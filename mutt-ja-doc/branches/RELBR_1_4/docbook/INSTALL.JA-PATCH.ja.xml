@@ -194,13 +194,13 @@ Mutt の tar ball を展開し, 日本語パッチを当ててください.
 <itemizedlist>
 <listitem>
 <para>
---with-iconv=DIR
+--with-libiconv-prefix=DIR
 </para>
 <para>   
  GNU libiconv を使う場合はこのオプションを付けないとうまくいかないことがあります.
 </para>
 <para>
-例) --with-iconv=/usr/local
+例) --with-libiconv-prefix=/usr/local
 </para>
 </listitem>
 <listitem>
