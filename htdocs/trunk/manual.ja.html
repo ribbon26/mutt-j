@@ -10,7 +10,7 @@
 <H1>The Mutt E-Mail Client</H1>
 
 <H2>by Michael Elkins 
-<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.7 +20050201
+<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.8 +20050213
 <P><HR>
 <EM>``All mail clients suck.  This one just sucks less.'' -me, circa 1995</EM>
 <HR>
@@ -1226,7 +1226,16 @@ Mutt は自動的にその元メッセイジの宛先へ返事を送るよう提案します。
 これこそが <CODE>alternates</CODE> コマンドの目的とするところです。
 このコマンドは正規表現のリストを受け取り、それらを使って、
 自分がメイルを受信するアドレスを識別するのです。
-<P>リストから正規表現を削除するには <CODE>unalternates</CODE> コマンドを使います。
+<P><CODE>unalternates</CODE> コマンドを使えば、<CODE>alternates</CODE> のパターンに
+例外を作ることができます。あるアドレスが <CODE>alternates</CODE> コマンドに
+該当していて、しかしそれを自分のではないことにしたい場合には、
+詳細なパターンを <CODE>unalternates</CODE> コマンドで指定することができるのです。
+<P><CODE>alternates</CODE> のリストから正規表現を削除するには <CODE>unalternates</CODE>
+コマンドで完全に同一の <EM>正規表現</EM> を指定します。
+同様に、<CODE>alternates</CODE> コマンドの <EM>正規表現</EM> が <CODE>unalternates</CODE>
+のリストにある項目と同じであれば、その <CODE>unalternates</CODE> の項目は
+削除されます。もし <CODE>unalternates</CODE> の <EM>正規表現</EM> が「*」であれば、
+<CODE>alternates</CODE> の <EM>全ての項目</EM> が削除されます。
 <P>
 <H2><A NAME="lists"></A> 3.10 メイリングリスト</H2>
 
@@ -1271,8 +1280,8 @@ lists コマンドを使ってください。
 これを購読していることを Mutt に教えるには、代わりに
 &quot;subscribe mutt-users&quot; を追加してください。
 万一 <EM>mutt-users@example.com</EM> というアドレスの人からメイルを
-受け取ることがあるなら、&quot;lists mutt-users@mutt.org&quot;
-か &quot;subscribe mutt-users@mutt.org&quot;
+受け取ることがあるなら、&quot;lists mutt-users@mutt\\.org&quot;
+か &quot;subscribe mutt-users@mutt\\.org&quot;
 を使って、実際にリストから来たメイルにだけ一致させることができます。
 <P>unlists コマンドは、既知と購読中のメイリングリストのリストから
 項目を消去するために使います。項目をすべて消去するには
@@ -1419,11 +1428,9 @@ Mutt はまず、メッセイジ宛先リストの中で<EM>正規表現パターン</EM>を検索して、
 つまり「記録」メイルボックスに保存します。
 <P><EM>パターン</EM>の正確な書式の情報については
 <A HREF="#pattern_hook">「フックにおけるメッセイジの合致」の節</A>を参照してください。
-<P>例: <CODE>fcc-hook aol.com$ +spammers</CODE>
+<P>例: <CODE>fcc-hook [@.]aol\\.com$ +spammers</CODE>
 <P>上のようにすると、aol.com ドメインに行くことになっているメッセイジは
 すべて既定で +spammers メイルボックスにコピーが保存されます
-(訳注：もしあれば some@aolicom や any@mx.maol.com なんていうのも
-該当してしまうけれど)。
 <A HREF="#fcc-save-hook">fcc-save-hook</A> コマンドの節も参照してください。
 <P>
 <H2><A NAME="fcc-save-hook"></A> 3.17 既定のセイヴファイル名と既定の Fcc:メイルボックスを同時に指定する</H2>
@@ -1866,6 +1873,7 @@ aaa777 に対しては a7 の部分にのみ合致。a7a7a7 なら全体に合致。)
 ~f USER         USER から送られた (from USER) メッセイジ
 ~g              暗号で署名されているメッセイジ
 ~G              暗号化されているメッセイジ
+~H EXPR         EXPR に合致するスパム属性を持つメッセイジ
 ~h EXPR         ヘッダ (header) に EXPR を含むメッセイジ
 ~k              PGP 鍵 (key) を含むメッセイジ
 ~i ID           "Message-ID" フィールドに ID が合致するメッセイジ
@@ -2124,7 +2132,7 @@ Mutt の世界において、<EM>フック</EM>は設定オプションやコマンドに合った
 <BLOCKQUOTE><CODE>
 <PRE>
 send-hook . 'unmy_hdr From:'
-send-hook ~Cb@b.b my_hdr from: c@c.c
+send-hook ~C'^b@b\.b$' my_hdr from: c@c.c
 </PRE>
 </CODE></BLOCKQUOTE>
 <P>
@@ -2336,12 +2344,12 @@ Mutt は、送信時にこのへッダが存在しない場合にだけ、
 自動的に &quot;Reply-To&quot; フィールドのアドレスへ返信するからです。
 Mutt は、
 <A HREF="#reply_to">$reply_to</A> 変数を使って、
-どちらのアドレスに返信するか決めさせてくれます。(訳注：ask-yes か ask-no に)
-設定されていると、&quot;Reply-To&quot; フィールドにあるアドレスを
+どちらのアドレスに返信するか決めさせてくれます。<EM>ask-yes</EM> か <EM>ask-no</EM>
+に設定されていると、&quot;Reply-To&quot; フィールドにあるアドレスを
 使うのかどうかを聞いてきて、使わないと答えると
 &quot;From&quot; フィールドのアドレスに直接返信します。
-この変数が設定されていない (訳注：yes の) 場合は、あれば &quot;Reply-To&quot;
-フィールドが使われます。
+この変数が <EM>yes</EM> に設定されている場合は、あれば必ず
+&quot;Reply-To&quot; フィールドが使われます。
 <P>&quot;X-Label:&quot; フィールドを使って、メイリングリストや
 リストで話題となっている事柄をさらに特定することができます (あるいは
 単に、メッセイジへ個別に註釈を付けることも)。
@@ -3258,8 +3266,6 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <LI><CODE>
 <A HREF="#push">push</A></CODE> <EM>文字列</EM></LI>
 <LI><CODE>
-<A HREF="#reply-hook">reply-hook</A></CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM></LI>
-<LI><CODE>
 <A HREF="#set">reset</A></CODE> <EM>変数</EM> [<EM>変数</EM> ... ]</LI>
 <LI><CODE>
 <A HREF="#save-hook">save-hook</A></CODE> <EM>正規表現</EM>　<EM>ファイル名</EM></LI>
@@ -3272,6 +3278,8 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <LI><CODE>
 <A HREF="#send2-hook">send2-hook</A></CODE> <EM>正規表現</EM>　<EM>コマンド</EM></LI>
 <LI><CODE>
+<A HREF="#reply-hook">reply-hook</A></CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM></LI>
+<LI><CODE>
 <A HREF="#set">set</A></CODE> [no|inv]<EM>変数</EM>[=<EM>値</EM>] [ <EM>変数</EM> ... ]</LI>
 <LI><CODE>
 <A HREF="#set">unset</A></CODE> <EM>変数</EM> [<EM>変数</EM> ... ]</LI>
@@ -3282,9 +3290,9 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <LI><CODE>
 <A HREF="#spam">nospam</A></CODE> <EM>パターン</EM></LI>
 <LI><CODE>
-<A HREF="#lists">subscribe</A></CODE> <EM>アドレス</EM> [ <EM>アドレス</EM> ... ]</LI>
+<A HREF="#lists">subscribe</A></CODE> <EM>正規表現</EM> [ <EM>正規表現</EM> ... ]</LI>
 <LI><CODE>
-<A HREF="#lists">unsubscribe</A></CODE> <EM>アドレス</EM> [ <EM>アドレス</EM> ... ]</LI>
+<A HREF="#lists">unsubscribe</A></CODE> <EM>正規表現</EM> [ <EM>正規表現</EM> ... ]</LI>
 <LI><CODE>
 <A HREF="#set">toggle</A></CODE> <EM>変数</EM> [<EM>変数</EM> ... ]</LI>
 <LI><CODE>
@@ -3588,7 +3596,7 @@ Default: no
 <P>Type: string<BR>
 Default: &quot;-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%&gt;-&quot;
 <P>
-<P>コンポウズメニューで表示されるステイタス行の書式を制御する。
+<P><EM>コンポウズ</EM>メニューで表示されるステイタス行の書式を制御する。
 この文字列は 
 <A HREF="#status_format">$status_format</A>
 とほぼ同じだが、独自の printf() 風シークウェンスを持っている。
@@ -4169,6 +4177,15 @@ Default: yes
 <P>設定されていると、スレッド分岐図に欠けているメッセイジの存在を示さなくなる。
 <P>
 <P>
+<H3><A NAME="hide_thread_subject"></A> hide_thread_subject</H3>
+
+<P>Type: boolean<BR>
+Default: yes
+<P>
+<P>設定されているとき、スレッド中で親または直近の兄と同じ題を持つ
+メッセイジは、題を表示しない。
+<P>
+<P>
 <H3><A NAME="hide_top_limited"></A> hide_top_limited</H3>
 
 <P>Type: boolean<BR>
@@ -4404,7 +4421,8 @@ Default: ask-yes
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>返信の際にメッセイジの最初の添付ファイルのみ引用するかどうかを制御する。
+<P>返信の際にメッセイジの最初の添付ファイルのみ引用するか、
+それともすべて引用するかを制御する。
 <P>
 <P>
 <H3><A NAME="indent_string"></A> indent_string</H3>
@@ -4635,6 +4653,16 @@ Default: no
 <A HREF="#alternates">alternates</A> コマンドを参照) を除去する。
 <P>
 <P>
+<H3><A NAME="menu_context"></A> menu_context</H3>
+
+<P>Type: number<BR>
+Default: 0
+<P>
+<P>この変数は、メニューをスクロウルする際に残される行数を制御する。
+(
+<A HREF="#pager_context">$pager_context</A> のようなもの。)
+<P>
+<P>
 <H3><A NAME="menu_scroll"></A> menu_scroll</H3>
 
 <P>Type: boolean<BR>
@@ -4783,9 +4811,6 @@ Default: ask-no
 <A HREF="#mbox">$mbox</A> メイルボックスや
 <A HREF="#mbox-hook">mbox-hook</A> コマンドの結果へ
 移動するかどうかを制御する。
-(訳注：原文は文字通りには「移動するかどうかを確認させるかどうかを制御する」
-となっているが、yes にすれば確認なしで移動されるし、no にすれば
-確認なしで移動もなしなのだから、原文直訳では不正確になってしまう。)
 <P>
 <P>
 <H3><A NAME="message_format"></A> message_format</H3>
@@ -5242,24 +5267,15 @@ Default: ask-yes
 (PGP only)
 <P>
 <P>
-<H3><A NAME="pgp_auto_traditional"></A> pgp_auto_traditional</H3>
+<H3><A NAME="pgp_auto_decode"></A> pgp_auto_decode</H3>
 
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>旧式インライン PGP で暗号化や署名をしてあるメッセイジへ返信する際は
-旧式メッセイジを生成させ、PGP/MIME メッセイジへ返信する際は PGP/MIME
-にするオプションである。ただし、
-<A HREF="#crypt_replyencrypt">$crypt_replyencrypt</A>,
-<A HREF="#crypt_replysign">$crypt_replysign</A>,
-<A HREF="#crypt_replysignencrypted">$crypt_replysignencrypted</A>
-を使っている場合にのみ有効である。
-<P>さらに注意すべきことに、us-ascii 以外の文字セットや複数 MIME パートで
-構成されたメッセイジは自動的に PGP/MIME が使われる。
-<P>このオプションは
-<A HREF="#pgp_create_traditional">$pgp_create_traditional</A>
-を上書きする。
-(PGP only)
+<P>設定しておくと、Mutt が自動的に伝統的な PGP メッセイジを復号化しようとする。
+その復号化は、メッセイジ内容を出力するような操作の際に起こる。例えば
+手動で check-traditional-pgp 関数によるチェックをしていない伝統的 PGP
+メッセイジは、表示するときに Mutt が自動でチェックしてくれるようになる。
 <P>
 <P>
 <H3><A NAME="pgp_decode_command"></A> pgp_decode_command</H3>
@@ -5616,6 +5632,14 @@ Default: &quot;&quot;
 (S/MIME only)
 <P>
 <P>
+<H3><A NAME="ssl_client_cert"></A> ssl_client_cert</H3>
+
+<P>Type: path<BR>
+Default: &quot;&quot;
+<P>
+<P>クライアント証明書とその秘密鍵を含んだファイル。
+<P>
+<P>
 <H3><A NAME="ssl_starttls"></A> ssl_starttls</H3>
 
 <P>Type: quadoption<BR>
@@ -5862,10 +5886,9 @@ sleep 20 &lt; /dev/null &gt; /dev/null&quot;
 <P>Type: quadoption<BR>
 Default: ask-no
 <P>
-<P>印刷前に確認を求めるかどうかを制御する。
-(訳注：no にすると印刷できなくなる。yes にすると確認せずに印刷する。
-ask-yes や ask-no にすると確認する。)
-よく間違って &quot;p&quot; を押してしまう (私のような) 人に有用である。
+<P>本当にメッセイジを印刷するかどうかを制御する。既定では
+<EM>ask-no</EM> に設定されているが、これは
+よく間違って &quot;p&quot; を押してしまう (私のような) 人がいるからだ。
 <P>
 <P>
 <H3><A NAME="print_command"></A> print_command</H3>
@@ -6053,9 +6076,10 @@ Default: no
 <P>Type: quadoption<BR>
 Default: ask-yes
 <P>
-<P>(訳注：ask-yes か ask-no に) 設定されていると、返信しようとする際に
+<P>設定されている (訳注：または yes と答える) と、返信しようとする際に
 メッセイジの Reply-To: ヘッダフィールドで挙げられているアドレスを
-使いたいかどうかを聞いてくる。no と答えると From: ヘッダフィールドの
+返信先として用いる。
+解除されている (訳注：または no と答える) と、From: ヘッダフィールドの
 アドレスを代わりに用いる。このオプションは、Reply-To: ヘッダフィールドを
 リストのアドレスに設定してくるメイリングリストを読んでいて、
 メッセイジの送信者へ個人的にメッセイジを送りたい場合に便利である。
@@ -6108,7 +6132,7 @@ Default: no
 <P>メイルをあるマシンで受信し、別のマシンへ移して、そこから返信する
 ということが時々あるかもしれない。この変数が設定されていると、
 返信したいメッセイジを受け取ったアドレスが alternates に
-合致しているときには、そのアドレスを使って既定の <EM>From:</EM>
+<B>合致しているときには</B>、そのアドレスを使って既定の <EM>From:</EM>
 行が作成される。この変数が設定されていなかったり、アドレスが
 alternates に合致しなかったりした場合には、
 <EM>From:</EM> 行には返信時のマシンのアドレスが使われる。
@@ -6582,7 +6606,7 @@ Default: &quot;-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?
 次のような構造が使われる。
 <P>%?&lt;シークウェンス文字&gt;?&lt;選択的文字列&gt;?
 <P>ここで、<EM>シークウェンス文字</EM>の部分には上記の表にある文字が入る。
-<EM>選択的文字列</EM>の部分は、その<EM>シークウェンス</EM>が
+<EM>選択的文字列</EM>の部分は、その<EM>シークウェンス文字</EM>が
 非ゼロのときに表示したい文字列である。<EM>選択的文字列</EM>には
 他のシークウェンスも普通の文章も含めることが<B>できる</B>が、
 選択的文字列を再帰的に使用することは<B>できない</B>。
@@ -6775,6 +6799,16 @@ Default: yes
 設定しないと生成されない。
 <P>
 <P>
+<H3><A NAME="use_idn"></A> use_idn</H3>
+
+<P>Type: boolean<BR>
+Default: yes
+<P>
+<P><EM>設定されている</EM>と、Mutt が国際化ドメイン名 (IDN) を復号して表示する。
+注意: <EM>解除</EM>されていても IDN アドレスを使うことはできる。
+この変数は復号にしか影響しない。
+<P>
+<P>
 <H3><A NAME="use_ipv6"></A> use_ipv6</H3>
 
 <P>Type: boolean<BR>
@@ -6865,8 +6899,8 @@ Default: 10
 Default: yes
 <P>
 <P>メッセイジを送信に備える際、Mutt が Bcc ヘッダを書いておくかどうかを
-制御する。Exim ユーザはこれを使いたいであろう。
-(訳注：exim は Bcc を消してくれないので、解除すべきだということ。)
+制御する。Exim ユーザはこれを解除したいと思うであろう。
+(訳注：exim は Bcc を消してくれない。)
 <P>
 <P>
 <H2><A NAME="functions"></A> 6.4 関数</H2>
@@ -7329,7 +7363,7 @@ Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 これによって原文の質が向上されることも視野に入れています。
 翻訳中に、実際いくつか原文の誤りなどを見付けました。
 <P>ライセンスについては、原文に何も付け足しません。
-参考にしたのは、原文とソース (1.5.6, 1.5.7 および CVS 版)、および
+参考にしたのは、原文とソース (1.5.6, 1.5.7, 1.5.8 および CVS 版)、および
 西岡・人見訳 (1.4) のみです。
 <P>改善要求などは sourceforge.jp の mutt-j プロジェクトの
 バグ報告機能かフォーラムを使うと良いでしょう。

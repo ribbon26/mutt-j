@@ -4,7 +4,7 @@
 
 <title>The Mutt E-Mail Client
 <author>by Michael Elkins <htmlurl url="mailto:me@cs.hmc.edu" name="&lt;me@cs.hmc.edu&gt;">
-<date>version 1.5.7 +20050201
+<date>version 1.5.8 +20050213
 <abstract>
 ``All mail clients suck.  This one just sucks less.'' -me, circa 1995
 </abstract>
@@ -1267,7 +1267,17 @@ Mutt は自動的にその元メッセイジの宛先へ返事を送るよう提案します。
 このコマンドは正規表現のリストを受け取り、それらを使って、
 自分がメイルを受信するアドレスを識別するのです。
 
-リストから正規表現を削除するには <tt/unalternates/ コマンドを使います。
+<tt/unalternates/ コマンドを使えば、<tt/alternates/ のパターンに
+例外を作ることができます。あるアドレスが <tt/alternates/ コマンドに
+該当していて、しかしそれを自分のではないことにしたい場合には、
+詳細なパターンを <tt/unalternates/ コマンドで指定することができるのです。
+
+<tt/alternates/ のリストから正規表現を削除するには <tt/unalternates/
+コマンドで完全に同一の <em/正規表現/ を指定します。
+同様に、<tt/alternates/ コマンドの <em/正規表現/ が <tt/unalternates/
+のリストにある項目と同じであれば、その <tt/unalternates/ の項目は
+削除されます。もし <tt/unalternates/ の <em/正規表現/ が「*」であれば、
+<tt/alternates/ の <em/全ての項目/ が削除されます。
 
 <sect1>メイリングリスト<label id="lists" >
 <p>
@@ -1314,8 +1324,8 @@ lists コマンドを使ってください。
 これを購読していることを Mutt に教えるには、代わりに
 &dquot;subscribe mutt-users&dquot; を追加してください。
 万一 <em>mutt-users@example.com</em> というアドレスの人からメイルを
-受け取ることがあるなら、&dquot;lists mutt-users@mutt.org&dquot;
-か &dquot;subscribe mutt-users@mutt.org&dquot;
+受け取ることがあるなら、&dquot;lists mutt-users@mutt&bsol;&bsol;.org&dquot;
+か &dquot;subscribe mutt-users@mutt&bsol;&bsol;.org&dquot;
 を使って、実際にリストから来たメイルにだけ一致させることができます。
 
 unlists コマンドは、既知と購読中のメイリングリストのリストから
@@ -1481,12 +1491,10 @@ Mutt はまず、メッセイジ宛先リストの中で<em/正規表現パターン/を検索して、
 <em/パターン/の正確な書式の情報については<ref id="pattern_hook"
 name="「フックにおけるメッセイジの合致」の節" >を参照してください。
 
-例: <tt>fcc-hook aol.com&dollar; +spammers</tt>
+例: <tt>fcc-hook &lsqb;@.&rsqb;aol&bsol;&bsol;.com&dollar; +spammers</tt>
 
 上のようにすると、aol.com ドメインに行くことになっているメッセイジは
 すべて既定で +spammers メイルボックスにコピーが保存されます
-(訳注：もしあれば some@aolicom や any@mx.maol.com なんていうのも
-該当してしまうけれど)。
 <ref id="fcc-save-hook" name="fcc-save-hook" > コマンドの節も参照してください。
 
 <sect1>既定のセイヴファイル名と既定の Fcc:
@@ -2004,6 +2012,7 @@ Mutt コマンドには、パターンを指定して合致したものにだけ適用することの
 ~f USER         USER から送られた (from USER) メッセイジ
 ~g              暗号で署名されているメッセイジ
 ~G              暗号化されているメッセイジ
+~H EXPR         EXPR に合致するスパム属性を持つメッセイジ
 ~h EXPR         ヘッダ (header) に EXPR を含むメッセイジ
 ~k              PGP 鍵 (key) を含むメッセイジ
 ~i ID           "Message-ID" フィールドに ID が合致するメッセイジ
@@ -2248,7 +2257,7 @@ Mutt の世界において、<em>フック</em>は設定オプションやコマンドに合った
 
 <tscreen><verb>
 send-hook . 'unmy_hdr From:'
-send-hook ~Cb@b.b my_hdr from: c@c.c
+send-hook ~C'^b@b\.b$' my_hdr from: c@c.c
 </verb></tscreen>
 
 <sect2>フックにおけるメッセイジ合致条件<label id="pattern_hook" >
@@ -2460,12 +2469,12 @@ Mutt は、送信時にこのへッダが存在しない場合にだけ、
 問題を引き起こすかもしれません。なぜなら大半のメイルクライアントは、
 自動的に &dquot;Reply-To&dquot; フィールドのアドレスへ返信するからです。
 Mutt は、<ref id="reply_to" name="&dollar;reply&lowbar;to" > 変数を使って、
-どちらのアドレスに返信するか決めさせてくれます。(訳注：ask-yes か ask-no に)
-設定されていると、&dquot;Reply-To&dquot; フィールドにあるアドレスを
+どちらのアドレスに返信するか決めさせてくれます。<em/ask-yes/ か <em/ask-no/
+に設定されていると、&dquot;Reply-To&dquot; フィールドにあるアドレスを
 使うのかどうかを聞いてきて、使わないと答えると
 &dquot;From&dquot; フィールドのアドレスに直接返信します。
-この変数が設定されていない (訳注：yes の) 場合は、あれば &dquot;Reply-To&dquot;
-フィールドが使われます。
+この変数が <em/yes/ に設定されている場合は、あれば必ず
+&dquot;Reply-To&dquot; フィールドが使われます。
 
 &dquot;X-Label:&dquot; フィールドを使って、メイリングリストや
 リストで話題となっている事柄をさらに特定することができます (あるいは
@@ -3379,8 +3388,6 @@ Mutt は、準備しておいたメッセイジを送信する &dquot;batch&dquot; モウドも
 <item>
 <tt><ref id="push" name="push"></tt> <em/文字列/
 <item>
-<tt><ref id="reply-hook" name="reply-hook"></tt> &lsqb;!&rsqb;<em/パターン/　<em/コマンド/
-<item>
 <tt><ref id="set" name="reset"></tt> <em/変数/ &lsqb;<em/変数/ ... &rsqb;
 <item>
 <tt><ref id="save-hook" name="save-hook"></tt> <em/正規表現/　<em/ファイル名/
@@ -3393,6 +3400,8 @@ Mutt は、準備しておいたメッセイジを送信する &dquot;batch&dquot; モウドも
 <item>
 <tt><ref id="send2-hook" name="send2-hook"></tt> <em/正規表現/　<em/コマンド/
 <item>
+<tt><ref id="reply-hook" name="reply-hook"></tt> &lsqb;!&rsqb;<em/パターン/　<em/コマンド/
+<item>
 <tt><ref id="set" name="set"></tt> &lsqb;no|inv&rsqb;<em/変数/&lsqb;=<em/値/&rsqb; &lsqb; <em/変数/ ... &rsqb;
 <item>
 <tt><ref id="set" name="unset"></tt> <em/変数/ &lsqb;<em/変数/ ... &rsqb;
@@ -3403,9 +3412,9 @@ Mutt は、準備しておいたメッセイジを送信する &dquot;batch&dquot; モウドも
 <item>
 <tt><ref id="spam" name="nospam"></tt> <em/パターン/
 <item>
-<tt><ref id="lists" name="subscribe"></tt> <em/アドレス/ &lsqb; <em/アドレス/ ... &rsqb;
+<tt><ref id="lists" name="subscribe"></tt> <em/正規表現/ &lsqb; <em/正規表現/ ... &rsqb;
 <item>
-<tt><ref id="lists" name="unsubscribe"></tt> <em/アドレス/ &lsqb; <em/アドレス/ ... &rsqb;
+<tt><ref id="lists" name="unsubscribe"></tt> <em/正規表現/ &lsqb; <em/正規表現/ ... &rsqb;
 <item>
 <tt><ref id="set" name="toggle"></tt> <em/変数/ &lsqb;<em/変数/ ... &rsqb;
 <item>
@@ -3731,7 +3740,7 @@ Type: string<newline>
 Default: &dquot;-- Mutt: Compose  &lsqb;Approx. msg size: &percnt;l   Atts: &percnt;a&rsqb;&percnt;&gt;-&dquot;
 
 <p>
-コンポウズメニューで表示されるステイタス行の書式を制御する。
+<em>コンポウズ</em>メニューで表示されるステイタス行の書式を制御する。
 この文字列は <ref id="status_format" name="&dollar;status&lowbar;format">
 とほぼ同じだが、独自の printf() 風シークウェンスを持っている。
 <p>
@@ -4358,6 +4367,16 @@ Default: yes
 設定されていると、スレッド分岐図に欠けているメッセイジの存在を示さなくなる。
 
 
+<sect2>hide&lowbar;thread&lowbar;subject<label id="hide_thread_subject">
+<p>
+Type: boolean<newline>
+Default: yes
+
+<p>
+設定されているとき、スレッド中で親または直近の兄と同じ題を持つ
+メッセイジは、題を表示しない。
+
+
 <sect2>hide&lowbar;top&lowbar;limited<label id="hide_top_limited">
 <p>
 Type: boolean<newline>
@@ -4616,7 +4635,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-返信の際にメッセイジの最初の添付ファイルのみ引用するかどうかを制御する。
+返信の際にメッセイジの最初の添付ファイルのみ引用するか、
+それともすべて引用するかを制御する。
 
 
 <sect2>indent&lowbar;string<label id="indent_string">
@@ -4859,6 +4879,16 @@ Default: no
 (<ref id="alternates" name="alternates"> コマンドを参照) を除去する。
 
 
+<sect2>menu&lowbar;context<label id="menu_context">
+<p>
+Type: number<newline>
+Default: 0
+
+<p>
+この変数は、メニューをスクロウルする際に残される行数を制御する。
+(<ref id="pager_context" name="&dollar;pager&lowbar;context"> のようなもの。)
+
+
 <sect2>menu&lowbar;scroll<label id="menu_scroll">
 <p>
 Type: boolean<newline>
@@ -5017,9 +5047,6 @@ Default: ask-no
 <ref id="mbox" name="&dollar;mbox"> メイルボックスや
 <ref id="mbox-hook" name="mbox-hook"> コマンドの結果へ
 移動するかどうかを制御する。
-(訳注：原文は文字通りには「移動するかどうかを確認させるかどうかを制御する」
-となっているが、yes にすれば確認なしで移動されるし、no にすれば
-確認なしで移動もなしなのだから、原文直訳では不正確になってしまう。)
 
 
 <sect2>message&lowbar;format<label id="message_format">
@@ -5533,27 +5560,16 @@ Default: ask-yes
 (PGP only)
 
 
-<sect2>pgp&lowbar;auto&lowbar;traditional<label id="pgp_auto_traditional">
+<sect2>pgp&lowbar;auto&lowbar;decode<label id="pgp_auto_decode">
 <p>
 Type: boolean<newline>
 Default: no
 
 <p>
-旧式インライン PGP で暗号化や署名をしてあるメッセイジへ返信する際は
-旧式メッセイジを生成させ、PGP/MIME メッセイジへ返信する際は PGP/MIME
-にするオプションである。ただし、
-<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">,
-<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">,
-<ref id="crypt_replysignencrypted" name="&dollar;crypt&lowbar;replysignencrypted">
-を使っている場合にのみ有効である。
-<p>
-さらに注意すべきことに、us-ascii 以外の文字セットや複数 MIME パートで
-構成されたメッセイジは自動的に PGP/MIME が使われる。
-<p>
-このオプションは
-<ref id="pgp_create_traditional" name="&dollar;pgp&lowbar;create&lowbar;traditional">
-を上書きする。
-(PGP only)
+設定しておくと、Mutt が自動的に伝統的な PGP メッセイジを復号化しようとする。
+その復号化は、メッセイジ内容を出力するような操作の際に起こる。例えば
+手動で check-traditional-pgp 関数によるチェックをしていない伝統的 PGP
+メッセイジは、表示するときに Mutt が自動でチェックしてくれるようになる。
 
 
 <sect2>pgp&lowbar;decode&lowbar;command<label id="pgp_decode_command">
@@ -5941,6 +5957,15 @@ Default: &dquot;&dquot;
 (S/MIME only)
 
 
+<sect2>ssl&lowbar;client&lowbar;cert<label id="ssl_client_cert">
+<p>
+Type: path<newline>
+Default: &dquot;&dquot;
+
+<p>
+クライアント証明書とその秘密鍵を含んだファイル。
+
+
 <sect2>ssl&lowbar;starttls<label id="ssl_starttls">
 <p>
 Type: quadoption<newline>
@@ -6217,10 +6242,9 @@ Type: quadoption<newline>
 Default: ask-no
 
 <p>
-印刷前に確認を求めるかどうかを制御する。
-(訳注：no にすると印刷できなくなる。yes にすると確認せずに印刷する。
-ask-yes や ask-no にすると確認する。)
-よく間違って &dquot;p&dquot; を押してしまう (私のような) 人に有用である。
+本当にメッセイジを印刷するかどうかを制御する。既定では
+<em>ask-no</em> に設定されているが、これは
+よく間違って &dquot;p&dquot; を押してしまう (私のような) 人がいるからだ。
 
 
 <sect2>print&lowbar;command<label id="print_command">
@@ -6421,9 +6445,10 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-(訳注：ask-yes か ask-no に) 設定されていると、返信しようとする際に
+設定されている (訳注：または yes と答える) と、返信しようとする際に
 メッセイジの Reply-To: ヘッダフィールドで挙げられているアドレスを
-使いたいかどうかを聞いてくる。no と答えると From: ヘッダフィールドの
+返信先として用いる。
+解除されている (訳注：または no と答える) と、From: ヘッダフィールドの
 アドレスを代わりに用いる。このオプションは、Reply-To: ヘッダフィールドを
 リストのアドレスに設定してくるメイリングリストを読んでいて、
 メッセイジの送信者へ個人的にメッセイジを送りたい場合に便利である。
@@ -6477,7 +6502,7 @@ Default: no
 メイルをあるマシンで受信し、別のマシンへ移して、そこから返信する
 ということが時々あるかもしれない。この変数が設定されていると、
 返信したいメッセイジを受け取ったアドレスが alternates に
-合致しているときには、そのアドレスを使って既定の <em>From:</em>
+<bf>合致しているときには</bf>、そのアドレスを使って既定の <em>From:</em>
 行が作成される。この変数が設定されていなかったり、アドレスが
 alternates に合致しなかったりした場合には、
 <em>From:</em> 行には返信時のマシンのアドレスが使われる。
@@ -6971,7 +6996,7 @@ Default: &dquot;-&percnt;r-Mutt: &percnt;f &lsqb;Msgs:&percnt;?M?&percnt;M/?&per
 &percnt;?&lt;シークウェンス文字&gt;?&lt;選択的文字列&gt;?
 <p>
 ここで、<em>シークウェンス文字</em>の部分には上記の表にある文字が入る。
-<em>選択的文字列</em>の部分は、その<em>シークウェンス</em>が
+<em>選択的文字列</em>の部分は、その<em>シークウェンス文字</em>が
 非ゼロのときに表示したい文字列である。<em>選択的文字列</em>には
 他のシークウェンスも普通の文章も含めることが<bf>できる</bf>が、
 選択的文字列を再帰的に使用することは<bf>できない</bf>。
@@ -7182,6 +7207,17 @@ Default: yes
 設定しないと生成されない。
 
 
+<sect2>use&lowbar;idn<label id="use_idn">
+<p>
+Type: boolean<newline>
+Default: yes
+
+<p>
+<em>設定されている</em>と、Mutt が国際化ドメイン名 (IDN) を復号して表示する。
+注意: <em>解除</em>されていても IDN アドレスを使うことはできる。
+この変数は復号にしか影響しない。
+
+
 <sect2>use&lowbar;ipv6<label id="use_ipv6">
 <p>
 Type: boolean<newline>
@@ -7283,8 +7319,8 @@ Default: yes
 
 <p>
 メッセイジを送信に備える際、Mutt が Bcc ヘッダを書いておくかどうかを
-制御する。Exim ユーザはこれを使いたいであろう。
-(訳注：exim は Bcc を消してくれないので、解除すべきだということ。)
+制御する。Exim ユーザはこれを解除したいと思うであろう。
+(訳注：exim は Bcc を消してくれない。)
 
 
 <sect1>関数<label id="functions">
@@ -7699,7 +7735,7 @@ Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 翻訳中に、実際いくつか原文の誤りなどを見付けました。
 
 ライセンスについては、原文に何も付け足しません。
-参考にしたのは、原文とソース (1.5.6, 1.5.7 および CVS 版)、および
+参考にしたのは、原文とソース (1.5.6, 1.5.7, 1.5.8 および CVS 版)、および
 西岡・人見訳 (1.4) のみです。
 
 改善要求などは sourceforge.jp の mutt-j プロジェクトの
