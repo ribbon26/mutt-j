@@ -8,8 +8,8 @@
 <title>mutt-ja patch extension manual</title>
 <revhistory>
 <revision>
-<revnumber>mutt-1.5.4i-ja.1</revnumber>
-<date>2003/03/21</date>
+<revnumber>mutt-1.5.5.1i-ja.1</revnumber>
+<date>2003/11/16</date>
 </revision>
 </revhistory>
 </articleinfo>
@@ -480,7 +480,7 @@ a column width of 2 in UTF-8 locale.
 <sect2>
 <title>Copyright</title>
 <para>
-Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
+Copyright (C) 2000-2003 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
 </para>
 <para>
 Copyright (C) 2000 Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;

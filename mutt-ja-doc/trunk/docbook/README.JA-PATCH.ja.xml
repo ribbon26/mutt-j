@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <author><firstname></firstname><surname>mutt-j 開発チーム</surname></author>
-<title>Mutt 1.5.4i用日本語版パッチリリースノート</title>
+<title>Mutt 1.5.5.1i用日本語版パッチリリースノート</title>
 </articleinfo>
 <sect1>
 <title>Mutt日本語版について</title>
@@ -424,7 +424,7 @@ Copyright (C) 2000-2001 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;
 Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
 </para></listitem>
 <listitem><para>
-Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62; *
+Copyright (C) 2000-2003 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62; *
 </para></listitem>
 </itemizedlist>
 <para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
