@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: 1.5.6\n"
 "Report-Msgid-Bugs-To: Tamotsu TAKAHASHI <tamo@momonga-linux.org>\n"
 "POT-Creation-Date: 2004-08-18 16:18+0900\n"
-"PO-Revision-Date: 2004-08-27 23:30+0900\n"
+"PO-Revision-Date: 2004-08-30 14:00+0900\n"
 "Last-Translator: Tamotsu TAKAHASHI <tamo@momonga-linux.org>\n"
 "Language-Team: mutt-j <mutt-j@ribbon.or.jp>\n"
 "MIME-Version: 1.0\n"
@@ -238,11 +238,11 @@ msgstr "ファイルマスク: "
 
 #: browser.c:1047
 msgid "Reverse sort by (d)ate, (a)lpha, si(z)e or do(n)'t sort? "
-msgstr "逆順の整列 (d:日付, a:ファイル名, z:サイズ, n:整列しない)"
+msgstr "逆順の整列 (d:日付, a:ABC順, z:サイズ, n:整列しない)"
 
 #: browser.c:1048
 msgid "Sort by (d)ate, (a)lpha, si(z)e or do(n)'t sort? "
-msgstr "整列 (d:日付, a:ファイル名, z:サイズ, n:整列しない)"
+msgstr "整列 (d:日付, a:ABC順, z:サイズ, n:整列しない)"
 
 #: browser.c:1049
 msgid "dazn"
