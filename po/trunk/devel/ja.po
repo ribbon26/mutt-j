@@ -1581,15 +1581,16 @@ msgstr "reset と共に使う接頭辞が不正"
 msgid "value is illegal with reset"
 msgstr "reset と共に使う値が不正"
 
+# これは :set ?move などとしたときの答えのようだ
 #: init.c:883
 #, c-format
 msgid "%s is set"
-msgstr "%s を設定"
+msgstr "%s は設定されている"
 
 #: init.c:883
 #, c-format
 msgid "%s is unset"
-msgstr "%s を解除"
+msgstr "%s は解除されている"
 
 #: init.c:1089
 #, c-format
@@ -3408,10 +3409,11 @@ msgstr "鍵 ID を入力: "
 msgid "Invoking pgp..."
 msgstr "PGP 起動中..."
 
+# 「0x0123ABCD。」は汚ないので「。」を省略
 #: pgpkey.c:773
 #, c-format
 msgid "PGP Key %s."
-msgstr "PGP 鍵 %s。"
+msgstr "PGP 鍵 %s"
 
 #: pgpkey.c:835 pgpkey.c:951
 #, c-format
