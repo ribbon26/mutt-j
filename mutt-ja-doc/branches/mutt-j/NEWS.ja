@@ -1,0 +1,194 @@
+                       Mutt 1.2からの変更点
+		       ====================
+
+
+フォルダの形式とフォルダへのアクセス
+------------------------------------
+
+- MHサポートの改善: Muttは.mh_sequencesファイルをサポートします。
+  現時点で、「unseen」「flagged」「replied」がMuttのフラグを保存するた
+  めに使われます（その名前は設定変数$mh_seq_unseen, $mh_seq_flagged, 
+  $mh_seq_repliedを使って設定できます）。副作用としては、MHフォルダの
+  個別のメッセージファイルはステータスの変更のため書き換えられなくなり
+  ました。
+
+- 「trashed」フラグがMaildirフォルダのためにサポートされました。
+  $maildir_trashを見てください。
+
+- POP フォルダのサポート。IMAPフォルダのようにPOPメールボックスにアク
+  セスできます。（POPプロトコルの制限のために機能の制約があります）
+
+- リモートフォルダに対するURL形式の書式。コマンドラインオプションの
+  -f の引数として pop://account@host や imap://account@host/folder の
+  ようなものを渡すことができます。
+
+- STARTTLSサポート。$ssl_starttlsが設定されている（デフォルト）場合は
+  MuttはSTARTTLSが使用可能なサーバでSTARTTLSを使おうと試みます。
+
+- $preconnect。サーバへの接続の確立が失敗した場合に実行されるシェルコマ
+  ンド。安全な接続を確立するために役に立ちます。詳細はmuttrc(5)を参照の
+  こと。
+
+- $tunnel。RAWソケットの代わりにコマンドへのパイプを使います。詳細は
+  muttrc(5)を参照のこと。（基本的にはセキュアな接続を確立するためのもう
+  一つの方法です。）
+
+- さらに増えた新しいIMAP/POP関連の変数（詳細はmuttrc(5)を参照のこと）:
+  $connect_timeout, $imap_authenticators, $imap_delim_chars,
+  $imap_peek, $pop_authenticators, $pop_auth_try_all,
+  $pop_checkinterval, $pop_delete, $pop_reconnect, $use_ipv6.
+
+- 次のIMAP/POP関連の変数はなくなりました:
+  $imap_checkinterval, $imap_cramkey, $pop_port.
+
+- 新しい機能 imap-fetch-mail。これはIMAPサーバへ新着メッセージのチェッ
+  クを行う機能です。
+
+- 機能 new-mailbox は create-mailbox に名前を変えました。そして、デフォ
+  ルトで n の代わりに C にキー割り当てが行われています。
+
+
+文字符号化方式のサポート
+-----------------------
+
+- Muttは文字符号化方式の変換にiconvライブラリを用いるようになりました。
+  これは非常に新しい（国際化された）libcかBruno Haible氏のlibiconvが必
+  要であることを意味します。
+  後者は <http://www.gnu.org/software/libiconv/> から取得できます。
+
+- 十分に新しいバージョンのncursesとslangを使えば、Muttはutf-8ロケール
+  において正しく動きます。
+  訳注: slangにはutf-8パッチが必要です。
+
+- 最近のシステムにおいては、$charset変数の値は使用しているロケールから
+  自動的に取得します。（注記：しかし、あなたのロケールに適した値を手動
+  で設定しても何の害もありません。）
+
+- charset-hookはメッセージに付けられている文字符号化方式の別名を定義し
+  ます（例えば、iso-8859-15のつもりでlatin15をメッセージに付けてくる人
+  もいます）。
+  iconv-hookは（MIMEの名前について知らないシステムのために）文字符号化
+  方式のローカル名を定義します。（サンプルの簡易な設定としてcontrib/iconv
+  を参照のこと）
+
+- 機能 change-charset はなくなりました。代わりに（composeメニュー上でC-e）
+  edit-typeを使ってください。
+
+- 機能 recode-attachment はなくなりました。
+
+他の変更点
+----------
+
+- compose画面のステータス行のために新しい変数 $compose_format を用意しました。
+  メッセージのおおよそのサイズを含めることが出来るようになりました。
+
+- attachmentメニューは畳み込めるようになりました。（デフォルトで v に
+  割り当てられている）collapse-parts を使います。添付ツリーでパートを
+  畳み込んだり展開したりできます。この機能は添付ツリーから起動したとき
+  にページャからも使うことができます。
+
+  通常は recvattach メニューは展開した状態で始まります。しかし、（デ
+  フォルトで設定されている）新しい $digest_collapse オプションでは、
+  要約に含まれている個別のメッセージは畳み込んで表示されます。
+  （すなわち、メッセージごとに１行で表示されます。）
+
+- $display_filter を使って、表示する前にメッセージをフィルタするコマンド
+  を指定できます。
+
+- message-hookを用いて、メッセージが表示される（あるいは返信する前に整形
+  される）前にMuttの設定コマンドを実行できます。
+
+- Muttがフラグを付けたメッセージをmboxに移動するのをしてほしくない場合は
+  $keep_flaggedを設定してください。
+
+- 変数 $pgp_ignore_subkeys を設定すれば、MuttにOpenPGPを無効にさせるこ
+  とができます。このオプションはデフォルトで設定されています。そして、
+  そのままにしておくことが推奨されます。
+
+- $pgp_sign_micalg はなくなりました。Muttは個々の署名に使われるMICアル
+  ゴリズムを自動的に決定します。
+
+- $pgp_good_signが設定されている場合、$pgp_verify_commandからの出力が
+  この正規表現に一致したらPGP署名が検証されたとみなします。
+  正しい署名であるときにPGP（あるいはGPGその他）によって生成されるテキ
+  ストメッセージにこの変数を設定することが推奨されます。
+
+- 新しい機能 check-traditional-pgp。これはデフォルトで esc-Pに割り当て
+  ています。メッセージのテキストパートがPGP暗号化あるいは署名を含んで
+  いるかチェックし、content-typeを可能な限り調整します。
+
+- $print_split.  このオプションが設定されている場合に、$print_command
+  は印刷するメッセージ毎に別々に動作します。enscript(1)のメール印刷
+  モードに適しています。
+
+- $sig_on_top.  引用したり転送したりするテキストの前に署名を含めます。
+  注意：このオプションを使うと揉め事になるかもしれません。
+
+- $text_flowed.  このオプションを設定したときに、Muttは format=flowed
+  パラメータを伴う text/plain メッセージを生成します。このようなメッ
+  セージを正しく生成するためには、対応したエディタモードが必要です。
+  注記：$indent_stringオプションは flowed テキストでは無効です。
+
+- $to_chars は拡張されました。メーリングリストのメッセージにはindexにお
+  いて L が付くようにになりました。古い動作に戻したい場合は、
+  .muttrcに「set to_chars=" +TCF "」を加えてください。
+
+- ラインエディタで新しいemacsライクな機能が加わりました:
+  backward-word (M-b), capitalize-word (M-c), downcase-word (M-l), 
+  upcase-word (M-u), forward-word (M-f), kill-eow (M-d), 
+  tranpose-chars (unbound).
+
+- transpose-charsは外部クエリがC-tを使用しているため、デフォルトでは
+  キーの割り当ては行われていません。別に割り当てることを推奨します。
+	bind	editor	"\e\t"		complete-query
+	bind	editor	"\Ct"		transpose-chars
+
+- mailto URL support: Muttのコマンドラインでmailto URLを渡すことができ
+  ます。
+
+- $duplicate_threadsが設定されている場合には、Muttの新しいスレッド表
+  示のコードは同じmessage-idを持つメッセージを一緒につなげます。
+  重複はスレッド表示では等号記号"="で示されます。
+
+  "~="パターンを使って重複したメッセージを絞り込んだり、あるいは除外し
+  たりすることもできます。
+
+
+1.2-jpから1.4-jaへの変更点
+--------------------------
+訳注:この項目は翻訳ではありません。
+     日本語版で拡張された設定変数に関しては日本語パッチの付属文書
+     manual-ja-patch.ja.htmlを読んでください。
+
+- 1.2-jpでは使用する文字符号化方式は決め打ちでしたが、1.4-jaではオリジ
+  ナルの国際化機能に従って動作します。しかし、このままでは実用上、使い
+  にくい面があるので、$assumed_charset, $create_rfc2047_parameters,
+  $file_charset, $sanitize_ja_chars, $strict_mime といった設定変数を新
+  たに設けました。
+  
+- 1.2-jpでは$recordで指定したフォルダにある作成済みの文書は作成した文
+  書の文字符号化方式のままでした。つまり、エディタの設定をEUC-JPにして
+  文書を作成した場合は、EUC-JPのまま$recordフォルダに保存されていたと
+  いうことです。1.4-jaでは送信用の文字符号化方式（ISO-2022-JP）に変換
+  されたもの（相手に届くものと同じもの）が保存されます。既存のメールを
+  適当なスクリプトを使ってISO-2022-JPに変換してください。
+
+- 文字符号化方式の指定の方法が変わっているため、以前に設定した$charset
+  はそのままでは使ってはいけません（恐らく"ISO-2022-JP"になっているケ
+  ースが多いはず）。トラブルの元になるので設定し直す必要があります。
+
+- $pop_apop は無くなりました。その代わりオリジナルでAPOPはサポートされ
+  ました。
+
+- $numbered_mlは$delete_prefixに名前が変わり、さらに、$delete_regexpに
+  より正規表現で指定することができるようになりました。
+
+- $kanjithreadは$tree_charsに置き換わりました。関連するいくつかの変数
+  $tree_*により使用する文字を任意に設定できます。
+
+- $pager_spoiler, $pager_spoiler_charは機能を少し変えて $pager_spoil, 
+  $pager_spoilerになりました。
+
+The original file is mutt-1.4/NEWS.
+Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+and members of mutt-j ML.
