@@ -1,0 +1,21 @@
+# mutt-en.rc:  configuration to use English
+#   If you want to use English, you should change your configuration 
+#   to include this file.
+#   For example: 
+#      source /usr/local/doc/mutt/samples/mutt-en.rc
+#
+
+# set charset for your terminal
+set charset="iso-8859-1"
+
+# you should not change the following configurations.
+set send_charset="us-ascii:iso-8859-1:utf-8"
+set file_charset=""
+set strict_mime=yes
+set assumed_charset="us-ascii"
+set thorough_search=no
+set sanitize_ja_chars=no
+#set rfc2047_parameters=no
+#set edit_headers=no
+set use_jisx0208=no
+
