@@ -179,8 +179,8 @@ Esc c           capitalize-word 単語の最初の文字を大文字に変換
 c               メイルボックスを変更
 ESC c           フォルダを読み出し専用モウドに変更
 C               現在のメッセイジを別のメイルボックスにコピー
-ESC C           メッセイジをデコウドしてフォルダにコピー
-ESC s           メッセイジをデコウドしてフォルダにセイヴ (移動)
+ESC C           メッセイジを復号化してフォルダにコピー
+ESC s           メッセイジを復号化してフォルダにセイヴ (移動)
 D               パターンに合致するメッセイジを削除
 d               現在のメッセイジを削除
 F               大事だとして印付け
@@ -351,7 +351,7 @@ P       parent-message       スレッド中の親メッセイジに飛ぶ
 %M を見てください。例えば <ref id="index_format"
 name="&dollar;index&lowbar;format" > に
 "&percnt;?M?(#&percnt;03M)&amp;(&percnt;4l)?"
-という設定を使って、スレッドが折りたたまれている時に
+という設定を使って、スレッドが折りたたまれているときに
 隠れているメイルの数を表示するようにできます。
 
 参照: <ref id="strict_threads" name="&dollar;strict&lowbar;threads" >
@@ -425,7 +425,7 @@ content type でも変更できます。この変更は永続的なものではなく、
 <p><bf>パスフレイズの忘却</bf> / <bf>forget-passphrase</bf><label id="forget-passphrase" > (既定値: ^F)<newline>
 
 このコマンドはパスフレイズをメモリ上から消去します。
-パスフレイズを誤入力した時に使います。
+パスフレイズを誤入力したときに使います。
 
 <p><bf>メイリングリストへの返信</bf> / <bf>list-reply</bf><label id="list-reply" > (既定値: L)<newline>
 
@@ -714,7 +714,7 @@ b       bounce          メッセイジを中継 (再送)
 変数の値によって、オリジナルのメッセイジを新規メッセイジの本文に
 (それとわかるように示す行で囲んで) 取り込むか、もしくは
 MIME 添付ファイルとして取り込みます。
-添付ファイルをペイジャのようにデコウドするかどうかは、それぞれ
+添付ファイルをペイジャのように復号化するかどうかは、それぞれ
 <ref id="forward_decode" name="&dollar;forward&lowbar;decode" > 変数と
 <ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">
 変数で制御できます。どちらの転送方法が良いかは内容によります。
@@ -924,7 +924,7 @@ Tab を打たなくてはなりません。
 使い方: <tt/bind/ <em/マップ/　<em/キー/　<em/関数/
 
 このコマンドで既定のキー割り当て
-(キーを押した時に起動する命令) を変更することができます。
+(キーを押したときに起動する命令) を変更することができます。
 
 <em>マップ</em>は、その割り当てがどのメニューのものなのかを指定します。
 複数のマップをコンマ (,) で区切って指定することもできます
@@ -1025,8 +1025,9 @@ noop に割り当てられたキーは常に何もしない。)
 <tt/iconv-hook/ コマンドは文字セットに対してシステム特有の名前を定義します。
 これは、システムの文字変換ライブラリが、文字セットに
 システム特有のおかしな名前を使うよう主張するときの助けになります。
-(訳注：あるいは拡張的な文字セットを使うときに、
-iconv-hook euc-jp eucjp-ms というような使い方も可能だろう。)
+(訳注：拡張的な文字セットを使うときに、mutt-j:02343 のパッチを当てて
+&dquot;iconv-hook 標準的なセット名 拡張セット名&dquot;
+というような使い方も可能。)
 
 
 <sect1>メイルボックスに基づいて変数を設定する<label id="folder-hook" >
@@ -1639,7 +1640,7 @@ yes と答えたかのような動作<!-- 実際は action にかかっているわけではないが -->を
 例: <tt>set noaskbcc</tt>
 
 <em>boolean</em> 型の変数に関しては、変数名の前に <tt>inv</tt> を付けて
-値を切り替えられます (on ⇔ off)。これはマクロを書く時に便利です。
+値を切り替えられます (on ⇔ off)。これはマクロを書くときに便利です。
 例: <tt>set invsmart&lowbar;wrap</tt>
 
 <tt>toggle</tt> コマンドは、指定した変数すべての頭に自動で <tt/inv/ を付けます。
@@ -2058,7 +2059,7 @@ d	日
 含むようにしないと、必ずしもインデックスに表示されている日付と
 <bf>同じではありません</bf>。
 
-<sect1>タグを使う
+<sect1>タグを使う<label id="tags">
 <p>
 
 操作を実行するときに、一通ずつ扱うよりも、ひとまとめにしたメッセイジを
@@ -2080,6 +2081,13 @@ d	日
 もし <ref id="auto_tag" name="&dollar;auto&lowbar;tag"> 変数が
 セットされていれば、次の操作が自動的にタグ付きメッセイジへ適用されるので、
 &dquot;tag-prefix&dquot; 演算子は必要ありません。
+(訳注：パターンに合致するものへタグを付けてから操作する際、
+必ずしも一つ以上のメッセイジにタグが付いているとは限らない。
+タグがない場合にはカーソルの位置にあるメッセイジへ操作が適用されてしまうため、
+危険すぎてマクロでは使えない。それで、tag-prefix-cond が追加された。
+たとえば macro index i
+&lt;tag-pattern&gt;~d*1w&bsol;n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent&bsol;n&lt;end-cond&gt;
+と設定すると、ここ一週間のメイルを移動するマクロができる。)
 
 <sect1>フックを使う<label id="hooks" >
 <p>
@@ -2602,7 +2610,7 @@ Mutt は三つの場面において、すなわちペイジャ (メイルを閲覧するとき)、
 <sect2>ペイジャで MIME メッセイジを閲覧する
 <p>
 インデックスでメイルを選択してペイジャで閲覧するとき、
-Mutt はメイルをテキスト表現へとデコウドします。Mutt には、
+Mutt はメイルをテキスト表現へと復号化します。Mutt には、
 <tt>text/plain, text/enriched, message/rfc822, message/news</tt>
 といった、数々の MIME タイプのサポート機能が内蔵されています。
 輸出制限ヴァージョンの Mutt では、それに加えて PGP/MIME や
@@ -2655,7 +2663,7 @@ name="resend-message">, reply, forward など) も使えます。
 印刷したり、フィルタにかけたり、パイプに通したり、編集したり、
 作成したり、もう一度確認のために閲覧したり、名前を変更したりすることが
 できます。また、添付ファイルに関する情報を変更することもできます。
-特に注目すべきなのは、content type, エンコウド方式、内容説明を
+特に注目すべきなのは、content type, 符号化方式、内容説明を
 変更できるという点です。
 
 添付ファイルは次のように表示されます。
@@ -2669,8 +2677,8 @@ name="resend-message">, reply, forward など) も使えます。
 この切替は <tt/toggle-unlink/ コマンド (既定値: u) でおこなえます。
 次の欄 は MIME content-type を示しており、
 <tt/edit-type/ コマンド (既定値: ^T) で変更できます。
-その次の欄はファイルのエンコウド方式を示しています。
-エンコウド (つまり変換) をすることによって、バイナリのメッセイジを
+その次の欄はファイルの符号化方式を示しています。
+符号化 (つまり変換) をすることによって、バイナリのメッセイジを
 7bit 通信で配送することができるようになります。変更は
 <tt/edit-encoding/ コマンド (既定値: ^E) です。
 次の欄はファイルサイズです。キロバイトかメガバイト単位に丸めてあります。
@@ -2865,7 +2873,7 @@ text/html; lynx -dump %s ; copiousoutput
 Mutt が標準のペイジャを使ってその結果を表示することになります。
 <tag/needsterminal/
 Mutt は <ref id="auto_view" name="auto&lowbar;view" > で
-添付ファイルを閲覧する時に、このフラグに合わせて <ref id="wait_key"
+添付ファイルを閲覧するときに、このフラグに合わせて <ref id="wait_key"
 name="&dollar;wait&lowbar;key" > 変数を扱います。
 終了時にキーを押すよう求めるかどうかは、
 閲覧に対話的な外部プログラムを使っており、かつ
@@ -2874,7 +2882,7 @@ name="&dollar;wait&lowbar;key" > 変数を扱います。
 とプログラムの終了値から決定することになります。
 そのほかの場合はすべて、キーを催促せずに終了します。
 <tag>compose=&lt;command&gt;</tag>
-このフラグは、特定の MIME タイプの添付ファイルを新規作成する時に使う
+このフラグは、特定の MIME タイプの添付ファイルを新規作成するときに使う
 コマンドを指定します。コンポウズメニューにおいてサポートされています。
 <tag>composetyped=&lt;command&gt;</tag>
 このフラグも、その MIME タイプの添付ファイルを新規作成する
@@ -2888,7 +2896,7 @@ Mutt では、ファイル添付メニューとコンポウズメニューでサポートされています。
 <tag>edit=&lt;command&gt;</tag>
 このフラグは、特定の MIME タイプの編集に使うコマンドを指定します。
 Mutt はこのコマンドをコンポウズメニューでサポートしており、
-新しい添付ファイルを作成する時にも使います。
+新しい添付ファイルを作成するときにも使います。
 Mutt は既定では editor 変数に定義されたエディタを
 テキストの添付ファイルに使用します。
 <tag>nametemplate=&lt;template&gt;</tag>
@@ -3450,10 +3458,10 @@ Default: yes
 
 <p>
 この変数が設定されていないと、複数のタグ付き添付ファイルを処理
-(保存、印刷、パイプ等々) する時に Mutt が添付ファイルを連結して
+(保存、印刷、パイプ等々) するときに Mutt が添付ファイルを連結して
 一つのファイルのように扱うことになる。その際
 <ref id="attach_sep" name="&dollar;attach&lowbar;sep">
-が各ファイルの後に追加される。なお、この変数が設定されている時には
+が各ファイルの後に追加される。なお、この変数が設定されているときには
 添付ファイルを一つずつ別々に処理する。
 
 
@@ -3489,10 +3497,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-設定されている時に <em>インデックス</em> メニューから
-メッセイジに影響を与える関数を実行すると、
+設定されているときに <em>インデックス</em> メニューから
+メッセイジに影響を与える関数を実行すると、その関数は
 タグ付けされたメッセイジすべて (もしあれば) に適用される。
-設定されていない時は、まず tag-prefix 関数 (既定値: &dquot;;&dquot;)
+(訳注：もしタグがなければ、カーソル位置のメッセイジに適用されるので注意。
+<ref id="tags" name="「タグを使う」の説明">を参照。)
+設定されていないときは、まず tag-prefix 関数 (既定値: &dquot;;&dquot;)
 を使って、次の関数をタグ付きメッセイジに適用するようにしなくてはならない。
 
 
@@ -3502,7 +3512,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-この変数が設定されている時にはエラー発生時に Mutt が音を鳴らす。
+この変数が設定されているときにはエラー発生時に Mutt が音を鳴らす。
 
 
 <sect2>beep&lowbar;new<label id="beep_new">
@@ -3511,7 +3521,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-この変数が設定されている時、Mutt は新着メイルを知らせるメッセイジを
+この変数が設定されているとき、Mutt は新着メイルを知らせるメッセイジを
 表示するたびに音を鳴らす。これは <ref id="beep" name="&dollar;beep">
 変数の設定とは無関係である。
 
@@ -3534,7 +3544,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-この変数が設定されている時にはメッセイジ中継の際に
+この変数が設定されているときにはメッセイジ中継の際に
 Mutt が Delivered-To ヘッダを付けてくれる。
 Postfix ユーザはこの変数を解除したいと思うだろう。
 
@@ -3557,7 +3567,7 @@ Default: yes
 <bf>注意:</bf> このオプションが有効なのは <em>Maildir</em> と <em>MH</em>
 形式メイルボックスだけである。
 <p>
-<em>yes</em> の時は、開いている最中のメイルボックスに着信する
+<em>yes</em> のときは、開いている最中のメイルボックスに着信する
 新着メイルを調べる。特に MH メイルボックスについて言えることだが、
 この調査はかなり時間のかかることがある。というのも、ディレクトリ全体を
 走査して、各ファイルを既に見たものかどうか確認する必要があるからだ。
@@ -3571,7 +3581,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-<em>no</em> の時は、未読メッセイジが含まれるスレッドを折り畳まない。
+<em>no</em> のときは、未読メッセイジが含まれるスレッドを折り畳まない。
 
 
 <sect2>uncollapse&lowbar;jump<label id="uncollapse_jump">
@@ -3580,7 +3590,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-<em>yes</em> の時は、カーソル下の折り畳まれて<em>いた</em>スレッドが
+<em>yes</em> のときは、カーソル下の折り畳まれて<em>いた</em>スレッドが
 <em>広げられる</em>際、未読メッセイジがあればそこにカーソルを移す。
 
 
@@ -3615,7 +3625,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-定義されていると、設定ファイルのコマンドをこのエンコウディングから
+定義されていると、設定ファイルのコマンドをこの符号化方式から
 (訳注：<ref id="charset" name="&dollar;charset"> へ) 復号する。
 
 
@@ -3626,7 +3636,7 @@ Default: yes
 
 <p>
 設定されていると、
-Mutt がメッセイジを既存メイルボックスに追加する時に確認を促す。
+Mutt がメッセイジを既存メイルボックスに追加するときに確認を促す。
 
 
 <sect2>confirmcreate<label id="confirmcreate">
@@ -3757,7 +3767,7 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-メイルボックスを閉じたり同期したりする時に
+メイルボックスを閉じたり同期したりするときに
 メッセイジを本当に削除するかどうかを制御する。
 <em>yes</em> に設定されていると、削除予定の印を付けたメッセイジは
 自動的に、確認を求めることなく消去される。
@@ -3773,9 +3783,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-このオプションが <em>yes</em> だと、Mutt はメッセイジに削除の印を付ける際に
-そのメッセイジのタグを外す。これはメッセイジを明示的に削除する時にも
-適用されるし、セイヴして別のフォルダへ移動する時にも適用される。
+このオプションが <em>yes</em> だと、Mutt はメッセイジへ削除の印を付ける際に
+そのメッセイジのタグを外す。これはメッセイジを明示的に削除するときにも
+適用されるし、セイヴして別のフォルダへ移動するときにも適用される。
+(訳注：セイヴされたメッセイジは移動先のフォルダに即座に現れるが、
+元のフォルダから即座に消え去るわけではない。
+通常の削除と同様、削除マークが付くだけなのである。)
 
 
 <sect2>digest&lowbar;collapse<label id="digest_collapse">
@@ -3795,7 +3808,7 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-設定されている時には、この変数で指定されたコマンドを使ってメッセイジを
+設定されているときには、この変数で指定されたコマンドを使ってメッセイジを
 フィルタする。メッセイジは閲覧時に標準入力として
 <ref id="display_filter" name="&dollar;display&lowbar;filter">
 に渡され、そのフィルタされたメッセイジが標準出力から読み出される。
@@ -3818,7 +3831,7 @@ Default: &dquot;&dquot;
 <p>
 <bf>注意:</bf> Sendmail 8.8.x 以降を使っていないなら有効にすべきではない。
 <p>
-この変数には、どんな時に通知が返ってくるよう要求するかを設定する。
+この変数には、どんなときに通知が返ってくるよう要求するかを設定する。
 文字列の中身はコンマ区切り (スペイスを入れないこと!) のリストで、
 この中から選べる: <em>never</em> は通知を一切要求しない、
 <em>failure</em> は伝達失敗の通知を要求する、
@@ -3850,7 +3863,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-この変数で制御するのは、Mutt がスレッドで整列している時に、
+この変数で制御するのは、Mutt がスレッドで整列しているときに、
 同一の message-id を持つメッセイジをスレッドにするかどうかである。
 もし設定されていると、そうしたメッセイジを重複だと考えていることを示す等号を
 スレッド図に表示する。
@@ -3883,8 +3896,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-<em>yes</em> の時は、&dquot;From &dquot; という文字列を行頭に含む
-メッセイジを Mutt が quoted-printable にエンコウドする。
+<em>yes</em> のときは、&dquot;From &dquot; という文字列を行頭に含む
+メッセイジを Mutt が quoted-printable に符号化する。
 これは、一部の MDA や MTA がメッセイジに行なおうとする不法改変を
 避けるのに役立つ。
 
@@ -3895,7 +3908,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-<em>yes</em> になっている時、Mutt はメッセイジの
+<em>yes</em> になっているとき、Mutt はメッセイジの
 <em>エンヴェロウプ</em>送信者を
 &dquot;From:&dquot; ヘッダに基づいて設定しようとする。
 この情報が sendmail コマンドに &dquot;-f&dquot; スウィッチを使って渡される
@@ -3920,12 +3933,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-設定されている時は最初の質問が飛ばされ、
-メッセイジに返信する際には宛先と題名が質問されず、
-転送する際には題名が質問されない。
+設定されていると、メッセイジへ返信する際、最初に宛先と題名を入力するのを省く。
+転送する際にも題名の入力を省く。
 <p>
 <bf>メモ:</bf> <ref id="autoedit" name="&dollar;autoedit">
-が設定されている時には、この変数は意味がない。
+が設定されているときには、この変数は意味がない。
 
 
 <sect2>fcc&lowbar;attach<label id="fcc_attach">
@@ -3944,7 +3956,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-この変数が設定されている時は、実際のメッセイジが暗号化されたり署名されたり
+この変数が設定されているときは、実際のメッセイジが暗号化されたり署名されたり
 していても、FCC は暗号化も署名もされずに保管される。(PGP のみ)
 
 
@@ -3959,7 +3971,8 @@ Default: &dquot;&tilde;/Mail&dquot;
 その部分がこの変数の値に展開される。ただし注意点がある。
 この変数を既定値から変更するなら、&dquot;+&dquot; や &dquot;=&dquot;
 を何かの変数に使う<em>前に</em>その変更が起こるようにしなくてはならない。
-なぜなら展開が生じるのは &dquot;set&dquot; コマンドの実行中だからである。
+なぜなら展開が生じるのは (訳注：変数の使用時ではなく)
+&dquot;set&dquot; コマンドの実行中だからである。
 
 
 <sect2>folder&lowbar;format<label id="folder_format">
@@ -4002,16 +4015,16 @@ Default: yes
 既知というのは subscribe コマンドか <ref id="lists" name="lists"> コマンドで
 指定されているということである。
 <p>
-このフィールドには二つ目的がある。第一に、メイリングリストに
+このフィールドには目的が二つある。第一に、メイリングリストに
 送ったメッセイジに対して、同じ返信を重複して受け取るのを避けることだ。
 そして第二に、購読していない既知のリストに送ったメッセイジへの返信を
 個別に受け取れるようにすることである。ヘッダの中には、
-購読しているリストに送る時はリストのアドレスだけが含まれ、
+購読しているリストに送るときはリストのアドレスだけが含まれ、
 未購読のリストにはリストのアドレスと自分のメイルアドレスの両方が含まれる。
 このヘッダを付けないで購読中のリストに送信すると、
 そのメッセイジに対するグループ返信が
 リストにも自分個人のアドレスにも送られるため、
-結果として同じメイルが二通送られてくることになる。
+結果として同じメイルが二通送られてくることになるのだ。
 
 
 <sect2>force&lowbar;name<label id="force_name">
@@ -4034,11 +4047,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-複雑な MIME メッセイジの転送時における text/plain へのデコウドを制御する。
-メッセイジヘッダも RFC2047 デコウドされる。
+複雑な MIME メッセイジを転送時に text/plain へ復号化するかどうかを制御する。
+(訳注：yes のときは) メッセイジヘッダも RFC2047 復号化される。
 この変数が使われるのは
 <ref id="mime_forward" name="&dollar;mime&lowbar;forward">
-が <em>no</em> の時だけであり、<em>yes</em> の時には
+が <em>no</em> のときだけであり、<em>yes</em> のときには
 <ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">
 が使われる。
 
@@ -4060,7 +4073,7 @@ Type: string<newline>
 Default: &dquot;&lsqb;&percnt;a: &percnt;s&rsqb;&dquot;
 
 <p>
-この変数はメッセイジを転送する時の題名の既定値を制御する。
+この変数はメッセイジを転送するときの題名の既定値を制御する。
 <ref id="index_format" name="&dollar;index&lowbar;format">
 変数と同じ書式シークウェンスを使う。
 
@@ -4071,9 +4084,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-<em>yes</em> の時、メッセイジ本文中に取り込まれた転送メッセイジは
+<em>yes</em> のとき、メッセイジ本文中に取り込まれた転送メッセイジは
 (<ref id="mime_forward" name="&dollar;mime&lowbar;forward"> が
-<em>no</em> の時には)
+<em>no</em> のときには)
 <ref id="indent_string" name="&dollar;indent&lowbar;string">
 を使って引用される。
 
@@ -4085,12 +4098,13 @@ Default: &dquot;&dquot;
 
 <p>
 設定されていると、この変数の中身が既定の From アドレスになる。
-これは (send-hook などから) my&lowbar;hdr を使って上書きできる。その際、
-<ref id="reverse_name" name="&dollar;reverse&lowbar;name"> も共に使うこと。
+これは my&lowbar;hdr (send-hook からでも使える) や
+<ref id="reverse_name" name="&dollar;reverse&lowbar;name">
+を使って上書きすることができる。
 なお、この変数は <ref id="use_from" name="&dollar;use&lowbar;from">
 が設定されていないと無視される。
 <p>
-設定されていない時は環境変数 EMAIL の内容が使われる。
+設定されていないときは環境変数 EMAIL の内容が使われる。
 
 
 <sect2>gecos&lowbar;mask<label id="gecos_mask">
@@ -4120,11 +4134,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-設定されていない時には、通常だと追加される
+設定されていないときには、通常だと追加される
 <ref id="my_hdr" name="my&lowbar;hdr"> コマンドのヘッダフィールドが
 作成されない。この変数の効果を発揮するには、<em>必ず</em>その
 新規メッセイジの作成や返信の<em>前に</em>解除しなくてはならない。
-設定されている時にはユーザ定義ヘッダフィールドが
+設定されているときにはユーザ定義ヘッダフィールドが
 すべての新メッセイジに追加される。
 
 
@@ -4134,7 +4148,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-設定されている時には、返信元メッセイジのヘッダを
+設定されているときには、返信元メッセイジのヘッダを
 Mutt が編集バッファに取り込むようになる。
 <ref id="weed" name="&dollar;weed"> の設定が適用される。
 
@@ -4161,7 +4175,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-設定されている時には、Mutt がアドレスにドメイン部分を付ける際、
+設定されているときには、Mutt がアドレスにドメイン部分を付ける際、
 <ref id="hostname" name="&dollar;hostname"> 変数のホスト名部分を抜く。
 この変数は Message-ID の生成に影響しないし、
 最上位ドメインまで切除してしまうようなことにもならない。
@@ -4206,10 +4220,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-設定されている時、スレッド頂点では
+設定されているとき、スレッド頂点では
 メッセイジが欠けているという表示をしなくなる。
 ただ、<ref id="hide_limited" name="&dollar;hide&lowbar;limited">
-が設定されている時にはこのオプションの効果がないということに注意せよ。
+が設定されているときにはこのオプションの効果がないということに注意せよ。
 
 
 <sect2>history<label id="history">
@@ -4229,7 +4243,7 @@ Default: yes
 
 <p>
 この変数は、メッセイジへグループ返信する際に
-Mail-Followup-To ヘッダに敬意を払って指示に服するかどうかを制御する。
+Mail-Followup-To ヘッダを尊重するかどうかを制御する。
 
 
 <sect2>hostname<label id="hostname">
@@ -4334,7 +4348,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-この変数は、IMAP フォルダ閲覧で探すのを購読フォルダのみにするか、
+この変数は、IMAP フォルダ閲覧で調べるのを購読フォルダのみにするか、
 それともフォルダすべてにするかを制御する。これは IMAP ブラウザ内で
 <em>toggle-subscribed</em> 関数を使って切り替えることもできる。
 
@@ -4410,9 +4424,10 @@ Default: no
 <p>
 これが &dquot;yes&dquot; に設定されていると、copiousoutput
 フラグの付いた mailcap 項目がないかどうかを、<em>どんな種類の</em>
-添付ファイルに対しても調査する。ただし、内部ヴューワが定義されて
-いない場合である。そのように調査して項目が見つかったときには、
-そこで定義されているヴューワを使って内容をテキスト形式に変換する。
+添付ファイルに対して調査する。内部ヴューワが
+(訳注：<ref id="auto_view" name="auto&lowbar;view"> で) 定義されていなくてもだ。
+そのように調査して項目が見つかったときには、
+そこで定義されているヴューワを使って内容をテキスト形式へ変換する。
 
 
 <sect2>include<label id="include">
@@ -5278,7 +5293,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-設定されていると PGP/MIME 署名メッセイジを自動で
+設定されていると PGP/MIME 署名メッセイジを自動的に
 <em>quoted-printable</em> で符号化する。
 この変数を解除すると PGP 署名が検証できなくなるかもしれないので注意せよ。
 この変数の意味をよく理解している場合にのみ変更するように。
@@ -6132,7 +6147,7 @@ Mutt が現在どのメッセイジまで来たのかを表示するようになる。
 おこなわれる (たとえば 25 だと、25 番目のメッセイジを読んだときに表示し、
 さらにまた 50 番目のときにも表示する)。この変数の意味は、時間のかかる
 大きなメイルボックスを読み出す際に、進行状況を示すということだ。
-0 に設定されているときは、メイルボックスの読み出し前にひとつ
+0 に設定されているときは、メイルボックスの読み出し前に一度
 メッセイジが表示されるだけになる。
 <p>
 <ref id="write_inc" name="&dollar;write&lowbar;inc"> 変数も参照のこと。
@@ -6156,7 +6171,7 @@ Default: &dquot;&dquot;
 メッセイジ送信時に使う「本名」すなわち「個人名」を指定する。
 <p>
 既定では /etc/passwd の GECOS フィールドになる。
-なお、ユーザが <ref id="from" name="&dollar;from"> に本名を設定していると
+なお、ユーザが <ref id="from" name="&dollar;from"> に本名を設定していると、
 この変数が使われ<em>ない</em>ので注意。
 
 
@@ -6214,8 +6229,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-解除されていると、自分で送ったメッセイジに返信する際に
-返信したい相手は、そのメッセイジの宛先であって自分ではないものとみなす。
+自分の送ったメッセイジに返信するとき、これが解除されていれば、
+自分に返信したいのではなく、そのメッセイジの宛先に返信したいのだとみなされる。
 
 
 <sect2>reply&lowbar;to<label id="reply_to">
@@ -6291,9 +6306,9 @@ Default: yes
 
 <p>
 この変数は <ref id="reverse_name" name="reverse&lowbar;name"> 機能の
-動作を微調整する。設定されていると Mutt は受信メッセイジのアドレスを
-そのまま使う。そこには本名も含まれているかもしれない。解除されていると、
-そうした本名部分を <ref id="realname" name="realname"> 変数の設定で
+動作を微調整する。これが設定されていると、Mutt は受信メッセイジのアドレスを
+そのまま丸ごと使う。あれば本名部分まで含めて使うのだ。もし解除されていると、
+そうした本名部分は <ref id="realname" name="realname"> 変数の設定で
 上書きするようになる。
 
 
@@ -6328,8 +6343,10 @@ Default: no
 <p>
 設定されていると、メイルを保存する既定フォルダに送信者のアドレス全体を使う。
 <ref id="save_name" name="&dollar;save&lowbar;name"> や
-<ref id="force_name" name="&dollar;force&lowbar;name"> も設定されていると、
-Fcc フォルダの選択も変わる。
+<ref id="force_name" name="&dollar;force&lowbar;name"> が設定されていると、
+Fcc フォルダの選択も変わる。(訳注：&dollar;save&lowbar;name が yes なら、
+アドレスと同じフォルダ名が Fcc に使われるようになる。&dollar;force&lowbar;name
+が yes なら、そのようなフォルダが存在しなくても作成して Fcc するようになる。)
 
 
 <sect2>save&lowbar;empty<label id="save_empty">
@@ -6371,9 +6388,9 @@ Default: yes
 
 <p>
 この変数が <em>no</em> のときには得点付けが停止される。
+これを使えばフォルダによって得点付けを無効にすることができるので、
 <ref id="score_threshold_delete" name="&dollar;score&lowbar;threshold&lowbar;delete">
-や同じような変数を使っているときに、これを使えば
-ある特定のフォルダで得点付けを無効にすることができて便利かもしれない。
+やその仲間たちを使っているときに便利かもしれない。
 
 
 <sect2>score&lowbar;threshold&lowbar;delete<label id="score_threshold_delete">
@@ -6424,7 +6441,8 @@ Mutt は、その文字セットへ正しく文章を変換できた最初のものを使う。
 koi8-r, iso-2022-jp など) を &dquot;iso-8859-1&dquot; の代わり、
 あるいはその後に含めることが推奨されている。
 (訳注：MS の似非 iso-2022-jp を送信しなくてはならないとしても、
-この変数には iso-2022-jp と指定すべきであろう。
+content type には iso-2022-jp と書かねばならないので、
+この変数には iso-2022-jp と指定すべきである。
 その場合には <ref id="charset-hook" name="iconv-hook"> で調整する。)
 
 
