@@ -63,7 +63,7 @@ url="http://www.openprojects.net" name="OpenProjects.Net
 
 <sect1>USENET
 <p>
-ニュースグループ <htmlurl url="news:comp.mail.mutt"
+ニューズグループ <htmlurl url="news:comp.mail.mutt"
 name="comp.mail.mutt"> を見てください。
 
 <sect1>Copyright (著作権)
@@ -95,8 +95,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111, USA.
 詳しくは <htmlurl url="http://www.mutt.org/mutt/" name="Mutt Page">
 を参照してください。
 
-この章では、配布されているままのデフォルトのキー割り当てで説明します。
-自分のサイトではシステム管理者がデフォルトを変えてしまっている
+この章では、配布されているままの既定のキー割り当てで説明します。
+自分のサイトではシステム管理者が既定値を変えてしまっている
 かもしれません。どのメニューでも &dquot;?&dquot; を押して
 現在のキー割り当てを表示できます。
 
@@ -137,7 +137,7 @@ Esc B           backward-word   一語戻る
 ^F or <Right>   forward-char    一文字進む
 Esc F           forward-word    一語進む
 <Tab>           complete        ファイル名やエイリアスを補完
-^T              complete-query  クエリによってアドレスを補完
+^T              complete-query  問い合わせでアドレスを補完
 ^K              kill-eol        行末まで削除
 ESC d           kill-eow        単語の終わりまで削除
 ^W              kill-word       カーソルの前の一語を消す
@@ -178,7 +178,7 @@ c               メイルボックスを変更
 ESC c           フォルダを読み出し専用モウドに変更
 C               現在のメッセイジを別のメイルボックスにコピー
 ESC C           メッセイジをデコウドしてフォルダにコピー
-ESC s           メッセイジをデコウドしてフォルダにセイブ
+ESC s           メッセイジをデコウドしてフォルダにセイヴ (移動)
 D               パターンに合致するメッセイジを削除
 d               現在のメッセイジを削除
 F               大事だとして印付け
@@ -186,8 +186,8 @@ l               パターンに合致するメッセイジを表示
 N               新しいとして印付け
 o               現在の整列方法を変更
 O               メイルボックスを逆順に整列
-q               変更をセイブして終了
-s               メッセイジをセイブ
+q               変更を保存して終了
+s               メッセイジをセイヴ (移動)
 T               パターンに合致するメッセイジにタグ付け
 t               メッセイジのタグを切替
 ESC t           メッセイジスレッド全体のタグを切替
@@ -214,8 +214,8 @@ ESC /           逆順に検索
 
 <p>
 <descrip>
-<tag/D/ 削除メッセイジである（削除のためにマークされている)
-<tag/d/ メッセイジ中に、削除のためにマークされた添付ファイルがある
+<tag/D/ 削除メッセイジである (削除予定の印が付いている)
+<tag/d/ メッセイジ中に、削除予定の添付ファイルがある
 <tag/K/ PGP 公開鍵を含んでいる
 <tag/N/ メッセイジが新しい
 <tag/O/ メッセイジが古い
@@ -229,8 +229,8 @@ ESC /           逆順に検索
 
 ステイタスフラグの一部は、次のコマンドを使ってオン／オフできます。
 <itemize>
-<item><bf>set-flag</bf> (デフォルトでは w)
-<item><bf>clear-flag</bf> (デフォルトでは W)
+<item><bf>set-flag</bf> (既定では w)
+<item><bf>clear-flag</bf> (既定では W)
 </itemize>
 
 <p>
@@ -250,7 +250,7 @@ ESC /           逆順に検索
 <sect2>ペイジャ
 <p>
 
-デフォルトでは、Mutt は内蔵ペイジャを使ってメッセイジ本文を表示します。
+既定では、Mutt は内蔵ペイジャを使ってメッセイジ本文を表示します。
 このペイジャは Unix プログラムの <em>less</em> によく似ていますが、
 <em>less</em> ほど多機能ではありません。
 
@@ -275,7 +275,7 @@ $               メッセイジの一番下に飛ぶ
 便利な点の一つです)。
 
 また、内部ペイジャはさらに二つの優れた機能をサポートしています。
-第一に、nroff の「標準」シーケンスを受け付け、太字や下線を解釈します。
+第一に、nroff の「標準」シークウェンスを受け付け、太字や下線を解釈します。
 シーケンスは連続で「文字、バックスペイス (^H)、同じ文字」なら太字、
 「文字、バックスペイス、&dquot;&lowbar;&dquot;」なら下線付き文字です。
 端末がサポートしていれば、これを Mutt はそれぞれ太字と下線付き文字として
@@ -283,10 +283,10 @@ $               メッセイジの一番下に飛ぶ
 bold (太字) と underline (下線) という <ref id="color" name="color">
 のオブジェクトを使って色属性か白黒属性を指定できます。
 
-さらに、内部ペイジャは ANSI エスケイプシーケンスの文字属性を
+さらに、内部ペイジャは ANSI エスケイプシークウェンスの文字属性を
 サポートしています。
-Mutt がそのシーケンスを正しい色や文字設定に解釈してくれるのです。
-Mutt がサポートしているシーケンスは以下の通りです。
+Mutt がそのシークウェンスを正しい色や文字設定に解釈してくれるのです。
+Mutt がサポートしているシークウェンスは以下の通りです。
 
 <p>
 <tscreen><verb>
@@ -331,7 +331,7 @@ name="整列">されているときは、さらにいくつかの関数が
 ^P      previous-thread      前のスレッドの始点に飛ぶ
 ^R      read-thread          現在のスレッドを既読にする
 ESC d   delete-subthread     現在のサブスレッドのメッセイジをすべて削除
-ESC u   undelete-subthread   現在のサブスレッドのメッセイジの削除マークをすべて解除
+ESC u   undelete-subthread   現在のサブスレッドのメッセイジの削除予定をすべて解除
 ESC n   next-subthread       次のサブスレッドの始点に移動
 ESC p   previous-subthread   前のサブスレッドの始点に移動
 ESC r   read-subthread       現在のサブスレッドを既読にする
@@ -355,7 +355,7 @@ name="&dollar;index&lowbar;format" > に
 参照: <ref id="strict_threads" name="&dollar;strict&lowbar;threads" >
 
 <sect2>その他の機能
-<p><bf>エイリアスの作成</bf> / <bf>create-alias</bf><label id="create-alias" > (デフォルト: a)<newline>
+<p><bf>エイリアスの作成</bf> / <bf>create-alias</bf><label id="create-alias" > (既定値: a)<newline>
 
 現在のメッセイジをもとに (あるいは新規プロンプトで) 新しいエイリアスを
 作成します。編集を終えると、<ref id="alias" name="alias" >
@@ -366,7 +366,7 @@ name="&dollar;alias&lowbar;file" > を指定しても、その中の alias
 が追加されるわけではありません。そのファイルを
 <ref id="source" name="source" > する必要もあります。
 
-<p><bf>伝統的 PGP のチェック</bf> / <bf>check-traditional-pgp</bf><label id="check-traditional-pgp" > (デフォルト: ESC P)<newline>
+<p><bf>伝統的 PGP のチェック</bf> / <bf>check-traditional-pgp</bf><label id="check-traditional-pgp" > (既定値: ESC P)<newline>
 
 この関数は現在のメッセイジを調べて、「伝統的な」方法で PGP
 の署名・暗号化がなされている内容を探します。
@@ -376,12 +376,12 @@ MIME content type を一時的に変更します。つまり
 <ref id="edit-type" name="edit-type" > 関数の効果と似ています。
 
 
-<p><bf>へッダ間引きの切替</bf> / <bf>display-toggle-weed</bf><label id="display-toggle-weed" > (デフォルト: h)<newline>
+<p><bf>へッダ間引きの切替</bf> / <bf>display-toggle-weed</bf><label id="display-toggle-weed" > (既定値: h)<newline>
 
 <ref id="ignore" name="ignore" > コマンドで指定された
 ヘッダフィールドの間引き表示を切り替えます。
 
-<p><bf>編集</bf> / <bf>edit</bf><label id="edit" > (デフォルト: e)<newline>
+<p><bf>編集</bf> / <bf>edit</bf><label id="edit" > (既定値: e)<newline>
 
 このコマンド (インデックスとペイジャで利用可) は、
 現在のメッセイジを「なま」で編集する、つまり、
@@ -390,7 +390,7 @@ MIME content type を一時的に変更します。つまり
 オリジナルのメッセイジは削除のために印付けられます。
 
 <bf>content-type の編集</bf> / <bf>edit-type</bf><label id="edit-type" ><newline>
-(デフォルト: 添付ファイルメニューと、ぺイジャ、インデックスメニューでは ^E, コンポウズメニューでは ^T)
+(既定値: 添付ファイルメニューと、ぺイジャ、インデックスメニューでは ^E, コンポウズメニューでは ^T)
 
 このコマンドは添付ファイルの content type を一時的に編集するために使い、
 たとえば偽装してある文字セットのパラメータを修正したりします。
@@ -404,7 +404,7 @@ content type でも変更できます。この変更は永続的なものではなく、
 ということを覚えておいてください。このメニューでは、
 送信する添付ファイルの性質を調整するために使います。
 
-<p><bf>コマンドの入力</bf> / <bf>enter-command</bf><label id="enter-command" > (デフォルト: &dquot;:&dquot;)<newline>
+<p><bf>コマンドの入力</bf> / <bf>enter-command</bf><label id="enter-command" > (既定値: &dquot;:&dquot;)<newline>
 
 このコマンドは、通常だと設定ファイルの中に入れるようなコマンドを
 動作中の Mutt 上で実行するために使います。
@@ -412,17 +412,17 @@ content type でも変更できます。この変更は永続的なものではなく、
 <ref id="macro" name="macro" > と組み合わせて動作中に設定を変更するために
 使ったりします。
 
-<p><bf>公開鍵の抽出</bf> / <bf>extract-keys</bf><label id="extract-keys" > (デフォルト: ^K)<newline>
+<p><bf>公開鍵の抽出</bf> / <bf>extract-keys</bf><label id="extract-keys" > (既定値: ^K)<newline>
 
 このコマンドは PGP 公開鍵を現在のメッセイジやタグ付きメッセイジから
 抽出して自分の PGP 公開鍵束に追加します。
 
-<p><bf>パスフレイズの忘却</bf> / <bf>forget-passphrase</bf><label id="forget-passphrase" > (デフォルト: ^F)<newline>
+<p><bf>パスフレイズの忘却</bf> / <bf>forget-passphrase</bf><label id="forget-passphrase" > (既定値: ^F)<newline>
 
 このコマンドはパスフレイズをメモリ上から消去します。
 パスフレイズを誤入力した時に便利です。
 
-<p><bf>メイリングリストへの返信</bf> / <bf>list-reply</bf><label id="list-reply" > (デフォルト: L)<newline>
+<p><bf>メイリングリストへの返信</bf> / <bf>list-reply</bf><label id="list-reply" > (既定値: L)<newline>
 
 現在のメッセイジやタグ付きメッセイジから
 <ref id="lists" name="lists や subscribe" >
@@ -434,7 +434,7 @@ name="&dollar;honor&lowbar;followup&lowbar;to" > 変数が設定されていると
 これを使えば、返信する元メッセイジの差出人とメイリングリストに
 二重に送信するのを避ける助けになります。
 
-<bf>メッセイジのパイプ</bf> / <bf>pipe-message</bf><label id="pipe-message" > (デフォルト: |)<newline>
+<bf>メッセイジのパイプ</bf> / <bf>pipe-message</bf><label id="pipe-message" > (既定値: |)<newline>
 
 外部 Unix コマンドの入力を要求して、現在のメッセイジやタグ付き
 メッセイジをそこにパイプします。
@@ -444,7 +444,7 @@ name="&dollar;honor&lowbar;followup&lowbar;to" > 変数が設定されていると
 <ref id="wait_key"    name="&dollar;wait&lowbar;key" > 変数が
 この関数の動作を精密に制御します。
 
-<bf>メッセイジの再送</bf> / <bf>resend-message</bf><label id="resend-message" > (デフォルト: ESC e)<newline>
+<bf>メッセイジの再送</bf> / <bf>resend-message</bf><label id="resend-message" > (既定値: ESC e)<newline>
 
 resend-message を使うと、Mutt は現在のメッセイジを雛型として
 新しいメッセイジを作成します。
@@ -457,14 +457,14 @@ MIME メッセイジを、もともとのメイル構造を保ったまま転送するのに便利です。
 これを使えば message/rfc822 パートとして転送されてきたメッセイジを
 簡単に再送できます。
 
-<bf>シェルコマンドの実行</bf> / <bf>shell-escape</bf><label id="shell-escape" > (デフォルト: !)<newline>
+<bf>シェルコマンドの実行</bf> / <bf>shell-escape</bf><label id="shell-escape" > (既定値: !)<newline>
 
 外部 UNIX コマンドの入力を要求し、それを実行します。<ref id="wait_key"
 name="&dollar;wait&lowbar;key" > を使って、コマンドが終了したときに
 (おそらくコマンドの出力をユーザが読めるようにするため) 何かキーが押されるまで
 Mutt が待つかどうかをコマンドの戻り値によって制御するようにできます。
 
-<bf>引用文表示の切替</bf> / <bf>toggle-quoted</bf><label id="toggle-quoted" > (デフォルト: T)<newline>
+<bf>引用文表示の切替</bf> / <bf>toggle-quoted</bf><label id="toggle-quoted" > (既定値: T)<newline>
 
 メッセイジ本文の表示中に、<em>ペイジャ</em>は <ref id="quote_regexp"
 name="&dollar;quote&lowbar;regexp"> 変数を使って引用文を検出します。
@@ -472,7 +472,7 @@ name="&dollar;quote&lowbar;regexp"> 変数を使って引用文を検出します。
 特に、返事だけに興味があるのに大量の引用文があって邪魔だというようなときに
 役に立ちます。
 
-<bf>引用文をとばして移動</bf> / <bf>skip-quoted</bf><label id="skip-quoted" > (デフォルト: S)<newline>
+<bf>引用文をとばして移動</bf> / <bf>skip-quoted</bf><label id="skip-quoted" > (既定値: S)<newline>
 
 内部ペイジャにおいて、この関数は、
 引用文の行のあとの非引用文の行に移動します。
@@ -612,7 +612,7 @@ name="&dollar;pgp&lowbar;entry&lowbar;format" > も参照) の
 能力 (capabilities), フラグ (flags), 信用度 (validity) のフィールドについて
 少し説明しておいても良いでしょう。
 
-フラグシーケンス (&percnt;f) は以下のフラグのいずれかに展開されます。
+フラグシークウェンス (&percnt;f) は以下のフラグのいずれかに展開されます。
 <tscreen><verb>
 R            鍵は破棄されており、使えない
 X            鍵は期限切れになっており、使えない
@@ -620,7 +620,8 @@ d            自分で鍵を使用不可に印付けた
 c            未知の重要な自己署名パケットがある
 </verb></tscreen>
 
-能力フィールド (&percnt;c) は鍵の能力を表わす二文字シーケンスに展開されます。
+能力フィールド (&percnt;c)
+は、鍵の能力を表わす二文字シークウェンスに展開されます。
 第一の文字は暗号化能力です。
 マイナス (<bf/-/) は暗号化に使えないという意味です。
 ドット (<bf/./) はいずれかのユーザ ID の署名鍵として印付けられているけれども
@@ -661,7 +662,7 @@ Mutt から Mixmaster を使うには、まずコンポウズメニューで mix 関数を使って
 
 このチェインの中を <tt>chain-prev</tt> 関数と
 <tt>chain-next</tt> 関数を使って渡り歩けます。
-この関数はデフォルトでは左右の矢印キーと
+この関数は既定では左右の矢印キーと
 <tt>h</tt> と <tt>l</tt> キーに割り当てられています
 (vi のキーバインドを考えてください)。
 新しいリメイラを現在のチェイン位置に挿入するには
@@ -670,7 +671,7 @@ Mutt から Mixmaster を使うには、まずコンポウズメニューで mix 関数を使って
 <tt>select-entry</tt> か <tt>append</tt> を使ってください。
 <tt/delete/ 関数を使ってチェインから項目を消すこともできます。
 最後に、メニューをそのまま抜けて変更を破棄するか、
-(デフォルトでは) リターンキーを押して承認 (<tt>accept</tt>) してください。
+(既定値では) リターンキーを押して承認 (<tt>accept</tt>) してください。
 
 リメイラごとに持っている能力が違うということに注意してください。
 その能力はリメイラメニューの &percnt;c の項目で表示されています
@@ -692,7 +693,7 @@ Mutt から Mixmaster を使うには、まずコンポウズメニューで mix 関数を使って
 一方、メッセイジの転送は、再送の前にメッセイジを変更できます
 (例えばコメントを加えるなど)。
 
-デフォルトでは次のキーが割り当てられています。
+既定では次のキーが割り当てられています。
 
 <tscreen><verb>
 f       forward         メッセイジを転送
@@ -707,9 +708,10 @@ MIME 添付ファイルとして取り込みます。
 <ref id="forward_decode" name="&dollar;forward&lowbar;decode" > 変数と
 <ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">
 変数で制御できます。どちらの転送方法が良いかは内容によります。
-そのため <em>&dollar;mime&lowbar;forward</em> は四択オプションになっていて、
-たとえば &dquot;ask-no&dquot; にできます (訳注： ask-no は「質問の際に
-Return だけ入力したときは no とみなす」という意味)。
+そのため <em>&dollar;mime&lowbar;forward</em> は quadoption 
+(四択オプション) になっていて、たとえば &dquot;ask-no&dquot; にできます
+(訳注： ask-no は「質問の際に Return だけ入力したときは no とみなす」
+という意味)。
 
 <ref id="mime_forward" name="&dollar;mime&lowbar;forward" >
 が設定されていない限り、へッダの取り込みはその時点の <ref id="weed"
@@ -741,13 +743,14 @@ name="&dollar;postponed" >
 注意してください。しかも、その親メッセイジと同じフォルダにいなければ
 状態がきちんと更新されません。
 
-<ref id="postpone" name="&dollar;postpone" > という四択オプションについても
-ご覧下さい。(訳注： postponed とは違います。末尾の &dquot;d&dquot; に注意！)
+<ref id="postpone" name="&dollar;postpone" > という quadoption
+(四択オプション) についてもご覧下さい。
+(訳注： postponed とは違う。末尾の &dquot;d&dquot; に注意！)
 
 <sect>設定
 <p>
 
-デフォルト設定 (すなわち初期値) は、そのままでも Mutt が使えるように
+既定の設定 (すなわち初期値) は、そのままでも Mutt が使えるように
 なっていますが、Mutt を自分の好みにあわせて仕立てたいということもよくあります。
 初めて起動したとき、<ref id="commandline" name="コマンドライン" >
 オプションの &dquot;-n&dquot; が指定されていなければ
@@ -763,7 +766,7 @@ Mutt は「システム」設定ファイル (システム管理者が設定した既定値)
 <tt/.muttrc/ は、普段から自分用の<ref id="commands"
 name="コマンド" >を入れておいて Mutt を設定するためのファイルです。
 
-それに加えて Mutt は、上で説明したデフォルトのファイルの代わりに実行する、
+それに加えて Mutt は、上で説明した既定のファイルの代わりに実行する、
 特定ヴァージョンの設定ファイルをサポートしています。例えば
 システム設定ディレクトリに <tt/Muttrc-0.88/ というファイルがあって
 Mutt のヴァージョン 0.88 を使っていると、<tt/Muttrc/ ではなく
@@ -771,10 +774,10 @@ Mutt のヴァージョン 0.88 を使っていると、<tt/Muttrc/ ではなく
 ユーザ設定ファイルに関しても同じことが言えます。
 ホウムディレクトリに <tt/.muttrc-0.88.6/ というファイルがあると、
 ヴァージョン 0.88.6 の Mutt を走らせたときには
-デフォルトの <tt/.muttrc/ の代わりにこのファイルを読み込みます。
-ヴァージョン番号は、<ref id="commandline" name="コマンドライン">スイッチの
+既定の <tt/.muttrc/ の代わりにこのファイルを読み込みます。
+ヴァージョン番号は、<ref id="commandline" name="コマンドライン">スウィッチの
 &dquot;-v&dquot; を使ったり、インデックスメニューから
-<tt/show-version/ のキー (デフォルト: V) を使ったりして表示されるものと
+<tt/show-version/ のキー (既定値: V) を使ったりして表示されるものと
 同じです。
 
 <sect1>初期化ファイルの構文<label id="muttrc-syntax" >
@@ -874,7 +877,7 @@ muttrc の中にすべて定義してしまうこともできます。
 その一方で、<ref id="create-alias" name="create-alias" > 関数は
 ひとつのファイルしか使えません。
 <ref id="alias_file" name="&dollar;alias&lowbar;file" > 変数
-で指定されるファイルだけ (デフォルトでは <tt>&tilde;/.muttrc</tt>) です。
+で指定されるファイルだけ (既定では <tt>&tilde;/.muttrc</tt>) です。
 しかし、このファイルは特別扱いされるわけではありません。
 というのも、Mutt はどのファイルにでもエイリアスを追加できますし、
 このファイルもきちんと <ref id="source" name="source" > しなければ
@@ -903,14 +906,14 @@ Tab を打たなくてはなりません。
 (&dquot;,&dquot;) の後です。
 
 エイリアスメニューでは、エイリアスを好きなだけ <em>select-entry</em> キー
-(デフォルト: RET) で選択してから <em>exit</em> キー (デフォルト: q)
+(既定値: RET) で選択してから <em>exit</em> キー (既定値: q)
 を使ってアドレスのプロンプトに戻れます。
 
-<sect1>デフォルトのキー割り当てを変更する<label id="bind" >
+<sect1>既定のキー割り当てを変更する<label id="bind" >
 <p>
 使い方: <tt/bind/ <em/マップ/　<em/キー/　<em/関数/
 
-このコマンドでデフォルトのキー割り当て
+このコマンドで既定のキー割り当て
 (キーを押した時に起動する命令) を変更できます。
 
 <em>マップ</em>は、その割り当てがどのメニューのものなのかを指定します。
@@ -947,9 +950,10 @@ PGP メニューを使って、送信メッセイジの暗号に使う OpenPGP 鍵を選択します。
 次回まで保存しておいたようなメッセイジを復元するときに使うものです。
 </descrip>
 
-<em>キー</em> は割り当てたいキー (またはキーシーケンス = キーの組み合わせ) です。
-制御文字を指定するには <em>&bsol;Cx</em> というキーシーケンスを使ってください。
-この <em/x/ が制御文字です (例えば Control-A を指定するには
+<em>キー</em> は割り当てたいキー (または
+キーシークウェンス = キーの組み合わせ) です。コントロウル文字を指定するには
+<em>&bsol;Cx</em> というキーシークウェンスを使ってください。
+この <em/x/ がコントロウル文字です (例えば Control-A を指定するには
 &dquot;&bsol;Ca&dquot; とします)。<em/x/ と <em/&bsol;C/ が大文字であるか
 小文字であるかは無視されるので注意してください。つまり <em/&bsol;CA/,
 <em/&bsol;Ca/, <em/&bsol;cA/, <em/&bsol;ca/ はすべて等価です。
@@ -988,7 +992,7 @@ PGP メニューを使って、送信メッセイジの暗号に使う OpenPGP 鍵を選択します。
 <em>関数</em> は <em>キー</em> が押されたときに取る行動を指定します。
 関数すべての一覧については <ref id="functions" name="関数早見表" >
 を参照して下さい。また、特殊な関数 noop を指定すると、
-そのキーシーケンスへの割り当てを解除します。
+そのキーシークウェンスへの割り当てを解除します。
 
 <sect1>文字セットのエイリアスを定義する <label id="charset-hook" >
 <p>
@@ -1030,7 +1034,7 @@ folder-hook mutt set sort=threads
 </verb></tscreen>
 
 このようにしたとしても、違うメイルボックスを読み出すときに整列方法が
-以前の値に復帰するわけではありません。<em/デフォルト/ のコマンドを指定するには
+以前の値に復帰するわけではありません。<em/既定/ のコマンドを指定するには
 &dquot;.&dquot; というパターンを使ってください。
 
 <p>
@@ -1044,17 +1048,17 @@ folder-hook . set sort=date-sent
 
 <sect1>キーボードマクロ<label id="macro" >
 <p>
-使い方: <tt/macro/ <em/メニュー/　<em/キー/　<em/シーケンス/ &lsqb; <em/説明/ &rsqb;
+使い方: <tt/macro/ <em/メニュー/　<em/キー/　<em/シークウェンス/ &lsqb; <em/説明/ &rsqb;
 
 マクロは、キーひとつで連続作業を実行したいときに便利です。
 <em>メニュー</em>のメニューでその<em>キー</em>を押すと、
-<em>シーケンス</em>を入力したのと同様に振る舞うのです。
+<em>シークウェンス</em>を入力したのと同様に振る舞うのです。
 ですから、よく連続して入力するコマンドがあれば、
 マクロを作成してキーひとつでそのコマンドを実行するようにできます。
 
-<em>キー</em>と<em>シーケンス</em>は<ref id="bind" name="キー割り当て" >と
+<em>キー</em>と<em>シークウェンス</em>は<ref id="bind" name="キー割り当て" >と
 同じルールで展開されます。ただ、いくつか追加があります。
-第一点は、<em>シーケンス</em>におけるコントロウルキャラクターを
+第一点は、<em>シークウェンス</em>におけるコントロウル文字を
 <em/&circ;x/ とも指定できることです。
 カレット (&dquot;&circ;&dquot;) を使うには
 <em/&circ;&circ;/ とする必要があります。
@@ -1074,7 +1078,7 @@ folder-hook . set sort=date-sent
 folder-hook 等で bind を実行すると違う結果を得ることができるので
 面白いことができるかもしれません。)
 
-必須ではありませんが、説明文を<em/シーケンス/の後ろに指定できます。
+必須ではありませんが、説明文を<em/シークウェンス/の後ろに指定できます。
 これはヘルプ画面に表示されます。
 
 <bf>注意:</bf> ヘルプ画面に表示されるマクロ定義 (定義されていればですが) は、
@@ -1099,7 +1103,7 @@ folder-hook 等で bind を実行すると違う結果を得ることができるので
 <item>bold (メッセイジの本文の太字強調部分)
 <item>error (Mutt が出力するエラーメッセイジ)
 <item>header (メッセイジヘッダで<em/正規表現/に合致する部分)
-<item>hdrdefault (ペイジャにおけるメッセイジヘッダのデフォルトの色)
+<item>hdrdefault (ペイジャにおけるメッセイジヘッダの既定の色)
 <item>index (メッセイジインデックスで<em/パターン/に合致する部分)
 <item>indicator (メニューで現在の項目を指し示す矢印もしくはバー
 &lsqb;<ref id="arrow_cursor" name="&dollar;arrow&lowbar;cursor"> 参照&rsqb;)
@@ -1141,7 +1145,7 @@ name="&dollar;quote&lowbar;regexp"> に合致する文章)
 透明色として使えます。また <em/brightdefault/ という値も有効です。
 Mutt が <em/S-Lang/ ライブラリにリンクされていれば、
 透明色が正しく動作するように <em/COLORFGBG/ 環境変数を
-端末のデフォルト色として設定しておく必要もあります。
+端末の既定色として設定しておく必要もあります。
 例えば (Bourne 系シェルの場合) こうです。
 
 <tscreen><verb>
@@ -1295,11 +1299,12 @@ unlists コマンドは、既知と購読中のメイリングリストのリストから
 既読メッセイジを特定のメイルボックスから違うメイルボックスへと、
 自動で移動させるのに使います。
 <em/パターン/は「スプール」のメイルボックスとして扱うメイルボックスを指定する
-正規表現で、<em/メイルボックス/は、既読時にメイルをどこにセイブすべきか
-を指定します。
+正規表現で、<em/メイルボックス/は、既読時にメイルをどこにセイヴ (移動)
+すべきかを指定します。
 
 一部の <em/hook/ コマンドと違って、<em/最初に/合致したパターンだけが
-使われます (既読のメイルを複数のメイルボックスにセイブすることはできません)。
+使われます (既読のメイルを複数のメイルボックスにセイヴ [移動] することは
+できません)。
 
 <sect1>メイルを受信するメイルボックスを定義する<label id="mailboxes" >
 <p>
@@ -1307,11 +1312,11 @@ unlists コマンドは、既知と購読中のメイリングリストのリストから
 
 このコマンドは、メイルを受信することがあるフォルダを指定し、
 指定したフォルダは新着メッセイジがあるかチェックされることになります。
-デフォルトでは、このフォルダのうちのいくつに新着メッセイジがあるかを、
+既定では、このフォルダのうちのいくつに新着メッセイジがあるかを、
 メインメニューのステイタスバーが表示しています。
 <p>
 フォルダ変更時に<em>スペイス</em>を押すと、新着メイルのあるフォルダを
-次々に表示します。<!-- Hitomi 氏による cycle through の訳。うまい！ -->
+次々に表示します。<!-- 西岡氏か人見氏による cycle through の訳。うまい！ -->
 <p>
 ディレクトリブラウザで TAB キーを押すと、
 <tt/mailboxes/ コマンドで指定したファイルを表示するメニューが出ます。
@@ -1367,7 +1372,7 @@ my_hdr Organization: 大会社 (株)<!-- A Really Big Company, Anytown, USA  -->
 単独のメッセイジにヘッダフィールドを付加したい場合は、
 <ref id="edit_headers" name="&dollar;edit&lowbar;headers" > 変数を
 設定しておくか、送信メニュー (訳注：コンポウズメニューのことか) で
-<em/edit-headers/ 関数 (デフォルト: E) を使うかのいずれかによって、
+<em/edit-headers/ 関数 (既定値: E) を使うかのいずれかによって、
 メッセイジの本文と一緒にヘッダを編集できます。
 
 ユーザ定義のヘッダフィールドを消去するには
@@ -1398,15 +1403,15 @@ unmy_hdr to cc
 hdr_order From Date: From: To: Cc: Subject:
 </verb></tscreen>
 
-<sect1>デフォルトのセイブファイル名を指定する<label id="save-hook" >
+<sect1>既定のセイヴファイル名を指定する<label id="save-hook" >
 <p>
 使い方: <tt/save-hook/ &lsqb;!&rsqb;<em/パターン/　<em/ファイル名/
 
-このコマンドは、メッセイジをセイブするときに使うファイル名の
+このコマンドは、メッセイジをセイヴ (移動) するときに使うファイル名の
 既定値を上書きするのに使います。
 <em/ファイル名/は、<em/正規表現パターン/に合致するアドレスが <em/From:/
 のときか、自分が差出人でメッセイジの <em/To:/ が<em/正規表現パターン/
-に合致するときに、デフォルトのファイル名として使われます。
+に合致するときに、既定のファイル名として使われます。
 
 <em/パターン/の正確な書式の情報については<ref id="pattern_hook"
 name="「フックにおけるメッセイジの合致」の節" >を参照してください。
@@ -1420,7 +1425,7 @@ save-hook aol\\.com$ +spam
 
 <ref id="fcc-save-hook" name="fcc-save-hook" > コマンドも参照して下さい。
 
-<sect1>メッセイジ作成時のデフォルトの Fcc: メイルボックスを指定する<label
+<sect1>メッセイジ作成時の既定の Fcc: メイルボックスを指定する<label
  id="fcc-hook" >
 <p>
 使い方: <tt/fcc-hook/ &lsqb;!&rsqb;<em/パターン/　<em/メイルボックス/
@@ -1429,7 +1434,7 @@ save-hook aol\\.com$ +spam
 以外のメイルボックスに保存するために使います。
 Mutt はまず、メッセイジ宛先リストの中で<em/正規表現パターン/を検索して、
 最初に合致したものの<em/メイルボックス/を
-デフォルトの Fcc: メイルボックスとして使います。
+既定の Fcc: メイルボックスとして使います。
 合致するものが見付からなければ <ref id="record" name="&dollar;record" >
 つまり「記録」メイルボックスに保存します。
 
@@ -1439,12 +1444,12 @@ name="「フックにおけるメッセイジの合致」の節" >を参照してください。
 例: <tt>fcc-hook aol.com&dollar; +spammers</tt>
 
 上のようにすると、aol.com ドメインに行くことになっているメッセイジは
-すべてデフォルトで +spammers メイルボックスにコピーが保存されます
+すべて既定で +spammers メイルボックスにコピーが保存されます
 (訳注：もしあれば someone@aolicom なんていうのも該当してしまうけれど)。
 <ref id="fcc-save-hook" name="fcc-save-hook" > コマンドの節も参照してください。
 
-<sect1>デフォルトのセイブファイル名とデフォルトの Fcc: メイルボックスを
-同時に指定する<label id="fcc-save-hook" >
+<sect1>既定のセイヴファイル名と既定の Fcc:
+メイルボックスを同時に指定する<label id="fcc-save-hook" >
 <p>
 使い方: <tt/fcc-save-hook/ &lsqb;!&rsqb;<em/パターン/　<em/メイルボックス/
 
@@ -1523,13 +1528,13 @@ ID を指定する手段を提供するのです。
 ここでは広い意味で「鍵 ID」と言っています。数字の鍵 ID を入れることも
 できますし、メイルアドレスも使えます。本名でも構いません。
 
-<sect1>キーボードバッファにキーシーケンスを加える<label id="push" >
+<sect1>キーボードバッファにキーシークウェンスを加える<label id="push" >
 <p>
 使い方: <tt/push/ <em/文字列/
 
-このコマンドは、指名した文字列をキーボードバッファに入れます。
-この文字列には <ref id="macro" name="macro" > コマンドのシーケンスのように、
-コントロウルキャラクタ、キーの名前、関数名を含められます。
+このコマンドは、指名した文字列をキーボードバッファに入れます。この文字列には
+<ref id="macro" name="macro" > コマンドのシークウェンスのように、
+コントロウル文字、キーの名前、関数名を含められます。
 <!-- like the sequence string in the macro command が -->
 <!-- 全体にかかるのか function names にかかるのか疑問 -->
 これを使って、起動時や特定のフォルダへの移動時に、
@@ -1580,19 +1585,19 @@ number (数値), string (文字列), quadoption (四値) です。
 かのいずれかです (原語：set (true) と unset (false))。
 <em/number/ 変数には正の整数を割り当てることができます。
 
-<em/string/ 型の変数はいくつかの文字 (原語：printable characters,
-つまり制御文字以外の文字) で構成されます。
+<em/string/ 型の変数はいくつかの表示文字 (原語：printable characters,
+つまりコントロウル文字以外の文字) で構成されます。
 スペイスやタブを含むならば引用符で括らなければなりません。
-また &dquot;C&dquot; のエスケイプシーケンス <bf/&bsol;n/ と <bf/&bsol;t/ を、
-それぞれ改行とタブの代わりに使用できます。
+また &dquot;C&dquot; のエスケイプシークウェンス <bf/&bsol;n/ と <bf/&bsol;t/
+を、それぞれ改行とタブの代わりに使用できます。
 
 <em>quadoption</em> 型の変数は、特定の動作について実行前に質問<!-- prompted -->
-するかどうかを制御したり、デフォルト (訳注：リターンだけを押したとき) の
+するかどうかを制御したり、既定 (訳注：リターンだけを押したとき) の
 動作を指定したりするのに使います。<em>yes</em> という値は、あたかも質問に
 yes と答えたかのような動作<!-- 実際は action にかかっているわけではないが -->を
 自動で引き起こします。それと同様、<em/no/ という値は、no と答えたかのような
-動作を引き起こします。<em>ask-yes</em> という値はデフォルトの答えを yes にして
-質問しますし、<em>ask-no</em> はデフォルトの答えを no にします。
+動作を引き起こします。<em>ask-yes</em> という値は既定の答えを yes にして
+質問しますし、<em>ask-no</em> は既定の答えを no にします。
 
 &dquot;no&dquot; を変数の前に付けると、変数を解除します。
 例: <tt>set noaskbcc</tt>
@@ -1612,18 +1617,16 @@ yes と答えたかのような動作<!-- 実際は action にかかっているわけではないが -->を
 set ?allow_8bit
 </verb></tscreen>
 
-<!-- ???
-この疑問符は、実際には boolean 変数と quadoption 変数に対してしか
-要求されていません。
--->
+この疑問符は、実際には boolean 変数と quadoption 変数にしか
+必要ありません。(訳注：ほかは set だけで値を参照できる)
 
-<tt>reset</tt> コマンドは与えられた変数すべてをコンパイル時のデフォルト
+<tt>reset</tt> コマンドは与えられた変数すべてをコンパイル時の既定値
 (おそらく、このマニュアルに書いてある値) に戻します。
 <tt>set</tt> コマンドで変数の前に &dquot;&amp;&dquot; を付けると
 <tt>reset</tt> コマンドと同じ挙動となります。
 
 <tt/reset/ コマンドには特別な変数 &dquot;all&dquot; が存在し、
-これですべての変数をシステムのデフォルトに戻すことができます。
+これですべての変数をシステムの既定値に戻すことができます。
 
 <sect1>初期化コマンドを別のファイルから読み込む<label id="source" >
 <p>
@@ -1679,7 +1682,7 @@ name="「初期化ファイルの構文」" >の項を参照してください。
 
 基本となる単位は文字ひとつに合致する正規表現です。
 ほとんどの文字 ― 英数字に関してはすべての文字 ― は、
-自分自身にマッチする正規表現です。
+自分自身に合致する正規表現です。
 特殊な意味を持つメタ文字記号は、前にバックスラッシュを付けることによって
 本来の記号に合致します。(訳注：つまり &dquot;.&dquot; に合致する正規表現は
 &dquot;&bsol;.&dquot;)
@@ -1713,7 +1716,7 @@ name="「初期化ファイルの構文」" >の項を参照してください。
 <tag/&lsqb;:blank:&rsqb;/
 スペイスとタブ
 <tag/&lsqb;:cntrl:&rsqb;/
-制御文字
+コントロウル文字
 <tag/&lsqb;:digit:&rsqb;/
 数字
 <tag/&lsqb;:graph:&rsqb;/
@@ -1722,9 +1725,9 @@ name="「初期化ファイルの構文」" >の項を参照してください。
 <tag/&lsqb;:lower:&rsqb;/
 小文字のアルファベット
 <tag/&lsqb;:print:&rsqb;/
-表示文字 (制御文字でない文字のこと)
+表示文字 (コントロウル文字でない文字のこと)
 <tag/&lsqb;:punct:&rsqb;/
-記号 (アルファベット、数字、制御文字、空間文字のどれでもない文字のこと)
+記号 (アルファベット、数字、コントロウル文字、空間文字のどれでもない文字のこと)
 <tag/&lsqb;:space:&rsqb;/
 空間文字 (幾つか挙げてみると、
 スペイス、タブ、改ペイジといったところ)
@@ -1740,7 +1743,7 @@ name="「初期化ファイルの構文」" >の項を参照してください。
 例えば <bf>&lsqb;&lsqb;:digit:&rsqb;&rsqb;</bf> が
 <bf>&lsqb;0-9&rsqb;</bf> と等価です。
 
-さらに二つの特殊シーケンスを文字リスト中で使えます。
+さらに二つの特殊シークウェンスを文字リスト中で使えます。
 これは非 ASCII 文字セットに適用されるもので、以下のように、
 そうした文字セットでは単一のシンボル (照合要素 collating elements
 と呼ばれる) が、照合や整列において等価な複数の文字列や文字を
@@ -1751,7 +1754,7 @@ name="「初期化ファイルの構文」" >の項を参照してください。
 照合記号は複数文字の照合要素を &dquot;&lsqb;.&dquot; と
 &dquot;.&rsqb;&dquot; で括ったもの。
 例えば ch が照合要素だとすると、<bf/&lsqb;&lsqb;.ch.&rsqb;&rsqb;/ が
-この照合要素にマッチする正規表現。一方、<bf/&lsqb;ch&rsqb;/ だと
+この照合要素に合致する正規表現。一方、<bf/&lsqb;ch&rsqb;/ だと
 c または h のどちらかに合致する正規表現ということになってしまう
 <tag>等価クラス</tag>
 等価クラスとは、特定の言語における一連の等価な文字を指す名前のこと。
@@ -1999,7 +2002,7 @@ d	日
 <itemize>
 <item>&gt;<em/offset/ (<em/offset/ より長く経過したメッセイジ)
 <item>&lt;<em/offset/ (経過期間が <em/offset/ より短いメッセイジ)
-<item>=<em/offset/ (ちょうど <em/ffset/ だけ経過したメッセイジ)
+<item>=<em/offset/ (ちょうど <em/offset/ だけ経過したメッセイジ)
 </itemize>
 
 <em/offset/ は正の数に以下の単位のいずれかを付けたものです。
@@ -2010,7 +2013,7 @@ w	週
 d	日
 </verb>
 
-例: 一ヵ月も経っていないメッセイジを選択するには次のようにします。
+例: 生後一ヵ月未満のメッセイジを選択するには次のようにします。
 <tscreen><verb>
 メッセイジの表示を制限するパターン: ~d <1m
 </verb></tscreen>
@@ -2028,17 +2031,17 @@ d	日
 
 操作を実行するときに、一通ずつ扱うよりも、ひとまとめにしたメッセイジを
 一度に扱った方が良いことがあります。
-例としては、あるメイリングリスト宛てのメッセイジを別のフォルダに保存するとか、
-指定した題名のメッセイジをすべて削除するといったものがあるでしょう。
+例としては、あるメイリングリスト宛てのメッセイジを別のフォルダにセイヴ (移動)
+するとか、指定した題名のメッセイジをすべて削除するといったものがあるでしょう。
 パターンに合致したメッセイジにタグをつけるには tag-pattern 関数を使います。
-これはデフォルトで &dquot;shift-T&dquot; に割り当てられています。
+これは既定で &dquot;shift-T&dquot; に割り当てられています。
 また、個々のメッセイジを手作業で &dquot;tag-message&dquot; 関数を使って
-選択することもできます。こちらはデフォルトで &dquot;t&dquot;
+選択することもできます。こちらは既定で &dquot;t&dquot;
 に割り当てられています。Mutt のパターン検索の構文については
 <ref id="patterns" name="「パターン」">の節を参照して下さい。
 
 お望みのメッセイジにタグをつけたら、&dquot;tag-prefix&dquot; 演算子を使えます。
-これはデフォルトで &dquot;;&dquot; (セミコロン) キーです。
+これは既定値では &dquot;;&dquot; (セミコロン) キーです。
 &dquot;tag-prefix&dquot; 演算子が使われると、<bf>次の</bf>操作は、
 タグの付いたメッセイジすべてに適用されます (そのような使い方の
 できる操作であれば、ですが)。
@@ -2069,8 +2072,8 @@ Mutt の世界において、<em>フック</em>は設定オプションやコマンドに合った
 <bf>注意:</bf> フックが設定を変更した場合、変更の効果は
 その mutt セッションの終わりまで続きます。
 これは一般的に望み通りの動作ではありませんので、
-デフォルトのフックを他のフックの前に追加して
-設定のデフォルト値に復帰する必要があります。
+既定のフックを他のフックの前に追加して
+設定の既定値に復帰する必要があります。
 次に挙げるのは send-hook と my_hdr 命令の例です。
 (訳注：b@bab や b@b.b といったアドレスを To か Cc に含むメッセイジを
 送信するときにのみ自分のアドレスを c@c.c とする、という設定。
@@ -2144,10 +2147,10 @@ roessler@guug.de        Thomas Roessler mutt pgp
 </verb></tscreen>
 
 Mutt の問い合わせ機能にアクセスする仕組みは二つあります。
-一つは問い合わせをインデックスメニューから query 関数 (デフォルト: Q)
+一つは問い合わせをインデックスメニューから query 関数 (既定値: Q)
 を使って行なう仕組みです。問い合わせ内容を聞かれるので入力すると、
-クエリメニューが出て合致結果の一覧が表示されるのです。
-クエリメニューからは、選んだアドレスにエイリアスを作成したり
+問い合わせメニューが出て合致結果の一覧が表示されるのです。
+問い合わせメニューからは、選んだアドレスにエイリアスを作成したり
 メイルしたりすることができます。
 タグを付けて複数アドレス<!-- いや、本文は multiple messages だけど、
 それじゃあまりにも意味不明というか脈略ないっしょ -->にメイルすることや、
@@ -2156,12 +2159,12 @@ Mutt の問い合わせ機能にアクセスする仕組みは二つあります。
 
 問い合わせ機能にアクセスするもう一つの仕組みは、アドレス補完という、
 エイリアス補完と同じような仕組みです。アドレス入力のプロンプトならどれででも
-complete-query 関数 (デフォルト: ^T) を使って、アドレスのうちの、
+complete-query 関数 (既定値: ^T) を使って、アドレスのうちの、
 その時点までに入力済みの部分に基づいた問い合わせを実行できます。
 エイリアス のように、どこまで入力済みかについて Mutt は
 最後のスペイスかコンマまで戻って調べます。
 その問い合わせに結果が一つだけであれば、Mutt はその場でアドレスを展開します。
-結果が複数ならば Mutt はクエリメニューに移ります。クエリメニューでは、
+結果が複数ならば Mutt は問い合わせメニューに移ります。問い合わせメニューでは、
 プロンプトに追加するアドレスを一つでも複数でも選択できます。
 
 <sect1>メイルボックスの形式
@@ -2222,7 +2225,7 @@ NFS 越しに書き込んでいるときでさえも重ならないような方法で選ばれています。
 <item>&tilde;　……　ホウムディレクトリを指す
 <item>= と +　……　<ref id="folder" name="&dollar;folder" > メイルボックスを指す
 <item>@<em>エイリアス名</em>　……　このエイリアスのアドレスで識別される<ref
-id="save-hook" name="デフォルトのセイブフォルダ" >を指す
+id="save-hook" name="既定のセイヴフォルダ" >を指す
 </itemize>
 
 <sect1>メイリングリストを扱う<label id="using_lists" >
@@ -2255,7 +2258,7 @@ Mutt には、大量のメイルの取り扱いを容易にする設定オプションが二、三あります。
 ほとんどの人は、返信しようとするメッセイジの差出人をわざわざ
 そうしたフィールド<!-- のアドレスリスト -->から削除したりせず、
 結果として同じものが複数その人に送られてしまうことになります。
-<ref id="list-reply" name="list-reply"> 関数は、デフォルトでは
+<ref id="list-reply" name="list-reply"> 関数は、既定では
 <em>インデックス</em>メニューと<em>ペイジャ</em>において
 &dquot;L&dquot; キーに割り当てられていますが、
 宛先すべてにではなく既知のメイリングリストのアドレスにのみ返信するので、
@@ -2363,7 +2366,7 @@ Mutt は、POP3 サポートありで (<em>configure</em> スクリプト実行時に
 POP3 経由だと、新着メイル情報の取得にロウカルより負担がかかります。
 このため、Mutt がリモウトでメイルチェックする頻度を
 <ref id="pop_checkinterval" name="&dollar;pop&lowbar;checkinterval" > 変数で
-制御できます。デフォルトは 60 秒ごとです。
+制御できます。既定値は 60 秒ごとです。
 
 Mutt が SSL サポートありで (<em>configure</em>スクリプト実行時に
 <em>--with-ssl</em> フラグを付けて) コンパイルしてあれば、
@@ -2374,7 +2377,7 @@ POP3/SSL でフォルダにアクセスするには pops: を使います。
 です。
 
 POP3 のメイルにアクセスする別の方法は
-<em>fetch-mail</em> 関数 (デフォルト: G) です。
+<em>fetch-mail</em> 関数 (既定値: G) です。
 POP3 ホスト (<ref id="pop_host" name="&dollar;pop&lowbar;host" >) に接続し、
 新着メイルをすべて取ってきて、ロウカルのスプール (<ref id="spoolfile"
 name="&dollar;spoolfile" >) に置いてくれるのです。
@@ -2467,13 +2470,13 @@ v12.250 以前の UW サーバでメイルの格納に mbox を使っている場合は
 Cyrus 系サーバの場合にはしばしばフォルダの中に
 メッセイジとサブフォルダが入っています。
 <item>メッセイジとサブフォルダの両方が含まれている場合、<tt/select-entry/
-(デフォルトでは <tt>enter</tt> に割り当てられている) のキーを押すと
+(既定では <tt>enter</tt> に割り当てられている) のキーを押すと
 そのサブフォルダの中に下りていってしまいます。
-もしそのフォルダ自体のメッセイジを見たい場合には (デフォルトでは
-<tt>space</tt> に割り当てられている)
+もしそのフォルダ自体のメッセイジを見たい場合には (既定では
+<tt>スペイス</tt> に割り当てられている)
 <tt>view-file</tt> を使わなければなりません。
 <item>メイルボックスを消すには <tt>delete-mailbox</tt> コマンド
-(デフォルトでは d) を使います。また、メイルボックスの購読
+(既定では d) を使います。また、メイルボックスの購読
 <tt>subscribe</tt> と、購読解除 <tt>unsubscribe</tt> もできます
 (通常は s と u に割り当てられています)。
 </itemize>
@@ -2512,7 +2515,7 @@ Mutt は、コンパイル時に組み込まれ、かつサーバ側の利用可能な方法を
 パスワードを必要とするすべての認証方法に使います。
 <item><ref id="imap_authenticators"
 name="&dollar;imap&lowbar;authenticators" > ―　試行順序にコロンで区切った、
-IMAP 認証方法リストです。設定されていると、この変数が mutt のデフォルト
+IMAP 認証方法リストです。設定されていると、この変数が mutt の既定値
 (あらゆる方法を上記の順に試す) を上書きします。
 </itemize>
 
@@ -2594,7 +2597,7 @@ Mutt が扱うことのできない MIME タイプであれば
 
 <sect2>添付ファイルメニュー<label id="attach_menu" >
 <p>
-デフォルトで &dquot;v&dquot; に割り当てられている <tt/view-attachments/
+既定で &dquot;v&dquot; に割り当てられている <tt/view-attachments/
 は、メッセイジの添付ファイルメニューを表示するものです。
 添付ファイルメニューにはメッセイジの添付ファイル一覧が表示され、
 このメニューから添付ファイルを保存、印刷、パイプ、削除、
@@ -2603,7 +2606,7 @@ Mutt が扱うことのできない MIME タイプであれば
 また、このメニューからメッセイジに返信することもできます。
 その場合は、カーソルのある (もしくはタグ付けされている) 添付ファイルのみ
 返信に引用されます。添付ファイルは、テキストとして閲覧したり、
-mailcap のビューワ定義を使って閲覧することもできます。
+mailcap のヴューワ定義を使って閲覧することもできます。
 
 また <tt>message/rfc822</tt> タイプのファイルには、
 メッセイジ関連の通常の関数 (たとえば <ref id="resend-message"
@@ -2632,17 +2635,17 @@ name="resend-message">, reply, forward など) も使えます。
 
 左端の &dquot;-&dquot; は、そのファイルがメッセイジの
 送信 (または延期や中止) の後に削除されるということを示しています。
-この切替は <tt/toggle-unlink/ コマンド (デフォルト: u) で可能です。
+この切替は <tt/toggle-unlink/ コマンド (既定値: u) で可能です。
 次の欄 は MIME content-type を示しており、
-<tt/edit-type/ コマンド (デフォルト: ^T) で変更できます。
+<tt/edit-type/ コマンド (既定値: ^T) で変更できます。
 その次の欄はファイルのエンコウド方式を示しています。
 エンコウド (つまり変換) をすることによって、バイナリのメッセイジを
 7bit 通信で配送することができるようになります。変更は
-<tt/edit-encoding/ コマンド (デフォルト: ^E) です。
+<tt/edit-encoding/ コマンド (既定値: ^E) です。
 次の欄はファイルサイズです。キロバイトかメガバイト単位に丸めてあります。
-次の欄はファイル名で、変更には <tt/rename-file/ コマンド (デフォルト: R)
+次の欄はファイル名で、変更には <tt/rename-file/ コマンド (既定値: R)
 を使います。最後の欄は添付ファイルの内容説明です。
-<tt/edit-description/ コマンド (デフォルト: d) で変更できます。
+<tt/edit-description/ コマンド (既定値: d) で変更できます。
 
 <sect1><tt/mime.types/ による MIME タイプ設定
 <p>
@@ -2668,7 +2671,7 @@ Mutt はファイルの中身を見に行きます。ファイルにバイナリ情報がなければ
 プレインテキストだとみなして <tt>text/plain</tt> にします。
 バイナリ情報を含んでいれば <tt>application/octet-stream</tt> にします。
 Mutt が添付ファイルに付けた MIME タイプは、添付ファイルメニュー
-から <tt>edit-type</tt> コマンド (デフォルト: ^T) を使って変更できます。
+から <tt>edit-type</tt> コマンド (既定値: ^T) を使って変更できます。
 さて、この MIME タイプは、メジャータイプの後に &dquot;/&dquot;
 とサブタイプの付いたものです。メジャータイプは
 application, text, image, video, audio, model の 6 種類が、インターネットでの
@@ -2676,11 +2679,11 @@ application, text, image, video, audio, model の 6 種類が、インターネットでの
 Mutt はこれらすべてを認識することができます。
 また、その他のメジャータイプも認識でき、例えば chemical タイプという、
 分子モデリング業界で広く使われているタイプなども使うことができます。
-これは様々な形式の分子デイタを種々の分子ビューワに渡すためのものです。
+これは様々な形式の分子デイタを種々の分子ヴューワに渡すためのものです。
 ただし、未承認の MIME タイプを使うのは、そういう添付ファイルが来ることを
 相手がわかっている場合だけにすべきです。
 
-<sect1><tt/mailcap/ による MIME ビューワの設定
+<sect1><tt/mailcap/ による MIME ヴューワの設定
 <p>
 Mutt は、MIME 設定に関する RFC 1524 をサポートしています。
 特に RFC 1524 の Appendix A で規定されている
@@ -2696,7 +2699,7 @@ Mutt 単体では扱えない様々な MIME タイプを扱うために、
 Mutt は外部の設定ファイルを解析して、
 扱うことのできる外部プログラムを探します。
 設定ファイルを検索する文字列はコロン区切りリストで、
-デフォルトはこうなっています。
+既定値はこうなっています。
 <tscreen><verb>
 ${HOME}/.mailcap:/usr/local/share/mutt/mailcap:/etc/mailcap:/etc/mailcap:/usr/etc/mailcap:/usr/local/etc/mailcap
 </verb></tscreen>
@@ -2726,8 +2729,8 @@ content type は MIME 標準の「タイプ/サブタイプ」方式で指定します。
 image タイプと video タイプの全体に相当します。
 
 閲覧コマンドは、特定のタイプを閲覧するための Unix コマンドです。
-二種類のコマンドがサポートされています。デフォルトの方は、その
-MIME メッセイジの内容を標準入力でコマンドに渡すものです。
+二種類のコマンドがサポートされています。既定では、その
+MIME メッセイジの内容を標準入力でコマンドに渡します。
 この動作を変更するには、閲覧コマンドの引数に &percnt;s を使います。
 こうすると Mutt は MIME メッセイジの内容を一時ファイルに保存し、
 &percnt;s を一時ファイルの名前に置き換えて閲覧コマンドを呼び出します。
@@ -2751,7 +2754,7 @@ text/html; lynx %s
 &percnt;s 構文を使わなければなりません。
 <bf>注意:</bf> <em>古いヴァージョンの lynx には、一部、「text/html にまで
 mailcap ファイルをチェックしてしまう」というバグを含むものがあります。
-その場合、ビューワとして lynx を呼ぶように書いてあっても
+その場合、ヴューワとして lynx を呼ぶように書いてあっても
 そのまま実行してしまいます。すると、いつまでも
 自分が自分を呼び出し続けることになってしまいます。</em>
 
@@ -2855,14 +2858,14 @@ Mutt では、ファイル添付メニューとコンポウズメニューでサポートされています。
 このフラグは、特定の MIME タイプの編集に使うコマンドを指定します。
 Mutt はこのコマンドをコンポウズメニューでサポートしており、
 新しい添付ファイルを作成する時にも使います。
-Mutt はデフォルトでは editor 変数に定義されたエディタを
+Mutt は既定では editor 変数に定義されたエディタを
 テキストの添付ファイルに使用します。
 <tag>nametemplate=&lt;template&gt;</tag>
 閲覧コマンド欄に &percnt;s で示されるファイルのファイル名を指定します。
 ある種のプログラムは、ファイル名に特定の拡張子がないと、
 正しく閲覧してくれなかったりします。例えば lynx は、ファイル名が
 <tt>.html</tt> で終わっている場合にのみ <tt>text/html</tt> であると
-解釈します。それで、lynx を <tt>text/html</tt> ビューワに指定するには
+解釈します。それで、lynx を <tt>text/html</tt> ヴューワに指定するには
 次のように mailcap に書くことになるでしょう。
 <tscreen><verb>
 text/html; lynx %s; nametemplate=%s.html
@@ -2904,7 +2907,7 @@ image/gif;      ; print= anytopnm %s | pnmtops | lpr; \
 と組み合わせて、添付ファイル閲覧のコマンドを二つ指定することもできます。
 一つは自動的に閲覧するためのコマンド、
 もう一つは添付ファイルメニューから閲覧する対話的なコマンドです。
-そのうえ、test 機能を使えば、どのビューワを使うかを
+そのうえ、test 機能を使えば、どのヴューワを使うかを
 自分の環境に合わせて対話的に決定できます。
 <tscreen><verb>
 text/html;      netscape -remote 'openURL(%s)' ; test=RunningX
@@ -2945,15 +2948,15 @@ Mutt はこれを、メイルの Content-Type: 行における特定のパラメータの
 Content-Type: text/plain; charset=iso-8859-1
 </verb></tscreen>
 すると Mutt は &percnt;{charset} を iso-8859-1 に展開します。
-metamail のデフォルトの mailcap ファイルでは、この機能を使って
+metamail の既定 mailcap ファイルでは、この機能を使って
 文字セットを調べ、xterm を正しい文字セットで起動してメイルを閲覧できる
 ようになっています。
 <tag>&bsol;&percnt;</tag>
 これは &percnt; に置き換えられます。
 </descrip>
 Mutt は RFC 1524 で定義されている &percnt;F と &percnt;n キーワードを
-今のところサポートしていません。これらのパラメータの主にマルチパート
-メッセイジのためのものですが、マルチパートは Mutt 内部で扱われるからです。
+今のところサポートしていません。これらのパラメータの主にマルティパート
+メッセイジのためのものですが、マルティパートは Mutt 内部で扱われるからです。
 
 <sect2>mailcap ファイルの例
 <p>
@@ -3008,12 +3011,12 @@ application/ms-excel; open.pl %s
 
 <sect1>MIME 自動閲覧<label id="auto_view" >
 <p>
-mailcap ファイルに指定されている MIME のビューワで添付ファイルを
+mailcap ファイルに指定されている MIME のヴューワで添付ファイルを
 閲覧するよう Mutt に明示的に言う以外に、
 ペイジャの中で MIME 添付ファイルを自動的に閲覧する機能もあります。
 
 機能させるには、mailcap ファイルで <tt/copiousoutput/ オプションを使って
-ビューワを指定しなくてはなりません。そのビューワが
+ヴューワを指定しなくてはなりません。そのヴューワが
 対話的コマンドではないということを指示するためです。
 普通は、ペイジャで閲覧できるようなテキスト表現へと
 添付ファイルを変換するためにもこの項目を使います。
@@ -3099,7 +3102,7 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 -h      コマンドラインオプションについてのヘルプを表示
 -H      下書きファイルを指定して、そこからヘッダと本文を読み出す
 -i      作成メッセイジに含めるファイルを指定
--m      デフォルトのメイルボックスの種類を指定
+-m      既定のメイルボックスの種類を指定
 -n      システムの Muttrc を読まない
 -p      延期していたメッセイジを呼び出す
 -Q      設定変数を問い合わせる
@@ -3273,10 +3276,12 @@ Default: &dquot;&tilde;/.muttrc&dquot;
 
 <p>
 <ref id="create-alias" name="create-alias"> 関数で作成された
-エイリアスを保存するデフォルトファイル。
+エイリアスを保存する既定ファイル。
 <p>
-<bf>Note:</bf> Mutt will not automatically source this file; you must
-explicitly use the ``<ref id="source" name="source">'' command for it to be executed.
+<bf>注意:</bf> Mutt は自動でこのファイルを source するわけではない。
+明示的に <ref id="source" name="source"> コマンドを使用して
+実行しなくてはならない。(訳注：このファイルには alias コマンドが
+羅列してあるだけだから「実行」するのである)
 
 
 <sect2>alias&lowbar;format<label id="alias_format">
@@ -3285,16 +3290,16 @@ Type: string<newline>
 Default: &dquot;&percnt;4n &percnt;2f &percnt;t &percnt;-10a   &percnt;r&dquot;
 
 <p>
-Specifies the format of the data displayed for the `alias' menu.  The
-following printf(3)-style sequences are available:
+エイリアスメニューに表示されるデイタの書式を指定する。
+次の printf(3) 式のシークウェンスが利用できる。
 <p>
 
 <descrip>
-<tag>&percnt;a </tag>alias name
-<tag>&percnt;f </tag>flags - currently, a &dquot;d&dquot; for an alias marked for deletion
-<tag>&percnt;n </tag>index number
-<tag>&percnt;r </tag>address which alias expands to
-<tag>&percnt;t </tag>character which indicates if the alias is tagged for inclusion
+<tag>&percnt;a </tag>エイリアス名
+<tag>&percnt;f </tag>フラグ - 現時点では、削除予定のエイリアスに &dquot;d&dquot; が付くだけ
+<tag>&percnt;n </tag>インデックス番号
+<tag>&percnt;r </tag>展開後のアドレス
+<tag>&percnt;t </tag>使用するためにタグ付けされていることを表す文字
 </descrip>
 
 
@@ -3304,8 +3309,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls whether 8-bit data is converted to 7-bit using either Quoted-
-Printable or Base64 encoding when sending mail.
+メイル送信時に Quoted-Printable か Base64 を使って
+8 ビットデイタを 7 ビットに変換するかどうかを制御する。
 
 
 <sect2>allow&lowbar;ansi<label id="allow_ansi">
@@ -3314,13 +3319,14 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Controls whether ANSI color codes in messages (and color tags in 
-rich text messages) are to be interpreted.
-Messages containing these codes are rare, but if this option is set,
-their text will be colored accordingly. Note that this may override
-your color choices, and even present a security problem, since a
-message could include a line like &dquot;&lsqb;-- PGP output follows ...&dquot; and
-give it the same color as your attachment color.
+メッセイジ中の ANSI 色コウド (と、リッチテキストメッセイジの色タグ)
+を解釈するかどうかを制御する。こうしたコウドを含むメッセイジは稀だが、
+このオプションが設定されていれば、相応に着色される。
+注意すべきなのは、自分の色選択を上書きしかねないという点や、
+セキュリティ上の問題さえ引き起こしかねないという点である。
+というのは、メッセイジに添付ファイルの色で
+&dquot;&lsqb;-- PGP output follows ...&dquot;
+という行を含めてあるかもしれないからだ。
 
 
 <sect2>arrow&lowbar;cursor<label id="arrow_cursor">
@@ -3329,11 +3335,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, an arrow (``-&gt;'') will be used to indicate the current entry
-in menus instead of highlighting the whole line.  On slow network or modem
-links this will make response faster because there is less that has to
-be redrawn on the screen when moving to the next or previous entries
-in the menu.
+設定されているときには、行全体の反転ではなく矢印 (&dquot;-&gt;&dquot;)
+を使って、メニューにおける現在位置を示す。これを使えば、
+遅いネットワークやモデム接続で反応を早くすることができる。
+なぜなら、メニューで前後の項目へ動く際に
+画面上で再描画しなければならない部分が少ないからだ。
 
 
 <sect2>ascii&lowbar;chars<label id="ascii_chars">
@@ -3342,8 +3348,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, Mutt will use plain ASCII characters when displaying thread
-and attachment trees, instead of the default <em>ACS</em> characters.
+設定されていると、スレッドや添付ファイルの枝分かれを表示する際に、
+既定の <em>ACS</em> 文字ではなくプレイン ASCII 文字を使う。
 
 
 <sect2>askbcc<label id="askbcc">
@@ -3352,8 +3358,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, Mutt will prompt you for blind-carbon-copy (Bcc) recipients
-before editing an outgoing message.
+設定されていると、送信メッセイジ編集前にブラインドカーボンコピー
+(Bcc) の宛先を入力するよう Mutt が促してくる。
 
 
 <sect2>askcc<label id="askcc">
@@ -3362,8 +3368,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, Mutt will prompt you for carbon-copy (Cc) recipients before
-editing the body of an outgoing message.
+設定されていると、Mutt は送信メッセイジの編集前にカーボンコピー
+(Cc) の宛先を尋ねてくる。
 
 
 <sect2>attach&lowbar;format<label id="attach_format">
@@ -3372,27 +3378,27 @@ Type: string<newline>
 Default: &dquot;&percnt;u&percnt;D&percnt;I &percnt;t&percnt;4n &percnt;T&percnt;.40d&percnt;&gt; &lsqb;&percnt;.7m/&percnt;.10M, &percnt;.6e&percnt;?C?, &percnt;C?, &percnt;s&rsqb; &dquot;
 
 <p>
-This variable describes the format of the `attachment' menu.  The
-following printf-style sequences are understood:
+この変数は添付ファイルメニューの書式を記述する。
+下記の printf 式シークウェンスが理解できる。
 <p>
 
 <descrip>
-<tag>&percnt;C  </tag>charset
-<tag>&percnt;c  </tag>reqiures charset conversion (n or c)
-<tag>&percnt;D  </tag>deleted flag
-<tag>&percnt;d  </tag>description
-<tag>&percnt;e  </tag>MIME content-transfer-encoding
-<tag>&percnt;f  </tag>filename
+<tag>&percnt;C  </tag>文字セット
+<tag>&percnt;c  </tag>文字セット変換の必要性 (n=無変換, c=変換)
+<tag>&percnt;D  </tag>削除予定フラグ
+<tag>&percnt;d  </tag>内容説明
+<tag>&percnt;e  </tag>MIME content-transfer-encoding (通信時の符号化方法)
+<tag>&percnt;f  </tag>ファイル名
 <tag>&percnt;I  </tag>disposition (I=inline, A=attachment)
-<tag>&percnt;m  </tag>major MIME type
-<tag>&percnt;M  </tag>MIME subtype
-<tag>&percnt;n  </tag>attachment number
-<tag>&percnt;s  </tag>size
-<tag>&percnt;t  </tag>tagged flag
-<tag>&percnt;T  </tag>graphic tree characters
-<tag>&percnt;u  </tag>unlink (=to delete) flag
-<tag>&percnt;&gt;X </tag>right justify the rest of the string and pad with character &dquot;X&dquot;
-<tag>&percnt;|X </tag>pad to the end of the line with character &dquot;X&dquot;
+<tag>&percnt;m  </tag>メジャー MIME タイプ
+<tag>&percnt;M  </tag>MIME サブタイプ
+<tag>&percnt;n  </tag>添付ファイル番号
+<tag>&percnt;s  </tag>サイズ
+<tag>&percnt;t  </tag>タグフラグ
+<tag>&percnt;T  </tag>視覚的な枝分かれ文字
+<tag>&percnt;u  </tag>アンリンク (=送信後削除) フラグ
+<tag>&percnt;&gt;X </tag>以降の文字列を右寄せし、余白を &dquot;X&dquot; で詰める
+<tag>&percnt;|X </tag>行の末尾まで、文字 &dquot;X&dquot; で詰める
 </descrip>
 
 
@@ -3402,8 +3408,8 @@ Type: string<newline>
 Default: &dquot;&bsol;n&dquot;
 
 <p>
-The separator to add between attachments when operating (saving,
-printing, piping, etc) on a list of tagged attachments.
+複数のタグ付き添付ファイルを処理 (保存、印刷、パイプ等々)
+する際に、各添付ファイルの間に付ける区切り。
 
 
 <sect2>attach&lowbar;split<label id="attach_split">
@@ -3412,11 +3418,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If this variable is unset, when operating (saving, printing, piping,
-etc) on a list of tagged attachments, Mutt will concatenate the
-attachments and will operate on them as a single attachment. The
-``<ref id="attach_sep" name="&dollar;attach&lowbar;sep">'' separator is added after each attachment. When set,
-Mutt will operate on the attachments one by one.
+この変数が設定されていないと、複数のタグ付き添付ファイルを処理
+(保存、印刷、パイプ等々) する時に Mutt が添付ファイルを連結して
+一つのファイルのように扱うことになる。その際
+<ref id="attach_sep" name="&dollar;attach&lowbar;sep">
+が各ファイルの後に追加される。なお、この変数が設定されている時には
+添付ファイルを一つずつ別々に処理する。
 
 
 <sect2>attribution<label id="attribution">
@@ -3425,9 +3432,10 @@ Type: string<newline>
 Default: &dquot;On &percnt;d, &percnt;n wrote:&dquot;
 
 <p>
-This is the string that will precede a message which has been included
-in a reply.  For a full listing of defined printf()-like sequences see
-the section on ``<ref id="index_format" name="&dollar;index&lowbar;format">''.
+これは、返信で引用されるメッセイジの前に付く文字列である。
+定義されている printf() 風シークウェンスの完全な一覧は
+<ref id="index_format" name="&dollar;index&lowbar;format">
+の節を見よ。
 
 
 <sect2>autoedit<label id="autoedit">
@@ -3436,12 +3444,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set along with ``<ref id="edit_headers" name="&dollar;edit&lowbar;headers">'', Mutt will skip the initial
-send-menu and allow you to immediately begin editing the body of your
-message.  The send-menu may still be accessed once you have finished
-editing the body of your message.
+これと <ref id="edit_headers" name="&dollar;edit&lowbar;headers">
+が設定されていると、Mutt は最初の送信メニューを飛ばして、
+即座にメッセイジ本文を編集し始めさせてくれる。
+送信メニューには、後でメッセイジ本文を編集し終えてから行くことができる。
 <p>
-Also see ``<ref id="fast_reply" name="&dollar;fast&lowbar;reply">''.
+<ref id="fast_reply" name="&dollar;fast&lowbar;reply"> も参照のこと。
 
 
 <sect2>auto&lowbar;tag<label id="auto_tag">
@@ -3450,10 +3458,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, functions in the <em>index</em> menu which affect a message
-will be applied to all tagged messages (if there are any).  When
-unset, you must first use the tag-prefix function (default: &dquot;;&dquot;) to
-make the next function apply to all tagged messages.
+設定されている時に <em>インデックス</em> メニューから
+メッセイジに影響を与える関数を実行すると、
+タグ付けされたメッセイジすべて (もしあれば) に適用される。
+設定されていない時は、まず tag-prefix 関数 (既定値: &dquot;;&dquot;)
+を使って、次の関数をタグ付きメッセイジに適用するようにしなくてはならない。
 
 
 <sect2>beep<label id="beep">
@@ -3462,7 +3471,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When this variable is set, mutt will beep when an error occurs.
+この変数が設定されている時にはエラー発生時に Mutt が音を鳴らす。
 
 
 <sect2>beep&lowbar;new<label id="beep_new">
@@ -3471,9 +3480,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When this variable is set, mutt will beep whenever it prints a message
-notifying you of new mail.  This is independent of the setting of the
-``<ref id="beep" name="&dollar;beep">'' variable.
+この変数が設定されている時、Mutt は新着メイルを知らせるメッセイジを
+表示するたびに音を鳴らす。これは <ref id="beep" name="&dollar;beep">
+変数の設定とは無関係である。
 
 
 <sect2>bounce<label id="bounce">
@@ -3482,10 +3491,10 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-Controls whether you will be asked to confirm bouncing messages.
-If set to <em>yes</em> you don't get asked if you want to bounce a
-message. Setting this variable to <em>no</em> is not generally useful,
-and thus not recommended, because you are unable to bounce messages.
+メッセイジ中継で確認のための質問をするかどうかを制御する。
+<em>yes</em> に設定してあると、本当に中継するかどうかを質問されない。
+この変数を <em>no</em> にすることは一般的に無益であり、推奨できない。
+なぜならメッセイジを中継できなくなってしまうからだ。
 
 
 <sect2>bounce&lowbar;delivered<label id="bounce_delivered">
@@ -3494,8 +3503,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When this variable is set, mutt will include Delivered-To headers when
-bouncing messages.  Postfix users may wish to unset this variable.
+この変数が設定されている時にはメッセイジ中継の際に
+Mutt が Delivered-To ヘッダを付けてくれる。
+Postfix ユーザはこの変数を解除したいと思うだろう。
 
 
 <sect2>charset<label id="charset">
@@ -3504,7 +3514,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Character set your terminal uses to display and enter textual data.
+テキストデイタを端末で表示したり入力したりするのに使う文字セット。
 
 
 <sect2>check&lowbar;new<label id="check_new">
@@ -3513,15 +3523,15 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-<bf>Note:</bf> this option only affects <em>maildir</em> and <em>MH</em> style
-mailboxes.
+<bf>注意:</bf> このオプションが有効なのは <em>Maildir</em> と <em>MH</em>
+形式メイルボックスだけである。
 <p>
-When <em>set</em>, Mutt will check for new mail delivered while the
-mailbox is open.  Especially with MH mailboxes, this operation can
-take quite some time since it involves scanning the directory and
-checking each file to see if it has already been looked at.  If
-<em>check&lowbar;new</em> is <em>unset</em>, no check for new mail is performed
-while the mailbox is open.
+<em>yes</em> の時は、開いている最中のメイルボックスに着信する
+新着メイルを調べる。特に MH メイルボックスについて言えることだが、
+この調査はかなり時間のかかることがある。というのも、ディレクトリ全体を
+走査して、各ファイルを既に見たものかどうか確認する必要があるからだ。
+もし <em>check&lowbar;new</em> が <em>no</em> なら、
+開いているメイルボックスには新着メイルの確認を行わない。
 
 
 <sect2>collapse&lowbar;unread<label id="collapse_unread">
@@ -3530,8 +3540,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When <em>unset</em>, Mutt will not collapse a thread if it contains any
-unread messages.
+<em>no</em> の時は、未読メッセイジが含まれるスレッドを折り畳まない。
 
 
 <sect2>uncollapse&lowbar;jump<label id="uncollapse_jump">
@@ -3540,8 +3549,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When <em>set</em>, Mutt will jump to the next unread message, if any,
-when the current thread is <em>un</em>collapsed.
+<em>yes</em> の時は、カーソル下の折り畳まれて<em>いた</em>スレッドが
+<em>広げられる</em>際、未読メッセイジがあればそこにカーソルを移す。
 
 
 <sect2>compose&lowbar;format<label id="compose_format">
@@ -3550,21 +3559,23 @@ Type: string<newline>
 Default: &dquot;-- Mutt: Compose  &lsqb;Approx. msg size: &percnt;l   Atts: &percnt;a&rsqb;&percnt;&gt;-&dquot;
 
 <p>
-Controls the format of the status line displayed in the &bsol;fCompose
-menu.  This string is similar to ``<ref id="status_format" name="&dollar;status&lowbar;format">'', but has its own
-set of printf()-like sequences:
+コンポウズメニューで表示されるステイタス行の書式を制御する。
+この文字列は <ref id="status_format" name="&dollar;status&lowbar;format">
+とほぼ同じだが、独自の printf() 風シークウェンスを持っている。
 <p>
 
 <descrip>
-<tag>&percnt;a </tag>total number of attachments 
-<tag>&percnt;h </tag>local hostname
-<tag>&percnt;l </tag>approximate size (in bytes) of the current message
-<tag>&percnt;v </tag>Mutt version string
+<tag>&percnt;a </tag>添付ファイルの総数
+<tag>&percnt;h </tag>ロウカルのホスト名
+<tag>&percnt;l </tag>メッセイジのおおよそのサイズ (バイト単位)
+<tag>&percnt;v </tag>Mutt ヴァージョン文字列
 </descrip>
 
 <p>
-See the text describing the ``<ref id="status_format" name="&dollar;status&lowbar;format">'' option for more 
-information on how to set ``<ref id="compose_format" name="&dollar;compose&lowbar;format">''.
+<ref id="compose_format" name="&dollar;compose&lowbar;format">
+の設定法に関してさらに情報を得るには、
+<ref id="status_format" name="&dollar;status&lowbar;format">
+オプションの説明文を見よ。
 
 
 <sect2>confirmappend<label id="confirmappend">
@@ -3573,8 +3584,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, Mutt will prompt for confirmation when appending messages to
-an existing mailbox.
+設定されていると、
+Mutt がメッセイジを既存メイルボックスに追加する時に確認を促す。
 
 
 <sect2>confirmcreate<label id="confirmcreate">
@@ -3583,8 +3594,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, Mutt will prompt for confirmation when saving messages to a
-mailbox which does not yet exist before creating it.
+設定されていると、存在しないメイルボックスにメッセイジを保存する際、
+メイルボックスを作成する前に確認を促す。
 
 
 <sect2>connect&lowbar;timeout<label id="connect_timeout">
@@ -3593,9 +3604,9 @@ Type: number<newline>
 Default: 30
 
 <p>
-Causes Mutt to timeout a network connection (for IMAP or POP) after this
-many seconds if the connection is not able to be established.  A negative
-value causes Mutt to wait indefinitely for the connection to succeed.
+この秒数でネットワーク接続 (IMAP と POP) が確立できなければ
+Mutt は時間切れとして諦める。
+負の数だと、接続が成功するまで永遠に待ち続ける。
 
 
 <sect2>content&lowbar;type<label id="content_type">
@@ -3604,7 +3615,7 @@ Type: string<newline>
 Default: &dquot;text/plain&dquot;
 
 <p>
-Sets the default Content-Type for the body of newly composed messages.
+新規作成メッセイジ本文における既定の Content-Type を設定する。
 
 
 <sect2>copy<label id="copy">
@@ -3613,9 +3624,12 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-This variable controls whether or not copies of your outgoing messages
-will be saved for later references.  Also see ``<ref id="record" name="&dollar;record">'',
-``<ref id="save_name" name="&dollar;save&lowbar;name">'', ``<ref id="force_name" name="&dollar;force&lowbar;name">'' and ``<ref id="fcc-hook" name="fcc-hook">''.
+この変数は、送信メッセイジのコピーを
+後で参照するために保存しておくかどうかを制御する。
+<ref id="record" name="&dollar;record">,
+<ref id="save_name" name="&dollar;save&lowbar;name">,
+<ref id="force_name" name="&dollar;force&lowbar;name">,
+<ref id="fcc-hook" name="fcc-hook"> も参照。
 
 
 <sect2>crypt&lowbar;autopgp<label id="crypt_autopgp">
@@ -3624,10 +3638,14 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variable controls whether or not mutt may automatically enable
-PGP encryption/signing for messages.  See also ``<ref id="crypt_autoencrypt" name="&dollar;crypt&lowbar;autoencrypt">'',
-``<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">'',
-``<ref id="crypt_autosign" name="&dollar;crypt&lowbar;autosign">'', ``<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">'' and ``<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">''.
+この変数は Mutt が自動でメッセイジの PGP 暗号化/署名を有効にするかどうかを
+制御する。
+<ref id="crypt_autoencrypt" name="&dollar;crypt&lowbar;autoencrypt">,
+<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">,
+<ref id="crypt_autosign" name="&dollar;crypt&lowbar;autosign">,
+<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">,
+<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">
+も見よ。
 
 
 <sect2>crypt&lowbar;autosmime<label id="crypt_autosmime">
@@ -3636,10 +3654,14 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variable controls whether or not mutt may automatically enable
-S/MIME encryption/signing for messages. See also ``<ref id="crypt_autoencrypt" name="&dollar;crypt&lowbar;autoencrypt">'',
-``<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">'',
-``<ref id="crypt_autosign" name="&dollar;crypt&lowbar;autosign">'', ``<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">'' and ``<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">''.
+この変数は Mutt が S/MIME による暗号化/署名を自動で有効にするかどうかを
+制御する。
+<ref id="crypt_autoencrypt" name="&dollar;crypt&lowbar;autoencrypt">,
+<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">,
+<ref id="crypt_autosign" name="&dollar;crypt&lowbar;autosign">,
+<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">,
+<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">
+も見よ。
 
 
 <sect2>date&lowbar;format<label id="date_format">
@@ -3648,17 +3670,16 @@ Type: string<newline>
 Default: &dquot;!&percnt;a, &percnt;b &percnt;d, &percnt;Y at &percnt;I:&percnt;M:&percnt;S&percnt;p &percnt;Z&dquot;
 
 <p>
-This variable controls the format of the date printed by the ``&percnt;d''
-sequence in ``<ref id="index_format" name="&dollar;index&lowbar;format">''.  This is passed to the <em>strftime</em>
-call to process the date. See the man page for <em>strftime(3)</em> for
-the proper syntax.
+この変数は <ref id="index_format" name="&dollar;index&lowbar;format"> 中の
+&dquot;&percnt;d&dquot; シークウェンスによって表示される日付の書式を制御する。
+これを <em>strftime</em> コールに渡して日付を処理する。
+正しい文法については <em>strftime(3)</em> の man ペイジを参照されたい。
 <p>
-Unless the first character in the string is a bang (``!''), the month
-and week day names are expanded according to the locale specified in
-the variable ``<ref id="locale" name="&dollar;locale">''. If the first character in the string is a
-bang, the bang is discarded, and the month and week day names in the
-rest of the string are expanded in the <em>C</em> locale (that is in US
-English).
+文字列の最初の一字がびっくりマーク (&dquot;!&dquot;) でない限り、
+月の名前や曜日の名前は変数 <ref id="locale" name="&dollar;locale">
+で指定されているロカールに従って展開される。もし最初がびっくりマークなら、
+そのマーク自体は捨てられ、残りの文字列にある月や曜日名が <em>C</em>
+ロカール (つまり合衆国英語 en_US) で展開される。
 
 
 <sect2>default&lowbar;hook<label id="default_hook">
@@ -3667,16 +3688,14 @@ Type: string<newline>
 Default: &dquot;&tilde;f &percnt;s !&tilde;P | (&tilde;P &tilde;C &percnt;s)&dquot;
 
 <p>
-This variable controls how send-hooks, message-hooks, save-hooks,
-and fcc-hooks will
-be interpreted if they are specified with only a simple regexp,
-instead of a matching pattern.  The hooks are expanded when they are
-declared, so a hook will be interpreted according to the value of this
-variable at the time the hook is declared.  The default value matches
-if the message is either from a user matching the regular expression
-given, or if it is from you (if the from address matches
-``alternates'') and is to or cc'ed to a user matching the given
-regular expression.
+send-hook, message-hook, save-hook, fcc-hook に
+合致パターンではなく単なる正規表現だけ指定されたときに
+どう解釈するかを制御する。
+これらのフックは宣言された時点で展開されるため、
+フックの解釈は宣言の時点でこの変数がとっていた値に従うことになる。
+既定値が合致するのは、メッセイジの差出人が正規表現に合致するか、
+または差出人が自分 (From のアドレスが &dquot;alternates&dquot;
+に合致する) で To か Cc の宛先が正規表現に合致する場合である。
 
 
 <sect2>delete<label id="delete">
@@ -3685,10 +3704,12 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-Controls whether or not messages are really deleted when closing or
-synchronizing a mailbox.  If set to <em>yes</em>, messages marked for
-deleting will automatically be purged without prompting.  If set to
-<em>no</em>, messages marked for deletion will be kept in the mailbox.
+メイルボックスを閉じたり同期したりする時に
+メッセイジを本当に削除するかどうかを制御する。
+<em>yes</em> に設定されていると、削除予定の印を付けたメッセイジは
+自動的に、確認を求めることなく消去される。
+<em>no</em> に設定されていると、削除予定のメッセイジが
+メイルボックスにそのまま残ることになる。
 
 
 <sect2>delete&lowbar;untag<label id="delete_untag">
@@ -3697,9 +3718,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If this option is <em>set</em>, mutt will untag messages when marking them
-for deletion.  This applies when you either explicitly delete a message,
-or when you save it to another folder.
+このオプションが <em>yes</em> だと、Mutt はメッセイジに削除の印を付ける際に
+そのメッセイジのタグを外す。これはメッセイジを明示的に削除する時にも
+適用されるし、セイヴして別のフォルダへ移動する時にも適用される。
 
 
 <sect2>digest&lowbar;collapse<label id="digest_collapse">
@@ -3708,8 +3729,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If this option is <em>set</em>, mutt's revattach menu will not show the subparts of
-individual messages in a digest.  To see these subparts, press 'v' on that menu.
+このオプションが <em>yes</em> なら、Mutt の受信添付ファイルメニューが
+multipart/digest の中の各メッセイジについて副パートを表示しない。
+副パートを見るには &dquot;v&dquot; を押す必要がある。
 
 
 <sect2>display&lowbar;filter<label id="display_filter">
@@ -3718,9 +3740,10 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-When set, specifies a command used to filter messages.  When a message
-is viewed it is passed as standard input to <ref id="display_filter" name="&dollar;display&lowbar;filter">, and the
-filtered message is read from the standard output.
+設定されている時には、この変数で指定されたコマンドを使ってメッセイジを
+フィルタする。メッセイジは閲覧時に標準入力として
+<ref id="display_filter" name="&dollar;display&lowbar;filter">
+に渡され、そのフィルタされたメッセイジが標準出力から読み出される。
 
 
 <sect2>dotlock&lowbar;program<label id="dotlock_program">
@@ -3729,8 +3752,7 @@ Type: path<newline>
 Default: &dquot;/usr/local/bin/mutt&lowbar;dotlock&dquot;
 
 <p>
-Contains the path of the mutt&lowbar;dotlock (8) binary to be used by
-mutt.
+Mutt が使用する mutt&lowbar;dotlock (8) バイナリのパス。
 
 
 <sect2>dsn&lowbar;notify<label id="dsn_notify">
@@ -3739,17 +3761,16 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-<bf>Note:</bf> you should not enable this unless you are using Sendmail
-8.8.x or greater.
+<bf>注意:</bf> Sendmail 8.8.x 以降を使っていないなら有効にすべきではない。
 <p>
-This variable sets the request for when notification is returned.  The
-string consists of a comma separated list (no spaces!) of one or more
-of the following: <em>never</em>, to never request notification,
-<em>failure</em>, to request notification on transmission failure,
-<em>delay</em>, to be notified of message delays, <em>success</em>, to be
-notified of successful transmission.
+この変数には、どんな時に通知が返ってくるよう要求するかを設定する。
+文字列の中身はコンマ区切り (スペイスを入れないこと!) のリストで、
+この中から選べる: <em>never</em> は通知を一切要求しない、
+<em>failure</em> は伝達失敗の通知を要求する、
+<em>delay</em> はメッセイジの遅延を通知させる、
+<em>success</em> は伝達成功を通知させるという意味である。
 <p>
-Example: set dsn&lowbar;notify=&dquot;failure,delay&dquot;
+例: set dsn&lowbar;notify=&dquot;failure,delay&dquot;
 
 
 <sect2>dsn&lowbar;return<label id="dsn_return">
@@ -3758,14 +3779,14 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-<bf>Note:</bf> you should not enable this unless you are using Sendmail
-8.8.x or greater.
+<bf>注意:</bf> Sendmail 8.8.x 以降を使っているのでない限り、
+この変数を有効にすべきではない。
 <p>
-This variable controls how much of your message is returned in DSN
-messages.  It may be set to either <em>hdrs</em> to return just the
-message header, or <em>full</em> to return the full message.
+この変数は、メッセイジがどれだけ DSN メッセイジで返ってくるかを制御する。
+<em>hdrs</em> にしてメッセイジヘッダのみ返ってくるようにするか、
+<em>full</em> でメッセイジ全体が返ってくるようにするかのいずれかである。
 <p>
-Example: set dsn&lowbar;return=hdrs
+例: set dsn&lowbar;return=hdrs
 
 
 <sect2>duplicate&lowbar;threads<label id="duplicate_threads">
@@ -3774,10 +3795,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variable controls whether mutt, when sorting by threads, threads
-messages with the same message-id together.  If it is set, it will indicate
-that it thinks they are duplicates of each other with an equals sign
-in the thread diagram.
+この変数で制御するのは、Mutt がスレッドで整列している時に、
+同一の message-id を持つメッセイジをスレッドにするかどうかである。
+もし設定されていると、そうしたメッセイジを重複だと考えていることを示す等号を
+スレッド図に表示する。
 
 
 <sect2>edit&lowbar;headers<label id="edit_headers">
@@ -3786,8 +3807,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This option allows you to edit the header of your outgoing messages
-along with the body of your message.
+このオプションは、送信メッセイジのヘッダを
+本文と一緒に編集できるようにしてくれる。
 
 
 <sect2>editor<label id="editor">
@@ -3796,9 +3817,9 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-This variable specifies which editor is used by mutt.
-It defaults to the value of the VISUAL, or EDITOR, environment
-variable, or to the string &dquot;vi&dquot; if neither of those are set.
+Mutt が使うエディタを指定する。
+指定しないと、VISUAL あるいは EDITOR 環境変数の値になる。
+どれも設定されていなければ &dquot;vi&dquot; という文字列になる。
 
 
 <sect2>encode&lowbar;from<label id="encode_from">
@@ -3807,10 +3828,10 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When <em>set</em>, mutt will quoted-printable encode messages when
-they contain the string &dquot;From &dquot; in the beginning of a line.
-Useful to avoid the tampering certain mail delivery and transport
-agents tend to do with messages.
+<em>yes</em> の時は、&dquot;From &dquot; という文字列を行頭に含む
+メッセイジを Mutt が quoted-printable にエンコウドする。
+これは、一部の MDA や MTA がメッセイジに行なおうとする不法改変を
+避けるのに役立つ。
 
 
 <sect2>envelope&lowbar;from<label id="envelope_from">
@@ -3819,12 +3840,14 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When <em>set</em>, mutt will try to derive the message's <em>envelope</em>
-sender from the &dquot;From:&dquot; header.  Note that this information is passed 
-to sendmail command using the &dquot;-f&dquot; command line switch, so don't set this
-option if you are using that switch in <ref id="sendmail" name="&dollar;sendmail"> yourself,
-or if the sendmail on your machine doesn't support that command
-line switch.
+<em>yes</em> になっている時、Mutt はメッセイジの
+<em>エンヴェロウプ</em>送信者を
+&dquot;From:&dquot; ヘッダに基づいて設定しようとする。
+この情報が sendmail コマンドに &dquot;-f&dquot; スウィッチを使って渡される
+ということに注意せよ。このため、そのスウィッチを自分で
+<ref id="sendmail" name="&dollar;sendmail"> の中に使っている場合や、
+マシンの sendmail がこのコマンドラインスウィッチを
+サポートしていない場合には、このオプションを設定してはならない。
 
 
 <sect2>escape<label id="escape">
@@ -3833,7 +3856,7 @@ Type: string<newline>
 Default: &dquot;&tilde;&dquot;
 
 <p>
-Escape character to use for functions in the builtin editor.
+内蔵エディタの各種機能を使うためのエスケイプ文字。
 
 
 <sect2>fast&lowbar;reply<label id="fast_reply">
@@ -3842,12 +3865,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, the initial prompt for recipients and subject are skipped
-when replying to messages, and the initial prompt for subject is
-skipped when forwarding messages.
+設定されている時は最初の質問が飛ばされ、
+メッセイジに返信する際には宛先と題名が質問されず、
+転送する際には題名が質問されない。
 <p>
-<bf>Note:</bf> this variable has no effect when the ``<ref id="autoedit" name="&dollar;autoedit">''
-variable is set.
+<bf>メモ:</bf> <ref id="autoedit" name="&dollar;autoedit">
+が設定されている時には、この変数は意味がない。
 
 
 <sect2>fcc&lowbar;attach<label id="fcc_attach">
@@ -3856,8 +3879,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variable controls whether or not attachments on outgoing messages
-are saved along with the main body of your message.
+この変数は、送信メッセイジの添付ファイルを
+本文と共に保存しておくかどうかを制御する。
 
 
 <sect2>fcc&lowbar;clear<label id="fcc_clear">
@@ -3866,10 +3889,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When this variable is set, FCCs will be stored unencrypted and
-unsigned, even when the actual message is encrypted and/or
-signed.
-(PGP only)
+この変数が設定されている時は、実際のメッセイジが暗号化されたり署名されたり
+していても、FCC は暗号化も署名もされずに保管される。(PGP のみ)
 
 
 <sect2>folder<label id="folder">
@@ -3878,12 +3899,12 @@ Type: path<newline>
 Default: &dquot;&tilde;/Mail&dquot;
 
 <p>
-Specifies the default location of your mailboxes.  A `+' or `=' at the
-beginning of a pathname will be expanded to the value of this
-variable.  Note that if you change this variable from the default
-value you need to make sure that the assignment occurs <em>before</em>
-you use `+' or `=' for any other variables since expansion takes place
-during the `set' command.
+メイルボックスの既定位置を指定する。
+先頭に &dquot;+&dquot; や &dquot;=&dquot; が付いているパスは、
+その部分がこの変数の値に展開される。ただし注意点がある。
+この変数を既定値から変更するなら、&dquot;+&dquot; や &dquot;=&dquot;
+を何かの変数に使う<em>前に</em>その変更が起こるようにしなくてはならない。
+なぜなら展開が生じるのは &dquot;set&dquot; コマンドの実行中だからである。
 
 
 <sect2>folder&lowbar;format<label id="folder_format">
@@ -3892,24 +3913,25 @@ Type: string<newline>
 Default: &dquot;&percnt;2C &percnt;t &percnt;N &percnt;F &percnt;2l &percnt;-8.8u &percnt;-8.8g &percnt;8s &percnt;d &percnt;f&dquot;
 
 <p>
-This variable allows you to customize the file browser display to your
-personal taste.  This string is similar to ``<ref id="index_format" name="&dollar;index&lowbar;format">'', but has
-its own set of printf()-like sequences:
+この変数を使って、ファイルブラウザの表示を自分好みの味わいへと
+カスタマイズすることができる。文字列の内容は
+<ref id="index_format" name="&dollar;index&lowbar;format">
+に似ているが、以下に示す独自の printf() 風シークウェンスがある。
 <p>
 
 <descrip>
-<tag>&percnt;C  </tag>current file number
-<tag>&percnt;d  </tag>date/time folder was last modified
-<tag>&percnt;f  </tag>filename
-<tag>&percnt;F  </tag>file permissions
-<tag>&percnt;g  </tag>group name (or numeric gid, if missing)
-<tag>&percnt;l  </tag>number of hard links
-<tag>&percnt;N  </tag>N if folder has new mail, blank otherwise
-<tag>&percnt;s  </tag>size in bytes
-<tag>&percnt;t  </tag>* if the file is tagged, blank otherwise
-<tag>&percnt;u  </tag>owner name (or numeric uid, if missing)
-<tag>&percnt;&gt;X </tag>right justify the rest of the string and pad with character &dquot;X&dquot;
-<tag>&percnt;|X </tag>pad to the end of the line with character &dquot;X&dquot;
+<tag>&percnt;C  </tag>ファイル番号
+<tag>&percnt;d  </tag>フォルダが最後に変更された日付/時刻
+<tag>&percnt;f  </tag>ファイル名
+<tag>&percnt;F  </tag>許可属性
+<tag>&percnt;g  </tag>グループ名 (なければ gid 番号)
+<tag>&percnt;l  </tag>ハードリンクの数
+<tag>&percnt;N  </tag>新着メイルがあれば N で、なければ空白
+<tag>&percnt;s  </tag>バイト数
+<tag>&percnt;t  </tag>タグ付けられていれば * で、それ以外は空白
+<tag>&percnt;u  </tag>所有者名 (なければ uid 番号)
+<tag>&percnt;&gt;X </tag>残りの文字列を右寄せして、間を &dquot;X&dquot; で詰める
+<tag>&percnt;|X </tag>行末まで &dquot;X&dquot; で詰める
 </descrip>
 
 
@@ -3919,21 +3941,22 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls whether or not the <em>Mail-Followup-To</em> header field is
-generated when sending mail.  When <em>set</em>, Mutt will generate this
-field when you are replying to a known mailing list, specified with
-the ``subscribe'' or ``<ref id="lists" name="lists">'' commands.
+メイル送信時に <em>Mail-Followup-To</em> ヘッダフィールドを
+生成するかどうかを制御する。<em>yes</em> だと、
+既知のメイリングリストに返信する際には Mutt がこのフィールドを生成する。
+既知というのは subscribe コマンドか <ref id="lists" name="lists"> コマンドで
+指定されているということである。
 <p>
-This field has two purposes.  First, preventing you from
-receiving duplicate copies of replies to messages which you send
-to mailing lists, and second, ensuring that you do get a reply
-separately for any messages sent to known lists to which you are
-not subscribed.  The header will contain only the list's address
-for subscribed lists, and both the list address and your own
-email address for unsubscribed lists.  Without this header, a
-group reply to your message sent to a subscribed list will be
-sent to both the list and your address, resulting in two copies
-of the same email for you.
+このフィールドには二つ目的がある。第一に、メイリングリストに
+送ったメッセイジに対して、同じ返信を重複して受け取るのを避けることだ。
+そして第二に、購読していない既知のリストに送ったメッセイジへの返信を
+個別に受け取れるようにすることである。ヘッダの中には、
+購読しているリストに送る時はリストのアドレスだけが含まれ、
+未購読のリストにはリストのアドレスと自分のメイルアドレスの両方が含まれる。
+このヘッダを付けないで購読中のリストに送信すると、
+そのメッセイジに対するグループ返信が
+リストにも自分個人のアドレスにも送られるため、
+結果として同じメイルが二通送られてくることになる。
 
 
 <sect2>force&lowbar;name<label id="force_name">
@@ -3942,11 +3965,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This variable is similar to ``<ref id="save_name" name="&dollar;save&lowbar;name">'', except that Mutt will
-store a copy of your outgoing message by the username of the address
-you are sending to even if that mailbox does not exist.
+この変数は <ref id="save_name" name="&dollar;save&lowbar;name">
+とほとんど同じだが、宛先アドレスのユーザ名と同じメイルボックスに
+送信メッセイジのコピーを保管しようとする際、そのメイルボックスが
+存在していなくても (訳注：新規作成して) そこに保管するという点だけが異なる。
 <p>
-Also see the ``<ref id="record" name="&dollar;record">'' variable.
+<ref id="record" name="&dollar;record"> 変数も参照せよ。
 
 
 <sect2>forward&lowbar;decode<label id="forward_decode">
@@ -3955,10 +3979,13 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls the decoding of complex MIME messages into text/plain when
-forwarding a message.  The message header is also RFC2047 decoded.
-This variable is only used, if ``<ref id="mime_forward" name="&dollar;mime&lowbar;forward">'' is <em>unset</em>,
-otherwise ``<ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">'' is used instead.
+複雑な MIME メッセイジの転送時における text/plain へのデコウドを制御する。
+メッセイジヘッダも RFC2047 デコウドされる。
+この変数が使われるのは
+<ref id="mime_forward" name="&dollar;mime&lowbar;forward">
+が <em>no</em> の時だけであり、<em>yes</em> の時には
+<ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">
+が使われる。
 
 
 <sect2>forward&lowbar;edit<label id="forward_edit">
@@ -3967,9 +3994,9 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-This quadoption controls whether or not the user is automatically
-placed in the editor when forwarding messages.  For those who always want
-to forward with no modification, use a setting of ``no''.
+この quadoption (四択オプション) は、メッセイジ転送時にユーザが
+自動でエディタに行かされるかどうかを制御する。
+常に無変更で転送したいという人は &dquot;no&dquot; に設定すれば良い。
 
 
 <sect2>forward&lowbar;format<label id="forward_format">
@@ -3978,8 +4005,9 @@ Type: string<newline>
 Default: &dquot;&lsqb;&percnt;a: &percnt;s&rsqb;&dquot;
 
 <p>
-This variable controls the default subject when forwarding a message.
-It uses the same format sequences as the ``<ref id="index_format" name="&dollar;index&lowbar;format">'' variable.
+この変数はメッセイジを転送する時の題名の既定値を制御する。
+<ref id="index_format" name="&dollar;index&lowbar;format">
+変数と同じ書式シークウェンスを使う。
 
 
 <sect2>forward&lowbar;quote<label id="forward_quote">
@@ -3988,9 +4016,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When <em>set</em> forwarded messages included in the main body of the
-message (when ``<ref id="mime_forward" name="&dollar;mime&lowbar;forward">'' is <em>unset</em>) will be quoted using
-``<ref id="indent_string" name="&dollar;indent&lowbar;string">''.
+<em>yes</em> の時、メッセイジ本文中に取り込まれた転送メッセイジは
+(<ref id="mime_forward" name="&dollar;mime&lowbar;forward"> が
+<em>no</em> の時には)
+<ref id="indent_string" name="&dollar;indent&lowbar;string">
+を使って引用される。
 
 
 <sect2>from<label id="from">
@@ -3999,12 +4029,13 @@ Type: e-mail address<newline>
 Default: &dquot;&dquot;
 
 <p>
-When set, this variable contains a default from address.  It
-can be overridden using my&lowbar;hdr (including from send-hooks) and
-``<ref id="reverse_name" name="&dollar;reverse&lowbar;name">''.  This variable is ignored if ``<ref id="use_from" name="&dollar;use&lowbar;from">''
-is unset.
+設定されていると、この変数の中身が既定の From アドレスになる。
+これは (send-hook などから) my&lowbar;hdr を使って上書きできる。その際、
+<ref id="reverse_name" name="&dollar;reverse&lowbar;name"> も共に使うこと。
+なお、この変数は <ref id="use_from" name="&dollar;use&lowbar;from">
+が設定されていないと無視される。
 <p>
-Defaults to the contents of the environment variable EMAIL.
+設定されていない時は環境変数 EMAIL の内容が使われる。
 
 
 <sect2>gecos&lowbar;mask<label id="gecos_mask">
@@ -4013,17 +4044,19 @@ Type: regular expression<newline>
 Default: &dquot;^&lsqb;^,&rsqb;*&dquot;
 
 <p>
-A regular expression used by mutt to parse the GECOS field of a password
-entry when expanding the alias.  By default the regular expression is set
-to &dquot;^&lsqb;^,&rsqb;*&dquot; which will return the string up to the first &dquot;,&dquot; encountered.
-If the GECOS field contains a string like &dquot;lastname, firstname&dquot; then you
-should set the gecos&lowbar;mask=&dquot;.*&dquot;.
+Mutt がエイリアスを展開する際にパスワード項目の GECOS フィールド
+(訳注：getent passwd の出力で五番目のフィールド) を読み取るための正規表現。
+既定値の正規表現は &dquot;^&lsqb;^,&rsqb;*&dquot; に設定されており、
+これは最初に &dquot;,&dquot; に当たるまでの部分の文字列を返すことになる。
+もし GECOS フィールドに &dquot;姓, 名&dquot; のような文字列が含まれているなら
+gecos&lowbar;mask=&dquot;.*&dquot; と設定すべきである。
 <p>
-This can be useful if you see the following behavior: you address a e-mail
-to user ID stevef whose full name is Steve Franklin.  If mutt expands 
-stevef to &dquot;Franklin&dquot; stevef@foo.bar then you should set the gecos&lowbar;mask to
-a regular expression that will match the whole name so mutt will expand
-&dquot;Franklin&dquot; to &dquot;Franklin, Steve&dquot;.
+次のような動作に有効である。メイルを stevef というユーザ ID の人に
+送るとする。その人の本名は Steve Franklin である。Mutt が stevef
+を &dquot;Franklin&dquot; stevef@foo.bar というように展開してしまう。
+この場合は、gecos&lowbar;mask を名前全体に合致するような正規表現に設定して、
+Mutt が &dquot;Franklin&dquot; から &dquot;Franklin, Steve&dquot;
+へと視野を広げられるようにすべきなのだ。
 
 
 <sect2>hdrs<label id="hdrs">
@@ -4032,10 +4065,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When unset, the header fields normally added by the ``<ref id="my_hdr" name="my&lowbar;hdr">''
-command are not created.  This variable <em>must</em> be unset before
-composing a new message or replying in order to take effect.  If set,
-the user defined header fields are added to every new message.
+設定されていない時には、通常だと追加される
+<ref id="my_hdr" name="my&lowbar;hdr"> コマンドのヘッダフィールドが
+作成されない。この変数の効果を発揮するには、<em>必ず</em>その
+新規メッセイジの作成や返信の<em>前に</em>解除しなくてはならない。
+設定されている時にはユーザ定義ヘッダフィールドが
+すべての新メッセイジに追加される。
 
 
 <sect2>header<label id="header">
@@ -4176,8 +4211,9 @@ Default: &dquot;&dquot;
 This is a colon-delimited list of authentication methods mutt may
 attempt to use to log in to an IMAP server, in the order mutt should
 try them.  Authentication methods are either 'login' or the right
-side of an IMAP 'AUTH=xxx' capability string, eg 'digest-md5',
-'gssapi' or 'cram-md5'. This parameter is case-insensitive. If this
+side of an IMAP 'AUTH=xxx' capability string,
+eg 'digest-md5', 'gssapi' or 'cram-md5'.
+This parameter is case-insensitive. If this
 parameter is unset (the default) mutt will try all available methods,
 in order from most-secure to least-secure.
 <p>
@@ -5494,8 +5530,8 @@ Default: &dquot;&dquot;
 
 <p>
 This command is used to extract only the signers X509 certificate from a S/MIME
-signature, so that the certificate's owner may get compared to the email's 
-'From'-field.
+signature, so that the certificate's owner may get compared to the
+email's 'From'-field.
 (S/MIME only)
 
 
@@ -7155,16 +7191,16 @@ transpose-chars    not bound   transpose character under cursor with previous
 upcase-word            ESC u   uppercase all characters in current word
 </verb>
 
-<sect>Miscellany
+<sect>雑録
 <p>
 
-<sect1>Acknowledgements
+<sect1>謝辞
 <p>
 Kari Hurtta
 <htmlurl url="mailto:kari.hurtta@fmi.fi" name="&lt;kari.hurtta@fmi.fi&gt;">
-co-developed the original MIME parsing code back in the ELM-ME days.
+は、かつて ELM-ME の日々に MIME 解釈コウドの原型を共同開発してくれました。
 
-The following people have been very helpful to the development of Mutt:
+以下の人々が Mutt 開発に対して大きな力になってくれてきました。
 
 Vikas Agnihotri <htmlurl url="mailto:vikasa@writeme.com" name="&lt;vikasa@writeme.com&gt;">,<newline>
 Francois Berjon <htmlurl url="mailto:Francois.Berjon@aar.alcatel-alsthom.fr" name="&lt;Francois.Berjon@aar.alcatel-alsthom.fr&gt;">,<newline>
@@ -7208,9 +7244,36 @@ Gero Treuner <htmlurl url="mailto:gero@faveve.uni-stuttgart.de" name="&lt;gero@f
 Vsevolod Volkov <htmlurl url="mailto:vvv@lucky.net" name="&lt;vvv@lucky.net&gt;">,<newline>
 Ken Weinert <htmlurl url="mailto:kenw@ihs.com" name="&lt;kenw@ihs.com&gt;">
 
-<sect1>About this document
+<sect1>この文書について
 <p>
-This document was written in SGML, and then rendered using the
-<htmlurl url="http://www.sgmltools.org/" name="sgml-tools"> package.
+この文書は SGML で書かれ、
+<htmlurl url="http://www.sgmltools.org/" name="sgml-tools">
+パッケイジを用いて他の形式へ整形されました。
+
+<sect1>日本語訳について
+<p>
+<bf>Note: The original manual does not have this section.<newline>
+注意: この章は原文には存在しません。</bf>
+
+日本語で読める完全な Mutt マニュアルは、西岡氏と人見氏による翻訳しか
+手に入らない状態が続いています。そこで tamomo こと高橋全は、
+sourceforge.jp の mutt-j プロジェクトという場を借りて、
+一つの仮想ライヴァルを作り出そうと考えました。
+目標は、この翻訳がシェアを握ることではありません。
+この翻訳が契機となって西岡・人見訳がより良いものとなり、
+Mutt ユーザにとって、より快適な日本語環境が整備されることです。
+また、この翻訳の特色として、原文 SGML との対応が見やすいという点があります。
+<tt>diff -du manual.sgml manual.ja.sgml</tt> としてみると、
+原文と日本語が並んで見えるため、誤訳なのか
+原文が間違っているのかが一目瞭然です。
+これによって原文の質が向上されることも視野に入れています。
+翻訳中にも、いくつかの typo などを見付けました。
+
+ライセンスについては、原文に何も付け足しません。
+参考にしたのは、原文 (1.5.6) と西岡・人見訳 (1.4) のみです。
+
+改善要求などは sourceforge.jp の mutt-j プロジェクトの
+バグ報告機能かフォーラムを使うと良いでしょう。
+あるいは高橋全に直接メイルを送っても構いません。
 
 </article>
