@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="euc-jp" ?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article>
+<articleinfo>
+<author><firstname></firstname><surname>mutt-j 開発チーム</surname></author>
+<title>Mutt 1.4i用日本語版パッチインストール方法</title>
+</articleinfo>
+<sect1>
+<title>必要なもの</title>
+<sect2>
+<title>Mutt日本語版のコンパイル前に取りそろえておくもの</title>
+<para>
+無い場合は修行が必要な物もあります.
+<itemizedlist>
+<listitem>
+<para>
+GNU automake
+</para>
+</listitem>
+<listitem>
+<para>
+GNU autoconf
+</para>
+</listitem>
+<listitem>
+<para>
+GNU m4
+</para>
+</listitem>
+<listitem>
+<para>
+GNU make(gmake)
+</para>
+</listitem>
+<listitem>
+<para>
+日本語を表示できるターミナルエミュレータ─と日本語フォント
+</para>
+</listitem>
+<listitem>
+<para>
+C のプログラミングに関する多少の知識
+</para>
+</listitem>
+<listitem>
+<para>
+コンパイルが上手くいかなくても自分で修正する根性
+</para>
+</listitem>
+<listitem>
+<para>
+若干の英語読解力
+</para>
+</listitem>
+</itemizedlist>
+</para>
+</sect2>
+<sect2>
+<title>Mutt日本語版をコンパイルするため必要なもの</title>
+<itemizedlist>
+<listitem>
+<para>
+mutt-1.4 オリジナルソース
+</para>
+</listitem>   
+<listitem>
+<para>
+mutt-1.4用日本語パッチ
+</para>
+</listitem>   
+<listitem>
+<para>
+S-Lang
+</para>
+</listitem>   
+<listitem>
+<para>
+文字符号化方式の変換関数 iconv を実装している C ライブラリで日本語の文字符号化方式と UTF-8 に対応しているもの（恐らく, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 以上）（glibc-2.1.3 + ja-locale でも動作確認済）あるいは GNU libiconv
+</para>
+</listitem>   
+<listitem>
+<para>
+ワイド文字関数を実装している C ライブラリで日本語のロケールの実装がまともであるもの. （恐らく, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 以上）（無い場合は Mutt 付属のものでもかまわない (*2)）
+</para>
+</listitem>   
+</itemizedlist>
+
+<para>
+以上で挙げた他に POP/IMAP over TLS/SSL を使いたい人は OpenSSL を, POP/IMAP でSASL 認証が必要な方は Cyrus SASL Library を, PGP を使いたい人は PGP あるいはGnuPG を予めインストールしてください。
+</para>
+<para>
+以上のものは次の URL あるいはこのページからリンクされているページからダウンロードできるようにしています. <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>
+</para>
+<para>
+*2) 簡易的な実装であるため, 表示／入力用の文字符号化方式としては EUC-JP かShift_JIS しか扱えません. Mutt 付属のワイド文字関数を使うためには ./configureするときに --without-wc-funcs を指定してください.</para>
+</sect2>
+</sect1>
+<sect1>
+<title>インストール方法</title>
+<sect2>
+<title>S-Lang をインストールする</title>
+<para>
+すでに, 日本語パッチの当った S-Lang がインストールされている, あるいはオリジナルの S-Lang で SLANG_HAS_KANJI_SUPPORT が定義されてインストールされていれば次の項目に移ってください.
+</para>
+<para>
+適当なディレクトリに展開し, そのディレクトリに移ります. オリジナルの S-Lang の場合は src/sl-feat.h を次のように編集して, SLANG_HAS_KANJI_SUPPORT を 1 に定義します.
+</para>
+<para>
+<programlisting>
+    #define SLANG_HAS_KANJI_SUPPORT         1                                  
+</programlisting>
+</para>
+<para>
+コンパイルします.
+</para>
+<para>
+<programlisting>
+    $ ./configure --prefix=/usr/local                                          
+    $ make                                                                     
+    $ make runtests                                                            
+</programlisting>
+</para>
+<para>
+静的ライブラリとしてインストールする場合は次にようにします.
+</para>
+<para>
+<programlisting>
+    # make install                                                             
+</programlisting>
+</para>
+<para>
+ELF形式の共有ライブラリとしてインストールする場合はさらに次のようにします.
+</para>
+<para>
+<programlisting>
+    $ make elf                                                                 
+    # make install-elf                                                         
+    # make install-links                                                       
+</programlisting>
+</para>
+<para>
+この場合はインストール後に ldconfig などでキャッシュの更新を行なってください。
+</para>
+</sect2>
+<sect2>
+<title>libiconv をインストールする</title>
+<para>
+すでに, GNU libiconv が実装されている方および日本語や UTF-8 に完全に対応したiconv を含んでいる C ライブラリを持っている環境方は次の項目に移ってください. ただし, C ライブラリの iconv を使ってもうまくいかない場合は, GNU libiconv を使ってみてください.
+</para>
+<para>
+適当なディレクトリに展開し, そのディレクトリに移り, ./configure;make;make install でできます. インストール後に libiconv を使うための環境変数の設定や共有ライブラリのキャッシュの更新(ldconfig)を行ってください.
+</para>
+<para>
+<programlisting>
+  GNU/Linux(glibc-2.1) と Solaris                                              
+      Bsh 系                                                                   
+        $ LD_PRELOAD=/usr/local/lib/libiconv_plug.so                           
+        $ export LD_PRELOAD                                                    
+      csh 系                                                                   
+        % setenv LD_PRELOAD /usr/local/lib/libiconv_plug.so                    
+  その他                                                                       
+      Bsh 系                                                                   
+        $ LD_LIBRARY_PATH=/usr/local/lib                                       
+        $ export LD_LIBRARY_PATH                                               
+      csh 系                                                                   
+        % setenv LD_LIBRARY_PATH /usr/local/lib                                
+</programlisting>
+</para>
+</sect2>
+<sect2>
+<title>Mutt のソースに日本語パッチを当てる</title>
+<para>
+Mutt の tar ball を展開し, 日本語パッチを当ててください.
+</para>
+<para>
+例）
+</para>
+<para>
+<programlisting>
+    $ gzip -dc mutt-1.4i-ja.1.tar.gz | tar xvf -
+    $ gzip -dc mutt-1.4i.tar.gz | tar xvf -
+    $ cd mutt-1.4
+    $ patch -p1 &#60; ../mutt-1.4i-ja.1/patch-1.4.tt.ja.1
+</programlisting>
+</para>
+</sect2>
+<sect2>
+<title>./configure に必要なオプションを付けて実行する</title>
+<para>
+次のオプションは Mutt で日本語を使うために必要です.
+</para>
+<para>
+<itemizedlist>
+<listitem>
+<para>
+--with-iconv=DIR
+</para>
+<para>   
+ GNU libiconv を使う場合はこのオプションを付けないとうまくいかないことがあります.
+</para>
+<para>
+例) --with-iconv=/usr/local
+</para>
+</listitem>
+<listitem>
+<para>
+--without-wc-funcs
+</para>
+<para>
+ワイド文字関数と日本語のロケールデータがまともに動く環境（恐らく GNU/Linux/glibc-2.2, Solaris 2.7, AIX 4.3 以上）以外の方はこのオプションを忘れずに付けてください.
+</para>
+</listitem>
+<listitem>
+<para>
+--with-slang[=DIR]
+</para>
+<para>
+S-Lang を使う場合は必ず付けてください. システムにライブラリとして存在する場合は基本的にはディレクトリを指定する必要はありません. なお、一部のLinuxディストリビューションでは共有ライブラリ名が libslang-ja.so である場合があります. この場合は configure と configure.in に記述されている"-lslang"を"-lslang-ja"に予め置換しておいてください.
+</para>
+<para>
+例) --with-slang=/usr/local
+</para>
+</listitem>
+<listitem>
+<para>
+--enable-default-japanese
+</para>
+<para>
+設定変数のデフォルト値を日本語を使うために適したものに設定します. このオプションを無効にしても, 設定変数を適切に設定すれば日本語を使うことができます.
+</para>
+</listitem>
+</itemizedlist>
+</para>
+<para>
+./configure にはそのほかにもいくつかのオプションがあります. ./configure --help
+で確認してください.
+</para>
+</sect2>
+<sect2>
+<title>コンパイル後インストールする</title>
+<para>
+make;make install でいけます.
+</para>
+<para>
+<programlisting>
+    $ make                                                                     
+    # make install                                                             
+</programlisting>
+</para>
+</sect2>
+<sect2>
+<title>日本語版のドキュメントをインストールする</title>
+<para>
+まず, オリジナルのMuttのドキュメントがインストールされたディレクトリを確認するために, オリジナルのソースディレクトリで次のコマンドを実行します.
+</para>
+<para>
+<programlisting>
+    $ grep docdir Makefile                                                     
+</programlisting>
+</para>
+<para>
+次に, 日本語パッチのディレクトリに移動してMakefileのDOCDIRの値を修正し, rootになって, make installを実行します.
+</para>
+<para>
+<programlisting>
+    $ cd ../mutt-1.4i-ja.1                                                     
+    [Makefileを修正]
+    # make install                                                             
+</programlisting>
+</para>
+</sect2>
+<sect2>
+<title>メッセージカタログに関する注意事項</title>
+<para>
+NEC UX/4800のように, 標準のlocaleが変則的なものは, Muttが使う ja locale ディレクトリと標準のディレクトリ(UX/4800シリーズでは japan)をシンボリックリンクしてください. こうすることで, メッセージカタログが正常にに利用できます.
+</para>
+</sect2>
+<sect2>
+<title>関連ツールをインストールする</title>
+<para>
+必要なら, urlview と metamail もインストールしてください. Mutt から直接 Web ブラウザを起動したり, 色々と便利なことができます.
+</para>
+</sect2>
+<sect2>
+<title>送信用プログラムをインストールする</title>
+<para>
+Muttでは送信に関しては外部プログラムを使います. システムにMTAがインストールされていて, 外部のドメインあるいは中継用サーバに送信できる環境であれば, 特に別のプログラムをインストールする必要はありません. そうでない場合は, qmail, exim,postfixなどの MTA や Nomail, smtppush, nullmailer, ssmtp などの送信専用のプログラムをインストールする必要があります. ダイアルアップ環境でしたら Nomail が, 常時接続環境であれば smtppush が設定が簡単です.
+</para>
+</sect2>
+</sect1>
+<sect1>
+<title>設定</title>
+<para>
+日本語環境の設定は usage-japanese.html をご覧下さい. 1.2.x 以前のものも基本的には使えますが, 日本語回りでいくつか不具合がでる可能性があるため設定を再確認してください.
+</para>
+<para>
+どうしても日本語の表示がうまくいかないという方は前のインストールの手順を確認し,S-Lang, iconv, ワイド文字関数を使うようになっているかを確かめてください.
+</para>
+</sect1>
+<sect1>
+<title>この文書の著作権</title>
+<itemizedlist>
+<listitem><para>
+Copyright (C) 2000-2001 Oota Toshiya &#60;oota@ppd.fc.nec.co.jp&#62;
+</para></listitem>
+<listitem><para>
+Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
+</para></listitem>
+<listitem><para>
+Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
+</para></listitem>
+</itemizedlist>
+<para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
+</sect1>
+</article>

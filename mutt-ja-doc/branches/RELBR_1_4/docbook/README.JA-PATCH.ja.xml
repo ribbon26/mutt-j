@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="euc-jp" ?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
+        "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article>
+<articleinfo>
+<author><firstname></firstname><surname>mutt-j 開発チーム</surname></author>
+<title>Mutt 1.4i用日本語版パッチリリースノート</title>
+</articleinfo>
+<sect1>
+<title>Mutt日本語版について</title>
+<para>
+Mutt 日本語版とは, 高速に動き, スレッド表示も可能, カスタマイズやPOP/IMAPも利用可能な Mutt を日本語が使えるようにしたバージョンです. 本家の Mutt に対して日本語化パッチを適用することで Mutt 日本語版になります. Mutt 日本語版は, 本家のMutt と上位互換の機能を提供します.
+</para>
+<para>
+Mutt の先の開発系列である mutt-1.3.x シリーズにおいては Edmund GRIMLEY EVANS&#60;edmundo@rano.org&#62; のおかげで国際化され日本語パッチがなくともある程度日本語のメールが取り扱えるようになりました. さらに滝澤隆史 &#60;taki@cyber.email.ne.jp&#62; のhack により日本語回りの仕様上の問題はほとんど無くなりました. しかし, 日本語特有の事情（いわゆる生JIS問題など）があるため, 実用上はそのままでは使いにくいものです. そこで, 特に日本語回りでの実用上の各種問題を修正しほぼ通常利用に差し支えなくし, さらにいくつかの便利な機能を追加したものが Mutt 日本語版です.
+</para>
+<para>
+日本語パッチとしては 1.2.x までの吉田行範によるバージョンとは基本的に独立に開発されているため, 従来あった日本語版独自の機能などは一部省略されて, また新たに1.3.x 系独自の新機能などが追加されています. (日本語化の実装は 1.2.x とは全く別物になっています)
+</para>
+</sect1>
+<sect1>
+<title>オリジナル版との違い</title>
+<sect2>
+<title>オリジナル版のバグの修正</title>
+<para>
+カプセル化した転送メッセージを作成すると転送元の charset の取得がおかしく,us-ascii 扱いになります. この問題に対して, 新たに file_charset という変数を追加することにより対処しています. ただし, 設定ファイルにおいて, ２つの変数
+<itemizedlist>
+ <listitem>
+<para>
+forward_decode
+</para>
+</listitem>
+<listitem>
+<para>
+mime_forward_decode
+</para>
+</listitem>
+</itemizedlist>
+   
+はデフォルト値のままでないとうまく動きません.
+</para>
+<para>
+作成したメッセージの最後の文字が改行コードで終わらず, JIS X 0208 の文字で終わっている場合に, 送信用に ISO-2022-JP 変換したメッセージの ISO 2022 のシフト状態がASCII に戻りません. これを修正するために, 作成したメッセージの最後の文字が改行コードで無い場合には改行コードを追加するようにしました.
+</para>
+<para>
+ステータス行のマルチバイト文字に対する処理が不完全であるため, これを修正しました.
+</para>
+<para>
+スレッド表示や添付ファイル画面で用いられるツリーの罫線(ACS)文字がマルチバイト文字であるときの処理がオリジナルでは全く行なわれていないため, その修正を行ないました.
+</para>
+<para>
+UTF-8ロケールにおいてはJIS X 0208の記号・ギリシャ文字・キルリ文字の幅は1桁幅の文字として扱われます. しかし, mlterm上でUCSフォントでない従来のフォントを用いた場合にはこれらの文字は2桁幅のJIS X 0208のフォントが使われます. そのため、不整合が生じ、表示が乱れます。これを防ぐために次の設定変数
+
+<itemizedlist>
+<listitem>
+<para>
+use_jisx0208
+</para>
+</listitem>
+</itemizedlist>
+ 
+を用意し、この値をyesに設定することにより2桁幅の文字として扱うようになり、表示
+が乱れるのを防ぎます. ただし、この設定変数はMutt内蔵のワイド文字関数を使うとき
+のみ有効です.
+</para>
+<para>
+Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは, 根本的に全くマルチバイト文字に対応していないため, 文字化けする可能性があります. しかし, 運用で対処できるため, 今のところは対応しません. 詳細は usage-japanese.html をご覧下さい.
+</para>
+</sect2>
+<sect2>
+<title>日本語回りの実用上の問題の修正</title>
+<para>
+オリジナル版でも MIME 関連の RFC に従っている日本語のメッセージは問題なく取り扱えます. しかし, 機種依存文字があると文字化けしたり, 非 MIME 生JIS message body,生JIS subject などは表示用の文字符号化方式に変換してくれないため読むことができません. そのため, 日本語版では, それらのメッセージを読むことができる次のような設定オプションを追加しました. 詳細は manual-ja-patch.html およびusage-japanese.html をご覧下さい.
+</para>
+<para>
+<orderedlist>
+<listitem>
+<para>
+非 MIME 生JIS message body, 生JIS subject 対策, 日本語ファイル名
+<itemizedlist>
+<listitem>
+<para>
+strict_mime
+</para>
+</listitem>
+<listitem>
+<para>
+assumed_charset
+</para>
+</listitem>
+<listitem>
+<para>
+create_rfc2047_parameters
+</para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+<listitem>
+<para>
+機種依存文字対策
+<itemizedlist>
+<listitem>
+<para>
+sanitize_ja_chars
+</para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+<listitem>
+<para>
+日本語テキストの添付ファイル及び転送に関する対策
+<itemizedlist>
+<listitem>
+<para>
+file_charset
+</para>
+</listitem>
+</itemizedlist>
+</para>
+</listitem>
+</orderedlist>
+</para>
+<para>
+また、オリジナル版では旧形式の（PGP/MIMEでない）PGPでは US-ASCII にしか対応せず、他の文字符号化方式を使う場合は PGP/MIME を使えという方針なのですが、日本語版ではこれを他の文字符号化方式でも使えるようにしました。ただし、クリア署名に関しては 7bit 符号化の文字にしか対応しません。日本語を使う分には ISO-2022-JP は7bit であるため問題はありませんが、ISO-8850-* などの文字で送ろうとすると強制的に PGP/MIME として生成されますので注意下さい。もちろん、PGP/MIME ではどの文字符号化方式でも問題無く使えます。
+</para>
+</sect2>
+<sect2>
+<title>便利な機能の追加</title>
+<para>
+いくつかの便利な機能を使うための設定オプションを追加しています. 次のようなものがあります. 詳細は manual-ja-patch.html をご覧下さい.
+</para>
+<para>
+<orderedlist>
+<listitem>
+<para>
+メイリングリストの Subject prefix の削除 (旧 numbered_ml)
+<itemizedlist>
+<listitem><para>delete_prefix</para></listitem>
+<listitem><para>delete_regexp</para></listitem>
+</itemizedlist>
+</para>
+</listitem>
+<listitem>
+<para>
+MH path の指定
+<itemizedlist>
+<listitem><para>mh_path</para></listitem>
+</itemizedlist>
+</para>
+</listitem>
+<listitem>
+<para>
+Message-ID の生成に関する設定
+<itemizedlist>
+<listitem><para>msgid</para></listitem>
+<listitem><para>msgid_use_from</para></listitem>
+</itemizedlist>
+</para>
+</listitem>
+<listitem>
+<para>
+pager の表示に関する設定（遅い回線やマシンで使うと便利な機能）
+<itemizedlist>
+<listitem><para>pager_hdrs_only</para></listitem>
+<listitem><para>pager_spoil</para></listitem>
+<listitem><para>pager_spoiler</para></listitem>
+</itemizedlist>
+</para>
+</listitem>
+<listitem>
+<para>
+スレッド表示のツリーに用いる文字の設定 (旧 kanjithread, vt-100 非互換端末用で使うと便利)
+<itemizedlist>
+<listitem><para>tree_chars</para></listitem>
+<listitem><para>tree_llcorner</para></listitem>
+<listitem><para>tree_ulcorner</para></listitem>
+<listitem><para>tree_ltee</para></listitem>
+<listitem><para>tree_hline</para></listitem>
+<listitem><para>tree_vline</para></listitem>
+<listitem><para>tree_ttee</para></listitem>
+<listitem><para>tree_btee</para></listitem>
+<listitem><para>tree_space</para></listitem>
+<listitem><para>tree_rarrow</para></listitem>
+<listitem><para>tree_star</para></listitem>
+<listitem><para>tree_hidden</para></listitem>
+<listitem><para>tree_equals</para></listitem>
+<listitem><para>tree_missing</para></listitem>
+</itemizedlist>
+</para>
+</listitem>
+</orderedlist>      
+</para>
+</sect2>
+</sect1>
+<sect1>
+<title>動作確認環境</title>
+<para>
+現在のバージョンでは以下の環境で動作確認をしています.
+</para>
+<table frame="all">
+<title>動作確認</title>
+<tgroup cols="3">
+<colspec colname="system"></colspec>
+<colspec colname="options"></colspec>
+<colspec colname="affirmation"></colspec>
+<tbody>
+<row><entry>システム</entry><entry>オプション</entry><entry>確認</entry></row>
+<row><entry>Linux 2.2.13/glibc-2.1.3</entry><entry>iw</entry><entry>TAKIZAWA Takashi</entry></row>
+<row><entry>Linux 2.4.17/glibc-2.2.4</entry><entry>IW</entry><entry>TAKIZAWA Takashi</entry></row>
+<row><entry>FreeBSD 3.4-RELEASE</entry><entry>iw</entry><entry>IWASHITA Yoji</entry></row>
+<row><entry>FreeBSD 4.1R, 4.1-STABLE</entry><entry>iw</entry><entry>Kawaguti Ginga</entry></row>
+<row><entry>Digital UNIX 4.0</entry><entry>iw</entry><entry>Kawaguti Ginga</entry></row>
+<row><entry>NetBSD 1.5ZC(i386)</entry><entry>iw</entry><entry>Hiroyuki Maehara</entry></row>
+<row><entry>NetBSD 1.5.3_ALPHA(alpha)</entry><entry>iw</entry><entry>Hiroyuki Maehara</entry></row>
+</tbody>
+</tgroup>
+</table>
+<para>
+オプション
+</para>
+<para>
+<itemizedlist>
+<listitem>
+<para>
+I: C ライブラリに実装されている iconv
+</para>
+</listitem>
+<listitem>
+<para>
+i: Bruno 氏の libiconv
+</para>
+</listitem>
+<listitem>
+<para>
+W: C ライブラリに実装されているワイド文字関数
+</para>
+</listitem>
+<listitem>
+<para>
+w: Mutt 付属のワイド文字関数 (--without-wc-funcs)
+</para>
+</listitem>
+</itemizedlist>
+</para>
+</sect1>
+<sect1>
+<title>インストールと設定</title>
+<para>
+インストールに関しては INSTALL.JA-PATCH をお読み下さい。なお、mutt-j ML のメンバーの手により FreeBSD, NetBSD, Linux(RedHat系, Debian)用のパッケージが作成されています。詳しくは <ulink url="http://www.emaillab.org/mutt/download14.html"><citetitle>http://www.emaillab.org/mutt/download14.html</citetitle></ulink>のページをご覧ください。
+</para>
+<para>
+また、インストールや設定に関して役に立つ文書へのリンクが <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>のドキュメントのコーナーにありますので、一度ご覧ください。
+</para>
+</sect1>
+<sect1>
+<title>関連リンク</title>
+<para>
+<itemizedlist>
+
+<listitem>
+<para>
+<ulink url="http://www.mutt.org/"><citetitle>Mutt Home Page</citetitle></ulink>
+
+<itemizedlist>
+<listitem>
+<para>
+http://www.mutt.org/
+</para>
+</listitem>
+<listitem>
+<para>
+Mutt 本家のページ
+</para>
+</listitem>
+</itemizedlist>       
+</para>
+</listitem>
+
+<listitem>
+<para>
+<ulink url="http://www.emaillab.org/mutt/"><citetitle>Mutt Japanese Edition</citetitle></ulink>
+
+<itemizedlist>
+<listitem>
+<para>
+http://www.emaillab.org/mutt/
+</para>
+</listitem>
+<listitem>
+<para>
+Mutt 日本語版のページ
+</para>
+</listitem>
+</itemizedlist>       
+</para>
+</listitem>
+
+<listitem>
+<para>
+<ulink url="http://www.kondara.org/%7Eg/mutt.html"><citetitle>mutt</citetitle></ulink>
+
+<itemizedlist>
+<listitem>
+<para>
+http://www.kondara.org/%7Eg/mutt.html
+</para>
+</listitem>
+<listitem>
+<para>
+菊谷さんのページ。mutt-1.0.1-jp0 の情報と slang-j の情報がある.
+</para>
+</listitem>
+</itemizedlist>       
+</para>
+</listitem>
+
+<listitem>
+<para>
+<ulink url="http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/"><citetitle>Japanese Mutt Manual</citetitle></ulink>
+
+<itemizedlist>
+<listitem>
+<para>
+http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/
+</para>
+</listitem>
+<listitem>
+<para>
+西岡さんと人見さんによる Mutt のマニュアルの邦訳
+</para>
+</listitem>
+</itemizedlist>       
+</para>
+</listitem>
+
+<listitem>
+<para>
+<ulink url="http://www.geocities.co.jp/SiliconValley-PaloAlto/2594/"><citetitle>Ribbon's Home Page</citetitle></ulink>
+
+<itemizedlist>
+<listitem>
+<para>
+http://www.geocities.co.jp/SiliconValley-PaloAlto/2594/
+</para>
+</listitem>
+<listitem>
+<para>
+mutt-j ML のメンテナーの太田さんのページ. mutt-j ML のアーカイブがある.
+</para>
+<para>
+mutt-1.2.x-jp の情報がある.
+</para>
+</listitem>
+</itemizedlist>       
+</para>
+</listitem>
+</itemizedlist>       
+</para>
+</sect1>
+<sect1>
+<title>その他</title>
+<sect2>
+<title>著作権等</title>
+<para>
+Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバーの協力により開発が行なわれています. なお, 現在の取りまとめの中心者にはメールアドレスの後ろに '*'を付けました. バグやおかしい点がありましたら, mutt-j ML あるいは取りまとめの中心者にメールをお送り下さい.
+</para>
+</sect2>
+<sect2>
+<title>日本語パッチ</title>
+<itemizedlist>
+<listitem><para>
+Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62; *
+</para></listitem>
+<listitem><para>
+Copyright (C) 2000 Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;
+</para></listitem>
+<listitem><para>
+Copyright (C) 2000 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
+</para></listitem>
+</itemizedlist>
+</sect2>
+<sect2>
+<title>メッセージカタログの邦訳</title>
+<itemizedlist>
+<listitem><para>
+Translation 1999 Kikutani Makoto &#60;kikutani@galaxy.net&#62;
+</para></listitem>
+<listitem><para>
+Translation 2001-2002 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62; *
+</para></listitem>
+<listitem><para>
+Translation 2002 "TAKAHASHI, Tamotsu" &#60;arms405@jade.dti.ne.jp&#62;
+</para></listitem>
+</itemizedlist>
+</sect2>
+<sect2>
+<title>マニュアルの邦訳</title>
+
+<itemizedlist>
+<listitem><para>
+Translation 1999 Takuhiro Nishioka &#60;takuhiro@super.win.ne.jp&#62;
+</para></listitem>
+<listitem><para>
+Translation 1999-2002 Kohtaro Hitomi &#60;hitomi@hiei.kit.ac.jp&#62; *
+</para></listitem>
+</itemizedlist>
+</sect2>
+<sect2>
+<title>この文書</title>
+<itemizedlist>
+<listitem><para>
+Copyright (C) 2000-2001 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;
+</para></listitem>
+<listitem><para>
+Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
+</para></listitem>
+<listitem><para>
+Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62; *
+</para></listitem>
+</itemizedlist>
+<para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
+</sect2>
+<sect2>
+<title>一次配布先</title>
+<para>
+日本語化パッチの一次配布先は http://www.emaillab.org/mutt/ です.
+</para>
+</sect2>
+<sect2>
+<title>ライセンス</title>
+<para>
+日本語化パッチはオリジナルの Mutt と同様に無保証であり, Free Software Foundation の GNU General Public License Version 2 に従って配布および修正を行うことができます. GNU General Public License Version 2 に関してはオリジナルのMutt のパッケージに含まれている GPL をお読み下さい.
+</para>
+</sect2>
+<sect2>
+<title>メーリングリスト</title>
+<para>
+本家のメーリングリストは http://www.mutt.org/ をご覧ください.
+</para>
+<para>
+mutt-j ML は mutt-j-ctl@ns.ribbon.or.jp に本文 "subscribe ローマ字の名前" のメールを送ると参加できます.
+</para>
+</sect2>
+</sect1>
+</article>

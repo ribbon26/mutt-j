@@ -1,0 +1,112 @@
+IMAP/SSL in mutt 
+================
+
+コンパイル
+-----------
+Mutt で SSL を使いたいのであれば、Mutt をコンパイルする前に OpenSSL
+（http://www.openssl.org）のライブラリとヘッダをインストールする必要が
+あります。OpenSSL バージョン 0.9.3 から 0.9.6a までが試験されています。
+
+SSL サポートを有効にするためには、「--enable-imap --with-ssl[=PFX]」パ
+ラメータを付けて configure スクリプトを実行する必要があります。
+OpenSSL のヘッダとライブラリがデフォルトのシステム・サーチパス（通常は
+/usr/include と /usr/lib）にない場合には、オプションの PFX 引数を使っ
+て OpenSSL がインストールされているルートディレクトリを指定することが
+できます。このときは、ライブラリーは PFX/lib で、ヘッダは
+PFX/include/openssl で見つけられることが望まれます。
+
+
+使い方
+------
+IMAP/SSL フォルダには普通の IMAP フォルダのようにアクセスできます。し
+かし、括弧を閉じる前に '/ssl' を加える必要があります。あるいは、IMAP 
+url記法を使うことができます。この場合にはプロトコル名は imaps と呼ばれ
+ます。
+
+例:
+	mailboxes {localhost/ssl}inbox
+	mailboxes {localhost:994/ssl}inbox
+あるいは
+	mailboxes imaps://localhost/inbox
+	mailboxes imaps://localhost:994/inbox
+
+エントロピ不足でエラーが生じたら、SSL ライブラリを初期化するための乱数
+データの源を見つけることができなかったことを意味します。このことが生じ
+たら、あなた自身でデータを生成し、$entropy_file や 環境変数 $RANDFILE
+で示されたファイルか ~/.rnd にそのデータを保存する必要があります。
+
+乱数データを生成する一つの方法は予測不能な出力を得るコマンドを実行する
+ことです。例えば、Linux においては 'ps aluxww' を実行します。そして、
+その出力から MD5-sum を計算し、その結果をファイルに保存します。
+
+** 注記: 環境変数 $RANDFILE で示されたファイル (環境変数が設定されて
+** いなければ ~/.rnd) の内容は Mutt が起動する度に上書きされます。
+** そのため、そのファイルには失って差し支えあるものは何も置かないよう
+** にしてください。
+
+Mutt が SSL ライブラリを初期化するために使うことを試すファイルは
+$entropy_file と $RANDFILE (設定されていなければ ~/.rnd) です。
+OpenSSL がバージョン 0.9.5 以上であれば、上述のファイルには EGD ソケッ
+ト（Entropy Gathering Daemon に関する更なる情報は
+http://www.lothar.com/tech/crypto/ を参照のこと）も含まれ、さらに、以
+下に述べるソケットが試されます。これは環境変数 $EGDSOCKET と ~/.entropy 
+と /tmp/entropy で示されるソケットです。
+
+上述した全てのファイルとソケットはそのユーザの所有でパーミッションは
+600でなければなりません。
+
+
+証明書
+------
+サーバが接続されるたびに、サーバの証明書は既知の有効な証明書に対して正
+しいか確認されます。未知の証明書に出会ったら、その証明書を検証するよう
+に尋ねられます。その証明書を拒否した場合は、すぐに接続が終了します。証
+明書を受諾した場合は、接続が確立されます。それ以降のサーバへの接続が自
+動的に許可されるように、受諾した証明書を保存することもできます。
+
+組織内にいくつかの同等な IMAP サーバがある場合には、個々のサーバは共通
+の証明書で署名されたただ一つの証明書を持つはずです。これらのサーバを全
+て利用したいのであれば、最初に接続した時に、個々のサーバの証明書を保存
+する必要はありません。代わりに、署名者の証明書を取得し、代わりにそれを
+保存することができます。そうしたら、Mutt は保存されている証明書で署名
+された全ての証明書を自動的に許諾するでしょう。
+
+システム全体の証明書は証明書を確認するときにデフォルトで署名者によって
+信用されたものとみなされます。このことはシステム管理者に全ユーザのため
+の信用された証明書を登録することを許可します。システム全体の証明書のイ
+ンストール方法は OpenSSL のインストールに依存します。システム全体の証
+明書の使用は変数 $ssl_usesystemcerts の解除によって無効にすることが出
+来ます。
+
+証明書は変数 $certificate_file によって指定されたファイルに保存されま
+す。この変数はデフォルトでは空です。そのため、サーバに接続するたびに証
+明書を検証したくなければ、この変数を適切な値に設定します。
+
+例:
+	set certificate_file=~/.mutt/certificates
+
+
+トラブルシューティング
+----------------------
+上述のことを行った後にうまく接続できないのであれば、IMAPサーバがSSLプ
+ロトコルの一つをサポートしていないということがありそうです。TLSv1, 
+SSLv2, SSLv3 といった３つの異なるプロトコルがあります。このそれぞれを
+確認するために、次のことを行います。
+    openssl s_client -host <imap server> -port <port> -verify -debug -no_tls1
+    openssl s_client -host <imap server> -port <port> -verify -debug -no_ssl2
+    openssl s_client -host <imap server> -port <port> -verify -debug -no_ssl3
+
+接続に成功するまでそのオプションを組み合わせることもできます。どのオプ
+ションが機能しないかがわかったら、わかった機能しないプロトコルを変数に
+設定することが出来ます。そのプロトコルの変数は ssl_use_tlsv1,
+ssl_use_sslv2, ssl_use_sslv3 です。
+
+-- 
+Tommi Komulainen
+Tommi.Komulainen@iki.fi
+
+Updated by Jeremy Katz
+katzj@linuxpower.org
+
+The original file is mutt-1.4/README.SSL.
+Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>.

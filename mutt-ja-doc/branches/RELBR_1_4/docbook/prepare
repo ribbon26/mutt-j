@@ -1,0 +1,18 @@
+#!/bin/sh
+# XSLPATH is a colon-separeted list.
+XSLPATH=/usr/share/sgml/docbook/xsl-stylesheets/xhtml/docbook.xsl:/usr/share/xml/docbook/xsl-stylesheets/xhtml/docbook.xsl:/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/xhtml/docbook.xsl:/usr/local/share/xsl/docbook/xhtml/docbook.xsl:/usr/local/share/xml/docbook/xsl/modular/xhtml/docbook.xsl
+XSL=xsl/docbook-wrapper.xsl
+
+for DOCBOOKXSL in `echo ${XSLPATH}|sed 's/:/ /g'`; do
+echo ${DOCBOOKXSL}
+  if test -f ${DOCBOOKXSL}; then
+    awk -v xsl=${DOCBOOKXSL} '{sub("docbookxslfile",xsl);print}' \
+	${XSL}.in > ${XSL}
+    exit 0
+  fi
+done
+
+echo "Error: Unable to find docbook.xsl."
+echo "       Open 'prepare' script, and add a path of docbook.xsl"
+echo "       to the end of the line starting with 'XSLPATH'."
+exit 1

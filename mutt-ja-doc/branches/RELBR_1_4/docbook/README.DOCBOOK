@@ -1,0 +1,31 @@
+DocBook XML 形式のファイルから XHTML ファイルを生成する方法
+===========================================================
+
+2002-12-24 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+
+
+1. 用意するもの
+
+- iconv
+  Cライブラリが iconv をまともに実装していれば特に別に用意する必要はない。
+  実装していない場合は GNU libiconv をインストールする必要がある。
+  もちろん、Mutt にも必要であるため、すでに用意されているものと思われるが。
+
+- libxml2
+  http://xmlsoft.org/
+  iconv とリンクするようにコンパイルする。
+
+- libxslt
+  http://xmlsoft.org/XSLT/
+ 
+- docbook-xsl
+  http://sourceforge.net/projects/docbook/
+  DocBook XML の XSL スタイルシートである。
+  適当なディレクトリに配置する。
+
+2. prepare スクリプトを開き、XSLPATH の行に配置した xhtml/docbook.xsl のパス
+   が存在するかを確認し、なければその行末に":"に続けてパスを追加する。
+
+3. make; make dist を実行する。
+
+  

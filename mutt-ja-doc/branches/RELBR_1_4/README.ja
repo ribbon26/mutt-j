@@ -1,0 +1,47 @@
+README for mutt-1.3
+===================
+
+公開CVSリポジトリからMuttソースコードを取得する場合は、
+doc/devel-notes.txtを読んで、開発環境が一式揃っていることを確かめて
+ください。
+CVS root: :pserver:anonymous@cvs.mutt.org:/home/roessler/cvs
+    password anonymous
+
+インストールに関する説明は「INSTALL」に詳細に記述されています。
+
+ユーザマニュアルは doc/manual.txt です。最後の公開バージョンからの大き
+な変更内容のリストは、NEWSで読むことができます。
+
+PGPユーザは、doc/PGP-Notes.txtを読んでください。
+
+1.1より前のMuttのバージョンからアップグレードする人はREADME.UPGRADE
+ファイルを読んでください。
+// 訳注: README.UPGRADEはありません。
+//       1.2以前の日本語版からアップグレードする人は NEWS.ja を読ん
+//       でください。
+
+Muttをハックし始める前に、doc/devel-notes.txtを読んでください。
+Muttにパッチを適用する前に、doc/applying-patches.txtを読んでください。
+FAQを尋ねないで済むようにこれらのファイルを読んでください。
+
+更に情報を知りたい方はMuttホームページを見てください。
+
+ http://www.mutt.org/
+
+// 訳注: 日本語版に関しては「Mutt Japanese Edition」を見てください。
+//       http://www.emaillab.org/mutt/
+
+Muttの一次配布元は次のURLです。
+
+ ftp://ftp.mutt.org/pub/mutt
+
+ミラーサイトのリストは
+<http://www.mutt.org/download.html>.
+で見ることができます。
+
+// 訳注: 国内のミラーは次のURLです。
+//       http://www.emaillab.org/mutt/www.mutt.org/
+
+The original file is mutt-1.4/README.
+Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+and members of mutt-j ML.
