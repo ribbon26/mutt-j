@@ -10,7 +10,7 @@
 <H1>The Mutt E-Mail Client</H1>
 
 <H2>by Michael Elkins 
-<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.6 +20040808
+<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.6 +20041208
 <P><HR>
 <EM>``All mail clients suck.  This one just sucks less.'' -me, circa 1995</EM>
 <HR>
@@ -2053,13 +2053,26 @@ d       日
 <A HREF="#auto_tag">$auto_tag</A> 変数が
 セットされていれば、次の操作が自動的にタグ付きメッセイジへ適用されるので、
 &quot;tag-prefix&quot; 演算子は必要ありません。
-(訳注：パターンに合致するものへタグを付けてから操作する際、
+<P>
+<A HREF="#macro">macro</A> や 
+<A HREF="#push">push</A> コマンドには
+&quot;tag-prefix-cond&quot; 演算子を使うことができます。
+タグの付いたメッセイジがない場合には Mutt が残りのマクロを「食って」、
+実行されないようにしてくれるのです。
+マクロに &quot;end-cond&quot; 演算子が出てきたところで食うのをやめて、
+その後の残りのマクロは通常通りに実行されるようになります。
+(訳注：特にパターンでタグを付ける際、
 必ずしも一つ以上のメッセイジにタグが付いているとは限らない。
-タグがない場合にはカーソルの位置にあるメッセイジへ操作が適用されてしまうため、
-危険すぎてマクロでは使えない。それで、tag-prefix-cond が追加された。
-たとえば
+タグがない場合に単なる &quot;tag-prefix&quot; を使うと、
+カーソルの位置にあるメッセイジへ操作が適用されてしまう。
+それで、tag-prefix-cond が追加された。たとえば
 <CODE>macro index i &lt;tag-pattern&gt;~d*1w\n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent\n&lt;end-cond&gt;</CODE>
-と設定すると、ここ一週間のメイルを移動するマクロができる。)
+と設定すると、ここ一週間のメイルを移動するマクロができる。
+注意すべき点は、これが単なる条件分岐であるということだ。
+&quot;tag-prefix-cond&quot; から &quot;end-cond&quot; までの部分を
+タグ付きメッセイジすべてに適用するというわけではなく、
+タグ付きメッセイジへ適用されるのは &quot;tag-prefix&quot; と同様、
+&quot;tag-prefix-cond&quot; 直後の操作のみである。)
 <P>
 <H2><A NAME="hooks"></A> 4.4 フックを使う</H2>
 
@@ -3236,6 +3249,8 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <A HREF="#crypt-hook">crypt-hook</A></CODE> <EM>パターン</EM>　<EM>鍵ID</EM></LI>
 <LI><CODE>
 <A HREF="#push">push</A></CODE> <EM>文字列</EM></LI>
+<LI><CODE>
+<A HREF="#reply-hook">reply-hook</A></CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM></LI>
 <LI><CODE>
 <A HREF="#set">reset</A></CODE> <EM>変数</EM> [<EM>変数</EM> ... ]</LI>
 <LI><CODE>
@@ -6865,7 +6880,9 @@ select-entry             RET   select the current entry
 shell-escape               !   run a program in a subshell
 tag-entry                  t   toggle the tag on the current entry
 tag-prefix                 ;   apply next command to tagged entries
+tag-prefix-cond    not bound   apply next function ONLY to tagged messages
 top-page                   H   move to the top of the page
+what-key           not bound   display the keycode for a key press
 </PRE>
 <H3>index</H3>
 
