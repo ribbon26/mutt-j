@@ -3,7 +3,7 @@
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author><firstname>Takashi</firstname><surname>TAKIZAWA</surname></author>
+<author>mutt-j 開発チーム</author>
 <title>日本語環境の設定方法 - Version 0.6.1</title>
 </articleinfo>
 <sect1>

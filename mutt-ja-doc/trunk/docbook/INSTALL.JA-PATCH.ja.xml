@@ -3,8 +3,8 @@
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author><firstname></firstname><surname>mutt-j │л╚пе┴б╝ер</surname></author>
-<title>Mutt 1.4i═╤╞№╦▄╕ь╚╟е╤е├е┴едеєе╣е╚б╝еы╩¤╦б</title>
+<author>mutt-j │л╚пе┴б╝ер</author>
+<title>Mutt 1.5.3i═╤╞№╦▄╕ь╚╟е╤е├е┴едеєе╣е╚б╝еы╩¤╦б</title>
 </articleinfo>
 <sect1>
 <title>╔м═╫д╩дтд╬</title>
@@ -61,12 +61,12 @@ C д╬е╫еэе░еще▀еєе░д╦┤╪д╣ды┬┐╛пд╬├╬╝▒
 <itemizedlist>
 <listitem>
 <para>
-mutt-1.4 екеъе╕е╩еые╜б╝е╣
+mutt-1.5.x екеъе╕е╩еые╜б╝е╣
 </para>
 </listitem>   
 <listitem>
 <para>
-mutt-1.4═╤╞№╦▄╕ье╤е├е┴
+mutt-1.5.x═╤╞№╦▄╕ье╤е├е┴
 </para>
 </listitem>   
 <listitem>
@@ -178,10 +178,10 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 </para>
 <para>
 <programlisting>
-    $ gzip -dc mutt-1.4i-ja.1.tar.gz | tar xvf -
-    $ gzip -dc mutt-1.4i.tar.gz | tar xvf -
-    $ cd mutt-1.4
-    $ patch -p1 &#60; ../mutt-1.4i-ja.1/patch-1.4.tt.ja.1
+    $ gzip -dc mutt-1.5.x-ja.1.tar.gz | tar xvf -
+    $ gzip -dc mutt-1.5.x.tar.gz | tar xvf -
+    $ cd mutt-1.5.x
+    $ patch -p1 &#60; ../mutt-1.5.x-ja.1/patch-1.5.x.tt.ja.1
 </programlisting>
 </para>
 </sect2>
@@ -194,13 +194,13 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 <itemizedlist>
 <listitem>
 <para>
---with-iconv=DIR
+--with-libiconv-prefix=DIR
 </para>
 <para>   
  GNU libiconv дЄ╗╚дж╛ь╣чд╧д│д╬еке╫е╖ечеєдЄ╔╒д▒д╩ддд╚джд▐дпдддлд╩ддд│д╚дмдвдъд▐д╣.
 </para>
 <para>
-╬у) --with-iconv=/usr/local
+╬у) --with-libiconv-prefix=/usr/local
 </para>
 </listitem>
 <listitem>
@@ -216,10 +216,21 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 --with-slang[=DIR]
 </para>
 <para>
-S-Lang дЄ╗╚дж╛ь╣чд╧╔мд║╔╒д▒д╞дпд└д╡дд. е╖е╣е╞ерд╦ещеде╓ещеъд╚д╖д╞┬╕║▀д╣ды╛ь╣чд╧┤Ё╦▄┼кд╦д╧е╟егеьепе╚еъдЄ╗╪─ъд╣ды╔м═╫д╧двдъд▐д╗дє. д╩дкбв░ь╔Їд╬Linuxе╟еге╣е╚еъе╙ехб╝е╖ечеєд╟д╧╢ж═нещеде╓ещеъ╠╛дм libslang-ja.so д╟двды╛ь╣чдмдвдъд▐д╣. д│д╬╛ь╣чд╧ configure д╚ configure.in д╦╡н╜╥д╡дьд╞ддды"-lslang"дЄ"-lslang-ja"д╦═╜дс├╓┤╣д╖д╞дкддд╞дпд└д╡дд.
+S-Lang дЄ╗╚дж╛ь╣чд╧╔мд║╔╒д▒д╞дпд└д╡дд. е╖е╣е╞ерд╦ещеде╓ещеъд╚д╖д╞┬╕║▀д╣ды╛ь╣чд╧┤Ё╦▄┼кд╦д╧е╟егеьепе╚еъдЄ╗╪─ъд╣ды╔м═╫д╧двдъд▐д╗дє. 
 </para>
 <para>
 ╬у) --with-slang=/usr/local
+</para>
+</listitem>
+<listitem>
+<para>
+--with-slanglib[=NAME]
+</para>
+<para>
+╢ж═нещеде╓ещеъ╠╛дм libslang.so ░╩│░д╬╛ь╣чд╦бвд│д╬еке╫е╖ечеєд╟╢ж═нещеде╓ещеъ╠╛дЄ╗╪─ъд╖д╞дпд└д╡дд. ╬удид╨бв╢ж═нещеде╓ещеъ╠╛д╬е╒ебедеы╠╛дм libslang-ja.so д╬╛ь╣чд╧░╩▓╝д╬дшджд╦╗╪─ъд╖д▐д╣.
+</para>
+<para>
+╬у) --with-slanglib=slang-ja
 </para>
 </listitem>
 <listitem>
@@ -264,7 +275,7 @@ make;make install д╟ддд▒д▐д╣.
 </para>
 <para>
 <programlisting>
-    $ cd ../mutt-1.4i-ja.1                                                     
+    $ cd ../mutt-1.5.x-ja.1                                                     
     [MakefileдЄ╜д└╡]
     # make install                                                             
 </programlisting>
@@ -302,7 +313,7 @@ Muttд╟д╧┴ў┐од╦┤╪д╖д╞д╧│░╔Їе╫еэе░ещердЄ╗╚ддд▐д╣. е╖е╣е╞ерд╦MTAдмедеєе╣е╚б╝еыд╡дьд
 <title>д│д╬╩╕╜ёд╬├°║ю╕в</title>
 <itemizedlist>
 <listitem><para>
-Copyright (C) 2000-2001 Oota Toshiya &#60;oota@ppd.fc.nec.co.jp&#62;
+Copyright (C) 2000-2001 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;
 </para></listitem>
 <listitem><para>
 Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;

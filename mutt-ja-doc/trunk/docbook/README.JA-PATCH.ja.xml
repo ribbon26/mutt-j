@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <author><firstname></firstname><surname>mutt-j │л╚пе┴б╝ер</surname></author>
-<title>Mutt 1.4i═╤╞№╦▄╕ь╚╟е╤е├е┴еъеъб╝е╣е╬б╝е╚</title>
+<title>Mutt 1.5.3i═╤╞№╦▄╕ь╚╟е╤е├е┴еъеъб╝е╣е╬б╝е╚</title>
 </articleinfo>
 <sect1>
 <title>Mutt╞№╦▄╕ь╚╟д╦д─ддд╞</title>
@@ -15,7 +15,7 @@ Mutt ╞№╦▄╕ь╚╟д╚д╧, ╣т┬од╦╞░дн, е╣еье├е╔╔╜╝идт▓─╟╜, еле╣е┐е▐еде║дфPOP/IMAPдт═°═╤▓
 Mutt д╬└шд╬│л╚п╖╧╬єд╟двды mutt-1.3.x е╖еъб╝е║д╦дкддд╞д╧ Edmund GRIMLEY EVANS&#60;edmundo@rano.org&#62; д╬дкдлд▓д╟╣ё║▌▓╜д╡дь╞№╦▄╕ье╤е├е┴дмд╩дпд╚дтдвды─°┼┘╞№╦▄╕ьд╬есб╝еыдм╝шдъ░╖дидыдшджд╦д╩дъд▐д╖д┐. д╡дщд╦┬ь▀╖╬┤╗╦ &#60;taki@cyber.email.ne.jp&#62; д╬hack д╦дшдъ╞№╦▄╕ь▓єдъд╬╗┼══╛хд╬╠ф┬ъд╧д█д╚дєд╔╠╡дпд╩дъд▐д╖д┐. д╖длд╖, ╞№╦▄╕ь╞├═нд╬╗Ў╛Ёб╩дддядцды└╕JIS╠ф┬ъд╩д╔б╦дмдвдыд┐дс, ╝┬═╤╛хд╧д╜д╬д▐д▐д╟д╧╗╚ддд╦дпдддтд╬д╟д╣. д╜д│д╟, ╞├д╦╞№╦▄╕ь▓єдъд╟д╬╝┬═╤╛хд╬│╞╝я╠ф┬ъдЄ╜д└╡д╖д█д▄─╠╛я═°═╤д╦║╣д╖╗┘дид╩дпд╖, д╡дщд╦дддпд─длд╬╩╪═°д╩╡б╟╜дЄ─╔▓├д╖д┐дтд╬дм Mutt ╞№╦▄╕ь╚╟д╟д╣.
 </para>
 <para>
-╞№╦▄╕ье╤е├е┴д╚д╖д╞д╧ 1.2.x д▐д╟д╬╡╚┼─╣╘╚╧д╦дшдые╨б╝е╕ечеєд╚д╧┤Ё╦▄┼кд╦╞╚╬йд╦│л╚пд╡дьд╞дддыд┐дс, ╜╛═шдвд├д┐╞№╦▄╕ь╚╟╞╚╝лд╬╡б╟╜д╩д╔д╧░ь╔Ї╛╩╬мд╡дьд╞, д▐д┐┐╖д┐д╦1.3.x ╖╧╞╚╝лд╬┐╖╡б╟╜д╩д╔дм─╔▓├д╡дьд╞ддд▐д╣. (╞№╦▄╕ь▓╜д╬╝┬┴їд╧ 1.2.x д╚д╧┴┤дп╩╠╩кд╦д╩д├д╞ддд▐д╣)
+╞№╦▄╕ье╤е├е┴д╚д╖д╞д╧ 1.2.x д▐д╟д╬╡╚┼─╣╘╚╧д╦дшдые╨б╝е╕ечеєд╚д╧┤Ё╦▄┼кд╦╞╚╬йд╦│л╚пд╡дьд╞дддыд┐дс, ╜╛═шдвд├д┐╞№╦▄╕ь╚╟╞╚╝лд╬╡б╟╜д╩д╔д╧░ь╔Ї╛╩╬мд╡дьд╞, д▐д┐┐╖д┐д╦1.3.x ╖╧░╩╣▀д╬╞╚╝лд╬┐╖╡б╟╜д╩д╔дм─╔▓├д╡дьд╞ддд▐д╣. (╞№╦▄╕ь▓╜д╬╝┬┴їд╧ 1.2.x д╚д╧┴┤дп╩╠╩кд╦д╩д├д╞ддд▐д╣)
 </para>
 </sect1>
 <sect1>
@@ -40,7 +40,7 @@ mime_forward_decode
 д╧е╟е╒ейеые╚├═д╬д▐д▐д╟д╩ддд╚джд▐дп╞░днд▐д╗дє.
 </para>
 <para>
-║ю└од╖д┐есе├е╗б╝е╕д╬║╟╕хд╬╩╕╗·дм▓■╣╘е│б╝е╔д╟╜кдядщд║, JIS X 0208 д╬╩╕╗·д╟╜кдяд├д╞ддды╛ь╣чд╦, ┴ў┐о═╤д╦ ISO-2022-JP ╩╤┤╣д╖д┐есе├е╗б╝е╕д╬ ISO 2022 д╬е╖е╒е╚╛ї┬╓дмASCII д╦╠сдъд▐д╗дє. д│дьдЄ╜д└╡д╣дыд┐дсд╦, ║ю└од╖д┐есе├е╗б╝е╕д╬║╟╕хд╬╩╕╗·дм▓■╣╘е│б╝е╔д╟╠╡дд╛ь╣чд╦д╧▓■╣╘е│б╝е╔дЄ─╔▓├д╣дыдшджд╦д╖д▐д╖д┐.
+║ю└од╖д┐есе├е╗б╝е╕д╬║╟╕хд╬╩╕╗·дм▓■╣╘е│б╝е╔д╟╜кдядщд║, JIS X 0208 д╬╩╕╗·д╟╜кдяд├д╞ддды╛ь╣чд╦, ┴ў┐о═╤д╦ ISO-2022-JP д╦╩╤┤╣д╖д┐есе├е╗б╝е╕д╬ ISO 2022 д╬е╖е╒е╚╛ї┬╓дмASCII д╦╠сдъд▐д╗дє. д│дьдЄ╜д└╡д╣дыд┐дсд╦, ║ю└од╖д┐есе├е╗б╝е╕д╬║╟╕хд╬╩╕╗·дм▓■╣╘е│б╝е╔д╟╠╡дд╛ь╣чд╦д╧▓■╣╘е│б╝е╔дЄ─╔▓├д╣дыдшджд╦д╖д▐д╖д┐.
 </para>
 <para>
 е╣е╞б╝е┐е╣╣╘д╬е▐еые┴е╨еде╚╩╕╗·д╦┬╨д╣ды╜ш═¤дм╔╘┤░┴┤д╟двдыд┐дс, д│дьдЄ╜д└╡д╖д▐д╖д┐.
@@ -59,9 +59,7 @@ use_jisx0208
 </listitem>
 </itemizedlist>
  
-дЄ═╤░╒д╖бвд│д╬├═дЄyesд╦└▀─ъд╣дыд│д╚д╦дшдъ2╖х╔¤д╬╩╕╗·д╚д╖д╞░╖дждшджд╦д╩дъбв╔╜╝и
-дм═Ёдьдыд╬дЄ╦╔дод▐д╣. д┐д└д╖бвд│д╬└▀─ъ╩╤┐Їд╧Mutt╞т┬вд╬еяеде╔╩╕╗·┤╪┐ЇдЄ╗╚джд╚дн
-д╬д▀═н╕·д╟д╣.
+дЄ═╤░╒д╖бвд│д╬├═дЄyesд╦└▀─ъд╣дыд│д╚д╦дшдъ2╖х╔¤д╬╩╕╗·д╚д╖д╞░╖дждшджд╦д╩дъбв╔╜╝идм═Ёдьдыд╬дЄ╦╔дод▐д╣. д┐д└д╖бвд│д╬└▀─ъ╩╤┐Їд╧Mutt╞т┬вд╬еяеде╔╩╕╗·┤╪┐ЇдЄ╗╚джд╚днд╬д▀═н╕·д╟д╣.
 </para>
 <para>
 Content-Type: text/enriched; charset=iso-2022-jp д╩есе├е╗б╝е╕д╟д╧, ║м╦▄┼кд╦┴┤дпе▐еые┴е╨еде╚╩╕╗·д╦┬╨▒■д╖д╞ддд╩ддд┐дс, ╩╕╗·▓╜д▒д╣ды▓─╟╜└ндмдвдъд▐д╣. д╖длд╖, ▒┐═╤д╟┬╨╜шд╟дндыд┐дс, ║гд╬д╚д│дэд╧┬╨▒■д╖д▐д╗дє. ╛▄║┘д╧ usage-japanese.html дЄд┤═ў▓╝д╡дд.
@@ -122,9 +120,6 @@ file_charset
 </listitem>
 </orderedlist>
 </para>
-<para>
-д▐д┐бвекеъе╕е╩еы╚╟д╟д╧╡ь╖┴╝░д╬б╩PGP/MIMEд╟д╩ддб╦PGPд╟д╧ US-ASCII д╦д╖дл┬╨▒■д╗д║бв┬╛д╬╩╕╗·╔ф╣ц▓╜╩¤╝░дЄ╗╚дж╛ь╣чд╧ PGP/MIME дЄ╗╚дид╚дддж╩¤┐╦д╩д╬д╟д╣дмбв╞№╦▄╕ь╚╟д╟д╧д│дьдЄ┬╛д╬╩╕╗·╔ф╣ц▓╜╩¤╝░д╟дт╗╚дидыдшджд╦д╖д▐д╖д┐бгд┐д└д╖бвепеъев╜Ё╠╛д╦┤╪д╖д╞д╧ 7bit ╔ф╣ц▓╜д╬╩╕╗·д╦д╖дл┬╨▒■д╖д▐д╗дєбг╞№╦▄╕ьдЄ╗╚дж╩мд╦д╧ ISO-2022-JP д╧7bit д╟двдыд┐дс╠ф┬ъд╧двдъд▐д╗дєдмбвISO-8850-* д╩д╔д╬╩╕╗·д╟┴ўдэджд╚д╣дыд╚╢п└й┼кд╦ PGP/MIME д╚д╖д╞└╕└од╡дьд▐д╣д╬д╟├э░╒▓╝д╡ддбгдтд┴дэдєбвPGP/MIME д╟д╧д╔д╬╩╕╗·╔ф╣ц▓╜╩¤╝░д╟дт╠ф┬ъ╠╡дп╗╚дид▐д╣бг
-</para>
 </sect2>
 <sect2>
 <title>╩╪═°д╩╡б╟╜д╬─╔▓├</title>
@@ -171,7 +166,7 @@ pager д╬╔╜╝ид╦┤╪д╣ды└▀─ъб╩├┘дд▓є└■дфе▐е╖еєд╟╗╚джд╚╩╪═°д╩╡б╟╜б╦
 </listitem>
 <listitem>
 <para>
-е╣еье├е╔╔╜╝ид╬е─еъб╝д╦═╤ддды╩╕╗·д╬└▀─ъ (╡ь kanjithread, vt-100 ╚є╕▀┤╣├╝╦Ў═╤д╟╗╚джд╚╩╪═°)
+е╣еье├е╔╔╜╝ид╬е─еъб╝д╦═╤ддды╩╕╗·д╬└▀─ъ (vt-100 ╚є╕▀┤╣├╝╦Ў═╤д╟╗╚джд╚╩╪═°)
 <itemizedlist>
 <listitem><para>tree_chars</para></listitem>
 <listitem><para>tree_llcorner</para></listitem>
@@ -194,29 +189,41 @@ pager д╬╔╜╝ид╦┤╪д╣ды└▀─ъб╩├┘дд▓є└■дфе▐е╖еєд╟╗╚джд╚╩╪═°д╩╡б╟╜б╦
 </para>
 </sect2>
 </sect1>
+
 <sect1>
 <title>╞░║ю│╬╟з┤─╢н</title>
 <para>
 ╕╜║▀д╬е╨б╝е╕ечеєд╟д╧░╩▓╝д╬┤─╢нд╟╞░║ю│╬╟здЄд╖д╞ддд▐д╣.
 </para>
+
 <table frame="all">
 <title>╞░║ю│╬╟з</title>
 <tgroup cols="3">
 <colspec colname="system"></colspec>
 <colspec colname="options"></colspec>
 <colspec colname="affirmation"></colspec>
+<thead>
+<row>
+	<entry>е╖е╣е╞ер</entry>
+	<entry>еке╫е╖ечеє</entry>
+	<entry>│╬╟з</entry>
+</row>
+</thead>
 <tbody>
-<row><entry>е╖е╣е╞ер</entry><entry>еке╫е╖ечеє</entry><entry>│╬╟з</entry></row>
-<row><entry>Linux 2.2.13/glibc-2.1.3</entry><entry>iw</entry><entry>TAKIZAWA Takashi</entry></row>
-<row><entry>Linux 2.4.17/glibc-2.2.4</entry><entry>IW</entry><entry>TAKIZAWA Takashi</entry></row>
-<row><entry>FreeBSD 3.4-RELEASE</entry><entry>iw</entry><entry>IWASHITA Yoji</entry></row>
-<row><entry>FreeBSD 4.1R, 4.1-STABLE</entry><entry>iw</entry><entry>Kawaguti Ginga</entry></row>
-<row><entry>Digital UNIX 4.0</entry><entry>iw</entry><entry>Kawaguti Ginga</entry></row>
-<row><entry>NetBSD 1.5ZC(i386)</entry><entry>iw</entry><entry>Hiroyuki Maehara</entry></row>
-<row><entry>NetBSD 1.5.3_ALPHA(alpha)</entry><entry>iw</entry><entry>Hiroyuki Maehara</entry></row>
+<row>
+	<entry>Linux 2.4.18/glibc-2.2.5</entry>
+	<entry>IW</entry>
+	<entry>TAKIZAWA Takashi</entry>
+</row>
+<row>
+	<entry>FreeBSD 4.5-stable</entry>
+	<entry>iw</entry>
+	<entry>IWASHITA Yoji</entry>
+</row>
 </tbody>
 </tgroup>
 </table>
+
 <para>
 еке╫е╖ечеє
 </para>
@@ -245,10 +252,11 @@ w: Mutt ╔╒┬░д╬еяеде╔╩╕╗·┤╪┐Ї (--without-wc-funcs)
 </itemizedlist>
 </para>
 </sect1>
+
 <sect1>
 <title>едеєе╣е╚б╝еыд╚└▀─ъ</title>
 <para>
-едеєе╣е╚б╝еыд╦┤╪д╖д╞д╧ INSTALL.JA-PATCH дЄдк╞╔д▀▓╝д╡ддбгд╩дкбвmutt-j ML д╬есеєе╨б╝д╬╝ъд╦дшдъ FreeBSD, NetBSD, Linux(RedHat╖╧, Debian)═╤д╬е╤е├е▒б╝е╕дм║ю└од╡дьд╞ддд▐д╣бг╛▄д╖дпд╧ <ulink url="http://www.emaillab.org/mutt/download14.html"><citetitle>http://www.emaillab.org/mutt/download14.html</citetitle></ulink>д╬е┌б╝е╕дЄд┤═ўдпд└д╡ддбг
+едеєе╣е╚б╝еыд╦┤╪д╖д╞д╧ INSTALL.JA-PATCH дЄдк╞╔д▀▓╝д╡ддбгд╩дкбвmutt-j ML д╬есеєе╨б╝д╬╝ъд╦дшдъ FreeBSD, NetBSD, Linux(RedHat╖╧, Debian)═╤д╬е╤е├е▒б╝е╕дм║ю└од╡дьд╞ддд▐д╣бг╛▄д╖дпд╧ <ulink url="http://www.emaillab.org/mutt/download15.html"><citetitle>http://www.emaillab.org/mutt/download14.html</citetitle></ulink>д╬е┌б╝е╕дЄд┤═ўдпд└д╡ддбг
 </para>
 <para>
 д▐д┐бведеєе╣е╚б╝еыдф└▀─ъд╦┤╪д╖д╞╠Єд╦╬йд─╩╕╜ёд╪д╬еъеєепдм <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>д╬е╔енехесеєе╚д╬е│б╝е╩б╝д╦двдъд▐д╣д╬д╟бв░ь┼┘д┤═ўдпд└д╡ддбг
@@ -299,25 +307,6 @@ Mutt ╞№╦▄╕ь╚╟д╬е┌б╝е╕
 
 <listitem>
 <para>
-<ulink url="http://www.kondara.org/%7Eg/mutt.html"><citetitle>mutt</citetitle></ulink>
-
-<itemizedlist>
-<listitem>
-<para>
-http://www.kondara.org/%7Eg/mutt.html
-</para>
-</listitem>
-<listitem>
-<para>
-╡╞├лд╡дєд╬е┌б╝е╕бгmutt-1.0.1-jp0 д╬╛Ё╩єд╚ slang-j д╬╛Ё╩єдмдвды.
-</para>
-</listitem>
-</itemizedlist>       
-</para>
-</listitem>
-
-<listitem>
-<para>
 <ulink url="http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/"><citetitle>Japanese Mutt Manual</citetitle></ulink>
 
 <itemizedlist>
@@ -328,7 +317,7 @@ http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/
 </listitem>
 <listitem>
 <para>
-└╛▓мд╡дєд╚┐═╕лд╡дєд╦дшды Mutt д╬е▐е╦ехевеыд╬╦о╠ї
+┐═╕лд╡дєд╚└╛▓мд╡дєд╦дшды Mutt д╬е▐е╦ехевеыд╬╦о╠ї
 </para>
 </listitem>
 </itemizedlist>       
@@ -388,10 +377,10 @@ Copyright (C) 2000 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
 Translation 1999 Kikutani Makoto &#60;kikutani@galaxy.net&#62;
 </para></listitem>
 <listitem><para>
-Translation 2001-2002 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62; *
+Translation 2001-2002 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;
 </para></listitem>
 <listitem><para>
-Translation 2002 "TAKAHASHI, Tamotsu" &#60;arms405@jade.dti.ne.jp&#62;
+Translation 2002 "TAKAHASHI, Tamotsu" &#60;arms405@jade.dti.ne.jp&#62; *
 </para></listitem>
 </itemizedlist>
 </sect2>

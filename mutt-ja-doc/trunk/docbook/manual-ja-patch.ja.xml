@@ -3,13 +3,13 @@
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author><firstname></firstname><surname>mutt-j ML 開発チーム</surname></author>
-<publisher><publishername>mutt-j ML 開発チーム</publishername></publisher>
+<author><firstname></firstname><surname>mutt-j 開発チーム</surname></author>
+<publisher><publishername>mutt-j 開発チーム</publishername></publisher>
 <title>日本語パッチ拡張機能マニュアル</title>
 <revhistory>
 <revision>
-<revnumber>mutt-1.4i-ja.1</revnumber>
-<date>2002/6/11</date>
+<revnumber>mutt-1.5.3i-ja.1</revnumber>
+<date>2002/12/18</date>
 </revision>
 </revhistory>
 </articleinfo>
@@ -436,7 +436,7 @@ Copyright (C) 2000 Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;
 Copyright (C) 2000 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
 </para>
 <para>
-この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62; 
+この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;
 </para>
 </sect2>
 </sect1>

@@ -1,6 +1,6 @@
 HTML2TXT = w3m -dump -T text/html
 XML2HTML = ./xsl/docbook2xhtml
-WWWDIR = /home/taki/www/mutt/1.4/doc
+WWWDIR = /home/taki/www/mutt/1.5/doc
 XSL = xsl/docbook-wrapper.xsl
 
 all : prepare text
