@@ -1,5 +1,6 @@
 <!doctype linuxdoc system>
 
+<!-- internal を内蔵と内部とに訳しており一貫性がない -->
 <article>
 
 <title>The Mutt E-Mail Client
@@ -1118,7 +1119,7 @@ name="&dollar;quote&lowbar;regexp"> に合致する文章)
 <item>status (メイルボックスやメッセイジに関する情報を表示する、モウド行)
 <item>tilde (ペイジャで空行を埋める &dquot;&tilde;&dquot; の部分)
 <item>tree (メッセイジインデックスと添付ファイルメニューで描かれる
-スレッドツリー)
+スレッドトゥリー)
 <item>underline (メッセイジ本文の下線つきパターンを強調する
 &lsqb;訳注：カラーでは下線を使えないのでこれで代用する&rsqb; )
 </itemize>
@@ -2487,7 +2488,7 @@ Cyrus 系サーバの場合にはしばしばフォルダの中に
 Mutt は IMAP サーバに関して四つの認証方法をサポートしています。
 SASL, GSSAPI, CRAM-MD5, LOGIN です (かわいそうな exchange ユーザのために
 NTLM 認証を追加する、Grant Edwards によるパッチがありますが、
-まだメインツリーには統合されていません)。また疑似プロトコル ANONYMOUS
+まだメイントゥリーには統合されていません)。また疑似プロトコル ANONYMOUS
 のサポートもあります。これは公開 IMAP サーバにアカウントなしでログイン
 するためのものです。ANONYMOUS を使うには、単にユーザ名を入れないでおくか、
 または &dquot;anonymous&dquot; にします。
@@ -4079,9 +4080,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, this variable causes Mutt to include the header
-of the message you are replying to into the edit buffer.
-The ``<ref id="weed" name="&dollar;weed">'' setting applies.
+設定されている時には、返信元メッセイジのヘッダを
+Mutt が編集バッファに取り込むようになる。
+<ref id="weed" name="&dollar;weed"> の設定が適用される。
 
 
 <sect2>help<label id="help">
@@ -4090,14 +4091,14 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, help lines describing the bindings for the major functions
-provided by each menu are displayed on the first line of the screen.
+設定されていると、各メニューに備わる主な機能のキー割り当て
+を説明するヘルプが画面の一行目に表示される。
 <p>
-<bf>Note:</bf> The binding will not be displayed correctly if the
-function is bound to a sequence rather than a single keystroke.  Also,
-the help line may not be updated if a binding is changed while Mutt is
-running.  Since this variable is primarily aimed at new users, neither
-of these should present a major problem.
+<bf>メモ:</bf> 操作キーが正しく表示されないことがある。これは関数が
+一つのキー押下だけでなく一連の操作に割り当てられている場合だ。
+さらに、Mutt 実行中に割り当てが変更されてもヘルプ行は更新されないことがある。
+ただ、この変数は基本的に新しいユーザのためにあるので、
+どちらもさほど大きな問題とはならないはずだ。
 
 
 <sect2>hidden&lowbar;host<label id="hidden_host">
@@ -4106,10 +4107,10 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, mutt will skip the host name part of ``<ref id="hostname" name="&dollar;hostname">'' variable
-when adding the domain part to addresses.  This variable does not
-affect the generation of Message-IDs, and it will not lead to the 
-cut-off of first-level domains.
+設定されている時には、Mutt がアドレスにドメイン部分を付ける際、
+<ref id="hostname" name="&dollar;hostname"> 変数のホスト名部分を抜く。
+この変数は Message-ID の生成に影響しないし、
+最上位ドメインまで切除してしまうようなことにもならない。
 
 
 <sect2>hide&lowbar;limited<label id="hide_limited">
@@ -4118,8 +4119,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, mutt will not show the presence of messages that are hidden
-by limiting, in the thread tree.
+設定されていると、スレッド分岐図の中で、
+limit (表示制限) によって隠れているメッセイジのある場所を
+Mutt が指示しなくなる。
 
 
 <sect2>hide&lowbar;missing<label id="hide_missing">
@@ -4128,8 +4130,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, mutt will not show the presence of missing messages in the
-thread tree.
+設定されていると、スレッド分岐図に欠けているメッセイジの存在を示さなくなる。
 
 
 <sect2>hide&lowbar;top&lowbar;limited<label id="hide_top_limited">
@@ -4138,9 +4139,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, mutt will not show the presence of messages that are hidden
-by limiting, at the top of threads in the thread tree.  Note that when
-<ref id="hide_missing" name="&dollar;hide&lowbar;missing"> is set, this option will have no effect.
+設定されていると、limit (表示制限) で隠れているメッセイジがあることを
+スレッド頂点で示さなくなる。
+<ref id="hide_missing" name="&dollar;hide&lowbar;missing">
+が設定されていると、このオプションがどうなっても効果がないので、
+覚えておくように。
 
 
 <sect2>hide&lowbar;top&lowbar;missing<label id="hide_top_missing">
@@ -4149,9 +4152,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, mutt will not show the presence of missing messages at the
-top of threads in the thread tree.  Note that when <ref id="hide_limited" name="&dollar;hide&lowbar;limited"> is
-set, this option will have no effect.
+設定されている時、スレッド頂点では
+メッセイジが欠けているという表示をしなくなる。
+ただ、<ref id="hide_limited" name="&dollar;hide&lowbar;limited">
+が設定されている時にはこのオプションの効果がないということに注意せよ。
 
 
 <sect2>history<label id="history">
@@ -4160,9 +4164,8 @@ Type: number<newline>
 Default: 10
 
 <p>
-This variable controls the size (in number of strings remembered) of
-the string history buffer. The buffer is cleared each time the
-variable is set.
+この変数は文字列履歴バッファのサイズ (記憶する文字列の数 [訳注：字数ではない])
+を制御する。このバッファは、変数が設定されるたびに消去される。
 
 
 <sect2>honor&lowbar;followup&lowbar;to<label id="honor_followup_to">
@@ -4171,8 +4174,8 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-This variable controls whether or not a Mail-Followup-To header is
-honored when group-replying to a message.
+この変数は、メッセイジへグループ返信する際に
+Mail-Followup-To ヘッダに敬意を払って指示に服するかどうかを制御する。
 
 
 <sect2>hostname<label id="hostname">
@@ -4181,9 +4184,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Specifies the hostname to use after the ``@'' in local e-mail
-addresses.  This overrides the compile time definition obtained from
-/etc/resolv.conf.
+ロウカルメイルアドレスの &dquot;@&dquot; の後に付けるホスト名を指定する。
+これはコンパイル時に /etc/resolv.conf から取得した定義を上書きする。
 
 
 <sect2>ignore&lowbar;list&lowbar;reply&lowbar;to<label id="ignore_list_reply_to">
@@ -4192,14 +4194,14 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Affects the behaviour of the <em>reply</em> function when replying to
-messages from mailing lists.  When set, if the ``Reply-To:'' field is
-set to the same value as the ``To:'' field, Mutt assumes that the
-``Reply-To:'' field was set by the mailing list to automate responses
-to the list, and will ignore this field.  To direct a response to the
-mailing list when this option is set, use the <em>list-reply</em>
-function; <em>group-reply</em> will reply to both the sender and the
-list.
+これはメイリングリストからのメッセイジに返信する際の <em>reply</em>
+関数の動作に影響する。設定されているとき、&dquot;Reply-To:&dquot;
+フィールドが &dquot;To:&dquot; フィールドと同じ値に設定されていると、
+Mutt は &dquot;Reply-To:&dquot; フィールドがメイリングリストによって
+(返事を自動でメイリングリストに送らせるため) 設定されたものとみなして、
+そのフィールドを無視する。このオプションが設定されているときに返事を
+メイリングリストに向かわせるには <em>list-reply</em> を使う。また、
+<em>group-reply</em> は差出人とリストの両方に返信する。
 
 
 <sect2>imap&lowbar;authenticators<label id="imap_authenticators">
@@ -4208,20 +4210,19 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This is a colon-delimited list of authentication methods mutt may
-attempt to use to log in to an IMAP server, in the order mutt should
-try them.  Authentication methods are either 'login' or the right
-side of an IMAP 'AUTH=xxx' capability string,
-eg 'digest-md5', 'gssapi' or 'cram-md5'.
-This parameter is case-insensitive. If this
-parameter is unset (the default) mutt will try all available methods,
-in order from most-secure to least-secure.
+これはコロン区切りによる認証方式の一覧で、Mutt はこれらの方式を使って
+IMAP サーバにログインしようとする。並びは Mutt が試行する順になっている。
+認証方式には、'login' か IMAP の能力文字列 'AUTH=xxx' の右辺を使う
+(例えば 'digest-md5', 'gssapi', 'cram-md5')。このパラメータは大文字と
+小文字を区別しない。なおパラメータが未設定 (既定) のときには、Mutt
+は利用できる方式をすべて、最も安全な方式から最も安全でない方式の順番に
+試行する。
 <p>
-Example: set imap&lowbar;authenticators=&dquot;gssapi:cram-md5:login&dquot;
+例: set imap&lowbar;authenticators=&dquot;gssapi:cram-md5:login&dquot;
 <p>
-<bf>Note:</bf> Mutt will only fall back to other authentication methods if
-the previous methods are unavailable. If a method is available but
-authentication fails, mutt will not connect to the IMAP server.
+<bf>注記:</bf> Mutt が他の認証方式へ移るのは方式が利用できない場合のみ
+である。方式が利用できるが認証に失敗したというときには IMAP サーバに
+接続しないことになる。
 
 
 <sect2>imap&lowbar;delim&lowbar;chars<label id="imap_delim_chars">
@@ -4230,9 +4231,10 @@ Type: string<newline>
 Default: &dquot;/.&dquot;
 
 <p>
-This contains the list of characters which you would like to treat
-as folder separators for displaying IMAP paths. In particular it
-helps in using the '=' shortcut for your <em>folder</em> variable.
+この中には、IMAP パスを表示する際にフォルダの区切りとして扱いたい
+文字の一覧が入る。特にこれが役立つのは <em>folder</em> 変数
+の内容を示すために &dquot;=&dquot; ショートカットを使うときである。
+(訳注：つまり &dquot;/.=&dquot; のように設定するということか?)
 
 
 <sect2>imap&lowbar;force&lowbar;ssl<label id="imap_force_ssl">
@@ -4241,8 +4243,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If this variable is set, Mutt will always use SSL when
-connecting to IMAP servers.
+この変数が設定されていると、Mutt は常に SSL を使って IMAP
+サーバに接続する。
 
 
 <sect2>imap&lowbar;home&lowbar;namespace<label id="imap_home_namespace">
@@ -4251,9 +4253,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-You normally want to see your personal folders alongside
-your INBOX in the IMAP browser. If you see something else, you may set
-this variable to the IMAP path to your folders.
+通常、IMAP ブラウザにおいては、自分の個人用フォルダが INBOX の
+すぐそばにあってほしいものだ。そのようになっていない場合、
+この変数を自分のフォルダへの IMAP パスに設定することができる。
 
 
 <sect2>imap&lowbar;keepalive<label id="imap_keepalive">
@@ -4262,13 +4264,14 @@ Type: number<newline>
 Default: 900
 
 <p>
-This variable specifies the maximum amount of time in seconds that mutt
-will wait before polling open IMAP connections, to prevent the server
-from closing them before mutt has finished with them. The default is
-well within the RFC-specified minimum amount of time (30 minutes) before
-a server is allowed to do this, but in practice the RFC does get
-violated every now and then. Reduce this number if you find yourself
-getting disconnected from your IMAP server due to inactivity.
+この変数には Mutt が IMAP 接続の継続を主張する<!-- polling open IMAP
+connections ってどう訳せばいい? -->まで待つ最大秒数を指定する。
+その主張をすることにより、Mutt が接続を使い終える前にサーバが
+接続を閉じてしまうのを防ぐのである。既定値は、RFC 指定により
+サーバ側が接続を閉じるまでに待たねばならない時間の最小値 (30 分) 内に
+しっかりおさまっているが、実際はそこかしこで RFC が破られている。
+接続を使用していないとみなされて IMAP サーバから切断されるようであれば、
+この数値を減らすこと。
 
 
 <sect2>imap&lowbar;list&lowbar;subscribed<label id="imap_list_subscribed">
@@ -4277,9 +4280,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This variable configures whether IMAP folder browsing will look for
-only subscribed folders or all folders.  This can be toggled in the
-IMAP browser with the <em>toggle-subscribed</em> function.
+この変数は、IMAP フォルダ閲覧で探すのを購読フォルダのみにするか、
+それともフォルダすべてにするかを制御する。これは IMAP ブラウザ内で
+<em>toggle-subscribed</em> 関数を使って切り替えることもできる。
 
 
 <sect2>imap&lowbar;pass<label id="imap_pass">
@@ -4288,11 +4291,11 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Specifies the password for your IMAP account.  If unset, Mutt will
-prompt you for your password when you invoke the fetch-mail function.
-<bf>Warning</bf>: you should only use this option when you are on a
-fairly secure machine, because the superuser can read your muttrc even
-if you are the only one who can read the file.
+IMAP アカウントのパスワードを指定する。設定されていないと、Mutt は
+fetch-mail 関数の実行時にパスワードを求めることになる。
+<bf>警告</bf>: このオプションは十分に安全なマシン上でのみ
+使うべきである。なぜなら、muttrc ファイルを自分以外が読めないように
+したつもりでも、スーパユーザは読めるからだ。
 
 
 <sect2>imap&lowbar;passive<label id="imap_passive">
@@ -4301,11 +4304,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, mutt will not open new IMAP connections to check for new
-mail.  Mutt will only check for new mail over existing IMAP
-connections.  This is useful if you don't want to be prompted to
-user/password pairs on mutt invocation, or if opening the connection
-is slow.
+設定されているときには、新着メイル確認のために Mutt が新しく
+IMAP 接続を開くことはない。Mutt は新着メイルを既存の IMAP
+接続でのみ確認することになる。これが有用となるのは、Mutt
+起動時にユーザ名とパスワードの入力を促されたくない場合や、
+接続を開くのに時間がかかる場合などである。
 
 
 <sect2>imap&lowbar;peek<label id="imap_peek">
@@ -4314,10 +4317,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, mutt will avoid implicitly marking your mail as read whenever
-you fetch a message from the server. This is generally a good thing,
-but can make closing an IMAP folder somewhat slower. This option
-exists to appease speed freaks.
+設定されていると Mutt は、サーバからメッセイジを取得しただけで
+メイルが既読として印付けられてしまうことのないようにする。
+これは一般的に良いことであるが、IMAP フォルダを閉じるのが
+幾らか遅くなることがある。このオプションはスピード狂の人たちを
+なだめるためにのみ存在しているのだ。
 
 
 <sect2>imap&lowbar;servernoise<label id="imap_servernoise">
@@ -4326,11 +4330,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, mutt will display warning messages from the IMAP
-server as error messages. Since these messages are often
-harmless, or generated due to configuration problems on the
-server which are out of the users' hands, you may wish to suppress
-them at some point.
+設定されているときには、IMAP サーバからの警告メッセイジを
+Mutt が表示するようになる。こうしたメッセイジはほとんど
+無害なことに関するものであったり、サーバ側の設定ミスのために
+ユーザからはどうしようもないものであったりすることが多いので、
+抑止したいと思うこともあるだろう。
 
 
 <sect2>imap&lowbar;user<label id="imap_user">
@@ -4339,9 +4343,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Your login name on the IMAP server.
+IMAP サーバへのログイン名。
 <p>
-This variable defaults to your user name on the local machine.
+この変数の既定値はロウカルマシン上のユーザ名になる。
 
 
 <sect2>implicit&lowbar;autoview<label id="implicit_autoview">
@@ -4350,11 +4354,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set to ``yes'', mutt will look for a mailcap entry with the
-copiousoutput flag set for <em>every</em> MIME attachment it doesn't have
-an internal viewer defined for.  If such an entry is found, mutt will
-use the viewer defined in that entry to convert the body part to text
-form.
+これが &dquot;yes&dquot; に設定されていると、copiousoutput
+フラグの付いた mailcap 項目がないかどうかを、<em>どんな種類の</em>
+添付ファイルに対しても調査する。ただし、内部ヴューワが定義されて
+いない場合である。そのように調査して項目が見つかったときには、
+そこで定義されているヴューワを使って内容をテキスト形式に変換する。
 
 
 <sect2>include<label id="include">
@@ -4363,8 +4367,8 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-Controls whether or not a copy of the message(s) you are replying to
-is included in your reply.
+返信しようとしている元のメッセイジ内容を
+返信に含めるかどうかを制御する。
 
 
 <sect2>indent&lowbar;string<label id="indent_string">
@@ -4373,9 +4377,9 @@ Type: string<newline>
 Default: &dquot;&gt; &dquot;
 
 <p>
-Specifies the string to prepend to each line of text quoted in a
-message to which you are replying.  You are strongly encouraged not to
-change this value, as it tends to agitate the more fanatical netizens.
+指定した文字列を、相手のメッセイジから引用した文の
+行頭に付ける。この値は、変更しないことが強く推奨されている。
+変更すると、熱狂的なネット市民を激昂させてしまう傾向があるからだ。
 
 
 <sect2>index&lowbar;format<label id="index_format">
@@ -4384,69 +4388,82 @@ Type: string<newline>
 Default: &dquot;&percnt;4C &percnt;Z &percnt;{&percnt;b &percnt;d} &percnt;-15.15L (&percnt;?l?&percnt;4l&amp;&percnt;4c?) &percnt;s&dquot;
 
 <p>
-This variable allows you to customize the message index display to
-your personal taste.
+この変数によって、メッセイジインデックス画面を好み通りに
+調整することができる。
 <p>
-``Format strings'' are similar to the strings used in the ``C''
-function printf to format output (see the man page for more detail).
-The following sequences are defined in Mutt:
+&dquot;形式文字列&dquot; は &dquot;C&dquot; の printf 関数で
+出力形式を指示するために使う文字列と似ている (詳細は man を参照)。
+Mutt では以下のシークウェンスが定義されている。
 <p>
 
 <descrip>
-<tag>&percnt;a </tag>address of the author
-<tag>&percnt;A </tag>reply-to address (if present; otherwise: address of author)
-<tag>&percnt;b </tag>filename of the original message folder (think mailBox)
-<tag>&percnt;B </tag>the list to which the letter was sent, or else the folder name (&percnt;b).
-<tag>&percnt;c </tag>number of characters (bytes) in the message
-<tag>&percnt;C </tag>current message number
-<tag>&percnt;d </tag>date and time of the message in the format specified by
-``date&lowbar;format'' converted to sender's time zone
-<tag>&percnt;D </tag>date and time of the message in the format specified by
-``date&lowbar;format'' converted to the local time zone
-<tag>&percnt;e </tag>current message number in thread
-<tag>&percnt;E </tag>number of messages in current thread
-<tag>&percnt;f </tag>entire From: line (address + real name)
-<tag>&percnt;F </tag>author name, or recipient name if the message is from you
-<tag>&percnt;i </tag>message-id of the current message
-<tag>&percnt;l </tag>number of lines in the message (does not work with maildir,
-mh, and possibly IMAP folders)
-<tag>&percnt;L </tag>If an address in the To or CC header field matches an address
-defined by the users ``subscribe'' command, this displays
-&dquot;To &lt;list-name&gt;&dquot;, otherwise the same as &percnt;F.
-<tag>&percnt;m </tag>total number of message in the mailbox
-<tag>&percnt;M </tag>number of hidden messages if the thread is collapsed.
-<tag>&percnt;N </tag>message score
-<tag>&percnt;n </tag>author's real name (or address if missing)
-<tag>&percnt;O </tag>(&lowbar;O&lowbar;riginal save folder)  Where mutt would formerly have
-stashed the message: list name or recipient name if no list
-<tag>&percnt;s </tag>subject of the message
-<tag>&percnt;S </tag>status of the message (N/D/d/!/r/*)
-<tag>&percnt;t </tag>`to:' field (recipients)
-<tag>&percnt;T </tag>the appropriate character from the <ref id="to_chars" name="&dollar;to&lowbar;chars"> string
-<tag>&percnt;u </tag>user (login) name of the author
-<tag>&percnt;v </tag>first name of the author, or the recipient if the message is from you
-<tag>&percnt;y </tag>`x-label:' field, if present
-<tag>&percnt;Y </tag>`x-label' field, if present, and (1) not at part of a thread tree,
-(2) at the top of a thread, or (3) `x-label' is different from
-preceding message's `x-label'.
-<tag>&percnt;Z </tag>message status flags
-<tag>&percnt;{fmt} </tag>the date and time of the message is converted to sender's
-time zone, and ``fmt'' is expanded by the library function
-``strftime''; a leading bang disables locales
-<tag>&percnt;&lsqb;fmt&rsqb; </tag>the date and time of the message is converted to the local
-time zone, and ``fmt'' is expanded by the library function
-``strftime''; a leading bang disables locales
-<tag>&percnt;(fmt) </tag>the local date and time when the message was received.
-``fmt'' is expanded by the library function ``strftime'';
-a leading bang disables locales
-<tag>&percnt;&lt;fmt&gt; </tag>the current local time. ``fmt'' is expanded by the library
-function ``strftime''; a leading bang disables locales.
-<tag>&percnt;&gt;X    </tag>right justify the rest of the string and pad with character &dquot;X&dquot;
-<tag>&percnt;|X    </tag>pad to the end of the line with character &dquot;X&dquot;
+<tag>&percnt;a </tag>差出人のアドレス
+<tag>&percnt;A </tag>(もしあれば) reply-to アドレス (なければ差出人アドレス)
+<tag>&percnt;b </tag>メッセイジフォルダのファイル名 (mailBox の b と考えよ)
+(訳注：最後に &dquot;/&dquot; が付いているディレクトリだと何も表示されない。
+((strrchr(path,'/'))+1) のポインタから strfcpy しているためである。)
+<tag>&percnt;B </tag>宛てられたリスト、なければフォルダ名 (&percnt;b)
+<tag>&percnt;c </tag>メッセイジのバイト数 (英文では文字 [characters] の数)
+<tag>&percnt;C </tag>メッセイジ番号
+<tag>&percnt;d </tag>日付と時刻を、送信者の現地時間に変換して
+&dquot;date&lowbar;format&dquot; の形式にしたもの
+<tag>&percnt;D </tag>日付と時刻を、自分の地域の時間に変換して
+&dquot;date&lowbar;format&dquot; の形式にしたもの
+<tag>&percnt;e </tag>スレッド内におけるメッセイジ番号
+<tag>&percnt;E </tag>スレッド内のメッセイジ総数
+<tag>&percnt;f </tag>From: 行の全体 (アドレスも本名も含む)
+<tag>&percnt;F </tag>差出人の名前、自分からのメッセイジなら宛先の名前
+(訳注：後者には To という文字列が前置される)
+<tag>&percnt;i </tag>Message-ID
+<tag>&percnt;l </tag>行数 (Maildir と MH では使えないし、IMAP でもたぶん不可
+[訳注：0 になる])
+<tag>&percnt;L </tag>To または CC ヘッダフィールドが &dquot;subscribe&dquot;
+コマンドで定義された正規表現に合致すると &dquot;To &lt;list-name&gt;&dquot;
+(訳注：&dquot;Cc &lt;list-name&gt;&dquot; の場合もある) と表示する。
+合致しなければ &percnt;F と同じ
+<tag>&percnt;m </tag>メイルボックス内のメッセイジ総数
+<tag>&percnt;M </tag>スレッドが折り畳まれているときの非表示メッセイジの数
+<tag>&percnt;N </tag>スコア
+<tag>&percnt;n </tag>差出人の本名 (なければアドレス)
+<tag>&percnt;O </tag>(オリジナルセイヴフォルダの O) むかし Mutt が
+FCC として使っていたような場所<!-- where mutt would have stashed -->:
+リストアドレスの名前部分、なければ宛先アドレスの名前部分
+(訳注：<ref id="save_address" name="&dollar;save&lowbar;address">
+が設定されていれば @ 以降も含み、そうでなければ @ の前までのみ)
+<tag>&percnt;s </tag>題名
+<tag>&percnt;S </tag>メッセイジの状態 (N/D/d/!/r/*)
+<tag>&percnt;t </tag>To: フィールド (宛先)
+<tag>&percnt;T </tag><ref id="to_chars" name="&dollar;to&lowbar;chars">
+文字列中の適切な文字
+<tag>&percnt;u </tag>送信者のユーザ (ログイン) 名
+<tag>&percnt;v </tag>送信者 (自分が送信者なら宛先人) のファーストネイム
+(訳注：日本人だと姓が先なので姓)
+<tag>&percnt;y </tag>あれば X-Label: フィールド
+<tag>&percnt;Y </tag>X-Label フィールドがあり、かつ
+(1) スレッドトゥリーの一部ではない、(2) スレッドの頂点である、
+(3) 前のメッセイジの X-Label と違う X-Label である、の
+いずれかであれば X-Label フィールド
+<tag>&percnt;Z </tag>3 桁の状態フラグ
+<tag>&percnt;{fmt} </tag>日付と時刻が送信者の現地時間に変換され、
+&dquot;fmt&dquot; がライブラリ関数 &dquot;strftime&dquot;
+により展開される。最初にびっくりマークが付いていると
+<ref id="locale" name="&dollar;locale"> が無視される。
+(訳注：&percnt;{!&percnt;b-&percnt;d(&percnt;a)} のように使う)
+<tag>&percnt;(fmt) </tag>メッセイジが到着した日付と時刻のロウカル時間表示。
+&dquot;fmt&dquot; はライブラリ関数 &dquot;strftime&dquot;
+により展開され、最初にびっくりマークが付いていると
+<ref id="locale" name="&dollar;locale"> が無視される。
+<tag>&percnt;&lt;fmt&gt; </tag>ロウカルの現在時刻。
+&dquot;fmt&dquot; はライブラリ関数 &dquot;strftime&dquot;
+により展開され、最初にびっくりマークが付いていると
+<ref id="locale" name="&dollar;locale"> が無視される。
+<tag>&percnt;&gt;X    </tag>残りの文字列を右寄せして、間を
+&dquot;X&dquot; 部分の文字で詰める (訳注：日本語文字は未対応)
+<tag>&percnt;|X    </tag>行末まで &dquot;X&dquot; 部分の文字で詰める
 </descrip>
 
 <p>
-See also: ``<ref id="to_chars" name="&dollar;to&lowbar;chars">''.
+参照: <ref id="to_chars" name="&dollar;to&lowbar;chars">
 
 
 <sect2>ispell<label id="ispell">
@@ -4455,7 +4472,7 @@ Type: path<newline>
 Default: &dquot;/usr/bin/ispell&dquot;
 
 <p>
-How to invoke ispell (GNU's spell-checking software).
+どう ispell (GNU スペルチェッカ) を起動するか。
 
 
 <sect2>keep&lowbar;flagged<label id="keep_flagged">
@@ -4464,9 +4481,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, read messages marked as flagged will not be moved
-from your spool mailbox to your ``<ref id="mbox" name="&dollar;mbox">'' mailbox, or as a result of
-a ``<ref id="mbox-hook" name="mbox-hook">'' command.
+設定されていると、フラグ付き既読メッセイジはスプールメイルボックスから
+自分の <ref id="mbox" name="&dollar;mbox"> メイルボックス
+(または <ref id="mbox-hook" name="mbox-hook"> コマンドの結果) に移さない。
 
 
 <sect2>locale<label id="locale">
@@ -4475,8 +4492,9 @@ Type: string<newline>
 Default: &dquot;C&dquot;
 
 <p>
-The locale used by <em>strftime(3)</em> to format dates. Legal values are
-the strings your system accepts for the locale variable <em>LC&lowbar;TIME</em>.
+<em>strftime(3)</em> が日付などを整形するために使うロカール。
+使うことのできる値は、システムがロカール変数 <em>LC&lowbar;TIME</em>
+として受け付ける文字列である。
 
 
 <sect2>mail&lowbar;check<label id="mail_check">
@@ -4485,8 +4503,8 @@ Type: number<newline>
 Default: 5
 
 <p>
-This variable configures how often (in seconds) mutt should look for
-new mail.
+この値は、どれほどの頻度で (何秒に一度) Mutt が新着メイルを
+確認するかを制御する。
 
 
 <sect2>mailcap&lowbar;path<label id="mailcap_path">
@@ -4495,8 +4513,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This variable specifies which files to consult when attempting to
-display MIME bodies not directly supported by Mutt.
+この変数は、Mutt が直接サポートしていない MIME ボディを
+表示しようとする際に、どのファイルに問い合わせるかを指定する。
 
 
 <sect2>mailcap&lowbar;sanitize<label id="mailcap_sanitize">
@@ -4505,12 +4523,13 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, mutt will restrict possible characters in mailcap &percnt; expandos
-to a well-defined set of safe characters.  This is the safe setting,
-but we are not sure it doesn't break some more advanced MIME stuff.
+設定されていると、Mutt は mailcap の &percnt;展開に現れる文字を制限して、
+ちょうどよく定義された安全な文字に直す。これは安全な設定ではあるが、
+これにより高度な MIME 項目が動かなくなることがないとは断言できない。
 <p>
 <bf>DON'T CHANGE THIS SETTING UNLESS YOU ARE REALLY SURE WHAT YOU ARE
-DOING!</bf>
+DOING!<newline>
+この設定は、完全に理解することなく変更してはならない!</bf>
 
 
 <sect2>maildir&lowbar;trash<label id="maildir_trash">
@@ -4519,10 +4538,10 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, messages marked as deleted will be saved with the maildir
-(T)rashed flag instead of unlinked.  <bf>NOTE:</bf> this only applies
-to maildir-style mailboxes.  Setting it will have no effect on other
-mailbox types.
+設定されていると、削除予定に印付けられたメッセイジがその後、
+削除されるのではなく Maildir の T フラグ (trashed) を付けて保存される。
+<bf>注意:</bf> これは Maildir 形式のメイルボックスにのみ適用される。
+他のメイルボックス形式にはまったく効果がない。
 
 
 <sect2>mark&lowbar;old<label id="mark_old">
@@ -4531,11 +4550,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls whether or not mutt marks <em>new</em> <bf>unread</bf>
-messages as <em>old</em> if you exit a mailbox without reading them.
-With this option set, the next time you start mutt, the messages
-will show up with an &dquot;O&dquot; next to them in the index menu,
-indicating that they are old.
+<em>新着</em>で<em>未読の</em>メッセイジを読まないまま
+メイルボックスを出たときに、Mutt がそれに<em>古い</em>という印を
+付けるかどうか制御する。このオプションが設定されていると、次回
+Mutt を始めたときに、インデックスメニューでメッセイジの隣りに
+&dquot;O&dquot; と表示される。それが古い (old) ということを示すのである。
 
 
 <sect2>markers<label id="markers">
@@ -4544,9 +4563,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls the display of wrapped lines in the internal pager. If set, a
-``+'' marker is displayed at the beginning of wrapped lines. Also see
-the ``<ref id="smart_wrap" name="&dollar;smart&lowbar;wrap">'' variable.
+内蔵ペイジャで折り返された行の表示を制御する。設定されていると、
+&dquot;+&dquot; 印が行頭に付いて、折り返し行を表す。
+<ref id="smart_wrap" name="&dollar;smart&lowbar;wrap"> 変数も見よ。
 
 
 <sect2>mask<label id="mask">
@@ -4555,9 +4574,10 @@ Type: regular expression<newline>
 Default: &dquot;!^&bsol;.&lsqb;^.&rsqb;&dquot;
 
 <p>
-A regular expression used in the file browser, optionally preceded by
-the <em>not</em> operator ``!''.  Only files whose names match this mask
-will be shown. The match is always case-sensitive.
+ファイルブラウザで使われる正規表現。
+先頭に <em>NOT</em> 演算子 &dquot;!&dquot; を付けることができる。
+ファイル名がこの条件に合致するもののみ表示されることになる。
+合致条件は常に大文字と小文字を区別する。
 
 
 <sect2>mbox<label id="mbox">

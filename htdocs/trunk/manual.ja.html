@@ -1090,7 +1090,7 @@ folder-hook 等で bind を実行すると違う結果を得ることができるので
 <LI>status (メイルボックスやメッセイジに関する情報を表示する、モウド行)</LI>
 <LI>tilde (ペイジャで空行を埋める &quot;~&quot; の部分)</LI>
 <LI>tree (メッセイジインデックスと添付ファイルメニューで描かれる
-スレッドツリー)</LI>
+スレッドトゥリー)</LI>
 <LI>underline (メッセイジ本文の下線つきパターンを強調する
 [訳注：カラーでは下線を使えないのでこれで代用する] )</LI>
 </UL>
@@ -2351,7 +2351,7 @@ Cyrus 系サーバの場合にはしばしばフォルダの中に
 <P>Mutt は IMAP サーバに関して四つの認証方法をサポートしています。
 SASL, GSSAPI, CRAM-MD5, LOGIN です (かわいそうな exchange ユーザのために
 NTLM 認証を追加する、Grant Edwards によるパッチがありますが、
-まだメインツリーには統合されていません)。また疑似プロトコル ANONYMOUS
+まだメイントゥリーには統合されていません)。また疑似プロトコル ANONYMOUS
 のサポートもあります。これは公開 IMAP サーバにアカウントなしでログイン
 するためのものです。ANONYMOUS を使うには、単にユーザ名を入れないでおくか、
 または &quot;anonymous&quot; にします。
@@ -3866,19 +3866,18 @@ Default: &quot;&quot;
 <P>Type: regular expression<BR>
 Default: &quot;^[^,]*&quot;
 <P>
-<P>A regular expression used by mutt to parse the GECOS field of a password
-entry when expanding the alias.  By default the regular expression is set
-to &quot;^[^,]*&quot; which will return the string up to the first
-&quot;,&quot; encountered.
-If the GECOS field contains a string like &quot;lastname, firstname&quot;
-then you
-should set the gecos_mask=&quot;.*&quot;.
-<P>This can be useful if you see the following behavior: you address a e-mail
-to user ID stevef whose full name is Steve Franklin.  If mutt expands 
-stevef to &quot;Franklin&quot; stevef@foo.bar then you should set
-the gecos_mask to
-a regular expression that will match the whole name so mutt will expand
-&quot;Franklin&quot; to &quot;Franklin, Steve&quot;.
+<P>Mutt がエイリアスを展開する際にパスワード項目の GECOS フィールド
+(訳注：getent passwd の出力で五番目のフィールド) を読み取るための正規表現。
+既定値の正規表現は &quot;^[^,]*&quot; に設定されており、
+これは最初に &quot;,&quot; に当たるまでの部分の文字列を返すことになる。
+もし GECOS フィールドに &quot;姓, 名&quot; のような文字列が含まれているなら
+gecos_mask=&quot;.*&quot; と設定すべきである。
+<P>次のような動作に有効である。メイルを stevef というユーザ ID の人に
+送るとする。その人の本名は Steve Franklin である。Mutt が stevef
+を &quot;Franklin&quot; stevef@foo.bar というように展開してしまう。
+この場合は、gecos_mask を名前全体に合致するような正規表現に設定して、
+Mutt が &quot;Franklin&quot; から &quot;Franklin, Steve&quot;
+へと視野を広げられるようにすべきなのだ。
 <P>
 <P>
 <H3><A NAME="hdrs"></A> hdrs</H3>
@@ -3886,11 +3885,12 @@ a regular expression that will match the whole name so mutt will expand
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>When unset, the header fields normally added by the ``
-<A HREF="#my_hdr">my_hdr</A>''
-command are not created.  This variable <EM>must</EM> be unset before
-composing a new message or replying in order to take effect.  If set,
-the user defined header fields are added to every new message.
+<P>設定されていない時には、通常だと追加される
+<A HREF="#my_hdr">my_hdr</A> コマンドのヘッダフィールドが
+作成されない。この変数の効果を発揮するには、<EM>必ず</EM>その
+新規メッセイジの作成や返信の<EM>前に</EM>解除しなくてはならない。
+設定されている時にはユーザ定義ヘッダフィールドが
+すべての新メッセイジに追加される。
 <P>
 <P>
 <H3><A NAME="header"></A> header</H3>
@@ -3898,10 +3898,9 @@ the user defined header fields are added to every new message.
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>When set, this variable causes Mutt to include the header
-of the message you are replying to into the edit buffer.
-The ``
-<A HREF="#weed">$weed</A>'' setting applies.
+<P>設定されている時には、返信元メッセイジのヘッダを
+Mutt が編集バッファに取り込むようになる。
+<A HREF="#weed">$weed</A> の設定が適用される。
 <P>
 <P>
 <H3><A NAME="help"></A> help</H3>
@@ -3909,13 +3908,13 @@ The ``
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>When set, help lines describing the bindings for the major functions
-provided by each menu are displayed on the first line of the screen.
-<P><B>Note:</B> The binding will not be displayed correctly if the
-function is bound to a sequence rather than a single keystroke.  Also,
-the help line may not be updated if a binding is changed while Mutt is
-running.  Since this variable is primarily aimed at new users, neither
-of these should present a major problem.
+<P>設定されていると、各メニューに備わる主な機能のキー割り当て
+を説明するヘルプが画面の一行目に表示される。
+<P><B>メモ:</B> 操作キーが正しく表示されないことがある。これは関数が
+一つのキー押下だけでなく一連の操作に割り当てられている場合だ。
+さらに、Mutt 実行中に割り当てが変更されてもヘルプ行は更新されないことがある。
+ただ、この変数は基本的に新しいユーザのためにあるので、
+どちらもさほど大きな問題とはならないはずだ。
 <P>
 <P>
 <H3><A NAME="hidden_host"></A> hidden_host</H3>
@@ -3923,11 +3922,10 @@ of these should present a major problem.
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>When set, mutt will skip the host name part of ``
-<A HREF="#hostname">$hostname</A>'' variable
-when adding the domain part to addresses.  This variable does not
-affect the generation of Message-IDs, and it will not lead to the 
-cut-off of first-level domains.
+<P>設定されている時には、Mutt がアドレスにドメイン部分を付ける際、
+<A HREF="#hostname">$hostname</A> 変数のホスト名部分を抜く。
+この変数は Message-ID の生成に影響しないし、
+最上位ドメインまで切除してしまうようなことにもならない。
 <P>
 <P>
 <H3><A NAME="hide_limited"></A> hide_limited</H3>
@@ -3935,8 +3933,9 @@ cut-off of first-level domains.
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>When set, mutt will not show the presence of messages that are hidden
-by limiting, in the thread tree.
+<P>設定されていると、スレッド分岐図の中で、
+limit (表示制限) によって隠れているメッセイジのある場所を
+Mutt が指示しなくなる。
 <P>
 <P>
 <H3><A NAME="hide_missing"></A> hide_missing</H3>
@@ -3944,8 +3943,7 @@ by limiting, in the thread tree.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>When set, mutt will not show the presence of missing messages in the
-thread tree.
+<P>設定されていると、スレッド分岐図に欠けているメッセイジの存在を示さなくなる。
 <P>
 <P>
 <H3><A NAME="hide_top_limited"></A> hide_top_limited</H3>
@@ -3953,9 +3951,11 @@ thread tree.
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>When set, mutt will not show the presence of messages that are hidden
-by limiting, at the top of threads in the thread tree.  Note that when
-<A HREF="#hide_missing">$hide_missing</A> is set, this option will have no effect.
+<P>設定されていると、limit (表示制限) で隠れているメッセイジがあることを
+スレッド頂点で示さなくなる。
+<A HREF="#hide_missing">$hide_missing</A>
+が設定されていると、このオプションがどうなっても効果がないので、
+覚えておくように。
 <P>
 <P>
 <H3><A NAME="hide_top_missing"></A> hide_top_missing</H3>
@@ -3963,10 +3963,11 @@ by limiting, at the top of threads in the thread tree.  Note that when
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>When set, mutt will not show the presence of missing messages at the
-top of threads in the thread tree.  Note that when 
-<A HREF="#hide_limited">$hide_limited</A> is
-set, this option will have no effect.
+<P>設定されている時、スレッド頂点では
+メッセイジが欠けているという表示をしなくなる。
+ただ、
+<A HREF="#hide_limited">$hide_limited</A>
+が設定されている時にはこのオプションの効果がないということに注意せよ。
 <P>
 <P>
 <H3><A NAME="history"></A> history</H3>
@@ -3974,9 +3975,8 @@ set, this option will have no effect.
 <P>Type: number<BR>
 Default: 10
 <P>
-<P>This variable controls the size (in number of strings remembered) of
-the string history buffer. The buffer is cleared each time the
-variable is set.
+<P>この変数は文字列履歴バッファのサイズ (記憶する文字列の数 [訳注：字数ではない])
+を制御する。このバッファは、変数が設定されるたびに消去される。
 <P>
 <P>
 <H3><A NAME="honor_followup_to"></A> honor_followup_to</H3>
@@ -3984,8 +3984,8 @@ variable is set.
 <P>Type: quadoption<BR>
 Default: yes
 <P>
-<P>This variable controls whether or not a Mail-Followup-To header is
-honored when group-replying to a message.
+<P>この変数は、メッセイジへグループ返信する際に
+Mail-Followup-To ヘッダに敬意を払って指示に服するかどうかを制御する。
 <P>
 <P>
 <H3><A NAME="hostname"></A> hostname</H3>
@@ -3993,9 +3993,8 @@ honored when group-replying to a message.
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>Specifies the hostname to use after the ``@'' in local e-mail
-addresses.  This overrides the compile time definition obtained from
-/etc/resolv.conf.
+<P>ロウカルメイルアドレスの &quot;@&quot; の後に付けるホスト名を指定する。
+これはコンパイル時に /etc/resolv.conf から取得した定義を上書きする。
 <P>
 <P>
 <H3><A NAME="ignore_list_reply_to"></A> ignore_list_reply_to</H3>
@@ -4003,14 +4002,14 @@ addresses.  This overrides the compile time definition obtained from
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>Affects the behaviour of the <EM>reply</EM> function when replying to
-messages from mailing lists.  When set, if the ``Reply-To:'' field is
-set to the same value as the ``To:'' field, Mutt assumes that the
-``Reply-To:'' field was set by the mailing list to automate responses
-to the list, and will ignore this field.  To direct a response to the
-mailing list when this option is set, use the <EM>list-reply</EM>
-function; <EM>group-reply</EM> will reply to both the sender and the
-list.
+<P>これはメイリングリストからのメッセイジに返信する際の <EM>reply</EM>
+関数の動作に影響する。設定されているとき、&quot;Reply-To:&quot;
+フィールドが &quot;To:&quot; フィールドと同じ値に設定されていると、
+Mutt は &quot;Reply-To:&quot; フィールドがメイリングリストによって
+(返事を自動でメイリングリストに送らせるため) 設定されたものとみなして、
+そのフィールドを無視する。このオプションが設定されているときに返事を
+メイリングリストに向かわせるには <EM>list-reply</EM> を使う。また、
+<EM>group-reply</EM> は差出人とリストの両方に返信する。
 <P>
 <P>
 <H3><A NAME="imap_authenticators"></A> imap_authenticators</H3>
@@ -4018,18 +4017,17 @@ list.
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>This is a colon-delimited list of authentication methods mutt may
-attempt to use to log in to an IMAP server, in the order mutt should
-try them.  Authentication methods are either 'login' or the right
-side of an IMAP 'AUTH=xxx' capability string,
-eg 'digest-md5', 'gssapi' or 'cram-md5'.
-This parameter is case-insensitive. If this
-parameter is unset (the default) mutt will try all available methods,
-in order from most-secure to least-secure.
-<P>Example: set imap_authenticators=&quot;gssapi:cram-md5:login&quot;
-<P><B>Note:</B> Mutt will only fall back to other authentication methods if
-the previous methods are unavailable. If a method is available but
-authentication fails, mutt will not connect to the IMAP server.
+<P>これはコロン区切りによる認証方式の一覧で、Mutt はこれらの方式を使って
+IMAP サーバにログインしようとする。並びは Mutt が試行する順になっている。
+認証方式には、'login' か IMAP の能力文字列 'AUTH=xxx' の右辺を使う
+(例えば 'digest-md5', 'gssapi', 'cram-md5')。このパラメータは大文字と
+小文字を区別しない。なおパラメータが未設定 (既定) のときには、Mutt
+は利用できる方式をすべて、最も安全な方式から最も安全でない方式の順番に
+試行する。
+<P>例: set imap_authenticators=&quot;gssapi:cram-md5:login&quot;
+<P><B>注記:</B> Mutt が他の認証方式へ移るのは方式が利用できない場合のみ
+である。方式が利用できるが認証に失敗したというときには IMAP サーバに
+接続しないことになる。
 <P>
 <P>
 <H3><A NAME="imap_delim_chars"></A> imap_delim_chars</H3>
@@ -4037,9 +4035,10 @@ authentication fails, mutt will not connect to the IMAP server.
 <P>Type: string<BR>
 Default: &quot;/.&quot;
 <P>
-<P>This contains the list of characters which you would like to treat
-as folder separators for displaying IMAP paths. In particular it
-helps in using the '=' shortcut for your <EM>folder</EM> variable.
+<P>この中には、IMAP パスを表示する際にフォルダの区切りとして扱いたい
+文字の一覧が入る。特にこれが役立つのは <EM>folder</EM> 変数
+の内容を示すために &quot;=&quot; ショートカットを使うときである。
+(訳注：つまり &quot;/.=&quot; のように設定するということか?)
 <P>
 <P>
 <H3><A NAME="imap_force_ssl"></A> imap_force_ssl</H3>
@@ -4047,8 +4046,8 @@ helps in using the '=' shortcut for your <EM>folder</EM> variable.
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>If this variable is set, Mutt will always use SSL when
-connecting to IMAP servers.
+<P>この変数が設定されていると、Mutt は常に SSL を使って IMAP
+サーバに接続する。
 <P>
 <P>
 <H3><A NAME="imap_home_namespace"></A> imap_home_namespace</H3>
@@ -4056,9 +4055,9 @@ connecting to IMAP servers.
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>You normally want to see your personal folders alongside
-your INBOX in the IMAP browser. If you see something else, you may set
-this variable to the IMAP path to your folders.
+<P>通常、IMAP ブラウザにおいては、自分の個人用フォルダが INBOX の
+すぐそばにあってほしいものだ。そのようになっていない場合、
+この変数を自分のフォルダへの IMAP パスに設定することができる。
 <P>
 <P>
 <H3><A NAME="imap_keepalive"></A> imap_keepalive</H3>
@@ -4066,13 +4065,13 @@ this variable to the IMAP path to your folders.
 <P>Type: number<BR>
 Default: 900
 <P>
-<P>This variable specifies the maximum amount of time in seconds that mutt
-will wait before polling open IMAP connections, to prevent the server
-from closing them before mutt has finished with them. The default is
-well within the RFC-specified minimum amount of time (30 minutes) before
-a server is allowed to do this, but in practice the RFC does get
-violated every now and then. Reduce this number if you find yourself
-getting disconnected from your IMAP server due to inactivity.
+<P>この変数には Mutt が IMAP 接続の継続を主張するまで待つ最大秒数を指定する。
+その主張をすることにより、Mutt が接続を使い終える前にサーバが
+接続を閉じてしまうのを防ぐのである。既定値は、RFC 指定により
+サーバ側が接続を閉じるまでに待たねばならない時間の最小値 (30 分) 内に
+しっかりおさまっているが、実際はそこかしこで RFC が破られている。
+接続を使用していないとみなされて IMAP サーバから切断されるようであれば、
+この数値を減らすこと。
 <P>
 <P>
 <H3><A NAME="imap_list_subscribed"></A> imap_list_subscribed</H3>
@@ -4080,9 +4079,9 @@ getting disconnected from your IMAP server due to inactivity.
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>This variable configures whether IMAP folder browsing will look for
-only subscribed folders or all folders.  This can be toggled in the
-IMAP browser with the <EM>toggle-subscribed</EM> function.
+<P>この変数は、IMAP フォルダ閲覧で探すのを購読フォルダのみにするか、
+それともフォルダすべてにするかを制御する。これは IMAP ブラウザ内で
+<EM>toggle-subscribed</EM> 関数を使って切り替えることもできる。
 <P>
 <P>
 <H3><A NAME="imap_pass"></A> imap_pass</H3>
@@ -4090,11 +4089,11 @@ IMAP browser with the <EM>toggle-subscribed</EM> function.
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>Specifies the password for your IMAP account.  If unset, Mutt will
-prompt you for your password when you invoke the fetch-mail function.
-<B>Warning</B>: you should only use this option when you are on a
-fairly secure machine, because the superuser can read your muttrc even
-if you are the only one who can read the file.
+<P>IMAP アカウントのパスワードを指定する。設定されていないと、Mutt は
+fetch-mail 関数の実行時にパスワードを求めることになる。
+<B>警告</B>: このオプションは十分に安全なマシン上でのみ
+使うべきである。なぜなら、muttrc ファイルを自分以外が読めないように
+したつもりでも、スーパユーザは読めるからだ。
 <P>
 <P>
 <H3><A NAME="imap_passive"></A> imap_passive</H3>
@@ -4102,11 +4101,11 @@ if you are the only one who can read the file.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>When set, mutt will not open new IMAP connections to check for new
-mail.  Mutt will only check for new mail over existing IMAP
-connections.  This is useful if you don't want to be prompted to
-user/password pairs on mutt invocation, or if opening the connection
-is slow.
+<P>設定されているときには、新着メイル確認のために Mutt が新しく
+IMAP 接続を開くことはない。Mutt は新着メイルを既存の IMAP
+接続でのみ確認することになる。これが有用となるのは、Mutt
+起動時にユーザ名とパスワードの入力を促されたくない場合や、
+接続を開くのに時間がかかる場合などである。
 <P>
 <P>
 <H3><A NAME="imap_peek"></A> imap_peek</H3>
@@ -4114,10 +4113,11 @@ is slow.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>If set, mutt will avoid implicitly marking your mail as read whenever
-you fetch a message from the server. This is generally a good thing,
-but can make closing an IMAP folder somewhat slower. This option
-exists to appease speed freaks.
+<P>設定されていると Mutt は、サーバからメッセイジを取得しただけで
+メイルが既読として印付けられてしまうことのないようにする。
+これは一般的に良いことであるが、IMAP フォルダを閉じるのが
+幾らか遅くなることがある。このオプションはスピード狂の人たちを
+なだめるためにのみ存在しているのだ。
 <P>
 <P>
 <H3><A NAME="imap_servernoise"></A> imap_servernoise</H3>
@@ -4125,11 +4125,11 @@ exists to appease speed freaks.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>When set, mutt will display warning messages from the IMAP
-server as error messages. Since these messages are often
-harmless, or generated due to configuration problems on the
-server which are out of the users' hands, you may wish to suppress
-them at some point.
+<P>設定されているときには、IMAP サーバからの警告メッセイジを
+Mutt が表示するようになる。こうしたメッセイジはほとんど
+無害なことに関するものであったり、サーバ側の設定ミスのために
+ユーザからはどうしようもないものであったりすることが多いので、
+抑止したいと思うこともあるだろう。
 <P>
 <P>
 <H3><A NAME="imap_user"></A> imap_user</H3>
@@ -4137,8 +4137,8 @@ them at some point.
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>Your login name on the IMAP server.
-<P>This variable defaults to your user name on the local machine.
+<P>IMAP サーバへのログイン名。
+<P>この変数の既定値はロウカルマシン上のユーザ名になる。
 <P>
 <P>
 <H3><A NAME="implicit_autoview"></A> implicit_autoview</H3>
@@ -4146,11 +4146,11 @@ Default: &quot;&quot;
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>If set to ``yes'', mutt will look for a mailcap entry with the
-copiousoutput flag set for <EM>every</EM> MIME attachment it doesn't have
-an internal viewer defined for.  If such an entry is found, mutt will
-use the viewer defined in that entry to convert the body part to text
-form.
+<P>これが &quot;yes&quot; に設定されていると、copiousoutput
+フラグの付いた mailcap 項目がないかどうかを、<EM>どんな種類の</EM>
+添付ファイルに対しても調査する。ただし、内部ヴューワが定義されて
+いない場合である。そのように調査して項目が見つかったときには、
+そこで定義されているヴューワを使って内容をテキスト形式に変換する。
 <P>
 <P>
 <H3><A NAME="include"></A> include</H3>
@@ -4158,8 +4158,8 @@ form.
 <P>Type: quadoption<BR>
 Default: ask-yes
 <P>
-<P>Controls whether or not a copy of the message(s) you are replying to
-is included in your reply.
+<P>返信しようとしている元のメッセイジ内容を
+返信に含めるかどうかを制御する。
 <P>
 <P>
 <H3><A NAME="indent_string"></A> indent_string</H3>
@@ -4167,9 +4167,9 @@ is included in your reply.
 <P>Type: string<BR>
 Default: &quot;&gt; &quot;
 <P>
-<P>Specifies the string to prepend to each line of text quoted in a
-message to which you are replying.  You are strongly encouraged not to
-change this value, as it tends to agitate the more fanatical netizens.
+<P>指定した文字列を、相手のメッセイジから引用した文の
+行頭に付ける。この値は、変更しないことが強く推奨されている。
+変更すると、熱狂的なネット市民を激昂させてしまう傾向があるからだ。
 <P>
 <P>
 <H3><A NAME="index_format"></A> index_format</H3>
@@ -4177,77 +4177,90 @@ change this value, as it tends to agitate the more fanatical netizens.
 <P>Type: string<BR>
 Default: &quot;%4C %Z %{%b %d} %-15.15L (%?l?%4l&amp;%4c?) %s&quot;
 <P>
-<P>This variable allows you to customize the message index display to
-your personal taste.
-<P>``Format strings'' are similar to the strings used in the ``C''
-function printf to format output (see the man page for more detail).
-The following sequences are defined in Mutt:
+<P>この変数によって、メッセイジインデックス画面を好み通りに
+調整することができる。
+<P>&quot;形式文字列&quot; は &quot;C&quot; の printf 関数で
+出力形式を指示するために使う文字列と似ている (詳細は man を参照)。
+Mutt では以下のシークウェンスが定義されている。
 <P>
 <P>
 <DL>
-<DT><B>%a </B><DD><P>address of the author
-<DT><B>%A </B><DD><P>reply-to address (if present; otherwise: address of author)
-<DT><B>%b </B><DD><P>filename of the original message folder (think mailBox)
-<DT><B>%B </B><DD><P>the list to which the letter was sent, or else the folder name (%b).
-<DT><B>%c </B><DD><P>number of characters (bytes) in the message
-<DT><B>%C </B><DD><P>current message number
-<DT><B>%d </B><DD><P>date and time of the message in the format specified by
-``date_format'' converted to sender's time zone
-<DT><B>%D </B><DD><P>date and time of the message in the format specified by
-``date_format'' converted to the local time zone
-<DT><B>%e </B><DD><P>current message number in thread
-<DT><B>%E </B><DD><P>number of messages in current thread
-<DT><B>%f </B><DD><P>entire From: line (address + real name)
-<DT><B>%F </B><DD><P>author name, or recipient name if the message is from you
-<DT><B>%i </B><DD><P>message-id of the current message
-<DT><B>%l </B><DD><P>number of lines in the message (does not work with maildir,
-mh, and possibly IMAP folders)
-<DT><B>%L </B><DD><P>If an address in the To or CC header field matches an address
-defined by the users ``subscribe'' command, this displays
-&quot;To &lt;list-name&gt;&quot;, otherwise the same as %F.
-<DT><B>%m </B><DD><P>total number of message in the mailbox
-<DT><B>%M </B><DD><P>number of hidden messages if the thread is collapsed.
-<DT><B>%N </B><DD><P>message score
-<DT><B>%n </B><DD><P>author's real name (or address if missing)
-<DT><B>%O </B><DD><P>(_O_riginal save folder)  Where mutt would formerly have
-stashed the message: list name or recipient name if no list
-<DT><B>%s </B><DD><P>subject of the message
-<DT><B>%S </B><DD><P>status of the message (N/D/d/!/r/*)
-<DT><B>%t </B><DD><P>`to:' field (recipients)
-<DT><B>%T </B><DD><P>the appropriate character from the 
-<A HREF="#to_chars">$to_chars</A> string
-<DT><B>%u </B><DD><P>user (login) name of the author
-<DT><B>%v </B><DD><P>first name of the author, or the recipient if the message is from you
-<DT><B>%y </B><DD><P>`x-label:' field, if present
-<DT><B>%Y </B><DD><P>`x-label' field, if present, and (1) not at part of a thread tree,
-(2) at the top of a thread, or (3) `x-label' is different from
-preceding message's `x-label'.
-<DT><B>%Z </B><DD><P>message status flags
-<DT><B>%{fmt} </B><DD><P>the date and time of the message is converted to sender's
-time zone, and ``fmt'' is expanded by the library function
-``strftime''; a leading bang disables locales
-<DT><B>%[fmt] </B><DD><P>the date and time of the message is converted to the local
-time zone, and ``fmt'' is expanded by the library function
-``strftime''; a leading bang disables locales
-<DT><B>%(fmt) </B><DD><P>the local date and time when the message was received.
-``fmt'' is expanded by the library function ``strftime'';
-a leading bang disables locales
-<DT><B>%&lt;fmt&gt; </B><DD><P>the current local time. ``fmt'' is expanded by the library
-function ``strftime''; a leading bang disables locales.
-<DT><B>%&gt;X    </B><DD><P>right justify the rest of the string and pad with character &quot;X&quot;
-<DT><B>%|X    </B><DD><P>pad to the end of the line with character &quot;X&quot;
+<DT><B>%a </B><DD><P>差出人のアドレス
+<DT><B>%A </B><DD><P>(もしあれば) reply-to アドレス (なければ差出人アドレス)
+<DT><B>%b </B><DD><P>メッセイジフォルダのファイル名 (mailBox の b と考えよ)
+(訳注：最後に &quot;/&quot; が付いているディレクトリだと何も表示されない。
+((strrchr(path,'/'))+1) のポインタから strfcpy しているためである。)
+<DT><B>%B </B><DD><P>宛てられたリスト、なければフォルダ名 (%b)
+<DT><B>%c </B><DD><P>メッセイジのバイト数 (英文では文字 [characters] の数)
+<DT><B>%C </B><DD><P>メッセイジ番号
+<DT><B>%d </B><DD><P>日付と時刻を、送信者の現地時間に変換して
+&quot;date_format&quot; の形式にしたもの
+<DT><B>%D </B><DD><P>日付と時刻を、自分の地域の時間に変換して
+&quot;date_format&quot; の形式にしたもの
+<DT><B>%e </B><DD><P>スレッド内におけるメッセイジ番号
+<DT><B>%E </B><DD><P>スレッド内のメッセイジ総数
+<DT><B>%f </B><DD><P>From: 行の全体 (アドレスも本名も含む)
+<DT><B>%F </B><DD><P>差出人の名前、自分からのメッセイジなら宛先の名前
+(訳注：後者には To という文字列が前置される)
+<DT><B>%i </B><DD><P>Message-ID
+<DT><B>%l </B><DD><P>行数 (Maildir と MH では使えないし、IMAP でもたぶん不可
+[訳注：0 になる])
+<DT><B>%L </B><DD><P>To または CC ヘッダフィールドが &quot;subscribe&quot;
+コマンドで定義された正規表現に合致すると &quot;To &lt;list-name&gt;&quot;
+(訳注：&quot;Cc &lt;list-name&gt;&quot; の場合もある) と表示する。
+合致しなければ %F と同じ
+<DT><B>%m </B><DD><P>メイルボックス内のメッセイジ総数
+<DT><B>%M </B><DD><P>スレッドが折り畳まれているときの非表示メッセイジの数
+<DT><B>%N </B><DD><P>スコア
+<DT><B>%n </B><DD><P>差出人の本名 (なければアドレス)
+<DT><B>%O </B><DD><P>(オリジナルセイヴフォルダの O) むかし Mutt が
+FCC として使っていたような場所:
+リストアドレスの名前部分、なければ宛先アドレスの名前部分
+(訳注：
+<A HREF="#save_address">$save_address</A>
+が設定されていれば @ 以降も含み、そうでなければ @ の前までのみ)
+<DT><B>%s </B><DD><P>題名
+<DT><B>%S </B><DD><P>メッセイジの状態 (N/D/d/!/r/*)
+<DT><B>%t </B><DD><P>To: フィールド (宛先)
+<DT><B>%T </B><DD><P>
+<A HREF="#to_chars">$to_chars</A>
+文字列中の適切な文字
+<DT><B>%u </B><DD><P>送信者のユーザ (ログイン) 名
+<DT><B>%v </B><DD><P>送信者 (自分が送信者なら宛先人) のファーストネイム
+(訳注：日本人だと姓が先なので姓)
+<DT><B>%y </B><DD><P>あれば X-Label: フィールド
+<DT><B>%Y </B><DD><P>X-Label フィールドがあり、かつ
+(1) スレッドトゥリーの一部ではない、(2) スレッドの頂点である、
+(3) 前のメッセイジの X-Label と違う X-Label である、の
+いずれかであれば X-Label フィールド
+<DT><B>%Z </B><DD><P>3 桁の状態フラグ
+<DT><B>%{fmt} </B><DD><P>日付と時刻が送信者の現地時間に変換され、
+&quot;fmt&quot; がライブラリ関数 &quot;strftime&quot;
+により展開される。最初にびっくりマークが付いていると
+<A HREF="#locale">$locale</A> が無視される。
+(訳注：%{!%b-%d(%a)} のように使う)
+<DT><B>%(fmt) </B><DD><P>メッセイジが到着した日付と時刻のロウカル時間表示。
+&quot;fmt&quot; はライブラリ関数 &quot;strftime&quot;
+により展開され、最初にびっくりマークが付いていると
+<A HREF="#locale">$locale</A> が無視される。
+<DT><B>%&lt;fmt&gt; </B><DD><P>ロウカルの現在時刻。
+&quot;fmt&quot; はライブラリ関数 &quot;strftime&quot;
+により展開され、最初にびっくりマークが付いていると
+<A HREF="#locale">$locale</A> が無視される。
+<DT><B>%&gt;X    </B><DD><P>残りの文字列を右寄せして、間を
+&quot;X&quot; 部分の文字で詰める (訳注：日本語文字は未対応)
+<DT><B>%|X    </B><DD><P>行末まで &quot;X&quot; 部分の文字で詰める
 </DL>
 <P>
-<P>See also: ``
-<A HREF="#to_chars">$to_chars</A>''.
-<P>
+<P>参照: 
+<A HREF="#to_chars">$to_chars</A><P>
 <P>
 <H3><A NAME="ispell"></A> ispell</H3>
 
 <P>Type: path<BR>
 Default: &quot;/usr/bin/ispell&quot;
 <P>
-<P>How to invoke ispell (GNU's spell-checking software).
+<P>どう ispell (GNU スペルチェッカ) を起動するか。
 <P>
 <P>
 <H3><A NAME="keep_flagged"></A> keep_flagged</H3>
@@ -4255,11 +4268,11 @@ Default: &quot;/usr/bin/ispell&quot;
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>If set, read messages marked as flagged will not be moved
-from your spool mailbox to your ``
-<A HREF="#mbox">$mbox</A>'' mailbox, or as a result of
-a ``
-<A HREF="#mbox-hook">mbox-hook</A>'' command.
+<P>設定されていると、フラグ付き既読メッセイジはスプールメイルボックスから
+自分の 
+<A HREF="#mbox">$mbox</A> メイルボックス
+(または 
+<A HREF="#mbox-hook">mbox-hook</A> コマンドの結果) に移さない。
 <P>
 <P>
 <H3><A NAME="locale"></A> locale</H3>
@@ -4267,8 +4280,9 @@ a ``
 <P>Type: string<BR>
 Default: &quot;C&quot;
 <P>
-<P>The locale used by <EM>strftime(3)</EM> to format dates. Legal values are
-the strings your system accepts for the locale variable <EM>LC_TIME</EM>.
+<P><EM>strftime(3)</EM> が日付などを整形するために使うロカール。
+使うことのできる値は、システムがロカール変数 <EM>LC_TIME</EM>
+として受け付ける文字列である。
 <P>
 <P>
 <H3><A NAME="mail_check"></A> mail_check</H3>
@@ -4276,8 +4290,8 @@ the strings your system accepts for the locale variable <EM>LC_TIME</EM>.
 <P>Type: number<BR>
 Default: 5
 <P>
-<P>This variable configures how often (in seconds) mutt should look for
-new mail.
+<P>この値は、どれほどの頻度で (何秒に一度) Mutt が新着メイルを
+確認するかを制御する。
 <P>
 <P>
 <H3><A NAME="mailcap_path"></A> mailcap_path</H3>
@@ -4285,8 +4299,8 @@ new mail.
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>This variable specifies which files to consult when attempting to
-display MIME bodies not directly supported by Mutt.
+<P>この変数は、Mutt が直接サポートしていない MIME ボディを
+表示しようとする際に、どのファイルに問い合わせるかを指定する。
 <P>
 <P>
 <H3><A NAME="mailcap_sanitize"></A> mailcap_sanitize</H3>
@@ -4294,11 +4308,12 @@ display MIME bodies not directly supported by Mutt.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>If set, mutt will restrict possible characters in mailcap % expandos
-to a well-defined set of safe characters.  This is the safe setting,
-but we are not sure it doesn't break some more advanced MIME stuff.
+<P>設定されていると、Mutt は mailcap の %展開に現れる文字を制限して、
+ちょうどよく定義された安全な文字に直す。これは安全な設定ではあるが、
+これにより高度な MIME 項目が動かなくなることがないとは断言できない。
 <P><B>DON'T CHANGE THIS SETTING UNLESS YOU ARE REALLY SURE WHAT YOU ARE
-DOING!</B>
+DOING!<BR>
+この設定は、完全に理解することなく変更してはならない!</B>
 <P>
 <P>
 <H3><A NAME="maildir_trash"></A> maildir_trash</H3>
@@ -4306,10 +4321,10 @@ DOING!</B>
 <P>Type: boolean<BR>
 Default: no
 <P>
-<P>If set, messages marked as deleted will be saved with the maildir
-(T)rashed flag instead of unlinked.  <B>NOTE:</B> this only applies
-to maildir-style mailboxes.  Setting it will have no effect on other
-mailbox types.
+<P>設定されていると、削除予定に印付けられたメッセイジがその後、
+削除されるのではなく Maildir の T フラグ (trashed) を付けて保存される。
+<B>注意:</B> これは Maildir 形式のメイルボックスにのみ適用される。
+他のメイルボックス形式にはまったく効果がない。
 <P>
 <P>
 <H3><A NAME="mark_old"></A> mark_old</H3>
@@ -4317,11 +4332,11 @@ mailbox types.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>Controls whether or not mutt marks <EM>new</EM> <B>unread</B>
-messages as <EM>old</EM> if you exit a mailbox without reading them.
-With this option set, the next time you start mutt, the messages
-will show up with an &quot;O&quot; next to them in the index menu,
-indicating that they are old.
+<P><EM>新着</EM>で<EM>未読の</EM>メッセイジを読まないまま
+メイルボックスを出たときに、Mutt がそれに<EM>古い</EM>という印を
+付けるかどうか制御する。このオプションが設定されていると、次回
+Mutt を始めたときに、インデックスメニューでメッセイジの隣りに
+&quot;O&quot; と表示される。それが古い (old) ということを示すのである。
 <P>
 <P>
 <H3><A NAME="markers"></A> markers</H3>
@@ -4329,10 +4344,9 @@ indicating that they are old.
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>Controls the display of wrapped lines in the internal pager. If set, a
-``+'' marker is displayed at the beginning of wrapped lines. Also see
-the ``
-<A HREF="#smart_wrap">$smart_wrap</A>'' variable.
+<P>内蔵ペイジャで折り返された行の表示を制御する。設定されていると、
+&quot;+&quot; 印が行頭に付いて、折り返し行を表す。
+<A HREF="#smart_wrap">$smart_wrap</A> 変数も見よ。
 <P>
 <P>
 <H3><A NAME="mask"></A> mask</H3>
@@ -4340,9 +4354,10 @@ the ``
 <P>Type: regular expression<BR>
 Default: &quot;!^\.[^.]&quot;
 <P>
-<P>A regular expression used in the file browser, optionally preceded by
-the <EM>not</EM> operator ``!''.  Only files whose names match this mask
-will be shown. The match is always case-sensitive.
+<P>ファイルブラウザで使われる正規表現。
+先頭に <EM>NOT</EM> 演算子 &quot;!&quot; を付けることができる。
+ファイル名がこの条件に合致するもののみ表示されることになる。
+合致条件は常に大文字と小文字を区別する。
 <P>
 <P>
 <H3><A NAME="mbox"></A> mbox</H3>
