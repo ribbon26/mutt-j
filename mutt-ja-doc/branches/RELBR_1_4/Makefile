@@ -1,35 +1,50 @@
-# Makefile for mutt-ja's documents
-DOCDIR = /usr/local/doc/mutt
-HTMLDIR = ${DOCDIR}/html
-SAMPLESDIR = ${DOCDIR}/samples
-INSTALL = /usr/bin/install -c
+HTML2TXT = w3m -dump -T text/html
+XML2HTML = ./xsl/docbook2xhtml
+WWWDIR = /home/taki/www/mutt/1.4/doc
+XSL = xsl/docbook-wrapper.xsl
 
-default: usage
+all : prepare text
 
-usage:
-	-@ echo "Usage:  At first, open this Makefile and edit parameters."
-	-@ echo "        Then, type 'make install' as root."
+prepare: xsl/docbook-wrapper.xsl
 
-install: doc-ja html-ja html-en samplefiles
+xsl/docbook-wrapper.xsl:
+	./prepare
 
-doc-ja: README.JA-PATCH.ja INSTALL.JA-PATCH.ja \
-INSTALL.ja NEWS.ja README.SECURITY.ja README.SSL.ja README.ja \
-PGP-Notes.ja.txt applying-patches.ja.txt
-	${INSTALL} -m 0644 $? ${DOCDIR}/
+text : prepare README.JA-PATCH.ja INSTALL.JA-PATCH.ja \
+manual-ja-patch.ja.txt manual-ja-patch.en.txt usage-japanese.ja.txt
 
-#doc-en: README.JA-PATCH.en INSTALL.JA-PATCH.en
-#	${INSTALL} -m 0644 $? ${DOCDIR}/
+html : prepare README.JA-PATCH.ja.html INSTALL.JA-PATCH.ja.html \
+manual-ja-patch.ja.html manual-ja-patch.en.html usage-japanese.ja.html
 
-html-ja: html/README.JA-PATCH.ja.html html/INSTALL.JA-PATCH.ja.html \
-	html/manual-ja-patch.ja.html html/usage-japanese.ja.html
-	${INSTALL} -m 0644 $? ${HTMLDIR}/
+%.html : %.xml
+	$(XML2HTML) $(XSL) $<
 
-#html-en: html/README.JA-PATCH.en.html html/INSTALL.JA-PATCH.en.html \
-#	 html/manual-ja-patch.en.html html/usage-japanese.en.html
-#	${INSTALL} -m 0644 $? ${HTMLDIR}/
-html-en: html/manual-ja-patch.en.html
-	${INSTALL} -m 0644 $? ${HTMLDIR}/
+%.txt : %.html
+	sed 's{<div class="toc">.*</div><hr />{{' $< | $(HTML2TXT) > $@
 
-samplefiles: samples/mutt-en.rc samples/mutt-ja.rc samples/sample.muttrc-tt
-	${INSTALL} -m 0644 $? ${SAMPLESDIR}/
+%.ja : %.ja.html
+	sed 's{<div class="toc">.*</div><hr />{{' $< | $(HTML2TXT) > $@
+
+%.en : %.en.html
+	sed 's{<div class="toc">.*</div><hr />{{' $< | $(HTML2TXT) > $@
+
+dist : dist-text dist-html
+
+dist-text : README.JA-PATCH.ja INSTALL.JA-PATCH.ja
+	cp $^ ../
+
+dist-html : INSTALL.JA-PATCH.ja.html manual-ja-patch.en.html \
+usage-japanese.ja.html README.JA-PATCH.ja.html manual-ja-patch.ja.html
+	test -d ../html || (cd ..;mkdir html);cp $^ ../html/
+
+upload : 
+	cp ../html/*.html $(WWWDIR)/
+	cp ../*.txt $(WWWDIR)/
+	cp ../*.ja $(WWWDIR)/
+
+clean :
+	rm -f *.txt *.ja *.html xsl/docbook-wrapper.xsl
+
+clean-all : clean
+	rm -rf ../README.JA-PATCH.ja ../INSTALL.JA-PATCH.ja ../html
 

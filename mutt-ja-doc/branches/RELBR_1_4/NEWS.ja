@@ -189,6 +189,4 @@
 - $pager_spoiler, $pager_spoiler_charは機能を少し変えて $pager_spoil, 
   $pager_spoilerになりました。
 
-The original file is mutt-1.4/NEWS.
-Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>
-and members of mutt-j ML.
+The original file is NEWS.
