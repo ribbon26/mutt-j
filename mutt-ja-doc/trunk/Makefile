@@ -14,7 +14,7 @@ install: doc-ja html-ja html-en samplefiles
 
 doc-ja: README.JA-PATCH.ja INSTALL.JA-PATCH.ja \
 INSTALL.ja NEWS.ja README.SECURITY.ja README.SSL.ja README.ja \
-PGP-Notes.ja.txt applying-patches.ja.txt
+PGP-Notes.ja.txt applying-patches.ja.txt smime-notes.ja.txt
 	${INSTALL} -m 0644 $? ${DOCDIR}/
 
 #doc-en: README.JA-PATCH.en INSTALL.JA-PATCH.en
