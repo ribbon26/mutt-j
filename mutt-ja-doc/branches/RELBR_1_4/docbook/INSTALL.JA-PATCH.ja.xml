@@ -178,10 +178,10 @@ Mutt の tar ball を展開し，日本語パッチを当ててください．
 </para>
 <para>
 <programlisting>
-    $ gzip -dc mutt-1.4.2.1-ja.1.tar.gz | tar xvf -
-    $ gzip -dc mutt-1.4.2.1.tar.gz | tar xvf -
+    $ gzip -dc mutt-1.4.2.1i-ja.1.tar.gz | tar xvf -
+    $ gzip -dc mutt-1.4.2.1i.tar.gz | tar xvf -
     $ cd mutt-1.4.2.1
-    $ patch -p1 &#60; ../mutt-1.4.2.1-ja.1/patch-1.4.2.1.tt.ja.1
+    $ patch -p1 &#60; ../mutt-1.4.2.1i-ja.1/patch-1.4.2.1.tt.ja.1
 </programlisting>
 </para>
 </sect2>
@@ -275,7 +275,7 @@ make;make install でいけます．
 </para>
 <para>
 <programlisting>
-    $ cd ../mutt-1.4.2.1-ja.1
+    $ cd ../mutt-1.4.2.1i-ja.1
     [Makefileを修正]
     # make install
 </programlisting>
