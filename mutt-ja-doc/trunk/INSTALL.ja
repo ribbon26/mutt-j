@@ -294,8 +294,6 @@ Digital Unix (OSF/1)
 	システムの curses ライブラリはひどく壊れているようです。
 	GNU ncurses か S-Lang を代わりに使ってください。
 
-$Id$
-
 The original file is mutt-1.4/INSTALL.
 Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>
 and members of mutt-j ML.

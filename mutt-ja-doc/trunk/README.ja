@@ -17,7 +17,7 @@ PGPユーザは、doc/PGP-Notes.txtを読んでください。
 1.1より前のMuttのバージョンからアップグレードする人はREADME.UPGRADE
 ファイルを読んでください。
 // 訳注: README.UPGRADEはありません。
-//       1.2以前の日本語版からアップグレードする人は NEWS.jp を読ん
+//       1.2以前の日本語版からアップグレードする人は NEWS.ja を読ん
 //       でください。
 
 Muttをハックし始める前に、doc/devel-notes.txtを読んでください。
@@ -41,8 +41,6 @@ Muttの一次配布元は次のURLです。
 
 // 訳注: 国内のミラーは次のURLです。
 //       http://www.emaillab.org/mutt/www.mutt.org/
-
-$Id$
 
 The original file is mutt-1.4/README.
 Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>
