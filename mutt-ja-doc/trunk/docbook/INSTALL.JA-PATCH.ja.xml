@@ -3,55 +3,61 @@
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author>mutt-j │л╚пе┴б╝ер</author>
-<title>Mutt 1.5.5.1i═╤╞№╦▄╕ь╚╟е╤е├е┴едеєе╣е╚б╝еы╩¤╦б</title>
+<title>Mutt 1.5.6i═╤╞№╦▄╕ь╚╟е╤е├е┴едеєе╣е╚б╝еы╩¤╦б</title>
+<authorgroup>
+<corpauthor>mutt-j │л╚пе┴б╝ер</corpauthor>
+</authorgroup>
+<copyright>
+  <year>2000</year>
+  <year>2001</year>
+  <holder>Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;</holder>
+</copyright>
+<copyright>
+  <year>2000</year>
+  <year>2001</year>
+  <holder>Kawaguti Ginga &#60;ginga@ginganet.org&#62;</holder>
+</copyright>
+<copyright>
+  <year>2000</year>
+  <year>2001</year>
+  <year>2002</year>
+  <year>2003</year>
+  <year>2004</year>
+  <holder>TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;</holder>
+</copyright>
+
 </articleinfo>
+
 <sect1>
 <title>╔м═╫д╩дтд╬</title>
 <sect2>
 <title>Mutt╞№╦▄╕ь╚╟д╬е│еєе╤едеы┴░д╦╝шдъд╜дэдид╞дкдпдтд╬</title>
 <para>
-╠╡дд╛ь╣чд╧╜д╣╘дм╔м═╫д╩╩кдтдвдъд▐д╣.
+╠╡дд╛ь╣чд╧╜д╣╘дм╔м═╫д╩╩кдтдвдъд▐д╣бе
 <itemizedlist>
 <listitem>
-<para>
-GNU automake
-</para>
+<para>GNU automake</para>
 </listitem>
 <listitem>
-<para>
-GNU autoconf
-</para>
+<para>GNU autoconf</para>
 </listitem>
 <listitem>
-<para>
-GNU m4
-</para>
+<para>GNU m4</para>
 </listitem>
 <listitem>
-<para>
-GNU make(gmake)
-</para>
+<para>GNU make(gmake)</para>
 </listitem>
 <listitem>
-<para>
-╞№╦▄╕ьдЄ╔╜╝ид╟дндые┐б╝е▀е╩еыеие▀ехеьб╝е┐ибд╚╞№╦▄╕ье╒ейеєе╚
-</para>
+<para>╞№╦▄╕ьдЄ╔╜╝ид╟дндые┐б╝е▀е╩еыеие▀ехеьб╝е┐ибд╚╞№╦▄╕ье╒ейеєе╚</para>
 </listitem>
 <listitem>
-<para>
-C д╬е╫еэе░еще▀еєе░д╦┤╪д╣ды┬┐╛пд╬├╬╝▒
-</para>
+<para>C д╬е╫еэе░еще▀еєе░д╦┤╪д╣ды┬┐╛пд╬├╬╝▒</para>
 </listitem>
 <listitem>
-<para>
-е│еєе╤едеыдм╛х╝ъдпдддлд╩дпд╞дт╝л╩мд╟╜д└╡д╣ды║м└н
-</para>
+<para>е│еєе╤едеыдм╛х╝ъдпдддлд╩дпд╞дт╝л╩мд╟╜д└╡д╣ды║м└н</para>
 </listitem>
 <listitem>
-<para>
-╝у┤│д╬▒╤╕ь╞╔▓Є╬╧
-</para>
+<para>╝у┤│д╬▒╤╕ь╞╔▓Є╬╧</para>
 </listitem>
 </itemizedlist>
 </para>
@@ -60,40 +66,32 @@ C д╬е╫еэе░еще▀еєе░д╦┤╪д╣ды┬┐╛пд╬├╬╝▒
 <title>Mutt╞№╦▄╕ь╚╟дЄе│еєе╤едеыд╣дыд┐дс╔м═╫д╩дтд╬</title>
 <itemizedlist>
 <listitem>
-<para>
-mutt-1.5.x екеъе╕е╩еые╜б╝е╣
-</para>
-</listitem>   
+<para>mutt-1.5.x екеъе╕е╩еые╜б╝е╣</para>
+</listitem>
+<listitem>
+<para>mutt-1.5.x═╤╞№╦▄╕ье╤е├е┴</para>
+</listitem>
+<listitem>
+<para>S-Lang</para>
+</listitem>
+<listitem>
+<para>╩╕╗·╔ф╣ц▓╜╩¤╝░д╬╩╤┤╣┤╪┐Ї iconv дЄ╝┬┴їд╖д╞ддды C ещеде╓ещеъд╟╞№╦▄╕ьд╬╩╕╗·╔ф╣ц▓╜╩¤╝░д╚ UTF-8 д╦┬╨▒■д╖д╞дддыдтд╬б╩╢▓дщдпбдGNU/Linux(glibc-2.2)бдSolaris 2.7бдAIX 4.3 ░╩╛хб╦двдыддд╧ GNU libiconv</para>
+</listitem>
 <listitem>
 <para>
-mutt-1.5.x═╤╞№╦▄╕ье╤е├е┴
+еяеде╔╩╕╗·┤╪┐ЇдЄ╝┬┴їд╖д╞ддды C ещеде╓ещеъд╟╞№╦▄╕ьд╬еэе▒б╝еыд╬╝┬┴їдмд▐д╚дтд╟двдыдтд╬беб╩╢▓дщдпбдGNU/Linux(glibc-2.2)бдSolaris 2.7бдAIX 4.3 ░╩╛хб╦б╩╠╡дд╛ь╣чд╧ Mutt ╔╒┬░д╬дтд╬д╟дтдлд▐дяд╩дд (*2)б╦
 </para>
-</listitem>   
-<listitem>
-<para>
-S-Lang
-</para>
-</listitem>   
-<listitem>
-<para>
-╩╕╗·╔ф╣ц▓╜╩¤╝░д╬╩╤┤╣┤╪┐Ї iconv дЄ╝┬┴їд╖д╞ддды C ещеде╓ещеъд╟╞№╦▄╕ьд╬╩╕╗·╔ф╣ц▓╜╩¤╝░д╚ UTF-8 д╦┬╨▒■д╖д╞дддыдтд╬б╩╢▓дщдп, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 ░╩╛хб╦б╩glibc-2.1.3 + ja-locale д╟дт╞░║ю│╬╟з║╤б╦двдыддд╧ GNU libiconv
-</para>
-</listitem>   
-<listitem>
-<para>
-еяеде╔╩╕╗·┤╪┐ЇдЄ╝┬┴їд╖д╞ддды C ещеде╓ещеъд╟╞№╦▄╕ьд╬еэе▒б╝еыд╬╝┬┴їдмд▐д╚дтд╟двдыдтд╬. б╩╢▓дщдп, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 ░╩╛хб╦б╩╠╡дд╛ь╣чд╧ Mutt ╔╒┬░д╬дтд╬д╟дтдлд▐дяд╩дд (*2)б╦
-</para>
-</listitem>   
+</listitem>
 </itemizedlist>
 
 <para>
-░╩╛хд╟╡єд▓д┐┬╛д╦ POP/IMAP over TLS/SSL дЄ╗╚ддд┐дд┐═д╧ OpenSSL дЄ, POP/IMAP д╟SASL ╟з╛┌дм╔м═╫д╩╩¤д╧ Cyrus SASL Library дЄ, PGP дЄ╗╚ддд┐дд┐═д╧ PGP двдыддд╧GnuPG дЄ═╜дседеєе╣е╚б╝еыд╖д╞дпд└д╡дд. 
+░╩╛хд╬дтд╬д╧╝бд╬ URL двдыддд╧д│д╬е┌б╝е╕длдщеъеєепд╡дьд╞дддые┌б╝е╕длдще└ежеєеэб╝е╔д╟дндыдшджд╦д╖д╞ддд▐д╣бе<ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>
 </para>
 <para>
-░╩╛хд╬дтд╬д╧╝бд╬ URL двдыддд╧д│д╬е┌б╝е╕длдщеъеєепд╡дьд╞дддые┌б╝е╕длдще└ежеєеэб╝е╔д╟дндыдшджд╦д╖д╞ддд▐д╣. <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>
+░╩╛хд╟╡єд▓д┐┬╛д╦ POP/IMAP over TLS/SSL дЄ╗╚ддд┐дд┐═д╧ OpenSSL дЄбдPOP/IMAP д╟SASL ╟з╛┌дм╔м═╫д╩╩¤д╧ Cyrus SASL Library дЄбдPGP дЄ╗╚ддд┐дд┐═д╧ PGP двдыддд╧GnuPG дЄбдS/MIME дЄ╗╚ддд┐дд┐═д╧ OpenSSL дЄ═╜дседеєе╣е╚б╝еыд╖д╞дпд└д╡ддбе
 </para>
 <para>
-*2) ┤╩░╫┼кд╩╝┬┴їд╟двдыд┐дс, ╔╜╝иб┐╞■╬╧═╤д╬╩╕╗·╔ф╣ц▓╜╩¤╝░д╚д╖д╞д╧ EUC-JP длShift_JIS д╖дл░╖дид▐д╗дє. Mutt ╔╒┬░д╬еяеде╔╩╕╗·┤╪┐ЇдЄ╗╚джд┐дсд╦д╧ ./configureд╣дыд╚днд╦ --without-wc-funcs дЄ╗╪─ъд╖д╞дпд└д╡дд.</para>
+*2) ┤╩░╫┼кд╩╝┬┴їд╟двдыд┐дсбд╔╜╝иб┐╞■╬╧═╤д╬╩╕╗·╔ф╣ц▓╜╩¤╝░д╚д╖д╞д╧ EUC-JP длShift_JIS д╖дл░╖дид▐д╗дєбеMutt ╔╒┬░д╬еяеде╔╩╕╗·┤╪┐ЇдЄ╗╚джд┐дсд╦д╧ ./configureд╣дыд╚днд╦ --without-wc-funcs дЄ╗╪─ъд╖д╞дпд└д╡ддбе</para>
 </sect2>
 </sect1>
 <sect1>
@@ -101,77 +99,79 @@ S-Lang
 <sect2>
 <title>S-Lang дЄедеєе╣е╚б╝еыд╣ды</title>
 <para>
-д╣д╟д╦, ╞№╦▄╕ье╤е├е┴д╬┼Ўд├д┐ S-Lang дмедеєе╣е╚б╝еыд╡дьд╞ддды, двдыддд╧екеъе╕е╩еыд╬ S-Lang д╟ SLANG_HAS_KANJI_SUPPORT дм─ъ╡┴д╡дьд╞едеєе╣е╚б╝еыд╡дьд╞дддьд╨╝бд╬╣р╠▄д╦░▄д├д╞дпд└д╡дд.
+д╣д╟д╦бд╞№╦▄╕ье╤е├е┴д╬┼Ўд├д┐ S-Lang дмедеєе╣е╚б╝еыд╡дьд╞дддыбддвдыддд╧екеъе╕е╩еыд╬ S-Lang д╟ SLANG_HAS_KANJI_SUPPORT дм─ъ╡┴д╡дьд╞едеєе╣е╚б╝еыд╡дьд╞дддьд╨╝бд╬╣р╠▄д╦░▄д├д╞дпд└д╡ддбе
 </para>
 <para>
-┼м┼Ўд╩е╟егеьепе╚еъд╦┼╕│лд╖, д╜д╬е╟егеьепе╚еъд╦░▄дъд▐д╣. екеъе╕е╩еыд╬ S-Lang д╬╛ь╣чд╧ src/sl-feat.h дЄ╝бд╬дшджд╦╩╘╜╕д╖д╞, SLANG_HAS_KANJI_SUPPORT дЄ 1 д╦─ъ╡┴д╖д▐д╣.
-</para>
-<para>
-<programlisting>
-    #define SLANG_HAS_KANJI_SUPPORT         1                                  
-</programlisting>
-</para>
-<para>
-е│еєе╤едеыд╖д▐д╣.
+┼м┼Ўд╩е╟егеьепе╚еъд╦┼╕│лд╖бдд╜д╬е╟егеьепе╚еъд╦░▄дъд▐д╣беекеъе╕е╩еыд╬ S-Lang д╬╛ь╣чд╧ src/sl-feat.h дЄ╝бд╬дшджд╦╩╘╜╕д╖д╞бдSLANG_HAS_KANJI_SUPPORT дЄ 1 д╦─ъ╡┴д╖д▐д╣бе
 </para>
 <para>
 <programlisting>
-    $ ./configure --prefix=/usr/local                                          
-    $ make                                                                     
-    $ make runtests                                                            
+    #define SLANG_HAS_KANJI_SUPPORT         1
 </programlisting>
 </para>
 <para>
-└┼┼кещеде╓ещеъд╚д╖д╞едеєе╣е╚б╝еыд╣ды╛ь╣чд╧╝бд╦дшджд╦д╖д▐д╣.
+е│еєе╤едеыд╖д▐д╣бе
 </para>
 <para>
 <programlisting>
-    # make install                                                             
+    $ ./configure --prefix=/usr/local
+    $ make
+    $ make runtests
 </programlisting>
 </para>
 <para>
-ELF╖┴╝░д╬╢ж═нещеде╓ещеъд╚д╖д╞едеєе╣е╚б╝еыд╣ды╛ь╣чд╧д╡дщд╦╝бд╬дшджд╦д╖д▐д╣.
+└┼┼кещеде╓ещеъд╚д╖д╞едеєе╣е╚б╝еыд╣ды╛ь╣чд╧╝бд╦дшджд╦д╖д▐д╣бе
 </para>
 <para>
 <programlisting>
-    $ make elf                                                                 
-    # make install-elf                                                         
-    # make install-links                                                       
+    # make install
 </programlisting>
 </para>
 <para>
-д│д╬╛ь╣чд╧едеєе╣е╚б╝еы╕хд╦ ldconfig д╩д╔д╟енеуе├е╖ехд╬╣╣┐╖дЄ╣╘д╩д├д╞дпд└д╡ддбг
+ELF╖┴╝░д╬╢ж═нещеде╓ещеъд╚д╖д╞едеєе╣е╚б╝еыд╣ды╛ь╣чд╧д╡дщд╦╝бд╬дшджд╦д╖д▐д╣бе
+</para>
+<para>
+<programlisting>
+    $ make elf
+    # make install-elf
+    # make install-links
+</programlisting>
+</para>
+<para>
+д│д╬╛ь╣чд╧едеєе╣е╚б╝еы╕хд╦ ldconfig д╩д╔д╟енеуе├е╖ехд╬╣╣┐╖дЄ╣╘д╩д├д╞дпд└д╡ддбе
 </para>
 </sect2>
+
 <sect2>
 <title>libiconv дЄедеєе╣е╚б╝еыд╣ды</title>
 <para>
-д╣д╟д╦, GNU libiconv дм╝┬┴їд╡дьд╞ддды╩¤дкдшд╙╞№╦▄╕ьдф UTF-8 д╦┤░┴┤д╦┬╨▒■д╖д┐iconv дЄ┤▐дєд╟ддды C ещеде╓ещеъдЄ╗¤д├д╞ддды┤─╢н╩¤д╧╝бд╬╣р╠▄д╦░▄д├д╞дпд└д╡дд. д┐д└д╖, C ещеде╓ещеъд╬ iconv дЄ╗╚д├д╞дтджд▐дпдддлд╩дд╛ь╣чд╧, GNU libiconv дЄ╗╚д├д╞д▀д╞дпд└д╡дд.
+д╣д╟д╦бдGNU libiconv дм╝┬┴їд╡дьд╞ддды╩¤дкдшд╙╞№╦▄╕ьдф UTF-8 д╦┤░┴┤д╦┬╨▒■д╖д┐iconv дЄ┤▐дєд╟ддды C ещеде╓ещеъдЄ╗¤д├д╞ддды┤─╢н╩¤д╧╝бд╬╣р╠▄д╦░▄д├д╞дпд└д╡ддбед┐д└д╖бд╔╕╜рд╬ C ещеде╓ещеъд╬ iconv дЄ╗╚д├д╞дтджд▐дпдддлд╩дд╛ь╣чд╧бдGNU libiconv дЄ╗╚д├д╞д▀д╞дпд└д╡ддбе
 </para>
 <para>
-┼м┼Ўд╩е╟егеьепе╚еъд╦┼╕│лд╖, д╜д╬е╟егеьепе╚еъд╦░▄дъ, ./configure;make;make install д╟д╟днд▐д╣. едеєе╣е╚б╝еы╕хд╦ libiconv дЄ╗╚джд┐дсд╬┤─╢н╩╤┐Їд╬└▀─ъдф╢ж═нещеде╓ещеъд╬енеуе├е╖ехд╬╣╣┐╖(ldconfig)дЄ╣╘д├д╞дпд└д╡дд.
+┼м┼Ўд╩е╟егеьепе╚еъд╦┼╕│лд╖бдд╜д╬е╟егеьепе╚еъд╦░▄дъбд./configure;make;make install д╟д╟днд▐д╣беедеєе╣е╚б╝еы╕хд╦ libiconv дЄ╗╚джд┐дсд╬┤─╢н╩╤┐Їд╬└▀─ъдф╢ж═нещеде╓ещеъд╬енеуе├е╖ехд╬╣╣┐╖(ldconfig)дЄ╣╘д├д╞дпд└д╡ддбе
 </para>
 <para>
 <programlisting>
-  GNU/Linux(glibc-2.1) д╚ Solaris                                              
-      Bsh ╖╧                                                                   
-        $ LD_PRELOAD=/usr/local/lib/libiconv_plug.so                           
-        $ export LD_PRELOAD                                                    
-      csh ╖╧                                                                   
-        % setenv LD_PRELOAD /usr/local/lib/libiconv_plug.so                    
-  д╜д╬┬╛                                                                       
-      Bsh ╖╧                                                                   
-        $ LD_LIBRARY_PATH=/usr/local/lib                                       
-        $ export LD_LIBRARY_PATH                                               
-      csh ╖╧                                                                   
-        % setenv LD_LIBRARY_PATH /usr/local/lib                                
+  GNU/Linux(glibc-2.1) д╚ Solaris
+      Bsh ╖╧
+        $ LD_PRELOAD=/usr/local/lib/libiconv_plug.so
+        $ export LD_PRELOAD
+      csh ╖╧
+        % setenv LD_PRELOAD /usr/local/lib/libiconv_plug.so
+  д╜д╬┬╛
+      Bsh ╖╧
+        $ LD_LIBRARY_PATH=/usr/local/lib
+        $ export LD_LIBRARY_PATH
+      csh ╖╧
+        % setenv LD_LIBRARY_PATH /usr/local/lib
 </programlisting>
 </para>
 </sect2>
+
 <sect2>
 <title>Mutt д╬е╜б╝е╣д╦╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞ды</title>
 <para>
-Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
+Mutt д╬ tar ball дЄ┼╕│лд╖бд╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡ддбе
 </para>
 <para>
 ╬уб╦
@@ -188,7 +188,7 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 <sect2>
 <title>./configure д╦╔м═╫д╩еке╫е╖ечеєдЄ╔╒д▒д╞╝┬╣╘д╣ды</title>
 <para>
-╝бд╬еке╫е╖ечеєд╧ Mutt д╟╞№╦▄╕ьдЄ╗╚джд┐дсд╦╔м═╫д╟д╣.
+╝бд╬еке╫е╖ечеєд╧ Mutt д╟╞№╦▄╕ьдЄ╗╚джд┐дсд╦╔м═╫д╟д╣бе
 </para>
 <para>
 <itemizedlist>
@@ -196,8 +196,8 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 <para>
 --with-libiconv-prefix=DIR
 </para>
-<para>   
- GNU libiconv дЄ╗╚дж╛ь╣чд╧д│д╬еке╫е╖ечеєдЄ╔╒д▒д╩ддд╚джд▐дпдддлд╩ддд│д╚дмдвдъд▐д╣.
+<para>
+GNU libiconv дЄ╗╚дж╛ь╣чд╧д│д╬еке╫е╖ечеєдЄ╔╒д▒д╩ддд╚джд▐дпдддлд╩ддд│д╚дмдвдъд▐д╣бе
 </para>
 <para>
 ╬у) --with-libiconv-prefix=/usr/local
@@ -208,7 +208,7 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 --without-wc-funcs
 </para>
 <para>
-еяеде╔╩╕╗·┤╪┐Їд╚╞№╦▄╕ьд╬еэе▒б╝еые╟б╝е┐дмд▐д╚дтд╦╞░дп┤─╢нб╩╢▓дщдп GNU/Linux/glibc-2.2, Solaris 2.7, AIX 4.3 ░╩╛хб╦░╩│░д╬╩¤д╧д│д╬еке╫е╖ечеєдЄ╦║дьд║д╦╔╒д▒д╞дпд└д╡дд.
+еяеде╔╩╕╗·┤╪┐Їд╚╞№╦▄╕ьд╬еэе▒б╝еые╟б╝е┐дмд▐д╚дтд╦╞░дп┤─╢нб╩╢▓дщдп GNU/Linux/glibc-2.2бдSolaris 2.7бдAIX 4.3 ░╩╛хб╦░╩│░д╬╩¤д╧д│д╬еке╫е╖ечеєдЄ╦║дьд║д╦╔╒д▒д╞дпд└д╡ддбе
 </para>
 </listitem>
 <listitem>
@@ -216,7 +216,7 @@ Mutt д╬ tar ball дЄ┼╕│лд╖, ╞№╦▄╕ье╤е├е┴дЄ┼Ўд╞д╞дпд└д╡дд.
 --with-slang[=DIR]
 </para>
 <para>
-S-Lang дЄ╗╚дж╛ь╣чд╧╔мд║╔╒д▒д╞дпд└д╡дд. е╖е╣е╞ерд╦ещеде╓ещеъд╚д╖д╞┬╕║▀д╣ды╛ь╣чд╧┤Ё╦▄┼кд╦д╧е╟егеьепе╚еъдЄ╗╪─ъд╣ды╔м═╫д╧двдъд▐д╗дє. 
+S-Lang дЄ╗╚дж╛ь╣чд╧╔мд║╔╒д▒д╞дпд└д╡ддбее╖е╣е╞ерд╦ещеде╓ещеъд╚д╖д╞┬╕║▀д╣ды╛ь╣чд╧┤Ё╦▄┼кд╦д╧е╟егеьепе╚еъдЄ╗╪─ъд╣ды╔м═╫д╧двдъд▐д╗дєбе
 </para>
 <para>
 ╬у) --with-slang=/usr/local
@@ -227,7 +227,7 @@ S-Lang дЄ╗╚дж╛ь╣чд╧╔мд║╔╒д▒д╞дпд└д╡дд. е╖е╣е╞ерд╦ещеде╓ещеъд╚д╖д╞┬╕║▀д╣ды╛ь╣чд╧┤
 --with-slanglib[=NAME]
 </para>
 <para>
-╢ж═нещеде╓ещеъ╠╛дм libslang.so ░╩│░д╬╛ь╣чд╦бвд│д╬еке╫е╖ечеєд╟╢ж═нещеде╓ещеъ╠╛дЄ╗╪─ъд╖д╞дпд└д╡дд. ╬удид╨, ╢ж═нещеде╓ещеъ╠╛д╬е╒ебедеы╠╛дм libslang-ja.so д╬╛ь╣чд╧░╩▓╝д╬дшджд╦╗╪─ъд╖д▐д╣.
+╢ж═нещеде╓ещеъ╠╛дм libslang.so ░╩│░д╬╛ь╣чд╦бдд│д╬еке╫е╖ечеєд╟╢ж═нещеде╓ещеъ╠╛дЄ╗╪─ъд╖д╞дпд└д╡ддбе╬удид╨бд╢ж═нещеде╓ещеъ╠╛д╬е╒ебедеы╠╛дм libslang-ja.so д╬╛ь╣чд╧░╩▓╝д╬дшджд╦╗╪─ъд╖д▐д╣бе
 </para>
 <para>
 ╬у) --with-slanglib=slang-ja
@@ -238,91 +238,76 @@ S-Lang дЄ╗╚дж╛ь╣чд╧╔мд║╔╒д▒д╞дпд└д╡дд. е╖е╣е╞ерд╦ещеде╓ещеъд╚д╖д╞┬╕║▀д╣ды╛ь╣чд╧┤
 --enable-default-japanese
 </para>
 <para>
-└▀─ъ╩╤┐Їд╬е╟е╒ейеые╚├═дЄ╞№╦▄╕ьдЄ╗╚джд┐дсд╦┼мд╖д┐дтд╬д╦└▀─ъд╖д▐д╣. д│д╬еке╫е╖ечеєдЄ╠╡╕·д╦д╖д╞дт, └▀─ъ╩╤┐ЇдЄ┼м└┌д╦└▀─ъд╣дьд╨╞№╦▄╕ьдЄ╗╚джд│д╚дмд╟днд▐д╣.
+└▀─ъ╩╤┐Їд╬е╟е╒ейеые╚├═дЄ╞№╦▄╕ьдЄ╗╚джд┐дсд╦┼мд╖д┐дтд╬д╦└▀─ъд╖д▐д╣бед│д╬еке╫е╖ечеєдЄ╠╡╕·д╦д╖д╞дтбд└▀─ъ╩╤┐ЇдЄ┼м└┌д╦└▀─ъд╣дьд╨╞№╦▄╕ьдЄ╗╚джд│д╚дмд╟днд▐д╣бе
 </para>
 </listitem>
 </itemizedlist>
 </para>
 <para>
-./configure д╦д╧д╜д╬д█длд╦дтдддпд─длд╬еке╫е╖ечеєдмдвдъд▐д╣. ./configure --help
-д╟│╬╟зд╖д╞дпд└д╡дд. д╩дкбвmake д╖д┐д╚днд╦ aclocal, autoconf, automake
-д╦┤╪╧вд╖д┐еиещб╝дм╜╨д┐╛ь╣чд╧╔╒┬░╩╕╜ёд╬ applying-patches.txt дЄ╞╔дєд╟дпд└д╡дд.
+./configure д╦д╧д╜д╬д█длд╦дтдддпд─длд╬еке╫е╖ечеєдмдвдъд▐д╣бе./configure --help д╟│╬╟зд╖д╞дпд└д╡ддбед╩дкбдmake д╖д┐д╚днд╦ aclocalбдautoconfбдautomake
+д╦┤╪╧вд╖д┐еиещб╝дм╜╨д┐╛ь╣чд╧╔╒┬░╩╕╜ёд╬ applying-patches.txt дЄ╞╔дєд╟дпд└д╡ддбе
 </para>
 </sect2>
 <sect2>
 <title>е│еєе╤едеы╕хедеєе╣е╚б╝еыд╣ды</title>
 <para>
-make;make install д╟ддд▒д▐д╣.
+make;make install д╟ддд▒д▐д╣бе
 </para>
 <para>
 <programlisting>
-    $ make                                                                     
-    # make install                                                             
+    $ make
+    # make install
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>╞№╦▄╕ь╚╟д╬е╔енехесеєе╚дЄедеєе╣е╚б╝еыд╣ды</title>
 <para>
-д▐д║, екеъе╕е╩еыд╬Muttд╬е╔енехесеєе╚дмедеєе╣е╚б╝еыд╡дьд┐е╟егеьепе╚еъдЄ│╬╟зд╣дыд┐дсд╦, екеъе╕е╩еыд╬е╜б╝е╣е╟егеьепе╚еъд╟╝бд╬е│е▐еєе╔дЄ╝┬╣╘д╖д▐д╣.
+д▐д║бдекеъе╕е╩еыд╬Muttд╬е╔енехесеєе╚дмедеєе╣е╚б╝еыд╡дьд┐е╟егеьепе╚еъдЄ│╬╟зд╣дыд┐дсд╦бдекеъе╕е╩еыд╬е╜б╝е╣е╟егеьепе╚еъд╟╝бд╬е│е▐еєе╔дЄ╝┬╣╘д╖д▐д╣бе
 </para>
 <para>
 <programlisting>
-    $ grep docdir Makefile                                                     
+    $ grep docdir Makefile
 </programlisting>
 </para>
 <para>
-╝бд╦, ╞№╦▄╕ье╤е├е┴д╬е╟егеьепе╚еъд╦░▄╞░д╖д╞Makefileд╬DOCDIRд╬├═дЄ╜д└╡д╖, rootд╦д╩д├д╞, make installдЄ╝┬╣╘д╖д▐д╣.
+╝бд╦бд╞№╦▄╕ье╤е├е┴д╬е╟егеьепе╚еъд╦░▄╞░д╖д╞Makefileд╬DOCDIRд╬├═дЄ╜д└╡д╖бдrootд╦д╩д├д╞бдmake installдЄ╝┬╣╘д╖д▐д╣бе
 </para>
 <para>
 <programlisting>
-    $ cd ../mutt-1.5.x-ja.1                                                     
+    $ cd ../mutt-1.5.x-ja.1
     [MakefileдЄ╜д└╡]
-    # make install                                                             
+    # make install
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>есе├е╗б╝е╕еле┐еэе░д╦┤╪д╣ды├э░╒╗Ў╣р</title>
 <para>
-NEC UX/4800д╬дшджд╦, ╔╕╜рд╬localeдм╩╤┬з┼кд╩дтд╬д╧, Muttдм╗╚дж ja locale е╟егеьепе╚еъд╚╔╕╜рд╬е╟егеьепе╚еъ(UX/4800е╖еъб╝е║д╟д╧ japan)дЄе╖еєе▄еъе├епеъеєепд╖д╞дпд└д╡дд. д│джд╣дыд│д╚д╟, есе├е╗б╝е╕еле┐еэе░дм└╡╛яд╦д╦═°═╤д╟днд▐д╣.
+NEC UX/4800д╬дшджд╦бд╔╕╜рд╬localeдм╩╤┬з┼кд╩дтд╬д╧бдMuttдм╗╚дж ja locale е╟егеьепе╚еъд╚╔╕╜рд╬е╟егеьепе╚еъ(UX/4800е╖еъб╝е║д╟д╧ japan)дЄе╖еєе▄еъе├епеъеєепд╖д╞дпд└д╡ддбед│джд╣дыд│д╚д╟бдесе├е╗б╝е╕еле┐еэе░дм└╡╛яд╦д╦═°═╤д╟днд▐д╣бе
 </para>
 </sect2>
 <sect2>
 <title>┤╪╧ве─б╝еыдЄедеєе╣е╚б╝еыд╣ды</title>
 <para>
-╔м═╫д╩дщ, urlview д╚ metamail дтедеєе╣е╚б╝еыд╖д╞дпд└д╡дд. Mutt длдщ─╛└▄ Web е╓ещеже╢дЄ╡п╞░д╖д┐дъ, ┐зб╣д╚╩╪═°д╩д│д╚дмд╟днд▐д╣.
+╔м═╫д╩дщбдurlview д╚ metamail дтедеєе╣е╚б╝еыд╖д╞дпд└д╡ддбеMutt длдщ─╛└▄ Web е╓ещеже╢дЄ╡п╞░д╖д┐дъбд┐зб╣д╚╩╪═°д╩д│д╚дмд╟днд▐д╣бе
 </para>
 </sect2>
 <sect2>
 <title>┴ў┐о═╤е╫еэе░ещердЄедеєе╣е╚б╝еыд╣ды</title>
 <para>
-Muttд╟д╧┴ў┐од╦┤╪д╖д╞д╧│░╔Їе╫еэе░ещердЄ╗╚ддд▐д╣. е╖е╣е╞ерд╦MTAдмедеєе╣е╚б╝еыд╡дьд╞ддд╞, │░╔Їд╬е╔еседеєдвдыддд╧├ц╖╤═╤е╡б╝е╨д╦┴ў┐од╟днды┤─╢нд╟двдьд╨, ╞├д╦╩╠д╬е╫еэе░ещердЄедеєе╣е╚б╝еыд╣ды╔м═╫д╧двдъд▐д╗дє. д╜джд╟д╩дд╛ь╣чд╧, qmail, exim,postfixд╩д╔д╬ MTA дф Nomail, smtppush, nullmailer, ssmtp д╩д╔д╬┴ў┐о└ь═╤д╬е╫еэе░ещердЄедеєе╣е╚б╝еыд╣ды╔м═╫дмдвдъд▐д╣. е└едевеыеве├е╫┤─╢нд╟д╖д┐дщ Nomail дм, ╛я╗■└▄┬│┤─╢нд╟двдьд╨ smtppush дм└▀─ъдм┤╩├▒д╟д╣.
+Muttд╟д╧┴ў┐од╦┤╪д╖д╞д╧│░╔Їе╫еэе░ещердЄ╗╚ддд▐д╣бее╖е╣е╞ерд╦MTAдмедеєе╣е╚б╝еыд╡дьд╞ддд╞бд│░╔Їд╬е╔еседеєдвдыддд╧├ц╖╤═╤е╡б╝е╨д╦┴ў┐од╟днды┤─╢нд╟двдьд╨бд╞├д╦╩╠д╬е╫еэе░ещердЄедеєе╣е╚б╝еыд╣ды╔м═╫д╧двдъд▐д╗дєбед╜джд╟д╩дд╛ь╣чд╧бдqmailбдexim, postfixд╩д╔д╬ MTA дф Nomailбдnullmailerбдssmtp д╩д╔д╬┴ў┐о└ь═╤д╬е╫еэе░ещердЄедеєе╣е╚б╝еыд╣ды╔м═╫дмдвдъд▐д╣бее└едевеыеве├е╫┤─╢нд╟д╖д┐дщ Nomail дмбд╛я╗■└▄┬│┤─╢нд╟двдьд╨ ssmtp дм└▀─ъдм┤╩├▒д╟д╣бе
 </para>
 </sect2>
 </sect1>
 <sect1>
 <title>└▀─ъ</title>
 <para>
-╞№╦▄╕ь┤─╢нд╬└▀─ъд╧ usage-japanese.html дЄд┤═ў▓╝д╡дд. 1.2.x ░╩┴░д╬дтд╬дт┤Ё╦▄┼кд╦д╧╗╚дид▐д╣дм, ╞№╦▄╕ь▓єдъд╟дддпд─дл╔╘╢ё╣чдмд╟ды▓─╟╜└ндмдвдыд┐дс└▀─ъдЄ║╞│╬╟зд╖д╞дпд└д╡дд.
+╞№╦▄╕ь┤─╢нд╬└▀─ъд╧ <ulink url="usage-japanese.ja.html">usage-japanese.ja.html</ulink> дЄд┤═ў▓╝д╡ддбе1.2.x ░╩┴░д╬дтд╬дт┤Ё╦▄┼кд╦д╧╗╚дид▐д╣дмбд╞№╦▄╕ь▓єдъд╟дддпд─дл╔╘╢ё╣чдмд╟ды▓─╟╜└ндмдвдыд┐дс└▀─ъдЄ║╞│╬╟зд╖д╞дпд└д╡ддбе
 </para>
 <para>
-д╔джд╖д╞дт╞№╦▄╕ьд╬╔╜╝идмджд▐дпдддлд╩ддд╚дддж╩¤д╧┴░д╬едеєе╣е╚б╝еыд╬╝ъ╜чдЄ│╬╟зд╖,S-Lang, iconv, еяеде╔╩╕╗·┤╪┐ЇдЄ╗╚дждшджд╦д╩д├д╞дддыдлдЄ│╬длдсд╞дпд└д╡дд.
+д╔джд╖д╞дт╞№╦▄╕ьд╬╔╜╝идмджд▐дпдддлд╩ддд╚дддж╩¤д╧┴░д╬едеєе╣е╚б╝еыд╬╝ъ╜чдЄ│╬╟зд╖бдS-Langбдiconvбдеяеде╔╩╕╗·┤╪┐ЇдЄ╗╚дждшджд╦д╩д├д╞дддыдлдЄ│╬длдсд╞дпд└д╡ддбе
 </para>
 </sect1>
-<sect1>
-<title>д│д╬╩╕╜ёд╬├°║ю╕в</title>
-<itemizedlist>
-<listitem><para>
-Copyright (C) 2000-2001 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;
-</para></listitem>
-<listitem><para>
-Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
-</para></listitem>
-<listitem><para>
-Copyright (C) 2000-2003 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
-</para></listitem>
-</itemizedlist>
-<para>д│д╬╩╕╜ёд╬ DocBook/XML ▓╜: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
-</sect1>
 </article>
+

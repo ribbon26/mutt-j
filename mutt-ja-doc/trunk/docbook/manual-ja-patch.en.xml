@@ -2,17 +2,30 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
+
 <articleinfo>
-<author><firstname></firstname><surname>mutt-j ML development team</surname></author>
-<publisher><publishername>mutt-j ML development team</publishername></publisher>
 <title>mutt-ja patch extension manual</title>
-<revhistory>
-<revision>
-<revnumber>mutt-1.5.5.1i-ja.1</revnumber>
-<date>2003/11/16</date>
-</revision>
-</revhistory>
+<authorgroup>
+<corpauthor>mutt-j ML development team</corpauthor>
+</authorgroup>
+<copyright>
+  <year>2000</year>
+  <year>2001</year>
+  <year>2002</year>
+  <year>2003</year>
+  <year>2004</year>
+  <holder>TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;</holder>
+</copyright>
+<copyright>
+  <year>2000</year>
+  <holder>Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;</holder>
+</copyright>
+<copyright>
+  <year>2000</year>
+  <holder>Kawaguti Ginga &#60;ginga@ginganet.org&#62;</holder>
+</copyright>
 </articleinfo>
+
 <sect1>
 <title>ja patch extension manual</title>
 <sect2>
@@ -164,8 +177,8 @@ For example, the following setting
 <para>
 <programlisting>
     set msgid_use_from=yes
-    set realname="D Vader"
-    set from="vader@deathstar.empire"
+    set realname="foo bar"
+    set from="foo@example.org"
 </programlisting>
 </para>
 <para>
@@ -173,8 +186,8 @@ generates these From:/Message-ID: fields:
 </para>
 <para> 
 <programlisting>
-    Message-ID: &#60;20000907080905.A5250%vader@deathstar.empire&#62;
-    From: D Vader &#60;vader@deathstar.empire&#62;
+    Message-ID: &#60;20000907080905.A5250%foo@example.org&#62;
+    From: Foo Bar &#60;foo@example.org&#62;
 </programlisting>
 </para>
 </sect3>
@@ -476,25 +489,6 @@ When set, Mutt will decide that Symbols, Greek and Cyrillic in JIS X 0208 have
 a column width of 2 in UTF-8 locale.
 </para>
 </sect3>
-</sect2>
-<sect2>
-<title>Copyright</title>
-<para>
-Copyright (C) 2000-2003 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
-</para>
-<para>
-Copyright (C) 2000 Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;
-</para>
-<para>
-Copyright (C) 2000 Kawaguti Ginga &#60;ginga@athena.club.ne.jp&#62;
-</para>
-<para>
-Converted to DocBook/XML Style by SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;.
-</para>
-<para>
-Translated to English by Kawaguti Ginga &#60;ginga@athena.club.ne.jp&#62;
-and SHIOZAKI Takehiko &#60;takehiko.shiozaki@reuters.co.jp&#62;.
-</para>
 </sect2>
 </sect1>
 </article>

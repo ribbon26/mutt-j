@@ -3,313 +3,268 @@
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author>mutt-j 開発チーム</author>
-<title>日本語環境の設定方法 - Version 0.6.1</title>
+<title>日本語環境の設定方法 - Version 0.6.3</title>
+<authorgroup>
+<corpauthor>mutt-j 開発チーム</corpauthor>
+</authorgroup>
+<copyright>
+  <year>2000</year>
+  <year>2001</year>
+  <year>2002</year>
+  <year>2003</year>
+  <year>2004</year>
+  <holder>TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;</holder>
+</copyright>
 </articleinfo>
+
 <sect1>
 <title>環境変数の設定</title>
 <para>
-日本語のロケールの設定が行われている必要があります（Mutt 付属のワイド文字関数を
-使っている場合は特に設定は必要ありません）. 環境変数 LC_CTYPE の値を "ja_JP" か
-"ja" に設定してください. 指定しない場合は環境変数 LANG で指定したものが有効にな
-ります.
+日本語のロケールの設定が行われている必要があります（Mutt 付属のワイド文字関数を使っている場合は特に設定は必要ありません）．環境変数 LC_CTYPE の値を "ja_JP" か "ja" に設定してください．指定しない場合は環境変数 LANG で指定したものが有効にな
+ります．
 </para>
 <para>
 例）
 <programlisting>
-Bsh 系                                                                         
-  $ LC_CTYPE=ja_JP                                                             
-  $ export LC_CTYPE                                                            
-csh 系                                                                         
-  % setenv LC_CTYPE ja_JP                                                      
+Bsh 系
+  $ LC_CTYPE=ja_JP
+  $ export LC_CTYPE
+csh 系
+  % setenv LC_CTYPE ja_JP
 </programlisting>
 </para>
 </sect1>
 <sect1>
 <title>Mutt の設定</title>
 <para>
-サイト共通の設定ファイルは /usr/local/share/mutt/Muttrc あるいは /etc/Muttrc で
-す. ユーザ全員に共通だと思われる設定はここで行ってください. ユーザ毎の設定ファ
-イルは $HOME/.muttrc です。このファイルが見つからなければ $HOME/.mutt/muttrc を
-探します. または、-F オプションで任意の設定ファイルを指定することもできます.
-alias ファイルなど別のファイルを呼び出したりすることもできますので, ホームディ
-レクトリに .mutt というディレクトリを作って運用することをお勧めします.
+サイト共通の設定ファイルは /usr/local/share/mutt/Muttrc あるいは /etc/Muttrc です．ユーザ全員に共通だと思われる設定はここで行ってください．ユーザ毎の設定ファイルは $HOME/.muttrc です．このファイルが見つからなければ $HOME/.mutt/muttrc を探します．または，-F オプションで任意の設定ファイルを指定することもできます．
+alias ファイルなど別のファイルを呼び出したりすることもできますので，ホームディレクトリに .mutt というディレクトリを作って運用することをお勧めします．
 </para>
 <sect2>
 <title>日本語を使うために必要な設定</title>
 <para>
-この章で示す設定は日本語を使うために必ず必要なものです. ./configure時に
-"--enable-default-japanese"オプションを付けた場合, あるいは日本語パッチと一緒に
-配布しているサンプルファイル mutt-ja.rc を設定ファイルに取り込んだ場合はこの章
-で示す設定が行なわれています. ただし, 表示用の文字符号化方式が EUC-JP であるこ
-とを想定しているので Shift_JIS の場合は $charset="shift_jis"を設定してください
-。
+この章で示す設定は日本語を使うために必ず必要なものです．./configure時に "--enable-default-japanese"オプションを付けた場合，あるいは日本語パッチと一緒に配布しているサンプルファイル mutt-ja.rc を設定ファイルに取り込んだ場合はこの章で示す設定が行なわれています．ただし，表示用の文字符号化方式が EUC-JP であることを想定しているので Shift_JIS の場合は $charset="shift_jis"を設定してください．
 </para>
 <para>
-なお, "--enable-default-japanese"オプションを付けた場合で, 英語環境で使いたい場
-合はサンプルファイル mutt-en.rc を設定ファイルに取り込んでください.
+なお，"--enable-default-japanese"オプションを付けた場合で，英語環境で使いたい場合はサンプルファイル mutt-en.rc を設定ファイルに取り込んでください．
 </para>
 <para>
-表示用／作成用と送信用の文字符号化方式を設定する必要があります. 表示用／作成用
-が charset で送信用が send_charset です. 設定例を示すと次のようになります.
+表示用／作成用と送信用の文字符号化方式を設定する必要があります．表示用／作成用が charset で送信用が send_charset です．設定例を示すと次のようになります．
 <programlisting>
-      set charset="euc-jp"                                                     
-      set send_charset="us-ascii:iso-2022-jp"                                  
+    set charset="euc-jp"
+    set send_charset="us-ascii:iso-2022-jp"
 </programlisting>
 </para>
 <para>
-なお, Mutt 付属のワイド文字関数は stateful な（エスケープシーケンスによりシフト
-状態が変わる） ISO-2022-JP を扱えないため, charset は EUC-JP か Shift_JIS を指
-定してください. 当然, エディタの設定も同じ文字符号化方式を指定してください. な
-お, .signature の文字符号化方式も同じものにしてください.
+なお，Mutt 付属のワイド文字関数はステートフルな（エスケープシーケンスによりシフト状態が変わる） ISO-2022-JP を扱えないため，charset は EUC-JP か Shift_JIS を指定してください．当然，エディタの設定も同じ文字符号化方式を指定してください．なお，.signature の文字符号化方式も同じものにしてください．
 </para>
 <para>
-テキストの添付ファイル用の文字符号化方式を設定します. これは日本語パッチの機能
-です.
+テキストの添付ファイル用の文字符号化方式を設定します．これは日本語パッチの機能です．
 <programlisting>
-      set file_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"                    
+    set file_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
 </programlisting>
 </para>
 <para>
-さらに, 日本語(ISO-2022-JP)で記述されているにも関わらず, 文字符号化方式の指定が
-行われていないメールを受け取ることがあります. また, へッダにおいて ISO-2022-JP
-の文字列を MIME 符号化せずに, そのまま記述したものもあります. 標準ではこのよう
-なメールを読むことができません. しかし, 日本語パッチでは次の設定を行うとそのよ
-うなメールを表示することができます.
+さらに，日本語(ISO-2022-JP)で記述されているにも関わらず，文字符号化方式の指定が行われていないメールを受け取ることがあります．また，へッダにおいて ISO-2022-JP の文字列を MIME 符号化せずに，そのまま記述したものもあります．標準ではこのようなメールを読むことができません．しかし，日本語パッチでは次の設定を行うとそのようなメールを表示することができます．
 </para>
 <para>
 <programlisting>
-      set strict_mime=no                                                       
-      set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"                 
+    set strict_mime=no
+    set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
 </programlisting>
 </para>
 <para>
-へッダに関しては指定したリストの先頭の文字符号化方式から順番に試されます. ボデ
-ィに関しては先頭のものしか試しません. ボディがうまく表示されないようでしたら,
-edit-type(^E) で Content-Type フィールドの編集ができますので, 適当な charset の
-指定を行ってください. ただし, Content-Type フィールドの charset パラメータが記
-述されている場合は Mutt はそのパラメータを信用しますので, 実際の文字符号化方式
-と一致していなければ表示ができません. この場合は, edit-type(^E) で Content-Type
-フィールドの編集モードに入り, 適当な charset の指定を行ってください.
+へッダに関しては指定したリストの先頭の文字符号化方式から順番に試されます．ボディに関しては先頭のものしか試しません．ボディがうまく表示されないようでしたら，edit-type(^E) で Content-Type フィールドの編集ができますので，適当な charset の指定を行ってください．ただし，Content-Type フィールドの charset パラメータが記述されている場合は Mutt はそのパラメータを信用しますので，実際の文字符号化方式と一致していなければ表示ができません．この場合は，edit-type(^E) で Content-Type フィールドの編集モードに入り，適当な charset の指定を行ってください．
 </para>
 <para>
-標準の設定では日本語でボディの検索を行うことができません. 必ず次の設定を行って
-ください.
+標準の設定では日本語でボディの検索を行うことができません．必ず次の設定を行ってください．
 </para>
 <para>
 <programlisting>
-      set thorough_search=yes                                                  
+    set thorough_search=yes
 </programlisting>
 </para>
 <para>
-機種依存文字があるとその文字以降の文字列は文字化けします. これを防ぐために次の
-設定を行ってください. ただし, これは日本語パッチの機能です.
+機種依存文字があるとその文字以降の文字列は文字化けします．これを防ぐために次の設定を行ってください．ただし，これは日本語パッチの機能です．
 </para>
 <para>
 <programlisting>
-      set sanitize_ja_chars=yes                                                
+    set sanitize_ja_chars=yes
 </programlisting>
 </para>
 <para>
-添付ファイルのファイル名が日本語である場合, MIME B encoding の形式に符号化され
-たものがほとんどです. これは RFC 違反(RFC 2231 の形式で符号化するべき)であるた
-め Mutt は標準では復号化しようとしません. そのため次の設定を行ってください.
+添付ファイルのファイル名が日本語である場合，MIME B encoding の形式に符号化されたものがほとんどです．これは RFC 違反(RFC 2231 の形式で符号化するべき)であるため Mutt は標準では復号化しようとしません．そのため次の設定を行ってください．
 </para>
 <para>
 <programlisting>
-      set rfc2047_parameters=yes                                               
+    set rfc2047_parameters=yes
 </programlisting>
 </para>
 <para>
-メッセージを転送する際に不具合が生じる可能性があるため, 次の設定値はデフォルト
-値のままにして変更しないでください.
+メッセージを転送する際に不具合が生じる可能性があるため，次の設定値はデフォルト値のままにして変更しないでください．
 </para>
 <para>
 <programlisting>
-      set forward_decode=yes                                                   
-      set mime_forward_decode=no                                               
+    set forward_decode=yes
+    set mime_forward_decode=no
 </programlisting>
 </para>
 <para>
-必ず設定しなければいけないものではないですが, 作成するメッセージのSubjectなどを
-編集するのはエディタ上の方が行ないやすいため次の設定を行なってください.
+必ず設定しなければいけないものではないですが，作成するメッセージのSubjectなどを編集するのはエディタ上の方が行ないやすいため次の設定を行なってください．
 </para>
 <para>
 <programlisting>
-      set edit_headers=yes                                                     
+    set edit_headers=yes
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>日本語回りの動作に関連する設定</title>
 <para>
-日本語で記述された text/enriched なメールや text/html なメールは Mutt では正常
-に表示できないことがあります. そのため, 設定ファイルに次の一行を追加してくださ
-い.
+日本語で記述された text/enriched なメールや text/html なメールは Mutt では正常に表示できないことがあります．そのため，設定ファイルに次の一行を追加してください．
 </para>
 <para>
 <programlisting>
-      auto_view text/enriched text/html                                        
+    auto_view text/enriched text/html
 </programlisting>
 </para>
 <para>
-text/html なメールをインラインで表示しない場合は 'text/html' を auto_view の設
-定からはずしてもかまいません. このときは、mailcap の設定で, text/html の項目行
-の最後の '; copiousoutput' を取り除いてください. 次に mailcap ファイルのパスを
-指定してください.
+text/html なメールをインラインで表示しない場合は 'text/html' を auto_view の設定からはずしてもかまいません．このときは，mailcap の設定で，text/html の項目行の最後の '; copiousoutput' を取り除いてください．次に mailcap ファイルのパスを指定してください．
 </para>
 <para>
 <programlisting>
-      set mailcap_path="$HOME/.mailcap:/etc/mailcap"                           
+    set mailcap_path="$HOME/.mailcap:/etc/mailcap"
 </programlisting>
 </para>
 <para>
-次に, mailcap の設定ファイルにそれぞれの種類のファイルを表示できるプログラムを
-指定してください. auto_view 用いるときは文字符号化方式の変換が行なわれないため,
-nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（ここではEUC-JP）に変換
-した後に表示するプログラムに渡してください. 次の例は richtext (metamail) と w3m
-を使って表示する例です. 共にlvを用いてEUC-JPに変換した後に表示するプログラムに
-渡しています。
+次に，mailcap の設定ファイルにそれぞれの種類のファイルを表示できるプログラムを指定してください．auto_view 用いるときは文字符号化方式の変換が行なわれないため，nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（ここではEUC-JP）に変換した後に表示するプログラムに渡してください．次の例は richtext (metamail) と w3m を使って表示する例です．共にlvを用いてEUC-JPに変換した後に表示するプログラムに渡しています．
 </para>
 <para>
 <programlisting>
-      text/enriched; lv -Oej %s | richtext -t; copiousoutput                   
-      text/html; lv -Oej %s | w3m -dump -T %t; copiousoutput                   
+    text/enriched; lv -Oej %s | richtext -t; copiousoutput
+    text/html; lv -Oej %s | w3m -dump -T %t; copiousoutput
 </programlisting>
 </para>
 <para>
-添付するファイルのファイル名が日本語である場合, Mutt はRFC 2231の形式で符号化し
-ます。しかし, RFC 2231形式のパラメータを理解できないメイラーがあるため, 受取り
-側がそのファイル名を読めない場合があります. 次の設定を行なうと, Content-Type フ
-ィールドに MIME B encoding 形式の name パラメータを追加するようになります. ただ
-し, このパラメータはRFC違反であるため, 必要な場合以外はこの設定を行なわないでく
-ださい. なお, これは日本語パッチの機能です.
+添付するファイルのファイル名が日本語である場合，Mutt はRFC 2231の形式で符号化します．しかし，RFC 2231形式のパラメータを理解できないメイラーがあるため，受取り側がそのファイル名を読めない場合があります．次の設定を行なうと，Content-Type フィールドに MIME B encoding 形式の name パラメータを追加するようになります．ただし，このパラメータはRFC違反であるため，必要な場合以外はこの設定を行なわないでください．なお，これは日本語パッチの機能です．
 </para>
 <para>
 <programlisting>
-      set create_rfc2047_parameters=yes                                        
+    set create_rfc2047_parameters=yes
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>ユーザの情報の設定</title>
 <para>
-あなたのメールアドレス, 名前などを設定してください. hostname はメールアドレスの
-ドメイン部(@の右側)だけを記述しましょう. From フィールドや Message-ID フィール
-ドがこの情報に基づいて生成されます.
+あなたのメールアドレス，名前などを設定してください．hostname はメールアドレスのドメイン部(@の右側)だけを記述しましょう．From フィールドや Message-ID フィールドがこの情報に基づいて生成されます．
 </para>
 <para>
 <programlisting>
-      set realname="D Vader"                                                   
-      set from="vader@deathstar.empire"                                        
-      set hostname="deathstar.empire"                                          
+    set realname="foo"
+    set from="foo@example.org"
+    set hostname="example.org"
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>ディレクトリの設定</title>
 <para>
-ディレクトリの設定を行ってください. Maildir 形式のメイルボックスを使った時の一
-例を示します. この通りに設定する必要はありません.
+ディレクトリの設定を行ってください．Maildir 形式のメイルボックスを使った時の一例を示します．この通りに設定する必要はありません．
 </para>
 <para>
 <programlisting>
-      set mbox_type=Maildir                                                    
-      set spoolfile="~/Maildir"                                                
-      set folder="~/Mail"                                                      
-      set mbox="+mbox"                                                         
-      set postponed="+postponed"                                               
-      set record="+outbox"                                                     
-      set tmpdir="~/tmp"                                                       
+    set mbox_type=Maildir
+    set spoolfile="~/Maildir"
+    set folder="~/Mail"
+    set mbox="+mbox"
+    set postponed="+postponed"
+    set record="+outbox"
+    set tmpdir="~/tmp"
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>エディタの設定</title>
 <para>
-使用するエディタの設定を行ってください. 次の行は jed を使う例です.
+使用するエディタの設定を行ってください．次の行は jed を使う例です．
 </para>
 <para>
 <programlisting>
-      set editor="jed %s -f set_buffer_no_backup"                              
+    set editor="jed %s -f set_buffer_no_backup"
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>PGP の設定例</title>
 <para>
-次の例は GnuPG を使う例です. 日本語を使う場合は必ず pgp_strict_enc=no を設定し
-てください. そうでないと quoted-printable で符号化されます.
+次の例は GnuPG を使う例です．日本語を使う場合は必ず pgp_strict_enc=no を設定してください．そうでないと quoted-printable で符号化されます．
 </para>
 <para>
 <programlisting>
-      set pgp_long_ids=yes                                                     
-      set pgp_strict_enc=no                                                    
-      set pgp_verify_sig=ask-yes                                               
-      source "/usr/local/doc/mutt/samples/gpg.rc"                              
-      pgp-hook vader@deathstar.empire 0x3456789A                               
+    set pgp_long_ids=yes
+    set pgp_strict_enc=no
+    set pgp_verify_sig=ask-yes
+    source "/usr/local/doc/mutt/samples/gpg.rc"
+    pgp-hook foo@example.org 0x3456789A
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>色の設定</title>
 <para>
-kterm など termcap(terminfo でも?)での color support が示されていない端末では
-COLORTERM という環境変数になにか設定する必要があります. 設定されているかどうか
-だけを確認するので内容は '' 以外ならなんでも構いません.
+kterm など termcap(terminfo でも?)での color support が示されていない端末では COLORTERM という環境変数になにか設定する必要があります．設定されているかどうかだけを確認するので内容は '' 以外ならなんでも構いません．
 </para>
 <para>
-色の設定例です. 好きなようにカスタマイズしてください. なお, このときは環境変数
-COLORFGBG="white;black" を設定しています.
+色の設定例です．好きなようにカスタマイズしてください．なお，このときは環境変数 COLORFGBG="white;black" を設定しています．
 </para>
 <para>
 <programlisting>
-      # normal setting                                                         
-      color normal green default                                               
-                                                                               
-      # pager                                                                  
-      color hdrdefault cyan default                                            
-      color header yellow default ^(From|Subject):                             
-      color quoted cyan default                                                
-      color signature red default                                              
-      color attachment blue default                                            
-      color body magenta default "(ftp|http)://[^ ]+" # point out URLs         
-      color body magenta default [-a-z_0-9.]+@[-a-z_0-9.]+  # e-mail addresses 
-      color search black yellow  # how to hilite search patterns in the pager  
-                                                                               
-      # index screen                                                           
-      color index green default .*                                             
-      color tree cyan default   # the thread tree in the index menu            
-      color indicator black brightcyan                                         
-                                                                               
-      # symbols                                                                
-      color markers blue default                                               
-      color tilde blue default                                                 
-                                                                               
-      # menu, message                                                          
-      color status yellow blue                                                 
-      color message cyan default                                               
-      color error brightred default                                            
+    # normal setting
+    color normal green default
+
+    # pager
+    color hdrdefault cyan default
+    color header yellow default ^(From|Subject):
+    color quoted cyan default
+    color signature red default
+    color attachment blue default
+    color body magenta default "(ftp|http)://[^ ]+" # point out URLs
+    color body magenta default [-a-z_0-9.]+@[-a-z_0-9.]+  # e-mail addresses
+    color search black yellow  # how to hilite search patterns in the pager
+
+    # index screen
+    color index green default .*
+    color tree cyan default   # the thread tree in the index menu
+    color indicator black brightcyan
+
+    # symbols
+    color markers blue default
+    color tilde blue default
+
+    # menu，message
+    color status yellow blue
+    color message cyan default
+    color error brightred default
 </programlisting>
 </para>
 </sect2>
 <sect2>
 <title>メイリングリストの場合に便利かもしれない設定例</title>
 <para>
-次の設定をすることによりインデックス画面でスレッド表示をします.
+次の設定をすることによりインデックス画面でスレッド表示をします．
 </para>
 <para>
 <programlisting>
-      folder-hook . 'set sort=threads'                                         
+    folder-hook . 'set sort=threads'
 </programlisting>
 </para>
 <para>
-スレッド表示をしたくないフォルダがあったら, 次のように folder-hook で日付順にで
-も設定しましょう.
+スレッド表示をしたくないフォルダがあったら，次のように folder-hook で日付順にでも設定しましょう．
 </para>
 <para>
 <programlisting>
-      folder-hook outbox 'set sort=date-sent'                                  
+    folder-hook outbox 'set sort=date-sent'
 </programlisting>
 </para>
 <para>
@@ -317,65 +272,54 @@ COLORFGBG="white;black" を設定しています.
 </para>
 <para>
 <programlisting>
-      Subject: [prefix:0123] hogohoge                                          
+    Subject: [prefix:0123] hogohoge
 </programlisting>
 </para>
 <para>
-のように Subject フィールドにプレフィックスをつける場合が多いです. しかし, プレ
-フィックスが長いと, 肝心の Subject の内容が行からはみ出てしまって読めません. そ
-のため, 次の設定を行うと, このプレフィックスをインデックス画面では表示しなくな
-ります. また, 返信や転送する際も除去します.
+のように Subject フィールドにプレフィックスをつける場合が多いです．しかし，プレフィックスが長いと，肝心の Subject の内容が行からはみ出てしまって読めません．そのため，次の設定を行うと，このプレフィックスをインデックス画面では表示しなくなります．また，返信や転送する際も除去します．
 </para>
 <para>
 <programlisting>
-      set delete_prefix=yes                                                    
+    set delete_prefix=yes
 </programlisting>
 </para>
 <para>
-このプレフィックスのパターンは次のように正規表現で設定できます. なお, この例は
-デフォルト値です.
+このプレフィックスのパターンは次のように正規表現で設定できます．なお，この例はデフォルト値です．
 </para>
 <para>
 <programlisting>
-      set delete_regexp="^(\[[A-Za-z0-9_.: \-]*\][ ]*)"                        
+    set delete_regexp="^(\[[A-Za-z0-9_.: \-]*\][ ]*)"
 </programlisting>
 </para>
 <para>
-この delete_prefix と delete_regexp は日本語パッチの拡張機能です.
+この delete_prefix と delete_regexp は日本語パッチの拡張機能です．
 </para>
 </sect2>
 <sect2>
 <title>その他</title>
 <para>
-ここに書いた例は滝澤が設定を行っているものです. 参考程度に捉えてください.
-manual.txt や Muttrc の説明を読んで適当に設定を行ってください.
+ここに書いた例は滝澤が設定を行っているものです．参考程度に捉えてください．manual.txt や Muttrc の説明を読んで適当に設定を行ってください．
 </para>
 <para>
 <programlisting>
-      set alias_file="~/.mutt/alias"                                             
-      source $HOME/.mutt/alias                                                   
-      set allow_8bit=no                                                          
-      set abort_nosubject=no                                                     
-      set attribution="On %d,\n %n wrote:\n"                                     
-      set forward_format="Fwd: %s"                                               
-      set mark_old=no                                                            
-      set mime_forward=ask-yes                                                   
-      set pager_index_lines=10                                                   
-      set tilde=yes                                                              
-      set envelope_from=yes                                                      
-      set sendmail="/usr/local/bin/nullmailer-inject"                            
-      ignore *                                                                   
-      unignore date from to cc reply-to subject x-mailer user-agent content-type 
-      hdr_order date from subject to cc                                          
+    set alias_file="~/.mutt/alias"
+    source $HOME/.mutt/alias
+    set allow_8bit=no
+    set abort_nosubject=no
+    set attribution="On %d,\n %n wrote:\n"
+    set forward_format="Fwd: %s"
+    set mark_old=no
+    set mime_forward=ask-yes
+    set pager_index_lines=10
+    set tilde=yes
+    set envelope_from=yes
+    set sendmail="/usr/local/bin/nullmailer-inject"
+    ignore *
+    unignore date from to cc reply-to subject x-mailer user-agent content-type
+    hdr_order date from subject to cc
 </programlisting>
 </para>
 </sect2>
 </sect1>
-<sect1>
-<title>著作権</title>
-<para>
-Copyright (C) 2000-2002 TAKIZAWA Takashi (滝澤隆史) &#60;taki@cyber.email.ne.jp&#62;
-</para>
-<para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
-</sect1>
 </article>
+
