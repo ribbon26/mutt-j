@@ -87,7 +87,7 @@ S-Lang
 </itemizedlist>
 
 <para>
-°Ê¾å¤Çµó¤²¤¿Â¾¤Ë POP/IMAP over TLS/SSL ¤ò»È¤¤¤¿¤¤¿Í¤Ï OpenSSL ¤ò, POP/IMAP ¤ÇSASL Ç§¾Ú¤¬É¬Í×¤ÊÊý¤Ï Cyrus SASL Library ¤ò, PGP ¤ò»È¤¤¤¿¤¤¿Í¤Ï PGP ¤¢¤ë¤¤¤ÏGnuPG ¤òÍ½¤á¥¤¥ó¥¹¥È¡¼¥ë¤·¤Æ¤¯¤À¤µ¤¤¡£
+°Ê¾å¤Çµó¤²¤¿Â¾¤Ë POP/IMAP over TLS/SSL ¤ò»È¤¤¤¿¤¤¿Í¤Ï OpenSSL ¤ò, POP/IMAP ¤ÇSASL Ç§¾Ú¤¬É¬Í×¤ÊÊý¤Ï Cyrus SASL Library ¤ò, PGP ¤ò»È¤¤¤¿¤¤¿Í¤Ï PGP ¤¢¤ë¤¤¤ÏGnuPG ¤òÍ½¤á¥¤¥ó¥¹¥È¡¼¥ë¤·¤Æ¤¯¤À¤µ¤¤. 
 </para>
 <para>
 °Ê¾å¤Î¤â¤Î¤Ï¼¡¤Î URL ¤¢¤ë¤¤¤Ï¤³¤Î¥Ú¡¼¥¸¤«¤é¥ê¥ó¥¯¤µ¤ì¤Æ¤¤¤ë¥Ú¡¼¥¸¤«¤é¥À¥¦¥ó¥í¡¼¥É¤Ç¤­¤ë¤è¤¦¤Ë¤·¤Æ¤¤¤Þ¤¹. <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>
@@ -245,7 +245,8 @@ S-Lang ¤ò»È¤¦¾ì¹ç¤ÏÉ¬¤ºÉÕ¤±¤Æ¤¯¤À¤µ¤¤. ¥·¥¹¥Æ¥à¤Ë¥é¥¤¥Ö¥é¥ê¤È¤·¤ÆÂ¸ºß¤¹¤ë¾ì¹ç¤Ï´
 </para>
 <para>
 ./configure ¤Ë¤Ï¤½¤Î¤Û¤«¤Ë¤â¤¤¤¯¤Ä¤«¤Î¥ª¥×¥·¥ç¥ó¤¬¤¢¤ê¤Þ¤¹. ./configure --help
-¤Ç³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤.
+¤Ç³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤. ¤Ê¤ª¡¢make ¤·¤¿¤È¤­¤Ë aclocal, autoconf, automake
+¤Ë´ØÏ¢¤·¤¿¥¨¥é¡¼¤¬½Ð¤¿¾ì¹ç¤ÏÉÕÂ°Ê¸½ñ¤Î applying-patches.txt ¤òÆÉ¤ó¤Ç¤¯¤À¤µ¤¤.
 </para>
 </sect2>
 <sect2>
