@@ -20,13 +20,13 @@ manual-ja-patch.ja.html manual-ja-patch.en.html usage-japanese.ja.html
 	$(XML2HTML) $(XSL) $<
 
 %.txt : %.html
-	sed 's{<div class="toc">.*</div><hr />{{' $< | $(HTML2TXT) > $@
+	$(HTML2TXT) $< > $@
 
 %.ja : %.ja.html
-	sed 's{<div class="toc">.*</div><hr />{{' $< | $(HTML2TXT) > $@
+	$(HTML2TXT) $< > $@
 
 %.en : %.en.html
-	sed 's{<div class="toc">.*</div><hr />{{' $< | $(HTML2TXT) > $@
+	$(HTML2TXT) $< > $@
 
 dist : dist-text dist-html
 
