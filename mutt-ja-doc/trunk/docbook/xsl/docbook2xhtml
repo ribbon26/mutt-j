@@ -16,7 +16,7 @@ OUTPUT=${INPUT%%xml}html
 
 xsltproc ${XSL} ${INPUT} | \
 sed '
-  s{<p class="copyright">製作著作{<p class="copyright">Copyright (C) {g
+  s{<p class="copyright">製作著作{<p class="copyright">Copyright {g
   s{</div><div class="sect1"{</div><hr /><div class="sect1"{g;
 ' > ${OUTPUT}
 
