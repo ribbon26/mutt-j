@@ -1,6 +1,7 @@
 <!doctype linuxdoc system>
 
-<!-- internal を内蔵と内部とに訳しており一貫性がない -->
+<!-- internal は内部、builtin は内蔵と訳す -->
+<!-- type はタイプ、format は形式 -->
 <article>
 
 <title>The Mutt E-Mail Client
@@ -18,9 +19,9 @@
 メイルクライアントです。その高い柔軟性に加えて、キー割り当てや
 キーボードマクロ、メイルのスレッド表示、正規表現検索、さらには
 メッセイジ選択用の強力なパターン言語といった高度な機能により、
-まさしくメイルのパワーユーザにぴったりと言えます。
-<quote>「メイルクライアントはぜんぶ腐ってる。こいつは
-それほど腐っちゃいないってだけのことさ」 - 作者 Michael Elkins</quote>
+まさしくメイルのパワーユーザにぴったりであると言えます。
+<quote>「メイルクライアントはぜんぶ腐ってる。こいつはそれほど腐っちゃいない
+ってだけのことさ」 - 作者 Michael Elkins, 1995 年頃の発言</quote>
 
 <sect1>ホウムペイジ
 <p>
@@ -645,7 +646,7 @@ c            未知の重要な自己署名パケットがある
 
 <p>
 Mutt を Mixmaster 匿名リメイラ (remailer) と共働するよう
-設定してあるかもしれません。
+設定してあるかもしれません。(訳注：日本では法律に抵触する可能性があります。)
 Mixmaster はリメイラのチェインを使って匿名でメッセイジを送信できます。
 Mutt の Mixmaster サポートは Mixmaster version 2.04 (beta 45 が最新のようです)
 と 2.03 に対するものです。これ以前のヴァージョンと、これ以降の
@@ -1314,7 +1315,7 @@ unlists コマンドは、既知と購読中のメイリングリストのリストから
 このコマンドは、メイルを受信することがあるフォルダを指定し、
 指定したフォルダは新着メッセイジがあるかチェックされることになります。
 既定では、このフォルダのうちのいくつに新着メッセイジがあるかを、
-メインメニューのステイタスバーが表示しています。
+メインメニュー (訳注：インデックスメニュー) のステイタス行が表示しています。
 <p>
 フォルダ変更時に<em>スペイス</em>を押すと、新着メイルのあるフォルダを
 次々に表示します。<!-- 西岡氏か人見氏による cycle through の訳。うまい！ -->
@@ -1413,6 +1414,11 @@ hdr_order From Date: From: To: Cc: Subject:
 <em/ファイル名/は、<em/正規表現パターン/に合致するアドレスが <em/From:/
 のときか、自分が差出人でメッセイジの <em/To:/ が<em/正規表現パターン/
 に合致するときに、既定のファイル名として使われます。
+(訳注：send-hook, save-hook, fcc-hook, fcc-save-hook には
+printf風シークウェンスが使えるようです。
+<ref id="index_format" name="&dollar;index&lowbar;format"> と
+<ref id="status_format" name="&dollar;status&lowbar;format">
+を参考にしてください。)
 
 <em/パターン/の正確な書式の情報については<ref id="pattern_hook"
 name="「フックにおけるメッセイジの合致」の節" >を参照してください。
@@ -1536,8 +1542,6 @@ ID を指定する手段を提供するのです。
 このコマンドは、指名した文字列をキーボードバッファに入れます。この文字列には
 <ref id="macro" name="macro" > コマンドのシークウェンスのように、
 コントロウル文字、キーの名前、関数名を含められます。
-<!-- like the sequence string in the macro command が -->
-<!-- 全体にかかるのか function names にかかるのか疑問 -->
 これを使って、起動時や特定のフォルダへの移動時に、
 複数のコマンドを連続実行することもできます。<!-- run a sequence of commands -->
 
@@ -1549,22 +1553,22 @@ ID を指定する手段を提供するのです。
 関数は<ref id="functions" name="関数早見表" >で一覧にしてあります。
 &dquot;exec 関数&dquot; は &dquot;push &lt;関数&gt;&dquot; と等価です。
 
-<sect1>メイルのスコアリング (重み付け)<label id="score-command" >
+<sect1>メイルの得点付け<label id="score-command" >
 <p>
 使い方: <tt/score/ <em/パターン/　<em/値/<newline>
 使い方: <tt/unscore/ <em/パターン/ &lsqb; <em/パターン/ ... &rsqb;
 
 <tt/score/ コマンドは、<em/パターン/がメッセイジに合致するなら、指定した
-<em/値/をそのメッセイジのスコアに加えます。<em/パターン/は<ref id="patterns"
+<em/値/をそのメッセイジの得点に加えます。<em/パターン/は<ref id="patterns"
 name="「パターン」" >の節に説明してある書式の文字列です
 (注意: 効率上の理由から、インデックスで扱えない情報を走査するパターン、
 例えば <tt>&tilde;b</tt>, <tt>&tilde;B</tt>, <tt>&tilde;h</tt> 等は
-使えません<!-- may not...「使わない方が良いでしょう」か？ -->)。
+使えません)。
 <em/値/は正か負の整数です。メッセイジの
-最終的なスコアは、合致する <tt/score/ コマンド<!-- entry -->すべての合計です。
+最終的な得点は、合致する <tt/score/ コマンド<!-- entry -->すべての合計です。
 しかしながら、<em/値/の前に等号 (=) を付けて、特定の score
 コマンド<!-- entry -->に合致すればそこで計算を止めさせる (訳注：確定させる)
-ということもできます。負数の最終スコアは 0 に丸められます。
+ということもできます。負数の最終得点は 0 に丸められます。
 
 <tt/unscore/ コマンドは score コマンドのリストから項目<!-- entry -->を
 除去します。<tt/score/ コマンドで指定したのと<bf/同じ/パターンを
@@ -1824,7 +1828,7 @@ a7a7a7 や a7b8c9 等に合致します。)
 <tag/&bsol;&bsol;&gt;/
 単語の終了部分 (訳注：最後の文字とそれに続くスペイスの間) に合致する
 <tag/&bsol;&bsol;w/
-単語要員の文字 (アルファベット、十進数字、アンダースコア [下線]) の
+単語要員の文字 (アルファベット、十進数字、アンダスコア [下線]) の
 いずれにも合致する
 <tag/&bsol;&bsol;W/
 単語要員でないあらゆる文字に合致する
@@ -1864,7 +1868,7 @@ Mutt コマンドには、パターンを指定して合致したものにだけ適用することの
 ~L EXPR         EXPR が出したか受けとったか、いずれかのメッセイジ
 ~l              既知のメイリングリスト (list) へ宛てたメッセイジ
 ~m [MIN]-[MAX]  番号が MIN から MAX の範囲のメッセイジ *)
-~n [MIN]-[MAX]  スコアが MIN から MAX の範囲のメッセイジ *)
+~n [MIN]-[MAX]  得点が MIN から MAX の範囲のメッセイジ *)
 ~N              新着 (new) メッセイジ
 ~O              古い (old) 未読メッセイジ
 ~p              自分宛てのメッセイジ (alternates を考慮する)
@@ -2153,8 +2157,7 @@ Mutt の問い合わせ機能にアクセスする仕組みは二つあります。
 問い合わせメニューが出て合致結果の一覧が表示されるのです。
 問い合わせメニューからは、選んだアドレスにエイリアスを作成したり
 メイルしたりすることができます。
-タグを付けて複数アドレス<!-- いや、本文は multiple messages だけど、
-それじゃあまりにも意味不明というか脈略ないっしょ -->にメイルすることや、
+タグを付けて複数アドレスにメイルすることや、
 新しく問い合わせを始める、つまり新規問い合わせを現在の結果内容に追加する
 こともできます。
 
@@ -2747,7 +2750,7 @@ text/plain; more
 <tscreen><verb>
 text/plain; more %s
 </verb></tscreen>
-lynx を使って対話的にtext/html のメッセイジを閲覧したいと思うかもしれません。
+lynx を使って対話的に text/html のメッセイジを閲覧したいと思うかもしれません。
 <tscreen><verb>
 text/html; lynx %s
 </verb></tscreen>
@@ -2766,7 +2769,7 @@ text/html; lynx -dump %s | more
 </verb></tscreen>
 
 おそらく、text/html ファイルの閲覧には lynx を使いたいものの、
-ほかの text 形式にはすべてペイジャを使いたいということもあるでしょう。
+ほかの text タイプにはすべてペイジャを使いたいということもあるでしょう。
 その場合はこういう書き方ができます。
 <tscreen><verb>
 text/html; lynx %s
@@ -2823,7 +2826,7 @@ Mutt は以下の付加的な欄をサポートしています。
 <tag/copiousoutput/
 このフラグは、そのコマンドがテキストを標準出力へ (もしかすると
 大量に) 渡すということを Mutt に教えます。このとき Mutt は
-ペイジャ (内蔵ペイジャ、もしくは pager 変数で決めた外部ペイジャ)
+ペイジャ (内部ペイジャ、もしくは pager 変数で決めた外部ペイジャ)
 を起動して閲覧コマンドの出力を受け取ります。このフラグがなければ、
 そのコマンドは対話的に操作できるものとみなされます。
 これを使って、「基本的な使い方」の <tt>lynx -dump</tt> の例における
@@ -3639,8 +3642,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-この変数は Mutt が自動でメッセイジの PGP 暗号化/署名を有効にするかどうかを
-制御する。
+この変数は、Mutt がメッセイジに自動で PGP 暗号化/署名を有効にしても
+良いかどうかを制御する。
 <ref id="crypt_autoencrypt" name="&dollar;crypt&lowbar;autoencrypt">,
 <ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">,
 <ref id="crypt_autosign" name="&dollar;crypt&lowbar;autosign">,
@@ -3655,8 +3658,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-この変数は Mutt が S/MIME による暗号化/署名を自動で有効にするかどうかを
-制御する。
+この変数は、自動的な S/MIME 暗号化/署名を有効にするかどうかを制御する。<!-- 意訳 -->
 <ref id="crypt_autoencrypt" name="&dollar;crypt&lowbar;autoencrypt">,
 <ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">,
 <ref id="crypt_autosign" name="&dollar;crypt&lowbar;autosign">,
@@ -3711,6 +3713,8 @@ Default: ask-yes
 自動的に、確認を求めることなく消去される。
 <em>no</em> に設定されていると、削除予定のメッセイジが
 メイルボックスにそのまま残ることになる。
+(訳注：quadoption すなわち四択オプションであるから、
+ask-yes や ask-no にして毎回確認するようにもできる。)
 
 
 <sect2>delete&lowbar;untag<label id="delete_untag">
@@ -4423,7 +4427,7 @@ Mutt では以下のシークウェンスが定義されている。
 合致しなければ &percnt;F と同じ
 <tag>&percnt;m </tag>メイルボックス内のメッセイジ総数
 <tag>&percnt;M </tag>スレッドが折り畳まれているときの非表示メッセイジの数
-<tag>&percnt;N </tag>スコア
+<tag>&percnt;N </tag>得点
 <tag>&percnt;n </tag>差出人の本名 (なければアドレス)
 <tag>&percnt;O </tag>(オリジナルセイヴフォルダの O) むかし Mutt が
 FCC として使っていたような場所<!-- where mutt would have stashed -->:
@@ -4513,7 +4517,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-この変数は、Mutt が直接サポートしていない MIME ボディを
+この変数は、Mutt が直接サポートしていない MIME パート<!-- body -->を
 表示しようとする際に、どのファイルに問い合わせるかを指定する。
 
 
@@ -4563,7 +4567,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-内蔵ペイジャで折り返された行の表示を制御する。設定されていると、
+内部ペイジャで折り返された行の表示を制御する。設定されていると、
 &dquot;+&dquot; 印が行頭に付いて、折り返し行を表す。
 <ref id="smart_wrap" name="&dollar;smart&lowbar;wrap"> 変数も見よ。
 
@@ -4586,8 +4590,8 @@ Type: path<newline>
 Default: &dquot;&tilde;/mbox&dquot;
 
 <p>
-This specifies the folder into which read mail in your ``<ref id="spoolfile" name="&dollar;spoolfile">''
-folder will be appended.
+これに指定したフォルダへ、<ref id="spoolfile" name="&dollar;spoolfile">
+フォルダの既読メイルを追加する。
 
 
 <sect2>mbox&lowbar;type<label id="mbox_type">
@@ -4596,8 +4600,8 @@ Type: folder magic<newline>
 Default: mbox
 
 <p>
-The default mailbox type used when creating new folders. May be any of
-mbox, MMDF, MH and Maildir.
+新しいフォルダを作るときに使う既定のメイルボックス形式。
+mbox, MMDF, MH, Maildir のいずれでも良い。
 
 
 <sect2>metoo<label id="metoo">
@@ -4606,8 +4610,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If unset, Mutt will remove your address (see the ``alternates''
-command) from the list of recipients when replying to a message.
+設定されていないと、メッセイジへの返信時に宛先リストから自分のアドレス
+(<ref id="alternates" name="alternates"> コマンドを参照) を除去する。
 
 
 <sect2>menu&lowbar;scroll<label id="menu_scroll">
@@ -4616,10 +4620,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When <em>set</em>, menus will be scrolled up or down one line when you
-attempt to move across a screen boundary.  If <em>unset</em>, the screen
-is cleared and the next or previous page of the menu is displayed
-(useful for slow links to avoid many redraws).
+これが <em>yes</em> に設定されているときには、画面の端を
+越えようとしたときにメニューが一行ずつスクロウルする。
+<em>no</em> なら、画面全体が消去されて次のペイジまたは前のペイジが
+表示される (こちらの方が、何度も再描画するのを避けられるので
+遅い回線に有用である)。
 
 
 <sect2>meta&lowbar;key<label id="meta_key">
@@ -4628,13 +4633,14 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, forces Mutt to interpret keystrokes with the high bit (bit 8)
-set as if the user had pressed the ESC key and whatever key remains
-after having the high bit removed.  For example, if the key pressed
-has an ASCII value of 0xf4, then this is treated as if the user had
-pressed ESC then ``x''.  This is because the result of removing the
-high bit from ``0xf4'' is ``0x74'', which is the ASCII character
-``x''.
+設定されていると、高位ビット (8 ビット目) との組み合わせを持つ
+キー押下を、ユーザが ESC キーを押してから別のキーを押したものと
+判断するよう Mutt に強制する。ESC の後に押したキーは、高位ビットを
+取り除いた後に残る部分である。例えば、押されたキーが 0xf4 という
+ASCII 値を持っていると、これはユーザが ESC と &dquot;x&dquot; を
+押したものとして扱われる。なぜなら &dquot;0xf4&dquot; から
+高位ビットを除いた結果は &dquot;0x74&dquot; であり、これは
+ASCII 文字の &dquot;x&dquot; だからである。
 
 
 <sect2>mh&lowbar;purge<label id="mh_purge">
@@ -4643,10 +4649,10 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When unset, mutt will mimic mh's behaviour and rename deleted messages
-to <em>,&lt;old file name&gt;</em> in mh folders instead of really deleting
-them.  If the variable is set, the message files will simply be
-deleted.
+設定されていないときには、Mutt が mh の挙動を偽装する。
+削除メッセイジを実際には削除せず、そのファイル名を
+「<em>,&lt;旧ファイル名&gt;</em>」に変更するのである。
+もし変数が設定されていれば、メッセイジファイルは単に消されてしまう。
 
 
 <sect2>mh&lowbar;seq&lowbar;flagged<label id="mh_seq_flagged">
@@ -4655,7 +4661,7 @@ Type: string<newline>
 Default: &dquot;flagged&dquot;
 
 <p>
-The name of the MH sequence used for flagged messages.
+フラグ付きメッセイジに使う MH シークウェンス名。
 
 
 <sect2>mh&lowbar;seq&lowbar;replied<label id="mh_seq_replied">
@@ -4664,7 +4670,7 @@ Type: string<newline>
 Default: &dquot;replied&dquot;
 
 <p>
-The name of the MH sequence used to tag replied messages.
+返信済みメッセイジに使う MH シークウェンス名。
 
 
 <sect2>mh&lowbar;seq&lowbar;unseen<label id="mh_seq_unseen">
@@ -4673,7 +4679,7 @@ Type: string<newline>
 Default: &dquot;unseen&dquot;
 
 <p>
-The name of the MH sequence used for unseen messages.
+未見メッセイジに使う MH シークウェンス名。
 
 
 <sect2>mime&lowbar;forward<label id="mime_forward">
@@ -4682,14 +4688,16 @@ Type: quadoption<newline>
 Default: no
 
 <p>
-When set, the message you are forwarding will be attached as a
-separate MIME part instead of included in the main body of the
-message.  This is useful for forwarding MIME messages so the receiver
-can properly view the message as it was delivered to you. If you like
-to switch between MIME and not MIME from mail to mail, set this
-variable to ask-no or ask-yes.
+設定されているときには、転送するメッセイジが個別の MIME パートとして
+添付される。メッセイジ本文に含めるのではないということだ。これは
+MIME メッセイジの転送に便利である。こうすれば相手も、自分に届けられたのと
+同じように正しくメッセイジを閲覧することができるのだ。
+もしもメイルごとに MIME と非 MIME を選択したいのであれば、
+この変数を ask-no か ask-yes に設定すること。
 <p>
-Also see ``<ref id="forward_decode" name="&dollar;forward&lowbar;decode">'' and ``<ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">''.
+<ref id="forward_decode" name="&dollar;forward&lowbar;decode"> および
+<ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">
+も参照。
 
 
 <sect2>mime&lowbar;forward&lowbar;decode<label id="mime_forward_decode">
@@ -4698,9 +4706,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Controls the decoding of complex MIME messages into text/plain when
-forwarding a message while ``<ref id="mime_forward" name="&dollar;mime&lowbar;forward">'' is <em>set</em>. Otherwise
-``<ref id="forward_decode" name="&dollar;forward&lowbar;decode">'' is used instead.
+<ref id="mime_forward" name="&dollar;mime&lowbar;forward"> が
+<em>yes</em> のときには、入り組んだ MIME メッセイジを転送時に
+text/plain へ復号するかどうかをこの変数が制御する。
+<em>no</em> のときには
+<ref id="forward_decode" name="&dollar;forward&lowbar;decode">
+が使われる。
 
 
 <sect2>mime&lowbar;forward&lowbar;rest<label id="mime_forward_rest">
@@ -4709,9 +4720,17 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-When forwarding multiple attachments of a MIME message from the recvattach
-menu, attachments which cannot be decoded in a reasonable manner will
-be attached to the newly composed message if this option is set.
+MIME メッセイジの添付ファイルメニューからファイルを複数
+(訳注：非 <ref id="mime_forward" name="MIME"> で) 転送するとき、
+適切な復号方法のないファイル<!-- attachments which cannot be decoded
+in a reasonable manner -->が転送メッセイジに添付されるのは、
+このオプションが設定された場合のみである。
+(訳注：yes の場合と、ask-yes または ask-no で y と答えた場合のこと。なお、
+このオプションは <ref id="mime_forward" name="&dollar;mime&lowbar;forward">
+が解除されているときにのみ意味を持つ。非 MIME 転送をしようとしているときに、
+MIME でしか転送できないファイルをあきらめる (no) か MIME で転送する (yes)
+かの設定なのだ。転送ファイルが一つだけのときには、あきらめるはずがないと
+みなされる。)
 
 
 <sect2>mix&lowbar;entry&lowbar;format<label id="mix_entry_format">
@@ -4720,16 +4739,15 @@ Type: string<newline>
 Default: &dquot;&percnt;4n &percnt;c &percnt;-16s &percnt;a&dquot;
 
 <p>
-This variable describes the format of a remailer line on the mixmaster
-chain selection screen.  The following printf-like sequences are 
-supported:
+この変数で Mixmaster チェイン選択画面におけるリメイラ行の書式を記述する。
+以下に挙げる printf風シークウェンスが使える。
 <p>
 
 <descrip>
-<tag>&percnt;n </tag>The running number on the menu.
-<tag>&percnt;c </tag>Remailer capabilities.
-<tag>&percnt;s </tag>The remailer's short name.
-<tag>&percnt;a </tag>The remailer's e-mail address.
+<tag>&percnt;n </tag>メニュー内での番号
+<tag>&percnt;c </tag>リメイラの能力
+<tag>&percnt;s </tag>リメイラの省略名
+<tag>&percnt;a </tag>リメイラのメイルアドレス
 </descrip>
 
 
@@ -4739,10 +4757,9 @@ Type: path<newline>
 Default: &dquot;mixmaster&dquot;
 
 <p>
-This variable contains the path to the Mixmaster binary on your
-system.  It is used with various sets of parameters to gather the
-list of known remailers, and to finally send a message through the
-mixmaster chain.
+この変数には自分のシステムの Mixmaster バイナリへのパスを入れる。
+これに種々のパラメータを付けて、既知のリメイラ一覧を収集する。
+また、最終的にメッセイジを Mixmaster チェイン経由で送信する際にも使う。
 
 
 <sect2>move<label id="move">
@@ -4751,9 +4768,13 @@ Type: quadoption<newline>
 Default: ask-no
 
 <p>
-Controls whether you will be asked to confirm moving read messages
-from your spool mailbox to your ``<ref id="mbox" name="&dollar;mbox">'' mailbox, or as a result of
-a ``<ref id="mbox-hook" name="mbox-hook">'' command.
+スプールメイルボックスの既読メッセイジを
+<ref id="mbox" name="&dollar;mbox"> メイルボックスや
+<ref id="mbox-hook" name="mbox-hook"> コマンドの結果へ
+移動するかどうかを制御する。
+(訳注：原文は文字通りには「移動するかどうかを確認させるかどうかを制御する」
+となっているが、yes にすれば確認なしで移動されるし、no にすれば
+確認なしで移動もなしなのだから、原文直訳では不正確になってしまう。)
 
 
 <sect2>message&lowbar;format<label id="message_format">
@@ -4762,9 +4783,11 @@ Type: string<newline>
 Default: &dquot;&percnt;s&dquot;
 
 <p>
-This is the string displayed in the ``attachment'' menu for
-attachments of type message/rfc822.  For a full listing of defined
-printf()-like sequences see the section on ``<ref id="index_format" name="&dollar;index&lowbar;format">''.
+「添付ファイル」メニューで message/rfc822 タイプのファイルの部分に
+表示される文字列。定義されている printf()風シークウェンスの
+完全な一覧表については
+<ref id="index_format" name="&dollar;index&lowbar;format">
+の項を参照のこと。
 
 
 <sect2>narrow&lowbar;tree<label id="narrow_tree">
@@ -4773,8 +4796,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This variable, when set, makes the thread tree narrower, allowing
-deeper threads to fit on the screen.
+この変数が設定されていると、スレッドトゥリーを狭くして、
+深いスレッドが画面に収まるようにする。
 
 
 <sect2>pager<label id="pager">
@@ -4783,15 +4806,14 @@ Type: path<newline>
 Default: &dquot;builtin&dquot;
 
 <p>
-This variable specifies which pager you would like to use to view
-messages.  builtin means to use the builtin pager, otherwise this
-variable should specify the pathname of the external pager you would
-like to use.
+この変数にはメッセイジ閲覧に使いたいペイジャを指定する。
+builtin は内蔵ペイジャを使うという意味になるが、
+それ以外は外部ペイジャのパス名を指定すべきである。
 <p>
-Using an external pager may have some disadvantages: Additional
-keystrokes are necessary because you can't call mutt functions
-directly from the pager, and screen resizes cause lines longer than
-the screen width to be badly formatted in the help menu.
+外部ペイジャを使うことには不便な点もある: まず、キーを多く押さなくては
+ならない。ペイジャから直接 Mutt の関数を呼び出すことはできないからだ。
+さらに、画面の大きさを変更すると、ヘルプメニューで画面の幅より長い行が
+ひどいことになってしまう。
 
 
 <sect2>pager&lowbar;context<label id="pager_context">
@@ -4800,10 +4822,11 @@ Type: number<newline>
 Default: 0
 
 <p>
-This variable controls the number of lines of context that are given
-when displaying the next or previous page in the internal pager.  By
-default, Mutt will display the line after the last one on the screen
-at the top of the next page (0 lines of context).
+この変数は、内部ペイジャで次のペイジや前のペイジを表示させる際に
+文脈として残す行数を制御する。Mutt は既定では、現時点の画面で
+一番下にある行の次からを次ペイジとして表示する (文脈は 0 行ということ)。
+<!-- Mutt will display the line after the last one on the screen
+at the top of the next page (0 lines of context). ちょっと意訳 -->
 
 
 <sect2>pager&lowbar;format<label id="pager_format">
@@ -4812,10 +4835,17 @@ Type: string<newline>
 Default: &dquot;-&percnt;Z- &percnt;C/&percnt;m: &percnt;-20.20n   &percnt;s&dquot;
 
 <p>
-This variable controls the format of the one-line message ``status''
+この変数は一行メッセイジである「ステイタス」の形式を制御する。
+これは内部ペイジャでも外部ペイジャでも各メッセイジの前に表示される
+(訳注：ただし、外部ペイジャの場合には表示内容の前に付加されるが、
+内部ペイジャの場合にはインデックスモウドにおけるステイタス行と
+同じ位置に常に表示される)。
+<!-- This variable controls the format of the one-line message ``status''
 displayed before each message in either the internal or an external
-pager.  The valid sequences are listed in the ``<ref id="index_format" name="&dollar;index&lowbar;format">''
-section.
+pager. -->
+正しいシークウェンスは
+<ref id="index_format" name="&dollar;index&lowbar;format"> の項で
+一覧にされている。
 
 
 <sect2>pager&lowbar;index&lowbar;lines<label id="pager_index_lines">
@@ -4824,17 +4854,18 @@ Type: number<newline>
 Default: 0
 
 <p>
-Determines the number of lines of a mini-index which is shown when in
-the pager.  The current message, unless near the top or bottom of the
-folder, will be roughly one third of the way down this mini-index,
-giving the reader the context of a few messages before and after the
-message.  This is useful, for example, to determine how many messages
-remain to be read in the current thread.  One of the lines is reserved
-for the status bar from the index, so a <em>pager&lowbar;index&lowbar;lines</em> of 6
-will only show 5 lines of the actual index.  A value of 0 results in
-no index being shown.  If the number of messages in the current folder
-is less than <em>pager&lowbar;index&lowbar;lines</em>, then the index will only use as
-many lines as it needs.
+ペイジャにいるときに表示する小インデックスの行数を決定する。
+ペイジャで表示中のメッセイジは、フォルダの上端や下端に近い場合を除き、
+この小インデックス画面の中で上からおよそ三分の一の位置になる。
+これによって、メッセイジを読むときに前後いくつかのメッセイジが
+文脈として与えられる。これが便利なのは、例えば、そのスレッドに
+あといくつ未読メッセイジが残っているのかを見極めるという場合である。
+行数のうち一行はインデックスのステイタス行に使われるので、
+<em>pager&lowbar;index&lowbar;lines</em> が 6 であっても、
+実際のインデックスは 5 行しか表示されないことになる。
+0 という値にするとインデックスが表示されない。
+フォルダ内のメッセイジ数が <em>pager&lowbar;index&lowbar;lines</em>
+よりも少ないとき、小インデックスは必要な行数だけを使うようにする。
 
 
 <sect2>pager&lowbar;stop<label id="pager_stop">
@@ -4843,9 +4874,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, the internal-pager will <bf>not</bf> move to the next message
-when you are at the end of a message and invoke the <em>next-page</em>
-function.
+設定されているときには、メッセイジの終わりまで来て <em>next-page</em>
+関数を実行しても、内部ペイジャが次のメッセイジへ移動<bf>しない</bf>。
 
 
 <sect2>crypt&lowbar;autosign<label id="crypt_autosign">
@@ -4854,12 +4884,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Setting this variable will cause Mutt to always attempt to
-cryptographically sign outgoing messages.  This can be overridden
-by use of the <em>pgp-menu</em>, when signing is not required or
-encryption is requested as well. If ``<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">'' is set,
-then OpenSSL is used instead to create S/MIME messages and settings can
-be overridden by use of the <em>smime-menu</em>.
+この変数を設定すると Mutt が送信メッセイジを常に暗号学的に署名しようとする。
+署名が不要なときや暗号化も要るときには、<em>pgp-menu</em> を使って
+上書きすることができる。
+<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">
+が設定されているのであれば、OpenSSL を使って S/MIME メッセイジを作成する。
+この場合は <em>smime-menu</em> を使って設定を上書きすることができる。
 (Crypto only)
 
 
@@ -4869,13 +4899,14 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Setting this variable will cause Mutt to always attempt to PGP
-encrypt outgoing messages.  This is probably only useful in
-connection to the <em>send-hook</em> command.  It can be overridden
-by use of the <em>pgp-menu</em>, when encryption is not required or
-signing is requested as well.  IF ``<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">'' is set,
-then OpenSSL is used instead to create S/MIME messages and
-settings can be overridden by use of the <em>smime-menu</em>.
+この変数を設定すると、Mutt が、常に PGP 暗号化して
+メッセイジを送信しようとするようになる。
+これはたぶん、<em>send-hook</em> コマンドとの組み合わせでのみ有用だろう。
+暗号化が不要だったり署名も必要だったりするときには、<em>pgp-menu</em>
+を使って上書きすることができる。
+<ref id="smime_is_default" name="&dollar;smime&lowbar;is&lowbar;default">
+が設定されていると OpenSSL が使われて S/MIME メッセイジが作成される。
+その際、設定の上書きは <em>smime-menu</em> を使うことにより可能である。
 (Crypto only)
 
 
@@ -4885,9 +4916,18 @@ Type: boolean<newline>
 Default: yes
 
 <p>
+この変数を設定すると Mutt が OpenPGP 副鍵を無視するようになる。
+主鍵が (訳注：画面上でのみ) 副鍵の能力を継承するのだ。
+鍵選択遊びを楽しみたいのであれば、この変数を解除すること。
+<!--
 Setting this variable will cause Mutt to ignore OpenPGP subkeys. Instead,
 the principal key will inherit the subkeys' capabilities.  Unset this
 if you want to play interesting key selection games.
+-->
+(訳注：通常、主鍵は署名に使い、副鍵は暗号化に使う。
+主鍵の有効期間を長くして副鍵の期間を短くすることで安全性を向上させるよう
+推奨されている。通常、ひとつの主鍵に対して有効な副鍵はひとつだけなので、
+この変数を設定しても不便なことはないはずだ。)
 (PGP only)
 
 
@@ -4897,8 +4937,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, automatically PGP or OpenSSL encrypt replies to messages which are
-encrypted.
+設定されていると、暗号化されたメッセイジへの返信には
+自動的に PGP か OpenSSL で暗号化する。
 (Crypto only)
 
 
@@ -4908,11 +4948,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, automatically PGP or OpenSSL sign replies to messages which are
-signed.
+設定されていると、署名されたメッセイジへの返信には
+自動的に PGP か OpenSSL で署名する。
 <p>
-<bf>Note:</bf> this does not work on messages that are encrypted
-<bf>and</bf> signed!
+<bf>注意:</bf> 署名され、<bf>かつ暗号化も</bf>されているメッセイジには、
+この変数が作用しない!
 (Crypto only)
 
 
@@ -4922,12 +4962,21 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, automatically PGP or OpenSSL sign replies to messages
-which are encrypted. This makes sense in combination with
-``<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">'', because it allows you to sign all
-messages which are automatically encrypted.  This works around
-the problem noted in ``<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">'', that mutt is not able
-to find out whether an encrypted message is also signed.
+設定されていると、暗号化されたメッセイジへの返信には
+自動的に PGP か OpenSSL で署名する。この変数は
+<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">
+との組み合わせにおいて意味を持つ。その組み合わせによって、
+自動的に暗号化されるメッセイジに署名することができるからだ。
+この変数は <ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">
+で注記されている問題の回避策となる。その問題とは、
+暗号化されているメッセイジに署名もされているかどうかを調べることが
+Mutt にはできない、というものである。
+(訳注：それで、replysign を設定するなら、ふつうは
+replysignencrypted も設定したいと思うだろう。
+ただし、暗号化かつ署名付きメッセイジに暗号化と署名を施しながら、
+署名なし暗号化メッセイジへの返信に暗号化のみ実行するためには
+フックを使わなければならないであろう。
+<ref id="patterns" name="~g および ~G"> を参照のこと。)
 (Crypto only)
 
 
@@ -4937,10 +4986,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, mutt will include a time stamp in the lines surrounding
-PGP or S/MIME output, so spoofing such lines is more difficult.
-If you are using colors to mark these lines, and rely on these,
-you may unset this setting.
+設定されていると、Mutt は PGP および S/MIME の出力を囲む行に
+時刻表示を含める。これにより出力行の偽造がさらに困難になる。
+もし、そうした行に色を使って印付けており、
+その色を信頼するのであれば、この設定を解除しても構わない。
+(訳注：<ref id="allow_ansi" name="&dollar;allow&lowbar;ansi"> 参照)
 (Crypto only)
 
 
@@ -4950,7 +5000,17 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, mutt will use a possibly-running gpg-agent process.
+設定されていると、Mutt は、
+既に起動してあるであろう gpg-agent プロセスを使おうとする。
+(訳注：gpg-agent とはパスフレイズを記憶してくれるエイジェントで、
+newpg および gnupg-1.9 以上に含まれている。
+ssh-agent のように、環境変数で通信経路を指定する。
+Mutt は、GPG_TTY および GPG_AGENT_INFO 環境変数が設定されていれば
+gpg-agent が起動しているものとみなし、パスフレイズを尋ねない。
+それら環境変数が設定されていなければ通常どおりパスフレイズを尋ねる。
+gpg-agent を利用するのであれば、~/.gnupg/gpg.conf に use-agent と書いておくか、
+&dollar;pgp&lowbar;*&lowbar;command 群に --use-agent オプションを
+含めておくべきだろう。)
 (PGP only)
 
 
@@ -4960,9 +5020,9 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-If ``yes'', always attempt to verify PGP or S/MIME signatures.
-If ``ask'', ask whether or not to verify the signature. 
-If ``no'', never attempt to verify cryptographic signatures.
+"yes" なら、常に PGP および S/MIME 署名を検証しようとする。
+"ask" (訳注：実際には ask-yes か ask-no) なら、署名を検証するかどうか尋ねる。
+"no" なら、暗号学的署名を一切検証しようとしない。
 (Crypto only)
 
 
@@ -4972,11 +5032,13 @@ Type: boolean<newline>
 Default: no
 
 <p>
-The default behaviour of mutt is to use PGP on all auto-sign/encryption
-operations. To override and to use OpenSSL instead this must be set.
-However, this has no effect while replying, since mutt will automatically 
-select the same application that was used to sign/encrypt the original
-message.  (Note that this variable can be overridden by unsetting <ref id="crypt_autosmime" name="&dollar;crypt&lowbar;autosmime">.)
+自動での署名/暗号化に関する既定の動作は、すべて PGP を使うというものだ。
+それを上書きして OpenSSL を使うには、この変数を設定しなくてはならない。
+ただし、この変数は返信には効果がない。というのも、Mutt はもともとの
+メッセイジの署名/暗号化に使われているのと同じ方式<!-- application -->を
+自動的に選択するからである。
+(この変数は <ref id="crypt_autosmime" name="&dollar;crypt&lowbar;autosmime">
+を解除することによって上書きされうるので注意。)
 (S/MIME only)
 
 
@@ -4986,9 +5048,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This flag controls whether you want to be asked to enter a label
-for a certificate about to be added to the database or not. It is
-set by default.
+このフラグは、デイタベイスに追加しようとする証明書のラベル名を
+入力するよう求めるかどうかを制御する。既定では設定されている。
 (S/MIME only)
 
 
@@ -4998,9 +5059,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set (default) this tells mutt to use the default key for decryption. Otherwise,
-if manage multiple certificate-key-pairs, mutt will try to use the mailbox-address
-to determine the key to use. It will ask you to supply a key, if it can't find one.
+設定されている (既定) なら、Mutt は復号化に既定鍵を使う。
+設定されていないとき、証明書と鍵のペアが複数管理されていれば、
+Mutt はメイルアドレス<!-- 原文 mailbox-address であるが、これは rfc822.h
+の ADDRESS 構造体における mailbox (純粋な user@fqdn 形式) のことだろう -->
+を使って鍵を決定する。それでも見付からなければ鍵を入力するよう求める。
 (S/MIME only)
 
 
@@ -5010,21 +5073,23 @@ Type: string<newline>
 Default: &dquot;&percnt;4n &percnt;t&percnt;f &percnt;4l/0x&percnt;k &percnt;-4a &percnt;2c &percnt;u&dquot;
 
 <p>
-This variable allows you to customize the PGP key selection menu to
-your personal taste. This string is similar to ``<ref id="index_format" name="&dollar;index&lowbar;format">'', but
-has its own set of printf()-like sequences:
+この変数を使って PGP 鍵選択メニューを自分好みに調整することができる。
+この文字列は <ref id="index_format" name="&dollar;index&lowbar;format">
+に似ているが、独自の printf()風シークウェンスがある。
+(訳注：&percnt;K, &percnt;A, &percnt;L, &percnt;F, &percnt;C も使える。
+副鍵にも主鍵の情報を表示する点が異なるが、それ以外は小文字と同じ意味だ。)
 <p>
 
 <descrip>
-<tag>&percnt;n     </tag>number
-<tag>&percnt;k     </tag>key id
-<tag>&percnt;u     </tag>user id
-<tag>&percnt;a     </tag>algorithm
-<tag>&percnt;l     </tag>key length
-<tag>&percnt;f     </tag>flags
-<tag>&percnt;c     </tag>capabilities
-<tag>&percnt;t     </tag>trust/validity of the key-uid association
-<tag>&percnt;&lsqb;&lt;s&gt;&rsqb; </tag>date of the key where &lt;s&gt; is an strftime(3) expression
+<tag>&percnt;n     </tag>番号 (number)
+<tag>&percnt;k     </tag>鍵 ID (key id)
+<tag>&percnt;u     </tag>ユーザ ID (user id)
+<tag>&percnt;a     </tag>アルゴリズム (algorithm)
+<tag>&percnt;l     </tag>鍵の長さ (length)
+<tag>&percnt;f     </tag>フラグ (flags) (訳注：期限切れや破棄など)
+<tag>&percnt;c     </tag>能力 (capabilities) (訳注：署名と暗号化)
+<tag>&percnt;t     </tag>信用度 (trust) / 鍵とユーザ ID の組み合わせの有効性 (訳注：本来、すべての鍵所有者に対して自分で決定した trust から各鍵の validity すなわち有効性を計算するのであり、「信用度」と「有効性」は違うものである。しかし GnuPG では validity という語を使わず、所有者への信用度は owner-trust, 鍵の有効性は calculated trust と呼ぶようだ。ここで表示されるのは後者である。)
+<tag>&percnt;&lsqb;&lt;s&gt;&rsqb; </tag>鍵の日付 (&lt;s&gt; は strftime(3) 表記)
 </descrip>
 
 <p>
@@ -5037,10 +5102,10 @@ Type: regular expression<newline>
 Default: &dquot;&dquot;
 
 <p>
-If you assign a text to this variable, then a PGP signature is only
-considered verified if the output from <ref id="pgp_verify_command" name="&dollar;pgp&lowbar;verify&lowbar;command"> contains
-the text. Use this variable if the exit code from the command is 0
-even for bad signatures.
+この変数に文章 (訳注：正しくは正規表現) を割り当てると、その文章が
+<ref id="pgp_verify_command" name="&dollar;pgp&lowbar;verify&lowbar;command">
+の出力に含まれているときにのみ PGP 署名が検証できたとみなされる。
+不正な署名にもコマンドの返り値が 0 になってしまうなら、この変数を使うこと。
 (PGP only)
 
 
@@ -5050,9 +5115,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, mutt will check the exit code of the PGP subprocess when
-signing or encrypting.  A non-zero exit code means that the
-subprocess failed.
+設定されていると、Mutt が署名や暗号化の際に PGP サブプロセスの返り値を
+確認するようになる。非ゼロの返り値はサブプロセスの失敗を意味する。
 (PGP only)
 
 
@@ -5062,7 +5126,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, use 64 bit PGP key IDs. Unset uses the normal 32 bit Key IDs.
+設定されていると 64 ビットの PGP 鍵 ID を使う。
+解除時はふつうの 32 ビット鍵 ID を使う。
 (PGP only)
 
 
@@ -5072,12 +5137,17 @@ Type: boolean<newline>
 Default: no
 
 <p>
+設定されていると、署名と暗号化をしてあるメッセイジの仲間として、
+multipart/encrypted パートの中に multipart/signed パートが入っていたりする
+メッセイジも含める。
+<!--
 If set, signed and encrypted messages will consist of nested
 multipart/signed and multipart/encrypted body parts.
+-->
 <p>
-This is useful for applications like encrypted and signed mailing
-lists, where the outer layer (multipart/encrypted) can be easily
-removed, while the inner multipart/signed part is retained.
+これは暗号化された署名メイリングリストのようなアプリケイションに便利だ。
+すなわち、外層 (multipart/encrypted) が簡単に取り除けるが、
+内側の multipart/signed パートは守られているというものである。
 (PGP only)
 
 
@@ -5087,9 +5157,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, mutt will display non-usable keys on the PGP key selection
-menu.  This includes keys which have been revoked, have expired, or
-have been marked as ``disabled'' by the user.
+設定されていると、使用不可能な鍵を PGP 鍵選択メニューに表示する。
+これには、破棄された鍵、期限切れの鍵、またユーザによって「使用不可」
+とされた鍵が含まれる。
 (PGP only)
 
 
@@ -5099,9 +5169,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-If you have more than one key pair, this option allows you to specify
-which of your private keys to use.  It is recommended that you use the
-keyid form to specify your key (e.g., ``0x00112233'').
+複数の鍵ペアがあるとき、どの秘密鍵を使うかを
+このオプションで指定することができる。
+指定には鍵 ID 形式を使うよう推奨されている (例 &dquot;0x00112233&dquot;)。
 (PGP only)
 
 
@@ -5111,10 +5181,14 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, Mutt will automatically encode PGP/MIME signed messages as
-<em>quoted-printable</em>.  Please note that unsetting this variable may
-lead to problems with non-verifyable PGP signatures, so only change
-this if you know what you are doing.
+設定されていると PGP/MIME 署名メッセイジを自動で
+<em>quoted-printable</em> で符号化する。
+この変数を解除すると PGP 署名が検証できなくなるかもしれないので注意せよ。
+この変数の意味をよく理解している場合にのみ変更するように。
+(訳注：日本語環境においては QP を理解しない PGP プラグインを利用する
+MUA もあるため、この変数を設定していると、相手がメッセイジを読むことすら
+できないかもしれない。訳者はこの問題で悩んだことがあるので、
+解除しておくことを勧める。)
 (PGP only)
 
 
@@ -5124,8 +5198,7 @@ Type: number<newline>
 Default: 300
 
 <p>
-The number of seconds after which a cached passphrase will expire if
-not used.
+キャッシュされたパスフレイズが使用されない場合に期限切れになるまでの秒数。
 (PGP only)
 
 
@@ -5135,20 +5208,19 @@ Type: sort order<newline>
 Default: address
 
 <p>
-Specifies how the entries in the `pgp keys' menu are sorted. The
-following are legal values:
+PGP 鍵メニューの項目をどう整列するか指定する。
+以下が有効な値である。
 <p>
 
 <descrip>
-<tag>address </tag>sort alphabetically by user id
-<tag>keyid   </tag>sort alphabetically by key id
-<tag>date    </tag>sort by key creation date
-<tag>trust   </tag>sort by the trust of the key
+<tag>address </tag>ユーザ ID でアルファベット順に整列
+<tag>keyid   </tag>鍵 ID でアルファベット順に整列
+<tag>date    </tag>鍵の作成日付で整列
+<tag>trust   </tag>鍵の信用度で整列
 </descrip>
 
 <p>
-If you prefer reverse order of the above values, prefix it with
-`reverse-'.
+逆順にしたければ、上記の値の頭に &dquot;reverse-&dquot; を付加する。
 (PGP only)
 
 
@@ -5158,15 +5230,14 @@ Type: quadoption<newline>
 Default: no
 
 <p>
-This option controls whether Mutt generates old-style inline PGP
-encrypted or signed messages.
+このオプションは、旧式のインライン PGP で暗号化や署名をした
+メッセイジを Mutt が生成するかどうかを制御する。
 <p>
-Note that PGP/MIME will be used automatically for messages which have
-a character set different from us-ascii, or which consist of more than
-a single MIME part.
+注意すべき点は、us-ascii 以外の文字セットや複数 MIME パート
+のあるメッセイジには自動的に PGP/MIME が使われるということだ。
 <p>
-Also note that using the old-style PGP message format is <bf>strongly</bf>
-<bf>deprecated</bf>.
+さらに注意。旧式 PGP メッセイジ形式の使用は<bf>まったく推奨されない</bf>。
+<!-- strongly deprecated 「強く非難」や「まったく否定」だろうか... -->
 (PGP only)
 
 
@@ -5176,18 +5247,20 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This option causes Mutt to generate an old-style inline PGP
-encrypted or signed message when replying to an old-style
-message, and a PGP/MIME message when replying to a PGP/MIME
-message.  Note that this option is only meaningful when using
-``<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">'', ``<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">'', or
-``<ref id="crypt_replysignencrypted" name="&dollar;crypt&lowbar;replysignencrypted">''.
+旧式インライン PGP で暗号化や署名をしてあるメッセイジへ返信する際は
+旧式メッセイジを生成させ、PGP/MIME メッセイジへ返信する際は PGP/MIME
+にするオプションである。ただし、
+<ref id="crypt_replyencrypt" name="&dollar;crypt&lowbar;replyencrypt">,
+<ref id="crypt_replysign" name="&dollar;crypt&lowbar;replysign">,
+<ref id="crypt_replysignencrypted" name="&dollar;crypt&lowbar;replysignencrypted">
+を使っている場合にのみ有効である。
 <p>
-Also note that PGP/MIME will be used automatically for messages
-which have a character set different from us-ascii, or which
-consist of more than a single MIME part.
+さらに注意すべきことに、us-ascii 以外の文字セットや複数 MIME パートで
+構成されたメッセイジは自動的に PGP/MIME が使われる。
 <p>
-This option overrides ``<ref id="pgp_create_traditional" name="&dollar;pgp&lowbar;create&lowbar;traditional">''
+このオプションは
+<ref id="pgp_create_traditional" name="&dollar;pgp&lowbar;create&lowbar;traditional">
+を上書きする。
 (PGP only)
 
 
@@ -5197,27 +5270,25 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This format strings specifies a command which is used to decode 
-application/pgp attachments.
+この形式化文字列<!-- format strings -->で、application/pgp
+添付ファイルを復号化するためのコマンドを指定する。
 <p>
-The PGP command formats have their own set of printf-like sequences:
+PGP コマンドの形式には独自の printf風シークウェンスがある。
 <p>
 
 <descrip>
-<tag>&percnt;p </tag>Expands to PGPPASSFD=0 when a pass phrase is needed, to an empty
-string otherwise. Note: This may be used with a &percnt;? construct.
-<tag>&percnt;f </tag>Expands to the name of a file containing a message.
-<tag>&percnt;s </tag>Expands to the name of a file containing the signature part
-           of a multipart/signed attachment when verifying it.
-<tag>&percnt;a </tag>The value of <ref id="pgp_sign_as" name="&dollar;pgp&lowbar;sign&lowbar;as">.
-<tag>&percnt;r </tag>One or more key IDs.
+<tag>&percnt;p </tag>パスフレイズが必要なときには PGPPASSFD=0 と展開され、必要ないときには空文字列になる。
+メモ: これは &percnt;? 構造にも使うことができる。
+<tag>&percnt;f </tag>メッセイジの入っているファイルの名前に展開される。
+<tag>&percnt;s </tag>multipart/signed <!-- attachment -->の検証時に、署名パートの入っているファイル名に展開される。
+<tag>&percnt;a </tag><ref id="pgp_sign_as" name="&dollar;pgp&lowbar;sign&lowbar;as"> の値。
+<tag>&percnt;r </tag>鍵 ID (複数になることもある)
 </descrip>
 
 <p>
-For examples on how to configure these formats for the various versions
-of PGP which are floating around, see the pgp*.rc and gpg.rc files in
-the samples/ subdirectory which has been installed on your system
-alongside the documentation.
+世の中に出廻っている各種ヴァージョンの PGP に合わせて設定する方法の例は、
+pgp*.rc および gpg.rc というファイルが、文書と同じあたりの
+samples/ サブディレクトリ内にインストールされているので、参照すること。
 (PGP only)
 
 
@@ -5227,8 +5298,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is invoked whenever mutt will need public key information.
-&percnt;r is the only printf-like sequence used with this format.
+Mutt が公開鍵情報を必要とするたびに起動するコマンド。
+&percnt;r が、唯一ここで使われる printf風シークウェンスである。
 (PGP only)
 
 
@@ -5238,7 +5309,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to verify PGP signatures.
+このコマンドが PGP 署名の検証に使われる。
 (PGP only)
 
 
@@ -5248,7 +5319,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to decrypt a PGP encrypted message.
+このコマンドが PGP 暗号化メッセイジの復号に使われる。
 (PGP only)
 
 
@@ -5258,9 +5329,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This format is used to create a old-style &dquot;clearsigned&dquot; PGP
-message.  Note that the use of this format is <bf>strongly</bf>
-<bf>deprecated</bf>.
+旧式の「クリア署名」による PGP メッセイジを作成するために使われる。
+ただし、この形式を使うことは<bf>まったく推奨されない</bf>。<!-- strongly deprecated -->
 (PGP only)
 
 
@@ -5270,8 +5340,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to create the detached PGP signature for a 
-multipart/signed PGP/MIME body part.
+このコマンドを使って分離式の PGP 署名を作り、multipart/signed の
+PGP/MIME パートに使う。
 (PGP only)
 
 
@@ -5281,7 +5351,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to both sign and encrypt a body part.
+このコマンドを使って、本文に署名と暗号化を両方おこなう。
 (PGP only)
 
 
@@ -5291,7 +5361,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to encrypt a body part without signing it.
+このコマンドを使って本文を暗号化する。署名はしない。
 (PGP only)
 
 
@@ -5301,8 +5371,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to import a key from a message into 
-the user's public key ring.
+このコマンドを使って、鍵をメッセイジから公開鍵束へ取り込む。
 (PGP only)
 
 
@@ -5312,8 +5381,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to export a public key from the user's
-key ring.
+このコマンドを使って、ユーザの鍵束から公開鍵を取り出す。
 (PGP only)
 
 
@@ -5323,8 +5391,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to verify key information from the key selection
-menu.
+鍵選択メニューで鍵の情報を検証するために、このコマンドを用いる。
 (PGP only)
 
 
@@ -5334,12 +5401,11 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to list the secret key ring's contents.  The
-output format must be analogous to the one used by 
-gpg --list-keys --with-colons.
+このコマンドで秘密鍵束の内容を一覧出力する。
+出力形式は gpg --list-keys --with-colons と同様でなくてはならない。
+(訳注：詳細は gnupg の文書ファイル DETAILS に書かれている。)
 <p>
-This format is also generated by the pgpring utility which comes 
-with mutt.
+この形式は、Mutt に付属する pgpring ユーティリティでも生成される。
 (PGP only)
 
 
@@ -5349,12 +5415,10 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to list the public key ring's contents.  The
-output format must be analogous to the one used by 
-gpg --list-keys --with-colons.
+このコマンドで公開鍵束の内容を一覧にする。
+出力形式は gpg --list-keys --with-colons と同様でなくてはならない。
 <p>
-This format is also generated by the pgpring utility which comes 
-with mutt.
+この形式は、Mutt 付属の pgpring ユーティリティでも生成される。
 (PGP only)
 
 
@@ -5364,10 +5428,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls the handling of encrypted messages when forwarding a message.
-When set, the outer layer of encryption is stripped off.  This
-variable is only used if ``<ref id="mime_forward" name="&dollar;mime&lowbar;forward">'' is <em>set</em> and
-``<ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">'' is <em>unset</em>.
+転送時における暗号化メッセイジの扱いを制御する。
+設定されていると、暗号化という外層が除去される。
+この変数は、<ref id="mime_forward" name="&dollar;mime&lowbar;forward">
+が<em>設定</em>され、
+<ref id="mime_forward_decode" name="&dollar;mime&lowbar;forward&lowbar;decode">
+が<em>解除</em>されているときにのみ用いられる。
 (PGP only)
 
 
@@ -5377,8 +5443,7 @@ Type: number<newline>
 Default: 300
 
 <p>
-The number of seconds after which a cached passphrase will expire if
-not used.
+キャッシュされたパスフレイズが使用されない場合に期限切れになるまでの秒数。
 (S/MIME only)
 
 
@@ -5388,9 +5453,10 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This sets the algorithm that should be used for encryption.
-Valid choices are &dquot;des&dquot;, &dquot;des3&dquot;, &dquot;rc2-40&dquot;, &dquot;rc2-64&dquot;, &dquot;rc2-128&dquot;.
-If unset &dquot;3des&dquot; (TripleDES) is used.
+暗号化に用いるアルゴリズムを設定する。
+有効な選択肢は &dquot;des&dquot;, &dquot;des3&dquot;, &dquot;rc2-40&dquot;,
+&dquot;rc2-64&dquot;, &dquot;rc2-128&dquot; である。
+設定されていないと &dquot;des3&dquot; (トリプルDES) が用いられる。
 (S/MIME only)
 
 
@@ -5400,12 +5466,13 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-Since there is no pubring/secring as with PGP, mutt has to handle
-storage ad retrieval of keys/certs by itself. This is very basic right now,
-and stores keys and certificates in two different directories, both
-named as the hash-value retrieved from OpenSSL. There is an index file
-which contains mailbox-address keyid pair, and which can be manually
-edited. This one points to the location of the private keys.
+OpenSSL には PGP における鍵束のようなものがないため、Mutt は
+鍵や証明書の格納および取得を自分で扱わなければならない。
+この仕組みは現在のところ非常に簡易的なもので、鍵と証明書を二つの異なる
+ディレクトリに格納し、ともに OpenSSL で取得したハッシュ値を
+ファイル名にしている。各ディレクトリには index ファイルがあって、
+メイルアドレスと鍵 ID の組み合わせが入っており、自分の手で
+編集することができる。この変数は、秘密鍵の場所を指し示すものである。
 (S/MIME only)
 
 
@@ -5415,8 +5482,8 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-This variable contains the name of either a directory, or a file which
-contains trusted certificates for use with OpenSSL.
+OpenSSL に使うための、信用できる証明書が入ったディレクトリかファイルの
+名前を入れる。
 (S/MIME only)
 
 
@@ -5426,13 +5493,13 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-Since there is no pubring/secring as with PGP, mutt has to handle
-storage and retrieval of keys by itself. This is very basic right
-now, and keys and certificates are stored in two different
-directories, both named as the hash-value retrieved from
-OpenSSL. There is an index file which contains mailbox-address
-keyid pairs, and which can be manually edited. This one points to
-the location of the certificates.
+OpenSSL には PGP における鍵束のようなものがないため、Mutt は
+鍵や証明書の格納および取得を自分で扱わなければならない。
+この仕組みは現在のところ非常に簡易的なもので、鍵と証明書を二つの異なる
+ディレクトリに格納し、ともに OpenSSL で取得したハッシュ値を
+ファイル名にしている。各ディレクトリには index ファイルがあって、
+メイルアドレスと鍵 ID の組み合わせが入っており、自分の手で
+編集することができる。この変数は、証明書の場所を指し示すものである。
 (S/MIME only)
 
 
@@ -5442,29 +5509,24 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This format string specifies a command which is used to decrypt
-application/x-pkcs7-mime attachments.
+この形式化文字列で指定したコマンドを使って application/x-pkcs7-mime
+ファイルを復号化する。
 <p>
-The OpenSSL command formats have their own set of printf-like sequences
-similar to PGP's:
+OpenSSL コマンドの指定形式には、PGP に似た独自の printf風シークウェンスがある。
 <p>
 
 <descrip>
-<tag>&percnt;f </tag>Expands to the name of a file containing a message.
-<tag>&percnt;s </tag>Expands to the name of a file containing the signature part
-           of a multipart/signed attachment when verifying it.
-<tag>&percnt;k </tag>The key-pair specified with <ref id="smime_default_key" name="&dollar;smime&lowbar;default&lowbar;key">
-<tag>&percnt;c </tag>One or more certificate IDs.
-<tag>&percnt;a </tag>The algorithm used for encryption.
-<tag>&percnt;C </tag>CA location:  Depending on whether <ref id="smime_ca_location" name="&dollar;smime&lowbar;ca&lowbar;location">
-           points to a directory or file, this expands to 
-           &dquot;-CApath <ref id="smime_ca_location" name="&dollar;smime&lowbar;ca&lowbar;location">&dquot; or &dquot;-CAfile <ref id="smime_ca_location" name="&dollar;smime&lowbar;ca&lowbar;location">&dquot;.
+<tag>&percnt;f </tag>メッセイジの入っているファイルの名前に展開される。
+<tag>&percnt;s </tag>multipart/signed の検証時に、署名パートの入っているファイル名に展開される。
+<tag>&percnt;k </tag><ref id="smime_default_key" name="&dollar;smime&lowbar;default&lowbar;key"> で指定された鍵ペア。
+<tag>&percnt;c </tag>証明書 ID (複数になることもある)
+<tag>&percnt;a </tag>暗号化に用いるアルゴリズム。
+<tag>&percnt;C </tag>CA 位置: <ref id="smime_ca_location" name="&dollar;smime&lowbar;ca&lowbar;location"> がディレクトリを指すかファイルを指すかにより、&dquot;-CApath <ref id="smime_ca_location" name="&dollar;smime&lowbar;ca&lowbar;location">&dquot; か &dquot;-CAfile <ref id="smime_ca_location" name="&dollar;smime&lowbar;ca&lowbar;location">&dquot; に展開される。
 </descrip>
 
 <p>
-For examples on how to configure these formats, see the smime.rc in
-the samples/ subdirectory which has been installed on your system
-alongside the documentation.
+この形式の設定方法の例については、smime.rc というファイルを参照せよ。
+文書のそばの samples/ サブディレクトリにインストールされている。
 (S/MIME only)
 
 
@@ -5474,7 +5536,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to verify S/MIME signatures of type multipart/signed.
+このコマンドを使って multipart/signed タイプの S/MIME 署名を検証する。
 (S/MIME only)
 
 
@@ -5484,8 +5546,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to verify S/MIME signatures of type
-application/x-pkcs7-mime.
+このコマンドを使って application/x-pkcs7-mime タイプの S/MIME 署名を検証する。
 (S/MIME only)
 
 
@@ -5495,8 +5556,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to created S/MIME signatures of type
-multipart/signed, which can be read by all mail clients.
+このコマンドは multipart/signed タイプの
+S/MIME 署名を作成するために用いられる。
+このタイプはあらゆるメイルクライアントから読める。
 (S/MIME only)
 
 
@@ -5506,9 +5568,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to created S/MIME signatures of type
-application/x-pkcs7-signature, which can only be handled by mail
-clients supporting the S/MIME extension.
+このコマンドは application/x-pkcs7-signature タイプの
+S/MIME 署名を作成するために用いられる。
+このタイプは S/MIME 拡張に対応したメイルクライアントからのみ扱える。
 (S/MIME only)
 
 
@@ -5518,7 +5580,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to create encrypted S/MIME messages.
+このコマンドは暗号化 S/MIME メッセイジを作成するために用いられる。
 (S/MIME only)
 
 
@@ -5528,8 +5590,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to extract PKCS7 structures of S/MIME signatures,
-in order to extract the public X509 certificate(s).
+このコマンドを用いて S/MIME 署名の PKCS7 構造を抽出する。
+その目的は、そこからさらに X509 公開証明書を抽出することにある。
 (S/MIME only)
 
 
@@ -5539,7 +5601,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to extract X509 certificates from a PKCS7 structure.
+PKCS7 構造から X509 証明書を抽出するために用いるコマンド。
 (S/MIME only)
 
 
@@ -5549,9 +5611,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to extract only the signers X509 certificate from a S/MIME
-signature, so that the certificate's owner may get compared to the
-email's 'From'-field.
+このコマンドで署名者の X509 証明書だけを S/MIME 署名から抽出する。
+そうして証明書の所有者とメイルの From フィールドを比較できるようにするのだ。
 (S/MIME only)
 
 
@@ -5561,7 +5622,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to import a certificate via smime&lowbar;keys.
+証明書を smime&lowbar;keys で取り込むために使うコマンド。
 (S/MIME only)
 
 
@@ -5571,9 +5632,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This command is used to extract the mail address(es) used for storing
-X509 certificates, and for verification purposes (to check whether the
-certificate was issued for the sender's mailbox).
+このコマンドを使って、
+用途の検証 (証明書がその送信者のアドレス用に発行されたのかどうかの確認のため)
+と X509 証明書の格納のために用いられるメイルアドレスを抽出する。
 (S/MIME only)
 
 
@@ -5583,8 +5644,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This is the default key-pair to use for signing. This must be set to the
-keyid (the hash-value that OpenSSL generates) to work properly
+署名に使う既定の鍵ペア。鍵 ID (OpenSSL が生成するハッシュ値)
+に設定されていないと正常に動作しない。
 (S/MIME only)
 
 
@@ -5594,9 +5655,9 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-If set (the default), mutt will attempt to use STARTTLS on servers
-advertising the capability. When unset, mutt will not attempt to
-use STARTTLS regardless of the server's capabilities.
+設定されている (既定) とき、STARTTLS 能力を公言するサーバでは
+Mutt が STARTTLS を使おうとする。解除されていると、サーバの能力に
+関わらず STARTTLS を使おうとしない。
 
 
 <sect2>certificate&lowbar;file<label id="certificate_file">
@@ -5605,17 +5666,15 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-This variable specifies the file where the certificates you trust
-are saved. When an unknown certificate is encountered, you are asked
-if you accept it or not. If you accept it, the certificate can also 
-be saved in this file and further connections are automatically 
-accepted.
+この変数で指定したファイルに、信用する証明書を保存する。
+未知の証明書に遭遇すると、受け入れるかどうか尋ねられる。
+受け入れると証明書がこのファイルに保存され、以後の接続では
+自動的に受け入れられる。
 <p>
-You can also manually add CA certificates in this file. Any server
-certificate that is signed with one of these CA certificates are 
-also automatically accepted.
+自分の手で CA 証明書をこのファイルに追加することもできる。
+すると、その CA に署名されたサーバ証明書もすべて自動的に受け入れられる。
 <p>
-Example: set certificate&lowbar;file=&tilde;/.mutt/certificates
+例: set certificate&lowbar;file=&tilde;/.mutt/certificates
 
 
 <sect2>ssl&lowbar;usesystemcerts<label id="ssl_usesystemcerts">
@@ -5624,9 +5683,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set to <em>yes</em>, mutt will use CA certificates in the
-system-wide certificate store when checking if server certificate 
-is signed by a trusted CA.
+<em>yes</em> に設定されていると、
+信用できる CA からサーバ証明書が署名されているかどうかを確認する際に、
+システム全体用の証明書格納所にあるCA 証明書を使う。
 
 
 <sect2>entropy&lowbar;file<label id="entropy_file">
@@ -5635,8 +5694,7 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-The file which includes random data that is used to initialize SSL
-library functions.
+SSL ライブラリ関数の初期化に用いる乱数デイタの入ったファイル。
 
 
 <sect2>ssl&lowbar;use&lowbar;sslv2<label id="ssl_use_sslv2">
@@ -5645,8 +5703,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variables specifies whether to attempt to use SSLv2 in the
-SSL authentication process.
+SSL 認証処理に SSLv2 を使おうとするかどうか指定する。
 
 
 <sect2>ssl&lowbar;use&lowbar;sslv3<label id="ssl_use_sslv3">
@@ -5655,8 +5712,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variables specifies whether to attempt to use SSLv3 in the
-SSL authentication process.
+SSL 認証処理に SSLv3 を使おうとするかどうか指定する。
 
 
 <sect2>ssl&lowbar;use&lowbar;tlsv1<label id="ssl_use_tlsv1">
@@ -5665,8 +5721,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variables specifies whether to attempt to use TLSv1 in the
-SSL authentication process.
+SSL 認証処理に TLSv1 を使おうとするかどうか指定する。
 
 
 <sect2>pipe&lowbar;split<label id="pipe_split">
@@ -5675,12 +5730,13 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Used in connection with the <em>pipe-message</em> command and the ``tag-
-prefix'' operator.  If this variable is unset, when piping a list of
-tagged messages Mutt will concatenate the messages and will pipe them
-as a single folder.  When set, Mutt will pipe the messages one by one.
-In both cases the messages are piped in the current sorted order,
-and the ``<ref id="pipe_sep" name="&dollar;pipe&lowbar;sep">'' separator is added after each message.
+<em>pipe-message</em> コマンドおよび &dquot;tag-prefix&dquot; 演算子との
+関連で用いられる。この変数が解除されていると、複数のタグ付けされた
+メッセイジをパイプする際に Mutt はすべて連結させて単一ファイル<!--folder-->
+としてパイプする。設定されていると、Mutt はメッセイジごとに一つずつパイプする。
+どちらの場合も、その時点での整列方法の順にメッセイジがパイプされ、
+<ref id="pipe_sep" name="&dollar;pipe&lowbar;sep"> が各メッセイジの
+後に付加される。
 
 
 <sect2>pipe&lowbar;decode<label id="pipe_decode">
@@ -5689,10 +5745,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Used in connection with the <em>pipe-message</em> command.  When unset,
-Mutt will pipe the messages without any preprocessing. When set, Mutt
-will weed headers and will attempt to PGP/MIME decode the messages
-first.
+<em>pipe-message</em> コマンドと関連して使われる。
+解除されていると Mutt は何も前処理をせずにメッセイジをパイプする。
+設定されていると、まずヘッダを間引きしたり PGP/MIME 復号化したりしようとする。
 
 
 <sect2>pipe&lowbar;sep<label id="pipe_sep">
@@ -5701,8 +5756,8 @@ Type: string<newline>
 Default: &dquot;&bsol;n&dquot;
 
 <p>
-The separator to add between messages when piping a list of tagged
-messages to an external Unix command.
+タグ付けされた複数のメッセイジを外部 Unix コマンドへパイプする際、
+メッセイジとメッセイジの間を区切るために付加される文字列。
 
 
 <sect2>pop&lowbar;authenticators<label id="pop_authenticators">
@@ -5711,15 +5766,15 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This is a colon-delimited list of authentication methods mutt may
-attempt to use to log in to an POP server, in the order mutt should
-try them.  Authentication methods are either 'user', 'apop' or any
-SASL mechanism, eg 'digest-md5', 'gssapi' or 'cram-md5'.
-This parameter is case-insensitive. If this parameter is unset
-(the default) mutt will try all available methods, in order from
-most-secure to least-secure.
+コロン区切りで列挙された認証方法。POP サーバにログインするために、
+その順で試行する。認証方法は &dquot;user&dquot;, &dquot;apop&dquot;
+およびいずれかの SASL 機構、たとえば &dquot;digest-md5&dquot; や
+&dquot;gssapi&dquot;, &dquot;cram-md5&dquot; である。
+このパラメータは大文字と小文字を区別しない。
+もし設定されていなければ (既定)、Mutt はあらゆる利用可能な方法を、
+最も安全なものから始めて、最も安全でないものまで試行する。
 <p>
-Example: set pop&lowbar;authenticators=&dquot;digest-md5:apop:user&dquot;
+例: set pop&lowbar;authenticators=&dquot;digest-md5:apop:user&dquot;
 
 
 <sect2>pop&lowbar;auth&lowbar;try&lowbar;all<label id="pop_auth_try_all">
@@ -5728,10 +5783,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, Mutt will try all available methods. When unset, Mutt will
-only fall back to other authentication methods if the previous
-methods are unavailable. If a method is available but authentication
-fails, Mutt will not connect to the POP server.
+設定されていると、Mutt は利用可能な方法をすべて試行する。
+解除されていると、前の方法が利用できなかったときにのみ他の認証方法に移る。
+認証方法は利用できるけれども認証が失敗したという場合には、
+POP サーバへの接続をやめるのだ。
 
 
 <sect2>pop&lowbar;checkinterval<label id="pop_checkinterval">
@@ -5740,8 +5795,7 @@ Type: number<newline>
 Default: 60
 
 <p>
-This variable configures how often (in seconds) POP should look for
-new mail.
+この変数は、何秒ごとに POP で新着メイルを探すかを調整する。
 
 
 <sect2>pop&lowbar;delete<label id="pop_delete">
@@ -5750,9 +5804,10 @@ Type: quadoption<newline>
 Default: ask-no
 
 <p>
-If set, Mutt will delete successfully downloaded messages from the POP
-server when using the fetch-mail function.  When unset, Mutt will
-download messages but also leave them on the POP server.
+設定されていると、fetch-mail 関数を使って POP サーバから
+ダウンロードすることに成功したメッセイジを削除する。
+解除されていると、メッセイジはダウンロードするものの、
+POP サーバにも残しておく。
 
 
 <sect2>pop&lowbar;host<label id="pop_host">
@@ -5761,10 +5816,10 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-The name of your POP server for the fetch-mail function.  You
-can also specify an alternative port, username and password, ie:
+fetch-mail 関数の POP サーバ名。
+次のように、代替ポート、ユーザ名、パスワードも指定することができる。
 <p>
-&lsqb;pop&lsqb;s&rsqb;://&rsqb;&lsqb;username&lsqb;:password&rsqb;@&rsqb;popserver&lsqb;:port&rsqb;
+&lsqb;pop&lsqb;s&rsqb;://&rsqb;&lsqb;ユーザ名&lsqb;:パスワード&rsqb;@&rsqb;サーバ&lsqb;:ポート&rsqb;
 
 
 <sect2>pop&lowbar;last<label id="pop_last">
@@ -5773,9 +5828,9 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If this variable is set, mutt will try to use the &dquot;LAST&dquot; POP command
-for retrieving only unread messages from the POP server when using
-the fetch-mail function.
+この変数が設定されていると、fetch-mail 関数の使用時に POP コマンド
+&dquot;LAST&dquot; を使って POP サーバから未読メッセイジのみを
+取得しようとする。
 
 
 <sect2>pop&lowbar;reconnect<label id="pop_reconnect">
@@ -5784,8 +5839,7 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-Controls whether or not Mutt will try to reconnect to POP server when
-connection lost.
+POP サーバとの接続が切れたときに再接続を試みるかどうかを制御する。
 
 
 <sect2>pop&lowbar;user<label id="pop_user">
@@ -5794,9 +5848,9 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Your login name on the POP server.
+POP サーバへのログイン名。
 <p>
-This variable defaults to your user name on the local machine.
+既定ではロウカルマシンでのユーザ名になる。
 
 
 <sect2>pop&lowbar;pass<label id="pop_pass">
@@ -5805,11 +5859,10 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Specifies the password for your POP account.  If unset, Mutt will
-prompt you for your password when you open POP mailbox.
-<bf>Warning</bf>: you should only use this option when you are on a
-fairly secure machine, because the superuser can read your muttrc
-even if you are the only one who can read the file.
+POP アカウントのパスワードを指定する。設定されていないと、
+POP メイルボックスを開くときにパスワードの入力を求める。
+<bf>警告</bf>: このオプションは、確実に安全なマシンでのみ使うべきである。
+自分しか読めないファイルであっても、スーパユーザは読むことができるからだ。
 
 
 <sect2>post&lowbar;indent&lowbar;string<label id="post_indent_string">
@@ -5818,8 +5871,8 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Similar to the ``<ref id="attribution" name="&dollar;attribution">'' variable, Mutt will append this
-string after the inclusion of a message which is being replied to.
+<ref id="attribution" name="&dollar;attribution"> 変数と似ており、
+Mutt はこの文字列を、返信するメッセイジの引用のあとに追加する。
 
 
 <sect2>postpone<label id="postpone">
@@ -5828,8 +5881,9 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-Controls whether or not messages are saved in the ``<ref id="postponed" name="&dollar;postponed">''
-mailbox when you elect not to send immediately.
+メッセイジをその場で送らないことにした際に
+<ref id="postponed" name="&dollar;postponed"> メイルボックスへ
+保存するかどうかを制御する。
 
 
 <sect2>postponed<label id="postponed">
@@ -5838,10 +5892,10 @@ Type: path<newline>
 Default: &dquot;&tilde;/postponed&dquot;
 
 <p>
-Mutt allows you to indefinitely ``<ref id="postpone" name="postpone"> sending a message'' which
-you are editing.  When you choose to postpone a message, Mutt saves it
-in the mailbox specified by this variable.  Also see the ``<ref id="postpone" name="&dollar;postpone">''
-variable.
+編集中のメッセイジは、いつまででも送信を
+<ref id="postpone" name="延期 (postpone)"> しておくことができる。
+延期することにした際、Mutt はこの変数で指定されたメイルボックスに保存する。
+これに関しては <ref id="postpone" name="&dollar;postpone"> も参照のこと。
 
 
 <sect2>preconnect<label id="preconnect">
@@ -5850,19 +5904,19 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-If set, a shell command to be executed if mutt fails to establish
-a connection to the server. This is useful for setting up secure
-connections, e.g. with ssh(1). If the command returns a  nonzero
-status, mutt gives up opening the server. Example:
+設定されていると、サーバとの接続を確立できなかったときに
+このシェルコマンドが実行される。これは ssh(1) などで安全な接続経路を
+作るために使える。もしコマンドが非ゼロの結果を返すなら、Mutt は
+そこでサーバを開くことをあきらめる。例:
 <p>
-preconnect=&dquot;ssh -f -q -L 1234:mailhost.net:143 mailhost.net
+preconnect=&dquot;ssh -f -q -L 1234:example.net:143 example.net
 sleep 20 &lt; /dev/null &gt; /dev/null&dquot;
 <p>
-Mailbox 'foo' on mailhost.net can now be reached
-as '{localhost:1234}foo'.
+example.net のメイルボックス 'foo' は、これで '{localhost:1234}foo'
+として扱うことができる。
 <p>
-NOTE: For this example to work, you must be able to log in to the
-remote machine without having to enter a password.
+注意: この例がうまくいくためには、このリモウトマシンに
+パスワードなしでログインできなくてはならない。
 
 
 <sect2>print<label id="print">
@@ -5871,8 +5925,10 @@ Type: quadoption<newline>
 Default: ask-no
 
 <p>
-Controls whether or not Mutt asks for confirmation before printing.
-This is useful for people (like me) who accidentally hit ``p'' often.
+印刷前に確認を求めるかどうかを制御する。
+(訳注：no にすると印刷できなくなる。yes にすると確認せずに印刷する。
+ask-yes や ask-no にすると確認する。)
+よく間違って &dquot;p&dquot; を押してしまう (私のような) 人に有用である。
 
 
 <sect2>print&lowbar;command<label id="print_command">
@@ -5881,7 +5937,7 @@ Type: path<newline>
 Default: &dquot;lpr&dquot;
 
 <p>
-This specifies the command pipe that should be used to print messages.
+これに指定したコマンドへパイプしてメッセイジを印刷する。
 
 
 <sect2>print&lowbar;decode<label id="print_decode">
@@ -5890,13 +5946,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Used in connection with the print-message command.  If this
-option is set, the message is decoded before it is passed to the
-external command specified by <ref id="print_command" name="&dollar;print&lowbar;command">.  If this option
-is unset, no processing will be applied to the message when
-printing it.  The latter setting may be useful if you are using
-some advanced printer filter which is able to properly format
-e-mail messages for printing.
+print-message コマンドと関連して用いられる。このオプションが設定されていると
+メッセイジを復号化してから外部コマンド
+<ref id="print_command" name="&dollar;print&lowbar;command">
+に渡す。解除されていると、何の処理もせずにメッセイジを印刷する。
+後者は、メイルメッセイジを印刷にふさわしく整形することのできる
+高度なプリンタフィルタを使っている場合に有用であろう。
 
 
 <sect2>print&lowbar;split<label id="print_split">
@@ -5905,15 +5960,16 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Used in connection with the print-message command.  If this option
-is set, the command specified by <ref id="print_command" name="&dollar;print&lowbar;command"> is executed once for
-each message which is to be printed.  If this option is unset, 
-the command specified by <ref id="print_command" name="&dollar;print&lowbar;command"> is executed only once, and
-all the messages are concatenated, with a form feed as the message
-separator.
+print-message コマンドとの関連で用いる。設定されていると、
+<ref id="print_command" name="&dollar;print&lowbar;command">
+で指定されたコマンドが、印刷メッセイジごとに毎回実行される。
+解除されていると、<ref id="print_command" name="&dollar;print&lowbar;command">
+は一度だけ実行され、メッセイジがすべて連結される。
+その際、フォームフィード (訳注：0x0a や \f として知られるもの)
+がメッセイジの区切りとして使われる。
 <p>
-Those who use the <bf>enscript</bf>(1) program's mail-printing mode will
-most likely want to set this option.
+<bf>enscript</bf>(1) プログラムのメイル印刷モウドを使っている人は
+このオプションを設定したいと思うはずだ。
 
 
 <sect2>prompt&lowbar;after<label id="prompt_after">
@@ -5922,10 +5978,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If you use an <em>external</em> ``<ref id="pager" name="&dollar;pager">'', setting this variable will
-cause Mutt to prompt you for a command when the pager exits rather
-than returning to the index menu.  If unset, Mutt will return to the
-index menu when the external pager exits.
+<em>外部</em><ref id="pager" name="ペイジャ">を使っている場合、
+この変数を設定しておくと、ペイジャ終了時にインデックスメニューへ戻らず、
+コマンド入力を求めるようになる。
+解除されていると、すぐインデックスメニューに戻る。
 
 
 <sect2>query&lowbar;command<label id="query_command">
@@ -5934,10 +5990,10 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-This specifies the command that mutt will use to make external address
-queries.  The string should contain a &percnt;s, which will be substituted
-with the query string the user types.  See ``<ref id="query" name="query">'' for more
-information.
+この変数で指定したコマンドを使ってアドレスの外部問い合わせをおこなう。
+この文字列には &percnt;s を含むべきで、その部分がユーザの入力する
+問い合わせ文字列に置換される。より詳細な情報は
+<ref id="query" name="アドレスの外部問い合わせ">を参照。
 
 
 <sect2>quit<label id="quit">
@@ -5946,10 +6002,10 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-This variable controls whether ``quit'' and ``exit'' actually quit
-from mutt.  If it set to yes, they do quit, if it is set to no, they
-have no effect, and if it is set to ask-yes or ask-no, you are
-prompted for confirmation when you try to quit.
+この変数は、&dquot;quit&dquot; と &dquot;exit&dquot; が実際に
+Mutt を終了させるかどうかを制御する。終了させようとしたとき、
+yes に設定されていると終了させ、no に設定されていると無効で、
+ask-yes か ask-no に設定されていると確認を求められる。
 
 
 <sect2>quote&lowbar;regexp<label id="quote_regexp">
@@ -5958,13 +6014,15 @@ Type: regular expression<newline>
 Default: &dquot;^(&lsqb; &bsol;t&rsqb;*&lsqb;|&gt;:}#&rsqb;)+&dquot;
 
 <p>
-A regular expression used in the internal-pager to determine quoted
-sections of text in the body of a message.
+内部ペイジャで、メッセイジ本文の引用部分を見極めるために使う正規表現。
 <p>
-<bf>Note:</bf> In order to use the <em>quoted</em><bf>x</bf> patterns in the
-internal pager, you need to set this to a regular expression that
-matches <em>exactly</em> the quote characters at the beginning of quoted
-lines.
+<bf>注意:</bf> 内部ペイジャで <em>quoted</em><bf>x</bf> のような
+着色パターンを使うためには、引用行の冒頭の引用文字に<em>正確に</em>
+合致する正規表現を設定する必要がある。
+(訳注：すなわち、引用記号全体に合致し、かつ、引用記号のみに合致する
+表現でなくてはならない。
+&dquot;&gt; &gt; &gt;&dquot; のような多層になった引用であっても、
+この正規表現ひとつで合致する必要があるのだ。)
 
 
 <sect2>read&lowbar;inc<label id="read_inc">
@@ -5973,16 +6031,16 @@ Type: number<newline>
 Default: 10
 
 <p>
-If set to a value greater than 0, Mutt will display which message it
-is currently on when reading a mailbox.  The message is printed after
-<em>read&lowbar;inc</em> messages have been read (e.g., if set to 25, Mutt will
-print a message when it reads message 25, and then again when it gets
-to message 50).  This variable is meant to indicate progress when
-reading large mailboxes which may take some time.
-When set to 0, only a single message will appear before the reading
-the mailbox.
+0 より大きな値に設定されていると、メイルボックス読み出し中に
+Mutt が現在どのメッセイジまで来たのかを表示するようになる。
+その表示は <em>read&lowbar;inc</em> 通のメッセイジが読み出されるたびに
+おこなわれる (たとえば 25 だと、25 番目のメッセイジを読んだときに表示し、
+さらにまた 50 番目のときにも表示する)。この変数の意味は、時間のかかる
+大きなメイルボックスを読み出す際に、進行状況を示すということだ。
+0 に設定されているときは、メイルボックスの読み出し前にひとつ
+メッセイジが表示されるだけになる。
 <p>
-Also see the ``<ref id="write_inc" name="&dollar;write&lowbar;inc">'' variable.
+<ref id="write_inc" name="&dollar;write&lowbar;inc"> 変数も参照のこと。
 
 
 <sect2>read&lowbar;only<label id="read_only">
@@ -5991,7 +6049,7 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, all folders are opened in read-only mode.
+設定されていると、フォルダがすべて読み出し専用モウドで開かれる。
 
 
 <sect2>realname<label id="realname">
@@ -6000,12 +6058,11 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-This variable specifies what &dquot;real&dquot; or &dquot;personal&dquot; name should be used
-when sending messages.
+メッセイジ送信時に使う「本名」すなわち「個人名」を指定する。
 <p>
-By default, this is the GECOS field from /etc/passwd.  Note that this
-variable will <em>not</em> be used when the user has set a real name
-in the <ref id="from" name="&dollar;from"> variable.
+既定では /etc/passwd の GECOS フィールドになる。
+なお、ユーザが <ref id="from" name="&dollar;from"> に本名を設定していると
+この変数が使われ<em>ない</em>ので注意。
 
 
 <sect2>recall<label id="recall">
@@ -6014,11 +6071,13 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-Controls whether or not you are prompted to recall postponed messages
-when composing a new message.  Also see ``<ref id="postponed" name="&dollar;postponed">''.
+新規メッセイジを作成する際に、延期メッセイジから続けるかどうかを制御する。
+<ref id="postponed" name="&dollar;postponed"> も参照。
 <p>
-Setting this variable to ``yes'' is not generally useful, and thus not
-recommended.
+この変数を &dquot;yes&dquot; に設定することが一般的に有用であるとは
+言えないので、そのような設定は推奨されていない。
+(訳注：&dquot;yes&dquot; だと、ひとつでも延期されているメッセイジがあると、
+いつまでも新規メッセイジが作成できなくなる。返信はできる。)
 
 
 <sect2>record<label id="record">
@@ -6027,13 +6086,18 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-This specifies the file into which your outgoing messages should be
-appended.  (This is meant as the primary method for saving a copy of
-your messages, but another way to do this is using the ``<ref id="my_hdr" name="my&lowbar;hdr">''
-command to create a <em>Bcc:</em> field with your email address in it.)
+送信メッセイジをどのファイルに追加して保存すべきかを指定する。
+(これはメッセイジのコピーを保存する基本的な方法であるが、
+ほかにも、<ref id="my_hdr" name="my&lowbar;hdr"> コマンドで
+自分のメイルアドレスの <em>Bcc:</em> フィールドを作成するという方法もある。)
 <p>
-The value of <em><ref id="record" name="&dollar;record"></em> is overridden by the ``<ref id="force_name" name="&dollar;force&lowbar;name">'' and
-``<ref id="save_name" name="&dollar;save&lowbar;name">'' variables, and the ``<ref id="fcc-hook" name="fcc-hook">'' command.
+<em><ref id="record" name="&dollar;record"></em> の値は、
+<ref id="force_name" name="&dollar;force&lowbar;name"> および
+<ref id="save_name" name="&dollar;save&lowbar;name"> 変数、
+また <ref id="fcc-hook" name="fcc-hook"> コマンドにより上書きされる。
+(訳注：さらに、この変数は Fcc ヘッダの既定値に過ぎないので、
+Fcc を変更すれば上書きされる。Fcc と <ref id="record" name="&dollar;record">
+の両方に保存されるわけではないので注意。)
 
 
 <sect2>reply&lowbar;regexp<label id="reply_regexp">
@@ -6042,9 +6106,11 @@ Type: regular expression<newline>
 Default: &dquot;^(re(&lsqb;&bsol;&lsqb;0-9&bsol;&rsqb;+&rsqb;)*|aw):&lsqb; &bsol;t&rsqb;*&dquot;
 
 <p>
-A regular expression used to recognize reply messages when threading
-and replying. The default value corresponds to the English &dquot;Re:&dquot; and
-the German &dquot;Aw:&dquot;.
+返信メッセイジを認識するための正規表現。
+スレッドを作ったり返信したりするときに使う。
+既定値は英語の &dquot;Re:&dquot; とドイツ語の &dquot;Aw:&dquot;
+に対応している。(訳注：ただし、Re&lsqb;3&rsqb;: や Re3: には合致するが
+Aw&lsqb;3&rsqb;: や Aw3: には合致しない。)
 
 
 <sect2>reply&lowbar;self<label id="reply_self">
@@ -6053,9 +6119,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If unset and you are replying to a message sent by you, Mutt will
-assume that you want to reply to the recipients of that message rather
-than to yourself.
+解除されていると、自分で送ったメッセイジに返信する際に
+返信したい相手は、そのメッセイジの宛先であって自分ではないものとみなす。
 
 
 <sect2>reply&lowbar;to<label id="reply_to">
@@ -6064,12 +6129,12 @@ Type: quadoption<newline>
 Default: ask-yes
 
 <p>
-If set, Mutt will ask you if you want to use the address listed in the
-Reply-To: header field when replying to a message.  If you answer no,
-it will use the address in the From: header field instead.  This
-option is useful for reading a mailing list that sets the Reply-To:
-header field to the list address and you want to send a private
-message to the author of a message.
+(訳注：ask-yes か ask-no に) 設定されていると、返信しようとする際に
+メッセイジの Reply-To: ヘッダフィールドで挙げられているアドレスを
+使いたいかどうかを聞いてくる。no と答えると From: ヘッダフィールドの
+アドレスを代わりに用いる。このオプションは、Reply-To: ヘッダフィールドを
+リストのアドレスに設定してくるメイリングリストを読んでいて、
+メッセイジの送信者へ個人的にメッセイジを送りたい場合に便利である。
 
 
 <sect2>resolve<label id="resolve">
@@ -6078,9 +6143,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, the cursor will be automatically advanced to the next
-(possibly undeleted) message whenever a command that modifies the
-current message is executed.
+設定されているときには、メッセイジを変更するコマンドが実行されると
+カーソルが自動で進み、(あれば) 次の未削除メッセイジへ動く。
 
 
 <sect2>reverse&lowbar;alias<label id="reverse_alias">
@@ -6089,26 +6153,27 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This variable controls whether or not Mutt will display the &dquot;personal&dquot;
-name from your aliases in the index menu if it finds an alias that
-matches the message's sender.  For example, if you have the following
-alias:
+この変数は、メッセイジの送信者に合致するエイリアスがあるときに、
+エイリアスの「個人名」部分をインデックスメニューで表示するかどうかを制御する。
+例として、次のエイリアスがあるとする。
 <p>
 
 <tscreen><verb>
 alias juser abd30425@somewhere.net (Joe User)
 
 </verb></tscreen><p>
-and then you receive mail which contains the following header:
+そして、このようなヘッダを含むメイルを受け取ったとする。
 <p>
 
 <tscreen><verb>
 From: abd30425@somewhere.net
 
 </verb></tscreen><p>
-It would be displayed in the index menu as ``Joe User'' instead of
-``abd30425@somewhere.net.''  This is useful when the person's e-mail
-address is not human friendly (like CompuServe addresses).
+すると、(訳注：&dollar;reverse&lowbar;alias が yes のときには)
+インデックスメニューに &dquot;abd30425@somewhere.net&dquot;
+ではなく &dquot;Joe User&dquot; と表示されるであろう。
+これは、その人物のメイルアドレスが人間向きでない (CompuServe
+のアドレスのような) ときに便利である。
 
 
 <sect2>reverse&lowbar;name<label id="reverse_name">
@@ -6117,12 +6182,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-It may sometimes arrive that you receive mail to a certain machine,
-move the messages to another machine, and reply to some the messages
-from there.  If this variable is set, the default <em>From:</em> line of
-the reply messages is built using the address where you received the
-messages you are replying to.  If the variable is unset, the
-<em>From:</em> line will use your address on the current machine.
+メイルをあるマシンで受信し、別のマシンへ移して、そこから返信する
+ということが時々あるかもしれない。この変数が設定されていると、
+既定の <em>From:</em> 行が、返信したいメッセイジを受け取ったアドレス
+を使って作成される。変数が設定されていないと、
+<em>From:</em> 行には返信時のマシンのアドレスが使われる。
 
 
 <sect2>reverse&lowbar;realname<label id="reverse_realname">
@@ -6131,10 +6195,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variable fine-tunes the behaviour of the <ref id="reverse_name" name="reverse&lowbar;name"> feature.
-When it is set, mutt will use the address from incoming messages as-is,
-possibly including eventual real names.  When it is unset, mutt will
-override any such real names with the setting of the <ref id="realname" name="realname"> variable.
+この変数は <ref id="reverse_name" name="reverse&lowbar;name"> 機能の
+動作を微調整する。設定されていると Mutt は受信メッセイジのアドレスを
+そのまま使う。そこには本名も含まれているかもしれない。解除されていると、
+そうした本名部分を <ref id="realname" name="realname"> 変数の設定で
+上書きするようになる。
 
 
 <sect2>rfc2047&lowbar;parameters<label id="rfc2047_parameters">
@@ -6143,20 +6208,21 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When this variable is set, Mutt will decode RFC-2047-encoded MIME 
-parameters. You want to set this variable when mutt suggests you
-to save attachments to files named like this: 
+この変数が設定されていると、RFC-2047 で符号化された MIME
+パラメータを復号化する。Mutt が添付ファイルを
 =?iso-8859-1?Q?file=5F=E4=5F991116=2Ezip?=
+のようなファイル名で保存するよう提案してくるときには、
+この変数を設定したいと思うであろう。
 <p>
-When this variable is set interactively, the change doesn't have
-the desired effect before you have changed folders.
+この変数を実行中に設定したときには、フォルダを変更するまで
+望み通りの効果はあらわれない。
 <p>
-Note that this use of RFC 2047's encoding is explicitly,
-prohibited by the standard, but nevertheless encountered in the
-wild.
-Also note that setting this parameter will <em>not</em> have the effect 
-that mutt <em>generates</em> this kind of encoding.  Instead, mutt will
-unconditionally use the encoding specified in RFC 2231.
+注意すべき点がある。このような RFC 2047 符号化方式の使い方は、
+その規格によって明示的に禁止されていること、
+しかしながら実際にはよく見かけるということだ。
+加えて、このパラメータを設定しても Mutt がこのような符号化ファイル名を
+<em>生成</em>するという効果は<em>ない</em>という点にも注意せよ。
+そうではなく、Mutt は常に<!-- unconditionally --> RFC 2231 で指示されている符号化方式を用いる。
 
 
 <sect2>save&lowbar;address<label id="save_address">
@@ -6165,9 +6231,10 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, mutt will take the sender's full address when choosing a
-default folder for saving a mail. If ``<ref id="save_name" name="&dollar;save&lowbar;name">'' or ``<ref id="force_name" name="&dollar;force&lowbar;name">''
-is set too, the selection of the fcc folder will be changed as well.
+設定されていると、メイルを保存する既定フォルダに送信者のアドレス全体を使う。
+<ref id="save_name" name="&dollar;save&lowbar;name"> や
+<ref id="force_name" name="&dollar;force&lowbar;name"> も設定されていると、
+Fcc フォルダの選択も変わる。
 
 
 <sect2>save&lowbar;empty<label id="save_empty">
@@ -6176,12 +6243,13 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When unset, mailboxes which contain no saved messages will be removed
-when closed (the exception is ``<ref id="spoolfile" name="&dollar;spoolfile">'' which is never removed).
-If set, mailboxes are never removed.
+解除されていると、メッセイジの保存されていないメイルボックスが、
+閉じるときに削除される (例外は <ref id="spoolfile" name="&dollar;spoolfile">
+である。これはどんな場合にも削除されない)。
+設定されていると、どのメイルボックスも削除されない。
 <p>
-<bf>Note:</bf> This only applies to mbox and MMDF folders, Mutt does not
-delete MH and Maildir directories.
+<bf>注意:</bf> これが適用されるのは mbox と MMDF のフォルダのみであり、
+Mutt が MH や Maildir のディレクトリを削除することはない。
 
 
 <sect2>save&lowbar;name<label id="save_name">
@@ -6190,15 +6258,15 @@ Type: boolean<newline>
 Default: no
 
 <p>
-This variable controls how copies of outgoing messages are saved.
-When set, a check is made to see if a mailbox specified by the
-recipient address exists (this is done by searching for a mailbox in
-the ``<ref id="folder" name="&dollar;folder">'' directory with the <em>username</em> part of the
-recipient address).  If the mailbox exists, the outgoing message will
-be saved to that mailbox, otherwise the message is saved to the
-``<ref id="record" name="&dollar;record">'' mailbox.
+この変数は、どのように送信メッセイジのコピーを保存するかを制御する。
+設定されているときには、宛先アドレスで指定されるメイルボックスが
+あるかどうかを確認する (これは <ref id="folder" name="&dollar;folder">
+ディレクトリ内で、アドレスの<em>ユーザ名</em>部分に該当するメイルボックスを
+検索することによる)。そのメイルボックスが存在していれば、送信メッセイジは
+そこに保存される。存在しなければ <ref id="record" name="&dollar;record">
+メイルボックスに保存される。
 <p>
-Also see the ``<ref id="force_name" name="&dollar;force&lowbar;name">'' variable.
+<ref id="force_name" name="&dollar;force&lowbar;name"> 変数も参照。
 
 
 <sect2>score<label id="score">
@@ -6207,9 +6275,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When this variable is <em>unset</em>, scoring is turned off.  This can
-be useful to selectively disable scoring for certain folders when the
-``<ref id="score_threshold_delete" name="&dollar;score&lowbar;threshold&lowbar;delete">'' variable and friends are used.
+この変数が <em>no</em> のときには得点付けが停止される。
+<ref id="score_threshold_delete" name="&dollar;score&lowbar;threshold&lowbar;delete">
+や同じような変数を使っているときに、これを使えば
+ある特定のフォルダで得点付けを無効にすることができて便利かもしれない。
 
 
 <sect2>score&lowbar;threshold&lowbar;delete<label id="score_threshold_delete">
@@ -6218,10 +6287,9 @@ Type: number<newline>
 Default: -1
 
 <p>
-Messages which have been assigned a score equal to or lower than the value
-of this variable are automatically marked for deletion by mutt.  Since
-mutt scores are always greater than or equal to zero, the default setting
-of this variable will never mark a message for deletion.
+得点がこの値以下のメッセイジは、自動的に削除予定の印が付けられる。
+Mutt のスコアは常にゼロ以上なので、既定の設定では
+いかなるメッセイジも削除予定にされることはない。
 
 
 <sect2>score&lowbar;threshold&lowbar;flag<label id="score_threshold_flag">
@@ -6230,8 +6298,8 @@ Type: number<newline>
 Default: 9999
 
 <p>
-Messages which have been assigned a score greater than or equal to this 
-variable's value are automatically marked &dquot;flagged&dquot;.
+割り当てられた得点がこの変数の値以上になるメッセイジには自動的に
+「重要」フラグが付けられる。
 
 
 <sect2>score&lowbar;threshold&lowbar;read<label id="score_threshold_read">
@@ -6240,10 +6308,9 @@ Type: number<newline>
 Default: -1
 
 <p>
-Messages which have been assigned a score equal to or lower than the value
-of this variable are automatically marked as read by mutt.  Since
-mutt scores are always greater than or equal to zero, the default setting
-of this variable will never mark a message read.
+メッセイジに、この変数と同じかそれより小さい得点が付いたとき、Mutt
+が既読として印付ける。Mutt では得点が常にゼロかゼロ以上なので、
+既定の設定でメッセイジを既読にしてしまうことはありえない。
 
 
 <sect2>send&lowbar;charset<label id="send_charset">
@@ -6252,13 +6319,18 @@ Type: string<newline>
 Default: &dquot;us-ascii:iso-8859-1:utf-8&dquot;
 
 <p>
-A list of character sets for outgoing messages. Mutt will use the
-first character set into which the text can be converted exactly.
-If your ``<ref id="charset" name="&dollar;charset">'' is not iso-8859-1 and recipients may not
-understand UTF-8, it is advisable to include in the list an
-appropriate widely used standard character set (such as
-iso-8859-2, koi8-r or iso-2022-jp) either instead of or after
-&dquot;iso-8859-1&dquot;.
+送信メッセイジの文字セットを列挙する。
+Mutt は、その文字セットへ正しく文章を変換できた最初のものを使う。
+(訳注：<ref id="charset" name="&dollar;charset"> から
+&dollar;send&lowbar;charset へ変換する。)
+もし <ref id="charset" name="&dollar;charset"> が iso-8859-1
+でなく、しかも宛先の人が UTF-8 を理解できないのであれば、
+適切な、広く用いられている標準的な文字セット (iso-8859-2,
+koi8-r, iso-2022-jp など) を &dquot;iso-8859-1&dquot; の代わり、
+あるいはその後に含めることが推奨されている。
+(訳注：MS の似非 iso-2022-jp を送信しなくてはならないとしても、
+この変数には iso-2022-jp と指定すべきであろう。
+その場合には <ref id="charset-hook" name="iconv-hook"> で調整する。)
 
 
 <sect2>sendmail<label id="sendmail">
@@ -6267,9 +6339,9 @@ Type: path<newline>
 Default: &dquot;/usr/sbin/sendmail -oem -oi&dquot;
 
 <p>
-Specifies the program and arguments used to deliver mail sent by Mutt.
-Mutt expects that the specified program interprets additional
-arguments as recipient addresses.
+Mutt で送信するメイルの配送に用いられるプログラムと引数を指定する。
+Mutt は、続く引数をこのプログラムが宛先アドレスとして解釈するものと
+想定している。
 
 
 <sect2>sendmail&lowbar;wait<label id="sendmail_wait">
@@ -6278,21 +6350,21 @@ Type: number<newline>
 Default: 0
 
 <p>
-Specifies the number of seconds to wait for the ``<ref id="sendmail" name="&dollar;sendmail">'' process
-to finish before giving up and putting delivery in the background.
+<ref id="sendmail" name="&dollar;sendmail"> プロセスが終わるのを
+あきらめて配送をバックグラウンドへ追いやるまで待つ秒数。
 <p>
-Mutt interprets the value of this variable as follows:
+Mutt はこの変数の値を以下のように解釈する。
 
 <descrip>
-<tag>&gt;0 </tag>number of seconds to wait for sendmail to finish before continuing
-<tag>0  </tag>wait forever for sendmail to finish
-<tag>&lt;0 </tag>always put sendmail in the background without waiting
+<tag>&gt;0 </tag>sendmail の終了を待つ秒数
+<tag>0  </tag>sendmail の終了をいつまでも待ち続ける
+<tag>&lt;0 </tag>常に sendmail をバックグラウンドで実行し、待たない
 </descrip>
 
 <p>
-Note that if you specify a value other than 0, the output of the child
-process will be put in a temporary file.  If there is some error, you
-will be informed as to where to find the output.
+注意すべき点がある。もしも 0 以外の値を指定すると、sendmail
+子プロセスの出力が一時ファイルへ置かれることになるのだ。
+何かエラーがあった場合には、その出力がどこにあるかを知らされることになる。
 
 
 <sect2>shell<label id="shell">
@@ -6301,8 +6373,8 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-Command to use when spawning a subshell.  By default, the user's login
-shell from /etc/passwd is used.
+内部でサブシェルを実行する際に使うコマンド。既定では、/etc/passwd を見て
+ユーザのログインシェルを用いる。
 
 
 <sect2>sig&lowbar;dashes<label id="sig_dashes">
@@ -6311,12 +6383,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-If set, a line containing ``-- '' will be inserted before your
-``<ref id="signature" name="&dollar;signature">''.  It is <bf>strongly</bf> recommended that you not unset
-this variable unless your ``signature'' contains just your name.  The
-reason for this is because many software packages use ``-- &bsol;n'' to
-detect your signature.  For example, Mutt has the ability to highlight
-the signature in a different color in the builtin pager.
+設定されていると、&dquot;-- &dquot; という行が
+<ref id="signature" name="署名 (&dollar;signature)"> の前に挿入される。
+署名が名前だけでない限りこの変数を解除しないことを、<bf>強く</bf>推奨する。
+その理由は、多くのソフトウェアが &dquot;-- &bsol;n&dquot; を使って
+署名を検出するからである。例えば Mutt は内蔵ペイジャで署名を別の色に
+目立たせる能力を持っている。
 
 
 <sect2>sig&lowbar;on&lowbar;top<label id="sig_on_top">
@@ -6325,10 +6397,10 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, the signature will be included before any quoted or forwarded
-text.  It is <bf>strongly</bf> recommended that you do not set this variable
-unless you really know what you are doing, and are prepared to take
-some heat from netiquette guardians.
+設定されていると署名が引用文や転送文の前に付けられる。
+この変数を設定することの意味をよく理解し、
+ネチケットの番人たちの憤りを買う準備ができているのでない限り、
+この変数は設定しないよう<bf>強く</bf>推奨されている。
 
 
 <sect2>signature<label id="signature">
@@ -6337,10 +6409,9 @@ Type: path<newline>
 Default: &dquot;&tilde;/.signature&dquot;
 
 <p>
-Specifies the filename of your signature, which is appended to all
-outgoing messages.   If the filename ends with a pipe (``|''), it is
-assumed that filename is a shell command and input should be read from
-its stdout.
+署名のファイル名を指定する。この署名はあらゆる送信メッセイジに付加される。
+ファイル名がパイプ (&dquot;|&dquot;) で終わっていると、ファイル名が
+シェルコマンドとみなされ、その標準出力から読み出される。
 
 
 <sect2>simple&lowbar;search<label id="simple_search">
@@ -6349,13 +6420,13 @@ Type: string<newline>
 Default: &dquot;&tilde;f &percnt;s | &tilde;s &percnt;s&dquot;
 
 <p>
-Specifies how Mutt should expand a simple search into a real search
-pattern.  A simple search is one that does not contain any of the &tilde;
-operators.  See ``<ref id="patterns" name="patterns">'' for more information on search patterns.
+単純検索を実際の検索パターンへ展開する方法を指定する。
+単純検索とは &tilde; 演算子を含まない検索のことだ。
+検索パターンに関してさらに情報を得るには
+<ref id="patterns" name="「パターン」">の節を参照せよ。
 <p>
-For example, if you simply type joe at a search or limit prompt, Mutt
-will automatically expand it to the value specified by this variable.
-For the default value it would be:
+たとえば、検索や表示制限の入力時にただ joe とだけ入力すると、
+Mutt は自動でこの変数の値へ展開し、既定値ではこうなる。
 <p>
 &tilde;f joe | &tilde;s joe
 
@@ -6366,10 +6437,11 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls the display of lines longer than the screen width in the
-internal pager. If set, long lines are wrapped at a word boundary.  If
-unset, lines are simply wrapped at the screen edge. Also see the
-``<ref id="markers" name="&dollar;markers">'' variable.
+内部ペイジャで画面幅より長い行を表示する方法を制御する。
+設定されていると、長い行は語の区切りで折り返される (訳注：英語では
+スペイスで語が区切られるので実装可能なのである)。
+解除されていると、単純に画面の端で折り返される。
+<ref id="markers" name="&dollar;markers"> 変数も参照のこと。
 
 
 <sect2>smileys<label id="smileys">
@@ -6378,9 +6450,9 @@ Type: regular expression<newline>
 Default: &dquot;(&gt;From )|(:&lsqb;-^&rsqb;?&lsqb;&rsqb;&lsqb;)(&gt;&lt;}{|/DP&rsqb;)&dquot;
 
 <p>
-The <em>pager</em> uses this variable to catch some common false
-positives of ``<ref id="quote_regexp" name="&dollar;quote&lowbar;regexp">'', most notably smileys in the beginning
-of a line
+<em>ペイジャ</em>がこの変数を使って、
+<ref id="quote_regexp" name="&dollar;quote&lowbar;regexp"> の
+よくある誤検出を補正する。おもに、行頭に顔文字 (smileys) がある場合である。
 
 
 <sect2>sleep&lowbar;time<label id="sleep_time">
@@ -6389,10 +6461,10 @@ Type: number<newline>
 Default: 1
 
 <p>
-Specifies time, in seconds, to pause while displaying certain informational
-messages, while moving from folder to folder and after expunging
-messages from the current folder.  The default is to pause one second, so 
-a value of zero for this option suppresses the pause.
+フォルダからフォルダへ移動する際にメッセイジを元のフォルダから消去した
+あと、通知メッセイジを表示するための停止時間。秒数で指定する。
+既定では一秒間だけ止まって表示する。それで、このオプションをゼロにすると
+停止しなくなる。(訳注：すぐに再描画されるので読むことができなくなる。)
 
 
 <sect2>sort<label id="sort">
@@ -6401,15 +6473,15 @@ Type: sort order<newline>
 Default: date
 
 <p>
-Specifies how to sort messages in the <em>index</em> menu.  Valid values
-are:
+<em>インデックス</em>メニューでメッセイジを整列する方法を指定する。
+正しい値は以下の通り。
 <p>
 
 <tscreen><verb>
-   date or date-sent
+   date すなわち date-sent
    date-received
    from
-   mailbox-order (unsorted)
+   mailbox-order (整列なし)
    score
    size
    subject
@@ -6417,8 +6489,8 @@ are:
    to
 
 </verb></tscreen><p>
-You may optionally use the reverse- prefix to specify reverse sorting
-order (example: set sort=reverse-date-sent).
+これに加えて、reverse- を頭に付けることで逆順に整列させることができる
+(例: set sort=reverse-date-sent)。
 
 
 <sect2>sort&lowbar;alias<label id="sort_alias">
@@ -6427,14 +6499,14 @@ Type: sort order<newline>
 Default: alias
 
 <p>
-Specifies how the entries in the `alias' menu are sorted.  The
-following are legal values:
+エイリアスメニューの項目を整列する方法を指定する。
+以下が適正な値である。
 <p>
 
 <tscreen><verb>
-   address (sort alphabetically by email address)
-   alias (sort alphabetically by alias name)
-   unsorted (leave in order specified in .muttrc)
+   address (メイルアドレスでアルファベット順に整列)
+   alias (エイリアス名でアルファベット順に整列)
+   unsorted (.muttrc で指定された順番のまま)
 
 </verb></tscreen>
 
@@ -6444,19 +6516,25 @@ Type: sort order<newline>
 Default: date
 
 <p>
-When sorting by threads, this variable controls how threads are sorted
-in relation to other threads, and how the branches of the thread trees
-are sorted.  This can be set to any value that ``<ref id="sort" name="&dollar;sort">'' can, except
-threads (in that case, mutt will just use date-sent).  You can also
-specify the last- prefix in addition to the reverse- prefix, but last-
-must come after reverse-.  The last- prefix causes messages to be
-sorted against its siblings by which has the last descendant, using
-the rest of sort&lowbar;aux as an ordering.  For instance, set sort&lowbar;aux=last-
-date-received would mean that if a new message is received in a
-thread, that thread becomes the last one displayed (or the first, if
-you have set sort=reverse-threads.) Note: For reversed ``<ref id="sort" name="&dollar;sort">''
-order <ref id="sort_aux" name="&dollar;sort&lowbar;aux"> is reversed again (which is not the right thing to do,
-but kept to not break any existing configuration setting).
+スレッドで整列しているとき、スレッドどうしをどのように比較・整列するかを、
+この変数で制御する。
+また、スレッド内の分岐した枝どうしを整列する方法も制御する。
+この変数には、<ref id="sort" name="&dollar;sort"> で使える値をどれでも
+使うことができるが、threads は無効である (この場合、Mutt は単に date-sent
+を使う)。また、reverse- に加えて last- 接頭辞も指定することができる。
+ただし、last- は reverse- の後に来なくてはならない。
+この last- 接頭辞は、兄弟どうしのメッセイジをそれぞれの一番下の子孫で
+比較させるもので、その「一番下」を決定するために sort&lowbar;aux の
+残りの部分を使う。たとえば set sort&lowbar;aux=last-date-received
+の意味は、あるスレッドに新着メッセイジが届くと、そのスレッドが
+最後に表示されるということである (set sort=reverse-threads してあれば
+最初になる)。注意: <ref id="sort" name="&dollar;sort"> が逆順指定だと、
+<ref id="sort_aux" name="&dollar;sort&lowbar;aux"> も
+また逆順になってしまう (これは正しい動作ではないが、既存の設定を
+だめにしてしまわないよう、放置されている)。
+(訳注：sort=reverse-threads で sort&lowbar;aux=date だと、
+スレッド内の各メッセイジが reverse-date のような順番に整列される
+ということ。)
 
 
 <sect2>sort&lowbar;browser<label id="sort_browser">
@@ -6465,19 +6543,19 @@ Type: sort order<newline>
 Default: subject
 
 <p>
-Specifies how to sort entries in the file browser.  By default, the
-entries are sorted alphabetically.  Valid values:
+ファイルブラウザで項目をどのように整列するかを指定する。
+既定ではアルファベット順に整列される。正しい値は次のとおり。
 <p>
 
 <tscreen><verb>
-   alpha (alphabetically)
+   alpha (アルファベット順)
    date
    size
    unsorted
 
 </verb></tscreen><p>
-You may optionally use the reverse- prefix to specify reverse sorting
-order (example: set sort&lowbar;browser=reverse-date).
+これに reverse- 接頭辞を付けて逆順に整列させることもできる
+(例: set sort&lowbar;browser=reverse-date)。
 
 
 <sect2>sort&lowbar;re<label id="sort_re">
@@ -6486,14 +6564,17 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-This variable is only useful when sorting by threads with
-``<ref id="strict_threads" name="&dollar;strict&lowbar;threads">'' unset.  In that case, it changes the heuristic
-mutt uses to thread messages by subject.  With sort&lowbar;re set, mutt will
-only attach a message as the child of another message by subject if
-the subject of the child message starts with a substring matching the
-setting of ``<ref id="reply_regexp" name="&dollar;reply&lowbar;regexp">''.  With sort&lowbar;re unset, mutt will attach
-the message whether or not this is the case, as long as the
-non-``<ref id="reply_regexp" name="&dollar;reply&lowbar;regexp">'' parts of both messages are identical.
+この変数が有効なのは、スレッドで整列していて
+<ref id="strict_threads" name="&dollar;strict&lowbar;threads">
+が解除されているときだけである。
+そのような場合には Mutt の使う発見的手法が変わり、メッセイジを
+題名でスレッドにするようになる。sort&lowbar;re が設定されていると、
+あるメッセイジを題名で別のメッセイジの子どもと判断してスレッドに入れるのは、
+その題名が <ref id="reply_regexp" name="&dollar;reply&lowbar;regexp">
+の設定と合致する文字列で始まっているものだけである。
+sort&lowbar;re が解除されていると、それ以外のものも、
+<ref id="reply_regexp" name="&dollar;reply&lowbar;regexp"> でない部分が
+同じである限りスレッドに入れてしまう。
 
 
 <sect2>spoolfile<label id="spoolfile">
@@ -6502,10 +6583,9 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-If your spool mailbox is in a non-default place where Mutt cannot find
-it, you can specify its location with this variable.  Mutt will
-automatically set this variable to the value of the environment
-variable &dollar;MAIL if it is not set.
+スプールメイルボックスが既定と違う場所にあって Mutt が見付けられないなら、
+その場所をこの変数で指定することができる。設定されていないと、Mutt
+は自動的に環境変数 &dollar;MAIL の値にする。
 
 
 <sect2>status&lowbar;chars<label id="status_chars">
@@ -6514,16 +6594,17 @@ Type: string<newline>
 Default: &dquot;-*&percnt;A&dquot;
 
 <p>
-Controls the characters used by the &dquot;&percnt;r&dquot; indicator in
-``<ref id="status_format" name="&dollar;status&lowbar;format">''. The first character is used when the mailbox is
-unchanged. The second is used when the mailbox has been changed, and
-it needs to be resynchronized. The third is used if the mailbox is in
-read-only mode, or if the mailbox will not be written when exiting
-that mailbox (You can toggle whether to write changes to a mailbox
-with the toggle-write operation, bound by default to &dquot;&percnt;&dquot;). The fourth
-is used to indicate that the current folder has been opened in attach-
-message mode (Certain operations like composing a new mail, replying,
-forwarding, etc. are not permitted in this mode).
+<ref id="status_format" name="&dollar;status&lowbar;format"> の
+&dquot;&percnt;r&dquot; で使われる文字を制御する。
+メイルボックスに変更がないときは最初の文字が用いられる。
+二番目はメイルボックスが変更されて同期が必要なときに使われる。
+三番目の文字が使われるのは、メイルボックスが読み出し専用モウドの場合、
+すなわち、そのメイルボックスを抜ける際に書き込まれない場合である
+(変更を書き込むかどうかは toggle-write 関数で切替できる。
+これは既定では &dquot;&percnt;&dquot; に割り当てられている)。
+四番目はフォルダがメッセイジ添付モウドで開かれていることを示すために
+用いられる (このモウドでは、新規メッセイジ作成や返信、転送などの
+動作が禁止されている)。
 
 
 <sect2>status&lowbar;format<label id="status_format">
@@ -6532,73 +6613,74 @@ Type: string<newline>
 Default: &dquot;-&percnt;r-Mutt: &percnt;f &lsqb;Msgs:&percnt;?M?&percnt;M/?&percnt;m&percnt;?n? New:&percnt;n?&percnt;?o? Old:&percnt;o?&percnt;?d? Del:&percnt;d?&percnt;?F? Flag:&percnt;F?&percnt;?t? Tag:&percnt;t?&percnt;?p? Post:&percnt;p?&percnt;?b? Inc:&percnt;b?&percnt;?l? &percnt;l?&rsqb;---(&percnt;s/&percnt;S)-&percnt;&gt;-(&percnt;P)---&dquot;
 
 <p>
-Controls the format of the status line displayed in the <em>index</em>
-menu.  This string is similar to ``<ref id="index_format" name="&dollar;index&lowbar;format">'', but has its own
-set of printf()-like sequences:
+<em>インデックス</em>メニューで表示されるステイタス行の書式を制御する。
+この文字列は <ref id="index_format" name="&dollar;index&lowbar;format">
+と似ているが、独自の printf()風シークウェンスを持っている。
 <p>
 
 <descrip>
-<tag>&percnt;b  </tag>number of mailboxes with new mail *
-<tag>&percnt;d  </tag>number of deleted messages *
-<tag>&percnt;f  </tag>the full pathname of the current mailbox
-<tag>&percnt;F  </tag>number of flagged messages *
-<tag>&percnt;h  </tag>local hostname
-<tag>&percnt;l  </tag>size (in bytes) of the current mailbox *
-<tag>&percnt;L  </tag>size (in bytes) of the messages shown 
-(i.e., which match the current limit) *
-<tag>&percnt;m  </tag>the number of messages in the mailbox *
-<tag>&percnt;M  </tag>the number of messages shown (i.e., which match the current limit) *
-<tag>&percnt;n  </tag>number of new messages in the mailbox *
-<tag>&percnt;o  </tag>number of old unread messages
-<tag>&percnt;p  </tag>number of postponed messages *
-<tag>&percnt;P  </tag>percentage of the way through the index
-<tag>&percnt;r  </tag>modified/read-only/won't-write/attach-message indicator,
-according to <ref id="status_chars" name="&dollar;status&lowbar;chars">
-<tag>&percnt;s  </tag>current sorting mode (<ref id="sort" name="&dollar;sort">)
-<tag>&percnt;S  </tag>current aux sorting method (<ref id="sort_aux" name="&dollar;sort&lowbar;aux">)
-<tag>&percnt;t  </tag>number of tagged messages *
-<tag>&percnt;u  </tag>number of unread messages *
-<tag>&percnt;v  </tag>Mutt version string
-<tag>&percnt;V  </tag>currently active limit pattern, if any *
-<tag>&percnt;&gt;X </tag>right justify the rest of the string and pad with &dquot;X&dquot;
-<tag>&percnt;|X </tag>pad to the end of the line with &dquot;X&dquot;
+<tag>&percnt;b  </tag>新着メイルのある<ref id="mailboxes" name="メイルボックス">の数 *
+<tag>&percnt;d  </tag>削除メッセイジの数 *
+<tag>&percnt;f  </tag>メイルボックスのフルパス名
+<tag>&percnt;F  </tag>フラグ付きメッセイジの数 *
+<tag>&percnt;h  </tag>ロウカルのホスト名
+<tag>&percnt;l  </tag>メイルボックスのバイト数 *
+<tag>&percnt;L  </tag>表示されるメッセイジのバイト数
+(すなわち、表示制限で隠されていないものの合計サイズ) *
+<tag>&percnt;m  </tag>メイルボックス内のメッセイジ数 *
+<tag>&percnt;M  </tag>表示されるメッセイジの数 (すなわち、表示制限で隠されていないものの数) *
+<tag>&percnt;n  </tag>メイルボックス内の新着メッセイジ数 *
+<tag>&percnt;o  </tag>古い未読メッセイジの数 *
+<tag>&percnt;p  </tag>延期メッセイジの数 *
+<tag>&percnt;P  </tag>現在位置の、インデックス中におけるパーセンテイジ
+<tag>&percnt;r  </tag><bf>変更/書込/メッセイジ添付</bf> を
+<ref id="status_chars" name="&dollar;status&lowbar;chars"> に基づいて示す
+<tag>&percnt;s  </tag>整列のモウド (<ref id="sort" name="&dollar;sort">)
+<tag>&percnt;S  </tag>補助整列モウド (<ref id="sort_aux" name="&dollar;sort&lowbar;aux">)
+<tag>&percnt;t  </tag>タグ付きメッセイジの数 *
+<tag>&percnt;u  </tag>未読メッセイジの数 *
+<tag>&percnt;v  </tag>Mutt ヴァージョン文字列
+<tag>&percnt;V  </tag>表示制限パターン (有効なものがあれば) *
+<tag>&percnt;&gt;X </tag>残りの文字列を右寄せして間を &dquot;X&dquot; で詰める
+<tag>&percnt;|X </tag>行の最後まで &dquot;X&dquot; で詰める
 </descrip>
 
 <p>
-* = can be optionally printed if nonzero
+* = 非ゼロのときのみ表示するようにできる
 <p>
-Some of the above sequences can be used to optionally print a string
-if their value is nonzero.  For example, you may only want to see the
-number of flagged messages if such messages exist, since zero is not
-particularly meaningful.  To optionally print a string based upon one
-of the above sequences, the following construct is used
+上記シークウェンスの中には、値が非ゼロのときのみ選択的に
+文字列を表示するという使い方のできるものがある。たとえば、
+フラグ付きメッセイジの数は、そのようなメッセイジが存在するときにのみ
+見たいと思うだろう。ゼロには特に意味があるわけではないのだから。
+そのように上記シークウェンスに基づいて選択的に文字列を表示するには、
+次のような構造が使われる。
 <p>
-&percnt;?&lt;sequence&lowbar;char&gt;?&lt;optional&lowbar;string&gt;?
+&percnt;?&lt;シークウェンス文字&gt;?&lt;選択的文字列&gt;?
 <p>
-where <em>sequence&lowbar;char</em> is a character from the table above, and
-<em>optional&lowbar;string</em> is the string you would like printed if
-<em>status&lowbar;char</em> is nonzero.  <em>optional&lowbar;string</em> <bf>may</bf> contain
-other sequence as well as normal text, but you may <bf>not</bf> nest
-optional strings.
+ここで、<em>シークウェンス文字</em>の部分には上記の表にある文字が入る。
+<em>選択的文字列</em>の部分は、その<em>シークウェンス</em>が
+非ゼロのときに表示したい文字列である。<em>選択的文字列</em>には
+他のシークウェンスも普通の文章も含めることが<bf>できる</bf>が、
+選択的文字列を再帰的に使用することは<bf>できない</bf>。
 <p>
-Here is an example illustrating how to optionally print the number of
-new messages in a mailbox:
+メイルボックス中にある新着メッセイジの数を選択的に
+表示する方法を説明する例を次に挙げる:
 &percnt;?n?&percnt;n new messages.?
 <p>
-Additionally you can switch between two strings, the first one, if a
-value is zero, the second one, if the value is nonzero, by using the
-following construct:
-&percnt;?&lt;sequence&lowbar;char&gt;?&lt;if&lowbar;string&gt;&amp;&lt;else&lowbar;string&gt;?
+加えて、二つの文字列を選択することもできる。第一の文字列は値がゼロのとき、
+第二の文字列は値が非ゼロのときである。これには次の構造を用いる:
+&percnt;?&lt;シークウェンス文字&gt;?&lt;ゼロ文字列&gt;&amp;&lt;非ゼロ文字列&gt;?
 <p>
-You can additionally force the result of any printf-like sequence to
-be lowercase by prefixing the sequence character with an underscore
-(&lowbar;) sign.  For example, if you want to display the local hostname in
-lowercase, you would use:
-&percnt;&lowbar;h
+さらに、どの printf風シークウェンスに対しても、結果を強制的に
+小文字にすることができる。これはシークウェンス文字の前にアンダスコア
+(&lowbar;) 記号を付ければ良い。たとえば、ロウカルのホスト名を
+小文字で表示したいなら &percnt;&lowbar;h とする。
 <p>
-If you prefix the sequence character with a colon (:) character, mutt
-will replace any dots in the expansion by underscores. This might be helpful 
-with IMAP folders that don't like dots in folder names.
+シークウェンス文字の前にコロン (:) 文字を付けると、Mutt
+は展開結果中のドット (.) をアンダスコアに置換する。
+これは、フォルダ名にドットを使えない IMAP フォルダで役立つかもしれない。
+(訳注：&dollar;status_format というよりは、
+<ref id="save-hook" name="save-hook"> などで使うことを想定しているのであろう。)
 
 
 <sect2>status&lowbar;on&lowbar;top<label id="status_on_top">
@@ -6607,8 +6689,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Setting this variable causes the ``status bar'' to be displayed on
-the first line of the screen rather than near the bottom.
+この変数を設定すると「ステイタスバー」が画面の下のほうではなく
+一番上の行に表示されるようになる。
 
 
 <sect2>strict&lowbar;threads<label id="strict_threads">
@@ -6617,12 +6699,12 @@ Type: boolean<newline>
 Default: no
 
 <p>
-If set, threading will only make use of the ``In-Reply-To'' and
-``References'' fields when you ``<ref id="sort" name="&dollar;sort">'' by message threads.  By
-default, messages with the same subject are grouped together in
-``pseudo threads.''  This may not always be desirable, such as in a
-personal mailbox where you might have several unrelated messages with
-the subject ``hi'' which will get grouped together.
+設定されていると、スレッドで<ref id="sort" name="整列">する際の
+スレッド構築に &dquot;In-Reply-To&dquot; と &dquot;References&dquot;
+フィールドだけを用いる。既定では、同じ題のメッセイジが「擬似スレッド」
+として一括りにされる。これが常に望ましいとは言えない。たとえば
+私的なメイルのメイルボックスで、「こんにちは」というような題の
+無関係なメッセイジがすべて一括りにされてしまうような場合もある。
 
 
 <sect2>suspend<label id="suspend">
@@ -6631,9 +6713,12 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When <em>unset</em>, mutt won't stop when the user presses the terminal's
-<em>susp</em> key, usually ``control-Z''. This is useful if you run mutt
-inside an xterm using a command like xterm -e mutt.
+<em>no</em> のときは、ユーザが端末の <em>susp</em> キーを押しても
+Mutt が停止しない。そのキーは通常 &dquot;control-Z&dquot; である。
+これが便利なのは Mutt を xterm -e mutt のようなコマンドで
+xterm 内に実行している場合である。(訳注：このような場合に C-z
+を押してしまったら、別の端末から killall -CONT mutt などとして
+CONT シグナルを送る必要がある。)
 
 
 <sect2>text&lowbar;flowed<label id="text_flowed">
@@ -6642,12 +6727,14 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, mutt will generate text/plain; format=flowed attachments.
-This format is easier to handle for some mailing software, and generally
-just looks like ordinary text.  To actually make use of this format's 
-features, you'll need support in your editor.
+設定されていると Mutt は text/plain; format=flowed 添付ファイルを生成する。
+この形式は通常の形式よりも一部のメイリングソフトウェアから扱いやすいが、
+一般的には通常の文書と同じように見える。ただし、実際にこの形式の特徴を
+活用するには、エディタの対応が必要になる。
 <p>
-Note that <ref id="indent_string" name="&dollar;indent&lowbar;string"> is ignored when this option is set.
+このオプションが設定されていると
+<ref id="indent_string" name="&dollar;indent&lowbar;string">
+が無視されるので注意すること。
 
 
 <sect2>thread&lowbar;received<label id="thread_received">
@@ -6656,8 +6743,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, mutt uses the date received rather than the date sent
-to thread messages by subject.
+設定されていると、メッセイジを題名でスレッドにする際に
+送信日付ではなく受信日付を使用する。
 
 
 <sect2>thorough&lowbar;search<label id="thorough_search">
@@ -6666,10 +6753,11 @@ Type: boolean<newline>
 Default: no
 
 <p>
-Affects the <em>&tilde;b</em> and <em>&tilde;h</em> search operations described in
-section ``<ref id="patterns" name="patterns">'' above.  If set, the headers and attachments of
-messages to be searched are decoded before searching.  If unset,
-messages are searched as they appear in the folder.
+<em>&tilde;b</em> と <em>&tilde;h</em> の検索に影響する。
+これらの意味は<ref id="patterns" name="「パターン」">の節に記述されている。
+この変数が設定されていると、検索するメッセイジのヘッダや添付ファイルが
+復号化されてから検索される。解除されているとフォルダにあるままで検索される。
+(訳注：日本語の場合は、この変数を設定しないと使いものにならない。)
 
 
 <sect2>tilde<label id="tilde">
@@ -6678,8 +6766,8 @@ Type: boolean<newline>
 Default: no
 
 <p>
-When set, the internal-pager will pad blank lines to the bottom of the
-screen with a tilde (&tilde;).
+設定されていると、内部ペイジャは画面の下端まで空行をティルダ (&tilde;)
+で詰める。
 
 
 <sect2>timeout<label id="timeout">
@@ -6688,10 +6776,10 @@ Type: number<newline>
 Default: 600
 
 <p>
-This variable controls the <em>number of seconds</em> Mutt will wait
-for a key to be pressed in the main menu before timing out and
-checking for new mail.  A value of zero or less will cause Mutt
-to never time out.
+Mutt は、キーが押されるのをこの変数の<em>秒数</em>だけメインメニュー
+(訳注：インデックスメニュー) で待ち続け、それを過ぎると、キーを
+押さなくても新着メイルを確認する。ゼロか負の値の場合には
+いつまでも確認せずに待ち続ける。
 
 
 <sect2>tmpdir<label id="tmpdir">
@@ -6700,10 +6788,10 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-This variable allows you to specify where Mutt will place its
-temporary files needed for displaying and composing messages.  If
-this variable is not set, the environment variable TMPDIR is
-used.  If TMPDIR is not set then &dquot;/tmp&dquot; is used.
+この変数で、メッセイジの表示や作成に必要な一時ファイルを
+Mutt が置く場所を指定することができる。設定されていないときには
+環境変数 TMPDIR が用いられる。TMPDIR も設定されていないなら
+&dquot;/tmp&dquot; が用いられる。
 
 
 <sect2>to&lowbar;chars<label id="to_chars">
@@ -6712,16 +6800,18 @@ Type: string<newline>
 Default: &dquot; +TCFL&dquot;
 
 <p>
-Controls the character used to indicate mail addressed to you.  The
-first character is the one used when the mail is NOT addressed to your
-address (default: space).  The second is used when you are the only
-recipient of the message (default: +).  The third is when your address
-appears in the TO header field, but you are not the only recipient of
-the message (default: T).  The fourth character is used when your
-address is specified in the CC header field, but you are not the only
-recipient.  The fifth character is used to indicate mail that was sent
-by <em>you</em>.  The sixth character is used to indicate when a mail
-was sent to a mailing-list you subscribe to (default: L).
+自分に来たメイルを示すために使われる文字を制御する。
+一番目の文字は、メイルが自分のアドレスに宛てられて「いない」
+ときに使われる (既定: スペイス)。
+二番目は自分がそのメッセイジ唯一の宛先である場合に用いられる (既定: +)。
+三番目は、自分のアドレスが TO ヘッダフィールドにあるものの、
+自分以外にも宛てられているというメッセイジに使われる (既定: T)。
+四番目の文字が使われるのは、自分のアドレスが CC ヘッダフィールドに
+指定されていて他の人にも宛てられている場合である (既定: C)。
+五番目の文字はメイルの送信者が<em>自分</em>であるという場合に用いられる
+(既定: F)。
+六番目の文字は、メイルが購読メイリングリストに送られていることを
+示すために使われる (既定: L)。
 
 
 <sect2>tunnel<label id="tunnel">
@@ -6730,14 +6820,15 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-Setting this variable will cause mutt to open a pipe to a command
-instead of a raw socket. You may be able to use this to set up
-preauthenticated connections to your IMAP/POP3 server. Example:
+この変数を設定すると Mutt がソケットではなくコマンドへのパイプを開く。
+これを使って、IMAP/POP3 サーバへの認証済み接続を作ることができる。
+例:
 <p>
 tunnel=&dquot;ssh -q mailhost.net /usr/local/libexec/imapd&dquot;
 <p>
-NOTE: For this example to work you must be able to log in to the remote
-machine without having to enter a password.
+注意: この例がうまくいくには、リモウトマシンにパスワードの入力なしで
+ログインすることができなくてはならない。
+(訳注：ssh-agent などを使う。)
 
 
 <sect2>use&lowbar;8bitmime<label id="use_8bitmime">
@@ -6746,12 +6837,13 @@ Type: boolean<newline>
 Default: no
 
 <p>
-<bf>Warning:</bf> do not set this variable unless you are using a version
-of sendmail which supports the -B8BITMIME flag (such as sendmail
-8.8.x) or you may not be able to send mail.
+<bf>警告:</bf> 自分の使っているヴァージョンの sendmail が
+-B8BITMIME フラグに対応している (sendmail 8.8.x など) のでない限り、
+この変数を設定してはいけない。さもないとメイルを送れなくなってしまう。
 <p>
-When <em>set</em>, Mutt will invoke ``<ref id="sendmail" name="&dollar;sendmail">'' with the -B8BITMIME
-flag when sending 8-bit messages to enable ESMTP negotiation.
+<em>yes</em> に設定されているとき、8ビットのメッセイジ送信時に Mutt は
+<ref id="sendmail" name="&dollar;sendmail"> を -B8BITMIME
+フラグ付きで起動して ESMTP 通信を有効にする。
 
 
 <sect2>use&lowbar;domain<label id="use_domain">
@@ -6760,9 +6852,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, Mutt will qualify all local addresses (ones without the
-@host portion) with the value of ``<ref id="hostname" name="&dollar;hostname">''.  If <em>unset</em>, no
-addresses will be qualified.
+設定されていると Mutt はすべてのロウカルアドレス (@host 部分のないもの)
+を <ref id="hostname" name="&dollar;hostname"> の値で補完する。
+<em>解除</em>すると、どのアドレスもそのままにする。
 
 
 <sect2>use&lowbar;from<label id="use_from">
@@ -6771,10 +6863,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When <em>set</em>, Mutt will generate the `From:' header field when
-sending messages.  If <em>unset</em>, no `From:' header field will be
-generated unless the user explicitly sets one using the ``<ref id="my_hdr" name="my&lowbar;hdr">''
-command.
+<em>yes</em> のときはメッセイジ送信時に &dquot;From:&dquot;
+ヘッダフィールドを Mutt が生成する。<em>no</em> だと、
+ユーザが明示的に <ref id="my_hdr" name="my&lowbar;hdr"> コマンドで
+設定しないと生成されない。
 
 
 <sect2>use&lowbar;ipv6<label id="use_ipv6">
@@ -6783,9 +6875,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When <em>set</em>, Mutt will look for IPv6 addresses of hosts it tries to
-contact.  If this option is unset, Mutt will restrict itself to IPv4 addresses.
-Normally, the default should work.
+<em>設定されている</em>とき、Mutt は接続しようとするホストの
+IPv6 アドレスを調べる。このオプションが解除されていると、
+IPv4 アドレスだけに絞って動作する。通常は既定値で問題なく動くはずだ。
 
 
 <sect2>user&lowbar;agent<label id="user_agent">
@@ -6794,9 +6886,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When <em>set</em>, mutt will add a &dquot;User-Agent&dquot; header to outgoing
-messages, indicating which version of mutt was used for composing
-them.
+<em>設定されている</em>と、Mutt は &dquot;User-Agent&dquot; ヘッダを
+送信メッセイジに付加する。これはどのヴァージョンの Mutt を使って
+作成されたのかを示すものである。
 
 
 <sect2>visual<label id="visual">
@@ -6805,8 +6897,8 @@ Type: path<newline>
 Default: &dquot;&dquot;
 
 <p>
-Specifies the visual editor to invoke when the <em>&tilde;v</em> command is
-given in the builtin editor.
+内蔵エディタの <em>&tilde;v</em> コマンドで起動する
+ヴィジュアルエディタを指定する。
 
 
 <sect2>wait&lowbar;key<label id="wait_key">
@@ -6815,16 +6907,16 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls whether Mutt will ask you to press a key after <em>shell-
-escape</em>, <em>pipe-message</em>, <em>pipe-entry</em>, <em>print-message</em>,
-and <em>print-entry</em> commands.
+Mutt が <em>shell-escape</em>, <em>pipe-message</em>, <em>pipe-entry</em>,
+<em>print-message</em>, <em>print-entry</em> コマンドのあとに
+キー押下を求めるかどうかを制御する。
 <p>
-It is also used when viewing attachments with ``<ref id="auto_view" name="auto&lowbar;view">'', provided
-that the corresponding mailcap entry has a <em>needsterminal</em> flag,
-and the external program is interactive.
+また、<ref id="auto_view" name="auto&lowbar;view"> で添付ファイルを
+閲覧する際にも、対応する mailcap 項目に <em>needsterminal</em>
+フラグがあって外部プログラムが対話的に動作する場合は、この変数が用いられる。
 <p>
-When set, Mutt will always ask for a key. When unset, Mutt will wait
-for a key only if the external command returned a non-zero status.
+設定されていると、常にキー入力を求める。解除されていると、
+外部コマンドが非ゼロを返した場合にのみキーを待つ。
 
 
 <sect2>weed<label id="weed">
@@ -6833,8 +6925,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-When set, mutt will weed headers when when displaying, forwarding,
-printing, or replying to messages.
+設定されていると、メッセイジの表示、転送、印刷、返信の際にヘッダを間引きする。
 
 
 <sect2>wrap&lowbar;search<label id="wrap_search">
@@ -6843,10 +6934,10 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls whether searches wrap around the end of the mailbox.
+検索がメイルボックスの最後まで行っても続けるかどうかを制御する。
 <p>
-When set, searches will wrap around the first (or last) message. When
-unset, searches will not wrap.
+設定されているときには最初 (または最後) のメッセイジに飛んで検索を続ける。
+解除されているときにはそこで終わる。
 
 
 <sect2>wrapmargin<label id="wrapmargin">
@@ -6855,8 +6946,8 @@ Type: number<newline>
 Default: 0
 
 <p>
-Controls the size of the margin remaining at the right side of
-the terminal when mutt's pager does smart wrapping.
+Mutt のペイジャが語単位で行を折り返す際に
+端末の右側に残す余白の大きさを制御する。
 
 
 <sect2>write&lowbar;inc<label id="write_inc">
@@ -6865,11 +6956,11 @@ Type: number<newline>
 Default: 10
 
 <p>
-When writing a mailbox, a message will be printed every
-<em>write&lowbar;inc</em> messages to indicate progress.  If set to 0, only a
-single message will be displayed before writing a mailbox.
+メイルボックスを書き込む際、<em>write&lowbar;inc</em> 通ごとに
+進行状況を示すメッセイジが表示される。
+0 に設定されると、書き込み前に一度表示されるだけになる。
 <p>
-Also see the ``<ref id="read_inc" name="&dollar;read&lowbar;inc">'' variable.
+<ref id="read_inc" name="&dollar;read&lowbar;inc"> 変数も参照。
 
 
 <sect2>write&lowbar;bcc<label id="write_bcc">
@@ -6878,25 +6969,27 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-Controls whether mutt writes out the Bcc header when preparing
-messages to be sent.  Exim users may wish to use this.
+メッセイジを送信に備える際、Mutt が Bcc ヘッダを書いておくかどうかを
+制御する。Exim ユーザはこれを使いたいであろう。
+(訳注：exim は Bcc を消してくれないので、解除すべきだということ。)
 
 
-<sect1>Functions<label id="functions">
+<sect1>関数<label id="functions">
 <p>
-The following is the list of available functions listed by the mapping
-in which they are available.  The default key setting is given, and an
-explanation of what the function does.  The key bindings of these
-functions can be changed with the <ref name="bind" id="bind">
-command.
+以下は利用可能な関数の一覧です。
+それぞれが利用可能なマップに挙げられています。
+既定のキー設定が取り上げられており、関数が何をするかについても
+説明されています。これらのキー割り当ては <ref name="bind" id="bind">
+コマンドで変更することができます。
 
 <sect2>generic
 <p>
 
-The <em/generic/ menu is not a real menu, but specifies common functions
-(such as movement) available in all menus except for <em/pager/ and
-<em/editor/.  Changing settings for this menu will affect the default
-bindings for all menus (except as noted).
+<em/generic/ メニューは実在のメニューではなく、
+<em/pager/ と <em/editor/ を除くあらゆるメニューで利用できる
+共通の関数 (カーソル移動など) を指定するものです。
+このメニューへの変更は、それらすべてのメニューの既定割り当てに
+影響を与えます。
 
 <verb>
 bottom-page                L   move to the bottom of the page
