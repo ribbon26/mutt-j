@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <author><firstname></firstname><surname>mutt-j 開発チーム</surname></author>
-<title>Mutt 1.4i用日本語版パッチリリースノート</title>
+<title>Mutt 1.4.1i用日本語版パッチリリースノート</title>
 </articleinfo>
 <sect1>
 <title>Mutt日本語版について</title>
@@ -395,9 +395,9 @@ Translation 2002 "TAKAHASHI, Tamotsu" &#60;arms405@jade.dti.ne.jp&#62;
 </para></listitem>
 </itemizedlist>
 </sect2>
+
 <sect2>
 <title>マニュアルの邦訳</title>
-
 <itemizedlist>
 <listitem><para>
 Translation 1999 Takuhiro Nishioka &#60;takuhiro@super.win.ne.jp&#62;
@@ -407,6 +407,19 @@ Translation 1999-2002 Kohtaro Hitomi &#60;hitomi@hiei.kit.ac.jp&#62; *
 </para></listitem>
 </itemizedlist>
 </sect2>
+
+<sect2>
+<title>マニュアル以外の付属文書の邦訳</title>
+<itemizedlist>
+<listitem><para>
+Translation 2002-2003 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62; *
+</para></listitem>
+<listitem><para>
+Translation 2002-2003 "TAKAHASHI, Tamotsu" &#60;arms405@jade.dti.ne.jp&#62; *
+</para></listitem>
+</itemizedlist>
+</sect2>
+
 <sect2>
 <title>この文書</title>
 <itemizedlist>
@@ -425,7 +438,7 @@ Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62; *
 <sect2>
 <title>一次配布先</title>
 <para>
-日本語化パッチの一次配布先は http://www.emaillab.org/mutt/ です.
+日本語化パッチの一次配布先は http://mutt-j.sourceforge.jp/ です.
 </para>
 </sect2>
 <sect2>
