@@ -919,8 +919,11 @@ Tab を打たなくてはなりません。
 (キーを押した時に起動する命令) を変更できます。
 
 <em>マップ</em>は、その割り当てがどのメニューのものなのかを指定します。
+複数のマップをコンマ (,) で区切って指定することもできます
+(ただし空白を入れてはいけません)。
 現状で定義されているマップはこうなっています。
 
+<label id="maps">
 <descrip>
 <tag/generic/
 これは実際のメニュー名ではなく、ペイジャとエディタ以外の全メニューにおける
@@ -1057,6 +1060,11 @@ folder-hook . set sort=date-sent
 <em>シークウェンス</em>を入力したのと同様に振る舞うのです。
 ですから、よく連続して入力するコマンドがあれば、
 マクロを作成してキーひとつでそのコマンドを実行するようにできます。
+
+<em/メニュー/はマクロを割り当てる<ref id="maps" name="マップ">です。
+複数のマップを指定することもできます。
+複数メニューをコンマ (,) で区切れば良いのです。
+ただし、メニューとコンマの間に空白を使うことはできません。
 
 <em>キー</em>と<em>シークウェンス</em>は<ref id="bind" name="キー割り当て" >と
 同じルールで展開されます。ただ、いくつか追加があります。
@@ -1886,6 +1894,7 @@ Mutt コマンドには、パターンを指定して合致したものにだけ適用することの
 ~y EXPR         "X-Label" フィールドに EXPR を含むメッセイジ
 ~z [MIN]-[MAX]  サイズが MIN から MAX までの範囲にあるメッセイジ *)
 ~=              重複しているメッセイジ ($duplicate_threads 参照)
+~$              参照されていないメッセイジ (スレッド表示が必要)
 </verb></tscreen>
 
 EXPR, USER, ID, SUBJECT の部分は<ref id="regexp" name="正規表現" >です。
@@ -1957,12 +1966,9 @@ Mutt は以下の演算子も認識するので、
 ~f "me@(mutt\.org|cs\.hmc\.edu)"
 </verb></tscreen>
 
-これにクウォウトがなかったら、括弧のせいで、<em/me@(mutt&bsol;.org/
-の部分だけが &tilde;f にかかる正規表現だとみなされてしまいます。
-(訳注：原文は間違っていると思う。Without the quotes, the parenthesis
-would truncate the regular expression to simply <em/me@/, which is
-probably not what you want. とあるが、単純に <em/me@/ になるのではなく
-括弧が終わっていないというエラーになる。)
+これにクウォウトがなかったら、括弧が終わらないことになります。
+「<em/&tilde;f me@(mutt\.org/」と「<em/cs\.hmc\.edu)/」という
+二つのパターンが OR されることになるのです。これは絶対に間違いですね。
 
 <sect2>日付で検索する
 <p>
@@ -3582,6 +3588,16 @@ Default: &dquot;-- Mutt: Compose  &lsqb;Approx. msg size: &percnt;l   Atts: &per
 オプションの説明文を見よ。
 
 
+<sect2>config&lowbar;charset<label id="config_charset">
+<p>
+Type: string<newline>
+Default: &dquot;&dquot;
+
+<p>
+定義されていると、設定ファイルのコマンドをこのエンコウディングから
+(訳注：<ref id="charset" name="&dollar;charset"> へ) 復号する。
+
+
 <sect2>confirmappend<label id="confirmappend">
 <p>
 Type: boolean<newline>
@@ -3634,6 +3650,19 @@ Default: yes
 <ref id="save_name" name="&dollar;save&lowbar;name">,
 <ref id="force_name" name="&dollar;force&lowbar;name">,
 <ref id="fcc-hook" name="fcc-hook"> も参照。
+
+
+<sect2>crypt&lowbar;use&lowbar;gpgme<label id="crypt_use_gpgme">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+GPGME を使った暗号バックエンドの使用を制御する。
+これが設定されていて、かつ Mutt が gpgme サポートありで構築されていると、
+S/MIME と PGP に旧式コウドではなく gpgme コウドが用いられる。
+注意が一つ。このオプションは .muttrc で使う必要があり、
+実行中に使ってもまったく効果がない。
 
 
 <sect2>crypt&lowbar;autopgp<label id="crypt_autopgp">
@@ -3734,7 +3763,7 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-このオプションが <em>yes</em> なら、Mutt の受信添付ファイルメニューが
+受信添付ファイルメニューでは、このオプションが <em>yes</em> なら、
 multipart/digest の中の各メッセイジについて副パートを表示しない。
 副パートを見るには &dquot;v&dquot; を押す必要がある。
 
@@ -5151,6 +5180,53 @@ multipart/signed and multipart/encrypted body parts.
 (PGP only)
 
 
+<sect2>pgp&lowbar;autoinline<label id="pgp_autoinline">
+<label id="pgp_create_traditional">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+このオプションは、旧式のインライン (伝統的) PGP 暗号および署名を
+生成するかどうかを制御する。ただし特定の状況下でのみ有効だ。
+さらに、インラインが必要ないときには <em>pgp-menu</em>
+を使って上書きすることができる。
+<p>
+Mutt は複数の MIME パートを含むメッセイジには自動的に PGP/MIME
+を使用する、ということを覚えておくように。また、インライン (伝統的形式)
+がうまくいかなかったときに PGP/MIME で送信するかどうかを尋ねるように
+設定することができる。
+参照: <ref id="pgp_mime_auto" name="&dollar;pgp&lowbar;mime&lowbar;auto">
+<p>
+なお、旧式 PGP メッセイジ形式は<bf>強く否定されている</bf>
+という点にも注意すべきである。
+(PGP only)
+
+
+<sect2>pgp&lowbar;replyinline<label id="pgp_replyinline">
+<label id="pgp_auto_traditional">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+この変数を設定すると、インライン (伝統的形式) で暗号化/署名されたメッセイジへ
+返信する際は、常にインラインのメッセイジを作成しようとするようになる。
+しかしインラインが必要ないときには <em>pgp-menu</em> で上書きすることができる。
+このオプションは、元のメッセイジがインラインかどうかを自動で
+検知するわけではない。事前に確認しフラグが立てられたメッセイジに関する
+Mutt 内部デイタを信用するだけである。
+<p>
+複数の MIME パートを含むメッセイジには自動で PGP/MIME を使用するので注意せよ。
+また、インライン (伝統的形式) がうまくいかなかったときに
+PGP/MIME にするかどうかを送信前に尋ねるよう設定することができる。
+参照: <ref id="pgp_mime_auto" name="&dollar;pgp&lowbar;mime&lowbar;auto">
+<p>
+なお、旧式 PGP メッセイジ形式は<bf>避ける</bf>よう<bf>強く</bf>
+勧められているという点にも注意すべきである。
+(PGP only)
+
+
 <sect2>pgp&lowbar;show&lowbar;unusable<label id="pgp_show_unusable">
 <p>
 Type: boolean<newline>
@@ -5224,19 +5300,17 @@ PGP 鍵メニューの項目をどう整列するか指定する。
 (PGP only)
 
 
-<sect2>pgp&lowbar;create&lowbar;traditional<label id="pgp_create_traditional">
+<sect2>pgp&lowbar;mime&lowbar;auto<label id="pgp_mime_auto">
 <p>
 Type: quadoption<newline>
-Default: no
+Default: ask-yes
 
 <p>
-このオプションは、旧式のインライン PGP で暗号化や署名をした
-メッセイジを Mutt が生成するかどうかを制御する。
+インライン (伝統的形式) の署名/暗号化に (いかなる理由にせよ) 失敗したときに
+自動的に PGP/MIME で送信するか尋ねるかを、このオプションで制御する。
+<!-- whether Mutt will prompt you for automatically sending... 意味不明 -->
 <p>
-注意すべき点は、us-ascii 以外の文字セットや複数 MIME パート
-のあるメッセイジには自動的に PGP/MIME が使われるということだ。
-<p>
-さらに注意。旧式 PGP メッセイジ形式の使用は<bf>まったく推奨されない</bf>。
+旧式 PGP メッセイジ形式の使用は<bf>まったく推奨されない</bf>ことに注意。
 <!-- strongly deprecated 「強く非難」や「まったく否定」だろうか... -->
 (PGP only)
 
