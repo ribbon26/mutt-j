@@ -1,12 +1,10 @@
 <!doctype linuxdoc system>
 
-<!-- internal は内部、builtin は内蔵と訳す -->
-<!-- type はタイプ、format は形式 -->
 <article>
 
 <title>The Mutt E-Mail Client
 <author>by Michael Elkins <htmlurl url="mailto:me@cs.hmc.edu" name="&lt;me@cs.hmc.edu&gt;">
-<date>version 1.5.6
+<date>version 1.5.6 +20040808
 <abstract>
 ``All mail clients suck.  This one just sucks less.'' -me, circa 1995
 </abstract>
@@ -59,9 +57,14 @@ name="http://www.mutt.org/download.html"> をご覧ください。
 <sect1>IRC
 <p>
 <htmlurl
-url="http://www.openprojects.net" name="OpenProjects.Net
-(www.openprojects.net)"> のチャンネル
+url="http://www.freenode.net/" name="irc.freenode.net
+(www.freenode.net)"> のチャンネル
 <em>&num;mutt</em> に行けば、Mutt に関心のある人と会話できます。
+(訳注：ただし、英語。なお、このチャンネル利用者の心得が
+<htmlurl url="http://wiki.mutt.org/" name="wiki.mutt.org">
+に書いてある。必ずしも即座に反応があるわけではないので、
+「だれかいる?」というような質問をせず、だまって相談し、しばらく待つべし、
+とのこと。日本語の Mutt チャンネルはどこかにあるのだろうか……。)
 
 <sect1>USENET
 <p>
@@ -1608,6 +1611,107 @@ name="「パターン」" >の節に説明してある書式の文字列です
 &dquot;*&dquot; というパターンは score コマンド<!-- entry -->のリストを
 すべて消去するという意味の特殊記号です。
 
+<sect1>スパム検出<label id="spam">
+<p>
+使い方: <tt/spam/ <em/パターン/　<em/書式/<newline>
+使い方: <tt/nospam/ <em/パターン/
+
+Mutt には、外部のスパム得点フィルタに対する一般化されたサポートがあります。
+自分のスパムパターンを <tt/spam/ と <tt/nospam/ で定義することによって、
+外部フィルタが決定したスパム属性にもとづいてメイルを
+<em/limit/ (表示制限)、<em/search/ (検索)、<em/sort/ (整列)
+することができるのです。さらに、スパム属性をインデックス画面に
+表示することもできます。<tt/%H/ を <ref id="index_format"
+name="&dollar;index&lowbar;format"> 変数に使うのです。(便利ワザ:
+<tt/%?H?[%H] ?/ としてみると、スパムタグがメッセイジに定義されている場合
+のみ表示される。)
+
+はじめの一歩として、外部フィルタのスパムパターンを <tt/spam/ コマンドで
+定義します。<em/パターン/ は正規表現で、メイルメッセイジのヘッダに
+合致するものであるべきです。メイルボックス中のメッセイジは、
+この正規表現に合致すると「スパムタグ」すなわち「スパム属性」を
+受け取ります (ただし後述の <tt/nospam/ パターンに合致している場合は除く)。
+この「属性」の表示方法は、自分で完全に制御することができます。
+その制御をおこなうのは <em/書式/ パラメータです。<em/書式/ は
+静的テキストでも構いませんが、<em/パターン/ からの後方参照を含めることも
+できます。(正規表現の「後方参照」とは、括弧の中に含まれた表現を参照するもの。)
+<tt/%1/ は正規表現中の最初の後方参照に置換され、<tt/%2/ は
+二番目の後方参照に置換されるのです。
+
+複数のスパムフィルタを利用していると、メッセイジに
+複数のスパム関連ヘッダが付くことがあります。そこで、<tt/spam/
+コマンドのパターンを各々のフィルタのために複数定義することができます。
+メッセイジが複数のパターンに合致したとき、
+<ref id="spam_separator" name="&dollar;spam&lowbar;separator"> 変数が
+文字列 (訳注：空文字列を含む) であれば、そのメッセイジのスパムタグは
+すべての <em/書式/ 文字列が連結されたものになります。その際、
+それぞれの値が <ref id="spam_separator" name="&dollar;spam&lowbar;separator">
+変数で区切られます。
+
+たとえば DCC, SpamAssassin, PureMessage を使っているとします。
+すると、このようなスパム設定をするかもしれません。
+<tscreen><verb>
+spam "X-DCC-.*-Metrics:.*(....)=many"         "90+/DCC-%1"
+spam "X-Spam-Status: Yes"                     "90+/SA"
+spam "X-PerlMX-Spam: .*Probability=([0-9]+)%" "%1/PM"
+set spam_separator=", "
+</verb></tscreen>
+
+このとき、受信したメッセイジが DCC の Fuz2 チェックサムで many と判定され、
+PureMessage でスパム確率が 97% と判定された場合に、そのメッセイジの
+スパムタグは <tt>90+/DCC-Fuz2, 97/PM</tt> となります。(DCC ヘッダで
+「=many」の前の四文字は使用したチェックサムを示しています。この場合は
+Fuz2 でした。)
+
+<ref id="spam_separator" name="&dollar;spam&lowbar;separator">
+変数が解除されていると、<em/spam/ パターンの合致は以前の合致を上書きします。
+連結された <em/書式/ 文字列ではなく、最後の合致のみが返されることになります。
+
+スパムタグは、<tt/%H/ を <tt/&dollar;index&lowbar;format/ 変数で使用した際に
+インデックスへ表示される文字列です。また、<em/search/ (検索) および
+<em/limit/ (表示制限) 関数で <tt/~H/ というパターン合致表現が合致する
+文字列でもあります。さらに、スパム属性で整列する際に使うカギでもあります。
+
+これは非常に混み入った例でした。ほとんどの人が実際に利用している環境では、
+スパムフィルタはひとつだけでしょう。設定が単純であればあるほど、
+Mutt の動作を効果的にすることができます。特に整列に関してそう言えます。
+
+一般的に言って、スパムタグで整列する際に Mutt は <em/辞書的/ に、
+すなわち、文字列を一文字ずつ英数字順に評価して整列します。しかしながら、
+スパムタグがもしも数字で始まっているならば、まず数値順に整列して、
+数値が同じ場合にのみ辞書的に整列します。(これは UNIX の <tt/sort -n/
+に似ています。) スパム属性が何もないメッセイジ、すなわち、どの
+<tt/spam/ パターンも合致しなかったメッセイジは、最低の順位で整列されます。
+数値がそれに続いて、0 から順に高い順位で整列されます。
+最後に数字以外の文字列が整列されます。a は z より低い順位になります。
+明らかにスパムタグの整列は、フィルタで強制的に数値を返させることが
+できれば、概して最も効果的になると言えます。しかし
+それができない場合でも、Mutt はまずまず有用な動作をするわけです。
+
+<tt/nospam/ コマンドは <tt/spam/ パターンの例外を書くために使います。
+もしヘッダが <tt/spam/ コマンドに合致した場合でもスパムタグを付けたくない
+条件があるなら、そうしたより詳細なパターンを <tt/nospam/ コマンドで
+列挙することができるのです。
+
+<tt/nospam/ に与えられた <em/パターン/ が既存の <tt/spam/ リストにある
+<em/パターン/ とまったく同一のときには、例外を追加するのではなく
+<tt/spam/ リストからその項目を消去する効果があります。
+同様に、<tt/spam/ コマンドの <em/パターン/ が <tt/nospam/ リストの
+項目に合致する場合には、その <tt/nospam/ 項目が消去されます。
+もし <tt/nospam/ の <em/パターン/ が &dquot;*&dquot; であれば、
+<em/リスト双方のすべての項目/ が消去されます。<tt/spam/ や <tt/nospam/
+を <tt/folder-hook/ と組み合わせて使う際にはこれを既定動作にすることでしょう。
+
+<tt/spam/ コマンドと <tt/nospam/ コマンドは、いくつでも好きなだけ
+使うことができます。Mutt だけで初歩的なスパム検出をすることも可能です。
+たとえば <tt/MAILER-DAEMON/ からのメイルをすべてスパムとみなすのであれば、
+このように <tt/spam/ コマンドを使うことができるでしょう。
+
+<tscreen><verb>
+spam "^From: .*MAILER-DAEMON"       "999"
+</verb></tscreen>
+
+
 <sect1>変数を設定する<label id="set" >
 <p>
 使い方: <tt/set/ &lsqb;no|inv&rsqb;<em/変数/&lsqb;=<em/値/&rsqb; &lsqb; <em/変数/ ... &rsqb;<newline>
@@ -1714,8 +1818,8 @@ GNU awk で使われている文法とほぼ同じです) を使って指定しなくてはなりません。
 処理に関するさらに詳細な情報は、<ref id="muttrc-syntax"
 name="「初期化ファイルの構文」" >の項を参照してください。
 そのままの記号として「&dquot;」や「'」に合致させるには、
-記号の前に「&bsol;」(バックスラッシュ [訳注：半角「￥」が表示される
-フォントもあるが、英語圏では逆向きスラッシュ]) をつけてください。
+記号の前に「&bsol;」(バックスラッシュ &lsqb;訳注：半角「￥」が表示される
+フォントもあるが、英語圏では逆向きスラッシュ&rsqb;) をつけてください。
 
 基本となる単位は文字ひとつに合致する正規表現です。
 すべてのアルファベットと数字を含めて、ほとんどの文字は
@@ -3271,6 +3375,10 @@ Mutt は、準備しておいたメッセイジを送信する &dquot;batch&dquot; モウドも
 <item>
 <tt><ref id="source" name="source"></tt> <em/ファイル名/
 <item>
+<tt><ref id="spam" name="spam"></tt> <em/パターン/　<em/書式/
+<item>
+<tt><ref id="spam" name="nospam"></tt> <em/パターン/
+<item>
 <tt><ref id="lists" name="subscribe"></tt> <em/アドレス/ &lsqb; <em/アドレス/ ... &rsqb;
 <item>
 <tt><ref id="lists" name="unsubscribe"></tt> <em/アドレス/ &lsqb; <em/アドレス/ ... &rsqb;
@@ -4314,6 +4422,19 @@ Default: no
 サーバに接続する。
 
 
+<sect2>imap&lowbar;headers<label id="imap_headers">
+<p>
+Type: string<newline>
+Default: &dquot;&dquot;
+
+<p>
+Mutt が既定のヘッダ (&dquot;DATE FROM SUBJECT TO CC MESSAGE-ID REFERENCES
+CONTENT-TYPE CONTENT-DESCRIPTION IN-REPLY-TO REPLY-TO LINES LIST-POST
+X-LABEL&dquot;) に加えてさらに IMAP サーバへ要求するヘッダフィールド。
+スパム検出のためのヘッダを追加したいときに使う。
+<bf>注意:</bf> これはスペイス区切りのリストである。
+
+
 <sect2>imap&lowbar;home&lowbar;namespace<label id="imap_home_namespace">
 <p>
 Type: string<newline>
@@ -4439,6 +4560,15 @@ Default: ask-yes
 返信に含めるかどうかを制御する。
 
 
+<sect2>include&lowbar;onlyfirst<label id="include_onlyfirst">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+返信の際にメッセイジの最初の添付ファイルのみ引用するかどうかを制御する。
+
+
 <sect2>indent&lowbar;string<label id="indent_string">
 <p>
 Type: string<newline>
@@ -4482,9 +4612,10 @@ Mutt では以下のシークウェンスが定義されている。
 <tag>&percnt;f </tag>From: 行の全体 (アドレスも本名も含む)
 <tag>&percnt;F </tag>差出人の名前、自分からのメッセイジなら宛先の名前
 (訳注：後者には To という文字列が前置される)
+<tag>&percnt;H </tag>このメッセイジのスパム属性
 <tag>&percnt;i </tag>Message-ID
 <tag>&percnt;l </tag>行数 (Maildir と MH では使えないし、IMAP でもたぶん不可
-[訳注：0 になる])
+&lsqb;訳注：0 になる&rsqb;)
 <tag>&percnt;L </tag>To または CC ヘッダフィールドが &dquot;subscribe&dquot;
 コマンドで定義された正規表現に合致すると &dquot;To &lt;list-name&gt;&dquot;
 (訳注：&dquot;Cc &lt;list-name&gt;&dquot; の場合もある) と表示する。
@@ -6598,6 +6729,7 @@ Default: date
    mailbox-order (整列なし)
    score
    size
+   spam
    subject
    threads
    to
@@ -6654,7 +6786,7 @@ Default: date
 <sect2>sort&lowbar;browser<label id="sort_browser">
 <p>
 Type: sort order<newline>
-Default: subject
+Default: alpha
 
 <p>
 ファイルブラウザで項目をどのように整列するかを指定する。
@@ -6689,6 +6821,21 @@ Default: yes
 sort&lowbar;re が解除されていると、それ以外のものも、
 <ref id="reply_regexp" name="&dollar;reply&lowbar;regexp"> でない部分が
 同じである限りスレッドに入れてしまう。
+
+
+<sect2>spam&lowbar;separator<label id="spam_separator">
+<p>
+Type: string<newline>
+Default: &dquot;,&dquot;
+
+<p>
+<tt/&dollar;spam&lowbar;separator/ は複数のスパムヘッダが
+<ref id="spam" name="spam"> コマンドに合致した際の挙動を制御する。
+解除されていると、あとから合致したヘッダが
+以前の合致によるスパムラベルの値を上書きしてゆく。
+設定されていると (訳注：空の &dquot;&dquot; も含めて)、
+あとから合致したものが以前の値に追記されてゆく。
+その際の区切り文字として <tt/&dollar;spam&lowbar;separator/ が使われる。
 
 
 <sect2>spoolfile<label id="spoolfile">
@@ -7486,7 +7633,8 @@ Ken Weinert <htmlurl url="mailto:kenw@ihs.com" name="&lt;kenw@ihs.com&gt;">
 手に入らない状態が続いています。そこで tamomo こと高橋全は、
 sourceforge.jp の mutt-j プロジェクトという場を借りて、
 一つの仮想ライヴァルを作り出そうと考えました。
-目標は、この翻訳がシェアを握ることではありません。
+目標は、この翻訳がシェアを握ることではありません
+(この翻訳は「訳注」が多すぎるし、カタカナが変で、読みづらいですからね)。
 この翻訳が契機となって西岡・人見訳がより良いものとなり、
 Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 また、この翻訳の特色として、原文 SGML との対応が見やすいという点があります。
@@ -7494,13 +7642,16 @@ Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 原文と日本語が並んで見えるため、誤訳なのか
 原文が間違っているのかが一目瞭然です。
 これによって原文の質が向上されることも視野に入れています。
-翻訳中にも、いくつかの typo などを見付けました。
+翻訳中に、実際いくつか原文の誤りなどを見付けました。
 
 ライセンスについては、原文に何も付け足しません。
-参考にしたのは、原文 (1.5.6 および CVS 版) と西岡・人見訳 (1.4) のみです。
+参考にしたのは、原文とソース (1.5.6 および CVS 版)、および
+西岡・人見訳 (1.4) のみです。
 
 改善要求などは sourceforge.jp の mutt-j プロジェクトの
 バグ報告機能かフォーラムを使うと良いでしょう。
 あるいは高橋全に直接メイルを送っても構いません。
+
+<tt>Translation to Japanese: (C) 2004 TAKAHASHI Tamotsu</tt>
 
 </article>

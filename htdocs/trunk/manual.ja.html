@@ -10,7 +10,7 @@
 <H1>The Mutt E-Mail Client</H1>
 
 <H2>by Michael Elkins 
-<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.6
+<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.6 +20040808
 <P><HR>
 <EM>``All mail clients suck.  This one just sucks less.'' -me, circa 1995</EM>
 <HR>
@@ -59,8 +59,13 @@
 <H2>1.4 IRC</H2>
 
 <P>
-<A HREF="http://www.openprojects.net">OpenProjects.Net (www.openprojects.net)</A> のチャンネル
+<A HREF="http://www.freenode.net/">irc.freenode.net (www.freenode.net)</A> のチャンネル
 <EM>#mutt</EM> に行けば、Mutt に関心のある人と会話できます。
+(訳注：ただし、英語。なお、このチャンネル利用者の心得が
+<A HREF="http://wiki.mutt.org/">wiki.mutt.org</A>
+に書いてある。必ずしも即座に反応があるわけではないので、
+「だれかいる?」というような質問をせず、だまって相談し、しばらく待つべし、
+とのこと。日本語の Mutt チャンネルはどこかにあるのだろうか……。)
 <P>
 <H2>1.5 USENET</H2>
 
@@ -1529,7 +1534,102 @@ ID を指定する手段を提供するのです。
 &quot;*&quot; というパターンは score コマンドのリストを
 すべて消去するという意味の特殊記号です。
 <P>
-<H2><A NAME="set"></A> 3.24 変数を設定する</H2>
+<H2><A NAME="spam"></A> 3.24 スパム検出</H2>
+
+<P>使い方: <CODE>spam</CODE> <EM>パターン</EM>　<EM>書式</EM><BR>
+使い方: <CODE>nospam</CODE> <EM>パターン</EM>
+<P>Mutt には、外部のスパム得点フィルタに対する一般化されたサポートがあります。
+自分のスパムパターンを <CODE>spam</CODE> と <CODE>nospam</CODE> で定義することによって、
+外部フィルタが決定したスパム属性にもとづいてメイルを
+<EM>limit</EM> (表示制限)、<EM>search</EM> (検索)、<EM>sort</EM> (整列)
+することができるのです。さらに、スパム属性をインデックス画面に
+表示することもできます。<CODE>%H</CODE> を 
+<A HREF="#index_format">$index_format</A> 変数に使うのです。(便利ワザ:
+<CODE>%?H?[%H] ?</CODE> としてみると、スパムタグがメッセイジに定義されている場合
+のみ表示される。)
+<P>はじめの一歩として、外部フィルタのスパムパターンを <CODE>spam</CODE> コマンドで
+定義します。<EM>パターン</EM> は正規表現で、メイルメッセイジのヘッダに
+合致するものであるべきです。メイルボックス中のメッセイジは、
+この正規表現に合致すると「スパムタグ」すなわち「スパム属性」を
+受け取ります (ただし後述の <CODE>nospam</CODE> パターンに合致している場合は除く)。
+この「属性」の表示方法は、自分で完全に制御することができます。
+その制御をおこなうのは <EM>書式</EM> パラメータです。<EM>書式</EM> は
+静的テキストでも構いませんが、<EM>パターン</EM> からの後方参照を含めることも
+できます。(正規表現の「後方参照」とは、括弧の中に含まれた表現を参照するもの。)
+<CODE>%1</CODE> は正規表現中の最初の後方参照に置換され、<CODE>%2</CODE> は
+二番目の後方参照に置換されるのです。
+<P>複数のスパムフィルタを利用していると、メッセイジに
+複数のスパム関連ヘッダが付くことがあります。そこで、<CODE>spam</CODE>
+コマンドのパターンを各々のフィルタのために複数定義することができます。
+メッセイジが複数のパターンに合致したとき、
+<A HREF="#spam_separator">$spam_separator</A> 変数が
+文字列 (訳注：空文字列を含む) であれば、そのメッセイジのスパムタグは
+すべての <EM>書式</EM> 文字列が連結されたものになります。その際、
+それぞれの値が 
+<A HREF="#spam_separator">$spam_separator</A>
+変数で区切られます。
+<P>たとえば DCC, SpamAssassin, PureMessage を使っているとします。
+すると、このようなスパム設定をするかもしれません。
+<BLOCKQUOTE><CODE>
+<PRE>
+spam "X-DCC-.*-Metrics:.*(....)=many"         "90+/DCC-%1"
+spam "X-Spam-Status: Yes"                     "90+/SA"
+spam "X-PerlMX-Spam: .*Probability=([0-9]+)%" "%1/PM"
+set spam_separator=", "
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>このとき、受信したメッセイジが DCC の Fuz2 チェックサムで many と判定され、
+PureMessage でスパム確率が 97% と判定された場合に、そのメッセイジの
+スパムタグは <CODE>90+/DCC-Fuz2, 97/PM</CODE> となります。(DCC ヘッダで
+「=many」の前の四文字は使用したチェックサムを示しています。この場合は
+Fuz2 でした。)
+<P>
+<A HREF="#spam_separator">$spam_separator</A>
+変数が解除されていると、<EM>spam</EM> パターンの合致は以前の合致を上書きします。
+連結された <EM>書式</EM> 文字列ではなく、最後の合致のみが返されることになります。
+<P>スパムタグは、<CODE>%H</CODE> を <CODE>$index_format</CODE> 変数で使用した際に
+インデックスへ表示される文字列です。また、<EM>search</EM> (検索) および
+<EM>limit</EM> (表示制限) 関数で <CODE>~H</CODE> というパターン合致表現が合致する
+文字列でもあります。さらに、スパム属性で整列する際に使うカギでもあります。
+<P>これは非常に混み入った例でした。ほとんどの人が実際に利用している環境では、
+スパムフィルタはひとつだけでしょう。設定が単純であればあるほど、
+Mutt の動作を効果的にすることができます。特に整列に関してそう言えます。
+<P>一般的に言って、スパムタグで整列する際に Mutt は <EM>辞書的</EM> に、
+すなわち、文字列を一文字ずつ英数字順に評価して整列します。しかしながら、
+スパムタグがもしも数字で始まっているならば、まず数値順に整列して、
+数値が同じ場合にのみ辞書的に整列します。(これは UNIX の <CODE>sort -n</CODE>
+に似ています。) スパム属性が何もないメッセイジ、すなわち、どの
+<CODE>spam</CODE> パターンも合致しなかったメッセイジは、最低の順位で整列されます。
+数値がそれに続いて、0 から順に高い順位で整列されます。
+最後に数字以外の文字列が整列されます。a は z より低い順位になります。
+明らかにスパムタグの整列は、フィルタで強制的に数値を返させることが
+できれば、概して最も効果的になると言えます。しかし
+それができない場合でも、Mutt はまずまず有用な動作をするわけです。
+<P><CODE>nospam</CODE> コマンドは <CODE>spam</CODE> パターンの例外を書くために使います。
+もしヘッダが <CODE>spam</CODE> コマンドに合致した場合でもスパムタグを付けたくない
+条件があるなら、そうしたより詳細なパターンを <CODE>nospam</CODE> コマンドで
+列挙することができるのです。
+<P><CODE>nospam</CODE> に与えられた <EM>パターン</EM> が既存の <CODE>spam</CODE> リストにある
+<EM>パターン</EM> とまったく同一のときには、例外を追加するのではなく
+<CODE>spam</CODE> リストからその項目を消去する効果があります。
+同様に、<CODE>spam</CODE> コマンドの <EM>パターン</EM> が <CODE>nospam</CODE> リストの
+項目に合致する場合には、その <CODE>nospam</CODE> 項目が消去されます。
+もし <CODE>nospam</CODE> の <EM>パターン</EM> が &quot;*&quot; であれば、
+<EM>リスト双方のすべての項目</EM> が消去されます。<CODE>spam</CODE> や <CODE>nospam</CODE>
+を <CODE>folder-hook</CODE> と組み合わせて使う際にはこれを既定動作にすることでしょう。
+<P><CODE>spam</CODE> コマンドと <CODE>nospam</CODE> コマンドは、いくつでも好きなだけ
+使うことができます。Mutt だけで初歩的なスパム検出をすることも可能です。
+たとえば <CODE>MAILER-DAEMON</CODE> からのメイルをすべてスパムとみなすのであれば、
+このように <CODE>spam</CODE> コマンドを使うことができるでしょう。
+<P>
+<BLOCKQUOTE><CODE>
+<PRE>
+spam "^From: .*MAILER-DAEMON"       "999"
+</PRE>
+</CODE></BLOCKQUOTE>
+<P>
+<P>
+<H2><A NAME="set"></A> 3.25 変数を設定する</H2>
 
 <P>使い方: <CODE>set</CODE> [no|inv]<EM>変数</EM>[=<EM>値</EM>] [ <EM>変数</EM> ... ]<BR>
 使い方: <CODE>toggle</CODE> <EM>変数</EM> [<EM>変数</EM> ... ]<BR>
@@ -1578,7 +1678,7 @@ set ?allow_8bit
 <P><CODE>reset</CODE> コマンドには特別な変数 &quot;all&quot; が存在し、
 これですべての変数をシステムの既定値に戻すことができます。
 <P>
-<H2><A NAME="source"></A> 3.25 初期化コマンドを別のファイルから読み込む</H2>
+<H2><A NAME="source"></A> 3.26 初期化コマンドを別のファイルから読み込む</H2>
 
 <P>使い方: source <I>ファイル名</I>
 <P>このコマンドで、初期化コマンドを他のファイルから取り込めます。
@@ -1591,7 +1691,7 @@ set ?allow_8bit
 実行プログラムとみなされ、そこから入力を読み出します。(例:
 <CODE>source ~/bin/myscript|</CODE>)
 <P>
-<H2><A NAME="unhook"></A> 3.26 フックを取り除く</H2>
+<H2><A NAME="unhook"></A> 3.27 フックを取り除く</H2>
 
 <P>使い方: <CODE>unhook</CODE> [ * | <EM>フック</EM> ]
 <P>このコマンドで、それまでに設定してきたフックを流し去ることができます。
@@ -3153,6 +3253,10 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <LI><CODE>
 <A HREF="#source">source</A></CODE> <EM>ファイル名</EM></LI>
 <LI><CODE>
+<A HREF="#spam">spam</A></CODE> <EM>パターン</EM>　<EM>書式</EM></LI>
+<LI><CODE>
+<A HREF="#spam">nospam</A></CODE> <EM>パターン</EM></LI>
+<LI><CODE>
 <A HREF="#lists">subscribe</A></CODE> <EM>アドレス</EM> [ <EM>アドレス</EM> ... ]</LI>
 <LI><CODE>
 <A HREF="#lists">unsubscribe</A></CODE> <EM>アドレス</EM> [ <EM>アドレス</EM> ... ]</LI>
@@ -4120,6 +4224,18 @@ Default: no
 サーバに接続する。
 <P>
 <P>
+<H3><A NAME="imap_headers"></A> imap_headers</H3>
+
+<P>Type: string<BR>
+Default: &quot;&quot;
+<P>
+<P>Mutt が既定のヘッダ (&quot;DATE FROM SUBJECT TO CC MESSAGE-ID REFERENCES
+CONTENT-TYPE CONTENT-DESCRIPTION IN-REPLY-TO REPLY-TO LINES LIST-POST
+X-LABEL&quot;) に加えてさらに IMAP サーバへ要求するヘッダフィールド。
+スパム検出のためのヘッダを追加したいときに使う。
+<B>注意:</B> これはスペイス区切りのリストである。
+<P>
+<P>
 <H3><A NAME="imap_home_namespace"></A> imap_home_namespace</H3>
 
 <P>Type: string<BR>
@@ -4234,6 +4350,14 @@ Default: ask-yes
 返信に含めるかどうかを制御する。
 <P>
 <P>
+<H3><A NAME="include_onlyfirst"></A> include_onlyfirst</H3>
+
+<P>Type: boolean<BR>
+Default: no
+<P>
+<P>返信の際にメッセイジの最初の添付ファイルのみ引用するかどうかを制御する。
+<P>
+<P>
 <H3><A NAME="indent_string"></A> indent_string</H3>
 
 <P>Type: string<BR>
@@ -4274,6 +4398,7 @@ Mutt では以下のシークウェンスが定義されている。
 <DT><B>%f </B><DD><P>From: 行の全体 (アドレスも本名も含む)
 <DT><B>%F </B><DD><P>差出人の名前、自分からのメッセイジなら宛先の名前
 (訳注：後者には To という文字列が前置される)
+<DT><B>%H </B><DD><P>このメッセイジのスパム属性
 <DT><B>%i </B><DD><P>Message-ID
 <DT><B>%l </B><DD><P>行数 (Maildir と MH では使えないし、IMAP でもたぶん不可
 [訳注：0 になる])
@@ -6218,6 +6343,7 @@ Default: date
    mailbox-order (整列なし)
    score
    size
+   spam
    subject
    threads
    to
@@ -6275,7 +6401,7 @@ Default: date
 <H3><A NAME="sort_browser"></A> sort_browser</H3>
 
 <P>Type: sort order<BR>
-Default: subject
+Default: alpha
 <P>
 <P>ファイルブラウザで項目をどのように整列するかを指定する。
 既定ではアルファベット順に整列される。正しい値は次のとおり。
@@ -6310,6 +6436,20 @@ Default: yes
 sort_re が解除されていると、それ以外のものも、
 <A HREF="#reply_regexp">$reply_regexp</A> でない部分が
 同じである限りスレッドに入れてしまう。
+<P>
+<P>
+<H3><A NAME="spam_separator"></A> spam_separator</H3>
+
+<P>Type: string<BR>
+Default: &quot;,&quot;
+<P>
+<P><CODE>$spam_separator</CODE> は複数のスパムヘッダが
+<A HREF="#spam">spam</A> コマンドに合致した際の挙動を制御する。
+解除されていると、あとから合致したヘッダが
+以前の合致によるスパムラベルの値を上書きしてゆく。
+設定されていると (訳注：空の &quot;&quot; も含めて)、
+あとから合致したものが以前の値に追記されてゆく。
+その際の区切り文字として <CODE>$spam_separator</CODE> が使われる。
 <P>
 <P>
 <H3><A NAME="spoolfile"></A> spoolfile</H3>
@@ -7125,7 +7265,8 @@ Ken Weinert
 手に入らない状態が続いています。そこで tamomo こと高橋全は、
 sourceforge.jp の mutt-j プロジェクトという場を借りて、
 一つの仮想ライヴァルを作り出そうと考えました。
-目標は、この翻訳がシェアを握ることではありません。
+目標は、この翻訳がシェアを握ることではありません
+(この翻訳は「訳注」が多すぎるし、カタカナが変で、読みづらいですからね)。
 この翻訳が契機となって西岡・人見訳がより良いものとなり、
 Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 また、この翻訳の特色として、原文 SGML との対応が見やすいという点があります。
@@ -7133,12 +7274,14 @@ Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 原文と日本語が並んで見えるため、誤訳なのか
 原文が間違っているのかが一目瞭然です。
 これによって原文の質が向上されることも視野に入れています。
-翻訳中にも、いくつかの typo などを見付けました。
+翻訳中に、実際いくつか原文の誤りなどを見付けました。
 <P>ライセンスについては、原文に何も付け足しません。
-参考にしたのは、原文 (1.5.6 および CVS 版) と西岡・人見訳 (1.4) のみです。
+参考にしたのは、原文とソース (1.5.6 および CVS 版)、および
+西岡・人見訳 (1.4) のみです。
 <P>改善要求などは sourceforge.jp の mutt-j プロジェクトの
 バグ報告機能かフォーラムを使うと良いでしょう。
 あるいは高橋全に直接メイルを送っても構いません。
+<P><CODE>Translation to Japanese: (C) 2004 TAKAHASHI Tamotsu</CODE>
 <P>
 </BODY>
 </HTML>

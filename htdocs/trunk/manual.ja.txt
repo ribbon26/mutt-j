@@ -1,6 +1,6 @@
   The Mutt E-Mail Client
   by Michael Elkins <me@cs.hmc.edu>
-  version 1.5.6
+  version 1.5.6 +20040808
 
   ``All mail clients suck.  This one just sucks less.'' -me, circa 1995
   ______________________________________________________________________
@@ -55,9 +55,10 @@
      3.21 キーボードバッファにキーシークウェンスを加える
      3.22 関数を実行する
      3.23 メイルの得点付け
-     3.24 変数を設定する
-     3.25 初期化コマンドを別のファイルから読み込む
-     3.26 フックを取り除く
+     3.24 スパム検出
+     3.25 変数を設定する
+     3.26 初期化コマンドを別のファイルから読み込む
+     3.27 フックを取り除く
 
   4. 高度な使い方
      4.1 正規表現
@@ -179,200 +180,203 @@
         6.3.75 imap_authenticators
         6.3.76 imap_delim_chars
         6.3.77 imap_force_ssl
-        6.3.78 imap_home_namespace
-        6.3.79 imap_keepalive
-        6.3.80 imap_list_subscribed
-        6.3.81 imap_pass
-        6.3.82 imap_passive
-        6.3.83 imap_peek
-        6.3.84 imap_servernoise
-        6.3.85 imap_user
-        6.3.86 implicit_autoview
-        6.3.87 include
-        6.3.88 indent_string
-        6.3.89 index_format
-        6.3.90 ispell
-        6.3.91 keep_flagged
-        6.3.92 locale
-        6.3.93 mail_check
-        6.3.94 mailcap_path
-        6.3.95 mailcap_sanitize
-        6.3.96 maildir_trash
-        6.3.97 mark_old
-        6.3.98 markers
-        6.3.99 mask
-        6.3.100 mbox
-        6.3.101 mbox_type
-        6.3.102 metoo
-        6.3.103 menu_scroll
-        6.3.104 meta_key
-        6.3.105 mh_purge
-        6.3.106 mh_seq_flagged
-        6.3.107 mh_seq_replied
-        6.3.108 mh_seq_unseen
-        6.3.109 mime_forward
-        6.3.110 mime_forward_decode
-        6.3.111 mime_forward_rest
-        6.3.112 mix_entry_format
-        6.3.113 mixmaster
-        6.3.114 move
-        6.3.115 message_format
-        6.3.116 narrow_tree
-        6.3.117 pager
-        6.3.118 pager_context
-        6.3.119 pager_format
-        6.3.120 pager_index_lines
-        6.3.121 pager_stop
-        6.3.122 crypt_autosign
-        6.3.123 crypt_autoencrypt
-        6.3.124 pgp_ignore_subkeys
-        6.3.125 crypt_replyencrypt
-        6.3.126 crypt_replysign
-        6.3.127 crypt_replysignencrypted
-        6.3.128 crypt_timestamp
-        6.3.129 pgp_use_gpg_agent
-        6.3.130 crypt_verify_sig
-        6.3.131 smime_is_default
-        6.3.132 smime_ask_cert_label
-        6.3.133 smime_decrypt_use_default_key
-        6.3.134 pgp_entry_format
-        6.3.135 pgp_good_sign
-        6.3.136 pgp_check_exit
-        6.3.137 pgp_long_ids
-        6.3.138 pgp_retainable_sigs
-        6.3.139 pgp_autoinline
-        6.3.140 pgp_replyinline
-        6.3.141 pgp_show_unusable
-        6.3.142 pgp_sign_as
-        6.3.143 pgp_strict_enc
-        6.3.144 pgp_timeout
-        6.3.145 pgp_sort_keys
-        6.3.146 pgp_mime_auto
-        6.3.147 pgp_auto_traditional
-        6.3.148 pgp_decode_command
-        6.3.149 pgp_getkeys_command
-        6.3.150 pgp_verify_command
-        6.3.151 pgp_decrypt_command
-        6.3.152 pgp_clearsign_command
-        6.3.153 pgp_sign_command
-        6.3.154 pgp_encrypt_sign_command
-        6.3.155 pgp_encrypt_only_command
-        6.3.156 pgp_import_command
-        6.3.157 pgp_export_command
-        6.3.158 pgp_verify_key_command
-        6.3.159 pgp_list_secring_command
-        6.3.160 pgp_list_pubring_command
-        6.3.161 forward_decrypt
-        6.3.162 smime_timeout
-        6.3.163 smime_encrypt_with
-        6.3.164 smime_keys
-        6.3.165 smime_ca_location
-        6.3.166 smime_certificates
-        6.3.167 smime_decrypt_command
-        6.3.168 smime_verify_command
-        6.3.169 smime_verify_opaque_command
-        6.3.170 smime_sign_command
-        6.3.171 smime_sign_opaque_command
-        6.3.172 smime_encrypt_command
-        6.3.173 smime_pk7out_command
-        6.3.174 smime_get_cert_command
-        6.3.175 smime_get_signer_cert_command
-        6.3.176 smime_import_cert_command
-        6.3.177 smime_get_cert_email_command
-        6.3.178 smime_default_key
-        6.3.179 ssl_starttls
-        6.3.180 certificate_file
-        6.3.181 ssl_usesystemcerts
-        6.3.182 entropy_file
-        6.3.183 ssl_use_sslv2
-        6.3.184 ssl_use_sslv3
-        6.3.185 ssl_use_tlsv1
-        6.3.186 pipe_split
-        6.3.187 pipe_decode
-        6.3.188 pipe_sep
-        6.3.189 pop_authenticators
-        6.3.190 pop_auth_try_all
-        6.3.191 pop_checkinterval
-        6.3.192 pop_delete
-        6.3.193 pop_host
-        6.3.194 pop_last
-        6.3.195 pop_reconnect
-        6.3.196 pop_user
-        6.3.197 pop_pass
-        6.3.198 post_indent_string
-        6.3.199 postpone
-        6.3.200 postponed
-        6.3.201 preconnect
-        6.3.202 print
-        6.3.203 print_command
-        6.3.204 print_decode
-        6.3.205 print_split
-        6.3.206 prompt_after
-        6.3.207 query_command
-        6.3.208 quit
-        6.3.209 quote_regexp
-        6.3.210 read_inc
-        6.3.211 read_only
-        6.3.212 realname
-        6.3.213 recall
-        6.3.214 record
-        6.3.215 reply_regexp
-        6.3.216 reply_self
-        6.3.217 reply_to
-        6.3.218 resolve
-        6.3.219 reverse_alias
-        6.3.220 reverse_name
-        6.3.221 reverse_realname
-        6.3.222 rfc2047_parameters
-        6.3.223 save_address
-        6.3.224 save_empty
-        6.3.225 save_name
-        6.3.226 score
-        6.3.227 score_threshold_delete
-        6.3.228 score_threshold_flag
-        6.3.229 score_threshold_read
-        6.3.230 send_charset
-        6.3.231 sendmail
-        6.3.232 sendmail_wait
-        6.3.233 shell
-        6.3.234 sig_dashes
-        6.3.235 sig_on_top
-        6.3.236 signature
-        6.3.237 simple_search
-        6.3.238 smart_wrap
-        6.3.239 smileys
-        6.3.240 sleep_time
-        6.3.241 sort
-        6.3.242 sort_alias
-        6.3.243 sort_aux
-        6.3.244 sort_browser
-        6.3.245 sort_re
-        6.3.246 spoolfile
-        6.3.247 status_chars
-        6.3.248 status_format
-        6.3.249 status_on_top
-        6.3.250 strict_threads
-        6.3.251 suspend
-        6.3.252 text_flowed
-        6.3.253 thread_received
-        6.3.254 thorough_search
-        6.3.255 tilde
-        6.3.256 timeout
-        6.3.257 tmpdir
-        6.3.258 to_chars
-        6.3.259 tunnel
-        6.3.260 use_8bitmime
-        6.3.261 use_domain
-        6.3.262 use_from
-        6.3.263 use_ipv6
-        6.3.264 user_agent
-        6.3.265 visual
-        6.3.266 wait_key
-        6.3.267 weed
-        6.3.268 wrap_search
-        6.3.269 wrapmargin
-        6.3.270 write_inc
-        6.3.271 write_bcc
+        6.3.78 imap_headers
+        6.3.79 imap_home_namespace
+        6.3.80 imap_keepalive
+        6.3.81 imap_list_subscribed
+        6.3.82 imap_pass
+        6.3.83 imap_passive
+        6.3.84 imap_peek
+        6.3.85 imap_servernoise
+        6.3.86 imap_user
+        6.3.87 implicit_autoview
+        6.3.88 include
+        6.3.89 include_onlyfirst
+        6.3.90 indent_string
+        6.3.91 index_format
+        6.3.92 ispell
+        6.3.93 keep_flagged
+        6.3.94 locale
+        6.3.95 mail_check
+        6.3.96 mailcap_path
+        6.3.97 mailcap_sanitize
+        6.3.98 maildir_trash
+        6.3.99 mark_old
+        6.3.100 markers
+        6.3.101 mask
+        6.3.102 mbox
+        6.3.103 mbox_type
+        6.3.104 metoo
+        6.3.105 menu_scroll
+        6.3.106 meta_key
+        6.3.107 mh_purge
+        6.3.108 mh_seq_flagged
+        6.3.109 mh_seq_replied
+        6.3.110 mh_seq_unseen
+        6.3.111 mime_forward
+        6.3.112 mime_forward_decode
+        6.3.113 mime_forward_rest
+        6.3.114 mix_entry_format
+        6.3.115 mixmaster
+        6.3.116 move
+        6.3.117 message_format
+        6.3.118 narrow_tree
+        6.3.119 pager
+        6.3.120 pager_context
+        6.3.121 pager_format
+        6.3.122 pager_index_lines
+        6.3.123 pager_stop
+        6.3.124 crypt_autosign
+        6.3.125 crypt_autoencrypt
+        6.3.126 pgp_ignore_subkeys
+        6.3.127 crypt_replyencrypt
+        6.3.128 crypt_replysign
+        6.3.129 crypt_replysignencrypted
+        6.3.130 crypt_timestamp
+        6.3.131 pgp_use_gpg_agent
+        6.3.132 crypt_verify_sig
+        6.3.133 smime_is_default
+        6.3.134 smime_ask_cert_label
+        6.3.135 smime_decrypt_use_default_key
+        6.3.136 pgp_entry_format
+        6.3.137 pgp_good_sign
+        6.3.138 pgp_check_exit
+        6.3.139 pgp_long_ids
+        6.3.140 pgp_retainable_sigs
+        6.3.141 pgp_autoinline
+        6.3.142 pgp_replyinline
+        6.3.143 pgp_show_unusable
+        6.3.144 pgp_sign_as
+        6.3.145 pgp_strict_enc
+        6.3.146 pgp_timeout
+        6.3.147 pgp_sort_keys
+        6.3.148 pgp_mime_auto
+        6.3.149 pgp_auto_traditional
+        6.3.150 pgp_decode_command
+        6.3.151 pgp_getkeys_command
+        6.3.152 pgp_verify_command
+        6.3.153 pgp_decrypt_command
+        6.3.154 pgp_clearsign_command
+        6.3.155 pgp_sign_command
+        6.3.156 pgp_encrypt_sign_command
+        6.3.157 pgp_encrypt_only_command
+        6.3.158 pgp_import_command
+        6.3.159 pgp_export_command
+        6.3.160 pgp_verify_key_command
+        6.3.161 pgp_list_secring_command
+        6.3.162 pgp_list_pubring_command
+        6.3.163 forward_decrypt
+        6.3.164 smime_timeout
+        6.3.165 smime_encrypt_with
+        6.3.166 smime_keys
+        6.3.167 smime_ca_location
+        6.3.168 smime_certificates
+        6.3.169 smime_decrypt_command
+        6.3.170 smime_verify_command
+        6.3.171 smime_verify_opaque_command
+        6.3.172 smime_sign_command
+        6.3.173 smime_sign_opaque_command
+        6.3.174 smime_encrypt_command
+        6.3.175 smime_pk7out_command
+        6.3.176 smime_get_cert_command
+        6.3.177 smime_get_signer_cert_command
+        6.3.178 smime_import_cert_command
+        6.3.179 smime_get_cert_email_command
+        6.3.180 smime_default_key
+        6.3.181 ssl_starttls
+        6.3.182 certificate_file
+        6.3.183 ssl_usesystemcerts
+        6.3.184 entropy_file
+        6.3.185 ssl_use_sslv2
+        6.3.186 ssl_use_sslv3
+        6.3.187 ssl_use_tlsv1
+        6.3.188 pipe_split
+        6.3.189 pipe_decode
+        6.3.190 pipe_sep
+        6.3.191 pop_authenticators
+        6.3.192 pop_auth_try_all
+        6.3.193 pop_checkinterval
+        6.3.194 pop_delete
+        6.3.195 pop_host
+        6.3.196 pop_last
+        6.3.197 pop_reconnect
+        6.3.198 pop_user
+        6.3.199 pop_pass
+        6.3.200 post_indent_string
+        6.3.201 postpone
+        6.3.202 postponed
+        6.3.203 preconnect
+        6.3.204 print
+        6.3.205 print_command
+        6.3.206 print_decode
+        6.3.207 print_split
+        6.3.208 prompt_after
+        6.3.209 query_command
+        6.3.210 quit
+        6.3.211 quote_regexp
+        6.3.212 read_inc
+        6.3.213 read_only
+        6.3.214 realname
+        6.3.215 recall
+        6.3.216 record
+        6.3.217 reply_regexp
+        6.3.218 reply_self
+        6.3.219 reply_to
+        6.3.220 resolve
+        6.3.221 reverse_alias
+        6.3.222 reverse_name
+        6.3.223 reverse_realname
+        6.3.224 rfc2047_parameters
+        6.3.225 save_address
+        6.3.226 save_empty
+        6.3.227 save_name
+        6.3.228 score
+        6.3.229 score_threshold_delete
+        6.3.230 score_threshold_flag
+        6.3.231 score_threshold_read
+        6.3.232 send_charset
+        6.3.233 sendmail
+        6.3.234 sendmail_wait
+        6.3.235 shell
+        6.3.236 sig_dashes
+        6.3.237 sig_on_top
+        6.3.238 signature
+        6.3.239 simple_search
+        6.3.240 smart_wrap
+        6.3.241 smileys
+        6.3.242 sleep_time
+        6.3.243 sort
+        6.3.244 sort_alias
+        6.3.245 sort_aux
+        6.3.246 sort_browser
+        6.3.247 sort_re
+        6.3.248 spam_separator
+        6.3.249 spoolfile
+        6.3.250 status_chars
+        6.3.251 status_format
+        6.3.252 status_on_top
+        6.3.253 strict_threads
+        6.3.254 suspend
+        6.3.255 text_flowed
+        6.3.256 thread_received
+        6.3.257 thorough_search
+        6.3.258 tilde
+        6.3.259 timeout
+        6.3.260 tmpdir
+        6.3.261 to_chars
+        6.3.262 tunnel
+        6.3.263 use_8bitmime
+        6.3.264 use_domain
+        6.3.265 use_from
+        6.3.266 use_ipv6
+        6.3.267 user_agent
+        6.3.268 visual
+        6.3.269 wait_key
+        6.3.270 weed
+        6.3.271 wrap_search
+        6.3.272 wrapmargin
+        6.3.273 write_inc
+        6.3.274 write_bcc
      6.4 関数
         6.4.1 generic
         6.4.2 index
@@ -401,9 +405,9 @@
   ーン言語といった高度な機能により、まさしくメイルのパワーユーザにぴった
   りであると言えます。
 
-  「メイルクライアントはぜんぶ腐ってる。こいつはそれほど腐っ
-  ちゃいないってだけのことさ」 - 作者 Michael Elkins, 1995 年
-  頃の発言
+       「メイルクライアントはぜんぶ腐ってる。こいつはそれほど腐っ
+       ちゃいないってだけのことさ」 - 作者 Michael Elkins, 1995 年
+       頃の発言
 
   11..11..  ホホウウムムペペイイジジ
 
@@ -432,8 +436,12 @@
 
   11..44..  IIRRCC
 
-  OpenProjects.Net (www.openprojects.net) のチャンネル _#_m_u_t_t に行け
-  ば、Mutt に関心のある人と会話できます。
+  irc.freenode.net (www.freenode.net) のチャンネル _#_m_u_t_t に行けば、Mutt
+  に関心のある人と会話できます。 (訳注：ただし、英語。なお、このチャンネ
+  ル利用者の心得が wiki.mutt.org に書いてある。必ずしも即座に反応がある
+  わけではないので、「だれかいる?」というような質問をせず、だまって相談
+  し、しばらく待つべし、とのこと。日本語の Mutt チャンネルはどこかにある
+  のだろうか……。)
 
   11..55..  UUSSEENNEETT
 
@@ -507,29 +515,28 @@
   Muttには内蔵ラインエディタがあり、これがメイルアドレスやファイル名のよ
   うな文字デイタ入力の主要な手段となっています。編集中に動きまわるための
   キーは Emacs によく似ています。
-
-  ^A or <Home>    bol             行頭に移動
-  ^B or <Left>    backward-char   一文字戻る
-  Esc B           backward-word   一語戻る
-  ^D or <Delete>  delete-char     カーソル位置の文字を削除
-  ^E or <End>     eol             行末に移動
-  ^F or <Right>   forward-char    一文字進む
-  Esc F           forward-word    一語進む
-  <Tab>           complete        ファイル名やエイリアスを補完
-  ^T              complete-query  問い合わせでアドレスを補完
-  ^K              kill-eol        行末まで削除
-  ESC d           kill-eow        単語の終わりまで削除
-  ^W              kill-word       カーソルの前の一語を消す
-  ^U              kill-line       一行全体を削除
-  ^V              quote-char      次に入力するキーに引用符を付ける
-  <Up>            history-up      履歴から前の入力文字列を呼び出す
-  <Down>          history-down    履歴から次の入力文字列を呼び出す
-  <BackSpace>     backspace       カーソルの前の一文字を削除
-  Esc u           upcase-word     単語を大文字に変換
-  Esc l           downcase-word   単語を小文字に変換
-  Esc c           capitalize-word 単語の最初の文字を大文字に変換
-  ^G              n/a             取消
-  <Return>        n/a             編集を終了
+       ^A or <Home>    bol             行頭に移動
+       ^B or <Left>    backward-char   一文字戻る
+       Esc B           backward-word   一語戻る
+       ^D or <Delete>  delete-char     カーソル位置の文字を削除
+       ^E or <End>     eol             行末に移動
+       ^F or <Right>   forward-char    一文字進む
+       Esc F           forward-word    一語進む
+       <Tab>           complete        ファイル名やエイリアスを補完
+       ^T              complete-query  問い合わせでアドレスを補完
+       ^K              kill-eol        行末まで削除
+       ESC d           kill-eow        単語の終わりまで削除
+       ^W              kill-word       カーソルの前の一語を消す
+       ^U              kill-line       一行全体を削除
+       ^V              quote-char      次に入力するキーに引用符を付ける
+       <Up>            history-up      履歴から前の入力文字列を呼び出す
+       <Down>          history-down    履歴から次の入力文字列を呼び出す
+       <BackSpace>     backspace       カーソルの前の一文字を削除
+       Esc u           upcase-word     単語を大文字に変換
+       Esc l           downcase-word   単語を小文字に変換
+       Esc c           capitalize-word 単語の最初の文字を大文字に変換
+       ^G              n/a             取消
+       <Return>        n/a             編集を終了
 
   エディタ (_e_d_i_t_o_r) の関数を割り当て直すには ``bind'' コマンドを使いま
   す。例えば、Delete キーを押したときに、カーソルの乗っている文字ではな
@@ -1831,7 +1838,99 @@
   というパターンは score コマンドのリストをすべて消去するという意味の特
   殊記号です。
 
-  33..2244..  変変数数をを設設定定すするる
+  33..2244..  ススパパムム検検出出
+
+  使い方: spam パターン 書式
+  使い方: nospam パターン
+
+  Mutt には、外部のスパム得点フィルタに対する一般化されたサポートがあり
+  ます。自分のスパムパターンを spam と nospam で定義することによって、外
+  部フィルタが決定したスパム属性にもとづいてメイルを _l_i_m_i_t (表示制
+  限)、_s_e_a_r_c_h (検索)、_s_o_r_t (整列) することができるのです。さらに、スパム
+  属性をインデックス画面に表示することもできます。%H を
+  ``$index_format'' 変数に使うのです。(便利ワザ: %?H?[%H] ? としてみる
+  と、スパムタグがメッセイジに定義されている場合のみ表示される。)
+
+  はじめの一歩として、外部フィルタのスパムパターンを spam コマンドで定義
+  します。パターン は正規表現で、メイルメッセイジのヘッダに合致するもの
+  であるべきです。メイルボックス中のメッセイジは、この正規表現に合致する
+  と「スパムタグ」すなわち「スパム属性」を受け取ります (ただし後述の
+  nospam パターンに合致している場合は除く)。この「属性」の表示方法は、自
+  分で完全に制御することができます。その制御をおこなうのは 書式 パラメー
+  タです。書式 は静的テキストでも構いませんが、パターン からの後方参照を
+  含めることもできます。(正規表現の「後方参照」とは、括弧の中に含まれた
+  表現を参照するもの。) %1 は正規表現中の最初の後方参照に置換され、%2 は
+  二番目の後方参照に置換されるのです。
+
+  複数のスパムフィルタを利用していると、メッセイジに複数のスパム関連ヘッ
+  ダが付くことがあります。そこで、spam コマンドのパターンを各々のフィル
+  タのために複数定義することができます。メッセイジが複数のパターンに合致
+  したとき、 ``$spam_separator'' 変数が文字列 (訳注：空文字列を含む) で
+  あれば、そのメッセイジのスパムタグはすべての 書式 文字列が連結されたも
+  のになります。その際、それぞれの値が ``$spam_separator'' 変数で区切ら
+  れます。
+
+  たとえば DCC, SpamAssassin, PureMessage を使っているとします。すると、
+  このようなスパム設定をするかもしれません。
+
+       spam "X-DCC-.*-Metrics:.*(....)=many"         "90+/DCC-%1"
+       spam "X-Spam-Status: Yes"                     "90+/SA"
+       spam "X-PerlMX-Spam: .*Probability=([0-9]+)%" "%1/PM"
+       set spam_separator=", "
+
+  このとき、受信したメッセイジが DCC の Fuz2 チェックサムで many と判定
+  され、 PureMessage でスパム確率が 97% と判定された場合に、そのメッセイ
+  ジのスパムタグは 90+/DCC-Fuz2, 97/PM となります。(DCC ヘッダで
+  「=many」の前の四文字は使用したチェックサムを示しています。この場合は
+  Fuz2 でした。)
+
+  ``$spam_separator'' 変数が解除されていると、_s_p_a_m パターンの合致は以前
+  の合致を上書きします。連結された 書式 文字列ではなく、最後の合致のみが
+  返されることになります。
+
+  スパムタグは、%H を $index_format 変数で使用した際にインデックスへ表示
+  される文字列です。また、_s_e_a_r_c_h (検索) および _l_i_m_i_t (表示制限) 関数で
+  ~H というパターン合致表現が合致する文字列でもあります。さらに、スパム
+  属性で整列する際に使うカギでもあります。
+
+  これは非常に混み入った例でした。ほとんどの人が実際に利用している環境で
+  は、スパムフィルタはひとつだけでしょう。設定が単純であればあるほど、
+  Mutt の動作を効果的にすることができます。特に整列に関してそう言えま
+  す。
+
+  一般的に言って、スパムタグで整列する際に Mutt は 辞書的 に、すなわち、
+  文字列を一文字ずつ英数字順に評価して整列します。しかしながら、スパムタ
+  グがもしも数字で始まっているならば、まず数値順に整列して、数値が同じ場
+  合にのみ辞書的に整列します。(これは UNIX の sort -n に似ています。) ス
+  パム属性が何もないメッセイジ、すなわち、どの spam パターンも合致しな
+  かったメッセイジは、最低の順位で整列されます。数値がそれに続いて、0 か
+  ら順に高い順位で整列されます。最後に数字以外の文字列が整列されます。a
+  は z より低い順位になります。明らかにスパムタグの整列は、フィルタで強
+  制的に数値を返させることができれば、概して最も効果的になると言えます。
+  しかしそれができない場合でも、Mutt はまずまず有用な動作をするわけで
+  す。
+
+  nospam コマンドは spam パターンの例外を書くために使います。もしヘッダ
+  が spam コマンドに合致した場合でもスパムタグを付けたくない条件があるな
+  ら、そうしたより詳細なパターンを nospam コマンドで列挙することができる
+  のです。
+
+  nospam に与えられた パターン が既存の spam リストにあるパターン とまっ
+  たく同一のときには、例外を追加するのではなく spam リストからその項目を
+  消去する効果があります。同様に、spam コマンドの パターン が nospam リ
+  ストの項目に合致する場合には、その nospam 項目が消去されます。もし
+  nospam の パターン が "*" であれば、リスト双方のすべての項目 が消去さ
+  れます。spam や nospam を folder-hook と組み合わせて使う際にはこれを既
+  定動作にすることでしょう。
+
+  spam コマンドと nospam コマンドは、いくつでも好きなだけ使うことができ
+  ます。Mutt だけで初歩的なスパム検出をすることも可能です。たとえば
+  MAILER-DAEMON からのメイルをすべてスパムとみなすのであれば、このように
+  spam コマンドを使うことができるでしょう。
+
+       spam "^From: .*MAILER-DAEMON"       "999"
+
+  33..2255..  変変数数をを設設定定すするる
 
   使い方: set [no|inv]変数[=値] [ 変数 ... ]
   使い方: toggle 変数 [変数 ... ]
@@ -1844,7 +1943,6 @@
   (真) か 設定されていない (偽) かのいずれかです (訳注：訳者の気分によ
   り、設定 (yes) と解除 (no) という表現も使う)。 _n_u_m_b_e_r 変数には正の整数
   を割り当てることができます。
-
   _s_t_r_i_n_g 型の変数はいくつかの表示文字 (原語：printable characters, つま
   りコントロウル文字以外の文字) で構成されます。スペイスやタブを含むなら
   ば引用符で括らなければなりません。また "C" のエスケイプシークウェンス
@@ -1882,7 +1980,7 @@
   reset コマンドには特別な変数 "all" が存在し、これですべての変数をシス
   テムの既定値に戻すことができます。
 
-  33..2255..  初初期期化化ココママンンドドをを別別ののフファァイイルルかからら読読みみ込込むむ
+  33..2266..  初初期期化化ココママンンドドをを別別ののフファァイイルルかからら読読みみ込込むむ
 
   使い方: source ファイル名
 
@@ -1897,7 +1995,7 @@
   実行プログラムとみなされ、そこから入力を読み出します。(例: source
   ~/bin/myscript|)
 
-  33..2266..  フフッッククをを取取りり除除くく
+  33..2277..  フフッッククをを取取りり除除くく
 
   使い方: unhook [ * | フック ]
 
@@ -2099,44 +2197,44 @@
   できるものが多数あります (limit, tag-pattern, delete-pattern 等)。いく
   つかの方法でメッセイジを選択できます。
 
-  ~A              全てのメッセイジ
-  ~b EXPR         メッセイジ本文 (body) に EXPR を含むメッセイジ
-  ~B EXPR         メッセイジ全体のどこかに EXPR を含むメッセイジ
-  ~c USER         USER に CC 送付されているメッセイジ
-  ~C EXPR         To: か Cc: に EXPR のあるメッセイジ
-  ~D              削除される (deleted) メッセイジ
-  ~d [MIN]-[MAX]  送信日 ("date-sent") が範囲内にあるメッセイジ
-  ~E              期限切れ (expired) メッセイジ
-  ~e EXPR         "Sender" フィールドに EXPR を含むメッセイジ
-  ~F              フラグ付き (flagged) メッセイジ
-  ~f USER         USER から送られた (from USER) メッセイジ
-  ~g              暗号で署名されているメッセイジ
-  ~G              暗号化されているメッセイジ
-  ~h EXPR         ヘッダ (header) に EXPR を含むメッセイジ
-  ~k              PGP 鍵 (key) を含むメッセイジ
-  ~i ID           "Message-ID" フィールドに ID が合致するメッセイジ
-  ~L EXPR         EXPR が出したか受けとったか、いずれかのメッセイジ
-  ~l              既知のメイリングリスト (list) へ宛てたメッセイジ
-  ~m [MIN]-[MAX]  番号が MIN から MAX の範囲のメッセイジ *)
-  ~n [MIN]-[MAX]  得点が MIN から MAX の範囲のメッセイジ *)
-  ~N              新着 (new) メッセイジ
-  ~O              古い (old) 未読メッセイジ
-  ~p              自分宛てのメッセイジ (alternates を考慮する)
-  ~P              自分が出したメッセイジ (alternates を考慮する)
-  ~Q              返信済みのメッセイジ
-  ~R              既読 (read) メッセイジ
-  ~r [MIN]-[MAX]  受信日付 "date-received" が範囲内にあるメッセイジ
-  ~S              置き換えられた (superseded) メッセイジ
-  ~s SUBJECT      "Subject" フィールドに SUBJECT を持つメッセイジ
-  ~T              タグ付き (tagged) メッセイジ
-  ~t USER         USER に宛てられた (to USER) メッセイジ
-  ~U              未読 (unread) メッセイジ
-  ~v              折りたたんだスレッドにあるメッセイジ
-  ~x EXPR         "References" フィールドに EXPR を含むメッセイジ
-  ~y EXPR         "X-Label" フィールドに EXPR を含むメッセイジ
-  ~z [MIN]-[MAX]  サイズが MIN から MAX までの範囲にあるメッセイジ *)
-  ~=              重複しているメッセイジ ($duplicate_threads 参照)
-  ~$              参照されていないメッセイジ (スレッド表示が必要)
+       ~A              全てのメッセイジ
+       ~b EXPR         メッセイジ本文 (body) に EXPR を含むメッセイジ
+       ~B EXPR         メッセイジ全体のどこかに EXPR を含むメッセイジ
+       ~c USER         USER に CC 送付されているメッセイジ
+       ~C EXPR         To: か Cc: に EXPR のあるメッセイジ
+       ~D              削除される (deleted) メッセイジ
+       ~d [MIN]-[MAX]  送信日 ("date-sent") が範囲内にあるメッセイジ
+       ~E              期限切れ (expired) メッセイジ
+       ~e EXPR         "Sender" フィールドに EXPR を含むメッセイジ
+       ~F              フラグ付き (flagged) メッセイジ
+       ~f USER         USER から送られた (from USER) メッセイジ
+       ~g              暗号で署名されているメッセイジ
+       ~G              暗号化されているメッセイジ
+       ~h EXPR         ヘッダ (header) に EXPR を含むメッセイジ
+       ~k              PGP 鍵 (key) を含むメッセイジ
+       ~i ID           "Message-ID" フィールドに ID が合致するメッセイジ
+       ~L EXPR         EXPR が出したか受けとったか、いずれかのメッセイジ
+       ~l              既知のメイリングリスト (list) へ宛てたメッセイジ
+       ~m [MIN]-[MAX]  番号が MIN から MAX の範囲のメッセイジ *)
+       ~n [MIN]-[MAX]  得点が MIN から MAX の範囲のメッセイジ *)
+       ~N              新着 (new) メッセイジ
+       ~O              古い (old) 未読メッセイジ
+       ~p              自分宛てのメッセイジ (alternates を考慮する)
+       ~P              自分が出したメッセイジ (alternates を考慮する)
+       ~Q              返信済みのメッセイジ
+       ~R              既読 (read) メッセイジ
+       ~r [MIN]-[MAX]  受信日付 "date-received" が範囲内にあるメッセイジ
+       ~S              置き換えられた (superseded) メッセイジ
+       ~s SUBJECT      "Subject" フィールドに SUBJECT を持つメッセイジ
+       ~T              タグ付き (tagged) メッセイジ
+       ~t USER         USER に宛てられた (to USER) メッセイジ
+       ~U              未読 (unread) メッセイジ
+       ~v              折りたたんだスレッドにあるメッセイジ
+       ~x EXPR         "References" フィールドに EXPR を含むメッセイジ
+       ~y EXPR         "X-Label" フィールドに EXPR を含むメッセイジ
+       ~z [MIN]-[MAX]  サイズが MIN から MAX までの範囲にあるメッセイジ *)
+       ~=              重複しているメッセイジ ($duplicate_threads 参照)
+       ~$              参照されていないメッセイジ (スレッド表示が必要)
 
   EXPR, USER, ID, SUBJECT の部分は``正規表現''です。
 
@@ -2150,7 +2248,7 @@
   の前に ^ を付ける必要があります。これはドイツの人だけに宛てられたメイ
   ルすべてに合致する例です。
 
-       ^~C \.de$
+  ^~C \.de$
 
   44..22..22..  複複雑雑ななパパタターーンン
 
@@ -2243,7 +2341,7 @@
 
   例: 生後一ヵ月未満のメッセイジを選択するには次のようにします。
 
-  メッセイジの表示を制限するパターン: ~d <1m
+       メッセイジの表示を制限するパターン: ~d <1m
 
   注注意意: 検索時に使う日付はすべてロロウウカカルル時間に対する相対日付ですか
   ら、``$index_format'' の設定を変更して %[...] フォーマットを含むように
@@ -3341,6 +3439,10 @@
 
   +o  ``source'' ファイル名
 
+  +o  ``spam'' パターン 書式
+
+  +o  ``nospam'' パターン
+
   +o  ``subscribe'' アドレス [ アドレス ... ]
 
   +o  ``unsubscribe'' アドレス [ アドレス ... ]
@@ -4190,7 +4292,18 @@
   この変数が設定されていると、Mutt は常に SSL を使って IMAP サーバに接続
   する。
 
-  66..33..7788..  iimmaapp__hhoommee__nnaammeessppaaccee
+  66..33..7788..  iimmaapp__hheeaaddeerrss
+
+  Type: string
+  Default: ""
+
+  Mutt が既定のヘッダ ("DATE FROM SUBJECT TO CC MESSAGE-ID REFERENCES
+  CONTENT-TYPE CONTENT-DESCRIPTION IN-REPLY-TO REPLY-TO LINES LIST-POST
+  X-LABEL") に加えてさらに IMAP サーバへ要求するヘッダフィールド。スパム
+  検出のためのヘッダを追加したいときに使う。注注意意:: これはスペイス区切りの
+  リストである。
+
+  66..33..7799..  iimmaapp__hhoommee__nnaammeessppaaccee
 
   Type: string
   Default: ""
@@ -4199,7 +4312,7 @@
   にあってほしいものだ。そのようになっていない場合、この変数を自分のフォ
   ルダへの IMAP パスに設定することができる。
 
-  66..33..7799..  iimmaapp__kkeeeeppaalliivvee
+  66..33..8800..  iimmaapp__kkeeeeppaalliivvee
 
   Type: number
   Default: 900
@@ -4212,7 +4325,7 @@
   ないとみなされて IMAP サーバから切断されるようであれば、この数値を減ら
   すこと。
 
-  66..33..8800..  iimmaapp__lliisstt__ssuubbssccrriibbeedd
+  66..33..8811..  iimmaapp__lliisstt__ssuubbssccrriibbeedd
 
   Type: boolean
   Default: no
@@ -4221,7 +4334,7 @@
   れともフォルダすべてにするかを制御する。これは IMAP ブラウザ内で
   _t_o_g_g_l_e_-_s_u_b_s_c_r_i_b_e_d 関数を使って切り替えることもできる。
 
-  66..33..8811..  iimmaapp__ppaassss
+  66..33..8822..  iimmaapp__ppaassss
 
   Type: string
   Default: ""
@@ -4232,7 +4345,7 @@
   ファイルを自分以外が読めないようにしたつもりでも、スーパユーザは読める
   からだ。
 
-  66..33..8822..  iimmaapp__ppaassssiivvee
+  66..33..8833..  iimmaapp__ppaassssiivvee
 
   Type: boolean
   Default: yes
@@ -4242,7 +4355,7 @@
   とになる。これが有用となるのは、Mutt 起動時にユーザ名とパスワードの入
   力を促されたくない場合や、接続を開くのに時間がかかる場合などである。
 
-  66..33..8833..  iimmaapp__ppeeeekk
+  66..33..8844..  iimmaapp__ppeeeekk
 
   Type: boolean
   Default: yes
@@ -4252,7 +4365,7 @@
   とであるが、IMAP フォルダを閉じるのが幾らか遅くなることがある。このオ
   プションはスピード狂の人たちをなだめるためにのみ存在しているのだ。
 
-  66..33..8844..  iimmaapp__sseerrvveerrnnooiissee
+  66..33..8855..  iimmaapp__sseerrvveerrnnooiissee
 
   Type: boolean
   Default: yes
@@ -4262,7 +4375,7 @@
   あったり、サーバ側の設定ミスのためにユーザからはどうしようもないもので
   あったりすることが多いので、抑止したいと思うこともあるだろう。
 
-  66..33..8855..  iimmaapp__uusseerr
+  66..33..8866..  iimmaapp__uusseerr
 
   Type: string
   Default: ""
@@ -4271,7 +4384,7 @@
 
   この変数の既定値はロウカルマシン上のユーザ名になる。
 
-  66..33..8866..  iimmpplliicciitt__aauuttoovviieeww
+  66..33..8877..  iimmpplliicciitt__aauuttoovviieeww
 
   Type: boolean
   Default: no
@@ -4282,7 +4395,7 @@
   調査して項目が見つかったときには、そこで定義されているヴューワを使って
   内容をテキスト形式へ変換する。
 
-  66..33..8877..  iinncclluuddee
+  66..33..8888..  iinncclluuddee
 
   Type: quadoption
   Default: ask-yes
@@ -4290,7 +4403,15 @@
   返信しようとしている元のメッセイジ内容を返信に含めるかどうかを制御す
   る。
 
-  66..33..8888..  iinnddeenntt__ssttrriinngg
+  66..33..8899..  iinncclluuddee__oonnllyyffiirrsstt
+
+  Type: boolean
+  Default: no
+
+  返信の際にメッセイジの最初の添付ファイルのみ引用するかどうかを制御す
+  る。
+
+  66..33..9900..  iinnddeenntt__ssttrriinngg
 
   Type: string
   Default: "> "
@@ -4299,7 +4420,7 @@
   は、変更しないことが強く推奨されている。変更すると、熱狂的なネット市民
   を激昂させてしまう傾向があるからだ。
 
-  66..33..8899..  iinnddeexx__ffoorrmmaatt
+  66..33..9911..  iinnddeexx__ffoorrmmaatt
 
   Type: string
   Default: "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
@@ -4341,10 +4462,13 @@
      %%FF 差出人の名前、自分からのメッセイジなら宛先の名前 (訳注：後者には
         To という文字列が前置される)
 
+     %%HH このメッセイジのスパム属性
+
      %%ii Message-ID
 
      %%ll 行数 (Maildir と MH では使えないし、IMAP でもたぶん不可 [訳注：0
         になる])
+
      %%LL To または CC ヘッダフィールドが "subscribe" コマンドで定義された
         正規表現に合致すると "To <list-name>" (訳注："Cc <list-name>" の
         場合もある) と表示する。合致しなければ %F と同じ
@@ -4407,14 +4531,14 @@
 
   参照: ``$to_chars''
 
-  66..33..9900..  iissppeellll
+  66..33..9922..  iissppeellll
 
   Type: path
   Default: "/usr/bin/ispell"
 
   どう ispell (GNU スペルチェッカ) を起動するか。
 
-  66..33..9911..  kkeeeepp__ffllaaggggeedd
+  66..33..9933..  kkeeeepp__ffllaaggggeedd
 
   Type: boolean
   Default: no
@@ -4423,7 +4547,7 @@
   自分の ``$mbox'' メイルボックス (または ``mbox-hook'' コマンドの結果)
   に移さない。
 
-  66..33..9922..  llooccaallee
+  66..33..9944..  llooccaallee
 
   Type: string
   Default: "C"
@@ -4431,7 +4555,7 @@
   _s_t_r_f_t_i_m_e_(_3_) が日付などを整形するために使うロカール。使うことのできる値
   は、システムがロカール変数 _L_C___T_I_M_E として受け付ける文字列である。
 
-  66..33..9933..  mmaaiill__cchheecckk
+  66..33..9955..  mmaaiill__cchheecckk
 
   Type: number
   Default: 5
@@ -4439,7 +4563,7 @@
   この値は、どれほどの頻度で (何秒に一度) Mutt が新着メイルを確認するか
   を制御する。
 
-  66..33..9944..  mmaaiillccaapp__ppaatthh
+  66..33..9966..  mmaaiillccaapp__ppaatthh
 
   Type: string
   Default: ""
@@ -4447,7 +4571,7 @@
   この変数は、Mutt が直接サポートしていない MIME パートを表示しようとす
   る際に、どのファイルに問い合わせるかを指定する。
 
-  66..33..9955..  mmaaiillccaapp__ssaanniittiizzee
+  66..33..9977..  mmaaiillccaapp__ssaanniittiizzee
 
   Type: boolean
   Default: yes
@@ -4460,7 +4584,7 @@
   DDOOIINNGG!!
   ここのの設設定定はは、、完完全全にに理理解解すするるここととななくく変変更更ししててははななららなないい!!
 
-  66..33..9966..  mmaaiillddiirr__ttrraasshh
+  66..33..9988..  mmaaiillddiirr__ttrraasshh
 
   Type: boolean
   Default: no
@@ -4470,7 +4594,7 @@
   れは Maildir 形式のメイルボックスにのみ適用される。他のメイルボックス
   形式にはまったく効果がない。
 
-  66..33..9977..  mmaarrkk__oolldd
+  66..33..9999..  mmaarrkk__oolldd
 
   Type: boolean
   Default: yes
@@ -4480,15 +4604,14 @@
   ていると、次回 Mutt を始めたときに、インデックスメニューでメッセイジの
   隣りに "O" と表示される。それが古い (old) ということを示すのである。
 
-  66..33..9988..  mmaarrkkeerrss
+  66..33..110000..  mmaarrkkeerrss
 
   Type: boolean
   Default: yes
 
   内部ペイジャで折り返された行の表示を制御する。設定されていると、 "+"
   印が行頭に付いて、折り返し行を表す。 ``$smart_wrap'' 変数も見よ。
-
-  66..33..9999..  mmaasskk
+  66..33..110011..  mmaasskk
 
   Type: regular expression
   Default: "!^\.[^.]"
@@ -4497,7 +4620,7 @@
   ができる。ファイル名がこの条件に合致するもののみ表示されることになる。
   合致条件は常に大文字と小文字を区別する。
 
-  66..33..110000..  mmbbooxx
+  66..33..110022..  mmbbooxx
 
   Type: path
   Default: "~/mbox"
@@ -4505,7 +4628,7 @@
   これに指定したフォルダへ、``$spoolfile'' フォルダの既読メイルを追加す
   る。
 
-  66..33..110011..  mmbbooxx__ttyyppee
+  66..33..110033..  mmbbooxx__ttyyppee
 
   Type: folder magic
   Default: mbox
@@ -4513,7 +4636,7 @@
   新しいフォルダを作るときに使う既定のメイルボックス形式。 mbox, MMDF,
   MH, Maildir のいずれでも良い。
 
-  66..33..110022..  mmeettoooo
+  66..33..110044..  mmeettoooo
 
   Type: boolean
   Default: no
@@ -4521,7 +4644,7 @@
   設定されていないと、メッセイジへの返信時に宛先リストから自分のアドレス
   (``alternates'' コマンドを参照) を除去する。
 
-  66..33..110033..  mmeennuu__ssccrroollll
+  66..33..110055..  mmeennuu__ssccrroollll
 
   Type: boolean
   Default: no
@@ -4531,7 +4654,7 @@
   ジまたは前のペイジが表示される (こちらの方が、何度も再描画するのを避け
   られるので遅い回線に有用である)。
 
-  66..33..110044..  mmeettaa__kkeeyy
+  66..33..110066..  mmeettaa__kkeeyy
 
   Type: boolean
   Default: no
@@ -4544,7 +4667,7 @@
   "0xf4" から高位ビットを除いた結果は "0x74" であり、これは ASCII 文字の
   "x" だからである。
 
-  66..33..110055..  mmhh__ppuurrggee
+  66..33..110077..  mmhh__ppuurrggee
 
   Type: boolean
   Default: no
@@ -4554,28 +4677,28 @@
   ある。もし変数が設定されていれば、メッセイジファイルは単に消されてしま
   う。
 
-  66..33..110066..  mmhh__sseeqq__ffllaaggggeedd
+  66..33..110088..  mmhh__sseeqq__ffllaaggggeedd
 
   Type: string
   Default: "flagged"
 
   フラグ付きメッセイジに使う MH シークウェンス名。
 
-  66..33..110077..  mmhh__sseeqq__rreepplliieedd
+  66..33..110099..  mmhh__sseeqq__rreepplliieedd
 
   Type: string
   Default: "replied"
 
   返信済みメッセイジに使う MH シークウェンス名。
 
-  66..33..110088..  mmhh__sseeqq__uunnsseeeenn
+  66..33..111100..  mmhh__sseeqq__uunnsseeeenn
 
   Type: string
   Default: "unseen"
 
   未見メッセイジに使う MH シークウェンス名。
 
-  66..33..110099..  mmiimmee__ffoorrwwaarrdd
+  66..33..111111..  mmiimmee__ffoorrwwaarrdd
 
   Type: quadoption
   Default: no
@@ -4589,7 +4712,7 @@
 
   ``$forward_decode'' および ``$mime_forward_decode'' も参照。
 
-  66..33..111100..  mmiimmee__ffoorrwwaarrdd__ddeeccooddee
+  66..33..111122..  mmiimmee__ffoorrwwaarrdd__ddeeccooddee
 
   Type: boolean
   Default: no
@@ -4598,7 +4721,7 @@
   時に text/plain へ復号するかどうかをこの変数が制御する。 _n_o のときには
   ``$forward_decode'' が使われる。
 
-  66..33..111111..  mmiimmee__ffoorrwwaarrdd__rreesstt
+  66..33..111133..  mmiimmee__ffoorrwwaarrdd__rreesstt
 
   Type: quadoption
   Default: yes
@@ -4612,7 +4735,7 @@
   ファイルをあきらめる (no) か MIME で転送する (yes) かの設定なのだ。転
   送ファイルが一つだけのときには、あきらめるはずがないとみなされる。)
 
-  66..33..111122..  mmiixx__eennttrryy__ffoorrmmaatt
+  66..33..111144..  mmiixx__eennttrryy__ffoorrmmaatt
 
   Type: string
   Default: "%4n %c %-16s %a"
@@ -4628,7 +4751,7 @@
 
      %%aa リメイラのメイルアドレス
 
-  66..33..111133..  mmiixxmmaasstteerr
+  66..33..111155..  mmiixxmmaasstteerr
 
   Type: path
   Default: "mixmaster"
@@ -4637,18 +4760,17 @@
   に種々のパラメータを付けて、既知のリメイラ一覧を収集する。また、最終的
   にメッセイジを Mixmaster チェイン経由で送信する際にも使う。
 
-  66..33..111144..  mmoovvee
+  66..33..111166..  mmoovvee
 
   Type: quadoption
   Default: ask-no
-
   スプールメイルボックスの既読メッセイジを ``$mbox'' メイルボックスや
   ``mbox-hook'' コマンドの結果へ移動するかどうかを制御する。 (訳注：原文
   は文字通りには「移動するかどうかを確認させるかどうかを制御する」となっ
   ているが、yes にすれば確認なしで移動されるし、no にすれば確認なしで移
   動もなしなのだから、原文直訳では不正確になってしまう。)
 
-  66..33..111155..  mmeessssaaggee__ffoorrmmaatt
+  66..33..111177..  mmeessssaaggee__ffoorrmmaatt
 
   Type: string
   Default: "%s"
@@ -4657,7 +4779,7 @@
   される文字列。定義されている printf()風シークウェンスの完全な一覧表に
   ついては ``$index_format'' の項を参照のこと。
 
-  66..33..111166..  nnaarrrrooww__ttrreeee
+  66..33..111188..  nnaarrrrooww__ttrreeee
 
   Type: boolean
   Default: no
@@ -4665,7 +4787,7 @@
   この変数が設定されていると、スレッドトゥリーを狭くして、深いスレッドが
   画面に収まるようにする。
 
-  66..33..111177..  ppaaggeerr
+  66..33..111199..  ppaaggeerr
 
   Type: path
   Default: "builtin"
@@ -4679,7 +4801,7 @@
   さらに、画面の大きさを変更すると、ヘルプメニューで画面の幅より長い行が
   ひどいことになってしまう。
 
-  66..33..111188..  ppaaggeerr__ccoonntteexxtt
+  66..33..112200..  ppaaggeerr__ccoonntteexxtt
 
   Type: number
   Default: 0
@@ -4688,7 +4810,7 @@
   して残す行数を制御する。Mutt は既定では、現時点の画面で一番下にある行
   の次からを次ペイジとして表示する (文脈は 0 行ということ)。
 
-  66..33..111199..  ppaaggeerr__ffoorrmmaatt
+  66..33..112211..  ppaaggeerr__ffoorrmmaatt
 
   Type: string
   Default: "-%Z- %C/%m: %-20.20n   %s"
@@ -4699,7 +4821,7 @@
   合にはインデックスモウドにおけるステイタス行と同じ位置に常に表示され
   る)。正しいシークウェンスは ``$index_format'' の項で一覧にされている。
 
-  66..33..112200..  ppaaggeerr__iinnddeexx__lliinneess
+  66..33..112222..  ppaaggeerr__iinnddeexx__lliinneess
 
   Type: number
   Default: 0
@@ -4715,7 +4837,7 @@
   クスが表示されない。フォルダ内のメッセイジ数が _p_a_g_e_r___i_n_d_e_x___l_i_n_e_s より
   も少ないとき、小インデックスは必要な行数だけを使うようにする。
 
-  66..33..112211..  ppaaggeerr__ssttoopp
+  66..33..112233..  ppaaggeerr__ssttoopp
 
   Type: boolean
   Default: no
@@ -4723,7 +4845,7 @@
   設定されているときには、メッセイジの終わりまで来て _n_e_x_t_-_p_a_g_e 関数を実
   行しても、内部ペイジャが次のメッセイジへ移動ししなないい。
 
-  66..33..112222..  ccrryypptt__aauuttoossiiggnn
+  66..33..112244..  ccrryypptt__aauuttoossiiggnn
 
   Type: boolean
   Default: no
@@ -4734,7 +4856,7 @@
   ば、OpenSSL を使って S/MIME メッセイジを作成する。この場合は _s_m_i_m_e_-
   _m_e_n_u を使って設定を上書きすることができる。 (Crypto only)
 
-  66..33..112233..  ccrryypptt__aauuttooeennccrryypptt
+  66..33..112255..  ccrryypptt__aauuttooeennccrryypptt
 
   Type: boolean
   Default: no
@@ -4746,7 +4868,7 @@
   ていると OpenSSL が使われて S/MIME メッセイジが作成される。その際、設
   定の上書きは _s_m_i_m_e_-_m_e_n_u を使うことにより可能である。 (Crypto only)
 
-  66..33..112244..  ppggpp__iiggnnoorree__ssuubbkkeeyyss
+  66..33..112266..  ppggpp__iiggnnoorree__ssuubbkkeeyyss
 
   Type: boolean
   Default: yes
@@ -4759,7 +4881,7 @@
   鍵はひとつだけなので、この変数を設定しても不便なことはないはずだ。)
   (PGP only)
 
-  66..33..112255..  ccrryypptt__rreeppllyyeennccrryypptt
+  66..33..112277..  ccrryypptt__rreeppllyyeennccrryypptt
 
   Type: boolean
   Default: yes
@@ -4767,7 +4889,7 @@
   設定されていると、暗号化されたメッセイジへの返信には自動的に PGP か
   OpenSSL で暗号化する。 (Crypto only)
 
-  66..33..112266..  ccrryypptt__rreeppllyyssiiggnn
+  66..33..112288..  ccrryypptt__rreeppllyyssiiggnn
 
   Type: boolean
   Default: no
@@ -4778,7 +4900,7 @@
   注注意意:: 署名され、かかつつ暗暗号号化化ももされているメッセイジには、この変数が作用し
   ない!  (Crypto only)
 
-  66..33..112277..  ccrryypptt__rreeppllyyssiiggnneennccrryypptteedd
+  66..33..112299..  ccrryypptt__rreeppllyyssiiggnneennccrryypptteedd
 
   Type: boolean
   Default: no
@@ -4795,7 +4917,7 @@
   信に暗号化のみ実行するためにはフックを使わなければならないであろう。
   ``~g および ~G'' を参照のこと。) (Crypto only)
 
-  66..33..112288..  ccrryypptt__ttiimmeessttaammpp
+  66..33..113300..  ccrryypptt__ttiimmeessttaammpp
 
   Type: boolean
   Default: yes
@@ -4805,7 +4927,7 @@
   を使って印付けており、その色を信頼するのであれば、この設定を解除しても
   構わない。 (訳注：``$allow_ansi'' 参照) (Crypto only)
 
-  66..33..112299..  ppggpp__uussee__ggppgg__aaggeenntt
+  66..33..113311..  ppggpp__uussee__ggppgg__aaggeenntt
 
   Type: boolean
   Default: no
@@ -4820,7 +4942,7 @@
   ~/.gnupg/gpg.conf に use-agent と書いておくか、 $pgp_*_command 群に
   --use-agent オプションを含めておくべきだろう。) (PGP only)
 
-  66..33..113300..  ccrryypptt__vveerriiffyy__ssiigg
+  66..33..113322..  ccrryypptt__vveerriiffyy__ssiigg
 
   Type: quadoption
   Default: yes
@@ -4829,7 +4951,7 @@
   注：実際には ask-yes か ask-no) なら、署名を検証するかどうか尋ねる。
   "no" なら、暗号学的署名を一切検証しようとしない。 (Crypto only)
 
-  66..33..113311..  ssmmiimmee__iiss__ddeeffaauulltt
+  66..33..113333..  ssmmiimmee__iiss__ddeeffaauulltt
 
   Type: boolean
   Default: no
@@ -4841,7 +4963,7 @@
   るからである。 (この変数は ``$crypt_autosmime'' を解除することによって
   上書きされうるので注意。) (S/MIME only)
 
-  66..33..113322..  ssmmiimmee__aasskk__cceerrtt__llaabbeell
+  66..33..113344..  ssmmiimmee__aasskk__cceerrtt__llaabbeell
 
   Type: boolean
   Default: yes
@@ -4849,7 +4971,7 @@
   このフラグは、デイタベイスに追加しようとする証明書のラベル名を入力する
   よう求めるかどうかを制御する。既定では設定されている。 (S/MIME only)
 
-  66..33..113333..  ssmmiimmee__ddeeccrryypptt__uussee__ddeeffaauulltt__kkeeyy
+  66..33..113355..  ssmmiimmee__ddeeccrryypptt__uussee__ddeeffaauulltt__kkeeyy
 
   Type: boolean
   Default: yes
@@ -4859,7 +4981,7 @@
   スを使って鍵を決定する。それでも見付からなければ鍵を入力するよう求め
   る。 (S/MIME only)
 
-  66..33..113344..  ppggpp__eennttrryy__ffoorrmmaatt
+  66..33..113366..  ppggpp__eennttrryy__ffoorrmmaatt
 
   Type: string
   Default: "%4n %t%f %4l/0x%k %-4a %2c %u"
@@ -4895,7 +5017,7 @@
 
   (PGP only)
 
-  66..33..113355..  ppggpp__ggoooodd__ssiiggnn
+  66..33..113377..  ppggpp__ggoooodd__ssiiggnn
 
   Type: regular expression
   Default: ""
@@ -4905,7 +5027,7 @@
   できたとみなされる。不正な署名にもコマンドの返り値が 0 になってしまう
   なら、この変数を使うこと。 (PGP only)
 
-  66..33..113366..  ppggpp__cchheecckk__eexxiitt
+  66..33..113388..  ppggpp__cchheecckk__eexxiitt
 
   Type: boolean
   Default: yes
@@ -4914,7 +5036,7 @@
   確認するようになる。非ゼロの返り値はサブプロセスの失敗を意味する。
   (PGP only)
 
-  66..33..113377..  ppggpp__lloonngg__iiddss
+  66..33..113399..  ppggpp__lloonngg__iiddss
 
   Type: boolean
   Default: no
@@ -4922,7 +5044,7 @@
   設定されていると 64 ビットの PGP 鍵 ID を使う。解除時はふつうの 32
   ビット鍵 ID を使う。 (PGP only)
 
-  66..33..113388..  ppggpp__rreettaaiinnaabbllee__ssiiggss
+  66..33..114400..  ppggpp__rreettaaiinnaabbllee__ssiiggss
 
   Type: boolean
   Default: no
@@ -4935,7 +5057,7 @@
   だ。すなわち、外層 (multipart/encrypted) が簡単に取り除けるが、内側の
   multipart/signed パートは守られているというものである。 (PGP only)
 
-  66..33..113399..  ppggpp__aauuttooiinnlliinnee
+  66..33..114411..  ppggpp__aauuttooiinnlliinnee
 
   Type: boolean
   Default: no
@@ -4952,7 +5074,7 @@
   なお、旧式 PGP メッセイジ形式は強強くく否否定定さされれてていいるるという点にも注意すべ
   きである。 (PGP only)
 
-  66..33..114400..  ppggpp__rreeppllyyiinnlliinnee
+  66..33..114422..  ppggpp__rreeppllyyiinnlliinnee
 
   Type: boolean
   Default: no
@@ -4972,7 +5094,7 @@
   なお、旧式 PGP メッセイジ形式は避避けけるるよう強強くく勧められているという点に
   も注意すべきである。 (PGP only)
 
-  66..33..114411..  ppggpp__sshhooww__uunnuussaabbllee
+  66..33..114433..  ppggpp__sshhooww__uunnuussaabbllee
 
   Type: boolean
   Default: yes
@@ -4981,7 +5103,7 @@
   には、破棄された鍵、期限切れの鍵、またユーザによって「使用不可」とされ
   た鍵が含まれる。 (PGP only)
 
-  66..33..114422..  ppggpp__ssiiggnn__aass
+  66..33..114444..  ppggpp__ssiiggnn__aass
 
   Type: string
   Default: ""
@@ -4990,7 +5112,7 @@
   とができる。指定には鍵 ID 形式を使うよう推奨されている (例
   "0x00112233")。 (PGP only)
 
-  66..33..114433..  ppggpp__ssttrriicctt__eenncc
+  66..33..114455..  ppggpp__ssttrriicctt__eenncc
 
   Type: boolean
   Default: yes
@@ -5003,7 +5125,7 @@
   ことすらできないかもしれない。訳者はこの問題で悩んだことがあるので、解
   除しておくことを勧める。) (PGP only)
 
-  66..33..114444..  ppggpp__ttiimmeeoouutt
+  66..33..114466..  ppggpp__ttiimmeeoouutt
 
   Type: number
   Default: 300
@@ -5011,7 +5133,7 @@
   キャッシュされたパスフレイズが使用されない場合に期限切れになるまでの秒
   数。 (PGP only)
 
-  66..33..114455..  ppggpp__ssoorrtt__kkeeyyss
+  66..33..114477..  ppggpp__ssoorrtt__kkeeyyss
 
   Type: sort order
   Default: address
@@ -5023,6 +5145,7 @@
 
      kkeeyyiidd
         鍵 ID でアルファベット順に整列
+
      ddaattee
         鍵の作成日付で整列
 
@@ -5031,7 +5154,7 @@
 
   逆順にしたければ、上記の値の頭に "reverse-" を付加する。 (PGP only)
 
-  66..33..114466..  ppggpp__mmiimmee__aauuttoo
+  66..33..114488..  ppggpp__mmiimmee__aauuttoo
 
   Type: quadoption
   Default: ask-yes
@@ -5043,7 +5166,7 @@
   旧式 PGP メッセイジ形式の使用はままっったたくく推推奨奨さされれなないいことに注意。 (PGP
   only)
 
-  66..33..114477..  ppggpp__aauuttoo__ttrraaddiittiioonnaall
+  66..33..114499..  ppggpp__aauuttoo__ttrraaddiittiioonnaall
 
   Type: boolean
   Default: no
@@ -5059,7 +5182,7 @@
 
   このオプションは ``$pgp_create_traditional'' を上書きする。 (PGP only)
 
-  66..33..114488..  ppggpp__ddeeccooddee__ccoommmmaanndd
+  66..33..115500..  ppggpp__ddeeccooddee__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5086,7 +5209,7 @@
   samples/ サブディレクトリ内にインストールされているので、参照するこ
   と。 (PGP only)
 
-  66..33..114499..  ppggpp__ggeettkkeeyyss__ccoommmmaanndd
+  66..33..115511..  ppggpp__ggeettkkeeyyss__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5094,29 +5217,28 @@
   Mutt が公開鍵情報を必要とするたびに起動するコマンド。 %r が、唯一ここ
   で使われる printf風シークウェンスである。 (PGP only)
 
-  66..33..115500..  ppggpp__vveerriiffyy__ccoommmmaanndd
+  66..33..115522..  ppggpp__vveerriiffyy__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   このコマンドが PGP 署名の検証に使われる。 (PGP only)
 
-  66..33..115511..  ppggpp__ddeeccrryypptt__ccoommmmaanndd
+  66..33..115533..  ppggpp__ddeeccrryypptt__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   このコマンドが PGP 暗号化メッセイジの復号に使われる。 (PGP only)
 
-  66..33..115522..  ppggpp__cclleeaarrssiiggnn__ccoommmmaanndd
+  66..33..115544..  ppggpp__cclleeaarrssiiggnn__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   旧式の「クリア署名」による PGP メッセイジを作成するために使われる。た
   だし、この形式を使うことはままっったたくく推推奨奨さされれなないい。 (PGP only)
-
-  66..33..115533..  ppggpp__ssiiggnn__ccoommmmaanndd
+  66..33..115555..  ppggpp__ssiiggnn__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5124,21 +5246,21 @@
   このコマンドを使って分離式の PGP 署名を作り、multipart/signed の
   PGP/MIME パートに使う。 (PGP only)
 
-  66..33..115544..  ppggpp__eennccrryypptt__ssiiggnn__ccoommmmaanndd
+  66..33..115566..  ppggpp__eennccrryypptt__ssiiggnn__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   このコマンドを使って、本文に署名と暗号化を両方おこなう。 (PGP only)
 
-  66..33..115555..  ppggpp__eennccrryypptt__oonnllyy__ccoommmmaanndd
+  66..33..115577..  ppggpp__eennccrryypptt__oonnllyy__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   このコマンドを使って本文を暗号化する。署名はしない。 (PGP only)
 
-  66..33..115566..  ppggpp__iimmppoorrtt__ccoommmmaanndd
+  66..33..115588..  ppggpp__iimmppoorrtt__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5146,14 +5268,14 @@
   このコマンドを使って、鍵をメッセイジから公開鍵束へ取り込む。 (PGP
   only)
 
-  66..33..115577..  ppggpp__eexxppoorrtt__ccoommmmaanndd
+  66..33..115599..  ppggpp__eexxppoorrtt__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   このコマンドを使って、ユーザの鍵束から公開鍵を取り出す。 (PGP only)
 
-  66..33..115588..  ppggpp__vveerriiffyy__kkeeyy__ccoommmmaanndd
+  66..33..116600..  ppggpp__vveerriiffyy__kkeeyy__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5161,7 +5283,7 @@
   鍵選択メニューで鍵の情報を検証するために、このコマンドを用いる。 (PGP
   only)
 
-  66..33..115599..  ppggpp__lliisstt__sseeccrriinngg__ccoommmmaanndd
+  66..33..116611..  ppggpp__lliisstt__sseeccrriinngg__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5173,7 +5295,7 @@
   この形式は、Mutt に付属する pgpring ユーティリティでも生成される。
   (PGP only)
 
-  66..33..116600..  ppggpp__lliisstt__ppuubbrriinngg__ccoommmmaanndd
+  66..33..116622..  ppggpp__lliisstt__ppuubbrriinngg__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5184,7 +5306,7 @@
   この形式は、Mutt 付属の pgpring ユーティリティでも生成される。 (PGP
   only)
 
-  66..33..116611..  ffoorrwwaarrdd__ddeeccrryypptt
+  66..33..116633..  ffoorrwwaarrdd__ddeeccrryypptt
 
   Type: boolean
   Default: yes
@@ -5194,7 +5316,7 @@
   ``$mime_forward_decode'' が解除されているときにのみ用いられる。 (PGP
   only)
 
-  66..33..116622..  ssmmiimmee__ttiimmeeoouutt
+  66..33..116644..  ssmmiimmee__ttiimmeeoouutt
 
   Type: number
   Default: 300
@@ -5202,7 +5324,7 @@
   キャッシュされたパスフレイズが使用されない場合に期限切れになるまでの秒
   数。 (S/MIME only)
 
-  66..33..116633..  ssmmiimmee__eennccrryypptt__wwiitthh
+  66..33..116655..  ssmmiimmee__eennccrryypptt__wwiitthh
 
   Type: string
   Default: ""
@@ -5211,7 +5333,7 @@
   "rc2-40", "rc2-64", "rc2-128" である。設定されていないと "des3" (トリ
   プルDES) が用いられる。 (S/MIME only)
 
-  66..33..116644..  ssmmiimmee__kkeeyyss
+  66..33..116666..  ssmmiimmee__kkeeyyss
 
   Type: path
   Default: ""
@@ -5224,7 +5346,7 @@
   入っており、自分の手で編集することができる。この変数は、秘密鍵の場所を
   指し示すものである。 (S/MIME only)
 
-  66..33..116655..  ssmmiimmee__ccaa__llooccaattiioonn
+  66..33..116677..  ssmmiimmee__ccaa__llooccaattiioonn
 
   Type: path
   Default: ""
@@ -5232,7 +5354,7 @@
   OpenSSL に使うための、信用できる証明書が入ったディレクトリかファイルの
   名前を入れる。 (S/MIME only)
 
-  66..33..116666..  ssmmiimmee__cceerrttiiffiiccaatteess
+  66..33..116688..  ssmmiimmee__cceerrttiiffiiccaatteess
 
   Type: path
   Default: ""
@@ -5245,7 +5367,7 @@
   入っており、自分の手で編集することができる。この変数は、証明書の場所を
   指し示すものである。 (S/MIME only)
 
-  66..33..116677..  ssmmiimmee__ddeeccrryypptt__ccoommmmaanndd
+  66..33..116699..  ssmmiimmee__ddeeccrryypptt__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5275,7 +5397,7 @@
   文書のそばの samples/ サブディレクトリにインストールされている。
   (S/MIME only)
 
-  66..33..116688..  ssmmiimmee__vveerriiffyy__ccoommmmaanndd
+  66..33..117700..  ssmmiimmee__vveerriiffyy__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5283,7 +5405,7 @@
   このコマンドを使って multipart/signed タイプの S/MIME 署名を検証する。
   (S/MIME only)
 
-  66..33..116699..  ssmmiimmee__vveerriiffyy__ooppaaqquuee__ccoommmmaanndd
+  66..33..117711..  ssmmiimmee__vveerriiffyy__ooppaaqquuee__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5291,7 +5413,7 @@
   このコマンドを使って application/x-pkcs7-mime タイプの S/MIME 署名を検
   証する。 (S/MIME only)
 
-  66..33..117700..  ssmmiimmee__ssiiggnn__ccoommmmaanndd
+  66..33..117722..  ssmmiimmee__ssiiggnn__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5300,7 +5422,7 @@
   いられる。このタイプはあらゆるメイルクライアントから読める。 (S/MIME
   only)
 
-  66..33..117711..  ssmmiimmee__ssiiggnn__ooppaaqquuee__ccoommmmaanndd
+  66..33..117733..  ssmmiimmee__ssiiggnn__ooppaaqquuee__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5309,7 +5431,7 @@
   成するために用いられる。このタイプは S/MIME 拡張に対応したメイルクライ
   アントからのみ扱える。 (S/MIME only)
 
-  66..33..117722..  ssmmiimmee__eennccrryypptt__ccoommmmaanndd
+  66..33..117744..  ssmmiimmee__eennccrryypptt__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5317,7 +5439,7 @@
   このコマンドは暗号化 S/MIME メッセイジを作成するために用いられる。
   (S/MIME only)
 
-  66..33..117733..  ssmmiimmee__ppkk77oouutt__ccoommmmaanndd
+  66..33..117755..  ssmmiimmee__ppkk77oouutt__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5325,7 +5447,7 @@
   このコマンドを用いて S/MIME 署名の PKCS7 構造を抽出する。その目的は、
   そこからさらに X509 公開証明書を抽出することにある。 (S/MIME only)
 
-  66..33..117744..  ssmmiimmee__ggeett__cceerrtt__ccoommmmaanndd
+  66..33..117766..  ssmmiimmee__ggeett__cceerrtt__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5333,7 +5455,7 @@
   PKCS7 構造から X509 証明書を抽出するために用いるコマンド。 (S/MIME
   only)
 
-  66..33..117755..  ssmmiimmee__ggeett__ssiiggnneerr__cceerrtt__ccoommmmaanndd
+  66..33..117777..  ssmmiimmee__ggeett__ssiiggnneerr__cceerrtt__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5342,14 +5464,14 @@
   して証明書の所有者とメイルの From フィールドを比較できるようにするの
   だ。 (S/MIME only)
 
-  66..33..117766..  ssmmiimmee__iimmppoorrtt__cceerrtt__ccoommmmaanndd
+  66..33..117788..  ssmmiimmee__iimmppoorrtt__cceerrtt__ccoommmmaanndd
 
   Type: string
   Default: ""
 
   証明書を smime_keys で取り込むために使うコマンド。 (S/MIME only)
 
-  66..33..117777..  ssmmiimmee__ggeett__cceerrtt__eemmaaiill__ccoommmmaanndd
+  66..33..117799..  ssmmiimmee__ggeett__cceerrtt__eemmaaiill__ccoommmmaanndd
 
   Type: string
   Default: ""
@@ -5358,7 +5480,7 @@
   されたのかどうかの確認のため) と X509 証明書の格納のために用いられるメ
   イルアドレスを抽出する。 (S/MIME only)
 
-  66..33..117788..  ssmmiimmee__ddeeffaauulltt__kkeeyy
+  66..33..118800..  ssmmiimmee__ddeeffaauulltt__kkeeyy
 
   Type: string
   Default: ""
@@ -5366,7 +5488,7 @@
   署名に使う既定の鍵ペア。鍵 ID (OpenSSL が生成するハッシュ値) に設定さ
   れていないと正常に動作しない。 (S/MIME only)
 
-  66..33..117799..  ssssll__ssttaarrttttllss
+  66..33..118811..  ssssll__ssttaarrttttllss
 
   Type: quadoption
   Default: yes
@@ -5375,7 +5497,7 @@
   STARTTLS を使おうとする。解除されていると、サーバの能力に関わらず
   STARTTLS を使おうとしない。
 
-  66..33..118800..  cceerrttiiffiiccaattee__ffiillee
+  66..33..118822..  cceerrttiiffiiccaattee__ffiillee
 
   Type: path
   Default: ""
@@ -5389,7 +5511,7 @@
 
   例: set certificate_file=~/.mutt/certificates
 
-  66..33..118811..  ssssll__uusseessyysstteemmcceerrttss
+  66..33..118833..  ssssll__uusseessyysstteemmcceerrttss
 
   Type: boolean
   Default: yes
@@ -5398,35 +5520,35 @@
   かどうかを確認する際に、システム全体用の証明書格納所にあるCA 証明書を
   使う。
 
-  66..33..118822..  eennttrrooppyy__ffiillee
+  66..33..118844..  eennttrrooppyy__ffiillee
 
   Type: path
   Default: ""
 
   SSL ライブラリ関数の初期化に用いる乱数デイタの入ったファイル。
 
-  66..33..118833..  ssssll__uussee__ssssllvv22
+  66..33..118855..  ssssll__uussee__ssssllvv22
 
   Type: boolean
   Default: yes
 
   SSL 認証処理に SSLv2 を使おうとするかどうか指定する。
 
-  66..33..118844..  ssssll__uussee__ssssllvv33
+  66..33..118866..  ssssll__uussee__ssssllvv33
 
   Type: boolean
   Default: yes
 
   SSL 認証処理に SSLv3 を使おうとするかどうか指定する。
 
-  66..33..118855..  ssssll__uussee__ttllssvv11
+  66..33..118877..  ssssll__uussee__ttllssvv11
 
   Type: boolean
   Default: yes
 
   SSL 認証処理に TLSv1 を使おうとするかどうか指定する。
 
-  66..33..118866..  ppiippee__sspplliitt
+  66..33..118888..  ppiippee__sspplliitt
 
   Type: boolean
   Default: no
@@ -5438,7 +5560,7 @@
   時点での整列方法の順にメッセイジがパイプされ、 ``$pipe_sep'' が各メッ
   セイジの後に付加される。
 
-  66..33..118877..  ppiippee__ddeeccooddee
+  66..33..118899..  ppiippee__ddeeccooddee
 
   Type: boolean
   Default: no
@@ -5447,7 +5569,7 @@
   前処理をせずにメッセイジをパイプする。設定されていると、まずヘッダを間
   引きしたり PGP/MIME 復号化したりしようとする。
 
-  66..33..118888..  ppiippee__sseepp
+  66..33..119900..  ppiippee__sseepp
 
   Type: string
   Default: "\n"
@@ -5455,7 +5577,7 @@
   タグ付けされた複数のメッセイジを外部 Unix コマンドへパイプする際、メッ
   セイジとメッセイジの間を区切るために付加される文字列。
 
-  66..33..118899..  ppoopp__aauutthheennttiiccaattoorrss
+  66..33..119911..  ppoopp__aauutthheennttiiccaattoorrss
 
   Type: string
   Default: ""
@@ -5469,7 +5591,7 @@
 
   例: set pop_authenticators="digest-md5:apop:user"
 
-  66..33..119900..  ppoopp__aauutthh__ttrryy__aallll
+  66..33..119922..  ppoopp__aauutthh__ttrryy__aallll
 
   Type: boolean
   Default: yes
@@ -5479,14 +5601,14 @@
   は利用できるけれども認証が失敗したという場合には、 POP サーバへの接続
   をやめるのだ。
 
-  66..33..119911..  ppoopp__cchheecckkiinntteerrvvaall
+  66..33..119933..  ppoopp__cchheecckkiinntteerrvvaall
 
   Type: number
   Default: 60
 
   この変数は、何秒ごとに POP で新着メイルを探すかを調整する。
 
-  66..33..119922..  ppoopp__ddeelleettee
+  66..33..119944..  ppoopp__ddeelleettee
 
   Type: quadoption
   Default: ask-no
@@ -5495,7 +5617,7 @@
   ることに成功したメッセイジを削除する。解除されていると、メッセイジはダ
   ウンロードするものの、 POP サーバにも残しておく。
 
-  66..33..119933..  ppoopp__hhoosstt
+  66..33..119955..  ppoopp__hhoosstt
 
   Type: string
   Default: ""
@@ -5505,7 +5627,7 @@
 
   [pop[s]://][ユーザ名[:パスワード]@]サーバ[:ポート]
 
-  66..33..119944..  ppoopp__llaasstt
+  66..33..119966..  ppoopp__llaasstt
 
   Type: boolean
   Default: no
@@ -5513,14 +5635,14 @@
   この変数が設定されていると、fetch-mail 関数の使用時に POP コマンド
   "LAST" を使って POP サーバから未読メッセイジのみを取得しようとする。
 
-  66..33..119955..  ppoopp__rreeccoonnnneecctt
+  66..33..119977..  ppoopp__rreeccoonnnneecctt
 
   Type: quadoption
   Default: ask-yes
 
   POP サーバとの接続が切れたときに再接続を試みるかどうかを制御する。
 
-  66..33..119966..  ppoopp__uusseerr
+  66..33..119988..  ppoopp__uusseerr
 
   Type: string
   Default: ""
@@ -5529,7 +5651,7 @@
 
   既定ではロウカルマシンでのユーザ名になる。
 
-  66..33..119977..  ppoopp__ppaassss
+  66..33..119999..  ppoopp__ppaassss
 
   Type: string
   Default: ""
@@ -5539,7 +5661,7 @@
   確実に安全なマシンでのみ使うべきである。自分しか読めないファイルであっ
   ても、スーパユーザは読むことができるからだ。
 
-  66..33..119988..  ppoosstt__iinnddeenntt__ssttrriinngg
+  66..33..220000..  ppoosstt__iinnddeenntt__ssttrriinngg
 
   Type: string
   Default: ""
@@ -5547,7 +5669,7 @@
   ``$attribution'' 変数と似ており、 Mutt はこの文字列を、返信するメッセ
   イジの引用のあとに追加する。
 
-  66..33..119999..  ppoossttppoonnee
+  66..33..220011..  ppoossttppoonnee
 
   Type: quadoption
   Default: ask-yes
@@ -5555,7 +5677,7 @@
   メッセイジをその場で送らないことにした際に ``$postponed'' メイルボック
   スへ保存するかどうかを制御する。
 
-  66..33..220000..  ppoossttppoonneedd
+  66..33..220022..  ppoossttppoonneedd
 
   Type: path
   Default: "~/postponed"
@@ -5563,8 +5685,7 @@
   編集中のメッセイジは、いつまででも送信を ``延期 (postpone)'' しておく
   ことができる。延期することにした際、Mutt はこの変数で指定されたメイル
   ボックスに保存する。これに関しては ``$postpone'' も参照のこと。
-
-  66..33..220011..  pprreeccoonnnneecctt
+  66..33..220033..  pprreeccoonnnneecctt
 
   Type: string
   Default: ""
@@ -5583,7 +5704,7 @@
   注意: この例がうまくいくためには、このリモウトマシンにパスワードなしで
   ログインできなくてはならない。
 
-  66..33..220022..  pprriinntt
+  66..33..220044..  pprriinntt
 
   Type: quadoption
   Default: ask-no
@@ -5593,14 +5714,14 @@
   認する。) よく間違って "p" を押してしまう (私のような) 人に有用であ
   る。
 
-  66..33..220033..  pprriinntt__ccoommmmaanndd
+  66..33..220055..  pprriinntt__ccoommmmaanndd
 
   Type: path
   Default: "lpr"
 
   これに指定したコマンドへパイプしてメッセイジを印刷する。
 
-  66..33..220044..  pprriinntt__ddeeccooddee
+  66..33..220066..  pprriinntt__ddeeccooddee
 
   Type: boolean
   Default: yes
@@ -5611,7 +5732,7 @@
   イルメッセイジを印刷にふさわしく整形することのできる高度なプリンタフィ
   ルタを使っている場合に有用であろう。
 
-  66..33..220055..  pprriinntt__sspplliitt
+  66..33..220077..  pprriinntt__sspplliitt
 
   Type: boolean
   Default: no
@@ -5625,7 +5746,7 @@
   eennssccrriipptt(1) プログラムのメイル印刷モウドを使っている人はこのオプション
   を設定したいと思うはずだ。
 
-  66..33..220066..  pprroommpptt__aafftteerr
+  66..33..220088..  pprroommpptt__aafftteerr
 
   Type: boolean
   Default: yes
@@ -5634,7 +5755,7 @@
   了時にインデックスメニューへ戻らず、コマンド入力を求めるようになる。解
   除されていると、すぐインデックスメニューに戻る。
 
-  66..33..220077..  qquueerryy__ccoommmmaanndd
+  66..33..220099..  qquueerryy__ccoommmmaanndd
 
   Type: path
   Default: ""
@@ -5644,7 +5765,7 @@
   字列に置換される。より詳細な情報は ``アドレスの外部問い合わせ''を参
   照。
 
-  66..33..220088..  qquuiitt
+  66..33..221100..  qquuiitt
 
   Type: quadoption
   Default: yes
@@ -5654,7 +5775,7 @@
   定されていると無効で、 ask-yes か ask-no に設定されていると確認を求め
   られる。
 
-  66..33..220099..  qquuoottee__rreeggeexxpp
+  66..33..221111..  qquuoottee__rreeggeexxpp
 
   Type: regular expression
   Default: "^([ \t]*[|>:}#])+"
@@ -5667,7 +5788,7 @@
   なくてはならない。 "> > >" のような多層になった引用であっても、この正
   規表現ひとつで合致する必要があるのだ。)
 
-  66..33..221100..  rreeaadd__iinncc
+  66..33..221122..  rreeaadd__iinncc
 
   Type: number
   Default: 10
@@ -5682,14 +5803,14 @@
 
   ``$write_inc'' 変数も参照のこと。
 
-  66..33..221111..  rreeaadd__oonnllyy
+  66..33..221133..  rreeaadd__oonnllyy
 
   Type: boolean
   Default: no
 
   設定されていると、フォルダがすべて読み出し専用モウドで開かれる。
 
-  66..33..221122..  rreeaallnnaammee
+  66..33..221144..  rreeaallnnaammee
 
   Type: string
   Default: ""
@@ -5699,7 +5820,7 @@
   既定では /etc/passwd の GECOS フィールドになる。なお、ユーザが
   ``$from'' に本名を設定していると、この変数が使われないので注意。
 
-  66..33..221133..  rreeccaallll
+  66..33..221155..  rreeccaallll
 
   Type: quadoption
   Default: ask-yes
@@ -5712,7 +5833,7 @@
   れているメッセイジがあると、いつまでも新規メッセイジが作成できなくな
   る。返信はできる。)
 
-  66..33..221144..  rreeccoorrdd
+  66..33..221166..  rreeccoorrdd
 
   Type: path
   Default: ""
@@ -5726,7 +5847,8 @@
   ``fcc-hook'' コマンドにより上書きされる。 (訳注：さらに、この変数は
   Fcc ヘッダの既定値に過ぎないので、 Fcc を変更すれば上書きされる。Fcc
   と ``$record'' の両方に保存されるわけではないので注意。)
-  66..33..221155..  rreeppllyy__rreeggeexxpp
+
+  66..33..221177..  rreeppllyy__rreeggeexxpp
 
   Type: regular expression
   Default: "^(re([\[0-9\]+])*|aw):[ \t]*"
@@ -5736,7 +5858,7 @@
   る。(訳注：ただし、Re[3]: や Re3: には合致するが Aw[3]: や Aw3: には合
   致しない。)
 
-  66..33..221166..  rreeppllyy__sseellff
+  66..33..221188..  rreeppllyy__sseellff
 
   Type: boolean
   Default: no
@@ -5744,7 +5866,7 @@
   自分の送ったメッセイジに返信するとき、これが解除されていれば、自分に返
   信したいのではなく、そのメッセイジの宛先に返信したいのだとみなされる。
 
-  66..33..221177..  rreeppllyy__ttoo
+  66..33..221199..  rreeppllyy__ttoo
 
   Type: quadoption
   Default: ask-yes
@@ -5756,7 +5878,7 @@
   トのアドレスに設定してくるメイリングリストを読んでいて、メッセイジの送
   信者へ個人的にメッセイジを送りたい場合に便利である。
 
-  66..33..221188..  rreessoollvvee
+  66..33..222200..  rreessoollvvee
 
   Type: boolean
   Default: yes
@@ -5764,7 +5886,7 @@
   設定されているときには、メッセイジを変更するコマンドが実行されるとカー
   ソルが自動で進み、(あれば) 次の未削除メッセイジへ動く。
 
-  66..33..221199..  rreevveerrssee__aalliiaass
+  66..33..222211..  rreevveerrssee__aalliiaass
 
   Type: boolean
   Default: no
@@ -5784,7 +5906,7 @@
   これは、その人物のメイルアドレスが人間向きでない (CompuServe のアドレ
   スのような) ときに便利である。
 
-  66..33..222200..  rreevveerrssee__nnaammee
+  66..33..222222..  rreevveerrssee__nnaammee
 
   Type: boolean
   Default: no
@@ -5795,7 +5917,7 @@
   が設定されていないと、 _F_r_o_m_: 行には返信時のマシンのアドレスが使われ
   る。
 
-  66..33..222211..  rreevveerrssee__rreeaallnnaammee
+  66..33..222233..  rreevveerrssee__rreeaallnnaammee
 
   Type: boolean
   Default: yes
@@ -5805,7 +5927,7 @@
   部分まで含めて使うのだ。もし解除されていると、そうした本名部分は
   ``realname'' 変数の設定で上書きするようになる。
 
-  66..33..222222..  rrffcc22004477__ppaarraammeetteerrss
+  66..33..222244..  rrffcc22004477__ppaarraammeetteerrss
 
   Type: boolean
   Default: no
@@ -5814,7 +5936,6 @@
   復号化する。Mutt が添付ファイルを
   =?iso-8859-1?Q?file=5F=E4=5F991116=2Ezip?= のようなファイル名で保存す
   るよう提案してくるときには、この変数を設定したいと思うであろう。
-
   この変数を実行中に設定したときには、フォルダを変更するまで望み通りの効
   果はあらわれない。
 
@@ -5824,7 +5945,7 @@
   ファイル名を生成するという効果はないという点にも注意せよ。そうではな
   く、Mutt は常に RFC 2231 で指示されている符号化方式を用いる。
 
-  66..33..222233..  ssaavvee__aaddddrreessss
+  66..33..222255..  ssaavvee__aaddddrreessss
 
   Type: boolean
   Default: no
@@ -5835,7 +5956,7 @@
   ルダ名が Fcc に使われるようになる。$force_name が yes なら、そのような
   フォルダが存在しなくても作成して Fcc するようになる。)
 
-  66..33..222244..  ssaavvee__eemmppttyy
+  66..33..222266..  ssaavvee__eemmppttyy
 
   Type: boolean
   Default: yes
@@ -5847,7 +5968,7 @@
   注注意意:: これが適用されるのは mbox と MMDF のフォルダのみであり、 Mutt が
   MH や Maildir のディレクトリを削除することはない。
 
-  66..33..222255..  ssaavvee__nnaammee
+  66..33..222277..  ssaavvee__nnaammee
 
   Type: boolean
   Default: no
@@ -5861,7 +5982,7 @@
 
   ``$force_name'' 変数も参照。
 
-  66..33..222266..  ssccoorree
+  66..33..222288..  ssccoorree
 
   Type: boolean
   Default: yes
@@ -5871,7 +5992,7 @@
   ``$score_threshold_delete'' やその仲間たちを使っているときに便利かもし
   れない。
 
-  66..33..222277..  ssccoorree__tthhrreesshhoolldd__ddeelleettee
+  66..33..222299..  ssccoorree__tthhrreesshhoolldd__ddeelleettee
 
   Type: number
   Default: -1
@@ -5880,7 +6001,7 @@
   Mutt のスコアは常にゼロ以上なので、既定の設定ではいかなるメッセイジも
   削除予定にされることはない。
 
-  66..33..222288..  ssccoorree__tthhrreesshhoolldd__ffllaagg
+  66..33..223300..  ssccoorree__tthhrreesshhoolldd__ffllaagg
 
   Type: number
   Default: 9999
@@ -5888,7 +6009,7 @@
   割り当てられた得点がこの変数の値以上になるメッセイジには自動的に「重
   要」フラグが付けられる。
 
-  66..33..222299..  ssccoorree__tthhrreesshhoolldd__rreeaadd
+  66..33..223311..  ssccoorree__tthhrreesshhoolldd__rreeaadd
 
   Type: number
   Default: -1
@@ -5897,7 +6018,7 @@
   既読として印付ける。Mutt では得点が常にゼロかゼロ以上なので、既定の設
   定でメッセイジを既読にしてしまうことはありえない。
 
-  66..33..223300..  sseenndd__cchhaarrsseett
+  66..33..223322..  sseenndd__cchhaarrsseett
 
   Type: string
   Default: "us-ascii:iso-8859-1:utf-8"
@@ -5913,7 +6034,7 @@
   iso-2022-jp と指定すべきである。その場合には ``iconv-hook'' で調整す
   る。)
 
-  66..33..223311..  sseennddmmaaiill
+  66..33..223333..  sseennddmmaaiill
 
   Type: path
   Default: "/usr/sbin/sendmail -oem -oi"
@@ -5922,7 +6043,7 @@
   Mutt は、続く引数をこのプログラムが宛先アドレスとして解釈するものと想
   定している。
 
-  66..33..223322..  sseennddmmaaiill__wwaaiitt
+  66..33..223344..  sseennddmmaaiill__wwaaiitt
 
   Type: number
   Default: 0
@@ -5942,7 +6063,7 @@
   の出力が一時ファイルへ置かれることになるのだ。何かエラーがあった場合に
   は、その出力がどこにあるかを知らされることになる。
 
-  66..33..223333..  sshheellll
+  66..33..223355..  sshheellll
 
   Type: path
   Default: ""
@@ -5950,7 +6071,7 @@
   内部でサブシェルを実行する際に使うコマンド。既定では、/etc/passwd を見
   てユーザのログインシェルを用いる。
 
-  66..33..223344..  ssiigg__ddaasshheess
+  66..33..223366..  ssiigg__ddaasshheess
 
   Type: boolean
   Default: yes
@@ -5961,7 +6082,7 @@
   らである。例えば Mutt は内蔵ペイジャで署名を別の色に目立たせる能力を
   持っている。
 
-  66..33..223355..  ssiigg__oonn__ttoopp
+  66..33..223377..  ssiigg__oonn__ttoopp
 
   Type: boolean
   Default: no
@@ -5970,7 +6091,7 @@
   ることの意味をよく理解し、ネチケットの番人たちの憤りを買う準備ができて
   いるのでない限り、この変数は設定しないよう強強くく推奨されている。
 
-  66..33..223366..  ssiiggnnaattuurree
+  66..33..223388..  ssiiggnnaattuurree
 
   Type: path
   Default: "~/.signature"
@@ -5979,7 +6100,7 @@
   る。ファイル名がパイプ ("|") で終わっていると、ファイル名がシェルコマ
   ンドとみなされ、その標準出力から読み出される。
 
-  66..33..223377..  ssiimmppllee__sseeaarrcchh
+  66..33..223399..  ssiimmppllee__sseeaarrcchh
 
   Type: string
   Default: "~f %s | ~s %s"
@@ -5993,7 +6114,7 @@
 
   ~f joe | ~s joe
 
-  66..33..223388..  ssmmaarrtt__wwrraapp
+  66..33..224400..  ssmmaarrtt__wwrraapp
 
   Type: boolean
   Default: yes
@@ -6003,7 +6124,7 @@
   られるので実装可能なのである)。解除されていると、単純に画面の端で折り
   返される。 ``$markers'' 変数も参照のこと。
 
-  66..33..223399..  ssmmiilleeyyss
+  66..33..224411..  ssmmiilleeyyss
 
   Type: regular expression
   Default: "(>From )|(:[-^]?[][)(><}{|/DP])"
@@ -6011,7 +6132,7 @@
   ペイジャがこの変数を使って、 ``$quote_regexp'' のよくある誤検出を補正
   する。おもに、行頭に顔文字 (smileys) がある場合である。
 
-  66..33..224400..  sslleeeepp__ttiimmee
+  66..33..224422..  sslleeeepp__ttiimmee
 
   Type: number
   Default: 1
@@ -6021,7 +6142,7 @@
   一秒間だけ止まって表示する。それで、このオプションをゼロにすると停止し
   なくなる。(訳注：すぐに再描画されるので読むことができなくなる。)
 
-  66..33..224411..  ssoorrtt
+  66..33..224433..  ssoorrtt
 
   Type: sort order
   Default: date
@@ -6029,20 +6150,21 @@
   インデックスメニューでメッセイジを整列する方法を指定する。正しい値は以
   下の通り。
 
-     date すなわち date-sent
-     date-received
-     from
-     mailbox-order (整列なし)
-     score
-     size
-     subject
-     threads
-     to
+          date すなわち date-sent
+          date-received
+          from
+          mailbox-order (整列なし)
+          score
+          size
+          spam
+          subject
+          threads
+          to
 
   これに加えて、reverse- を頭に付けることで逆順に整列させることができる
   (例: set sort=reverse-date-sent)。
 
-  66..33..224422..  ssoorrtt__aalliiaass
+  66..33..224444..  ssoorrtt__aalliiaass
 
   Type: sort order
   Default: alias
@@ -6054,7 +6176,7 @@
           alias (エイリアス名でアルファベット順に整列)
           unsorted (.muttrc で指定された順番のまま)
 
-  66..33..224433..  ssoorrtt__aauuxx
+  66..33..224455..  ssoorrtt__aauuxx
 
   Type: sort order
   Default: date
@@ -6075,10 +6197,11 @@
   注：sort=reverse-threads で sort_aux=date だと、スレッド内の各メッセイ
   ジが reverse-date のような順番に整列されるということ。)
 
-  66..33..224444..  ssoorrtt__bbrroowwsseerr
+  66..33..224466..  ssoorrtt__bbrroowwsseerr
 
   Type: sort order
-  Default: subject
+  Default: alpha
+
   ファイルブラウザで項目をどのように整列するかを指定する。既定ではアル
   ファベット順に整列される。正しい値は次のとおり。
 
@@ -6090,7 +6213,7 @@
   これに reverse- 接頭辞を付けて逆順に整列させることもできる (例: set
   sort_browser=reverse-date)。
 
-  66..33..224455..  ssoorrtt__rree
+  66..33..224477..  ssoorrtt__rree
 
   Type: boolean
   Default: yes
@@ -6104,7 +6227,18 @@
   のも、 ``$reply_regexp'' でない部分が同じである限りスレッドに入れてし
   まう。
 
-  66..33..224466..  ssppoooollffiillee
+  66..33..224488..  ssppaamm__sseeppaarraattoorr
+
+  Type: string
+  Default: ","
+
+  $spam_separator は複数のスパムヘッダが ``spam'' コマンドに合致した際の
+  挙動を制御する。解除されていると、あとから合致したヘッダが以前の合致に
+  よるスパムラベルの値を上書きしてゆく。設定されていると (訳注：空の ""
+  も含めて)、あとから合致したものが以前の値に追記されてゆく。その際の区
+  切り文字として $spam_separator が使われる。
+
+  66..33..224499..  ssppoooollffiillee
 
   Type: path
   Default: ""
@@ -6113,7 +6247,7 @@
   ら、その場所をこの変数で指定することができる。設定されていないと、Mutt
   は自動的に環境変数 $MAIL の値にする。
 
-  66..33..224477..  ssttaattuuss__cchhaarrss
+  66..33..225500..  ssttaattuuss__cchhaarrss
 
   Type: string
   Default: "-*%A"
@@ -6128,7 +6262,7 @@
   モウドでは、新規メッセイジ作成や返信、転送などの動作が禁止されてい
   る)。
 
-  66..33..224488..  ssttaattuuss__ffoorrmmaatt
+  66..33..225511..  ssttaattuuss__ffoorrmmaatt
 
   Type: string
   Default: "-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d?
@@ -6219,7 +6353,7 @@
   ない IMAP フォルダで役立つかもしれない。 (訳注：$status_format という
   よりは、 ``save-hook'' などで使うことを想定しているのであろう。)
 
-  66..33..224499..  ssttaattuuss__oonn__ttoopp
+  66..33..225522..  ssttaattuuss__oonn__ttoopp
 
   Type: boolean
   Default: no
@@ -6227,7 +6361,7 @@
   この変数を設定すると「ステイタスバー」が画面の下のほうではなく一番上の
   行に表示されるようになる。
 
-  66..33..225500..  ssttrriicctt__tthhrreeaaddss
+  66..33..225533..  ssttrriicctt__tthhrreeaaddss
 
   Type: boolean
   Default: no
@@ -6238,7 +6372,7 @@
   い。たとえば私的なメイルのメイルボックスで、「こんにちは」というような
   題の無関係なメッセイジがすべて一括りにされてしまうような場合もある。
 
-  66..33..225511..  ssuussppeenndd
+  66..33..225544..  ssuussppeenndd
 
   Type: boolean
   Default: yes
@@ -6249,7 +6383,7 @@
   ような場合に C-z を押してしまったら、別の端末から killall -CONT mutt
   などとして CONT シグナルを送る必要がある。)
 
-  66..33..225522..  tteexxtt__fflloowweedd
+  66..33..225555..  tteexxtt__fflloowweedd
 
   Type: boolean
   Default: no
@@ -6262,7 +6396,7 @@
   このオプションが設定されていると ``$indent_string'' が無視されるので注
   意すること。
 
-  66..33..225533..  tthhrreeaadd__rreecceeiivveedd
+  66..33..225566..  tthhrreeaadd__rreecceeiivveedd
 
   Type: boolean
   Default: no
@@ -6270,7 +6404,7 @@
   設定されていると、メッセイジを題名でスレッドにする際に送信日付ではなく
   受信日付を使用する。
 
-  66..33..225544..  tthhoorroouugghh__sseeaarrcchh
+  66..33..225577..  tthhoorroouugghh__sseeaarrcchh
 
   Type: boolean
   Default: no
@@ -6281,7 +6415,7 @@
   まで検索される。 (訳注：日本語の場合は、この変数を設定しないと使いもの
   にならない。)
 
-  66..33..225555..  ttiillddee
+  66..33..225588..  ttiillddee
 
   Type: boolean
   Default: no
@@ -6289,7 +6423,7 @@
   設定されていると、内部ペイジャは画面の下端まで空行をティルド (~) で詰
   める。
 
-  66..33..225566..  ttiimmeeoouutt
+  66..33..225599..  ttiimmeeoouutt
 
   Type: number
   Default: 600
@@ -6299,7 +6433,7 @@
   メイルを確認する。ゼロか負の値の場合にはいつまでも確認せずに待ち続け
   る。
 
-  66..33..225577..  ttmmppddiirr
+  66..33..226600..  ttmmppddiirr
 
   Type: path
   Default: ""
@@ -6308,7 +6442,7 @@
   所を指定することができる。設定されていないときには環境変数 TMPDIR が用
   いられる。TMPDIR も設定されていないなら "/tmp" が用いられる。
 
-  66..33..225588..  ttoo__cchhaarrss
+  66..33..226611..  ttoo__cchhaarrss
 
   Type: string
   Default: " +TCFL"
@@ -6324,7 +6458,7 @@
   イルが購読メイリングリストに送られていることを示すために使われる (既
   定: L)。
 
-  66..33..225599..  ttuunnnneell
+  66..33..226622..  ttuunnnneell
 
   Type: string
   Default: ""
@@ -6337,7 +6471,7 @@
   注意: この例がうまくいくには、リモウトマシンにパスワードの入力なしでロ
   グインすることができなくてはならない。 (訳注：ssh-agent などを使う。)
 
-  66..33..226600..  uussee__88bbiittmmiimmee
+  66..33..226633..  uussee__88bbiittmmiimmee
 
   Type: boolean
   Default: no
@@ -6350,7 +6484,7 @@
   ``$sendmail'' を -B8BITMIME フラグ付きで起動して ESMTP 通信を有効にす
   る。
 
-  66..33..226611..  uussee__ddoommaaiinn
+  66..33..226644..  uussee__ddoommaaiinn
 
   Type: boolean
   Default: yes
@@ -6359,7 +6493,7 @@
   の) を ``$hostname'' の値で補完する。解除すると、どのアドレスもそのま
   まにする。
 
-  66..33..226622..  uussee__ffrroomm
+  66..33..226655..  uussee__ffrroomm
 
   Type: boolean
   Default: yes
@@ -6368,7 +6502,7 @@
   する。_n_o だと、ユーザが明示的に ``my_hdr'' コマンドで設定しないと生成
   されない。
 
-  66..33..226633..  uussee__iippvv66
+  66..33..226666..  uussee__iippvv66
 
   Type: boolean
   Default: yes
@@ -6377,7 +6511,7 @@
   べる。このオプションが解除されていると、 IPv4 アドレスだけに絞って動作
   する。通常は既定値で問題なく動くはずだ。
 
-  66..33..226644..  uusseerr__aaggeenntt
+  66..33..226677..  uusseerr__aaggeenntt
 
   Type: boolean
   Default: yes
@@ -6386,20 +6520,21 @@
   る。これはどのヴァージョンの Mutt を使って作成されたのかを示すものであ
   る。
 
-  66..33..226655..  vviissuuaall
+  66..33..226688..  vviissuuaall
 
   Type: path
   Default: ""
 
   内蔵エディタの _~_v コマンドで起動するヴィジュアルエディタを指定する。
 
-  66..33..226666..  wwaaiitt__kkeeyy
+  66..33..226699..  wwaaiitt__kkeeyy
 
   Type: boolean
   Default: yes
 
   Mutt が _s_h_e_l_l_-_e_s_c_a_p_e, _p_i_p_e_-_m_e_s_s_a_g_e, _p_i_p_e_-_e_n_t_r_y, _p_r_i_n_t_-_m_e_s_s_a_g_e, _p_r_i_n_t_-
   _e_n_t_r_y コマンドのあとにキー押下を求めるかどうかを制御する。
+
   また、``auto_view'' で添付ファイルを閲覧する際にも、対応する mailcap
   項目に _n_e_e_d_s_t_e_r_m_i_n_a_l フラグがあって外部プログラムが対話的に動作する場
   合は、この変数が用いられる。
@@ -6407,7 +6542,7 @@
   設定されていると、常にキー入力を求める。解除されていると、外部コマンド
   が非ゼロを返した場合にのみキーを待つ。
 
-  66..33..226677..  wweeeedd
+  66..33..227700..  wweeeedd
 
   Type: boolean
   Default: yes
@@ -6415,7 +6550,7 @@
   設定されていると、メッセイジの表示、転送、印刷、返信の際にヘッダを間引
   きする。
 
-  66..33..226688..  wwrraapp__sseeaarrcchh
+  66..33..227711..  wwrraapp__sseeaarrcchh
 
   Type: boolean
   Default: yes
@@ -6425,7 +6560,7 @@
   設定されているときには最初 (または最後) のメッセイジに飛んで検索を続け
   る。解除されているときにはそこで終わる。
 
-  66..33..226699..  wwrraappmmaarrggiinn
+  66..33..227722..  wwrraappmmaarrggiinn
 
   Type: number
   Default: 0
@@ -6433,7 +6568,7 @@
   Mutt のペイジャが語単位で行を折り返す際に端末の右側に残す余白の大きさ
   を制御する。
 
-  66..33..227700..  wwrriittee__iinncc
+  66..33..227733..  wwrriittee__iinncc
 
   Type: number
   Default: 10
@@ -6444,7 +6579,7 @@
 
   ``$read_inc'' 変数も参照。
 
-  66..33..227711..  wwrriittee__bbcccc
+  66..33..227744..  wwrriittee__bbcccc
 
   Type: boolean
   Default: yes
@@ -6833,18 +6968,21 @@
   に入らない状態が続いています。そこで tamomo こと高橋全は、
   sourceforge.jp の mutt-j プロジェクトという場を借りて、一つの仮想ライ
   ヴァルを作り出そうと考えました。目標は、この翻訳がシェアを握ることでは
-  ありません。この翻訳が契機となって西岡・人見訳がより良いものとなり、
+  ありません (この翻訳は「訳注」が多すぎるし、カタカナが変で、読みづらい
+  ですからね)。この翻訳が契機となって西岡・人見訳がより良いものとなり、
   Mutt ユーザにとって、より快適な日本語環境が整備されることです。また、
   この翻訳の特色として、原文 SGML との対応が見やすいという点があります。
   diff -du manual.sgml manual.ja.sgml としてみると、原文と日本語が並んで
   見えるため、誤訳なのか原文が間違っているのかが一目瞭然です。これによっ
-  て原文の質が向上されることも視野に入れています。翻訳中にも、いくつかの
-  typo などを見付けました。
+  て原文の質が向上されることも視野に入れています。翻訳中に、実際いくつか
+  原文の誤りなどを見付けました。
 
-  ライセンスについては、原文に何も付け足しません。参考にしたのは、原文
-  (1.5.6 および CVS 版) と西岡・人見訳 (1.4) のみです。
+  ライセンスについては、原文に何も付け足しません。参考にしたのは、原文と
+  ソース (1.5.6 および CVS 版)、および西岡・人見訳 (1.4) のみです。
 
   改善要求などは sourceforge.jp の mutt-j プロジェクトのバグ報告機能か
   フォーラムを使うと良いでしょう。あるいは高橋全に直接メイルを送っても構
   いません。
+
+  Translation to Japanese: (C) 2004 TAKAHASHI Tamotsu
 
