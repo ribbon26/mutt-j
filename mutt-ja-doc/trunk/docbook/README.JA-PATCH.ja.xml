@@ -220,6 +220,11 @@ pager の表示に関する設定（遅い回線やマシンで使うと便利な機能）
 	<entry>iw</entry>
 	<entry>IWASHITA Yoji</entry>
 </row>
+<row>
+	<entry>NetBSD 1.6P</entry>
+	<entry>iw</entry>
+	<entry>Hiroyuki Maehara</entry>
+</row>
 </tbody>
 </tgroup>
 </table>
