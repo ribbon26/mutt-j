@@ -4154,7 +4154,7 @@ msgstr "eswabfc"
 #: smime.c:1953
 msgid ""
 "1: DES, 2: Triple-DES, 3: RC2-40, 4: RC2-64, 5: RC2-128, or (f)orget it? "
-msgstr "1: DES, 2: Triple-DES, 3: RC2-40, 4: RC2-64, 5: RC2-128, f: 変更なし "
+msgstr "1:DES, 2:Triple-DES, 3:RC2-40, 4:RC2-64, 5:RC2-128, f:変更なし "
 
 #: smime.c:1955
 msgid "12345f"
