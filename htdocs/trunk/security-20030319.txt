@@ -1,0 +1,52 @@
+Date: Wed, 19 Mar 2003 23:07:58 +0100
+From: Thomas Roessler <roessler@does-not-exist.org>
+To: mutt-dev@mutt.org
+Subject: buffer overflow
+Message-ID: <20030319220758.GA22989@coruscant.does-not-exist.org>
+Mime-Version: 1.0
+Content-Type: multipart/mixed; boundary="d6Gm4EdcadzBjdND"
+Content-Disposition: inline
+User-Agent: Mutt/1.5.3i
+Sender: owner-mutt-dev@mutt.org
+
+
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+Edmund provided the attached patch to fix a buffer overflow in
+mutt's IMAP code.  I'm in the process of preparing releases 1.4.1
+and 1.5.4.
+
+More details later.
+
+Regards,
+-- 
+Thomas Roessler                        <roessler@does-not-exist.org>
+
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename=diff
+
+Index: imap/utf7.c
+===================================================================
+RCS file: /home/roessler/cvs/mutt/imap/utf7.c,v
+retrieving revision 1.5
+diff -u -r1.5 utf7.c
+--- imap/utf7.c	13 Feb 2001 22:06:16 -0000	1.5
++++ imap/utf7.c	14 Mar 2003 22:10:14 -0000
+@@ -149,7 +149,11 @@
+   int n, i, b = 0, k = 0;
+   int base64 = 0;
+ 
+-  p = buf = safe_malloc (u8len * 2 + 1);
++  /*
++   * In the worst case we convert 2 chars to 7 chars. For example:
++   * "\x10&\x10&..." -> "&ABA-&-&ABA-&-...".
++   */
++  p = buf = safe_malloc ((u8len / 2) * 7 + 6);
+ 
+   while (u8len)
+   {
+
+--d6Gm4EdcadzBjdND--
