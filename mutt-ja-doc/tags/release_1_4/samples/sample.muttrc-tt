@@ -1,0 +1,102 @@
+# sample of muttrc
+#   TAKIZAWA Takashi
+
+#  Japanese
+#source /usr/local/doc/mutt/samples/mutt-ja.rc
+#set charset="euc-jp"
+#set send_charset="us-ascii:iso-2022-jp"
+#set file_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+#set strict_mime=no
+#set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+#set thorough_search=yes
+#set sanitize_ja_chars=yes
+#set rfc2047_parameters=yes
+#set edit_headers=yes
+
+#  Mailcap
+auto_view text/enriched text/html
+set mailcap_path="~/.mailcap:/etc/mailcap"
+
+#  Your name and domain
+set realname="D Vader"
+set from="vader@deathstar.empire"
+set hostname="deathstar.empire"
+
+#  Example for Maildir
+set mbox_type=Maildir
+set spoolfile="~/Maildir"
+set folder="~/Mail"
+set mbox="+mbox"
+set postponed="+postponed"
+set record="+outbox"
+set tmpdir="~/tmp"
+
+#  Editor
+set editor="jed %s -f set_buffer_no_backup"
+
+#  PGP
+#set pgp_long_ids=yes
+#set pgp_strict_enc=no
+#set pgp_verify_sig=ask-yes
+#source "/usr/local/doc/mutt/samples/gpg.rc"
+#pgp-hook vader@deathstar.empire 0x3456789A
+
+#  Color
+# normal setting
+color normal green default
+# pager
+color hdrdefault cyan default
+color header yellow default ^(From|Subject):
+color quoted cyan default
+color signature red default
+color attachment blue default
+color body magenta default "(ftp|http)://[^ ]+" # point out URLs
+color body magenta default [-a-z_0-9.]+@[-a-z_0-9.]+  # e-mail addresses
+color search black yellow  # how to hilite search patterns in the pager
+# index screen
+color index green default .*
+color tree cyan default   # the thread tree in the index menu
+color indicator black brightcyan
+# symbols
+color markers blue default
+color tilde blue default
+# menu, message
+color status yellow blue
+color message cyan default
+color error brightred default
+
+#  Alias
+set alias_file="~/.mutt/alias"
+source ~/.mutt/alias
+
+#  Mailing List
+set metoo=yes
+set sort=threads
+set delete_prefix=yes
+set delete_regexp="^(\[[A-Za-z0-9_.: \-]*\][ ]*)"
+
+#  Index and Pager
+set pager_index_lines=10
+set tilde=yes
+
+#  nullmailer
+set envelope_from=yes
+set sendmail="/usr/local/bin/nullmailer-inject"
+
+#  header
+ignore *
+unignore date from to cc reply-to subject x-mailer user-agent content-type
+hdr_order date from subject to cc
+
+#  folder-hook
+folder-hook . 'unlists *'
+folder-hook . 'set sort=threads'
+folder-hook outbox 'set sort=date-sent'
+
+#  Others
+set allow_8bit=no
+set abort_nosubject=no
+set attribution="On %d,\n %n wrote:\n"
+set forward_format="Fwd: %s"
+set mark_old=no
+set mime_forward=ask-yes
