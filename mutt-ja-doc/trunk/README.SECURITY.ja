@@ -1,3 +1,5 @@
+Original Id: README.SECURITY,v 3.0 2002/01/24 12:10:47 roessler Exp
+
 最近、MIMEパラメータに埋め込まれたシェルのメタキャラクタの解釈によって
 引き起こされるセキュリティ問題の報告がありました。その報告はPineに言及
 していましたが、Muttを使うときにもその問題は当てはまります。
@@ -56,7 +58,3 @@ mailcap を解釈する他のどのプログラムもそうすべきであるように、正しい
 > text/test-mailcap-bug; cat %s; copiousoutput; test=charset=%{charset} \
 >         && test "`echo \"$charset\" | tr '[A-Z]' '[a-z]'`" != iso-8859-1
 
-
-The original file is mutt-1.4/README.SECURITY.
-Translated to Japanese by TAKIZAWA Takashi <taki@cyber.email.ne.jp>
-and members of mutt-j ML.
