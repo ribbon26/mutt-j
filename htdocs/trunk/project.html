@@ -15,16 +15,25 @@
 <h1>プロジェクトの管理について</h1>
 
 <h2>文書の管理</h2>
-<p>CVS で管理しています。リポジトリ名は mutt-ja-doc
-です。ただし、mutt-1.4用の文書に関しては RELBR_1_4
-というブランチで管理しています。</p>
+<p>CVS で管理しています。リポジトリ名は mutt-ja-doc です。
+ただし、mutt-1.4用の文書に関しては RELBR_1_4 というブランチで管理しています。</p>
 
 <h3>ファイルの修正</h3>
 <p>CVS からファイルをチェックアウトします。</p>
 <pre>
 $ cd src/mutt-j
-$ cvs -d :ext:[loginname]@cvs.sourceforge.jp:/cvsroot/mutt-j co htdocs
-[ファイルの修正]
+$ cvs -d :ext:[loginname]@cvs.sourceforge.jp:/cvsroot/mutt-j co mutt-ja-doc
+</pre>
+<p>mutt-1.4用の文書の場合は次のようになります。</p>
+<pre>
+$ cvs -d :ext:[loginname]@cvs.sourceforge.jp:/cvsroot/mutt-j co -r RELBR_1_4 mutt-ja-doc
+</pre>
+<p>ファイルの修正します。</p>
+<pre>
+$ cd mutt-ja-doc
+</pre>
+<p>ファイルの変更を反映させます。</p>
+<pre>
 $ cvs -d :ext:[loginname]@cvs.sourceforge.jp:/cvsroot/mutt-j ci
 </pre>
 <p>docbook形式のファイルに関しては
@@ -60,7 +69,14 @@ mutt-ja-doc/docbook/README.DOCBOOKを参照してください。</p>
 <pre>
 $ cd src/mutt-j
 $ cvs -d :ext:[loginname]@cvs.sourceforge.jp:/cvsroot/mutt-j co htdocs
+</pre>
+<p>ファイルを修正します。</p>
+<pre>
+$ cd htdocs
 [ファイルの修正]
+</pre>
+<p>ファイルの更新を反映させます。</p>
+<pre>
 $ cvs -d :ext:[loginname]@cvs.sourceforge.jp:/cvsroot/mutt-j ci
 </pre>
 
