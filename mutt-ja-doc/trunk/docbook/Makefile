@@ -35,15 +35,14 @@ dist-text : README.JA-PATCH.ja INSTALL.JA-PATCH.ja
 
 dist-html : INSTALL.JA-PATCH.ja.html manual-ja-patch.en.html \
 usage-japanese.ja.html README.JA-PATCH.ja.html manual-ja-patch.ja.html
-	cp $^ ../html/
+	test -d ../html || (cd ..;mkdir html);cp $^ ../html/
 
 upload : 
 	cp *.txt *.ja *.html $(WWWDIR)/
 
 clean :
-	rm -f *.txt *.ja *.html
+	rm -f *.txt *.ja *.html xsl/docbook-wrapper.xsl
 
 clean-all : clean
-	rm -f ../README.JA-PATCH.ja ../INSTALL.JA-PATCH.ja ../html/* \
-	xsl/docbook-wrapper.xsl
+	rm -rf ../README.JA-PATCH.ja ../INSTALL.JA-PATCH.ja ../html
 
