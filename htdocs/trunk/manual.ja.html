@@ -1589,7 +1589,7 @@ set ?allow_8bit
 自分のホウムディレクトリのパスに展開されます。
 <P>ファイル名が縦線 (|) で終わっていれば、指定した<EM>ファイル名</EM>のファイルは
 実行プログラムとみなされ、そこから入力を読み出します。(例:
-<CODE>source ~/bin/myscript|/</CODE>)
+<CODE>source ~/bin/myscript|</CODE>)
 <P>
 <H2><A NAME="unhook"></A> 3.26 フックを取り除く</H2>
 
@@ -1897,9 +1897,11 @@ d       日
 次のようなパターンを使えます。
 <BLOCKQUOTE><CODE>
 <PRE>
+ 
 メッセイジの表示を制限するパターン: ~d 15/1/2001*2w
 </PRE>
 </CODE></BLOCKQUOTE>
+<P>
 <P><B>相対日付</B>。　このタイプの日付は、現在の日付から
 相対的に見たものです。このように指定できます。
 <UL>
@@ -1955,8 +1957,8 @@ d       日
 必ずしも一つ以上のメッセイジにタグが付いているとは限らない。
 タグがない場合にはカーソルの位置にあるメッセイジへ操作が適用されてしまうため、
 危険すぎてマクロでは使えない。それで、tag-prefix-cond が追加された。
-たとえば macro index i
-&lt;tag-pattern&gt;&nbsp;d*1w\n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent\n&lt;end-cond&gt;
+たとえば
+<CODE>macro index i &lt;tag-pattern&gt;~d*1w\n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent\n&lt;end-cond&gt;</CODE>
 と設定すると、ここ一週間のメイルを移動するマクロができる。)
 <P>
 <H2><A NAME="hooks"></A> 4.4 フックを使う</H2>
@@ -2490,7 +2492,8 @@ application/pgp といった PGP MIME タイプを理解することもできます。
 [-- Type: text/plain, Encoding: 7bit, Size: 10000 --]
 </PRE>
 </CODE></BLOCKQUOTE>
-<P><CODE>Description</CODE> の部分は添付ファイルに関する説明やファイル名で、
+
+<CODE>Description</CODE> の部分は添付ファイルに関する説明やファイル名で、
 <CODE>Encoding</CODE> は <CODE>7bit/8bit/quoted-printable/base64/binary</CODE>
 のどれかです。
 <P>Mutt が扱うことのできない MIME タイプであれば
@@ -2532,8 +2535,8 @@ mailcap のヴューワ定義を使って閲覧することもできます。
 変更できるという点です。
 <P>添付ファイルは次のように表示されます。
 <PRE>
--   1 [text/plain, 7bit, 1K]             /tmp/mutt-euler-8082-0 &lt;no description>
-    2 [applica/x-gunzip, base64, 422K]   ~/src/mutt-0.85.tar.gz &lt;no description>
+-   1 [text/plain, 7bit, 1K]             /tmp/mutt-euler-8082-0 &lt;no description&gt;
+    2 [applica/x-gunzip, base64, 422K]   ~/src/mutt-0.85.tar.gz &lt;no description&gt;
 </PRE>
 <P>左端の &quot;-&quot; は、そのファイルがメッセイジの
 送信 (または延期や中止) の後に削除されるということを示しています。
@@ -2558,7 +2561,6 @@ mailcap のヴューワ定義を使って閲覧することもできます。
 か <CODE>/etc/mime.types</CODE> に探しに行きます。
 <P>mime.types ファイルを構成する各行には、
 MIME タイプとスペイス区切りの拡張子のリストが書かれています。
-<P>
 <BLOCKQUOTE><CODE>
 <PRE>
 application/postscript          ps eps
@@ -4818,7 +4820,8 @@ ssh-agent のように、環境変数で通信経路を指定する。
 Mutt は、GPG_TTY および GPG_AGENT_INFO 環境変数が設定されていれば
 gpg-agent が起動しているものとみなし、パスフレイズを尋ねない。
 それら環境変数が設定されていなければ通常どおりパスフレイズを尋ねる。
-gpg-agent を利用するのであれば、&nbsp;/.gnupg/gpg.conf に use-agent と書いておくか、
+gpg-agent を利用するのであれば、
+~/.gnupg/gpg.conf に use-agent と書いておくか、
 $pgp_*_command 群に --use-agent オプションを
 含めておくべきだろう。)
 (PGP only)
@@ -4829,9 +4832,10 @@ $pgp_*_command 群に --use-agent オプションを
 <P>Type: quadoption<BR>
 Default: yes
 <P>
-<P>"yes" なら、常に PGP および S/MIME 署名を検証しようとする。
-"ask" (訳注：実際には ask-yes か ask-no) なら、署名を検証するかどうか尋ねる。
-"no" なら、暗号学的署名を一切検証しようとしない。
+<P>&quot;yes&quot; なら、常に PGP および S/MIME 署名を検証しようとする。
+&quot;ask&quot; (訳注：実際には ask-yes か ask-no) なら、署名を
+検証するかどうか尋ねる。
+&quot;no&quot; なら、暗号学的署名を一切検証しようとしない。
 (Crypto only)
 <P>
 <P>

@@ -1431,7 +1431,7 @@ unmy_hdr to cc
 ヘッダ順序の効果も消去してしまいます。
 
 <tscreen><verb>
-hdr_order From Date: From: To: Cc: Subject:
+hdr&lowbar;order From Date: From: To: Cc: Subject:
 </verb></tscreen>
 
 <sect1>既定のセイヴファイル名を指定する<label id="save-hook" >
@@ -1679,7 +1679,7 @@ set ?allow_8bit
 
 ファイル名が縦線 (|) で終わっていれば、指定した<em/ファイル名/のファイルは
 実行プログラムとみなされ、そこから入力を読み出します。(例:
-<tt>source ~/bin/myscript|/</tt>)
+<tt>source ~/bin/myscript|</tt>)
 
 <sect1>フックを取り除く<label id="unhook" >
 <p>
@@ -2026,9 +2026,10 @@ d	日
 
 例: 2001 年 1 月 15 日の前後二週間ずつのメッセイジを選択するには、
 次のようなパターンを使えます。
-<tscreen><verb>
+<tscreen><verb> 
 メッセイジの表示を制限するパターン: ~d 15/1/2001*2w
 </verb></tscreen>
+
 
 <bf>相対日付</bf>。　このタイプの日付は、現在の日付から
 相対的に見たものです。このように指定できます。
@@ -2085,8 +2086,8 @@ d	日
 必ずしも一つ以上のメッセイジにタグが付いているとは限らない。
 タグがない場合にはカーソルの位置にあるメッセイジへ操作が適用されてしまうため、
 危険すぎてマクロでは使えない。それで、tag-prefix-cond が追加された。
-たとえば macro index i
-&lt;tag-pattern&gt;~d*1w&bsol;n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent&bsol;n&lt;end-cond&gt;
+たとえば
+<tt>macro index i &lt;tag-pattern&gt;&tilde;d*1w&bsol;n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent&bsol;n&lt;end-cond&gt;</tt>
 と設定すると、ここ一週間のメイルを移動するマクロができる。)
 
 <sect1>フックを使う<label id="hooks" >
@@ -2623,7 +2624,6 @@ Mutt は添付ファイルがあることを二、三行の説明で表します。
 [-- Attachment #1: Description --]
 [-- Type: text/plain, Encoding: 7bit, Size: 10000 --]
 </verb></tscreen>
-</p><p>
 <tt/Description/ の部分は添付ファイルに関する説明やファイル名で、
 <tt/Encoding/ は <tt>7bit/8bit/quoted-printable/base64/binary</tt>
 のどれかです。
@@ -2668,8 +2668,8 @@ name="resend-message">, reply, forward など) も使えます。
 
 添付ファイルは次のように表示されます。
 <verb>
--   1 [text/plain, 7bit, 1K]             /tmp/mutt-euler-8082-0 <no description>
-    2 [applica/x-gunzip, base64, 422K]   ~/src/mutt-0.85.tar.gz <no description>
+-   1 [text/plain, 7bit, 1K]             /tmp/mutt-euler-8082-0 &lt;no description&gt;
+    2 [applica/x-gunzip, base64, 422K]   ~/src/mutt-0.85.tar.gz &lt;no description&gt;
 </verb>
 
 左端の &dquot;-&dquot; は、そのファイルがメッセイジの
@@ -2696,7 +2696,6 @@ name="resend-message">, reply, forward など) も使えます。
 
 mime.types ファイルを構成する各行には、
 MIME タイプとスペイス区切りの拡張子のリストが書かれています。
-
 <tscreen><verb>
 application/postscript          ps eps
 application/pgp                 pgp
@@ -5041,7 +5040,7 @@ replysignencrypted も設定したいと思うだろう。
 ただし、暗号化かつ署名付きメッセイジに暗号化と署名を施しながら、
 署名なし暗号化メッセイジへの返信に暗号化のみ実行するためには
 フックを使わなければならないであろう。
-<ref id="patterns" name="~g および ~G"> を参照のこと。)
+<ref id="patterns" name="&tilde;g および &tilde;G"> を参照のこと。)
 (Crypto only)
 
 
@@ -5073,7 +5072,8 @@ ssh-agent のように、環境変数で通信経路を指定する。
 Mutt は、GPG_TTY および GPG_AGENT_INFO 環境変数が設定されていれば
 gpg-agent が起動しているものとみなし、パスフレイズを尋ねない。
 それら環境変数が設定されていなければ通常どおりパスフレイズを尋ねる。
-gpg-agent を利用するのであれば、~/.gnupg/gpg.conf に use-agent と書いておくか、
+gpg-agent を利用するのであれば、
+&tilde;/.gnupg/gpg.conf に use-agent と書いておくか、
 &dollar;pgp&lowbar;*&lowbar;command 群に --use-agent オプションを
 含めておくべきだろう。)
 (PGP only)
@@ -5085,9 +5085,10 @@ Type: quadoption<newline>
 Default: yes
 
 <p>
-"yes" なら、常に PGP および S/MIME 署名を検証しようとする。
-"ask" (訳注：実際には ask-yes か ask-no) なら、署名を検証するかどうか尋ねる。
-"no" なら、暗号学的署名を一切検証しようとしない。
+&dquot;yes&dquot; なら、常に PGP および S/MIME 署名を検証しようとする。
+&dquot;ask&dquot; (訳注：実際には ask-yes か ask-no) なら、署名を
+検証するかどうか尋ねる。
+&dquot;no&dquot; なら、暗号学的署名を一切検証しようとしない。
 (Crypto only)
 
 
