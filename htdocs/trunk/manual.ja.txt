@@ -1,6 +1,6 @@
 The Mutt E-Mail Client
 by Michael Elkins <me@cs.hmc.edu>
-version 1.5.6 +20041208
+version 1.5.7 +20050201
 
 ``All mail clients suck.  This one just sucks less.'' -me, circa 1995
 _____________________________________________________________________________
@@ -167,216 +167,218 @@ _____________________________________________________________________________
       6.3.62 gecos_mask
       6.3.63 hdrs
       6.3.64 header
-      6.3.65 help
-      6.3.66 hidden_host
-      6.3.67 hide_limited
-      6.3.68 hide_missing
-      6.3.69 hide_top_limited
-      6.3.70 hide_top_missing
-      6.3.71 history
-      6.3.72 honor_followup_to
-      6.3.73 hostname
-      6.3.74 ignore_list_reply_to
-      6.3.75 imap_authenticators
-      6.3.76 imap_delim_chars
-      6.3.77 imap_force_ssl
-      6.3.78 imap_headers
-      6.3.79 imap_home_namespace
-      6.3.80 imap_keepalive
-      6.3.81 imap_list_subscribed
-      6.3.82 imap_pass
-      6.3.83 imap_passive
-      6.3.84 imap_peek
-      6.3.85 imap_servernoise
-      6.3.86 imap_user
-      6.3.87 implicit_autoview
-      6.3.88 include
-      6.3.89 include_onlyfirst
-      6.3.90 indent_string
-      6.3.91 index_format
-      6.3.92 ispell
-      6.3.93 keep_flagged
-      6.3.94 locale
-      6.3.95 mail_check
-      6.3.96 mailcap_path
-      6.3.97 mailcap_sanitize
-      6.3.98 maildir_trash
-      6.3.99 mark_old
-      6.3.100 markers
-      6.3.101 mask
-      6.3.102 mbox
-      6.3.103 mbox_type
-      6.3.104 metoo
-      6.3.105 menu_scroll
-      6.3.106 meta_key
-      6.3.107 mh_purge
-      6.3.108 mh_seq_flagged
-      6.3.109 mh_seq_replied
-      6.3.110 mh_seq_unseen
-      6.3.111 mime_forward
-      6.3.112 mime_forward_decode
-      6.3.113 mime_forward_rest
-      6.3.114 mix_entry_format
-      6.3.115 mixmaster
-      6.3.116 move
-      6.3.117 message_format
-      6.3.118 narrow_tree
-      6.3.119 pager
-      6.3.120 pager_context
-      6.3.121 pager_format
-      6.3.122 pager_index_lines
-      6.3.123 pager_stop
-      6.3.124 crypt_autosign
-      6.3.125 crypt_autoencrypt
-      6.3.126 pgp_ignore_subkeys
-      6.3.127 crypt_replyencrypt
-      6.3.128 crypt_replysign
-      6.3.129 crypt_replysignencrypted
-      6.3.130 crypt_timestamp
-      6.3.131 pgp_use_gpg_agent
-      6.3.132 crypt_verify_sig
-      6.3.133 smime_is_default
-      6.3.134 smime_ask_cert_label
-      6.3.135 smime_decrypt_use_default_key
-      6.3.136 pgp_entry_format
-      6.3.137 pgp_good_sign
-      6.3.138 pgp_check_exit
-      6.3.139 pgp_long_ids
-      6.3.140 pgp_retainable_sigs
-      6.3.141 pgp_autoinline
-      6.3.142 pgp_replyinline
-      6.3.143 pgp_show_unusable
-      6.3.144 pgp_sign_as
-      6.3.145 pgp_strict_enc
-      6.3.146 pgp_timeout
-      6.3.147 pgp_sort_keys
-      6.3.148 pgp_mime_auto
-      6.3.149 pgp_auto_traditional
-      6.3.150 pgp_decode_command
-      6.3.151 pgp_getkeys_command
-      6.3.152 pgp_verify_command
-      6.3.153 pgp_decrypt_command
-      6.3.154 pgp_clearsign_command
-      6.3.155 pgp_sign_command
-      6.3.156 pgp_encrypt_sign_command
-      6.3.157 pgp_encrypt_only_command
-      6.3.158 pgp_import_command
-      6.3.159 pgp_export_command
-      6.3.160 pgp_verify_key_command
-      6.3.161 pgp_list_secring_command
-      6.3.162 pgp_list_pubring_command
-      6.3.163 forward_decrypt
-      6.3.164 smime_timeout
-      6.3.165 smime_encrypt_with
-      6.3.166 smime_keys
-      6.3.167 smime_ca_location
-      6.3.168 smime_certificates
-      6.3.169 smime_decrypt_command
-      6.3.170 smime_verify_command
-      6.3.171 smime_verify_opaque_command
-      6.3.172 smime_sign_command
-      6.3.173 smime_sign_opaque_command
-      6.3.174 smime_encrypt_command
-      6.3.175 smime_pk7out_command
-      6.3.176 smime_get_cert_command
-      6.3.177 smime_get_signer_cert_command
-      6.3.178 smime_import_cert_command
-      6.3.179 smime_get_cert_email_command
-      6.3.180 smime_default_key
-      6.3.181 ssl_starttls
-      6.3.182 certificate_file
-      6.3.183 ssl_usesystemcerts
-      6.3.184 entropy_file
-      6.3.185 ssl_use_sslv2
-      6.3.186 ssl_use_sslv3
-      6.3.187 ssl_use_tlsv1
-      6.3.188 pipe_split
-      6.3.189 pipe_decode
-      6.3.190 pipe_sep
-      6.3.191 pop_authenticators
-      6.3.192 pop_auth_try_all
-      6.3.193 pop_checkinterval
-      6.3.194 pop_delete
-      6.3.195 pop_host
-      6.3.196 pop_last
-      6.3.197 pop_reconnect
-      6.3.198 pop_user
-      6.3.199 pop_pass
-      6.3.200 post_indent_string
-      6.3.201 postpone
-      6.3.202 postponed
-      6.3.203 preconnect
-      6.3.204 print
-      6.3.205 print_command
-      6.3.206 print_decode
-      6.3.207 print_split
-      6.3.208 prompt_after
-      6.3.209 query_command
-      6.3.210 quit
-      6.3.211 quote_regexp
-      6.3.212 read_inc
-      6.3.213 read_only
-      6.3.214 realname
-      6.3.215 recall
-      6.3.216 record
-      6.3.217 reply_regexp
-      6.3.218 reply_self
-      6.3.219 reply_to
-      6.3.220 resolve
-      6.3.221 reverse_alias
-      6.3.222 reverse_name
-      6.3.223 reverse_realname
-      6.3.224 rfc2047_parameters
-      6.3.225 save_address
-      6.3.226 save_empty
-      6.3.227 save_name
-      6.3.228 score
-      6.3.229 score_threshold_delete
-      6.3.230 score_threshold_flag
-      6.3.231 score_threshold_read
-      6.3.232 send_charset
-      6.3.233 sendmail
-      6.3.234 sendmail_wait
-      6.3.235 shell
-      6.3.236 sig_dashes
-      6.3.237 sig_on_top
-      6.3.238 signature
-      6.3.239 simple_search
-      6.3.240 smart_wrap
-      6.3.241 smileys
-      6.3.242 sleep_time
-      6.3.243 sort
-      6.3.244 sort_alias
-      6.3.245 sort_aux
-      6.3.246 sort_browser
-      6.3.247 sort_re
-      6.3.248 spam_separator
-      6.3.249 spoolfile
-      6.3.250 status_chars
-      6.3.251 status_format
-      6.3.252 status_on_top
-      6.3.253 strict_threads
-      6.3.254 suspend
-      6.3.255 text_flowed
-      6.3.256 thread_received
-      6.3.257 thorough_search
-      6.3.258 tilde
-      6.3.259 timeout
-      6.3.260 tmpdir
-      6.3.261 to_chars
-      6.3.262 tunnel
-      6.3.263 use_8bitmime
-      6.3.264 use_domain
-      6.3.265 use_from
-      6.3.266 use_ipv6
-      6.3.267 user_agent
-      6.3.268 visual
-      6.3.269 wait_key
-      6.3.270 weed
-      6.3.271 wrap_search
-      6.3.272 wrapmargin
-      6.3.273 write_inc
-      6.3.274 write_bcc
+      6.3.65 header_cache
+      6.3.66 header_cache_pagesize
+      6.3.67 help
+      6.3.68 hidden_host
+      6.3.69 hide_limited
+      6.3.70 hide_missing
+      6.3.71 hide_top_limited
+      6.3.72 hide_top_missing
+      6.3.73 history
+      6.3.74 honor_followup_to
+      6.3.75 hostname
+      6.3.76 ignore_list_reply_to
+      6.3.77 imap_authenticators
+      6.3.78 imap_delim_chars
+      6.3.79 imap_force_ssl
+      6.3.80 imap_headers
+      6.3.81 imap_home_namespace
+      6.3.82 imap_keepalive
+      6.3.83 imap_list_subscribed
+      6.3.84 imap_pass
+      6.3.85 imap_passive
+      6.3.86 imap_peek
+      6.3.87 imap_servernoise
+      6.3.88 imap_user
+      6.3.89 implicit_autoview
+      6.3.90 include
+      6.3.91 include_onlyfirst
+      6.3.92 indent_string
+      6.3.93 index_format
+      6.3.94 ispell
+      6.3.95 keep_flagged
+      6.3.96 locale
+      6.3.97 mail_check
+      6.3.98 mailcap_path
+      6.3.99 mailcap_sanitize
+      6.3.100 maildir_trash
+      6.3.101 mark_old
+      6.3.102 markers
+      6.3.103 mask
+      6.3.104 mbox
+      6.3.105 mbox_type
+      6.3.106 metoo
+      6.3.107 menu_scroll
+      6.3.108 meta_key
+      6.3.109 mh_purge
+      6.3.110 mh_seq_flagged
+      6.3.111 mh_seq_replied
+      6.3.112 mh_seq_unseen
+      6.3.113 mime_forward
+      6.3.114 mime_forward_decode
+      6.3.115 mime_forward_rest
+      6.3.116 mix_entry_format
+      6.3.117 mixmaster
+      6.3.118 move
+      6.3.119 message_format
+      6.3.120 narrow_tree
+      6.3.121 pager
+      6.3.122 pager_context
+      6.3.123 pager_format
+      6.3.124 pager_index_lines
+      6.3.125 pager_stop
+      6.3.126 crypt_autosign
+      6.3.127 crypt_autoencrypt
+      6.3.128 pgp_ignore_subkeys
+      6.3.129 crypt_replyencrypt
+      6.3.130 crypt_replysign
+      6.3.131 crypt_replysignencrypted
+      6.3.132 crypt_timestamp
+      6.3.133 pgp_use_gpg_agent
+      6.3.134 crypt_verify_sig
+      6.3.135 smime_is_default
+      6.3.136 smime_ask_cert_label
+      6.3.137 smime_decrypt_use_default_key
+      6.3.138 pgp_entry_format
+      6.3.139 pgp_good_sign
+      6.3.140 pgp_check_exit
+      6.3.141 pgp_long_ids
+      6.3.142 pgp_retainable_sigs
+      6.3.143 pgp_autoinline
+      6.3.144 pgp_replyinline
+      6.3.145 pgp_show_unusable
+      6.3.146 pgp_sign_as
+      6.3.147 pgp_strict_enc
+      6.3.148 pgp_timeout
+      6.3.149 pgp_sort_keys
+      6.3.150 pgp_mime_auto
+      6.3.151 pgp_auto_traditional
+      6.3.152 pgp_decode_command
+      6.3.153 pgp_getkeys_command
+      6.3.154 pgp_verify_command
+      6.3.155 pgp_decrypt_command
+      6.3.156 pgp_clearsign_command
+      6.3.157 pgp_sign_command
+      6.3.158 pgp_encrypt_sign_command
+      6.3.159 pgp_encrypt_only_command
+      6.3.160 pgp_import_command
+      6.3.161 pgp_export_command
+      6.3.162 pgp_verify_key_command
+      6.3.163 pgp_list_secring_command
+      6.3.164 pgp_list_pubring_command
+      6.3.165 forward_decrypt
+      6.3.166 smime_timeout
+      6.3.167 smime_encrypt_with
+      6.3.168 smime_keys
+      6.3.169 smime_ca_location
+      6.3.170 smime_certificates
+      6.3.171 smime_decrypt_command
+      6.3.172 smime_verify_command
+      6.3.173 smime_verify_opaque_command
+      6.3.174 smime_sign_command
+      6.3.175 smime_sign_opaque_command
+      6.3.176 smime_encrypt_command
+      6.3.177 smime_pk7out_command
+      6.3.178 smime_get_cert_command
+      6.3.179 smime_get_signer_cert_command
+      6.3.180 smime_import_cert_command
+      6.3.181 smime_get_cert_email_command
+      6.3.182 smime_default_key
+      6.3.183 ssl_starttls
+      6.3.184 certificate_file
+      6.3.185 ssl_usesystemcerts
+      6.3.186 entropy_file
+      6.3.187 ssl_use_sslv2
+      6.3.188 ssl_use_sslv3
+      6.3.189 ssl_use_tlsv1
+      6.3.190 pipe_split
+      6.3.191 pipe_decode
+      6.3.192 pipe_sep
+      6.3.193 pop_authenticators
+      6.3.194 pop_auth_try_all
+      6.3.195 pop_checkinterval
+      6.3.196 pop_delete
+      6.3.197 pop_host
+      6.3.198 pop_last
+      6.3.199 pop_reconnect
+      6.3.200 pop_user
+      6.3.201 pop_pass
+      6.3.202 post_indent_string
+      6.3.203 postpone
+      6.3.204 postponed
+      6.3.205 preconnect
+      6.3.206 print
+      6.3.207 print_command
+      6.3.208 print_decode
+      6.3.209 print_split
+      6.3.210 prompt_after
+      6.3.211 query_command
+      6.3.212 quit
+      6.3.213 quote_regexp
+      6.3.214 read_inc
+      6.3.215 read_only
+      6.3.216 realname
+      6.3.217 recall
+      6.3.218 record
+      6.3.219 reply_regexp
+      6.3.220 reply_self
+      6.3.221 reply_to
+      6.3.222 resolve
+      6.3.223 reverse_alias
+      6.3.224 reverse_name
+      6.3.225 reverse_realname
+      6.3.226 rfc2047_parameters
+      6.3.227 save_address
+      6.3.228 save_empty
+      6.3.229 save_name
+      6.3.230 score
+      6.3.231 score_threshold_delete
+      6.3.232 score_threshold_flag
+      6.3.233 score_threshold_read
+      6.3.234 send_charset
+      6.3.235 sendmail
+      6.3.236 sendmail_wait
+      6.3.237 shell
+      6.3.238 sig_dashes
+      6.3.239 sig_on_top
+      6.3.240 signature
+      6.3.241 simple_search
+      6.3.242 smart_wrap
+      6.3.243 smileys
+      6.3.244 sleep_time
+      6.3.245 sort
+      6.3.246 sort_alias
+      6.3.247 sort_aux
+      6.3.248 sort_browser
+      6.3.249 sort_re
+      6.3.250 spam_separator
+      6.3.251 spoolfile
+      6.3.252 status_chars
+      6.3.253 status_format
+      6.3.254 status_on_top
+      6.3.255 strict_threads
+      6.3.256 suspend
+      6.3.257 text_flowed
+      6.3.258 thread_received
+      6.3.259 thorough_search
+      6.3.260 tilde
+      6.3.261 timeout
+      6.3.262 tmpdir
+      6.3.263 to_chars
+      6.3.264 tunnel
+      6.3.265 use_8bitmime
+      6.3.266 use_domain
+      6.3.267 use_from
+      6.3.268 use_ipv6
+      6.3.269 user_agent
+      6.3.270 visual
+      6.3.271 wait_key
+      6.3.272 weed
+      6.3.273 wrap_search
+      6.3.274 wrapmargin
+      6.3.275 write_inc
+      6.3.276 write_bcc
    6.4 ´Ø¿ô
       6.4.1 generic
       6.4.2 index
@@ -749,8 +751,8 @@ ccoonntteenntt--ttyyppee ¤Î¤ÎÊÔÊÔ½¸½¸ / eeddiitt--ttyyppe
 (´ûÄêÃÍ: ÅºÉÕ¥Õ¥¡¥¤¥ë¥á¥Ë¥å¡¼¡¢¤Ú¥¤¥¸¥ã¡¢¤ª¤è¤Ó¥¤¥ó¥Ç¥Ã¥¯¥¹¥á¥Ë¥å¡¼¤Ç¤Ï ^E,
 ¥³¥ó¥Ý¥¦¥º¥á¥Ë¥å¡¼¤Ç¤Ï ^T)
 
-¤³¤Î¥³¥Þ¥ó¥É¤ÏÅºÉÕ¥Õ¥¡¥¤¥ë¤Î content type ¤ò°ì»þÅª¤ËÊÔ½¸¤¹¤ë¤¿¤á¤Ë»È¤¤¡¢¤¿¤È
-¤¨¤Ðµ¶Áõ¤·¤Æ¤¢¤ëÊ¸»ú¥»¥Ã¥È¤Î¥Ñ¥é¥á¡¼¥¿¤ò½¤Àµ¤·¤¿¤ê¤·¤Þ¤¹¡£¥¤¥ó¥Ç¥Ã¥¯¥¹¤ä¥Ú¥¤
+¤³¤Î¥³¥Þ¥ó¥É¤ÏÅºÉÕ¥Õ¥¡¥¤¥ë¤Î content type ¤ò°ì»þÅª¤ËÊÔ½¸¤¹¤ë¤¿¤á¤Ë»È¤¤¡¢Îã¤¨
+¤Ðµ¶Áõ¤·¤Æ¤¢¤ëÊ¸»ú¥»¥Ã¥È¤Î¥Ñ¥é¥á¡¼¥¿¤ò½¤Àµ¤·¤¿¤ê¤·¤Þ¤¹¡£¥¤¥ó¥Ç¥Ã¥¯¥¹¤ä¥Ú¥¤
 ¥¸¥ã¤«¤é»È¤¦¤ÈºÇ¾å°Ì¤ÎÅºÉÕ¥Õ¥¡¥¤¥ë¤Î content type ¤òÊÔ½¸¤Ç¤­¤Þ¤¹¡£ÅºÅºÉÕÉÕ¥Õ¥Õ¥¡¥¡¥¤¥¤
 ¥ë¥ë¥á¥á¥Ë¥Ë¥å¥å¡¼¡¼¤«¤é»È¤¨¤Ð¡¢¤É¤ÎÅºÉÕ¥Õ¥¡¥¤¥ë¤Î content type ¤Ç¤âÊÑ¹¹¤Ç¤­¤Þ¤¹¡£¤³¤Î
 ÊÑ¹¹¤Ï±ÊÂ³Åª¤Ê¤â¤Î¤Ç¤Ï¤Ê¤¯¡¢¥Õ¥©¥ë¥ÀÊÑ¹¹¤Ë¤è¤Ã¤Æ¾Ã¤¨¤Æ¤·¤Þ¤¤¤Þ¤¹¡£
@@ -1004,7 +1006,7 @@ Mixmaster ¤ÎÊ¸½ñ¤ò¸«¤Æ¤¯¤À¤µ¤¤¡£
 ¥Õ¥¡¥¤¥ë¤È¤·¤Æ¼è¤ê¹þ¤ß¤Þ¤¹¡£ÅºÉÕ¥Õ¥¡¥¤¥ë¤ò¥Ú¥¤¥¸¥ã¤Î¤è¤¦¤ËÉü¹æ²½¤¹¤ë¤«¤É¤¦¤«
 ¤Ï¡¢¤½¤ì¤¾¤ì $$ffoorrwwaarrdd__ddeeccooddee ÊÑ¿ô¤È $$mmiimmee__ffoorrwwaarrdd__ddeeccooddee ÊÑ¿ô¤ÇÀ©¸æ¤Ç¤­¤Þ¤¹¡£
 ¤É¤Á¤é¤ÎÅ¾Á÷ÊýË¡¤¬ÎÉ¤¤¤«¤ÏÆâÍÆ¤Ë¤è¤ê¤Þ¤¹¡£¤½¤Î¤¿¤á _$_m_i_m_e___f_o_r_w_a_r_d ¤Ï»ÍÂò¥ª¥×
-¥·¥ç¥ó (quadoption) ¤Ë¤Ê¤Ã¤Æ¤¤¤Æ¡¢¤¿¤È¤¨¤Ð "ask-no" ¤Ë¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹ (Ìõ
+¥·¥ç¥ó (quadoption) ¤Ë¤Ê¤Ã¤Æ¤¤¤Æ¡¢Îã¤¨¤Ð "ask-no" ¤Ë¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹ (Ìõ
 Ãí¡§ ask-no ¤Ï¡Ö¼ÁÌä¤ÎºÝ¤Ë Return ¤À¤±ÆþÎÏ¤·¤¿¤È¤­¤Ï no ¤È¤ß¤Ê¤¹¡×¤È¤¤¤¦°Õ
 Ì£)¡£
 
@@ -1156,8 +1158,8 @@ muttrc ¤ÎÃæ¤Ë¤¹¤Ù¤ÆÄêµÁ¤·¤Æ¤·¤Þ¤¦¤³¤È¤â¤Ç¤­¤Þ¤¹¡£
 ¥¨¥¤¥ê¥¢¥¹¤«¤é´°Á´¤Ê¥¨¥¤¥ê¥¢¥¹¤ËÅ¸³«¤µ¤»¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£¹çÃ×¤¹¤ë¤â¤Î¤¬Ê£¿ô
 ¤¢¤ë¤È¡¢Mutt ¤Ï¹çÃ×¤·¤¿¥¨¥¤¥ê¥¢¥¹¤Î¥á¥Ë¥å¡¼¤ò½Ð¤·¤Þ¤¹¡£¥¨¥¤¥ê¥¢¥¹¤Î´°Á´¤Ê°ìÍ÷
 ¤òÉ½¼¨¤µ¤»¤ë¤Ë¤Ï¡¢½ñ¤­¤«¤±¤Î¥¨¥¤¥ê¥¢¥¹¤Î¤Ê¤¤¾õÂÖ¤Ç Tab ¤òÂÇ¤¿¤Ê¤¯¤Æ¤Ï¤Ê¤ê¤Þ¤»
-¤ó¡£¤¿¤È¤¨¤Ð¥×¥í¥ó¥×¥È¤ÎºÇ½é¤ä¡¢¥¢¥É¥ì¥¹¤¬Ê£¿ô¤¢¤ë¤³¤È¤ò¼¨¤¹¥³¥ó¥Þ (",") ¤Î¸å
-¤Ç¤¹¡£
+¤ó¡£Îã¤¨¤Ð¥×¥í¥ó¥×¥È¤ÎºÇ½é¤ä¡¢¥¢¥É¥ì¥¹¤¬Ê£¿ô¤¢¤ë¤³¤È¤ò¼¨¤¹¥³¥ó¥Þ (",") ¤Î¸å¤Ç
+¤¹¡£
 
 ¥¨¥¤¥ê¥¢¥¹¥á¥Ë¥å¡¼¤Ç¤Ï¡¢¥¨¥¤¥ê¥¢¥¹¤ò¹¥¤­¤Ê¤À¤± _s_e_l_e_c_t_-_e_n_t_r_y ¥­¡¼ (´ûÄêÃÍ:
 RET) ¤ÇÁªÂò¤·¤Æ¤«¤é _e_x_i_t ¥­¡¼ (´ûÄêÃÍ: q) ¤ò»È¤Ã¤Æ¥¢¥É¥ì¥¹¤Î¥×¥í¥ó¥×¥È¤ËÌá¤ì
@@ -1472,8 +1474,8 @@ _Â°_À­¤ÎÉôÊ¬¤Ï°Ê²¼¤Î¤É¤ì¤«¤Ç¤¹¡£
 
 °ÊÁ°¤ËÄÉ²Ã¤·¤¿¹àÌÜ¤ò¥ê¥¹¥È¤«¤é³°¤¹¤Ë¤Ï "unignore" ¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ¤¯¤À¤µ
 ¤¤¡£"unignore" ¥³¥Þ¥ó¥É¤Ï¡¢»ØÄê¤·¤¿¥Ñ¥¿¡¼¥ó¤Î¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É¤òÉ½¼¨¤µ¤»¤Þ¤¹¡£
-¤¿¤È¤¨¤Ð "ignore x-" ¤È¤·¤Æ¤¤¤ë¤È¤­¡¢"unignore x-mailer" ¤Ç x-mailer: ¤òÉ½¼¨
-¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
+Îã¤¨¤Ð "ignore x-" ¤È¤·¤Æ¤¤¤ë¤È¤­¡¢"unignore x-mailer" ¤Ç x-mailer: ¤òÉ½¼¨¤¹
+¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
 
 "unignore *" ¤ÏÌµ»ë¥ê¥¹¥È¤«¤éÁ´¹àÌÜ¤ò¾Ãµî¤·¤Þ¤¹¡£
 
@@ -1686,6 +1688,7 @@ ssaavvee--hhooookk ¥³¥Þ¥ó¥É¤ÎÀá¤â»²¾È¤·¤Æ¤¯¤À¤µ¤¤¡£
 
 »È¤¤Êý: rreeppllyy--hhooookk [!]_¥Ñ_¥¿_¡¼_¥ó¡¡_¥³_¥Þ_¥ó_¥É
 »È¤¤Êý: sseenndd--hhooookk [!]_¥Ñ_¥¿_¡¼_¥ó¡¡_¥³_¥Þ_¥ó_¥É
+»È¤¤Êý: sseenndd22--hhooookk [!]_¥Ñ_¥¿_¡¼_¥ó¡¡_¥³_¥Þ_¥ó_¥É
 
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ¡¢¥á¥Ã¥»¥¤¥¸¤Î°¸Àè¤Ë´ð¤Å¤¤¤ÆÇ¤°Õ¤Î¥³¥Þ¥ó¥É¤ò¼Â¹Ô¤Ç¤­¤Þ
 ¤¹¡£_¥Ñ_¥¿_¡¼_¥ó¤ÏË¾¤ß¤Î¥¢¥É¥ì¥¹¤Ë¹çÃ×¤¹¤ëÀµµ¬É½¸½¤Ç¤¹¡£_¥³_¥Þ_¥ó_¥É¤Ï¡¢_¥Ñ_¥¿_¡¼_¥ó¤¬
@@ -1695,6 +1698,11 @@ rreeppllyy--hhooookk ¤Ï_Á÷_¿®_¤¹_¤ë¥á¥Ã¥»¥¤¥¸¤ÎÂå¤ï¤ê¤Ë_ÊÖ_¿®¸µ
 ¤Þ¤¹¡£sseenndd--hhooookk ¤Ï_¿·_µ¬¥á¥Ã¥»¥¤¥¸¤Ë¤â_ÊÖ_¿®¥á¥Ã¥»¥¤¥¸¤ËÂÐ¤·¤Æ¤â¸¡º÷¤µ¤ì¤Þ¤¹¡£ÃíÃí
 °Õ°Õ:: rreeppllyy--hhooookk ¤Ï¥æ¡¼¥¶¤ÎÀßÄê¥Õ¥¡¥¤¥ë¤Ë»ØÄê¤µ¤ì¤Æ¤¤¤ë½çÈÖ¤Ë´Ø´Ø¤ï¤ï¤é¤é¤º¤º sseenndd--hhooookk
 ¤è¤êÀèÀè¤Ë¤Ë¸¡º÷¤µ¤ì¤Þ¤¹¡£
+
+sseenndd22--hhooookk ¤Ï¥á¥Ã¥»¥¤¥¸¤¬ÊÑ¹¹¤µ¤ì¤ë¤¿¤Ó¤Ë¼Â¹Ô¤µ¤ì¤Þ¤¹¡£¤¹¤Ê¤ï¤Á¡¢ÊÔ½¸¤·¤¿
+¤«¡¢¥³¥ó¥Ý¥¦¥º¥á¥Ë¥å¡¼¤Ç°¸Àè¤äÂêÌ¾¤òÊÑ¹¹¤·¤¿¤È¤­¤Ç¤¹¡£ sseenndd22--hhooookk ¤Ï sseenndd--
+hhooookk ¤Î¸å¤Ë¼Â¹Ô¤µ¤ì¤ë¤Î¤Ç¡¢Îã¤¨¤Ð $$sseennddmmaaiill ÊÑ¿ô¤Î¤è¤¦¤Ê¥Ñ¥é¥á¡¼¥¿¤ò¼«Ê¬¤ÎÁ÷
+¿®¥¢¥É¥ì¥¹¤Ë±þ¤¸¤¿¤â¤Î¤È¤¹¤ë¤¿¤á¤Ë»È¤¦¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£
 
 sseenndd--hhooookk ¤ª¤è¤Ó rreeppllyy--hhooookk ¤Î³Æ¥¿¥¤¥×¤È¤â¡¢Ê£¿ô¤Î³ºÅö·ë²Ì¤¬À¸¤¸¤¿¤È¤­¤Ë¥³¥Þ
 ¥ó¥É¤¬¼Â¹Ô¤µ¤ì¤ë½çÈÖ¤Ï (¤½¤Î¥¿¥¤¥×¤Î¥Õ¥Ã¥¯¤Î¤¦¤Á¤Ç¤Ï) muttrc ¤Ë½ñ¤«¤ì¤Æ¤¤¤ë½ç
@@ -1808,8 +1816,8 @@ $$ssppaamm__sseeppaarraattoorr ÊÑ¿ô¤¬Ê¸»úÎó (ÌõÃí¡§¶õÊ¸»úÎó¤ò´Þ¤à
 ¤Î¥¹¥Ñ¥à¥¿¥°¤Ï¤¹¤Ù¤Æ¤Î _½ñ_¼° Ê¸»úÎó¤¬Ï¢·ë¤µ¤ì¤¿¤â¤Î¤Ë¤Ê¤ê¤Þ¤¹¡£¤½¤ÎºÝ¡¢¤½¤ì¤¾
 ¤ì¤ÎÃÍ¤¬ $$ssppaamm__sseeppaarraattoorr ÊÑ¿ô¤Ç¶èÀÚ¤é¤ì¤Þ¤¹¡£
 
-¤¿¤È¤¨¤Ð DCC, SpamAssassin, PureMessage ¤ò»È¤Ã¤Æ¤¤¤ë¤È¤·¤Þ¤¹¡£¤¹¤ë¤È¡¢¤³¤Î¤è
-¤¦¤Ê¥¹¥Ñ¥àÀßÄê¤ò¤¹¤ë¤«¤â¤·¤ì¤Þ¤»¤ó¡£
+Îã¤¨¤Ð DCC, SpamAssassin, PureMessage ¤ò»È¤Ã¤Æ¤¤¤ë¤È¤·¤Þ¤¹¡£¤¹¤ë¤È¡¢¤³¤Î¤è¤¦
+¤Ê¥¹¥Ñ¥àÀßÄê¤ò¤¹¤ë¤«¤â¤·¤ì¤Þ¤»¤ó¡£
 
       spam "X-DCC-.*-Metrics:.*(....)=many"         "90+/DCC-%1"
       spam "X-Spam-Status: Yes"                     "90+/SA"
@@ -1857,7 +1865,7 @@ nnoossppaamm ¤ËÍ¿¤¨¤é¤ì¤¿ _¥Ñ_¥¿_¡¼_¥ó ¤¬´ûÂ¸¤Î ssppaamm ¥ê¥¹¥È¤Ë¤
 ¤ÈÁÈ¤ß¹ç¤ï¤»¤Æ»È¤¦ºÝ¤Ë¤Ï¤³¤ì¤ò´ûÄêÆ°ºî¤Ë¤¹¤ë¤³¤È¤Ç¤·¤ç¤¦¡£
 
 ssppaamm ¥³¥Þ¥ó¥É¤È nnoossppaamm ¥³¥Þ¥ó¥É¤Ï¡¢¤¤¤¯¤Ä¤Ç¤â¹¥¤­¤Ê¤À¤±»È¤¦¤³¤È¤¬¤Ç¤­¤Þ
-¤¹¡£Mutt ¤À¤±¤Ç½éÊâÅª¤Ê¥¹¥Ñ¥à¸¡½Ð¤ò¤¹¤ë¤³¤È¤â²ÄÇ½¤Ç¤¹¡£¤¿¤È¤¨¤Ð MMAAIILLEERR--DDAAEEMMOONN
+¤¹¡£Mutt ¤À¤±¤Ç½éÊâÅª¤Ê¥¹¥Ñ¥à¸¡½Ð¤ò¤¹¤ë¤³¤È¤â²ÄÇ½¤Ç¤¹¡£Îã¤¨¤Ð MMAAIILLEERR--DDAAEEMMOONN
 ¤«¤é¤Î¥á¥¤¥ë¤ò¤¹¤Ù¤Æ¥¹¥Ñ¥à¤È¤ß¤Ê¤¹¤Î¤Ç¤¢¤ì¤Ð¡¢¤³¤Î¤è¤¦¤Ë ssppaamm ¥³¥Þ¥ó¥É¤ò»È¤¦
 ¤³¤È¤¬¤Ç¤­¤ë¤Ç¤·¤ç¤¦¡£
 
@@ -2062,12 +2070,12 @@ Mutt ¤Ë¤ª¤±¤ëÊ¸»úÎó¥Ñ¥¿¡¼¥ó¤Ï¡¢¤è¤êÊ£»¨¤Ê¥Ñ¥Ñ¥¿¥¿¡¼¡¼¥ó¥ó¤Ë¤ª¤±¤ëÊ¸»úÎó¥Ñ¥¿¡
 
 Æó¤Ä¤ÎÀµµ¬É½¸½¤òÏ¢·ë¤¹¤ë¤³¤È¤¬¤Ç¤­¤Þ¤¹¡£¤½¤Î·ë²Ì¤Ç¤­¤¿Àµµ¬É½¸½¤¬¹çÃ×¤¹¤ë¤Î
 ¤Ï¡¢¤½¤ì¤¾¤ì¤Ë¹çÃ×¤¹¤ëÊ¸»úÎó¤ò¤½¤Î½çÈÖ¤ËÊÂ¤Ù¤¿¤â¤Î¤Ç¤¹¡£ (ÌõÃí¡§Ìõ¤¬°­¤¤¤Î¤Ç
-ÊäÂ­¤¹¤ë¤È¡¢¤¿¤È¤¨¤Ð [A-Z][0-9] ¤Ï¡¢ A3 ¤ä B5 ¤È¤¤¤Ã¤¿¡¢ÂçÊ¸»ú¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È
-¤Î¼¡¤Ë¿ô»ú¤¬Íè¤ë¤è¤¦¤ÊÊ¸»úÎó¤Ë¹çÃ×¤¹¤ë°ì¤Ä¤ÎÀµµ¬É½¸½¤Ç¤¢¤ë¡¢¤È¤¤¤¦¤³¤È¡£)
+ÊäÂ­¤¹¤ë¤È¡¢Îã¤¨¤Ð [A-Z][0-9] ¤Ï¡¢ A3 ¤ä B5 ¤È¤¤¤Ã¤¿¡¢ÂçÊ¸»ú¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤Î
+¼¡¤Ë¿ô»ú¤¬Íè¤ë¤è¤¦¤ÊÊ¸»úÎó¤Ë¹çÃ×¤¹¤ë°ì¤Ä¤ÎÀµµ¬É½¸½¤Ç¤¢¤ë¡¢¤È¤¤¤¦¤³¤È¡£)
 
 Æó¤Ä¤ÎÀµµ¬É½¸½¤ÏÃæ´Ö±é»»»Ò "|" ¤ÇÏ¢·ë¤¹¤ë¤³¤È¤â¤Ç¤­¡¢Æó¤Ä¤ò¤³¤Î¤è¤¦¤Ë¤Ä¤Ê¤¤
 ¤Ç¤Ç¤­¤ëÀµµ¬É½¸½¤Ï¡¢¤¤¤º¤ì¤«¤Î¡Ö»ÒÉ½¸½¡×¤Î¹çÃ×¤¹¤ëÊ¸»úÎó¤Ë¹çÃ×¤·¤Þ¤¹¡£ (Ìõ
-Ãí¡§¤¿¤È¤¨¤Ð [A-Z]|[0-9] ¤À¤È¡¢D2 Åù¤Ç¤Ï¤Ê¤¯ C ¤ä 0  ¤ä R ¤Ë¹çÃ×¤¹¤ë¤³¤È¤Ë¤Ê
+Ãí¡§Îã¤¨¤Ð [A-Z]|[0-9] ¤À¤È¡¢D2 Åù¤Ç¤Ï¤Ê¤¯ C ¤ä 0  ¤ä R ¤Ë¹çÃ×¤¹¤ë¤³¤È¤Ë¤Ê
 ¤ê¡¢[A-Z0-9] ¤ÈÅù²Á¤Ë¤Ê¤ë¡£ a1B2c3 ¤È¤¤¤¦Ê¸»úÎó¤ËÂÐ¤·¤Æ¡¢[A-Z][0-9] ¤Ï B2 ¤Ë
 ¤Î¤ß¹çÃ×¤·¡¢ [A-Z]|[0-9] ¤Ï 1 ¤Ë¤â B ¤Ë¤â 3 ¤Ë¤â¹çÃ×¤¹¤ë¡£)
 
@@ -2291,7 +2299,7 @@ mmaaccrroo ¤ä ppuusshh ¥³¥Þ¥ó¥É¤Ë¤Ï "tag-prefix-cond" ±é»»»Ò¤ò»È¤¦¤³¤È¤
 Ãí¡§ÆÃ¤Ë¥Ñ¥¿¡¼¥ó¤Ç¥¿¥°¤òÉÕ¤±¤ëºÝ¡¢É¬¤º¤·¤â°ì¤Ä°Ê¾å¤Î¥á¥Ã¥»¥¤¥¸¤Ë¥¿¥°¤¬ÉÕ¤¤¤Æ
 ¤¤¤ë¤È¤Ï¸Â¤é¤Ê¤¤¡£¥¿¥°¤¬¤Ê¤¤¾ì¹ç¤ËÃ±¤Ê¤ë "tag-prefix" ¤ò»È¤¦¤È¡¢¥«¡¼¥½¥ë¤Î°Ì
 ÃÖ¤Ë¤¢¤ë¥á¥Ã¥»¥¤¥¸¤ØÁàºî¤¬Å¬ÍÑ¤µ¤ì¤Æ¤·¤Þ¤¦¡£¤½¤ì¤Ç¡¢tag-prefix-cond ¤¬ÄÉ²Ã¤µ
-¤ì¤¿¡£¤¿¤È¤¨¤Ð mmaaccrroo iinnddeexx ii <<ttaagg--ppaatttteerrnn>>~~dd**11ww\\nn<<ttaagg--pprreeffiixx--ccoonndd>><<ssaavvee--
+¤ì¤¿¡£Îã¤¨¤Ð mmaaccrroo iinnddeexx ii <<ttaagg--ppaatttteerrnn>>~~dd**11ww\\nn<<ttaagg--pprreeffiixx--ccoonndd>><<ssaavvee--
 mmeessssaaggee>>==rreecceenntt\\nn<<eenndd--ccoonndd>> ¤ÈÀßÄê¤¹¤ë¤È¡¢¤³¤³°ì½µ´Ö¤Î¥á¥¤¥ë¤ò°ÜÆ°¤¹¤ë¥Þ¥¯¥í
 ¤¬¤Ç¤­¤ë¡£Ãí°Õ¤¹¤Ù¤­ÅÀ¤Ï¡¢¤³¤ì¤¬Ã±¤Ê¤ë¾ò·ïÊ¬´ô¤Ç¤¢¤ë¤È¤¤¤¦¤³¤È¤À¡£ "tag-
 prefix-cond" ¤«¤é "end-cond" ¤Þ¤Ç¤ÎÉôÊ¬¤ò¥¿¥°ÉÕ¤­¥á¥Ã¥»¥¤¥¸¤¹¤Ù¤Æ¤ËÅ¬ÍÑ¤¹¤ë¤È
@@ -2571,11 +2579,11 @@ POP3 ¥Û¥¹¥È ($$ppoopp__hhoosstt) ¤ËÀÜÂ³¤·¡¢¿·Ãå¥á¥¤¥ë¤ò¤¹¤Ù¤Æ¼è¤Ã¤Æ¤­¤Æ
 ¤Ç¤º¤Ã¤È¥í¥¦¥«¥ë¤Ë¤¢¤Ã¤¿¤«¤Î¤è¤¦¤ËÆ°ºî¤·¤Þ¤¹¡£
 
 ¥á¥á¥â¥â::¡¡¥í¥¦¥«¥ë¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤ËÁ´¥á¥Ã¥»¥¤¥¸¤ò¼è¤Ã¤ÆÍè¤ë¤À¤±¤ÇÎÉ¤±¤ì¤Ð¡¢ÀìÌç
-¤Î¡¢¤¿¤È¤¨¤Ð fetchmail ¤Î¤è¤¦¤Ê¥×¥í¥°¥é¥à¤Î»ÈÍÑ¤ò¸¡Æ¤¤¹¤Ù¤­¤Ç¤¹¡£ (ÌõÃí¡§¤³¤ì
-¤Ï Mutt ³«È¯¼Ô¤Î¡ÖËÜÂÎ¤ò¤Ç¤­¤ë¤À¤±¾®¤µ¤¯¤·¤Æ¡¢¤è¤½¤ËÇ¤¤»¤é¤ì¤ë¤È¤³¤í¤ÏÇ¤¤»¤¿
-¤¤¡×¤È¤¤¤¦»ÑÀª¤òÈ¿±Ç¤·¤Æ¤¤¤ë¤è¤¦¤À¡£Ìõ¼Ô¼«¿È¤Ï _f_e_t_c_h_-_m_a_i_l ¤ò»È¤Ã¤Æ¤¤¤Æ²¿¤ÎÌä
-Âê¤â¤Ê¤¤¡£³«È¯¼Ô¤Î°Õ¿Þ¤È¤·¤Æ¤Ï mmaaccrroo iinnddeexx GG !!ffeettcchhmmaaiill\\nn ¤Î¤è¤¦¤ËÀßÄê¤¹¤ì¤Ð
-»öÂ­¤ê¤ë¤Î¤À¤«¤éÌµÂÌ¤Êµ¡Ç½¤À¤È¤¤¤¦¤³¤È¤Ç¤¢¤í¤¦¡£)
+¤Î¡¢Îã¤¨¤Ð fetchmail ¤Î¤è¤¦¤Ê¥×¥í¥°¥é¥à¤Î»ÈÍÑ¤ò¸¡Æ¤¤¹¤Ù¤­¤Ç¤¹¡£ (ÌõÃí¡§¤³¤ì¤Ï
+Mutt ³«È¯¼Ô¤Î¡ÖËÜÂÎ¤ò¤Ç¤­¤ë¤À¤±¾®¤µ¤¯¤·¤Æ¡¢¤è¤½¤ËÇ¤¤»¤é¤ì¤ë¤È¤³¤í¤ÏÇ¤¤»¤¿¤¤¡×
+¤È¤¤¤¦»ÑÀª¤òÈ¿±Ç¤·¤Æ¤¤¤ë¤è¤¦¤À¡£Ìõ¼Ô¼«¿È¤Ï _f_e_t_c_h_-_m_a_i_l ¤ò»È¤Ã¤Æ¤¤¤Æ²¿¤ÎÌäÂê¤â
+¤Ê¤¤¡£³«È¯¼Ô¤Î°Õ¿Þ¤È¤·¤Æ¤Ï mmaaccrroo iinnddeexx GG !!ffeettcchhmmaaiill\\nn ¤Î¤è¤¦¤ËÀßÄê¤¹¤ì¤Ð»öÂ­
+¤ê¤ë¤Î¤À¤«¤éÌµÂÌ¤Êµ¡Ç½¤À¤È¤¤¤¦¤³¤È¤Ç¤¢¤í¤¦¡£)
 
 44..1111..  IIMMAAPP ¥µ¥µ¥Ý¥Ý¡¼¡¼¥È¥È ((¥ª¥ª¥×¥×¥·¥·¥ç¥ç¥ó¥ó))
 
@@ -2696,7 +2704,7 @@ Mutt ¤Ï¡¢¥³¥ó¥Ñ¥¤¥ë»þ¤ËÁÈ¤ß¹þ¤Þ¤ì¡¢¤«¤Ä¥µ¡¼¥ÐÂ¦¤ÎÍøÍÑ²ÄÇ½¤ÊÊýË¡¤ò¤¹¤Ù¤Æ»î¤·
 
 44..1133..  UURRLL ¤Ë¤ËÂÐÂÐ¤·¤·¤Æ¤Æ WWWWWW ¥Ö¥Ö¥é¥é¥¦¥¦¥¶¥¶¤ò¤òµ¯µ¯Æ°Æ°¤¹¤¹¤ë¤ë ((³°³°ÉôÉô¥³¥³¥Þ¥Þ¥ó¥ó¥É¥É))
 
-¥á¥¤¥ë¤Ë URL (_u_n_i_f_i_e_d _r_e_s_o_u_r_c_e _l_o_c_a_t_o_r = WWW ¶õ´Ö¤Ë¤ª¤±¤ë½»½ê¡£¤¿¤È¤¨¤Ð
+¥á¥¤¥ë¤Ë URL (_u_n_i_f_i_e_d _r_e_s_o_u_r_c_e _l_o_c_a_t_o_r = WWW ¶õ´Ö¤Ë¤ª¤±¤ë½»½ê¡£Îã¤¨¤Ð
 _h_t_t_p_:_/_/_w_w_w_._m_u_t_t_._o_r_g_/) ¤¬´Þ¤Þ¤ì¤Æ¤¤¤ë¤È¤­¡¢¤½¤¦¤·¤¿ URL ¤ò¤¹¤Ù¤Æ´Þ¤à¥á¥Ë¥å¡¼¤¬
 ½Ð¤Æ¤­¤Æ¡¢°ì¤ÄÁª¤Ö¤È WWW ¥Ö¥é¥¦¥¶¤¬µ¯Æ°¤¹¤ë¤È¸úÎ¨¤¬ÎÉ¤¤¤Ç¤¹¤è¤Í¡£¤³¤Îµ¡Ç½¤Ï³°
 Éô¥×¥í¥°¥é¥à¤Î urlview ¤È°Ê²¼¤ÎÀßÄê¥³¥Þ¥ó¥É¤Ë¤è¤Ã¤ÆÄó¶¡¤µ¤ì¤Æ¤¤¤Þ¤¹¡£ urlview
@@ -2753,8 +2761,8 @@ Mutt ¤¬°·¤¦¤³¤È¤Î¤Ç¤­¤Ê¤¤ MIME ¥¿¥¤¥×¤Ç¤¢¤ì¤Ð¼¡¤Î¤è¤¦¤Ê¥á¥Ã¥»¥¤¥¸¤òÉ½¼¨¤·¤Þ
 °úÍÑ¤µ¤ì¤Þ¤¹¡£ÅºÉÕ¥Õ¥¡¥¤¥ë¤Ï¡¢¥Æ¥­¥¹¥È¤È¤·¤Æ±ÜÍ÷¤·¤¿¤ê¡¢ mailcap ¤Î¥ô¥å¡¼¥ïÄê
 µÁ¤ò»È¤Ã¤Æ±ÜÍ÷¤¹¤ë¤³¤È¤â¤Ç¤­¤Þ¤¹¡£
 
-¤Þ¤¿ mmeessssaaggee//rrffcc882222 ¥¿¥¤¥×¤Î¥Õ¥¡¥¤¥ë¤Ë¤Ï¡¢¥á¥Ã¥»¥¤¥¸´ØÏ¢¤ÎÄÌ¾ï¤Î´Ø¿ô (¤¿¤È¤¨
-¤Ð rreesseenndd--mmeessssaaggee, reply, forward ¤Ê¤É) ¤â»È¤¨¤Þ¤¹¡£
+¤Þ¤¿ mmeessssaaggee//rrffcc882222 ¥¿¥¤¥×¤Î¥Õ¥¡¥¤¥ë¤Ë¤Ï¡¢¥á¥Ã¥»¥¤¥¸´ØÏ¢¤ÎÄÌ¾ï¤Î´Ø¿ô (Îã¤¨¤Ð
+rreesseenndd--mmeessssaaggee, reply, forward ¤Ê¤É) ¤â»È¤¨¤Þ¤¹¡£
 
 ¤µ¤é¤Ë¾Ü¤·¤¤¾ðÊó¤Ï¡¢ÅºÉÕ¥Õ¥¡¥¤¥ë¥á¥Ë¥å¡¼¤Ç¤Î¥Ø¥ë¥×¤ò¤´Í÷²¼¤µ¤¤¡£
 
@@ -3170,8 +3178,8 @@ Mutt ¤Î mime_lookup ¥ê¥¹¥È¤Ï¡¢mailcap ¤Î¹àÌÜ¤Ë½¾¤Ã¤Æ°·¤¦¤Ù¤­¤Ç¤Ï¤Ê¤¤ MIME ¥¿
 ¥Ð¥¤¥Ê¥ê¤Î¥¿¥¤¥×¤ò¼è¤ê°·¤¦¤è¤¦¤ËÀß·×¤µ¤ì¤Æ¤¤¤Þ¤¹¡£ÅºÉÕ¥Õ¥¡¥¤¥ë¤Î MIME ¥¿¥¤¥×
 ¤¬ mime_lookup ¤Ë»ØÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ï¡¢¤½¤Î¥Õ¥¡¥¤¥ëÌ¾¤Î³ÈÄ¥»Ò¤ò mime.types
 ¥Õ¥¡¥¤¥ë¤Î³ÈÄ¥»Ò¤Î¥ê¥¹¥È¤È¸«Èæ¤Ù¤Æ¡¢³ÈÄ¥»Ò¤ËÂÐ±þ¤¹¤ë MIME ¥¿¥¤¥×¤ò»È¤Ã
-¤Æ¡¢mailcap ¤Ë¤¢¤ë¥ë¡¼¥ë¤äÂ¾¤Î»ØÄê¤µ¤ì¤¿ÀßÄê¥ª¥×¥·¥ç¥ó (¤¿¤È¤¨¤Ð auto_view)
-¤Ë½¾¤Ã¤¿½èÍý¤ò¤·¤Þ¤¹¡£°ìÈÌÅª¤Ê»È¤¤Êý¤Ï¤³¤¦¤Ç¤¹¡¢
+¤Æ¡¢mailcap ¤Ë¤¢¤ë¥ë¡¼¥ë¤äÂ¾¤Î»ØÄê¤µ¤ì¤¿ÀßÄê¥ª¥×¥·¥ç¥ó (Îã¤¨¤Ð auto_view) ¤Ë
+½¾¤Ã¤¿½èÍý¤ò¤·¤Þ¤¹¡£°ìÈÌÅª¤Ê»È¤¤Êý¤Ï¤³¤¦¤Ç¤¹¡¢
 
       mime_lookup application/octet-stream application/X-Lotus-Manuscript
 
@@ -3313,6 +3321,8 @@ mmuutttt --ss ""ddaattaa sseett ffoorr rruunn ##22"" ppr
       +o  uunnssccoorree _¥Ñ_¥¿_¡¼_¥ó [ _¥Ñ_¥¿_¡¼_¥ó ... ]
 
       +o  sseenndd--hhooookk _Àµ_µ¬_É½_¸½¡¡_¥³_¥Þ_¥ó_¥É
+
+      +o  sseenndd22--hhooookk _Àµ_µ¬_É½_¸½¡¡_¥³_¥Þ_¥ó_¥É
 
       +o  sseett [no|inv]_ÊÑ_¿ô[=_ÃÍ] [ _ÊÑ_¿ô ... ]
 
@@ -4026,7 +4036,27 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Ï¡¢ÊÖ¿®¸µ¥á¥Ã¥»¥¤¥¸¤Î¥Ø¥Ã¥À¤ò Mutt ¤¬ÊÔ½¸¥Ð¥Ã¥Õ¥¡¤Ë¼è¤ê
 ¹þ¤à¤è¤¦¤Ë¤Ê¤ë¡£ $$wweeeedd ¤ÎÀßÄê¤¬Å¬ÍÑ¤µ¤ì¤ë¡£
 
-66..33..6655..  hheellpp
+66..33..6655..  hheeaaddeerr__ccaacchhee
+
+Type: path
+Default: ""
+
+header_cache ÊÑ¿ô¤Ï¥Ø¥Ã¥À¥­¥ã¥Ã¥·¥å¤Î¥Ç¥¤¥¿¥Ù¥¤¥¹¤ò»Ø¤·¼¨¤¹¡£¤â¤·¥Ç¥£¥ì¥¯¥È
+¥ê¤ò»Ø¤·¤Æ¤¤¤ì¤Ð¡¢¥á¥¤¥ë¥Õ¥©¥ë¥À°ì¤Ä¤Ë¤Ä¤­¥Ç¥¤¥¿¥Ù¥¤¥¹°ì¤Ä¤¬ºîÀ®¤µ¤ì¤ë¡£¥Ç¥£
+¥ì¥¯¥È¥ê¤ò»Ø¤·¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ë¤Ï¤¹¤Ù¤Æ¤Î¥Õ¥©¥ë¥À¤ËÂÐ¤¹¤ëÃ±°ì¤Î¥­¥ã¥Ã¥·¥å¤¬ÍÑ¤¤
+¤é¤ì¤ë¡£´ûÄê¤Ç¤ÏÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤Î¤Ç¡¢¥Ø¥Ã¥À¥­¥ã¥Ã¥·¥å¤¬»È¤ï¤ì¤Ê¤¤¡£
+
+66..33..6666..  hheeaaddeerr__ccaacchhee__ppaaggeessiizzee
+
+Type: string
+Default: "16384"
+
+¥Ø¥Ã¥À¥­¥ã¥Ã¥·¥å¥Ç¥¤¥¿¥Ù¥¤¥¹¤Î¥Ú¥¤¥¸¥µ¥¤¥º¤òÊÑ¹¹¤¹¤ë¡£Âç¤­¤¹¤®¤¿¤ê¾®¤µ¤¹¤®¤¿
+¤ê¤¹¤ë¤È¡¢ÍÆÎÌ¤ä¥á¥â¥ê¤ä CPU ¤òÌµÂÌ¤Ë»È¤Ã¤Æ¤·¤Þ¤¦¤³¤È¤¬¤¢¤ë¡£´ûÄêÃÍ¤¬¤Û¤ÜºÇÁ±
+¤Î¤Ï¤º¤À¡£¾ÜºÙ¤Ë¤Ä¤¤¤Æ¤Ï "mutt header cache" ¤Ç google ¸¡º÷¤¹¤ë¤³¤È (ºÇ½é¤Ë½Ð
+¤Æ¤¯¤ë¥µ¥¤¥È)¡£
+
+66..33..6677..  hheellpp
 
 Type: boolean
 Default: yes
@@ -4039,7 +4069,7 @@ Default: yes
 ¹¹¤µ¤ì¤Æ¤â¥Ø¥ë¥×¹Ô¤Ï¹¹¿·¤µ¤ì¤Ê¤¤¤³¤È¤¬¤¢¤ë¡£¤¿¤À¡¢¤³¤ÎÊÑ¿ô¤Ï´ðËÜÅª¤Ë¿·¤·¤¤
 ¥æ¡¼¥¶¤Î¤¿¤á¤Ë¤¢¤ë¤Î¤Ç¡¢¤É¤Á¤é¤â¤µ¤Û¤ÉÂç¤­¤ÊÌäÂê¤È¤Ï¤Ê¤é¤Ê¤¤¤Ï¤º¤À¡£
 
-66..33..6666..  hhiiddddeenn__hhoosstt
+66..33..6688..  hhiiddddeenn__hhoosstt
 
 Type: boolean
 Default: no
@@ -4048,7 +4078,7 @@ Default: no
 ÊÑ¿ô¤Î¥Û¥¹¥ÈÌ¾ÉôÊ¬¤òÈ´¤¯¡£¤³¤ÎÊÑ¿ô¤Ï Message-ID ¤ÎÀ¸À®¤Ë±Æ¶Á¤·¤Ê¤¤¤·¡¢ºÇ¾å°Ì
 ¥É¥á¥¤¥ó¤Þ¤ÇÀÚ½ü¤·¤Æ¤·¤Þ¤¦¤è¤¦¤Ê¤³¤È¤Ë¤â¤Ê¤é¤Ê¤¤¡£
 
-66..33..6677..  hhiiddee__lliimmiitteedd
+66..33..6699..  hhiiddee__lliimmiitteedd
 
 Type: boolean
 Default: no
@@ -4056,14 +4086,14 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥¹¥ì¥Ã¥ÉÊ¬´ô¿Þ¤ÎÃæ¤Ç¡¢ limit (É½¼¨À©¸Â) ¤Ë¤è¤Ã¤Æ±£¤ì¤Æ¤¤¤ë
 ¥á¥Ã¥»¥¤¥¸¤Î¤¢¤ë¾ì½ê¤ò Mutt ¤¬»Ø¼¨¤·¤Ê¤¯¤Ê¤ë¡£
 
-66..33..6688..  hhiiddee__mmiissssiinngg
+66..33..7700..  hhiiddee__mmiissssiinngg
 
 Type: boolean
 Default: yes
 
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥¹¥ì¥Ã¥ÉÊ¬´ô¿Þ¤Ë·ç¤±¤Æ¤¤¤ë¥á¥Ã¥»¥¤¥¸¤ÎÂ¸ºß¤ò¼¨¤µ¤Ê¤¯¤Ê¤ë¡£
 
-66..33..6699..  hhiiddee__ttoopp__lliimmiitteedd
+66..33..7711..  hhiiddee__ttoopp__lliimmiitteedd
 
 Type: boolean
 Default: no
@@ -4072,7 +4102,7 @@ Default: no
 ¥ÉÄºÅÀ¤Ç¼¨¤µ¤Ê¤¯¤Ê¤ë¡£ $$hhiiddee__mmiissssiinngg ¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¤³¤Î¥ª¥×¥·¥ç¥ó¤¬¤É¤¦
 ¤Ê¤Ã¤Æ¤â¸ú²Ì¤¬¤Ê¤¤¤Î¤Ç¡¢³Ð¤¨¤Æ¤ª¤¯¤è¤¦¤Ë¡£
 
-66..33..7700..  hhiiddee__ttoopp__mmiissssiinngg
+66..33..7722..  hhiiddee__ttoopp__mmiissssiinngg
 
 Type: boolean
 Default: yes
@@ -4081,7 +4111,7 @@ Default: yes
 ¤Ê¤ë¡£¤¿¤À¡¢$$hhiiddee__lliimmiitteedd ¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Ï¤³¤Î¥ª¥×¥·¥ç¥ó¤Î¸ú²Ì¤¬¤Ê¤¤
 ¤È¤¤¤¦¤³¤È¤ËÃí°Õ¤»¤è¡£
 
-66..33..7711..  hhiissttoorryy
+66..33..7733..  hhiissttoorryy
 
 Type: number
 Default: 10
@@ -4089,7 +4119,7 @@ Default: 10
 ¤³¤ÎÊÑ¿ô¤ÏÊ¸»úÎóÍúÎò¥Ð¥Ã¥Õ¥¡¤Î¥µ¥¤¥º (µ­²±¤¹¤ëÊ¸»úÎó¤Î¿ô [ÌõÃí¡§»ú¿ô¤Ç¤Ï¤Ê
 ¤¤]) ¤òÀ©¸æ¤¹¤ë¡£¤³¤Î¥Ð¥Ã¥Õ¥¡¤Ï¡¢ÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤ë¤¿¤Ó¤Ë¾Ãµî¤µ¤ì¤ë¡£
 
-66..33..7722..  hhoonnoorr__ffoolllloowwuupp__ttoo
+66..33..7744..  hhoonnoorr__ffoolllloowwuupp__ttoo
 
 Type: quadoption
 Default: yes
@@ -4097,7 +4127,7 @@ Default: yes
 ¤³¤ÎÊÑ¿ô¤Ï¡¢¥á¥Ã¥»¥¤¥¸¤Ø¥°¥ë¡¼¥×ÊÖ¿®¤¹¤ëºÝ¤Ë Mail-Followup-To ¥Ø¥Ã¥À¤òÂº½Å¤¹
 ¤ë¤«¤É¤¦¤«¤òÀ©¸æ¤¹¤ë¡£
 
-66..33..7733..  hhoossttnnaammee
+66..33..7755..  hhoossttnnaammee
 
 Type: string
 Default: ""
@@ -4105,7 +4135,7 @@ Default: ""
 ¥í¥¦¥«¥ë¥á¥¤¥ë¥¢¥É¥ì¥¹¤Î "@" ¤Î¸å¤ËÉÕ¤±¤ë¥Û¥¹¥ÈÌ¾¤ò»ØÄê¤¹¤ë¡£¤³¤ì¤Ï¥³¥ó¥Ñ¥¤
 ¥ë»þ¤Ë /etc/resolv.conf ¤«¤é¼èÆÀ¤·¤¿ÄêµÁ¤ò¾å½ñ¤­¤¹¤ë¡£
 
-66..33..7744..  iiggnnoorree__lliisstt__rreeppllyy__ttoo
+66..33..7766..  iiggnnoorree__lliisstt__rreeppllyy__ttoo
 
 Type: boolean
 Default: no
@@ -4118,7 +4148,7 @@ Default: no
 ¥¹¥È¤Ë¸þ¤«¤ï¤»¤ë¤Ë¤Ï _l_i_s_t_-_r_e_p_l_y ¤ò»È¤¦¡£¤Þ¤¿¡¢ _g_r_o_u_p_-_r_e_p_l_y ¤Ïº¹½Ð¿Í¤È¥ê¥¹¥È¤Î
 Î¾Êý¤ËÊÖ¿®¤¹¤ë¡£
 
-66..33..7755..  iimmaapp__aauutthheennttiiccaattoorrss
+66..33..7777..  iimmaapp__aauutthheennttiiccaattoorrss
 
 Type: string
 Default: ""
@@ -4135,7 +4165,7 @@ md5', 'gssapi', 'cram-md5')¡£¤³¤Î¥Ñ¥é¥á¡¼¥¿¤ÏÂçÊ¸»ú¤È¾®Ê¸»ú¤ò¶èÊÌ¤·¤Ê¤¤¡£¤Ê¤ª
 ÃíÃíµ­µ­:: Mutt ¤¬Â¾¤ÎÇ§¾ÚÊý¼°¤Ø°Ü¤ë¤Î¤ÏÊý¼°¤¬ÍøÍÑ¤Ç¤­¤Ê¤¤¾ì¹ç¤Î¤ß¤Ç¤¢¤ë¡£Êý¼°¤¬
 ÍøÍÑ¤Ç¤­¤ë¤¬Ç§¾Ú¤Ë¼ºÇÔ¤·¤¿¤È¤¤¤¦¤È¤­¤Ë¤Ï IMAP ¥µ¡¼¥Ð¤ËÀÜÂ³¤·¤Ê¤¤¤³¤È¤Ë¤Ê¤ë¡£
 
-66..33..7766..  iimmaapp__ddeelliimm__cchhaarrss
+66..33..7788..  iimmaapp__ddeelliimm__cchhaarrss
 
 Type: string
 Default: "/."
@@ -4144,14 +4174,14 @@ Default: "/."
 ¤¬Æþ¤ë¡£ÆÃ¤Ë¤³¤ì¤¬ÌòÎ©¤Ä¤Î¤Ï _f_o_l_d_e_r ÊÑ¿ô¤ÎÆâÍÆ¤ò¼¨¤¹¤¿¤á¤Ë "=" ¥·¥ç¡¼¥È¥«¥Ã¥È
 ¤ò»È¤¦¤È¤­¤Ç¤¢¤ë¡£ (ÌõÃí¡§¤Ä¤Þ¤ê "/.=" ¤Î¤è¤¦¤ËÀßÄê¤¹¤ë¤È¤¤¤¦¤³¤È¤«?)
 
-66..33..7777..  iimmaapp__ffoorrccee__ssssll
+66..33..7799..  iimmaapp__ffoorrccee__ssssll
 
 Type: boolean
 Default: no
 
 ¤³¤ÎÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢Mutt ¤Ï¾ï¤Ë SSL ¤ò»È¤Ã¤Æ IMAP ¥µ¡¼¥Ð¤ËÀÜÂ³¤¹¤ë¡£
 
-66..33..7788..  iimmaapp__hheeaaddeerrss
+66..33..8800..  iimmaapp__hheeaaddeerrss
 
 Type: string
 Default: ""
@@ -4161,7 +4191,7 @@ TYPE CONTENT-DESCRIPTION IN-REPLY-TO REPLY-TO LINES LIST-POST X-LABEL") ¤Ë²Ã
 ¤¨¤Æ¤µ¤é¤Ë IMAP ¥µ¡¼¥Ð¤ØÍ×µá¤¹¤ë¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É¡£¥¹¥Ñ¥à¸¡½Ð¤Î¤¿¤á¤Î¥Ø¥Ã¥À¤ò
 ÄÉ²Ã¤·¤¿¤¤¤È¤­¤Ë»È¤¦¡£ÃíÃí°Õ°Õ:: ¤³¤ì¤Ï¥¹¥Ú¥¤¥¹¶èÀÚ¤ê¤Î¥ê¥¹¥È¤Ç¤¢¤ë¡£
 
-66..33..7799..  iimmaapp__hhoommee__nnaammeessppaaccee
+66..33..8811..  iimmaapp__hhoommee__nnaammeessppaaccee
 
 Type: string
 Default: ""
@@ -4170,7 +4200,7 @@ Default: ""
 ¤Æ¤Û¤·¤¤¤â¤Î¤À¡£¤½¤Î¤è¤¦¤Ë¤Ê¤Ã¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢¤³¤ÎÊÑ¿ô¤ò¼«Ê¬¤Î¥Õ¥©¥ë¥À¤Ø¤Î IMAP
 ¥Ñ¥¹¤ËÀßÄê¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£
 
-66..33..8800..  iimmaapp__kkeeeeppaalliivvee
+66..33..8822..  iimmaapp__kkeeeeppaalliivvee
 
 Type: number
 Default: 900
@@ -4182,7 +4212,7 @@ Default: 900
 ¤Ç RFC ¤¬ÇË¤é¤ì¤Æ¤¤¤ë¡£ÀÜÂ³¤ò»ÈÍÑ¤·¤Æ¤¤¤Ê¤¤¤È¤ß¤Ê¤µ¤ì¤Æ IMAP ¥µ¡¼¥Ð¤«¤éÀÚÃÇ¤µ
 ¤ì¤ë¤è¤¦¤Ç¤¢¤ì¤Ð¡¢¤³¤Î¿ôÃÍ¤ò¸º¤é¤¹¤³¤È¡£
 
-66..33..8811..  iimmaapp__lliisstt__ssuubbssccrriibbeedd
+66..33..8833..  iimmaapp__lliisstt__ssuubbssccrriibbeedd
 
 Type: boolean
 Default: no
@@ -4191,7 +4221,7 @@ Default: no
 ¥Õ¥©¥ë¥À¤¹¤Ù¤Æ¤Ë¤¹¤ë¤«¤òÀ©¸æ¤¹¤ë¡£¤³¤ì¤Ï IMAP ¥Ö¥é¥¦¥¶Æâ¤Ç _t_o_g_g_l_e_-_s_u_b_s_c_r_i_b_e_d
 ´Ø¿ô¤ò»È¤Ã¤ÆÀÚ¤êÂØ¤¨¤ë¤³¤È¤â¤Ç¤­¤ë¡£
 
-66..33..8822..  iimmaapp__ppaassss
+66..33..8844..  iimmaapp__ppaassss
 
 Type: string
 Default: ""
@@ -4201,7 +4231,7 @@ mail ´Ø¿ô¤Î¼Â¹Ô»þ¤Ë¥Ñ¥¹¥ï¡¼¥É¤òµá¤á¤ë¤³¤È¤Ë¤Ê¤ë¡£·Ù·Ù¹ð¹ð: ¤³¤Î¥ª¥×¥·¥ç¥ó¤Ï½½Ê
 °ÂÁ´¤Ê¥Þ¥·¥ó¾å¤Ç¤Î¤ß»È¤¦¤Ù¤­¤Ç¤¢¤ë¡£¤Ê¤¼¤Ê¤é¡¢muttrc ¥Õ¥¡¥¤¥ë¤ò¼«Ê¬°Ê³°¤¬ÆÉ¤á
 ¤Ê¤¤¤è¤¦¤Ë¤·¤¿¤Ä¤â¤ê¤Ç¤â¡¢¥¹¡¼¥Ñ¥æ¡¼¥¶¤ÏÆÉ¤á¤ë¤«¤é¤À¡£
 
-66..33..8833..  iimmaapp__ppaassssiivvee
+66..33..8855..  iimmaapp__ppaassssiivvee
 
 Type: boolean
 Default: yes
@@ -4211,7 +4241,7 @@ Default: yes
 ¤¬Í­ÍÑ¤È¤Ê¤ë¤Î¤Ï¡¢Mutt µ¯Æ°»þ¤Ë¥æ¡¼¥¶Ì¾¤È¥Ñ¥¹¥ï¡¼¥É¤ÎÆþÎÏ¤òÂ¥¤µ¤ì¤¿¤¯¤Ê¤¤¾ì¹ç
 ¤ä¡¢ÀÜÂ³¤ò³«¤¯¤Î¤Ë»þ´Ö¤¬¤«¤«¤ë¾ì¹ç¤Ê¤É¤Ç¤¢¤ë¡£
 
-66..33..8844..  iimmaapp__ppeeeekk
+66..33..8866..  iimmaapp__ppeeeekk
 
 Type: boolean
 Default: yes
@@ -4221,7 +4251,7 @@ Default: yes
 ¤¬¡¢IMAP ¥Õ¥©¥ë¥À¤òÊÄ¤¸¤ë¤Î¤¬´ö¤é¤«ÃÙ¤¯¤Ê¤ë¤³¤È¤¬¤¢¤ë¡£¤³¤Î¥ª¥×¥·¥ç¥ó¤Ï¥¹¥Ô¡¼
 ¥É¶¸¤Î¿Í¤¿¤Á¤ò¤Ê¤À¤á¤ë¤¿¤á¤Ë¤Î¤ßÂ¸ºß¤·¤Æ¤¤¤ë¤Î¤À¡£
 
-66..33..8855..  iimmaapp__sseerrvveerrnnooiissee
+66..33..8877..  iimmaapp__sseerrvveerrnnooiissee
 
 Type: boolean
 Default: yes
@@ -4231,7 +4261,7 @@ Default: yes
 ¥ÐÂ¦¤ÎÀßÄê¥ß¥¹¤Î¤¿¤á¤Ë¥æ¡¼¥¶¤«¤é¤Ï¤É¤¦¤·¤è¤¦¤â¤Ê¤¤¤â¤Î¤Ç¤¢¤Ã¤¿¤ê¤¹¤ë¤³¤È¤¬Â¿
 ¤¤¤Î¤Ç¡¢ÍÞ»ß¤·¤¿¤¤¤È»×¤¦¤³¤È¤â¤¢¤ë¤À¤í¤¦¡£
 
-66..33..8866..  iimmaapp__uusseerr
+66..33..8888..  iimmaapp__uusseerr
 
 Type: string
 Default: ""
@@ -4240,7 +4270,7 @@ IMAP ¥µ¡¼¥Ð¤Ø¤Î¥í¥°¥¤¥óÌ¾¡£
 
 ¤³¤ÎÊÑ¿ô¤Î´ûÄêÃÍ¤Ï¥í¥¦¥«¥ë¥Þ¥·¥ó¾å¤Î¥æ¡¼¥¶Ì¾¤Ë¤Ê¤ë¡£
 
-66..33..8877..  iimmpplliicciitt__aauuttoovviieeww
+66..33..8899..  iimmpplliicciitt__aauuttoovviieeww
 
 Type: boolean
 Default: no
@@ -4250,21 +4280,21 @@ Default: no
 Ãí¡§aauuttoo__vviieeww ¤Ç) ÄêµÁ¤µ¤ì¤Æ¤¤¤Ê¤¯¤Æ¤â¤À¡£¤½¤Î¤è¤¦¤ËÄ´ºº¤·¤Æ¹àÌÜ¤¬¸«¤Ä¤«¤Ã¤¿
 ¤È¤­¤Ë¤Ï¡¢¤½¤³¤ÇÄêµÁ¤µ¤ì¤Æ¤¤¤ë¥ô¥å¡¼¥ï¤ò»È¤Ã¤ÆÆâÍÆ¤ò¥Æ¥­¥¹¥È·Á¼°¤ØÊÑ´¹¤¹¤ë¡£
 
-66..33..8888..  iinncclluuddee
+66..33..9900..  iinncclluuddee
 
 Type: quadoption
 Default: ask-yes
 
 ÊÖ¿®¤·¤è¤¦¤È¤·¤Æ¤¤¤ë¸µ¤Î¥á¥Ã¥»¥¤¥¸ÆâÍÆ¤òÊÖ¿®¤Ë´Þ¤á¤ë¤«¤É¤¦¤«¤òÀ©¸æ¤¹¤ë¡£
 
-66..33..8899..  iinncclluuddee__oonnllyyffiirrsstt
+66..33..9911..  iinncclluuddee__oonnllyyffiirrsstt
 
 Type: boolean
 Default: no
 
 ÊÖ¿®¤ÎºÝ¤Ë¥á¥Ã¥»¥¤¥¸¤ÎºÇ½é¤ÎÅºÉÕ¥Õ¥¡¥¤¥ë¤Î¤ß°úÍÑ¤¹¤ë¤«¤É¤¦¤«¤òÀ©¸æ¤¹¤ë¡£
 
-66..33..9900..  iinnddeenntt__ssttrriinngg
+66..33..9922..  iinnddeenntt__ssttrriinngg
 
 Type: string
 Default: "> "
@@ -4273,7 +4303,7 @@ Default: "> "
 ¹¹¤·¤Ê¤¤¤³¤È¤¬¶¯¤¯¿ä¾©¤µ¤ì¤Æ¤¤¤ë¡£ÊÑ¹¹¤¹¤ë¤È¡¢Ç®¶¸Åª¤Ê¥Í¥Ã¥È»ÔÌ±¤ò·ã¹·¤µ¤»¤Æ
 ¤·¤Þ¤¦·¹¸þ¤¬¤¢¤ë¤«¤é¤À¡£
 
-66..33..9911..  iinnddeexx__ffoorrmmaatt
+66..33..9933..  iinnddeexx__ffoorrmmaatt
 
 Type: string
 Default: "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
@@ -4379,14 +4409,14 @@ Default: "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
 
 »²¾È: $$ttoo__cchhaarrss
 
-66..33..9922..  iissppeellll
+66..33..9944..  iissppeellll
 
 Type: path
 Default: "/usr/bin/ispell"
 
 ¤É¤¦ ispell (GNU ¥¹¥Ú¥ë¥Á¥§¥Ã¥«) ¤òµ¯Æ°¤¹¤ë¤«¡£
 
-66..33..9933..  kkeeeepp__ffllaaggggeedd
+66..33..9955..  kkeeeepp__ffllaaggggeedd
 
 Type: boolean
 Default: no
@@ -4394,7 +4424,7 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥Õ¥é¥°ÉÕ¤­´ûÆÉ¥á¥Ã¥»¥¤¥¸¤Ï¥¹¥×¡¼¥ë¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤«¤é¼«Ê¬¤Î
 $$mmbbooxx ¥á¥¤¥ë¥Ü¥Ã¥¯¥¹ (¤Þ¤¿¤Ï mmbbooxx--hhooookk ¥³¥Þ¥ó¥É¤Î·ë²Ì) ¤Ë°Ü¤µ¤Ê¤¤¡£
 
-66..33..9944..  llooccaallee
+66..33..9966..  llooccaallee
 
 Type: string
 Default: "C"
@@ -4402,7 +4432,7 @@ Default: "C"
 _s_t_r_f_t_i_m_e_(_3_) ¤¬ÆüÉÕ¤Ê¤É¤òÀ°·Á¤¹¤ë¤¿¤á¤Ë»È¤¦¥í¥«¡¼¥ë¡£»È¤¦¤³¤È¤Î¤Ç¤­¤ëÃÍ¤Ï¡¢¥·
 ¥¹¥Æ¥à¤¬¥í¥«¡¼¥ëÊÑ¿ô _L_C___T_I_M_E ¤È¤·¤Æ¼õ¤±ÉÕ¤±¤ëÊ¸»úÎó¤Ç¤¢¤ë¡£
 
-66..33..9955..  mmaaiill__cchheecckk
+66..33..9977..  mmaaiill__cchheecckk
 
 Type: number
 Default: 5
@@ -4410,7 +4440,7 @@ Default: 5
 ¤³¤ÎÃÍ¤Ï¡¢¤É¤ì¤Û¤É¤ÎÉÑÅÙ¤Ç (²¿ÉÃ¤Ë°ìÅÙ) Mutt ¤¬¿·Ãå¥á¥¤¥ë¤ò³ÎÇ§¤¹¤ë¤«¤òÀ©¸æ
 ¤¹¤ë¡£
 
-66..33..9966..  mmaaiillccaapp__ppaatthh
+66..33..9988..  mmaaiillccaapp__ppaatthh
 
 Type: string
 Default: ""
@@ -4418,7 +4448,7 @@ Default: ""
 ¤³¤ÎÊÑ¿ô¤Ï¡¢Mutt ¤¬Ä¾ÀÜ¥µ¥Ý¡¼¥È¤·¤Æ¤¤¤Ê¤¤ MIME ¥Ñ¡¼¥È¤òÉ½¼¨¤·¤è¤¦¤È¤¹¤ëºÝ
 ¤Ë¡¢¤É¤Î¥Õ¥¡¥¤¥ë¤ËÌä¤¤¹ç¤ï¤»¤ë¤«¤ò»ØÄê¤¹¤ë¡£
 
-66..33..9977..  mmaaiillccaapp__ssaanniittiizzee
+66..33..9999..  mmaaiillccaapp__ssaanniittiizzee
 
 Type: boolean
 Default: yes
@@ -4430,7 +4460,7 @@ MIME ¹àÌÜ¤¬Æ°¤«¤Ê¤¯¤Ê¤ë¤³¤È¤¬¤Ê¤¤¤È¤ÏÃÇ¸À¤Ç¤­¤Ê¤¤¡£
 DDOONN''TT CCHHAANNGGEE TTHHIISS SSEETTTTIINNGG UUNNLLEESSSS YYOOUU AARREE RREEAALLLLYY SSUURREE WWHHAATT YYOOUU AARREE DDOOIINNGG!!
 ¤³¤³¤Î¤ÎÀßÀßÄêÄê¤Ï¤Ï¡¢¡¢´°´°Á´Á´¤Ë¤ËÍýÍý²ò²ò¤¹¤¹¤ë¤ë¤³¤³¤È¤È¤Ê¤Ê¤¯¤¯ÊÑÊÑ¹¹¹¹¤·¤·¤Æ¤Æ¤Ï¤Ï¤Ê¤Ê¤é¤é¤Ê¤Ê¤¤¤¤!!
 
-66..33..9988..  mmaaiillddiirr__ttrraasshh
+66..33..110000..  mmaaiillddiirr__ttrraasshh
 
 Type: boolean
 Default: no
@@ -4440,7 +4470,7 @@ Default: no
 ·Á¼°¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤Ë¤Î¤ßÅ¬ÍÑ¤µ¤ì¤ë¡£Â¾¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹·Á¼°¤Ë¤Ï¤Þ¤Ã¤¿¤¯¸ú²Ì
 ¤¬¤Ê¤¤¡£
 
-66..33..9999..  mmaarrkk__oolldd
+66..33..110011..  mmaarrkk__oolldd
 
 Type: boolean
 Default: yes
@@ -4450,7 +4480,7 @@ _¿·_Ãå¤Ç_Ì¤_ÆÉ_¤Î¥á¥Ã¥»¥¤¥¸¤òÆÉ¤Þ¤Ê¤¤¤Þ¤Þ¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤ò½Ð¤¿¤È¤­¤Ë¡¢Mutt ¤
 ²ó Mutt ¤ò»Ï¤á¤¿¤È¤­¤Ë¡¢¥¤¥ó¥Ç¥Ã¥¯¥¹¥á¥Ë¥å¡¼¤Ç¥á¥Ã¥»¥¤¥¸¤ÎÎÙ¤ê¤Ë "O" ¤ÈÉ½¼¨¤µ
 ¤ì¤ë¡£¤½¤ì¤¬¸Å¤¤ (old) ¤È¤¤¤¦¤³¤È¤ò¼¨¤¹¤Î¤Ç¤¢¤ë¡£
 
-66..33..110000..  mmaarrkkeerrss
+66..33..110022..  mmaarrkkeerrss
 
 Type: boolean
 Default: yes
@@ -4458,7 +4488,7 @@ Default: yes
 ÆâÉô¥Ú¥¤¥¸¥ã¤ÇÀÞ¤êÊÖ¤µ¤ì¤¿¹Ô¤ÎÉ½¼¨¤òÀ©¸æ¤¹¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢ "+" °õ¤¬¹Ô
 Æ¬¤ËÉÕ¤¤¤Æ¡¢ÀÞ¤êÊÖ¤·¹Ô¤òÉ½¤¹¡£ $$ssmmaarrtt__wwrraapp ÊÑ¿ô¤â¸«¤è¡£
 
-66..33..110011..  mmaasskk
+66..33..110033..  mmaasskk
 
 Type: regular expression
 Default: "!^\.[^.]"
@@ -4467,14 +4497,14 @@ Default: "!^\.[^.]"
 ¤ë¡£¥Õ¥¡¥¤¥ëÌ¾¤¬¤³¤Î¾ò·ï¤Ë¹çÃ×¤¹¤ë¤â¤Î¤Î¤ßÉ½¼¨¤µ¤ì¤ë¤³¤È¤Ë¤Ê¤ë¡£¹çÃ×¾ò·ï¤Ï¾ï
 ¤ËÂçÊ¸»ú¤È¾®Ê¸»ú¤ò¶èÊÌ¤¹¤ë¡£
 
-66..33..110022..  mmbbooxx
+66..33..110044..  mmbbooxx
 
 Type: path
 Default: "~/mbox"
 
 ¤³¤ì¤Ë»ØÄê¤·¤¿¥Õ¥©¥ë¥À¤Ø¡¢$$ssppoooollffiillee ¥Õ¥©¥ë¥À¤Î´ûÆÉ¥á¥¤¥ë¤òÄÉ²Ã¤¹¤ë¡£
 
-66..33..110033..  mmbbooxx__ttyyppee
+66..33..110055..  mmbbooxx__ttyyppee
 
 Type: folder magic
 Default: mbox
@@ -4482,7 +4512,7 @@ Default: mbox
 ¿·¤·¤¤¥Õ¥©¥ë¥À¤òºî¤ë¤È¤­¤Ë»È¤¦´ûÄê¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹·Á¼°¡£ mbox, MMDF, MH,
 Maildir ¤Î¤¤¤º¤ì¤Ç¤âÎÉ¤¤¡£
 
-66..33..110044..  mmeettoooo
+66..33..110066..  mmeettoooo
 
 Type: boolean
 Default: no
@@ -4490,7 +4520,7 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤È¡¢¥á¥Ã¥»¥¤¥¸¤Ø¤ÎÊÖ¿®»þ¤Ë°¸Àè¥ê¥¹¥È¤«¤é¼«Ê¬¤Î¥¢¥É¥ì¥¹
 (aalltteerrnnaatteess ¥³¥Þ¥ó¥É¤ò»²¾È) ¤ò½üµî¤¹¤ë¡£
 
-66..33..110055..  mmeennuu__ssccrroollll
+66..33..110077..  mmeennuu__ssccrroollll
 
 Type: boolean
 Default: no
@@ -4500,7 +4530,7 @@ Default: no
 ¥Ú¥¤¥¸¤¬É½¼¨¤µ¤ì¤ë (¤³¤Á¤é¤ÎÊý¤¬¡¢²¿ÅÙ¤âºÆÉÁ²è¤¹¤ë¤Î¤òÈò¤±¤é¤ì¤ë¤Î¤ÇÃÙ¤¤²óÀþ
 ¤ËÍ­ÍÑ¤Ç¤¢¤ë)¡£
 
-66..33..110066..  mmeettaa__kkeeyy
+66..33..110088..  mmeettaa__kkeeyy
 
 Type: boolean
 Default: no
@@ -4512,7 +4542,7 @@ Default: no
 "x" ¤ò²¡¤·¤¿¤â¤Î¤È¤·¤Æ°·¤ï¤ì¤ë¡£¤Ê¤¼¤Ê¤é "0xf4" ¤«¤é¹â°Ì¥Ó¥Ã¥È¤ò½ü¤¤¤¿·ë²Ì¤Ï
 "0x74" ¤Ç¤¢¤ê¡¢¤³¤ì¤Ï ASCII Ê¸»ú¤Î "x" ¤À¤«¤é¤Ç¤¢¤ë¡£
 
-66..33..110077..  mmhh__ppuurrggee
+66..33..110099..  mmhh__ppuurrggee
 
 Type: boolean
 Default: no
@@ -4521,28 +4551,28 @@ Default: no
 ¤Ë¤Ïºï½ü¤»¤º¡¢¤½¤Î¥Õ¥¡¥¤¥ëÌ¾¤ò¡Ö_,_<_µì_¥Õ_¥¡_¥¤_¥ë_Ì¾_>¡×¤ËÊÑ¹¹¤¹¤ë¤Î¤Ç¤¢¤ë¡£¤â¤·ÊÑ¿ô
 ¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ì¤Ð¡¢¥á¥Ã¥»¥¤¥¸¥Õ¥¡¥¤¥ë¤ÏÃ±¤Ë¾Ã¤µ¤ì¤Æ¤·¤Þ¤¦¡£
 
-66..33..110088..  mmhh__sseeqq__ffllaaggggeedd
+66..33..111100..  mmhh__sseeqq__ffllaaggggeedd
 
 Type: string
 Default: "flagged"
 
 ¥Õ¥é¥°ÉÕ¤­¥á¥Ã¥»¥¤¥¸¤Ë»È¤¦ MH ¥·¡¼¥¯¥¦¥§¥ó¥¹Ì¾¡£
 
-66..33..110099..  mmhh__sseeqq__rreepplliieedd
+66..33..111111..  mmhh__sseeqq__rreepplliieedd
 
 Type: string
 Default: "replied"
 
 ÊÖ¿®ºÑ¤ß¥á¥Ã¥»¥¤¥¸¤Ë»È¤¦ MH ¥·¡¼¥¯¥¦¥§¥ó¥¹Ì¾¡£
 
-66..33..111100..  mmhh__sseeqq__uunnsseeeenn
+66..33..111122..  mmhh__sseeqq__uunnsseeeenn
 
 Type: string
 Default: "unseen"
 
 Ì¤¸«¥á¥Ã¥»¥¤¥¸¤Ë»È¤¦ MH ¥·¡¼¥¯¥¦¥§¥ó¥¹Ì¾¡£
 
-66..33..111111..  mmiimmee__ffoorrwwaarrdd
+66..33..111133..  mmiimmee__ffoorrwwaarrdd
 
 Type: quadoption
 Default: no
@@ -4555,7 +4585,7 @@ Default: no
 
 $$ffoorrwwaarrdd__ddeeccooddee ¤ª¤è¤Ó $$mmiimmee__ffoorrwwaarrdd__ddeeccooddee ¤â»²¾È¡£
 
-66..33..111122..  mmiimmee__ffoorrwwaarrdd__ddeeccooddee
+66..33..111144..  mmiimmee__ffoorrwwaarrdd__ddeeccooddee
 
 Type: boolean
 Default: no
@@ -4564,7 +4594,7 @@ $$mmiimmee__ffoorrwwaarrdd ¤¬ _y_e_s ¤Î¤È¤­¤Ë¤Ï¡¢Æþ¤êÁÈ¤ó¤À MIME
 text/plain ¤ØÉü¹æ¤¹¤ë¤«¤É¤¦¤«¤ò¤³¤ÎÊÑ¿ô¤¬À©¸æ¤¹¤ë¡£ _n_o ¤Î¤È¤­¤Ë¤Ï
 $$ffoorrwwaarrdd__ddeeccooddee ¤¬»È¤ï¤ì¤ë¡£
 
-66..33..111133..  mmiimmee__ffoorrwwaarrdd__rreesstt
+66..33..111155..  mmiimmee__ffoorrwwaarrdd__rreesstt
 
 Type: quadoption
 Default: yes
@@ -4577,7 +4607,7 @@ MIME ¥á¥Ã¥»¥¤¥¸¤ÎÅºÉÕ¥Õ¥¡¥¤¥ë¥á¥Ë¥å¡¼¤«¤é¥Õ¥¡¥¤¥ë¤òÊ£¿ô (ÌõÃí¡§Èó MMIIMMEE ¤
 ¤Ç¤·¤«Å¾Á÷¤Ç¤­¤Ê¤¤¥Õ¥¡¥¤¥ë¤ò¤¢¤­¤é¤á¤ë (no) ¤« MIME ¤ÇÅ¾Á÷¤¹¤ë (yes) ¤«¤ÎÀßÄê
 ¤Ê¤Î¤À¡£Å¾Á÷¥Õ¥¡¥¤¥ë¤¬°ì¤Ä¤À¤±¤Î¤È¤­¤Ë¤Ï¡¢¤¢¤­¤é¤á¤ë¤Ï¤º¤¬¤Ê¤¤¤È¤ß¤Ê¤µ¤ì¤ë¡£)
 
-66..33..111144..  mmiixx__eennttrryy__ffoorrmmaatt
+66..33..111166..  mmiixx__eennttrryy__ffoorrmmaatt
 
 Type: string
 Default: "%4n %c %-16s %a"
@@ -4593,7 +4623,7 @@ Default: "%4n %c %-16s %a"
 
    %%aa ¥ê¥á¥¤¥é¤Î¥á¥¤¥ë¥¢¥É¥ì¥¹
 
-66..33..111155..  mmiixxmmaasstteerr
+66..33..111177..  mmiixxmmaasstteerr
 
 Type: path
 Default: "mixmaster"
@@ -4602,7 +4632,7 @@ Default: "mixmaster"
 ¤Î¥Ñ¥é¥á¡¼¥¿¤òÉÕ¤±¤Æ¡¢´ûÃÎ¤Î¥ê¥á¥¤¥é°ìÍ÷¤ò¼ý½¸¤¹¤ë¡£¤Þ¤¿¡¢ºÇ½ªÅª¤Ë¥á¥Ã¥»¥¤¥¸
 ¤ò Mixmaster ¥Á¥§¥¤¥ó·ÐÍ³¤ÇÁ÷¿®¤¹¤ëºÝ¤Ë¤â»È¤¦¡£
 
-66..33..111166..  mmoovvee
+66..33..111188..  mmoovvee
 
 Type: quadoption
 Default: ask-no
@@ -4613,7 +4643,7 @@ Default: ask-no
 ¤·¤Ç°ÜÆ°¤µ¤ì¤ë¤·¡¢no ¤Ë¤¹¤ì¤Ð³ÎÇ§¤Ê¤·¤Ç°ÜÆ°¤â¤Ê¤·¤Ê¤Î¤À¤«¤é¡¢¸¶Ê¸Ä¾Ìõ¤Ç¤ÏÉÔÀµ
 ³Î¤Ë¤Ê¤Ã¤Æ¤·¤Þ¤¦¡£)
 
-66..33..111177..  mmeessssaaggee__ffoorrmmaatt
+66..33..111199..  mmeessssaaggee__ffoorrmmaatt
 
 Type: string
 Default: "%s"
@@ -4622,7 +4652,7 @@ Default: "%s"
 Ê¸»úÎó¡£ÄêµÁ¤µ¤ì¤Æ¤¤¤ë printf()É÷¥·¡¼¥¯¥¦¥§¥ó¥¹¤Î´°Á´¤Ê°ìÍ÷É½¤Ë¤Ä¤¤¤Æ¤Ï
 $$iinnddeexx__ffoorrmmaatt ¤Î¹à¤ò»²¾È¤Î¤³¤È¡£
 
-66..33..111188..  nnaarrrrooww__ttrreeee
+66..33..112200..  nnaarrrrooww__ttrreeee
 
 Type: boolean
 Default: no
@@ -4630,7 +4660,7 @@ Default: no
 ¤³¤ÎÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥¹¥ì¥Ã¥É¥È¥¥¥ê¡¼¤ò¶¹¤¯¤·¤Æ¡¢¿¼¤¤¥¹¥ì¥Ã¥É¤¬²èÌÌ¤Ë
 ¼ý¤Þ¤ë¤è¤¦¤Ë¤¹¤ë¡£
 
-66..33..111199..  ppaaggeerr
+66..33..112211..  ppaaggeerr
 
 Type: path
 Default: "builtin"
@@ -4644,7 +4674,7 @@ Default: "builtin"
 ¤ÎÂç¤­¤µ¤òÊÑ¹¹¤¹¤ë¤È¡¢¥Ø¥ë¥×¥á¥Ë¥å¡¼¤Ç²èÌÌ¤ÎÉý¤è¤êÄ¹¤¤¹Ô¤¬¤Ò¤É¤¤¤³¤È¤Ë¤Ê¤Ã¤Æ
 ¤·¤Þ¤¦¡£
 
-66..33..112200..  ppaaggeerr__ccoonntteexxtt
+66..33..112222..  ppaaggeerr__ccoonntteexxtt
 
 Type: number
 Default: 0
@@ -4653,7 +4683,7 @@ Default: 0
 ¤¹¹Ô¿ô¤òÀ©¸æ¤¹¤ë¡£Mutt ¤Ï´ûÄê¤Ç¤Ï¡¢¸½»þÅÀ¤Î²èÌÌ¤Ç°ìÈÖ²¼¤Ë¤¢¤ë¹Ô¤Î¼¡¤«¤é¤ò¼¡¥Ú
 ¥¤¥¸¤È¤·¤ÆÉ½¼¨¤¹¤ë (Ê¸Ì®¤Ï 0 ¹Ô¤È¤¤¤¦¤³¤È)¡£
 
-66..33..112211..  ppaaggeerr__ffoorrmmaatt
+66..33..112233..  ppaaggeerr__ffoorrmmaatt
 
 Type: string
 Default: "-%Z- %C/%m: %-20.20n   %s"
@@ -4664,7 +4694,7 @@ Default: "-%Z- %C/%m: %-20.20n   %s"
 ¥â¥¦¥É¤Ë¤ª¤±¤ë¥¹¥Æ¥¤¥¿¥¹¹Ô¤ÈÆ±¤¸°ÌÃÖ¤Ë¾ï¤ËÉ½¼¨¤µ¤ì¤ë)¡£Àµ¤·¤¤¥·¡¼¥¯¥¦¥§¥ó¥¹¤Ï
 $$iinnddeexx__ffoorrmmaatt ¤Î¹à¤Ç°ìÍ÷¤Ë¤µ¤ì¤Æ¤¤¤ë¡£
 
-66..33..112222..  ppaaggeerr__iinnddeexx__lliinneess
+66..33..112244..  ppaaggeerr__iinnddeexx__lliinneess
 
 Type: number
 Default: 0
@@ -4680,7 +4710,7 @@ _p_a_g_e_r___i_n_d_e_x___l_i_n_e_s ¤¬ 6 ¤Ç¤¢¤Ã¤Æ¤â¡¢¼ÂºÝ¤Î¥¤¥ó¥
 ¥¤¥¸¿ô¤¬ _p_a_g_e_r___i_n_d_e_x___l_i_n_e_s ¤è¤ê¤â¾¯¤Ê¤¤¤È¤­¡¢¾®¥¤¥ó¥Ç¥Ã¥¯¥¹¤ÏÉ¬Í×¤Ê¹Ô¿ô¤À¤±¤ò
 »È¤¦¤è¤¦¤Ë¤¹¤ë¡£
 
-66..33..112233..  ppaaggeerr__ssttoopp
+66..33..112255..  ppaaggeerr__ssttoopp
 
 Type: boolean
 Default: no
@@ -4688,7 +4718,7 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Ï¡¢¥á¥Ã¥»¥¤¥¸¤Î½ª¤ï¤ê¤Þ¤ÇÍè¤Æ _n_e_x_t_-_p_a_g_e ´Ø¿ô¤ò¼Â¹Ô¤·¤Æ
 ¤â¡¢ÆâÉô¥Ú¥¤¥¸¥ã¤¬¼¡¤Î¥á¥Ã¥»¥¤¥¸¤Ø°ÜÆ°¤·¤·¤Ê¤Ê¤¤¤¤¡£
 
-66..33..112244..  ccrryypptt__aauuttoossiiggnn
+66..33..112266..  ccrryypptt__aauuttoossiiggnn
 
 Type: boolean
 Default: no
@@ -4699,7 +4729,7 @@ Default: no
 ¥á¥Ã¥»¥¤¥¸¤òºîÀ®¤¹¤ë¡£¤³¤Î¾ì¹ç¤Ï _s_m_i_m_e_-_m_e_n_u ¤ò»È¤Ã¤ÆÀßÄê¤ò¾å½ñ¤­¤¹¤ë¤³¤È¤¬¤Ç
 ¤­¤ë¡£ (Crypto only)
 
-66..33..112255..  ccrryypptt__aauuttooeennccrryypptt
+66..33..112277..  ccrryypptt__aauuttooeennccrryypptt
 
 Type: boolean
 Default: no
@@ -4711,7 +4741,7 @@ Default: no
 S/MIME ¥á¥Ã¥»¥¤¥¸¤¬ºîÀ®¤µ¤ì¤ë¡£¤½¤ÎºÝ¡¢ÀßÄê¤Î¾å½ñ¤­¤Ï _s_m_i_m_e_-_m_e_n_u ¤ò»È¤¦¤³¤È¤Ë
 ¤è¤ê²ÄÇ½¤Ç¤¢¤ë¡£ (Crypto only)
 
-66..33..112266..  ppggpp__iiggnnoorree__ssuubbkkeeyyss
+66..33..112288..  ppggpp__iiggnnoorree__ssuubbkkeeyyss
 
 Type: boolean
 Default: yes
@@ -4723,7 +4753,7 @@ Default: yes
 ¿ä¾©¤µ¤ì¤Æ¤¤¤ë¡£ÄÌ¾ï¡¢¤Ò¤È¤Ä¤Î¼ç¸°¤ËÂÐ¤·¤ÆÍ­¸ú¤ÊÉû¸°¤Ï¤Ò¤È¤Ä¤À¤±¤Ê¤Î¤Ç¡¢¤³¤Î
 ÊÑ¿ô¤òÀßÄê¤·¤Æ¤âÉÔÊØ¤Ê¤³¤È¤Ï¤Ê¤¤¤Ï¤º¤À¡£) (PGP only)
 
-66..33..112277..  ccrryypptt__rreeppllyyeennccrryypptt
+66..33..112299..  ccrryypptt__rreeppllyyeennccrryypptt
 
 Type: boolean
 Default: yes
@@ -4731,7 +4761,7 @@ Default: yes
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢°Å¹æ²½¤µ¤ì¤¿¥á¥Ã¥»¥¤¥¸¤Ø¤ÎÊÖ¿®¤Ë¤Ï¼«Æ°Åª¤Ë PGP ¤« OpenSSL
 ¤Ç°Å¹æ²½¤¹¤ë¡£ (Crypto only)
 
-66..33..112288..  ccrryypptt__rreeppllyyssiiggnn
+66..33..113300..  ccrryypptt__rreeppllyyssiiggnn
 
 Type: boolean
 Default: no
@@ -4742,7 +4772,7 @@ Default: no
 ÃíÃí°Õ°Õ:: ½ðÌ¾¤µ¤ì¡¢¤«¤«¤Ä¤Ä°Å°Å¹æ¹æ²½²½¤â¤â¤µ¤ì¤Æ¤¤¤ë¥á¥Ã¥»¥¤¥¸¤Ë¤Ï¡¢¤³¤ÎÊÑ¿ô¤¬ºîÍÑ¤·¤Ê¤¤!
 (Crypto only)
 
-66..33..112299..  ccrryypptt__rreeppllyyssiiggnneennccrryypptteedd
+66..33..113311..  ccrryypptt__rreeppllyyssiiggnneennccrryypptteedd
 
 Type: boolean
 Default: no
@@ -4758,7 +4788,7 @@ Mutt ¤Ë¤Ï¤Ç¤­¤Ê¤¤¡¢¤È¤¤¤¦¤â¤Î¤Ç¤¢¤ë¡£ (ÌõÃí¡§¤½¤ì¤Ç¡¢replysign ¤òÀßÄê¤¹¤ë¤Ê
 ¿®¤Ë°Å¹æ²½¤Î¤ß¼Â¹Ô¤¹¤ë¤¿¤á¤Ë¤Ï¥Õ¥Ã¥¯¤ò»È¤ï¤Ê¤±¤ì¤Ð¤Ê¤é¤Ê¤¤¤Ç¤¢¤í¤¦¡£ ~~gg ¤ª¤ª¤è¤è
 ¤Ó¤Ó ~~GG ¤ò»²¾È¤Î¤³¤È¡£) (Crypto only)
 
-66..33..113300..  ccrryypptt__ttiimmeessttaammpp
+66..33..113322..  ccrryypptt__ttiimmeessttaammpp
 
 Type: boolean
 Default: yes
@@ -4768,7 +4798,7 @@ Default: yes
 ÉÕ¤±¤Æ¤ª¤ê¡¢¤½¤Î¿§¤ò¿®Íê¤¹¤ë¤Î¤Ç¤¢¤ì¤Ð¡¢¤³¤ÎÀßÄê¤ò²ò½ü¤·¤Æ¤â¹½¤ï¤Ê¤¤¡£ (Ìõ
 Ãí¡§$$aallllooww__aannssii »²¾È) (Crypto only)
 
-66..33..113311..  ppggpp__uussee__ggppgg__aaggeenntt
+66..33..113333..  ppggpp__uussee__ggppgg__aaggeenntt
 
 Type: boolean
 Default: no
@@ -4783,7 +4813,7 @@ newpg ¤ª¤è¤Ó gnupg-1.9 °Ê¾å¤Ë´Þ¤Þ¤ì¤Æ¤¤¤ë¡£ ssh-agent ¤Î¤è¤¦¤Ë¡¢´Ä¶­ÊÑ¿ô¤ÇÄÌ
 $pgp_*_command ·²¤Ë --use-agent ¥ª¥×¥·¥ç¥ó¤ò´Þ¤á¤Æ¤ª¤¯¤Ù¤­¤À¤í¤¦¡£) (PGP
 only)
 
-66..33..113322..  ccrryypptt__vveerriiffyy__ssiigg
+66..33..113344..  ccrryypptt__vveerriiffyy__ssiigg
 
 Type: quadoption
 Default: yes
@@ -4792,7 +4822,7 @@ Default: yes
 ºÝ¤Ë¤Ï ask-yes ¤« ask-no) ¤Ê¤é¡¢½ðÌ¾¤ò¸¡¾Ú¤¹¤ë¤«¤É¤¦¤«¿Ò¤Í¤ë¡£ "no" ¤Ê¤é¡¢°Å
 ¹æ³ØÅª½ðÌ¾¤ò°ìÀÚ¸¡¾Ú¤·¤è¤¦¤È¤·¤Ê¤¤¡£ (Crypto only)
 
-66..33..113333..  ssmmiimmee__iiss__ddeeffaauulltt
+66..33..113355..  ssmmiimmee__iiss__ddeeffaauulltt
 
 Type: boolean
 Default: no
@@ -4804,7 +4834,7 @@ Default: no
 $$ccrryypptt__aauuttoossmmiimmee ¤ò²ò½ü¤¹¤ë¤³¤È¤Ë¤è¤Ã¤Æ¾å½ñ¤­¤µ¤ì¤¦¤ë¤Î¤ÇÃí°Õ¡£) (S/MIME
 only)
 
-66..33..113344..  ssmmiimmee__aasskk__cceerrtt__llaabbeell
+66..33..113366..  ssmmiimmee__aasskk__cceerrtt__llaabbeell
 
 Type: boolean
 Default: yes
@@ -4812,7 +4842,7 @@ Default: yes
 ¤³¤Î¥Õ¥é¥°¤Ï¡¢¥Ç¥¤¥¿¥Ù¥¤¥¹¤ËÄÉ²Ã¤·¤è¤¦¤È¤¹¤ë¾ÚÌÀ½ñ¤Î¥é¥Ù¥ëÌ¾¤òÆþÎÏ¤¹¤ë¤è¤¦µá
 ¤á¤ë¤«¤É¤¦¤«¤òÀ©¸æ¤¹¤ë¡£´ûÄê¤Ç¤ÏÀßÄê¤µ¤ì¤Æ¤¤¤ë¡£ (S/MIME only)
 
-66..33..113355..  ssmmiimmee__ddeeccrryypptt__uussee__ddeeffaauulltt__kkeeyy
+66..33..113377..  ssmmiimmee__ddeeccrryypptt__uussee__ddeeffaauulltt__kkeeyy
 
 Type: boolean
 Default: yes
@@ -4821,7 +4851,7 @@ Default: yes
 ¤­¡¢¾ÚÌÀ½ñ¤È¸°¤Î¥Ú¥¢¤¬Ê£¿ô´ÉÍý¤µ¤ì¤Æ¤¤¤ì¤Ð¡¢ Mutt ¤Ï¥á¥¤¥ë¥¢¥É¥ì¥¹¤ò»È¤Ã¤Æ¸°
 ¤ò·èÄê¤¹¤ë¡£¤½¤ì¤Ç¤â¸«ÉÕ¤«¤é¤Ê¤±¤ì¤Ð¸°¤òÆþÎÏ¤¹¤ë¤è¤¦µá¤á¤ë¡£ (S/MIME only)
 
-66..33..113366..  ppggpp__eennttrryy__ffoorrmmaatt
+66..33..113388..  ppggpp__eennttrryy__ffoorrmmaatt
 
 Type: string
 Default: "%4n %t%f %4l/0x%k %-4a %2c %u"
@@ -4857,7 +4887,7 @@ Default: "%4n %t%f %4l/0x%k %-4a %2c %u"
 
 (PGP only)
 
-66..33..113377..  ppggpp__ggoooodd__ssiiggnn
+66..33..113399..  ppggpp__ggoooodd__ssiiggnn
 
 Type: regular expression
 Default: ""
@@ -4867,7 +4897,7 @@ $$ppggpp__vveerriiffyy__ccoommmmaanndd ¤Î½ÐÎÏ¤Ë´Þ¤Þ¤ì¤Æ¤¤¤ë¤È
 ¤µ¤ì¤ë¡£ÉÔÀµ¤Ê½ðÌ¾¤Ë¤â¥³¥Þ¥ó¥É¤ÎÊÖ¤êÃÍ¤¬ 0 ¤Ë¤Ê¤Ã¤Æ¤·¤Þ¤¦¤Ê¤é¡¢¤³¤ÎÊÑ¿ô¤ò»È¤¦
 ¤³¤È¡£ (PGP only)
 
-66..33..113388..  ppggpp__cchheecckk__eexxiitt
+66..33..114400..  ppggpp__cchheecckk__eexxiitt
 
 Type: boolean
 Default: yes
@@ -4875,7 +4905,7 @@ Default: yes
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢Mutt ¤¬½ðÌ¾¤ä°Å¹æ²½¤ÎºÝ¤Ë PGP ¥µ¥Ö¥×¥í¥»¥¹¤ÎÊÖ¤êÃÍ¤ò³ÎÇ§¤¹
 ¤ë¤è¤¦¤Ë¤Ê¤ë¡£Èó¥¼¥í¤ÎÊÖ¤êÃÍ¤Ï¥µ¥Ö¥×¥í¥»¥¹¤Î¼ºÇÔ¤ò°ÕÌ£¤¹¤ë¡£ (PGP only)
 
-66..33..113399..  ppggpp__lloonngg__iiddss
+66..33..114411..  ppggpp__lloonngg__iiddss
 
 Type: boolean
 Default: no
@@ -4883,7 +4913,7 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È 64 ¥Ó¥Ã¥È¤Î PGP ¸° ID ¤ò»È¤¦¡£²ò½ü»þ¤Ï¤Õ¤Ä¤¦¤Î 32 ¥Ó¥Ã¥È¸°
 ID ¤ò»È¤¦¡£ (PGP only)
 
-66..33..114400..  ppggpp__rreettaaiinnaabbllee__ssiiggss
+66..33..114422..  ppggpp__rreettaaiinnaabbllee__ssiiggss
 
 Type: boolean
 Default: no
@@ -4896,7 +4926,7 @@ multipart/encrypted ¥Ñ¡¼¥È¤ÎÃæ¤Ë multipart/signed ¥Ñ¡¼¥È¤¬Æþ¤Ã¤Æ¤¤¤¿¤ê¤¹¤ë
 ¤ï¤Á¡¢³°ÁØ (multipart/encrypted) ¤¬´ÊÃ±¤Ë¼è¤ê½ü¤±¤ë¤¬¡¢ÆâÂ¦¤Î
 multipart/signed ¥Ñ¡¼¥È¤Ï¼é¤é¤ì¤Æ¤¤¤ë¤È¤¤¤¦¤â¤Î¤Ç¤¢¤ë¡£ (PGP only)
 
-66..33..114411..  ppggpp__aauuttooiinnlliinnee
+66..33..114433..  ppggpp__aauuttooiinnlliinnee
 
 Type: boolean
 Default: no
@@ -4913,7 +4943,7 @@ Mutt ¤ÏÊ£¿ô¤Î MIME ¥Ñ¡¼¥È¤ò´Þ¤à¥á¥Ã¥»¥¤¥¸¤Ë¤Ï¼«Æ°Åª¤Ë PGP/MIME ¤ò»ÈÍÑ¤¹¤ë¡¢
 ¤Ê¤ª¡¢µì¼° PGP ¥á¥Ã¥»¥¤¥¸·Á¼°¤Ï¶¯¶¯¤¯¤¯ÈÝÈÝÄêÄê¤µ¤µ¤ì¤ì¤Æ¤Æ¤¤¤¤¤ë¤ë¤È¤¤¤¦ÅÀ¤Ë¤âÃí°Õ¤¹¤Ù¤­¤Ç¤¢
 ¤ë¡£ (PGP only)
 
-66..33..114422..  ppggpp__rreeppllyyiinnlliinnee
+66..33..114444..  ppggpp__rreeppllyyiinnlliinnee
 
 Type: boolean
 Default: no
@@ -4932,7 +4962,7 @@ Default: no
 ¤Ê¤ª¡¢µì¼° PGP ¥á¥Ã¥»¥¤¥¸·Á¼°¤ÏÈòÈò¤±¤±¤ë¤ë¤è¤¦¶¯¶¯¤¯¤¯´«¤á¤é¤ì¤Æ¤¤¤ë¤È¤¤¤¦ÅÀ¤Ë¤âÃí°Õ
 ¤¹¤Ù¤­¤Ç¤¢¤ë¡£ (PGP only)
 
-66..33..114433..  ppggpp__sshhooww__uunnuussaabbllee
+66..33..114455..  ppggpp__sshhooww__uunnuussaabbllee
 
 Type: boolean
 Default: yes
@@ -4941,7 +4971,7 @@ Default: yes
 ÇË´þ¤µ¤ì¤¿¸°¡¢´ü¸ÂÀÚ¤ì¤Î¸°¡¢¤Þ¤¿¥æ¡¼¥¶¤Ë¤è¤Ã¤Æ¡Ö»ÈÍÑÉÔ²Ä¡×¤È¤µ¤ì¤¿¸°¤¬´Þ¤Þ¤ì
 ¤ë¡£ (PGP only)
 
-66..33..114444..  ppggpp__ssiiggnn__aass
+66..33..114466..  ppggpp__ssiiggnn__aass
 
 Type: string
 Default: ""
@@ -4950,7 +4980,7 @@ Default: ""
 ¤­¤ë¡£»ØÄê¤Ë¤Ï¸° ID ·Á¼°¤ò»È¤¦¤è¤¦¿ä¾©¤µ¤ì¤Æ¤¤¤ë (Îã "0x00112233")¡£ (PGP
 only)
 
-66..33..114455..  ppggpp__ssttrriicctt__eenncc
+66..33..114477..  ppggpp__ssttrriicctt__eenncc
 
 Type: boolean
 Default: yes
@@ -4962,7 +4992,7 @@ Default: yes
 ÊÑ¿ô¤òÀßÄê¤·¤Æ¤¤¤ë¤È¡¢Áê¼ê¤¬¥á¥Ã¥»¥¤¥¸¤òÆÉ¤à¤³¤È¤¹¤é¤Ç¤­¤Ê¤¤¤«¤â¤·¤ì¤Ê¤¤¡£Ìõ
 ¼Ô¤Ï¤³¤ÎÌäÂê¤ÇÇº¤ó¤À¤³¤È¤¬¤¢¤ë¤Î¤Ç¡¢²ò½ü¤·¤Æ¤ª¤¯¤³¤È¤ò´«¤á¤ë¡£) (PGP only)
 
-66..33..114466..  ppggpp__ttiimmeeoouutt
+66..33..114488..  ppggpp__ttiimmeeoouutt
 
 Type: number
 Default: 300
@@ -4970,7 +5000,7 @@ Default: 300
 ¥­¥ã¥Ã¥·¥å¤µ¤ì¤¿¥Ñ¥¹¥Õ¥ì¥¤¥º¤¬»ÈÍÑ¤µ¤ì¤Ê¤¤¾ì¹ç¤Ë´ü¸ÂÀÚ¤ì¤Ë¤Ê¤ë¤Þ¤Ç¤ÎÉÃ¿ô¡£
 (PGP only)
 
-66..33..114477..  ppggpp__ssoorrtt__kkeeyyss
+66..33..114499..  ppggpp__ssoorrtt__kkeeyyss
 
 Type: sort order
 Default: address
@@ -4991,7 +5021,7 @@ PGP ¸°¥á¥Ë¥å¡¼¤Î¹àÌÜ¤ò¤É¤¦À°Îó¤¹¤ë¤«»ØÄê¤¹¤ë¡£°Ê²¼¤¬Í­¸ú¤ÊÃÍ¤Ç¤¢¤ë¡£
 
 µÕ½ç¤Ë¤·¤¿¤±¤ì¤Ð¡¢¾åµ­¤ÎÃÍ¤ÎÆ¬¤Ë "reverse-" ¤òÉÕ²Ã¤¹¤ë¡£ (PGP only)
 
-66..33..114488..  ppggpp__mmiimmee__aauuttoo
+66..33..115500..  ppggpp__mmiimmee__aauuttoo
 
 Type: quadoption
 Default: ask-yes
@@ -5001,7 +5031,7 @@ Default: ask-yes
 
 µì¼° PGP ¥á¥Ã¥»¥¤¥¸·Á¼°¤Î»ÈÍÑ¤Ï¤Þ¤Þ¤Ã¤Ã¤¿¤¿¤¯¤¯¿ä¿ä¾©¾©¤µ¤µ¤ì¤ì¤Ê¤Ê¤¤¤¤¤³¤È¤ËÃí°Õ¡£ (PGP only)
 
-66..33..114499..  ppggpp__aauuttoo__ttrraaddiittiioonnaall
+66..33..115511..  ppggpp__aauuttoo__ttrraaddiittiioonnaall
 
 Type: boolean
 Default: no
@@ -5016,7 +5046,7 @@ $$ccrryypptt__rreeppllyyssiiggnneennccrryypptteedd ¤ò»È
 
 ¤³¤Î¥ª¥×¥·¥ç¥ó¤Ï $$ppggpp__ccrreeaattee__ttrraaddiittiioonnaall ¤ò¾å½ñ¤­¤¹¤ë¡£ (PGP only)
 
-66..33..115500..  ppggpp__ddeeccooddee__ccoommmmaanndd
+66..33..115522..  ppggpp__ddeeccooddee__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5042,7 +5072,7 @@ PGP ¥³¥Þ¥ó¥É¤Î·Á¼°¤Ë¤ÏÆÈ¼«¤Î printfÉ÷¥·¡¼¥¯¥¦¥§¥ó¥¹¤¬¤¢¤ë¡£
 pgp*.rc ¤ª¤è¤Ó gpg.rc ¤È¤¤¤¦¥Õ¥¡¥¤¥ë¤¬¡¢Ê¸½ñ¤ÈÆ±¤¸¤¢¤¿¤ê¤Î samples/ ¥µ¥Ö¥Ç¥£
 ¥ì¥¯¥È¥êÆâ¤Ë¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤Æ¤¤¤ë¤Î¤Ç¡¢»²¾È¤¹¤ë¤³¤È¡£ (PGP only)
 
-66..33..115511..  ppggpp__ggeettkkeeyyss__ccoommmmaanndd
+66..33..115533..  ppggpp__ggeettkkeeyyss__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5050,21 +5080,21 @@ Default: ""
 Mutt ¤¬¸ø³«¸°¾ðÊó¤òÉ¬Í×¤È¤¹¤ë¤¿¤Ó¤Ëµ¯Æ°¤¹¤ë¥³¥Þ¥ó¥É¡£ %r ¤¬¡¢Í£°ì¤³¤³¤Ç»È¤ï
 ¤ì¤ë printfÉ÷¥·¡¼¥¯¥¦¥§¥ó¥¹¤Ç¤¢¤ë¡£ (PGP only)
 
-66..33..115522..  ppggpp__vveerriiffyy__ccoommmmaanndd
+66..33..115544..  ppggpp__vveerriiffyy__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¤³¤Î¥³¥Þ¥ó¥É¤¬ PGP ½ðÌ¾¤Î¸¡¾Ú¤Ë»È¤ï¤ì¤ë¡£ (PGP only)
 
-66..33..115533..  ppggpp__ddeeccrryypptt__ccoommmmaanndd
+66..33..115555..  ppggpp__ddeeccrryypptt__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¤³¤Î¥³¥Þ¥ó¥É¤¬ PGP °Å¹æ²½¥á¥Ã¥»¥¤¥¸¤ÎÉü¹æ¤Ë»È¤ï¤ì¤ë¡£ (PGP only)
 
-66..33..115544..  ppggpp__cclleeaarrssiiggnn__ccoommmmaanndd
+66..33..115566..  ppggpp__cclleeaarrssiiggnn__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5072,7 +5102,7 @@ Default: ""
 µì¼°¤Î¡Ö¥¯¥ê¥¢½ðÌ¾¡×¤Ë¤è¤ë PGP ¥á¥Ã¥»¥¤¥¸¤òºîÀ®¤¹¤ë¤¿¤á¤Ë»È¤ï¤ì¤ë¡£¤¿¤À¤·¡¢
 ¤³¤Î·Á¼°¤ò»È¤¦¤³¤È¤Ï¤Þ¤Þ¤Ã¤Ã¤¿¤¿¤¯¤¯¿ä¿ä¾©¾©¤µ¤µ¤ì¤ì¤Ê¤Ê¤¤¤¤¡£ (PGP only)
 
-66..33..115555..  ppggpp__ssiiggnn__ccoommmmaanndd
+66..33..115577..  ppggpp__ssiiggnn__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5080,42 +5110,42 @@ Default: ""
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤ÆÊ¬Î¥¼°¤Î PGP ½ðÌ¾¤òºî¤ê¡¢multipart/signed ¤Î PGP/MIME
 ¥Ñ¡¼¥È¤Ë»È¤¦¡£ (PGP only)
 
-66..33..115566..  ppggpp__eennccrryypptt__ssiiggnn__ccoommmmaanndd
+66..33..115588..  ppggpp__eennccrryypptt__ssiiggnn__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ¡¢ËÜÊ¸¤Ë½ðÌ¾¤È°Å¹æ²½¤òÎ¾Êý¤ª¤³¤Ê¤¦¡£ (PGP only)
 
-66..33..115577..  ppggpp__eennccrryypptt__oonnllyy__ccoommmmaanndd
+66..33..115599..  ppggpp__eennccrryypptt__oonnllyy__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤ÆËÜÊ¸¤ò°Å¹æ²½¤¹¤ë¡£½ðÌ¾¤Ï¤·¤Ê¤¤¡£ (PGP only)
 
-66..33..115588..  ppggpp__iimmppoorrtt__ccoommmmaanndd
+66..33..116600..  ppggpp__iimmppoorrtt__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ¡¢¸°¤ò¥á¥Ã¥»¥¤¥¸¤«¤é¸ø³«¸°Â«¤Ø¼è¤ê¹þ¤à¡£ (PGP only)
 
-66..33..115599..  ppggpp__eexxppoorrtt__ccoommmmaanndd
+66..33..116611..  ppggpp__eexxppoorrtt__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ¡¢¥æ¡¼¥¶¤Î¸°Â«¤«¤é¸ø³«¸°¤ò¼è¤ê½Ð¤¹¡£ (PGP only)
 
-66..33..116600..  ppggpp__vveerriiffyy__kkeeyy__ccoommmmaanndd
+66..33..116622..  ppggpp__vveerriiffyy__kkeeyy__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¸°ÁªÂò¥á¥Ë¥å¡¼¤Ç¸°¤Î¾ðÊó¤ò¸¡¾Ú¤¹¤ë¤¿¤á¤Ë¡¢¤³¤Î¥³¥Þ¥ó¥É¤òÍÑ¤¤¤ë¡£ (PGP only)
 
-66..33..116611..  ppggpp__lliisstt__sseeccrriinngg__ccoommmmaanndd
+66..33..116633..  ppggpp__lliisstt__sseeccrriinngg__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5127,7 +5157,7 @@ DETAILS ¤Ë½ñ¤«¤ì¤Æ¤¤¤ë¡£)
 ¤³¤Î·Á¼°¤Ï¡¢Mutt ¤ËÉÕÂ°¤¹¤ë pgpring ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤Ç¤âÀ¸À®¤µ¤ì¤ë¡£ (PGP
 only)
 
-66..33..116622..  ppggpp__lliisstt__ppuubbrriinngg__ccoommmmaanndd
+66..33..116644..  ppggpp__lliisstt__ppuubbrriinngg__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5137,7 +5167,7 @@ colons ¤ÈÆ±ÍÍ¤Ç¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡£
 
 ¤³¤Î·Á¼°¤Ï¡¢Mutt ÉÕÂ°¤Î pgpring ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤Ç¤âÀ¸À®¤µ¤ì¤ë¡£ (PGP only)
 
-66..33..116633..  ffoorrwwaarrdd__ddeeccrryypptt
+66..33..116655..  ffoorrwwaarrdd__ddeeccrryypptt
 
 Type: boolean
 Default: yes
@@ -5146,7 +5176,7 @@ Default: yes
 ¤¦³°ÁØ¤¬½üµî¤µ¤ì¤ë¡£¤³¤ÎÊÑ¿ô¤Ï¡¢$$mmiimmee__ffoorrwwaarrdd ¤¬_Àß_Äê¤µ¤ì¡¢
 $$mmiimmee__ffoorrwwaarrdd__ddeeccooddee ¤¬_²ò_½ü¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Î¤ßÍÑ¤¤¤é¤ì¤ë¡£ (PGP only)
 
-66..33..116644..  ssmmiimmee__ttiimmeeoouutt
+66..33..116666..  ssmmiimmee__ttiimmeeoouutt
 
 Type: number
 Default: 300
@@ -5154,7 +5184,7 @@ Default: 300
 ¥­¥ã¥Ã¥·¥å¤µ¤ì¤¿¥Ñ¥¹¥Õ¥ì¥¤¥º¤¬»ÈÍÑ¤µ¤ì¤Ê¤¤¾ì¹ç¤Ë´ü¸ÂÀÚ¤ì¤Ë¤Ê¤ë¤Þ¤Ç¤ÎÉÃ¿ô¡£
 (S/MIME only)
 
-66..33..116655..  ssmmiimmee__eennccrryypptt__wwiitthh
+66..33..116677..  ssmmiimmee__eennccrryypptt__wwiitthh
 
 Type: string
 Default: ""
@@ -5163,7 +5193,7 @@ Default: ""
 "rc2-40", "rc2-64", "rc2-128" ¤Ç¤¢¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤È "des3" (¥È¥ê¥×¥ëDES)
 ¤¬ÍÑ¤¤¤é¤ì¤ë¡£ (S/MIME only)
 
-66..33..116666..  ssmmiimmee__kkeeyyss
+66..33..116688..  ssmmiimmee__kkeeyyss
 
 Type: path
 Default: ""
@@ -5175,7 +5205,7 @@ OpenSSL ¤Ë¤Ï PGP ¤Ë¤ª¤±¤ë¸°Â«¤Î¤è¤¦¤Ê¤â¤Î¤¬¤Ê¤¤¤¿¤á¡¢Mutt ¤Ï¸°¤ä¾ÚÌÀ½ñ¤Î³ÊÇ¼
 ¤Æ¡¢¥á¥¤¥ë¥¢¥É¥ì¥¹¤È¸° ID ¤ÎÁÈ¤ß¹ç¤ï¤»¤¬Æþ¤Ã¤Æ¤ª¤ê¡¢¼«Ê¬¤Î¼ê¤ÇÊÔ½¸¤¹¤ë¤³¤È¤¬
 ¤Ç¤­¤ë¡£¤³¤ÎÊÑ¿ô¤Ï¡¢ÈëÌ©¸°¤Î¾ì½ê¤ò»Ø¤·¼¨¤¹¤â¤Î¤Ç¤¢¤ë¡£ (S/MIME only)
 
-66..33..116677..  ssmmiimmee__ccaa__llooccaattiioonn
+66..33..116699..  ssmmiimmee__ccaa__llooccaattiioonn
 
 Type: path
 Default: ""
@@ -5183,7 +5213,7 @@ Default: ""
 OpenSSL ¤Ë»È¤¦¤¿¤á¤Î¡¢¿®ÍÑ¤Ç¤­¤ë¾ÚÌÀ½ñ¤¬Æþ¤Ã¤¿¥Ç¥£¥ì¥¯¥È¥ê¤«¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°¤ò
 Æþ¤ì¤ë¡£ (S/MIME only)
 
-66..33..116688..  ssmmiimmee__cceerrttiiffiiccaatteess
+66..33..117700..  ssmmiimmee__cceerrttiiffiiccaatteess
 
 Type: path
 Default: ""
@@ -5195,7 +5225,7 @@ OpenSSL ¤Ë¤Ï PGP ¤Ë¤ª¤±¤ë¸°Â«¤Î¤è¤¦¤Ê¤â¤Î¤¬¤Ê¤¤¤¿¤á¡¢Mutt ¤Ï¸°¤ä¾ÚÌÀ½ñ¤Î³ÊÇ¼
 ¤Æ¡¢¥á¥¤¥ë¥¢¥É¥ì¥¹¤È¸° ID ¤ÎÁÈ¤ß¹ç¤ï¤»¤¬Æþ¤Ã¤Æ¤ª¤ê¡¢¼«Ê¬¤Î¼ê¤ÇÊÔ½¸¤¹¤ë¤³¤È¤¬
 ¤Ç¤­¤ë¡£¤³¤ÎÊÑ¿ô¤Ï¡¢¾ÚÌÀ½ñ¤Î¾ì½ê¤ò»Ø¤·¼¨¤¹¤â¤Î¤Ç¤¢¤ë¡£ (S/MIME only)
 
-66..33..116699..  ssmmiimmee__ddeeccrryypptt__ccoommmmaanndd
+66..33..117711..  ssmmiimmee__ddeeccrryypptt__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5224,7 +5254,7 @@ OpenSSL ¥³¥Þ¥ó¥É¤Î»ØÄê·Á¼°¤Ë¤Ï¡¢PGP ¤Ë»÷¤¿ÆÈ¼«¤Î printfÉ÷¥·¡¼¥¯¥¦¥§¥ó¥¹¤¬¤¢
 ¤³¤Î·Á¼°¤ÎÀßÄêÊýË¡¤ÎÎã¤Ë¤Ä¤¤¤Æ¤Ï¡¢smime.rc ¤È¤¤¤¦¥Õ¥¡¥¤¥ë¤ò»²¾È¤»¤è¡£Ê¸½ñ¤Î¤½
 ¤Ð¤Î samples/ ¥µ¥Ö¥Ç¥£¥ì¥¯¥È¥ê¤Ë¥¤¥ó¥¹¥È¡¼¥ë¤µ¤ì¤Æ¤¤¤ë¡£ (S/MIME only)
 
-66..33..117700..  ssmmiimmee__vveerriiffyy__ccoommmmaanndd
+66..33..117722..  ssmmiimmee__vveerriiffyy__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5232,7 +5262,7 @@ Default: ""
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ multipart/signed ¥¿¥¤¥×¤Î S/MIME ½ðÌ¾¤ò¸¡¾Ú¤¹¤ë¡£
 (S/MIME only)
 
-66..33..117711..  ssmmiimmee__vveerriiffyy__ooppaaqquuee__ccoommmmaanndd
+66..33..117733..  ssmmiimmee__vveerriiffyy__ooppaaqquuee__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5240,7 +5270,7 @@ Default: ""
 ¤³¤Î¥³¥Þ¥ó¥É¤ò»È¤Ã¤Æ application/x-pkcs7-mime ¥¿¥¤¥×¤Î S/MIME ½ðÌ¾¤ò¸¡¾Ú¤¹
 ¤ë¡£ (S/MIME only)
 
-66..33..117722..  ssmmiimmee__ssiiggnn__ccoommmmaanndd
+66..33..117744..  ssmmiimmee__ssiiggnn__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5248,7 +5278,7 @@ Default: ""
 ¤³¤Î¥³¥Þ¥ó¥É¤Ï multipart/signed ¥¿¥¤¥×¤Î S/MIME ½ðÌ¾¤òºîÀ®¤¹¤ë¤¿¤á¤ËÍÑ¤¤¤é¤ì
 ¤ë¡£¤³¤Î¥¿¥¤¥×¤Ï¤¢¤é¤æ¤ë¥á¥¤¥ë¥¯¥é¥¤¥¢¥ó¥È¤«¤éÆÉ¤á¤ë¡£ (S/MIME only)
 
-66..33..117733..  ssmmiimmee__ssiiggnn__ooppaaqquuee__ccoommmmaanndd
+66..33..117755..  ssmmiimmee__ssiiggnn__ooppaaqquuee__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5257,7 +5287,7 @@ Default: ""
 ¤¿¤á¤ËÍÑ¤¤¤é¤ì¤ë¡£¤³¤Î¥¿¥¤¥×¤Ï S/MIME ³ÈÄ¥¤ËÂÐ±þ¤·¤¿¥á¥¤¥ë¥¯¥é¥¤¥¢¥ó¥È¤«¤é¤Î
 ¤ß°·¤¨¤ë¡£ (S/MIME only)
 
-66..33..117744..  ssmmiimmee__eennccrryypptt__ccoommmmaanndd
+66..33..117766..  ssmmiimmee__eennccrryypptt__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5265,7 +5295,7 @@ Default: ""
 ¤³¤Î¥³¥Þ¥ó¥É¤Ï°Å¹æ²½ S/MIME ¥á¥Ã¥»¥¤¥¸¤òºîÀ®¤¹¤ë¤¿¤á¤ËÍÑ¤¤¤é¤ì¤ë¡£ (S/MIME
 only)
 
-66..33..117755..  ssmmiimmee__ppkk77oouutt__ccoommmmaanndd
+66..33..117777..  ssmmiimmee__ppkk77oouutt__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5273,14 +5303,14 @@ Default: ""
 ¤³¤Î¥³¥Þ¥ó¥É¤òÍÑ¤¤¤Æ S/MIME ½ðÌ¾¤Î PKCS7 ¹½Â¤¤òÃê½Ð¤¹¤ë¡£¤½¤ÎÌÜÅª¤Ï¡¢¤½¤³¤«
 ¤é¤µ¤é¤Ë X509 ¸ø³«¾ÚÌÀ½ñ¤òÃê½Ð¤¹¤ë¤³¤È¤Ë¤¢¤ë¡£ (S/MIME only)
 
-66..33..117766..  ssmmiimmee__ggeett__cceerrtt__ccoommmmaanndd
+66..33..117788..  ssmmiimmee__ggeett__cceerrtt__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 PKCS7 ¹½Â¤¤«¤é X509 ¾ÚÌÀ½ñ¤òÃê½Ð¤¹¤ë¤¿¤á¤ËÍÑ¤¤¤ë¥³¥Þ¥ó¥É¡£ (S/MIME only)
 
-66..33..117777..  ssmmiimmee__ggeett__ssiiggnneerr__cceerrtt__ccoommmmaanndd
+66..33..117799..  ssmmiimmee__ggeett__ssiiggnneerr__cceerrtt__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5289,14 +5319,14 @@ Default: ""
 ÌÀ½ñ¤Î½êÍ­¼Ô¤È¥á¥¤¥ë¤Î From ¥Õ¥£¡¼¥ë¥É¤òÈæ³Ó¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë¤Î¤À¡£ (S/MIME
 only)
 
-66..33..117788..  ssmmiimmee__iimmppoorrtt__cceerrtt__ccoommmmaanndd
+66..33..118800..  ssmmiimmee__iimmppoorrtt__cceerrtt__ccoommmmaanndd
 
 Type: string
 Default: ""
 
 ¾ÚÌÀ½ñ¤ò smime_keys ¤Ç¼è¤ê¹þ¤à¤¿¤á¤Ë»È¤¦¥³¥Þ¥ó¥É¡£ (S/MIME only)
 
-66..33..117799..  ssmmiimmee__ggeett__cceerrtt__eemmaaiill__ccoommmmaanndd
+66..33..118811..  ssmmiimmee__ggeett__cceerrtt__eemmaaiill__ccoommmmaanndd
 
 Type: string
 Default: ""
@@ -5305,7 +5335,7 @@ Default: ""
 ¤Î¤«¤É¤¦¤«¤Î³ÎÇ§¤Î¤¿¤á) ¤È X509 ¾ÚÌÀ½ñ¤Î³ÊÇ¼¤Î¤¿¤á¤ËÍÑ¤¤¤é¤ì¤ë¥á¥¤¥ë¥¢¥É¥ì¥¹
 ¤òÃê½Ð¤¹¤ë¡£ (S/MIME only)
 
-66..33..118800..  ssmmiimmee__ddeeffaauulltt__kkeeyy
+66..33..118822..  ssmmiimmee__ddeeffaauulltt__kkeeyy
 
 Type: string
 Default: ""
@@ -5313,7 +5343,7 @@ Default: ""
 ½ðÌ¾¤Ë»È¤¦´ûÄê¤Î¸°¥Ú¥¢¡£¸° ID (OpenSSL ¤¬À¸À®¤¹¤ë¥Ï¥Ã¥·¥åÃÍ) ¤ËÀßÄê¤µ¤ì¤Æ¤¤
 ¤Ê¤¤¤ÈÀµ¾ï¤ËÆ°ºî¤·¤Ê¤¤¡£ (S/MIME only)
 
-66..33..118811..  ssssll__ssttaarrttttllss
+66..33..118833..  ssssll__ssttaarrttttllss
 
 Type: quadoption
 Default: yes
@@ -5322,10 +5352,10 @@ Default: yes
 STARTTLS ¤ò»È¤ª¤¦¤È¤¹¤ë¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥µ¡¼¥Ð¤ÎÇ½ÎÏ¤Ë´Ø¤ï¤é¤º STARTTLS ¤ò
 »È¤ª¤¦¤È¤·¤Ê¤¤¡£
 
-66..33..118822..  cceerrttiiffiiccaattee__ffiillee
+66..33..118844..  cceerrttiiffiiccaattee__ffiillee
 
 Type: path
-Default: ""
+Default: "~/.mutt_certificates"
 
 ¤³¤ÎÊÑ¿ô¤Ç»ØÄê¤·¤¿¥Õ¥¡¥¤¥ë¤Ë¡¢¿®ÍÑ¤¹¤ë¾ÚÌÀ½ñ¤òÊÝÂ¸¤¹¤ë¡£Ì¤ÃÎ¤Î¾ÚÌÀ½ñ¤ËÁø¶ø¤¹
 ¤ë¤È¡¢¼õ¤±Æþ¤ì¤ë¤«¤É¤¦¤«¿Ò¤Í¤é¤ì¤ë¡£¼õ¤±Æþ¤ì¤ë¤È¾ÚÌÀ½ñ¤¬¤³¤Î¥Õ¥¡¥¤¥ë¤ËÊÝÂ¸¤µ
@@ -5336,7 +5366,7 @@ Default: ""
 
 Îã: set certificate_file=~/.mutt/certificates
 
-66..33..118833..  ssssll__uusseessyysstteemmcceerrttss
+66..33..118855..  ssssll__uusseessyysstteemmcceerrttss
 
 Type: boolean
 Default: yes
@@ -5344,35 +5374,35 @@ Default: yes
 _y_e_s ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¿®ÍÑ¤Ç¤­¤ë CA ¤«¤é¥µ¡¼¥Ð¾ÚÌÀ½ñ¤¬½ðÌ¾¤µ¤ì¤Æ¤¤¤ë¤«¤É¤¦
 ¤«¤ò³ÎÇ§¤¹¤ëºÝ¤Ë¡¢¥·¥¹¥Æ¥àÁ´ÂÎÍÑ¤Î¾ÚÌÀ½ñ³ÊÇ¼½ê¤Ë¤¢¤ëCA ¾ÚÌÀ½ñ¤ò»È¤¦¡£
 
-66..33..118844..  eennttrrooppyy__ffiillee
+66..33..118866..  eennttrrooppyy__ffiillee
 
 Type: path
 Default: ""
 
 SSL ¥é¥¤¥Ö¥é¥ê´Ø¿ô¤Î½é´ü²½¤ËÍÑ¤¤¤ëÍð¿ô¥Ç¥¤¥¿¤ÎÆþ¤Ã¤¿¥Õ¥¡¥¤¥ë¡£
 
-66..33..118855..  ssssll__uussee__ssssllvv22
+66..33..118877..  ssssll__uussee__ssssllvv22
 
 Type: boolean
 Default: yes
 
 SSL Ç§¾Ú½èÍý¤Ë SSLv2 ¤ò»È¤ª¤¦¤È¤¹¤ë¤«¤É¤¦¤«»ØÄê¤¹¤ë¡£
 
-66..33..118866..  ssssll__uussee__ssssllvv33
+66..33..118888..  ssssll__uussee__ssssllvv33
 
 Type: boolean
 Default: yes
 
 SSL Ç§¾Ú½èÍý¤Ë SSLv3 ¤ò»È¤ª¤¦¤È¤¹¤ë¤«¤É¤¦¤«»ØÄê¤¹¤ë¡£
 
-66..33..118877..  ssssll__uussee__ttllssvv11
+66..33..118899..  ssssll__uussee__ttllssvv11
 
 Type: boolean
 Default: yes
 
 SSL Ç§¾Ú½èÍý¤Ë TLSv1 ¤ò»È¤ª¤¦¤È¤¹¤ë¤«¤É¤¦¤«»ØÄê¤¹¤ë¡£
 
-66..33..118888..  ppiippee__sspplliitt
+66..33..119900..  ppiippee__sspplliitt
 
 Type: boolean
 Default: no
@@ -5383,7 +5413,7 @@ _p_i_p_e_-_m_e_s_s_a_g_e ¥³¥Þ¥ó¥É¤ª¤è¤Ó "tag-prefix" ±é»»»Ò¤È¤Î´ØÏ¢¤
 ¥¤¥¸¤´¤È¤Ë°ì¤Ä¤º¤Ä¥Ñ¥¤¥×¤¹¤ë¡£¤É¤Á¤é¤Î¾ì¹ç¤â¡¢¤½¤Î»þÅÀ¤Ç¤ÎÀ°ÎóÊýË¡¤Î½ç¤Ë¥á¥Ã
 ¥»¥¤¥¸¤¬¥Ñ¥¤¥×¤µ¤ì¡¢ $$ppiippee__sseepp ¤¬³Æ¥á¥Ã¥»¥¤¥¸¤Î¸å¤ËÉÕ²Ã¤µ¤ì¤ë¡£
 
-66..33..118899..  ppiippee__ddeeccooddee
+66..33..119911..  ppiippee__ddeeccooddee
 
 Type: boolean
 Default: no
@@ -5392,7 +5422,7 @@ _p_i_p_e_-_m_e_s_s_a_g_e ¥³¥Þ¥ó¥É¤È´ØÏ¢¤·¤Æ»È¤ï¤ì¤ë¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤
 ¤ò¤»¤º¤Ë¥á¥Ã¥»¥¤¥¸¤ò¥Ñ¥¤¥×¤¹¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¤Þ¤º¥Ø¥Ã¥À¤ò´Ö°ú¤­¤·¤¿¤ê
 PGP/MIME Éü¹æ²½¤·¤¿¤ê¤·¤è¤¦¤È¤¹¤ë¡£
 
-66..33..119900..  ppiippee__sseepp
+66..33..119922..  ppiippee__sseepp
 
 Type: string
 Default: "\n"
@@ -5400,20 +5430,20 @@ Default: "\n"
 ¥¿¥°ÉÕ¤±¤µ¤ì¤¿Ê£¿ô¤Î¥á¥Ã¥»¥¤¥¸¤ò³°Éô Unix ¥³¥Þ¥ó¥É¤Ø¥Ñ¥¤¥×¤¹¤ëºÝ¡¢¥á¥Ã¥»¥¤¥¸
 ¤È¥á¥Ã¥»¥¤¥¸¤Î´Ö¤ò¶èÀÚ¤ë¤¿¤á¤ËÉÕ²Ã¤µ¤ì¤ëÊ¸»úÎó¡£
 
-66..33..119911..  ppoopp__aauutthheennttiiccaattoorrss
+66..33..119933..  ppoopp__aauutthheennttiiccaattoorrss
 
 Type: string
 Default: ""
 
 ¥³¥í¥ó¶èÀÚ¤ê¤ÇÎóµó¤µ¤ì¤¿Ç§¾ÚÊýË¡¡£POP ¥µ¡¼¥Ð¤Ë¥í¥°¥¤¥ó¤¹¤ë¤¿¤á¤Ë¡¢¤½¤Î½ç¤Ç»î
-¹Ô¤¹¤ë¡£Ç§¾ÚÊýË¡¤Ï "user", "apop" ¤ª¤è¤Ó¤¤¤º¤ì¤«¤Î SASL µ¡¹½¡¢¤¿¤È¤¨¤Ð
-"digest-md5" ¤ä "gssapi", "cram-md5" ¤Ç¤¢¤ë¡£¤³¤Î¥Ñ¥é¥á¡¼¥¿¤ÏÂçÊ¸»ú¤È¾®Ê¸»ú¤ò
-¶èÊÌ¤·¤Ê¤¤¡£¤â¤·ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ð (´ûÄê)¡¢Mutt ¤Ï¤¢¤é¤æ¤ëÍøÍÑ²ÄÇ½¤ÊÊýË¡
-¤ò¡¢ºÇ¤â°ÂÁ´¤Ê¤â¤Î¤«¤é»Ï¤á¤Æ¡¢ºÇ¤â°ÂÁ´¤Ç¤Ê¤¤¤â¤Î¤Þ¤Ç»î¹Ô¤¹¤ë¡£
+¹Ô¤¹¤ë¡£Ç§¾ÚÊýË¡¤Ï "user", "apop" ¤ª¤è¤Ó¤¤¤º¤ì¤«¤Î SASL µ¡¹½¡¢Îã¤¨¤Ð "digest-
+md5" ¤ä "gssapi", "cram-md5" ¤Ç¤¢¤ë¡£¤³¤Î¥Ñ¥é¥á¡¼¥¿¤ÏÂçÊ¸»ú¤È¾®Ê¸»ú¤ò¶èÊÌ¤·¤Ê
+¤¤¡£¤â¤·ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ð (´ûÄê)¡¢Mutt ¤Ï¤¢¤é¤æ¤ëÍøÍÑ²ÄÇ½¤ÊÊýË¡¤ò¡¢ºÇ¤â°Â
+Á´¤Ê¤â¤Î¤«¤é»Ï¤á¤Æ¡¢ºÇ¤â°ÂÁ´¤Ç¤Ê¤¤¤â¤Î¤Þ¤Ç»î¹Ô¤¹¤ë¡£
 
 Îã: set pop_authenticators="digest-md5:apop:user"
 
-66..33..119922..  ppoopp__aauutthh__ttrryy__aallll
+66..33..119944..  ppoopp__aauutthh__ttrryy__aallll
 
 Type: boolean
 Default: yes
@@ -5422,14 +5452,14 @@ Default: yes
 Á°¤ÎÊýË¡¤¬ÍøÍÑ¤Ç¤­¤Ê¤«¤Ã¤¿¤È¤­¤Ë¤Î¤ßÂ¾¤ÎÇ§¾ÚÊýË¡¤Ë°Ü¤ë¡£Ç§¾ÚÊýË¡¤ÏÍøÍÑ¤Ç¤­¤ë
 ¤±¤ì¤É¤âÇ§¾Ú¤¬¼ºÇÔ¤·¤¿¤È¤¤¤¦¾ì¹ç¤Ë¤Ï¡¢ POP ¥µ¡¼¥Ð¤Ø¤ÎÀÜÂ³¤ò¤ä¤á¤ë¤Î¤À¡£
 
-66..33..119933..  ppoopp__cchheecckkiinntteerrvvaall
+66..33..119955..  ppoopp__cchheecckkiinntteerrvvaall
 
 Type: number
 Default: 60
 
 ¤³¤ÎÊÑ¿ô¤Ï¡¢²¿ÉÃ¤´¤È¤Ë POP ¤Ç¿·Ãå¥á¥¤¥ë¤òÃµ¤¹¤«¤òÄ´À°¤¹¤ë¡£
 
-66..33..119944..  ppoopp__ddeelleettee
+66..33..119966..  ppoopp__ddeelleettee
 
 Type: quadoption
 Default: ask-no
@@ -5438,7 +5468,7 @@ Default: ask-no
 ¤ËÀ®¸ù¤·¤¿¥á¥Ã¥»¥¤¥¸¤òºï½ü¤¹¤ë¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥á¥Ã¥»¥¤¥¸¤Ï¥À¥¦¥ó¥í¡¼¥É¤¹
 ¤ë¤â¤Î¤Î¡¢ POP ¥µ¡¼¥Ð¤Ë¤â»Ä¤·¤Æ¤ª¤¯¡£
 
-66..33..119955..  ppoopp__hhoosstt
+66..33..119977..  ppoopp__hhoosstt
 
 Type: string
 Default: ""
@@ -5448,7 +5478,7 @@ fetch-mail ´Ø¿ô¤Î POP ¥µ¡¼¥ÐÌ¾¡£¼¡¤Î¤è¤¦¤Ë¡¢ÂåÂØ¥Ý¡¼¥È¡¢¥æ¡¼¥¶Ì¾¡¢¥Ñ¥¹¥ï¡¼¥É
 
 [pop[s]://][¥æ¡¼¥¶Ì¾[:¥Ñ¥¹¥ï¡¼¥É]@]¥µ¡¼¥Ð[:¥Ý¡¼¥È]
 
-66..33..119966..  ppoopp__llaasstt
+66..33..119988..  ppoopp__llaasstt
 
 Type: boolean
 Default: no
@@ -5456,14 +5486,14 @@ Default: no
 ¤³¤ÎÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢fetch-mail ´Ø¿ô¤Î»ÈÍÑ»þ¤Ë POP ¥³¥Þ¥ó¥É "LAST" ¤ò
 »È¤Ã¤Æ POP ¥µ¡¼¥Ð¤«¤éÌ¤ÆÉ¥á¥Ã¥»¥¤¥¸¤Î¤ß¤ò¼èÆÀ¤·¤è¤¦¤È¤¹¤ë¡£
 
-66..33..119977..  ppoopp__rreeccoonnnneecctt
+66..33..119999..  ppoopp__rreeccoonnnneecctt
 
 Type: quadoption
 Default: ask-yes
 
 POP ¥µ¡¼¥Ð¤È¤ÎÀÜÂ³¤¬ÀÚ¤ì¤¿¤È¤­¤ËºÆÀÜÂ³¤ò»î¤ß¤ë¤«¤É¤¦¤«¤òÀ©¸æ¤¹¤ë¡£
 
-66..33..119988..  ppoopp__uusseerr
+66..33..220000..  ppoopp__uusseerr
 
 Type: string
 Default: ""
@@ -5472,7 +5502,7 @@ POP ¥µ¡¼¥Ð¤Ø¤Î¥í¥°¥¤¥óÌ¾¡£
 
 ´ûÄê¤Ç¤Ï¥í¥¦¥«¥ë¥Þ¥·¥ó¤Ç¤Î¥æ¡¼¥¶Ì¾¤Ë¤Ê¤ë¡£
 
-66..33..119999..  ppoopp__ppaassss
+66..33..220011..  ppoopp__ppaassss
 
 Type: string
 Default: ""
@@ -5482,7 +5512,7 @@ POP ¥¢¥«¥¦¥ó¥È¤Î¥Ñ¥¹¥ï¡¼¥É¤ò»ØÄê¤¹¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤È¡¢ POP ¥á¥¤¥ë¥Ü¥Ã¥¯
 ¥Þ¥·¥ó¤Ç¤Î¤ß»È¤¦¤Ù¤­¤Ç¤¢¤ë¡£¼«Ê¬¤·¤«ÆÉ¤á¤Ê¤¤¥Õ¥¡¥¤¥ë¤Ç¤¢¤Ã¤Æ¤â¡¢¥¹¡¼¥Ñ¥æ¡¼¥¶
 ¤ÏÆÉ¤à¤³¤È¤¬¤Ç¤­¤ë¤«¤é¤À¡£
 
-66..33..220000..  ppoosstt__iinnddeenntt__ssttrriinngg
+66..33..220022..  ppoosstt__iinnddeenntt__ssttrriinngg
 
 Type: string
 Default: ""
@@ -5490,7 +5520,7 @@ Default: ""
 $$aattttrriibbuuttiioonn ÊÑ¿ô¤È»÷¤Æ¤ª¤ê¡¢ Mutt ¤Ï¤³¤ÎÊ¸»úÎó¤ò¡¢ÊÖ¿®¤¹¤ë¥á¥Ã¥»¥¤¥¸¤Î°úÍÑ
 ¤Î¤¢¤È¤ËÄÉ²Ã¤¹¤ë¡£
 
-66..33..220011..  ppoossttppoonnee
+66..33..220033..  ppoossttppoonnee
 
 Type: quadoption
 Default: ask-yes
@@ -5498,7 +5528,7 @@ Default: ask-yes
 ¥á¥Ã¥»¥¤¥¸¤ò¤½¤Î¾ì¤ÇÁ÷¤é¤Ê¤¤¤³¤È¤Ë¤·¤¿ºÝ¤Ë $$ppoossttppoonneedd ¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤ØÊÝÂ¸¤¹
 ¤ë¤«¤É¤¦¤«¤òÀ©¸æ¤¹¤ë¡£
 
-66..33..220022..  ppoossttppoonneedd
+66..33..220044..  ppoossttppoonneedd
 
 Type: path
 Default: "~/postponed"
@@ -5507,7 +5537,7 @@ Default: "~/postponed"
 ¤ë¡£±ä´ü¤¹¤ë¤³¤È¤Ë¤·¤¿ºÝ¡¢Mutt ¤Ï¤³¤ÎÊÑ¿ô¤Ç»ØÄê¤µ¤ì¤¿¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤ËÊÝÂ¸¤¹
 ¤ë¡£¤³¤ì¤Ë´Ø¤·¤Æ¤Ï $$ppoossttppoonnee ¤â»²¾È¤Î¤³¤È¡£
 
-66..33..220033..  pprreeccoonnnneecctt
+66..33..220055..  pprreeccoonnnneecctt
 
 Type: string
 Default: ""
@@ -5525,7 +5555,7 @@ example.net ¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹ 'foo' ¤Ï¡¢¤³¤ì¤Ç '{localhost:1234}foo' ¤È¤·¤Æ°·
 Ãí°Õ: ¤³¤ÎÎã¤¬¤¦¤Þ¤¯¤¤¤¯¤¿¤á¤Ë¤Ï¡¢¤³¤Î¥ê¥â¥¦¥È¥Þ¥·¥ó¤Ë¥Ñ¥¹¥ï¡¼¥É¤Ê¤·¤Ç¥í¥°¥¤
 ¥ó¤Ç¤­¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡£
 
-66..33..220044..  pprriinntt
+66..33..220066..  pprriinntt
 
 Type: quadoption
 Default: ask-no
@@ -5534,14 +5564,14 @@ Default: ask-no
 ¤ë¡£yes ¤Ë¤¹¤ë¤È³ÎÇ§¤»¤º¤Ë°õºþ¤¹¤ë¡£ ask-yes ¤ä ask-no ¤Ë¤¹¤ë¤È³ÎÇ§¤¹¤ë¡£) ¤è
 ¤¯´Ö°ã¤Ã¤Æ "p" ¤ò²¡¤·¤Æ¤·¤Þ¤¦ (»ä¤Î¤è¤¦¤Ê) ¿Í¤ËÍ­ÍÑ¤Ç¤¢¤ë¡£
 
-66..33..220055..  pprriinntt__ccoommmmaanndd
+66..33..220077..  pprriinntt__ccoommmmaanndd
 
 Type: path
 Default: "lpr"
 
 ¤³¤ì¤Ë»ØÄê¤·¤¿¥³¥Þ¥ó¥É¤Ø¥Ñ¥¤¥×¤·¤Æ¥á¥Ã¥»¥¤¥¸¤ò°õºþ¤¹¤ë¡£
 
-66..33..220066..  pprriinntt__ddeeccooddee
+66..33..220088..  pprriinntt__ddeeccooddee
 
 Type: boolean
 Default: yes
@@ -5552,7 +5582,7 @@ print-message ¥³¥Þ¥ó¥É¤È´ØÏ¢¤·¤ÆÍÑ¤¤¤é¤ì¤ë¡£¤³¤Î¥ª¥×¥·¥ç¥ó¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È
 ¤µ¤ï¤·¤¯À°·Á¤¹¤ë¤³¤È¤Î¤Ç¤­¤ë¹âÅÙ¤Ê¥×¥ê¥ó¥¿¥Õ¥£¥ë¥¿¤ò»È¤Ã¤Æ¤¤¤ë¾ì¹ç¤ËÍ­ÍÑ¤Ç¤¢
 ¤í¤¦¡£
 
-66..33..220077..  pprriinntt__sspplliitt
+66..33..220099..  pprriinntt__sspplliitt
 
 Type: boolean
 Default: no
@@ -5566,7 +5596,7 @@ print-message ¥³¥Þ¥ó¥É¤È¤Î´ØÏ¢¤ÇÍÑ¤¤¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢ $$pprriinntt__
 eennssccrriipptt(1) ¥×¥í¥°¥é¥à¤Î¥á¥¤¥ë°õºþ¥â¥¦¥É¤ò»È¤Ã¤Æ¤¤¤ë¿Í¤Ï¤³¤Î¥ª¥×¥·¥ç¥ó¤òÀßÄê
 ¤·¤¿¤¤¤È»×¤¦¤Ï¤º¤À¡£
 
-66..33..220088..  pprroommpptt__aafftteerr
+66..33..221100..  pprroommpptt__aafftteerr
 
 Type: boolean
 Default: yes
@@ -5575,7 +5605,7 @@ _³°_Éô¥Ú¥Ú¥¤¥¤¥¸¥¸¥ã¥ã¤ò»È¤Ã¤Æ¤¤¤ë¾ì¹ç¡¢¤³¤ÎÊÑ¿ô¤òÀßÄê¤·¤Æ¤ª¤¯¤È¡¢¥Ú¥¤¥¸¥ã
 ¥Ç¥Ã¥¯¥¹¥á¥Ë¥å¡¼¤ØÌá¤é¤º¡¢¥³¥Þ¥ó¥ÉÆþÎÏ¤òµá¤á¤ë¤è¤¦¤Ë¤Ê¤ë¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢
 ¤¹¤°¥¤¥ó¥Ç¥Ã¥¯¥¹¥á¥Ë¥å¡¼¤ËÌá¤ë¡£
 
-66..33..220099..  qquueerryy__ccoommmmaanndd
+66..33..221111..  qquueerryy__ccoommmmaanndd
 
 Type: path
 Default: ""
@@ -5584,7 +5614,7 @@ Default: ""
 »úÎó¤Ë¤Ï %s ¤ò´Þ¤à¤Ù¤­¤Ç¡¢¤½¤ÎÉôÊ¬¤¬¥æ¡¼¥¶¤ÎÆþÎÏ¤¹¤ëÌä¤¤¹ç¤ï¤»Ê¸»úÎó¤ËÃÖ´¹¤µ
 ¤ì¤ë¡£¤è¤ê¾ÜºÙ¤Ê¾ðÊó¤Ï¥¢¥¢¥É¥É¥ì¥ì¥¹¥¹¤Î¤Î³°³°ÉôÉôÌäÌä¤¤¤¤¹ç¹ç¤ï¤ï¤»¤»¤ò»²¾È¡£
 
-66..33..221100..  qquuiitt
+66..33..221122..  qquuiitt
 
 Type: quadoption
 Default: yes
@@ -5593,7 +5623,7 @@ Default: yes
 ½ªÎ»¤µ¤»¤è¤¦¤È¤·¤¿¤È¤­¡¢ yes ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È½ªÎ»¤µ¤»¡¢no ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë
 ¤ÈÌµ¸ú¤Ç¡¢ ask-yes ¤« ask-no ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È³ÎÇ§¤òµá¤á¤é¤ì¤ë¡£
 
-66..33..221111..  qquuoottee__rreeggeexxpp
+66..33..221133..  qquuoottee__rreeggeexxpp
 
 Type: regular expression
 Default: "^([ \t]*[|>:}#])+"
@@ -5606,29 +5636,29 @@ Default: "^([ \t]*[|>:}#])+"
 >" ¤Î¤è¤¦¤ÊÂ¿ÁØ¤Ë¤Ê¤Ã¤¿°úÍÑ¤Ç¤¢¤Ã¤Æ¤â¡¢¤³¤ÎÀµµ¬É½¸½¤Ò¤È¤Ä¤Ç¹çÃ×¤¹¤ëÉ¬Í×¤¬¤¢¤ë
 ¤Î¤À¡£)
 
-66..33..221122..  rreeaadd__iinncc
+66..33..221144..  rreeaadd__iinncc
 
 Type: number
 Default: 10
 
 0 ¤è¤êÂç¤­¤ÊÃÍ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥á¥¤¥ë¥Ü¥Ã¥¯¥¹ÆÉ¤ß½Ð¤·Ãæ¤Ë Mutt ¤¬¸½ºß¤É¤Î
 ¥á¥Ã¥»¥¤¥¸¤Þ¤ÇÍè¤¿¤Î¤«¤òÉ½¼¨¤¹¤ë¤è¤¦¤Ë¤Ê¤ë¡£¤½¤ÎÉ½¼¨¤Ï _r_e_a_d___i_n_c ÄÌ¤Î¥á¥Ã¥»¥¤
-¥¸¤¬ÆÉ¤ß½Ð¤µ¤ì¤ë¤¿¤Ó¤Ë¤ª¤³¤Ê¤ï¤ì¤ë (¤¿¤È¤¨¤Ð 25 ¤À¤È¡¢25 ÈÖÌÜ¤Î¥á¥Ã¥»¥¤¥¸¤òÆÉ
-¤ó¤À¤È¤­¤ËÉ½¼¨¤·¡¢¤µ¤é¤Ë¤Þ¤¿ 50 ÈÖÌÜ¤Î¤È¤­¤Ë¤âÉ½¼¨¤¹¤ë)¡£¤³¤ÎÊÑ¿ô¤Î°ÕÌ£¤Ï¡¢»þ
-´Ö¤Î¤«¤«¤ëÂç¤­¤Ê¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤òÆÉ¤ß½Ð¤¹ºÝ¤Ë¡¢¿Ê¹Ô¾õ¶·¤ò¼¨¤¹¤È¤¤¤¦¤³¤È¤À¡£ 0
-¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ï¡¢¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤ÎÆÉ¤ß½Ð¤·Á°¤Ë°ìÅÙ¥á¥Ã¥»¥¤¥¸¤¬É½¼¨¤µ¤ì
-¤ë¤À¤±¤Ë¤Ê¤ë¡£
+¥¸¤¬ÆÉ¤ß½Ð¤µ¤ì¤ë¤¿¤Ó¤Ë¤ª¤³¤Ê¤ï¤ì¤ë (Îã¤¨¤Ð 25 ¤À¤È¡¢25 ÈÖÌÜ¤Î¥á¥Ã¥»¥¤¥¸¤òÆÉ¤ó
+¤À¤È¤­¤ËÉ½¼¨¤·¡¢¤µ¤é¤Ë¤Þ¤¿ 50 ÈÖÌÜ¤Î¤È¤­¤Ë¤âÉ½¼¨¤¹¤ë)¡£¤³¤ÎÊÑ¿ô¤Î°ÕÌ£¤Ï¡¢»þ´Ö
+¤Î¤«¤«¤ëÂç¤­¤Ê¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤òÆÉ¤ß½Ð¤¹ºÝ¤Ë¡¢¿Ê¹Ô¾õ¶·¤ò¼¨¤¹¤È¤¤¤¦¤³¤È¤À¡£ 0 ¤Ë
+ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ï¡¢¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤ÎÆÉ¤ß½Ð¤·Á°¤Ë°ìÅÙ¥á¥Ã¥»¥¤¥¸¤¬É½¼¨¤µ¤ì¤ë
+¤À¤±¤Ë¤Ê¤ë¡£
 
 $$wwrriittee__iinncc ÊÑ¿ô¤â»²¾È¤Î¤³¤È¡£
 
-66..33..221133..  rreeaadd__oonnllyy
+66..33..221155..  rreeaadd__oonnllyy
 
 Type: boolean
 Default: no
 
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥Õ¥©¥ë¥À¤¬¤¹¤Ù¤ÆÆÉ¤ß½Ð¤·ÀìÍÑ¥â¥¦¥É¤Ç³«¤«¤ì¤ë¡£
 
-66..33..221144..  rreeaallnnaammee
+66..33..221166..  rreeaallnnaammee
 
 Type: string
 Default: ""
@@ -5638,7 +5668,7 @@ Default: ""
 ´ûÄê¤Ç¤Ï /etc/passwd ¤Î GECOS ¥Õ¥£¡¼¥ë¥É¤Ë¤Ê¤ë¡£¤Ê¤ª¡¢¥æ¡¼¥¶¤¬ $$ffrroomm ¤ËËÜÌ¾¤ò
 ÀßÄê¤·¤Æ¤¤¤ë¤È¡¢¤³¤ÎÊÑ¿ô¤¬»È¤ï¤ì_¤Ê_¤¤¤Î¤ÇÃí°Õ¡£
 
-66..33..221155..  rreeccaallll
+66..33..221177..  rreeccaallll
 
 Type: quadoption
 Default: ask-yes
@@ -5650,7 +5680,7 @@ $$ppoossttppoonneedd ¤â»²¾È¡£
 ¤ÊÀßÄê¤Ï¿ä¾©¤µ¤ì¤Æ¤¤¤Ê¤¤¡£ (ÌõÃí¡§"yes" ¤À¤È¡¢¤Ò¤È¤Ä¤Ç¤â±ä´ü¤µ¤ì¤Æ¤¤¤ë¥á¥Ã¥»
 ¥¤¥¸¤¬¤¢¤ë¤È¡¢¤¤¤Ä¤Þ¤Ç¤â¿·µ¬¥á¥Ã¥»¥¤¥¸¤¬ºîÀ®¤Ç¤­¤Ê¤¯¤Ê¤ë¡£ÊÖ¿®¤Ï¤Ç¤­¤ë¡£)
 
-66..33..221166..  rreeccoorrdd
+66..33..221188..  rreeccoorrdd
 
 Type: path
 Default: ""
@@ -5664,7 +5694,7 @@ $$rreeccoorrdd ¤Î¤ÎÃÍÃÍ¤Ï¤Ï¡¢¡¢ $$ffoorrccee__nnaammee ¤ª¤
 ¤Ç¡¢ Fcc ¤òÊÑ¹¹¤¹¤ì¤Ð¾å½ñ¤­¤µ¤ì¤ë¡£Fcc ¤È $$rreeccoorrdd ¤ÎÎ¾Êý¤ËÊÝÂ¸¤µ¤ì¤ë¤ï¤±¤Ç¤Ï
 ¤Ê¤¤¤Î¤ÇÃí°Õ¡£)
 
-66..33..221177..  rreeppllyy__rreeggeexxpp
+66..33..221199..  rreeppllyy__rreeggeexxpp
 
 Type: regular expression
 Default: "^(re([\[0-9\]+])*|aw):[ \t]*"
@@ -5673,7 +5703,7 @@ Default: "^(re([\[0-9\]+])*|aw):[ \t]*"
 ¤Ë»È¤¦¡£´ûÄêÃÍ¤Ï±Ñ¸ì¤Î "Re:" ¤È¥É¥¤¥Ä¸ì¤Î "Aw:" ¤ËÂÐ±þ¤·¤Æ¤¤¤ë¡£(ÌõÃí¡§¤¿¤À
 ¤·¡¢Re[3]: ¤ä Re3: ¤Ë¤Ï¹çÃ×¤¹¤ë¤¬ Aw[3]: ¤ä Aw3: ¤Ë¤Ï¹çÃ×¤·¤Ê¤¤¡£)
 
-66..33..221188..  rreeppllyy__sseellff
+66..33..222200..  rreeppllyy__sseellff
 
 Type: boolean
 Default: no
@@ -5681,7 +5711,7 @@ Default: no
 ¼«Ê¬¤ÎÁ÷¤Ã¤¿¥á¥Ã¥»¥¤¥¸¤ËÊÖ¿®¤¹¤ë¤È¤­¡¢¤³¤ì¤¬²ò½ü¤µ¤ì¤Æ¤¤¤ì¤Ð¡¢¼«Ê¬¤ËÊÖ¿®¤·¤¿
 ¤¤¤Î¤Ç¤Ï¤Ê¤¯¡¢¤½¤Î¥á¥Ã¥»¥¤¥¸¤Î°¸Àè¤ËÊÖ¿®¤·¤¿¤¤¤Î¤À¤È¤ß¤Ê¤µ¤ì¤ë¡£
 
-66..33..221199..  rreeppllyy__ttoo
+66..33..222211..  rreeppllyy__ttoo
 
 Type: quadoption
 Default: ask-yes
@@ -5693,7 +5723,7 @@ Default: ask-yes
 ¥¤¥ê¥ó¥°¥ê¥¹¥È¤òÆÉ¤ó¤Ç¤¤¤Æ¡¢¥á¥Ã¥»¥¤¥¸¤ÎÁ÷¿®¼Ô¤Ø¸Ä¿ÍÅª¤Ë¥á¥Ã¥»¥¤¥¸¤òÁ÷¤ê¤¿¤¤
 ¾ì¹ç¤ËÊØÍø¤Ç¤¢¤ë¡£
 
-66..33..222200..  rreessoollvvee
+66..33..222222..  rreessoollvvee
 
 Type: boolean
 Default: yes
@@ -5701,7 +5731,7 @@ Default: yes
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Ï¡¢¥á¥Ã¥»¥¤¥¸¤òÊÑ¹¹¤¹¤ë¥³¥Þ¥ó¥É¤¬¼Â¹Ô¤µ¤ì¤ë¤È¥«¡¼¥½¥ë¤¬
 ¼«Æ°¤Ç¿Ê¤ß¡¢(¤¢¤ì¤Ð) ¼¡¤ÎÌ¤ºï½ü¥á¥Ã¥»¥¤¥¸¤ØÆ°¤¯¡£
 
-66..33..222211..  rreevveerrssee__aalliiaass
+66..33..222233..  rreevveerrssee__aalliiaass
 
 Type: boolean
 Default: no
@@ -5721,17 +5751,19 @@ Default: no
 ¤Î¿ÍÊª¤Î¥á¥¤¥ë¥¢¥É¥ì¥¹¤¬¿Í´Ö¸þ¤­¤Ç¤Ê¤¤ (CompuServe ¤Î¥¢¥É¥ì¥¹¤Î¤è¤¦¤Ê) ¤È¤­¤Ë
 ÊØÍø¤Ç¤¢¤ë¡£
 
-66..33..222222..  rreevveerrssee__nnaammee
+66..33..222244..  rreevveerrssee__nnaammee
 
 Type: boolean
 Default: no
 
 ¥á¥¤¥ë¤ò¤¢¤ë¥Þ¥·¥ó¤Ç¼õ¿®¤·¡¢ÊÌ¤Î¥Þ¥·¥ó¤Ø°Ü¤·¤Æ¡¢¤½¤³¤«¤éÊÖ¿®¤¹¤ë¤È¤¤¤¦¤³¤È¤¬
-»þ¡¹¤¢¤ë¤«¤â¤·¤ì¤Ê¤¤¡£¤³¤ÎÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢´ûÄê¤Î _F_r_o_m_: ¹Ô¤¬¡¢ÊÖ¿®¤·¤¿
-¤¤¥á¥Ã¥»¥¤¥¸¤ò¼õ¤±¼è¤Ã¤¿¥¢¥É¥ì¥¹¤ò»È¤Ã¤ÆºîÀ®¤µ¤ì¤ë¡£ÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤
-¤È¡¢ _F_r_o_m_: ¹Ô¤Ë¤ÏÊÖ¿®»þ¤Î¥Þ¥·¥ó¤Î¥¢¥É¥ì¥¹¤¬»È¤ï¤ì¤ë¡£
+»þ¡¹¤¢¤ë¤«¤â¤·¤ì¤Ê¤¤¡£¤³¤ÎÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢ÊÖ¿®¤·¤¿¤¤¥á¥Ã¥»¥¤¥¸¤ò¼õ¤±
+¼è¤Ã¤¿¥¢¥É¥ì¥¹¤¬ alternates ¤Ë¹çÃ×¤·¤Æ¤¤¤ë¤È¤­¤Ë¤Ï¡¢¤½¤Î¥¢¥É¥ì¥¹¤ò»È¤Ã¤Æ´ûÄê
+¤Î _F_r_o_m_: ¹Ô¤¬ºîÀ®¤µ¤ì¤ë¡£¤³¤ÎÊÑ¿ô¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤«¤Ã¤¿¤ê¡¢¥¢¥É¥ì¥¹¤¬
+alternates ¤Ë¹çÃ×¤·¤Ê¤«¤Ã¤¿¤ê¤·¤¿¾ì¹ç¤Ë¤Ï¡¢ _F_r_o_m_: ¹Ô¤Ë¤ÏÊÖ¿®»þ¤Î¥Þ¥·¥ó¤Î¥¢¥É
+¥ì¥¹¤¬»È¤ï¤ì¤ë¡£
 
-66..33..222233..  rreevveerrssee__rreeaallnnaammee
+66..33..222255..  rreevveerrssee__rreeaallnnaammee
 
 Type: boolean
 Default: yes
@@ -5741,7 +5773,7 @@ Default: yes
 ¤Î¤À¡£¤â¤·²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢¤½¤¦¤·¤¿ËÜÌ¾ÉôÊ¬¤Ï rreeaallnnaammee ÊÑ¿ô¤ÎÀßÄê¤Ç¾å½ñ¤­¤¹
 ¤ë¤è¤¦¤Ë¤Ê¤ë¡£
 
-66..33..222244..  rrffcc22004477__ppaarraammeetteerrss
+66..33..222266..  rrffcc22004477__ppaarraammeetteerrss
 
 Type: boolean
 Default: no
@@ -5760,7 +5792,7 @@ Default: no
 ¤ë¤È¤¤¤¦¸ú²Ì¤Ï_¤Ê_¤¤¤È¤¤¤¦ÅÀ¤Ë¤âÃí°Õ¤»¤è¡£¤½¤¦¤Ç¤Ï¤Ê¤¯¡¢Mutt ¤Ï¾ï¤Ë RFC 2231 ¤Ç
 »Ø¼¨¤µ¤ì¤Æ¤¤¤ëÉä¹æ²½Êý¼°¤òÍÑ¤¤¤ë¡£
 
-66..33..222255..  ssaavvee__aaddddrreessss
+66..33..222277..  ssaavvee__aaddddrreessss
 
 Type: boolean
 Default: no
@@ -5771,7 +5803,7 @@ $$ssaavvee__nnaammee ¤ä $$ffoorrccee__nnaammee ¤¬ÀßÄê¤µ¤ì¤Æ
 ¤Ê¤ë¡£$force_name ¤¬ yes ¤Ê¤é¡¢¤½¤Î¤è¤¦¤Ê¥Õ¥©¥ë¥À¤¬Â¸ºß¤·¤Ê¤¯¤Æ¤âºîÀ®¤·¤Æ Fcc
 ¤¹¤ë¤è¤¦¤Ë¤Ê¤ë¡£)
 
-66..33..222266..  ssaavvee__eemmppttyy
+66..33..222288..  ssaavvee__eemmppttyy
 
 Type: boolean
 Default: yes
@@ -5783,7 +5815,7 @@ Default: yes
 ÃíÃí°Õ°Õ:: ¤³¤ì¤¬Å¬ÍÑ¤µ¤ì¤ë¤Î¤Ï mbox ¤È MMDF ¤Î¥Õ¥©¥ë¥À¤Î¤ß¤Ç¤¢¤ê¡¢ Mutt ¤¬ MH ¤ä
 Maildir ¤Î¥Ç¥£¥ì¥¯¥È¥ê¤òºï½ü¤¹¤ë¤³¤È¤Ï¤Ê¤¤¡£
 
-66..33..222277..  ssaavvee__nnaammee
+66..33..222299..  ssaavvee__nnaammee
 
 Type: boolean
 Default: no
@@ -5796,7 +5828,7 @@ Default: no
 
 $$ffoorrccee__nnaammee ÊÑ¿ô¤â»²¾È¡£
 
-66..33..222288..  ssccoorree
+66..33..223300..  ssccoorree
 
 Type: boolean
 Default: yes
@@ -5805,7 +5837,7 @@ Default: yes
 ÅÀÉÕ¤±¤òÌµ¸ú¤Ë¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¤Î¤Ç¡¢ $$ssccoorree__tthhrreesshhoolldd__ddeelleettee ¤ä¤½¤ÎÃç´Ö¤¿¤Á¤ò
 »È¤Ã¤Æ¤¤¤ë¤È¤­¤ËÊØÍø¤«¤â¤·¤ì¤Ê¤¤¡£
 
-66..33..222299..  ssccoorree__tthhrreesshhoolldd__ddeelleettee
+66..33..223311..  ssccoorree__tthhrreesshhoolldd__ddeelleettee
 
 Type: number
 Default: -1
@@ -5814,7 +5846,7 @@ Default: -1
 ¥³¥¢¤Ï¾ï¤Ë¥¼¥í°Ê¾å¤Ê¤Î¤Ç¡¢´ûÄê¤ÎÀßÄê¤Ç¤Ï¤¤¤«¤Ê¤ë¥á¥Ã¥»¥¤¥¸¤âºï½üÍ½Äê¤Ë¤µ¤ì¤ë
 ¤³¤È¤Ï¤Ê¤¤¡£
 
-66..33..223300..  ssccoorree__tthhrreesshhoolldd__ffllaagg
+66..33..223322..  ssccoorree__tthhrreesshhoolldd__ffllaagg
 
 Type: number
 Default: 9999
@@ -5822,7 +5854,7 @@ Default: 9999
 ³ä¤êÅö¤Æ¤é¤ì¤¿ÆÀÅÀ¤¬¤³¤ÎÊÑ¿ô¤ÎÃÍ°Ê¾å¤Ë¤Ê¤ë¥á¥Ã¥»¥¤¥¸¤Ë¤Ï¼«Æ°Åª¤Ë¡Ö½ÅÍ×¡×¥Õ¥é
 ¥°¤¬ÉÕ¤±¤é¤ì¤ë¡£
 
-66..33..223311..  ssccoorree__tthhrreesshhoolldd__rreeaadd
+66..33..223333..  ssccoorree__tthhrreesshhoolldd__rreeaadd
 
 Type: number
 Default: -1
@@ -5831,7 +5863,7 @@ Default: -1
 ¤·¤Æ°õÉÕ¤±¤ë¡£Mutt ¤Ç¤ÏÆÀÅÀ¤¬¾ï¤Ë¥¼¥í¤«¥¼¥í°Ê¾å¤Ê¤Î¤Ç¡¢´ûÄê¤ÎÀßÄê¤Ç¥á¥Ã¥»¥¤¥¸
 ¤ò´ûÆÉ¤Ë¤·¤Æ¤·¤Þ¤¦¤³¤È¤Ï¤¢¤ê¤¨¤Ê¤¤¡£
 
-66..33..223322..  sseenndd__cchhaarrsseett
+66..33..223344..  sseenndd__cchhaarrsseett
 
 Type: string
 Default: "us-ascii:iso-8859-1:utf-8"
@@ -5845,7 +5877,7 @@ iso-2022-jp ¤Ê¤É) ¤ò "iso-8859-1" ¤ÎÂå¤ï¤ê¡¢¤¢¤ë¤¤¤Ï¤½¤Î¸å¤Ë´Þ¤á¤ë¤³¤È¤¬¿ä¾©
 content type ¤Ë¤Ï iso-2022-jp ¤È½ñ¤«¤Í¤Ð¤Ê¤é¤Ê¤¤¤Î¤Ç¡¢¤³¤ÎÊÑ¿ô¤Ë¤Ï
 iso-2022-jp ¤È»ØÄê¤¹¤Ù¤­¤Ç¤¢¤ë¡£¤½¤Î¾ì¹ç¤Ë¤Ï iiccoonnvv--hhooookk ¤ÇÄ´À°¤¹¤ë¡£)
 
-66..33..223333..  sseennddmmaaiill
+66..33..223355..  sseennddmmaaiill
 
 Type: path
 Default: "/usr/sbin/sendmail -oem -oi"
@@ -5853,7 +5885,7 @@ Default: "/usr/sbin/sendmail -oem -oi"
 Mutt ¤ÇÁ÷¿®¤¹¤ë¥á¥¤¥ë¤ÎÇÛÁ÷¤ËÍÑ¤¤¤é¤ì¤ë¥×¥í¥°¥é¥à¤È°ú¿ô¤ò»ØÄê¤¹¤ë¡£ Mutt
 ¤Ï¡¢Â³¤¯°ú¿ô¤ò¤³¤Î¥×¥í¥°¥é¥à¤¬°¸Àè¥¢¥É¥ì¥¹¤È¤·¤Æ²ò¼á¤¹¤ë¤â¤Î¤ÈÁÛÄê¤·¤Æ¤¤¤ë¡£
 
-66..33..223344..  sseennddmmaaiill__wwaaiitt
+66..33..223366..  sseennddmmaaiill__wwaaiitt
 
 Type: number
 Default: 0
@@ -5873,7 +5905,7 @@ Mutt ¤Ï¤³¤ÎÊÑ¿ô¤ÎÃÍ¤ò°Ê²¼¤Î¤è¤¦¤Ë²ò¼á¤¹¤ë¡£
 ¤¬°ì»þ¥Õ¥¡¥¤¥ë¤ØÃÖ¤«¤ì¤ë¤³¤È¤Ë¤Ê¤ë¤Î¤À¡£²¿¤«¥¨¥é¡¼¤¬¤¢¤Ã¤¿¾ì¹ç¤Ë¤Ï¡¢¤½¤Î½ÐÎÏ
 ¤¬¤É¤³¤Ë¤¢¤ë¤«¤òÃÎ¤é¤µ¤ì¤ë¤³¤È¤Ë¤Ê¤ë¡£
 
-66..33..223355..  sshheellll
+66..33..223377..  sshheellll
 
 Type: path
 Default: ""
@@ -5881,7 +5913,7 @@ Default: ""
 ÆâÉô¤Ç¥µ¥Ö¥·¥§¥ë¤ò¼Â¹Ô¤¹¤ëºÝ¤Ë»È¤¦¥³¥Þ¥ó¥É¡£´ûÄê¤Ç¤Ï¡¢/etc/passwd ¤ò¸«¤Æ¥æ¡¼
 ¥¶¤Î¥í¥°¥¤¥ó¥·¥§¥ë¤òÍÑ¤¤¤ë¡£
 
-66..33..223366..  ssiigg__ddaasshheess
+66..33..223388..  ssiigg__ddaasshheess
 
 Type: boolean
 Default: yes
@@ -5891,7 +5923,7 @@ Default: yes
 ¤Î¥½¥Õ¥È¥¦¥§¥¢¤¬ "-- \n" ¤ò»È¤Ã¤Æ½ðÌ¾¤ò¸¡½Ð¤¹¤ë¤«¤é¤Ç¤¢¤ë¡£Îã¤¨¤Ð Mutt ¤ÏÆâÂ¢
 ¥Ú¥¤¥¸¥ã¤Ç½ðÌ¾¤òÊÌ¤Î¿§¤ËÌÜÎ©¤¿¤»¤ëÇ½ÎÏ¤ò»ý¤Ã¤Æ¤¤¤ë¡£
 
-66..33..223377..  ssiigg__oonn__ttoopp
+66..33..223399..  ssiigg__oonn__ttoopp
 
 Type: boolean
 Default: no
@@ -5900,7 +5932,7 @@ Default: no
 ¤Î°ÕÌ£¤ò¤è¤¯Íý²ò¤·¡¢¥Í¥Á¥±¥Ã¥È¤ÎÈÖ¿Í¤¿¤Á¤ÎÊ°¤ê¤òÇã¤¦½àÈ÷¤¬¤Ç¤­¤Æ¤¤¤ë¤Î¤Ç¤Ê¤¤
 ¸Â¤ê¡¢¤³¤ÎÊÑ¿ô¤ÏÀßÄê¤·¤Ê¤¤¤è¤¦¶¯¶¯¤¯¤¯¿ä¾©¤µ¤ì¤Æ¤¤¤ë¡£
 
-66..33..223388..  ssiiggnnaattuurree
+66..33..224400..  ssiiggnnaattuurree
 
 Type: path
 Default: "~/.signature"
@@ -5909,7 +5941,7 @@ Default: "~/.signature"
 ¥Õ¥¡¥¤¥ëÌ¾¤¬¥Ñ¥¤¥× ("|") ¤Ç½ª¤ï¤Ã¤Æ¤¤¤ë¤È¡¢¥Õ¥¡¥¤¥ëÌ¾¤¬¥·¥§¥ë¥³¥Þ¥ó¥É¤È¤ß¤Ê¤µ
 ¤ì¡¢¤½¤ÎÉ¸½à½ÐÎÏ¤«¤éÆÉ¤ß½Ð¤µ¤ì¤ë¡£
 
-66..33..223399..  ssiimmppllee__sseeaarrcchh
+66..33..224411..  ssiimmppllee__sseeaarrcchh
 
 Type: string
 Default: "~f %s | ~s %s"
@@ -5918,12 +5950,12 @@ Default: "~f %s | ~s %s"
 ¤ò´Þ¤Þ¤Ê¤¤¸¡º÷¤Î¤³¤È¤À¡£¸¡º÷¥Ñ¥¿¡¼¥ó¤Ë´Ø¤·¤Æ¤µ¤é¤Ë¾ðÊó¤òÆÀ¤ë¤Ë¤Ï¡Ö¡Ö¥Ñ¥Ñ¥¿¥¿¡¼¡¼¥ó¥ó¡×¡×
 ¤ÎÀá¤ò»²¾È¤»¤è¡£
 
-¤¿¤È¤¨¤Ð¡¢¸¡º÷¤äÉ½¼¨À©¸Â¤ÎÆþÎÏ»þ¤Ë¤¿¤À joe ¤È¤À¤±ÆþÎÏ¤¹¤ë¤È¡¢ Mutt ¤Ï¼«Æ°¤Ç¤³
-¤ÎÊÑ¿ô¤ÎÃÍ¤ØÅ¸³«¤·¡¢´ûÄêÃÍ¤Ç¤Ï¤³¤¦¤Ê¤ë¡£
+Îã¤¨¤Ð¡¢¸¡º÷¤äÉ½¼¨À©¸Â¤ÎÆþÎÏ»þ¤Ë¤¿¤À joe ¤È¤À¤±ÆþÎÏ¤¹¤ë¤È¡¢ Mutt ¤Ï¼«Æ°¤Ç¤³¤Î
+ÊÑ¿ô¤ÎÃÍ¤ØÅ¸³«¤·¡¢´ûÄêÃÍ¤Ç¤Ï¤³¤¦¤Ê¤ë¡£
 
 ~f joe | ~s joe
 
-66..33..224400..  ssmmaarrtt__wwrraapp
+66..33..224422..  ssmmaarrtt__wwrraapp
 
 Type: boolean
 Default: yes
@@ -5933,7 +5965,7 @@ Default: yes
 Áõ²ÄÇ½¤Ê¤Î¤Ç¤¢¤ë)¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢Ã±½ã¤Ë²èÌÌ¤ÎÃ¼¤ÇÀÞ¤êÊÖ¤µ¤ì¤ë¡£ $$mmaarrkkeerrss
 ÊÑ¿ô¤â»²¾È¤Î¤³¤È¡£
 
-66..33..224411..  ssmmiilleeyyss
+66..33..224433..  ssmmiilleeyyss
 
 Type: regular expression
 Default: "(>From )|(:[-^]?[][)(><}{|/DP])"
@@ -5941,7 +5973,7 @@ Default: "(>From )|(:[-^]?[][)(><}{|/DP])"
 _¥Ú_¥¤_¥¸_¥ã¤¬¤³¤ÎÊÑ¿ô¤ò»È¤Ã¤Æ¡¢ $$qquuoottee__rreeggeexxpp ¤Î¤è¤¯¤¢¤ë¸í¸¡½Ð¤òÊäÀµ¤¹¤ë¡£¤ª¤â
 ¤Ë¡¢¹ÔÆ¬¤Ë´éÊ¸»ú (smileys) ¤¬¤¢¤ë¾ì¹ç¤Ç¤¢¤ë¡£
 
-66..33..224422..  sslleeeepp__ttiimmee
+66..33..224444..  sslleeeepp__ttiimmee
 
 Type: number
 Default: 1
@@ -5951,7 +5983,7 @@ Default: 1
 ¤Þ¤Ã¤ÆÉ½¼¨¤¹¤ë¡£¤½¤ì¤Ç¡¢¤³¤Î¥ª¥×¥·¥ç¥ó¤ò¥¼¥í¤Ë¤¹¤ë¤ÈÄä»ß¤·¤Ê¤¯¤Ê¤ë¡£(ÌõÃí¡§¤¹
 ¤°¤ËºÆÉÁ²è¤µ¤ì¤ë¤Î¤ÇÆÉ¤à¤³¤È¤¬¤Ç¤­¤Ê¤¯¤Ê¤ë¡£)
 
-66..33..224433..  ssoorrtt
+66..33..224455..  ssoorrtt
 
 Type: sort order
 Default: date
@@ -5973,7 +6005,7 @@ _¥¤_¥ó_¥Ç_¥Ã_¥¯_¥¹¥á¥Ë¥å¡¼¤Ç¥á¥Ã¥»¥¤¥¸¤òÀ°Îó¤¹¤ëÊýË¡¤ò»ØÄê¤¹¤ë¡£Àµ¤·¤¤ÃÍ¤Ï
 ¤³¤ì¤Ë²Ã¤¨¤Æ¡¢reverse- ¤òÆ¬¤ËÉÕ¤±¤ë¤³¤È¤ÇµÕ½ç¤ËÀ°Îó¤µ¤»¤ë¤³¤È¤¬¤Ç¤­¤ë (Îã:
 set sort=reverse-date-sent)¡£
 
-66..33..224444..  ssoorrtt__aalliiaass
+66..33..224466..  ssoorrtt__aalliiaass
 
 Type: sort order
 Default: alias
@@ -5984,7 +6016,7 @@ Default: alias
          alias (¥¨¥¤¥ê¥¢¥¹Ì¾¤Ç¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È½ç¤ËÀ°Îó)
          unsorted (.muttrc ¤Ç»ØÄê¤µ¤ì¤¿½çÈÖ¤Î¤Þ¤Þ)
 
-66..33..224455..  ssoorrtt__aauuxx
+66..33..224477..  ssoorrtt__aauuxx
 
 Type: sort order
 Default: date
@@ -5996,15 +6028,15 @@ Default: date
 last- ÀÜÆ¬¼­¤â»ØÄê¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£¤¿¤À¤·¡¢last- ¤Ï reverse- ¤Î¸å¤ËÍè¤Ê¤¯¤Æ
 ¤Ï¤Ê¤é¤Ê¤¤¡£¤³¤Î last- ÀÜÆ¬¼­¤Ï¡¢·»Äï¤É¤¦¤·¤Î¥á¥Ã¥»¥¤¥¸¤ò¤½¤ì¤¾¤ì¤Î°ìÈÖ²¼¤Î»Ò
 Â¹¤ÇÈæ³Ó¤µ¤»¤ë¤â¤Î¤Ç¡¢¤½¤Î¡Ö°ìÈÖ²¼¡×¤ò·èÄê¤¹¤ë¤¿¤á¤Ë sort_aux ¤Î»Ä¤ê¤ÎÉôÊ¬¤ò
-»È¤¦¡£¤¿¤È¤¨¤Ð set sort_aux=last-date-received ¤Î°ÕÌ£¤Ï¡¢¤¢¤ë¥¹¥ì¥Ã¥É¤Ë¿·Ãå
-¥á¥Ã¥»¥¤¥¸¤¬ÆÏ¤¯¤È¡¢¤½¤Î¥¹¥ì¥Ã¥É¤¬ºÇ¸å¤ËÉ½¼¨¤µ¤ì¤ë¤È¤¤¤¦¤³¤È¤Ç¤¢¤ë (set
+»È¤¦¡£Îã¤¨¤Ð set sort_aux=last-date-received ¤Î°ÕÌ£¤Ï¡¢¤¢¤ë¥¹¥ì¥Ã¥É¤Ë¿·Ãå¥á¥Ã
+¥»¥¤¥¸¤¬ÆÏ¤¯¤È¡¢¤½¤Î¥¹¥ì¥Ã¥É¤¬ºÇ¸å¤ËÉ½¼¨¤µ¤ì¤ë¤È¤¤¤¦¤³¤È¤Ç¤¢¤ë (set
 sort=reverse-threads ¤·¤Æ¤¢¤ì¤ÐºÇ½é¤Ë¤Ê¤ë)¡£Ãí°Õ: $$ssoorrtt ¤¬µÕ½ç»ØÄê¤À¤È¡¢
 $$ssoorrtt__aauuxx ¤â¤Þ¤¿µÕ½ç¤Ë¤Ê¤Ã¤Æ¤·¤Þ¤¦ (¤³¤ì¤ÏÀµ¤·¤¤Æ°ºî¤Ç¤Ï¤Ê¤¤¤¬¡¢´ûÂ¸¤ÎÀßÄê¤ò
 ¤À¤á¤Ë¤·¤Æ¤·¤Þ¤ï¤Ê¤¤¤è¤¦¡¢ÊüÃÖ¤µ¤ì¤Æ¤¤¤ë)¡£ (ÌõÃí¡§sort=reverse-threads ¤Ç
 sort_aux=date ¤À¤È¡¢¥¹¥ì¥Ã¥ÉÆâ¤Î³Æ¥á¥Ã¥»¥¤¥¸¤¬ reverse-date ¤Î¤è¤¦¤Ê½çÈÖ¤ËÀ°
 Îó¤µ¤ì¤ë¤È¤¤¤¦¤³¤È¡£)
 
-66..33..224466..  ssoorrtt__bbrroowwsseerr
+66..33..224488..  ssoorrtt__bbrroowwsseerr
 
 Type: sort order
 Default: alpha
@@ -6020,7 +6052,7 @@ Default: alpha
 ¤³¤ì¤Ë reverse- ÀÜÆ¬¼­¤òÉÕ¤±¤ÆµÕ½ç¤ËÀ°Îó¤µ¤»¤ë¤³¤È¤â¤Ç¤­¤ë (Îã: set
 sort_browser=reverse-date)¡£
 
-66..33..224477..  ssoorrtt__rree
+66..33..224499..  ssoorrtt__rree
 
 Type: boolean
 Default: yes
@@ -6033,7 +6065,7 @@ $$rreeppllyy__rreeggeexxpp ¤ÎÀßÄê¤È¹çÃ×¤¹¤ëÊ¸»úÎó¤Ç»Ï¤Þ¤Ã¤Æ¤¤¤ë¤â¤Î
 ²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢¤½¤ì°Ê³°¤Î¤â¤Î¤â¡¢ $$rreeppllyy__rreeggeexxpp ¤Ç¤Ê¤¤ÉôÊ¬¤¬Æ±¤¸¤Ç¤¢¤ë¸Â¤ê
 ¥¹¥ì¥Ã¥É¤ËÆþ¤ì¤Æ¤·¤Þ¤¦¡£
 
-66..33..224488..  ssppaamm__sseeppaarraattoorr
+66..33..225500..  ssppaamm__sseeppaarraattoorr
 
 Type: string
 Default: ","
@@ -6044,7 +6076,7 @@ $$ssppaamm__sseeppaarraattoorr ¤ÏÊ£¿ô¤Î¥¹¥Ñ¥à¥Ø¥Ã¥À¤¬ ssppaam
 ¤·¤¿¤â¤Î¤¬°ÊÁ°¤ÎÃÍ¤ËÄÉµ­¤µ¤ì¤Æ¤æ¤¯¡£¤½¤ÎºÝ¤Î¶èÀÚ¤êÊ¸»ú¤È¤·¤Æ $$ssppaamm__sseeppaarraattoorr
 ¤¬»È¤ï¤ì¤ë¡£
 
-66..33..224499..  ssppoooollffiillee
+66..33..225511..  ssppoooollffiillee
 
 Type: path
 Default: ""
@@ -6053,7 +6085,7 @@ Default: ""
 ¤Î¾ì½ê¤ò¤³¤ÎÊÑ¿ô¤Ç»ØÄê¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤È¡¢Mutt ¤Ï¼«Æ°Åª¤Ë´Ä
 ¶­ÊÑ¿ô $MAIL ¤ÎÃÍ¤Ë¤¹¤ë¡£
 
-66..33..225500..  ssttaattuuss__cchhaarrss
+66..33..225522..  ssttaattuuss__cchhaarrss
 
 Type: string
 Default: "-*%A"
@@ -6067,7 +6099,7 @@ $$ssttaattuuss__ffoorrmmaatt ¤Î "%r" ¤Ç»È¤ï¤ì¤ëÊ¸»ú¤òÀ©¸æ¤¹¤ë¡£¥á¥
 ¤ò¼¨¤¹¤¿¤á¤ËÍÑ¤¤¤é¤ì¤ë (¤³¤Î¥â¥¦¥É¤Ç¤Ï¡¢¿·µ¬¥á¥Ã¥»¥¤¥¸ºîÀ®¤äÊÖ¿®¡¢Å¾Á÷¤Ê¤É¤Î
 Æ°ºî¤¬¶Ø»ß¤µ¤ì¤Æ¤¤¤ë)¡£
 
-66..33..225511..  ssttaattuuss__ffoorrmmaatt
+66..33..225533..  ssttaattuuss__ffoorrmmaatt
 
 Type: string
 Default: "-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d?
@@ -6127,7 +6159,7 @@ $$iinnddeexx__ffoorrmmaatt ¤È»÷¤Æ¤¤¤ë¤¬¡¢ÆÈ¼«¤Î printf()É÷¥·¡¼¥¯¥¦¥
 * = Èó¥¼¥í¤Î¤È¤­¤Î¤ßÉ½¼¨¤¹¤ë¤è¤¦¤Ë¤Ç¤­¤ë
 
 ¾åµ­¥·¡¼¥¯¥¦¥§¥ó¥¹¤ÎÃæ¤Ë¤Ï¡¢ÃÍ¤¬Èó¥¼¥í¤Î¤È¤­¤Î¤ßÁªÂòÅª¤ËÊ¸»úÎó¤òÉ½¼¨¤¹¤ë¤È¤¤
-¤¦»È¤¤Êý¤Î¤Ç¤­¤ë¤â¤Î¤¬¤¢¤ë¡£¤¿¤È¤¨¤Ð¡¢¥Õ¥é¥°ÉÕ¤­¥á¥Ã¥»¥¤¥¸¤Î¿ô¤Ï¡¢¤½¤Î¤è¤¦¤Ê
+¤¦»È¤¤Êý¤Î¤Ç¤­¤ë¤â¤Î¤¬¤¢¤ë¡£Îã¤¨¤Ð¡¢¥Õ¥é¥°ÉÕ¤­¥á¥Ã¥»¥¤¥¸¤Î¿ô¤Ï¡¢¤½¤Î¤è¤¦¤Ê
 ¥á¥Ã¥»¥¤¥¸¤¬Â¸ºß¤¹¤ë¤È¤­¤Ë¤Î¤ß¸«¤¿¤¤¤È»×¤¦¤À¤í¤¦¡£¥¼¥í¤Ë¤ÏÆÃ¤Ë°ÕÌ£¤¬¤¢¤ë¤ï¤±
 ¤Ç¤Ï¤Ê¤¤¤Î¤À¤«¤é¡£¤½¤Î¤è¤¦¤Ë¾åµ­¥·¡¼¥¯¥¦¥§¥ó¥¹¤Ë´ð¤Å¤¤¤ÆÁªÂòÅª¤ËÊ¸»úÎó¤òÉ½¼¨
 ¤¹¤ë¤Ë¤Ï¡¢¼¡¤Î¤è¤¦¤Ê¹½Â¤¤¬»È¤ï¤ì¤ë¡£
@@ -6148,14 +6180,14 @@ _Îó¤Ë¤ÏÂ¾¤Î¥·¡¼¥¯¥¦¥§¥ó¥¹¤âÉáÄÌ¤ÎÊ¸¾Ï¤â´Þ¤á¤ë¤³¤È¤¬¤Ç¤Ç¤­¤­¤ë¤ë¤¬¡¢ÁªÂòÅªÊ¸»
 
 ¤µ¤é¤Ë¡¢¤É¤Î printfÉ÷¥·¡¼¥¯¥¦¥§¥ó¥¹¤ËÂÐ¤·¤Æ¤â¡¢·ë²Ì¤ò¶¯À©Åª¤Ë¾®Ê¸»ú¤Ë¤¹¤ë¤³
 ¤È¤¬¤Ç¤­¤ë¡£¤³¤ì¤Ï¥·¡¼¥¯¥¦¥§¥ó¥¹Ê¸»ú¤ÎÁ°¤Ë¥¢¥ó¥À¥¹¥³¥¢ (_) µ­¹æ¤òÉÕ¤±¤ì¤ÐÎÉ
-¤¤¡£¤¿¤È¤¨¤Ð¡¢¥í¥¦¥«¥ë¤Î¥Û¥¹¥ÈÌ¾¤ò¾®Ê¸»ú¤ÇÉ½¼¨¤·¤¿¤¤¤Ê¤é %_h ¤È¤¹¤ë¡£
+¤¤¡£Îã¤¨¤Ð¡¢¥í¥¦¥«¥ë¤Î¥Û¥¹¥ÈÌ¾¤ò¾®Ê¸»ú¤ÇÉ½¼¨¤·¤¿¤¤¤Ê¤é %_h ¤È¤¹¤ë¡£
 
 ¥·¡¼¥¯¥¦¥§¥ó¥¹Ê¸»ú¤ÎÁ°¤Ë¥³¥í¥ó (:) Ê¸»ú¤òÉÕ¤±¤ë¤È¡¢Mutt ¤ÏÅ¸³«·ë²ÌÃæ¤Î¥É¥Ã¥È
 (.) ¤ò¥¢¥ó¥À¥¹¥³¥¢¤ËÃÖ´¹¤¹¤ë¡£¤³¤ì¤Ï¡¢¥Õ¥©¥ë¥ÀÌ¾¤Ë¥É¥Ã¥È¤ò»È¤¨¤Ê¤¤ IMAP ¥Õ¥©
 ¥ë¥À¤ÇÌòÎ©¤Ä¤«¤â¤·¤ì¤Ê¤¤¡£ (ÌõÃí¡§$status_format ¤È¤¤¤¦¤è¤ê¤Ï¡¢ ssaavvee--hhooookk ¤Ê
 ¤É¤Ç»È¤¦¤³¤È¤òÁÛÄê¤·¤Æ¤¤¤ë¤Î¤Ç¤¢¤í¤¦¡£)
 
-66..33..225522..  ssttaattuuss__oonn__ttoopp
+66..33..225544..  ssttaattuuss__oonn__ttoopp
 
 Type: boolean
 Default: no
@@ -6163,18 +6195,18 @@ Default: no
 ¤³¤ÎÊÑ¿ô¤òÀßÄê¤¹¤ë¤È¡Ö¥¹¥Æ¥¤¥¿¥¹¥Ð¡¼¡×¤¬²èÌÌ¤Î²¼¤Î¤Û¤¦¤Ç¤Ï¤Ê¤¯°ìÈÖ¾å¤Î¹Ô¤ËÉ½
 ¼¨¤µ¤ì¤ë¤è¤¦¤Ë¤Ê¤ë¡£
 
-66..33..225533..  ssttrriicctt__tthhrreeaaddss
+66..33..225555..  ssttrriicctt__tthhrreeaaddss
 
 Type: boolean
 Default: no
 
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥¹¥ì¥Ã¥É¤ÇÀ°À°ÎóÎó¤¹¤ëºÝ¤Î¥¹¥ì¥Ã¥É¹½ÃÛ¤Ë "In-Reply-To" ¤È
 "References" ¥Õ¥£¡¼¥ë¥É¤À¤±¤òÍÑ¤¤¤ë¡£´ûÄê¤Ç¤Ï¡¢Æ±¤¸Âê¤Î¥á¥Ã¥»¥¤¥¸¤¬¡Öµ¼»÷¥¹
-¥ì¥Ã¥É¡×¤È¤·¤Æ°ì³ç¤ê¤Ë¤µ¤ì¤ë¡£¤³¤ì¤¬¾ï¤ËË¾¤Þ¤·¤¤¤È¤Ï¸À¤¨¤Ê¤¤¡£¤¿¤È¤¨¤Ð»äÅª¤Ê
-¥á¥¤¥ë¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤Ç¡¢¡Ö¤³¤ó¤Ë¤Á¤Ï¡×¤È¤¤¤¦¤è¤¦¤ÊÂê¤ÎÌµ´Ø·¸¤Ê¥á¥Ã¥»¥¤¥¸¤¬
-¤¹¤Ù¤Æ°ì³ç¤ê¤Ë¤µ¤ì¤Æ¤·¤Þ¤¦¤è¤¦¤Ê¾ì¹ç¤â¤¢¤ë¡£
+¥ì¥Ã¥É¡×¤È¤·¤Æ°ì³ç¤ê¤Ë¤µ¤ì¤ë¡£¤³¤ì¤¬¾ï¤ËË¾¤Þ¤·¤¤¤È¤Ï¸À¤¨¤Ê¤¤¡£Îã¤¨¤Ð»äÅª¤Ê¥á
+¥¤¥ë¤Î¥á¥¤¥ë¥Ü¥Ã¥¯¥¹¤Ç¡¢¡Ö¤³¤ó¤Ë¤Á¤Ï¡×¤È¤¤¤¦¤è¤¦¤ÊÂê¤ÎÌµ´Ø·¸¤Ê¥á¥Ã¥»¥¤¥¸¤¬¤¹
+¤Ù¤Æ°ì³ç¤ê¤Ë¤µ¤ì¤Æ¤·¤Þ¤¦¤è¤¦¤Ê¾ì¹ç¤â¤¢¤ë¡£
 
-66..33..225544..  ssuussppeenndd
+66..33..225566..  ssuussppeenndd
 
 Type: boolean
 Default: yes
@@ -6185,7 +6217,7 @@ _n_o ¤Î¤È¤­¤Ï¡¢¥æ¡¼¥¶¤¬Ã¼Ëö¤Î _s_u_s_p ¥­¡¼¤ò²¡¤·¤Æ¤â Mutt ¤¬Ää»ß¤·¤Ê¤¤¡£¤
 ¤Æ¤·¤Þ¤Ã¤¿¤é¡¢ÊÌ¤ÎÃ¼Ëö¤«¤é killall -CONT mutt ¤Ê¤É¤È¤·¤Æ CONT ¥·¥°¥Ê¥ë¤òÁ÷¤ë
 É¬Í×¤¬¤¢¤ë¡£)
 
-66..33..225555..  tteexxtt__fflloowweedd
+66..33..225577..  tteexxtt__fflloowweedd
 
 Type: boolean
 Default: no
@@ -6198,7 +6230,7 @@ Default: no
 ¤³¤Î¥ª¥×¥·¥ç¥ó¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È $$iinnddeenntt__ssttrriinngg ¤¬Ìµ»ë¤µ¤ì¤ë¤Î¤ÇÃí°Õ¤¹¤ë¤³
 ¤È¡£
 
-66..33..225566..  tthhrreeaadd__rreecceeiivveedd
+66..33..225588..  tthhrreeaadd__rreecceeiivveedd
 
 Type: boolean
 Default: no
@@ -6206,7 +6238,7 @@ Default: no
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥á¥Ã¥»¥¤¥¸¤òÂêÌ¾¤Ç¥¹¥ì¥Ã¥É¤Ë¤¹¤ëºÝ¤ËÁ÷¿®ÆüÉÕ¤Ç¤Ï¤Ê¤¯¼õ¿®Æü
 ÉÕ¤ò»ÈÍÑ¤¹¤ë¡£
 
-66..33..225577..  tthhoorroouugghh__sseeaarrcchh
+66..33..225599..  tthhoorroouugghh__sseeaarrcchh
 
 Type: boolean
 Default: no
@@ -6216,14 +6248,14 @@ _~_b ¤È _~_h ¤Î¸¡º÷¤Ë±Æ¶Á¤¹¤ë¡£¤³¤ì¤é¤Î°ÕÌ£¤Ï¡Ö¡Ö¥Ñ¥Ñ¥¿¥¿¡¼¡¼¥ó¥ó¡×¡×¤
 ¤µ¤ì¤Æ¤«¤é¸¡º÷¤µ¤ì¤ë¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¥Õ¥©¥ë¥À¤Ë¤¢¤ë¤Þ¤Þ¤Ç¸¡º÷¤µ¤ì¤ë¡£ (Ìõ
 Ãí¡§ÆüËÜ¸ì¤Î¾ì¹ç¤Ï¡¢¤³¤ÎÊÑ¿ô¤òÀßÄê¤·¤Ê¤¤¤È»È¤¤¤â¤Î¤Ë¤Ê¤é¤Ê¤¤¡£)
 
-66..33..225588..  ttiillddee
+66..33..226600..  ttiillddee
 
 Type: boolean
 Default: no
 
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢ÆâÉô¥Ú¥¤¥¸¥ã¤Ï²èÌÌ¤Î²¼Ã¼¤Þ¤Ç¶õ¹Ô¤ò¥Æ¥£¥ë¥É (~) ¤ÇµÍ¤á¤ë¡£
 
-66..33..225599..  ttiimmeeoouutt
+66..33..226611..  ttiimmeeoouutt
 
 Type: number
 Default: 600
@@ -6232,7 +6264,7 @@ Mutt ¤Ï¡¢¥­¡¼¤¬²¡¤µ¤ì¤ë¤Î¤ò¤³¤ÎÊÑ¿ô¤Î_ÉÃ_¿ô¤À¤±¥á¥¤¥ó¥á¥Ë¥å¡¼ (ÌõÃí¡§¥¤¥ó¥Ç¥Ã
 ¥¯¥¹¥á¥Ë¥å¡¼) ¤ÇÂÔ¤ÁÂ³¤±¡¢¤½¤ì¤ò²á¤®¤ë¤È¡¢¥­¡¼¤ò²¡¤µ¤Ê¤¯¤Æ¤â¿·Ãå¥á¥¤¥ë¤ò³ÎÇ§
 ¤¹¤ë¡£¥¼¥í¤«Éé¤ÎÃÍ¤Î¾ì¹ç¤Ë¤Ï¤¤¤Ä¤Þ¤Ç¤â³ÎÇ§¤»¤º¤ËÂÔ¤ÁÂ³¤±¤ë¡£
 
-66..33..226600..  ttmmppddiirr
+66..33..226622..  ttmmppddiirr
 
 Type: path
 Default: ""
@@ -6241,7 +6273,7 @@ Default: ""
 Äê¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë¡£ÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤È¤­¤Ë¤Ï´Ä¶­ÊÑ¿ô TMPDIR ¤¬ÍÑ¤¤¤é¤ì
 ¤ë¡£TMPDIR ¤âÀßÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¤Ê¤é "/tmp" ¤¬ÍÑ¤¤¤é¤ì¤ë¡£
 
-66..33..226611..  ttoo__cchhaarrss
+66..33..226633..  ttoo__cchhaarrss
 
 Type: string
 Default: " +TCFL"
@@ -6256,7 +6288,7 @@ Default: " +TCFL"
 Äê: F)¡£Ï»ÈÖÌÜ¤ÎÊ¸»ú¤Ï¡¢¥á¥¤¥ë¤¬¹ØÆÉ¥á¥¤¥ê¥ó¥°¥ê¥¹¥È¤ËÁ÷¤é¤ì¤Æ¤¤¤ë¤³¤È¤ò¼¨¤¹
 ¤¿¤á¤Ë»È¤ï¤ì¤ë (´ûÄê: L)¡£
 
-66..33..226622..  ttuunnnneell
+66..33..226644..  ttuunnnneell
 
 Type: string
 Default: ""
@@ -6269,7 +6301,7 @@ tunnel="ssh -q mailhost.net /usr/local/libexec/imapd"
 Ãí°Õ: ¤³¤ÎÎã¤¬¤¦¤Þ¤¯¤¤¤¯¤Ë¤Ï¡¢¥ê¥â¥¦¥È¥Þ¥·¥ó¤Ë¥Ñ¥¹¥ï¡¼¥É¤ÎÆþÎÏ¤Ê¤·¤Ç¥í¥°¥¤¥ó
 ¤¹¤ë¤³¤È¤¬¤Ç¤­¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡£ (ÌõÃí¡§ssh-agent ¤Ê¤É¤ò»È¤¦¡£)
 
-66..33..226633..  uussee__88bbiittmmiimmee
+66..33..226655..  uussee__88bbiittmmiimmee
 
 Type: boolean
 Default: no
@@ -6281,7 +6313,7 @@ Default: no
 _y_e_s ¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¡¢8¥Ó¥Ã¥È¤Î¥á¥Ã¥»¥¤¥¸Á÷¿®»þ¤Ë Mutt ¤Ï $$sseennddmmaaiill ¤ò
 -B8BITMIME ¥Õ¥é¥°ÉÕ¤­¤Çµ¯Æ°¤·¤Æ ESMTP ÄÌ¿®¤òÍ­¸ú¤Ë¤¹¤ë¡£
 
-66..33..226644..  uussee__ddoommaaiinn
+66..33..226666..  uussee__ddoommaaiinn
 
 Type: boolean
 Default: yes
@@ -6289,7 +6321,7 @@ Default: yes
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È Mutt ¤Ï¤¹¤Ù¤Æ¤Î¥í¥¦¥«¥ë¥¢¥É¥ì¥¹ (@host ÉôÊ¬¤Î¤Ê¤¤¤â¤Î) ¤ò
 $$hhoossttnnaammee ¤ÎÃÍ¤ÇÊä´°¤¹¤ë¡£_²ò_½ü¤¹¤ë¤È¡¢¤É¤Î¥¢¥É¥ì¥¹¤â¤½¤Î¤Þ¤Þ¤Ë¤¹¤ë¡£
 
-66..33..226655..  uussee__ffrroomm
+66..33..226677..  uussee__ffrroomm
 
 Type: boolean
 Default: yes
@@ -6297,7 +6329,7 @@ Default: yes
 _y_e_s ¤Î¤È¤­¤Ï¥á¥Ã¥»¥¤¥¸Á÷¿®»þ¤Ë "From:" ¥Ø¥Ã¥À¥Õ¥£¡¼¥ë¥É¤ò Mutt ¤¬À¸À®¤¹
 ¤ë¡£_n_o ¤À¤È¡¢¥æ¡¼¥¶¤¬ÌÀ¼¨Åª¤Ë mmyy__hhddrr ¥³¥Þ¥ó¥É¤ÇÀßÄê¤·¤Ê¤¤¤ÈÀ¸À®¤µ¤ì¤Ê¤¤¡£
 
-66..33..226666..  uussee__iippvv66
+66..33..226688..  uussee__iippvv66
 
 Type: boolean
 Default: yes
@@ -6306,7 +6338,7 @@ _Àß_Äê_¤µ_¤ì_¤Æ_¤¤_¤ë¤È¤­¡¢Mutt ¤ÏÀÜÂ³¤·¤è¤¦¤È¤¹¤ë¥Û¥¹¥È¤Î IPv6 ¥¢¥É¥ì¥¹¤
 ¤³¤Î¥ª¥×¥·¥ç¥ó¤¬²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢ IPv4 ¥¢¥É¥ì¥¹¤À¤±¤Ë¹Ê¤Ã¤ÆÆ°ºî¤¹¤ë¡£ÄÌ¾ï¤Ï
 ´ûÄêÃÍ¤ÇÌäÂê¤Ê¤¯Æ°¤¯¤Ï¤º¤À¡£
 
-66..33..226677..  uusseerr__aaggeenntt
+66..33..226699..  uusseerr__aaggeenntt
 
 Type: boolean
 Default: yes
@@ -6314,14 +6346,14 @@ Default: yes
 _Àß_Äê_¤µ_¤ì_¤Æ_¤¤_¤ë¤È¡¢Mutt ¤Ï "User-Agent" ¥Ø¥Ã¥À¤òÁ÷¿®¥á¥Ã¥»¥¤¥¸¤ËÉÕ²Ã¤¹¤ë¡£¤³
 ¤ì¤Ï¤É¤Î¥ô¥¡¡¼¥¸¥ç¥ó¤Î Mutt ¤ò»È¤Ã¤ÆºîÀ®¤µ¤ì¤¿¤Î¤«¤ò¼¨¤¹¤â¤Î¤Ç¤¢¤ë¡£
 
-66..33..226688..  vviissuuaall
+66..33..227700..  vviissuuaall
 
 Type: path
 Default: ""
 
 ÆâÂ¢¥¨¥Ç¥£¥¿¤Î _~_v ¥³¥Þ¥ó¥É¤Çµ¯Æ°¤¹¤ë¥ô¥£¥¸¥å¥¢¥ë¥¨¥Ç¥£¥¿¤ò»ØÄê¤¹¤ë¡£
 
-66..33..226699..  wwaaiitt__kkeeyy
+66..33..227711..  wwaaiitt__kkeeyy
 
 Type: boolean
 Default: yes
@@ -6336,7 +6368,7 @@ _n_e_e_d_s_t_e_r_m_i_n_a_l ¥Õ¥é¥°¤¬¤¢¤Ã¤Æ³°Éô¥×¥í¥°¥é¥à¤¬ÂÐÏÃÅª¤ËÆ°
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¾ï¤Ë¥­¡¼ÆþÎÏ¤òµá¤á¤ë¡£²ò½ü¤µ¤ì¤Æ¤¤¤ë¤È¡¢³°Éô¥³¥Þ¥ó¥É¤¬Èó¥¼
 ¥í¤òÊÖ¤·¤¿¾ì¹ç¤Ë¤Î¤ß¥­¡¼¤òÂÔ¤Ä¡£
 
-66..33..227700..  wweeeedd
+66..33..227722..  wweeeedd
 
 Type: boolean
 Default: yes
@@ -6344,7 +6376,7 @@ Default: yes
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¡¢¥á¥Ã¥»¥¤¥¸¤ÎÉ½¼¨¡¢Å¾Á÷¡¢°õºþ¡¢ÊÖ¿®¤ÎºÝ¤Ë¥Ø¥Ã¥À¤ò´Ö°ú¤­¤¹
 ¤ë¡£
 
-66..33..227711..  wwrraapp__sseeaarrcchh
+66..33..227733..  wwrraapp__sseeaarrcchh
 
 Type: boolean
 Default: yes
@@ -6354,7 +6386,7 @@ Default: yes
 ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤ÏºÇ½é (¤Þ¤¿¤ÏºÇ¸å) ¤Î¥á¥Ã¥»¥¤¥¸¤ËÈô¤ó¤Ç¸¡º÷¤òÂ³¤±¤ë¡£²ò
 ½ü¤µ¤ì¤Æ¤¤¤ë¤È¤­¤Ë¤Ï¤½¤³¤Ç½ª¤ï¤ë¡£
 
-66..33..227722..  wwrraappmmaarrggiinn
+66..33..227744..  wwrraappmmaarrggiinn
 
 Type: number
 Default: 0
@@ -6362,7 +6394,7 @@ Default: 0
 Mutt ¤Î¥Ú¥¤¥¸¥ã¤¬¸ìÃ±°Ì¤Ç¹Ô¤òÀÞ¤êÊÖ¤¹ºÝ¤ËÃ¼Ëö¤Î±¦Â¦¤Ë»Ä¤¹Í¾Çò¤ÎÂç¤­¤µ¤òÀ©¸æ
 ¤¹¤ë¡£
 
-66..33..227733..  wwrriittee__iinncc
+66..33..227755..  wwrriittee__iinncc
 
 Type: number
 Default: 10
@@ -6372,7 +6404,7 @@ Default: 10
 
 $$rreeaadd__iinncc ÊÑ¿ô¤â»²¾È¡£
 
-66..33..227744..  wwrriittee__bbcccc
+66..33..227766..  wwrriittee__bbcccc
 
 Type: boolean
 Default: yes
@@ -6770,10 +6802,10 @@ NNoottee:: TThhee oorriiggiinnaall mmaannuuaall ddooees
 ¸í¤ê¤Ê¤É¤ò¸«ÉÕ¤±¤Þ¤·¤¿¡£
 
 ¥é¥¤¥»¥ó¥¹¤Ë¤Ä¤¤¤Æ¤Ï¡¢¸¶Ê¸¤Ë²¿¤âÉÕ¤±Â­¤·¤Þ¤»¤ó¡£»²¹Í¤Ë¤·¤¿¤Î¤Ï¡¢¸¶Ê¸¤È¥½¡¼¥¹
-(1.5.6 ¤ª¤è¤Ó CVS ÈÇ)¡¢¤ª¤è¤ÓÀ¾²¬¡¦¿Í¸«Ìõ (1.4) ¤Î¤ß¤Ç¤¹¡£
+(1.5.6, 1.5.7 ¤ª¤è¤Ó CVS ÈÇ)¡¢¤ª¤è¤ÓÀ¾²¬¡¦¿Í¸«Ìõ (1.4) ¤Î¤ß¤Ç¤¹¡£
 
 ²þÁ±Í×µá¤Ê¤É¤Ï sourceforge.jp ¤Î mutt-j ¥×¥í¥¸¥§¥¯¥È¤Î¥Ð¥°Êó¹ðµ¡Ç½¤«¥Õ¥©¡¼¥é
 ¥à¤ò»È¤¦¤ÈÎÉ¤¤¤Ç¤·¤ç¤¦¡£¤¢¤ë¤¤¤Ï¹â¶¶Á´¤ËÄ¾ÀÜ¥á¥¤¥ë¤òÁ÷¤Ã¤Æ¤â¹½¤¤¤Þ¤»¤ó¡£
 
-TTrraannssllaattiioonn ttoo JJaappaanneessee:: ((CC)) 22000044 TTAAKKAAHHAASSHHII TTaammoottssuu
+TTrraannssllaattiioonn ttoo JJaappaanneessee:: ((CC)) 22000044,, 22000055 TTAAKKAAHHAASSHHII TTaammoottssuu
 

@@ -10,7 +10,7 @@
 <H1>The Mutt E-Mail Client</H1>
 
 <H2>by Michael Elkins 
-<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.6 +20041208
+<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.7 +20050201
 <P><HR>
 <EM>``All mail clients suck.  This one just sucks less.'' -me, circa 1995</EM>
 <HR>
@@ -407,7 +407,7 @@ MIME content type を一時的に変更します。つまり
 <A NAME="edit-type"></A> <BR>
 (既定値: 添付ファイルメニュー、ぺイジャ、およびインデックスメニューでは ^E, コンポウズメニューでは ^T)
 <P>このコマンドは添付ファイルの content type を一時的に編集するために使い、
-たとえば偽装してある文字セットのパラメータを修正したりします。
+例えば偽装してある文字セットのパラメータを修正したりします。
 インデックスやペイジャから使うと最上位の添付ファイルの
 content type を編集できます。
 <A HREF="#attach_menu">添付ファイルメニュー</A>から使えば、どの添付ファイルの
@@ -511,8 +511,9 @@ ESC k   mail-key     だれかに PGP 公開鍵を送信
 </CODE></BLOCKQUOTE>
 <P>メッセイジの中継は、指定した宛先に「あるがまま」のメッセイジを送信します。
 メッセイジの転送は、転送するメッセイジにコメントを付けたり変更したりできます。
-これらに関しては次の節 
-<A HREF="#forwarding_mail">「メイルを転送・中継する」</A> で詳しく論じられています。
+これらに関しては次の節
+<A HREF="#forwarding_mail">「メイルを転送・中継する」</A>
+で詳しく論じられています。
 <P>上記のコマンドを使うと Mutt はコンポウズ (<EM>compose</EM>) メニューに入り、
 &quot;To:&quot; ヘッダフィールドに入れる宛先の入力を促します。
 次にメッセイジの &quot;Subject:&quot; フィールドを聞いてきますが、
@@ -709,7 +710,7 @@ MIME 添付ファイルとして取り込みます。
 <A HREF="#mime_forward_decode">$mime_forward_decode</A>
 変数で制御できます。どちらの転送方法が良いかは内容によります。
 そのため <EM>$mime_forward</EM> は四択オプション (quadoption)
-になっていて、たとえば &quot;ask-no&quot; にすることができます
+になっていて、例えば &quot;ask-no&quot; にすることができます
 (訳注： ask-no は「質問の際に Return だけ入力したときは no とみなす」
 という意味)。
 <P>
@@ -904,7 +905,7 @@ set alias_file=~/.mail_aliases
 合致するものが複数あると、Mutt は合致したエイリアスのメニューを出します。
 エイリアスの完全な一覧を表示させるには、書きかけのエイリアスのない状態で
 Tab を打たなくてはなりません。
-たとえばプロンプトの最初や、アドレスが複数あることを示すコンマ
+例えばプロンプトの最初や、アドレスが複数あることを示すコンマ
 (&quot;,&quot;) の後です。
 <P>エイリアスメニューでは、エイリアスを好きなだけ <EM>select-entry</EM> キー
 (既定値: RET) で選択してから <EM>exit</EM> キー (既定値: q)
@@ -1194,7 +1195,7 @@ color index のリストを全項目消去することを意味します。
 &quot;content-&quot; で始まるヘッダフィールドをすべて無視します。
 <P>以前に追加した項目をリストから外すには &quot;unignore&quot; コマンドを
 使ってください。&quot;unignore&quot; コマンドは、指定したパターンの
-ヘッダフィールドを表示させます。たとえば &quot;ignore x-&quot;
+ヘッダフィールドを表示させます。例えば &quot;ignore x-&quot;
 としているとき、&quot;unignore x-mailer&quot; で x-mailer:
 を表示することができます。
 <P>&quot;unignore *&quot; は無視リストから全項目を消去します。
@@ -1433,10 +1434,11 @@ Mutt はまず、メッセイジ宛先リストの中で<EM>正規表現パターン</EM>を検索して、
 <A HREF="#fcc-hook">fcc-hook</A> と 
 <A HREF="#save-hook">save-hook</A> を両方とも実行するのと等価です。
 <P>
-<H2><A NAME="reply-hook"></A> <A NAME="send-hook"></A> 3.18 メッセイジの宛先によって設定を変更する</H2>
+<H2><A NAME="send2-hook"></A> <A NAME="reply-hook"></A> <A NAME="send-hook"></A> 3.18 メッセイジの宛先によって設定を変更する</H2>
 
 <P>使い方: <CODE>reply-hook</CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM><BR>
-使い方: <CODE>send-hook</CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM>
+使い方: <CODE>send-hook</CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM><BR>
+使い方: <CODE>send2-hook</CODE> [!]<EM>パターン</EM>　<EM>コマンド</EM>
 <P>このコマンドを使って、メッセイジの宛先に基づいて任意のコマンドを実行できます。
 <EM>パターン</EM>は望みのアドレスに合致する正規表現です。
 <EM>コマンド</EM>は、<EM>パターン</EM>がメッセイジの宛先に合致するときに実行されます。
@@ -1445,6 +1447,12 @@ Mutt はまず、メッセイジ宛先リストの中で<EM>正規表現パターン</EM>を検索して、
 <EM>返信</EM>メッセイジに対しても検索されます。
 <B>注意:</B> <CODE>reply-hook</CODE> はユーザの設定ファイルに指定されている順番に
 <B>関わらず</B> <CODE>send-hook</CODE> より<B>先に</B>検索されます。
+<P><CODE>send2-hook</CODE> はメッセイジが変更されるたびに実行されます。
+すなわち、編集したか、コンポウズメニューで宛先や題名を変更したときです。
+<CODE>send2-hook</CODE> は <CODE>send-hook</CODE> の後に実行されるので、
+例えば 
+<A HREF="#sendmail">$sendmail</A> 変数のようなパラメータを
+自分の送信アドレスに応じたものとするために使うことができます。
 <P><CODE>send-hook</CODE> および <CODE>reply-hook</CODE> の各タイプとも、
 複数の該当結果が生じたときにコマンドが実行される順番は
 (そのタイプのフックのうちでは) muttrc に書かれている順です。
@@ -1568,7 +1576,7 @@ ID を指定する手段を提供するのです。
 それぞれの値が 
 <A HREF="#spam_separator">$spam_separator</A>
 変数で区切られます。
-<P>たとえば DCC, SpamAssassin, PureMessage を使っているとします。
+<P>例えば DCC, SpamAssassin, PureMessage を使っているとします。
 すると、このようなスパム設定をするかもしれません。
 <BLOCKQUOTE><CODE>
 <PRE>
@@ -1619,7 +1627,7 @@ Mutt の動作を効果的にすることができます。特に整列に関してそう言えます。
 を <CODE>folder-hook</CODE> と組み合わせて使う際にはこれを既定動作にすることでしょう。
 <P><CODE>spam</CODE> コマンドと <CODE>nospam</CODE> コマンドは、いくつでも好きなだけ
 使うことができます。Mutt だけで初歩的なスパム検出をすることも可能です。
-たとえば <CODE>MAILER-DAEMON</CODE> からのメイルをすべてスパムとみなすのであれば、
+例えば <CODE>MAILER-DAEMON</CODE> からのメイルをすべてスパムとみなすのであれば、
 このように <CODE>spam</CODE> コマンドを使うことができるでしょう。
 <P>
 <BLOCKQUOTE><CODE>
@@ -1802,13 +1810,13 @@ c または h のどちらかに合致する正規表現ということになってしまう
 </DL>
 <P>二つの正規表現を連結することができます。その結果できた正規表現が
 合致するのは、それぞれに合致する文字列をその順番に並べたものです。
-(訳注：訳が悪いので補足すると、たとえば [A-Z][0-9] は、
+(訳注：訳が悪いので補足すると、例えば [A-Z][0-9] は、
 A3 や B5 といった、大文字アルファベットの次に数字が来るような文字列
 に合致する一つの正規表現である、ということ。)
 <P>二つの正規表現は中間演算子 &quot;|&quot; で連結することもでき、
 二つをこのようにつないでできる正規表現は、
 いずれかの「子表現」の合致する文字列に合致します。
-(訳注：たとえば [A-Z]|[0-9] だと、D2 等ではなく
+(訳注：例えば [A-Z]|[0-9] だと、D2 等ではなく
 C や 0  や R に合致することになり、[A-Z0-9] と等価になる。
 a1B2c3 という文字列に対して、[A-Z][0-9] は B2 にのみ合致し、
 [A-Z]|[0-9] は 1 にも B にも 3 にも合致する。)
@@ -2065,7 +2073,7 @@ d       日
 必ずしも一つ以上のメッセイジにタグが付いているとは限らない。
 タグがない場合に単なる &quot;tag-prefix&quot; を使うと、
 カーソルの位置にあるメッセイジへ操作が適用されてしまう。
-それで、tag-prefix-cond が追加された。たとえば
+それで、tag-prefix-cond が追加された。例えば
 <CODE>macro index i &lt;tag-pattern&gt;~d*1w\n&lt;tag-prefix-cond&gt;&lt;save-message&gt;=recent\n&lt;end-cond&gt;</CODE>
 と設定すると、ここ一週間のメイルを移動するマクロができる。
 注意すべき点は、これが単なる条件分岐であるということだ。
@@ -2409,7 +2417,7 @@ POP3 ホスト (
 Mutt はそれ以降、そのメイルがまるでずっとロウカルにあったかのように
 動作します。
 <P><B>メモ:</B>　ロウカルのメイルボックスに全メッセイジを取って来る
-だけで良ければ、専門の、たとえば
+だけで良ければ、専門の、例えば
 <A HREF="http://www.ccil.org/~esr/fetchmail">fetchmail</A>
 のようなプログラムの使用を検討すべきです。
 (訳注：これは Mutt 開発者の「本体をできるだけ小さくして、
@@ -2558,7 +2566,7 @@ account-hook imap://host2/ 'set tunnel="ssh host2 /usr/libexec/imapd"'
 <H2><A NAME="urlview"></A> 4.13 URL に対して WWW ブラウザを起動する (外部コマンド)</H2>
 
 <P>メイルに URL (<EM>unified resource locator</EM> = WWW 空間における住所。
-たとえば <EM>http://www.mutt.org/</EM>) が含まれているとき、
+例えば <EM>http://www.mutt.org/</EM>) が含まれているとき、
 そうした URL をすべて含むメニューが出てきて、一つ選ぶと WWW ブラウザが
 起動すると効率が良いですよね。
 この機能は外部プログラムの urlview と
@@ -2630,7 +2638,7 @@ application/pgp といった PGP MIME タイプを理解することもできます。
 返信に引用されます。添付ファイルは、テキストとして閲覧したり、
 mailcap のヴューワ定義を使って閲覧することもできます。
 <P>また <CODE>message/rfc822</CODE> タイプのファイルには、
-メッセイジ関連の通常の関数 (たとえば 
+メッセイジ関連の通常の関数 (例えば 
 <A HREF="#resend-message">resend-message</A>, reply, forward など) も使えます。
 <P>さらに詳しい情報は、添付ファイルメニューでのヘルプをご覧下さい。
 <P>
@@ -3110,7 +3118,7 @@ application/octet-stream のようなバイナリのタイプを取り扱うように
 添付ファイルの MIME タイプが mime_lookup に指定されているときは、
 そのファイル名の拡張子を mime.types ファイルの拡張子のリストと見比べて、
 拡張子に対応する MIME タイプを使って、mailcap にあるルールや
-他の指定された設定オプション (たとえば auto_view) に従った処理をします。
+他の指定された設定オプション (例えば auto_view) に従った処理をします。
 一般的な使い方はこうです、
 <BLOCKQUOTE><CODE>
 <PRE>
@@ -3261,6 +3269,8 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <A HREF="#score-command">unscore</A></CODE> <EM>パターン</EM> [ <EM>パターン</EM> ... ]</LI>
 <LI><CODE>
 <A HREF="#send-hook">send-hook</A></CODE> <EM>正規表現</EM>　<EM>コマンド</EM></LI>
+<LI><CODE>
+<A HREF="#send2-hook">send2-hook</A></CODE> <EM>正規表現</EM>　<EM>コマンド</EM></LI>
 <LI><CODE>
 <A HREF="#set">set</A></CODE> [no|inv]<EM>変数</EM>[=<EM>値</EM>] [ <EM>変数</EM> ... ]</LI>
 <LI><CODE>
@@ -4090,6 +4100,30 @@ Default: no
 <P>設定されているときには、返信元メッセイジのヘッダを
 Mutt が編集バッファに取り込むようになる。
 <A HREF="#weed">$weed</A> の設定が適用される。
+<P>
+<P>
+<H3><A NAME="header_cache"></A> header_cache</H3>
+
+<P>Type: path<BR>
+Default: &quot;&quot;
+<P>
+<P>header_cache 変数はヘッダキャッシュのデイタベイスを指し示す。
+もしディレクトリを指していれば、メイルフォルダ一つにつき
+デイタベイス一つが作成される。ディレクトリを指していない場合には
+すべてのフォルダに対する単一のキャッシュが用いられる。
+既定では設定されていないので、ヘッダキャッシュが使われない。
+<P>
+<P>
+<H3><A NAME="header_cache_pagesize"></A> header_cache_pagesize</H3>
+
+<P>Type: string<BR>
+Default: &quot;16384&quot;
+<P>
+<P>ヘッダキャッシュデイタベイスのペイジサイズを変更する。
+大きすぎたり小さすぎたりすると、容量やメモリや CPU
+を無駄に使ってしまうことがある。既定値がほぼ最善のはずだ。
+詳細については &quot;mutt header cache&quot; で google
+検索すること (最初に出てくるサイト)。
 <P>
 <P>
 <H3><A NAME="help"></A> help</H3>
@@ -5595,7 +5629,7 @@ Mutt が STARTTLS を使おうとする。解除されていると、サーバの能力に
 <H3><A NAME="certificate_file"></A> certificate_file</H3>
 
 <P>Type: path<BR>
-Default: &quot;&quot;
+Default: &quot;~/.mutt_certificates&quot;
 <P>
 <P>この変数で指定したファイルに、信用する証明書を保存する。
 未知の証明書に遭遇すると、受け入れるかどうか尋ねられる。
@@ -5688,7 +5722,7 @@ Default: &quot;&quot;
 <P>
 <P>コロン区切りで列挙された認証方法。POP サーバにログインするために、
 その順で試行する。認証方法は &quot;user&quot;, &quot;apop&quot;
-およびいずれかの SASL 機構、たとえば &quot;digest-md5&quot; や
+およびいずれかの SASL 機構、例えば &quot;digest-md5&quot; や
 &quot;gssapi&quot;, &quot;cram-md5&quot; である。
 このパラメータは大文字と小文字を区別しない。
 もし設定されていなければ (既定)、Mutt はあらゆる利用可能な方法を、
@@ -5929,7 +5963,7 @@ Default: 10
 <P>0 より大きな値に設定されていると、メイルボックス読み出し中に
 Mutt が現在どのメッセイジまで来たのかを表示するようになる。
 その表示は <EM>read_inc</EM> 通のメッセイジが読み出されるたびに
-おこなわれる (たとえば 25 だと、25 番目のメッセイジを読んだときに表示し、
+おこなわれる (例えば 25 だと、25 番目のメッセイジを読んだときに表示し、
 さらにまた 50 番目のときにも表示する)。この変数の意味は、時間のかかる
 大きなメイルボックスを読み出す際に、進行状況を示すということだ。
 0 に設定されているときは、メイルボックスの読み出し前に一度
@@ -6073,8 +6107,10 @@ Default: no
 <P>
 <P>メイルをあるマシンで受信し、別のマシンへ移して、そこから返信する
 ということが時々あるかもしれない。この変数が設定されていると、
-既定の <EM>From:</EM> 行が、返信したいメッセイジを受け取ったアドレス
-を使って作成される。変数が設定されていないと、
+返信したいメッセイジを受け取ったアドレスが alternates に
+合致しているときには、そのアドレスを使って既定の <EM>From:</EM>
+行が作成される。この変数が設定されていなかったり、アドレスが
+alternates に合致しなかったりした場合には、
 <EM>From:</EM> 行には返信時のマシンのアドレスが使われる。
 <P>
 <P>
@@ -6303,7 +6339,7 @@ Default: &quot;~f %s | ~s %s&quot;
 単純検索とは ~ 演算子を含まない検索のことだ。
 検索パターンに関してさらに情報を得るには
 <A HREF="#patterns">「パターン」</A>の節を参照せよ。
-<P>たとえば、検索や表示制限の入力時にただ joe とだけ入力すると、
+<P>例えば、検索や表示制限の入力時にただ joe とだけ入力すると、
 Mutt は自動でこの変数の値へ展開し、既定値ではこうなる。
 <P>~f joe | ~s joe
 <P>
@@ -6400,7 +6436,7 @@ Default: date
 ただし、last- は reverse- の後に来なくてはならない。
 この last- 接頭辞は、兄弟どうしのメッセイジをそれぞれの一番下の子孫で
 比較させるもので、その「一番下」を決定するために sort_aux の
-残りの部分を使う。たとえば set sort_aux=last-date-received
+残りの部分を使う。例えば set sort_aux=last-date-received
 の意味は、あるスレッドに新着メッセイジが届くと、そのスレッドが
 最後に表示されるということである (set sort=reverse-threads してあれば
 最初になる)。注意: 
@@ -6539,7 +6575,7 @@ Default: &quot;-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?
 <P>
 <P>* = 非ゼロのときのみ表示するようにできる
 <P>上記シークウェンスの中には、値が非ゼロのときのみ選択的に
-文字列を表示するという使い方のできるものがある。たとえば、
+文字列を表示するという使い方のできるものがある。例えば、
 フラグ付きメッセイジの数は、そのようなメッセイジが存在するときにのみ
 見たいと思うだろう。ゼロには特に意味があるわけではないのだから。
 そのように上記シークウェンスに基づいて選択的に文字列を表示するには、
@@ -6558,7 +6594,7 @@ Default: &quot;-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?
 %?&lt;シークウェンス文字&gt;?&lt;ゼロ文字列&gt;&amp;&lt;非ゼロ文字列&gt;?
 <P>さらに、どの printf風シークウェンスに対しても、結果を強制的に
 小文字にすることができる。これはシークウェンス文字の前にアンダスコア
-(_) 記号を付ければ良い。たとえば、ロウカルのホスト名を
+(_) 記号を付ければ良い。例えば、ロウカルのホスト名を
 小文字で表示したいなら %_h とする。
 <P>シークウェンス文字の前にコロン (:) 文字を付けると、Mutt
 は展開結果中のドット (.) をアンダスコアに置換する。
@@ -6585,7 +6621,7 @@ Default: no
 <A HREF="#sort">整列</A>する際の
 スレッド構築に &quot;In-Reply-To&quot; と &quot;References&quot;
 フィールドだけを用いる。既定では、同じ題のメッセイジが「擬似スレッド」
-として一括りにされる。これが常に望ましいとは言えない。たとえば
+として一括りにされる。これが常に望ましいとは言えない。例えば
 私的なメイルのメイルボックスで、「こんにちは」というような題の
 無関係なメッセイジがすべて一括りにされてしまうような場合もある。
 <P>
@@ -7293,12 +7329,12 @@ Mutt ユーザにとって、より快適な日本語環境が整備されることです。
 これによって原文の質が向上されることも視野に入れています。
 翻訳中に、実際いくつか原文の誤りなどを見付けました。
 <P>ライセンスについては、原文に何も付け足しません。
-参考にしたのは、原文とソース (1.5.6 および CVS 版)、および
+参考にしたのは、原文とソース (1.5.6, 1.5.7 および CVS 版)、および
 西岡・人見訳 (1.4) のみです。
 <P>改善要求などは sourceforge.jp の mutt-j プロジェクトの
 バグ報告機能かフォーラムを使うと良いでしょう。
 あるいは高橋全に直接メイルを送っても構いません。
-<P><CODE>Translation to Japanese: (C) 2004 TAKAHASHI Tamotsu</CODE>
+<P><CODE>Translation to Japanese: (C) 2004, 2005 TAKAHASHI Tamotsu</CODE>
 <P>
 </BODY>
 </HTML>
