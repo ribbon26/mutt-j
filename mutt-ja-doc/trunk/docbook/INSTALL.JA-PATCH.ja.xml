@@ -4,7 +4,7 @@
 <article>
 <articleinfo>
 <author>mutt-j 開発チーム</author>
-<title>Mutt 1.5.3i用日本語版パッチインストール方法</title>
+<title>Mutt 1.5.4i用日本語版パッチインストール方法</title>
 </articleinfo>
 <sect1>
 <title>必要なもの</title>
@@ -319,7 +319,7 @@ Copyright (C) 2000-2001 Oota Toshiya &#60;ribbon@ns.ribbon.or.jp&#62;
 Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
 </para></listitem>
 <listitem><para>
-Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
+Copyright (C) 2000-2003 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
 </para></listitem>
 </itemizedlist>
 <para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>

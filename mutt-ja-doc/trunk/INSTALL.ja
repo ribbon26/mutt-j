@@ -234,7 +234,7 @@ Mutt をインストールするのであれば、Bruno Haible 氏の libiconv ライブラリ
 
      source /usr/local/doc/mutt/samples/iconv/iconv.osf1-4.0d.rc
 
-もし本当にしたいのであれば、--without-iconv を付けて Mutt を設定するこ
+もし本当にしたいのであれば、--disable-iconv を付けて Mutt を設定するこ
 ともできます。しかし、文字符号化方式の変換を行いません。
 
 
