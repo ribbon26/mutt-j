@@ -1,46 +1,44 @@
-// この文書はまだ邦訳されていません。
+Original id: PGP-Notes.txt,v 3.0 2002/01/24 13:35:07 roessler
 
-		     USING PGP FROM WITHIN MUTT
-
-
-WARNING: The configuration interface has completely changed as of
-         0.96.3!
+		      MUTT の中から PGP を使う
 
 
+警告: 設定方法が 0.96.3 とはまったく異なっています!
 
-			    USERS' GUIDE
+
+			    ユーザガイド
 
 
-How do I use mutt with PGP, PGP5, or GnuPG?
--------------------------------------------
+mutt で PGP や PGP5, GnuPG を使うにはどうするか?
+------------------------------------------------
 
-Go to the contrib subdirectory of the source tree.  You'll find
-three files there, pgp2.rc, pgp5.rc, and gpg.rc.  These files
-contain ready-to-use configurations for using mutt with pgp2, pgp5,
-and gpg.
+ソースツリーの contrib というサブディレクトリに行ってください。
+pgp2.rc, pgp5.rc, gpg.rc という三つのファイルがあります。これには、
+mutt で pgp2, pgp5, gpg を使うための設定が書いてあります。
 
-Include one of these files with your ~/.muttrc, and things should
-work out fine.
+その中の一つをそのまま ~/.muttrc に入れれば、それだけで
+うまく動くはずです。
 
-You may wish to verify that all paths and  the language parameters
-given to the PGP binaries match your needs.
+とはいえ、PGP バイナリに与える言語パラメータや PGP のパスがすべて
+自分に合っているかどうかは確認しておきたいものですね。
 
 
 
-Frequently Asked Questions and Tips
------------------------------------
+よくある質問と小ワザ
+--------------------
 
-Q: "People are sending PGP messages which mutt doesn't
-    recognize.  What can I do?"
+Q: 「みんな mutt の認識しない PGP メッセイジを送ってきます。
+    どうすればいいですか?」
 
-The new way is to leave headers alone and use mutt's
-check-traditional-pgp function, which can detect PGP messages at
-run-time, and adjust content-types.
+新しい方法は、ヘッダをいじらずに mutt の check-traditional-pgp
+関数を使うというものです。これは、その場で PGP メッセイジを
+検出して content-type を調整してくれる関数です。
 
-The old way is to configure your mail filter so it fixes headers:
+昔の方法は、ヘッダを直すようにメイルフィルタを設定する
+というものです。以下に説明します。
 
-Add the following lines to your ~/.procmailrc (you are
-using procmail, aren't you?):
+以下の内容を ~/.procmailrc に書き込みます。
+(procmail 使ってますよね?)
 
 		   ------------------------------
 
@@ -70,8 +68,10 @@ using procmail, aren't you?):
 
 		   ------------------------------
 
-For users of maildrop, "Mark Weinem"
-<mark.weinem@unidui.uni-duisburg.de> suggests the following recipe:
+maildrop ユーザには
+"Mark Weinem" <mark.weinem@unidui.uni-duisburg.de> が
+次の処方を提案しています。
+
 
 		   ------------------------------
 
@@ -96,176 +96,169 @@ if (/^$BPGPS/:b && /^$EPGPS/:b)
 
 
 
-Q: "I don't like that PGP/MIME stuff, but want to use the
-    old way of PGP-signing my mails.  Can't you include
-    that with mutt?"
+Q: 「あの PGP/MIME っていうやつがどうも気に入らないので、
+    昔ながらの方法でメイルを PGP 署名したいと思っています。
+    その機能を mutt に入れてくれませんか?」
 
-The old answer to this question used to be this:
+以前は、この質問に対する答えはこういうものでした。
 
-  No.  Application/pgp is not really suited to a world with MIME,
-  non-textual body parts and similar things.  Anyway, if you really
-  want to generate these old-style attachments, include the
-  following macro in your ~/.muttrc (line breaks for readability,
-  this is actually one line):
+  だめです。実のところ application/pgp は、MIME の非テクストな
+  パートなどのある世界には適していないのです。それでもなお、本気で
+  旧式の添付ファイルを生成したいというのであれば、次のマクロを
+  ~/.muttrc に入れてください。(読みやすくするために行が分割されて
+  いますが、実際には一行です)
 
   macro compose S "Fpgp +verbose=0 -fast
   	+clearsig=on\ny^T^Uapplication/pgp; format=text;
 	x-action=sign\n"
 
 
-There's a new answer, though: Set the $pgp_create_traditional
-configuration variable (it's a quad-option) to something different
-from "no" (that's the default).  Mutt will then try to use
-application/pgp whereever it makes sense.  In particular, it does
-not make any sense with multiparts, or non-ASCII or non-text bodies.
-In all other cases, PGP/MIME is used unconditionally.
+今なら新しい答えがあります。設定変数 $pgp_create_traditional
+(yes, no [=デフォルト], ask-yes, ask-no の値を取る) を
+"no" 以外に設定するのです。そうすれば mutt は、
+使える場面ではいつでも application/pgp を選択肢に含めます。
+具体的に言うと、マルチパート、また非 ASCII や非テクストの
+ボディにおいて application/pgp を使うのはまったくナンセンスです。
+そうした状況では無条件で PGP/MIME が使われます。
 
-Note that application/pgp is still strongly deprecated.
-
-
-
-Q: "I don't like all the ^Gs and various other verbosity
-    PGP is presenting me with."
-
-Roland Rosenfeld <roland@spinnaker.rhein.de> has found a quite
-elegant solution to this problem: PGP has some pretty good foreign
-language support.  So we just introduce a language called "mutt"
-which contains empty strings for the messages we don't want to see.
-To use this, copy either language.txt or language50.txt (depending
-on what PGP version you are using) to your $PGPPATH.  Make sure the
-PGP command formats pass "+language=pgp" to all the PGP binaries
-(but not to pgpring!).
-
-For PGP 2.6, a German version called "muttde" is available
-as well.
-
-
-Q: "My PGP signatures are being invalidated.  BTW, I'm using Courier
-    MTA."
-
-The author of the Courier MTA believes that the standard specifying
-multipart/signed is broken.  For that reason, he has choosen to
-implement his MTA in a way which does not assure that
-multipart/signed body parts are left untouched.
-
-We suggest that you abandon courier and change to sendmail, postfix,
-or exim.
+しかし、そうは言っても、application/pgp は使用しないよう
+強くお勧めします。
 
 
 
-			     BACKGROUND
+Q: 「PGP の、^G とかいろいろ出てきてうるさいのがイヤなんですけど」
+
+この問題に対する非常に美しい解を Roland Rosenfeld
+<roland@spinnaker.rhein.de> が発見しています。PGP には、とても良い
+外国語サポートがあるので、ただ表示されたくないメッセイジに対する訳が
+空文になっている "mutt" という言語を導入するだけでいいのです。
+この言語を使うには、language.txt か language50.txt のいずれか
+(使っている PGP のヴァージョンによる) を $PGPPATH にコピーします。
+PGP コマンドの設定を確認して、PGP のバイナリにすべて
+"+language=mutt" を渡すようにしてください (ただし pgpring には
+渡さないように!)。
+
+PGP 2.6 用には、ドイツ語版の "muttde" もあります。
 
 
-Auxiliary Programs
-------------------
+Q: 「署名が不正になってしまいます。Courier の MTA を使ってます」
 
-Mutt needs two auxiliary programs for its PGP support: pgpewrap and
-pgpring.
+Courier MTA の作者は、multipart/signed を規定している標準仕様が
+おかしいと思い込んでいます。そのため、multipart/signed な
+パートを保護するような実装はしないことに決めたようです。
+
+我々としては、courier を捨てて sendmail か postfix, または exim に
+乗り換えるよう提案します。
+
+
+
+				深層
+
+
+外部プログラム
+--------------
+
+mutt の PGP サポートには二つの外部プログラム、pgpewrap と pgpring
+が必要となっています。
 
 
 1. pgpring
 
-pgpring is a key ring dumper.  It extracts information from PGP's
-binary key ring and emits it in an (almost) readable output format
-understood by mutt's key selection routines.  This output format
-mimics the one used by the GNU Privacy Guard (GPG).
+pgpring は鍵束の内容を表示します。PGP のバイナリ形式の鍵束から
+情報を取り出して、mutt の鍵選択ルーティンが理解できるような
+(ほぼ) 人間でも読める形式で出力してくれるのです。これは
+GNU Privacy Guard (GPG) で使われている出力形式をまねたものです。
 
-You'll need this program with PGP 2 and PGP 5.
+PGP 2 と PGP 5 にはこのプログラムが必要です。
 
-Command line options:
+コマンドラインオプション
 
-	-k <key ring>	Dump the contents of the key ring specified
-			as an argument to -k.
-			
-	-2, -5	 	Use the default key ring for PGP 2 or 5, 
-			respectively.
-			
-	-s		Dump the secret key ring.
+	-k <鍵束>	-k のあとに指定された鍵束の内容を出力します。
+
+	-2, -5		デフォルトの鍵束を使います。
+			順に PGP の 2 と 5 に対応します。
+
+	-s		秘密鍵の鍵束を出力します。
 
 
 
 2. pgpewrap
 
-This is a little C program which does some command line munging: The
-first argument is a command to be executed.  When pgpewrap
-encounters a "--" (dash-dash) argument, it will interpret the next
-argument as a prefix which is put in front of all following
-arguments.
+ちょっとしたコマンドライン改変をおこなう、小さな C プログラムです。
+一つめの引数は実行するコマンドです。pgpewrap は "--" (ダッシュ二つ)
+を引数として受け取ると、その次の引数を以降の引数すべての前に付けて
+いきます。
 
-Example:
+(例)
 
 	pgpewrap pgpe file -- -r a b c
 
-will execute:
+は実際にはこう実行されます。
 
 	pgpe file -r a -r b -r c
 
-This script is needed with PGP 5 and with GPG, since their command
-line interfaces can't be properly served by mutt's format mechanism.
+このスクリプトが必要なのは PGP 5 と GPG です。これは、それらの
+コマンドラインの書式が mutt の仕組みでは正しく扱えないためです。
 
 
 
-The Configuration Interface
----------------------------
+設定方式
+--------
 
-As usual within mutt, the configuration interface for the PGP
-commands relies on printf-like formats.  For all PGP commands, the
-following %-sequences are defined.
+mutt 内の他の設定と同様、PGP コマンドの設定方式も printf 風の
+書式を使っています。すべての PGP コマンドに対して、以下の
+%-シークエンスが定義されています。
 
-  %p	The empty string when no passphrase is needed,
-  	the string "PGPPASSFD=0" if one is needed.
+  %p	パスフレイズが不要なら空文字列、必要なら "PGPPASSFD=0"
+  	という文字列になります。
 
-	This is mostly used in conditional % sequences.
+	おもに、条件分岐する %-シークエンス内で使われます。
 
-  %f	Most PGP commands operate on a single file or a file
-  	containing a message.  %f expands to this file's name.
+  %f	ほとんどの PGP コマンドは、単一のファイルか
+  	メッセイジを入れた一時ファイルに対するものです。
+  	%f は、このファイル名に展開されます。
 
-  %s	When verifying signatures, there is another temporary file
-	containing the detached signature.  %s expands to this
-	file's name.
+  %s	署名を検証する時には、分離署名を入れた一時ファイルもできます。
+  	%s は、このファイル名に展開されます。
 
-  %a	In "signing" contexts, this expands to the value of the
-	configuration variable $pgp_sign_as.  You probably need to
-	use this within a conditional % sequence.
+  %a	署名に関連した場面で、これは設定変数 $pgp_sign_as の値に
+  	展開されます。たぶん条件文の %-シークエンスの中で使う必要が
+	あります。
 
-  %r	In many contexts, mutt passes key IDs to pgp.  %r expands to
-	a list of key IDs.
+  %r	多くの場面で mutt は鍵 ID を pgp に渡します。
+  	%r は鍵 ID のリストに展開されます。
 
-The following command formats are defined:
+以下のコマンド変数が定義されています。
 
-  $pgp_decode_command	Decode application/pgp messages.  This
-  			command operates with and without pass phrases.
-			
-  $pgp_verify_command	Verify a PGP/MIME signature.
+  $pgp_decode_command	application/pgp メッセイジを復号化します。
+  			パスフレイズが必要な場合も不要な場合もあります。
 
-  $pgp_decrypt_command	Decrypt a PGP/MIME encrypted MIME body.
-   			This command always gets a pass phrase.
+  $pgp_verify_command	PGP/MIME 署名を検証します。
 
-  $pgp_sign_command	Sign a PGP/MIME body.  This command always
-  			gets a pass phrase.
+  $pgp_decrypt_command	PGP/MIME で暗号化されたボディを復号化します。
+  			このコマンドは必ずパスフレイズを使います。
 
+  $pgp_sign_command	ボディを PGP/MIME で署名します。
+  			必ずパスフレイズを使います。
 
-  $pgp_encrypt_sign_command Encrypt and sign a MIME body.  This
-  			command always gets a pass phrase.
-			
-  $pgp_encrypt_only_command Encrypt a MIME body, but don't sign it.
-  
-  $pgp_import_command	Import PGP keys from a file.
-  
-  $pgp_export_command	Export PGP keys to a file.  The output must
-  			be ASCII armored.
-			
-  $pgp_verify_key_command Check a public key. This is used from the
-  			key selection menu.
+  $pgp_encrypt_sign_command 暗号化と署名を MIME ボディに施します。
+  			このコマンドは必ずパスフレイズを使います。
 
-  $pgp_list_secring_command List the secret keys matching some hints
-  			given in %r.
+  $pgp_encrypt_only_command MIME ボディを暗号化しますが署名はしません。
 
-  $pgp_list_pubring_command List the public keys matching some hints
-  			given in %r.
+  $pgp_import_command	ファイルから PGP 鍵をインポートします。
 
-The passphrase is always passed on stdin; all commands must send
-their output to stdout and stderr.
+  $pgp_export_command	ファイルへ PGP 鍵をエクスポートします。出力は
+  			ASCII 包装されていなくてはなりません。
 
+  $pgp_verify_key_command 公開鍵を検査します。このコマンドは
+  			鍵選択メニューで使われます。
 
+  $pgp_list_secring_command 秘密鍵のうち、%r のヒントに合致するものを
+  			一覧表示します。
 
+  $pgp_list_pubring_command 公開鍵のうち、%r のヒントに合致するものを
+  			一覧表示します。
+
+パスフレイズは標準出力で渡されます。コマンドの出力はすべて
+標準出力と標準エラー出力に送出しなくてはなりません。
