@@ -1,81 +1,81 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="euc-jp" ?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
 <author><firstname>Takashi</firstname><surname>TAKIZAWA</surname></author>
-<title>日本語環境の設定方法 - Version 0.6.1</title>
+<title>���ܸ�Ķ���������ˡ - Version 0.6.1</title>
 </articleinfo>
 <sect1>
-<title>環境変数の設定</title>
+<title>�Ķ��ѿ�������</title>
 <para>
-日本語のロケールの設定が行われている必要があります（Mutt 付属のワイド文字関数を
-使っている場合は特に設定は必要ありません）. 環境変数 LC_CTYPE の値を "ja_JP" か
-"ja" に設定してください. 指定しない場合は環境変数 LANG で指定したものが有効にな
-ります.
+���ܸ�Υ�����������꤬�Ԥ��Ƥ���ɬ�פ�����ޤ���Mutt ��°�Υ磻��ʸ���ؿ���
+�ȤäƤ�������ä������ɬ�פ���ޤ����. �Ķ��ѿ� LC_CTYPE ���ͤ� "ja_JP" ��
+"ja" �����ꤷ�Ƥ�������. ���ꤷ�ʤ����ϴĶ��ѿ� LANG �ǻ��ꤷ����Τ�ͭ���ˤ�
+��ޤ�.
 </para>
 <para>
-例）
+���
 <programlisting>
-Bsh 系                                                                         
+Bsh ��                                                                         
   $ LC_CTYPE=ja_JP                                                             
   $ export LC_CTYPE                                                            
-csh 系                                                                         
+csh ��                                                                         
   % setenv LC_CTYPE ja_JP                                                      
 </programlisting>
 </para>
 </sect1>
 <sect1>
-<title>Mutt の設定</title>
+<title>Mutt ������</title>
 <para>
-サイト共通の設定ファイルは /usr/local/share/mutt/Muttrc あるいは /etc/Muttrc で
-す. ユーザ全員に共通だと思われる設定はここで行ってください. ユーザ毎の設定ファ
-イルは $HOME/.muttrc です。このファイルが見つからなければ $HOME/.mutt/muttrc を
-探します. または、-F オプションで任意の設定ファイルを指定することもできます.
-alias ファイルなど別のファイルを呼び出したりすることもできますので, ホームディ
-レクトリに .mutt というディレクトリを作って運用することをお勧めします.
+�����ȶ��̤�����ե������ /usr/local/share/mutt/Muttrc ���뤤�� /etc/Muttrc ��
+��. �桼�������˶��̤��Ȼפ�������Ϥ����ǹԤäƤ�������. �桼���������ե�
+����� $HOME/.muttrc �Ǥ������Υե����뤬���Ĥ���ʤ���� $HOME/.mutt/muttrc ��
+õ���ޤ�. �ޤ��ϡ�-F ���ץ�����Ǥ�դ�����ե��������ꤹ�뤳�Ȥ�Ǥ��ޤ�.
+alias �ե�����ʤ��̤Υե������ƤӽФ����ꤹ�뤳�Ȥ�Ǥ��ޤ��Τ�, �ۡ���ǥ�
+�쥯�ȥ�� .mutt �Ȥ����ǥ��쥯�ȥ���äƱ��Ѥ��뤳�Ȥ򤪴��ᤷ�ޤ�.
 </para>
 <sect2>
-<title>日本語を使うために必要な設定</title>
+<title>���ܸ��Ȥ������ɬ�פ�����</title>
 <para>
-この章で示す設定は日本語を使うために必ず必要なものです. ./configure時に
-"--enable-default-japanese"オプションを付けた場合, あるいは日本語パッチと一緒に
-配布しているサンプルファイル mutt-ja.rc を設定ファイルに取り込んだ場合はこの章
-で示す設定が行なわれています. ただし, 表示用の文字符号化方式が EUC-JP であるこ
-とを想定しているので Shift_JIS の場合は $charset="shift_jis"を設定してください
-。
+���ξϤǼ�����������ܸ��Ȥ������ɬ��ɬ�פʤ�ΤǤ�. ./configure����
+"--enable-default-japanese"���ץ������դ������, ���뤤�����ܸ�ѥå��Ȱ���
+���ۤ��Ƥ��륵��ץ�ե����� mutt-ja.rc ������ե�����˼���������Ϥ��ξ�
+�Ǽ������꤬�Ԥʤ��Ƥ��ޤ�. ������, ɽ���Ѥ�ʸ����沽������ EUC-JP �Ǥ��뤳
+�Ȥ����ꤷ�Ƥ���Τ� Shift_JIS �ξ��� $charset="shift_jis"�����ꤷ�Ƥ�������
+��
 </para>
 <para>
-なお, "--enable-default-japanese"オプションを付けた場合で, 英語環境で使いたい場
-合はサンプルファイル mutt-en.rc を設定ファイルに取り込んでください.
+�ʤ�, "--enable-default-japanese"���ץ������դ�������, �Ѹ�Ķ��ǻȤ�������
+��ϥ���ץ�ե����� mutt-en.rc ������ե�����˼�����Ǥ�������.
 </para>
 <para>
-表示用／作成用と送信用の文字符号化方式を設定する必要があります. 表示用／作成用
-が charset で送信用が send_charset です. 設定例を示すと次のようになります.
+ɽ���ѡ������Ѥ������Ѥ�ʸ����沽���������ꤹ��ɬ�פ�����ޤ�. ɽ���ѡ�������
+�� charset �������Ѥ� send_charset �Ǥ�. ������򼨤��ȼ��Τ褦�ˤʤ�ޤ�.
 <programlisting>
       set charset="euc-jp"                                                     
       set send_charset="us-ascii:iso-2022-jp"                                  
 </programlisting>
 </para>
 <para>
-なお, Mutt 付属のワイド文字関数は stateful な（エスケープシーケンスによりシフト
-状態が変わる） ISO-2022-JP を扱えないため, charset は EUC-JP か Shift_JIS を指
-定してください. 当然, エディタの設定も同じ文字符号化方式を指定してください. な
-お, .signature の文字符号化方式も同じものにしてください.
+�ʤ�, Mutt ��°�Υ磻��ʸ���ؿ��� stateful �ʡʥ��������ץ������󥹤ˤ�ꥷ�ե�
+���֤��Ѥ��� ISO-2022-JP �򰷤��ʤ�����, charset �� EUC-JP �� Shift_JIS ���
+�ꤷ�Ƥ�������. ����, ���ǥ����������Ʊ��ʸ����沽��������ꤷ�Ƥ�������. ��
+��, .signature ��ʸ����沽������Ʊ����Τˤ��Ƥ�������.
 </para>
 <para>
-テキストの添付ファイル用の文字符号化方式を設定します. これは日本語パッチの機能
-です.
+�ƥ����Ȥ�ź�եե������Ѥ�ʸ����沽���������ꤷ�ޤ�. ��������ܸ�ѥå��ε�ǽ
+�Ǥ�.
 <programlisting>
       set file_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"                    
 </programlisting>
 </para>
 <para>
-さらに, 日本語(ISO-2022-JP)で記述されているにも関わらず, 文字符号化方式の指定が
-行われていないメールを受け取ることがあります. また, へッダにおいて ISO-2022-JP
-の文字列を MIME 符号化せずに, そのまま記述したものもあります. 標準ではこのよう
-なメールを読むことができません. しかし, 日本語パッチでは次の設定を行うとそのよ
-うなメールを表示することができます.
+�����, ���ܸ�(ISO-2022-JP)�ǵ��Ҥ���Ƥ���ˤ�ؤ�餺, ʸ����沽�����λ��꤬
+�Ԥ��Ƥ��ʤ��᡼��������뤳�Ȥ�����ޤ�. �ޤ�, �إå��ˤ����� ISO-2022-JP
+��ʸ����� MIME ��沽������, ���Τޤ޵��Ҥ�����Τ⤢��ޤ�. ɸ��ǤϤ��Τ褦
+�ʥ᡼����ɤळ�Ȥ��Ǥ��ޤ���. ������, ���ܸ�ѥå��Ǥϼ��������Ԥ��Ȥ��Τ�
+���ʥ᡼���ɽ�����뤳�Ȥ��Ǥ��ޤ�.
 </para>
 <para>
 <programlisting>
@@ -84,17 +84,17 @@ alias ファイルなど別のファイルを呼び出したりすることも�
 </programlisting>
 </para>
 <para>
-へッダに関しては指定したリストの先頭の文字符号化方式から順番に試されます. ボデ
-ィに関しては先頭のものしか試しません. ボディがうまく表示されないようでしたら,
-edit-type(^E) で Content-Type フィールドの編集ができますので, 適当な charset の
-指定を行ってください. ただし, Content-Type フィールドの charset パラメータが記
-述されている場合は Mutt はそのパラメータを信用しますので, 実際の文字符号化方式
-と一致していなければ表示ができません. この場合は, edit-type(^E) で Content-Type
-フィールドの編集モードに入り, 適当な charset の指定を行ってください.
+�إå��˴ؤ��Ƥϻ��ꤷ���ꥹ�Ȥ���Ƭ��ʸ����沽����������֤˻��ޤ�. �ܥ�
+���˴ؤ��Ƥ���Ƭ�Τ�Τ�����ޤ���. �ܥǥ������ޤ�ɽ������ʤ��褦�Ǥ�����,
+edit-type(^E) �� Content-Type �ե�����ɤ��Խ����Ǥ��ޤ��Τ�, Ŭ���� charset ��
+�����ԤäƤ�������. ������, Content-Type �ե�����ɤ� charset �ѥ�᡼������
+�Ҥ���Ƥ������ Mutt �Ϥ��Υѥ�᡼�����Ѥ��ޤ��Τ�, �ºݤ�ʸ����沽����
+�Ȱ��פ��Ƥ��ʤ����ɽ�����Ǥ��ޤ���. ���ξ���, edit-type(^E) �� Content-Type
+�ե�����ɤ��Խ��⡼�ɤ�����, Ŭ���� charset �λ����ԤäƤ�������.
 </para>
 <para>
-標準の設定では日本語でボディの検索を行うことができません. 必ず次の設定を行って
-ください.
+ɸ�������Ǥ����ܸ�ǥܥǥ��θ�����Ԥ����Ȥ��Ǥ��ޤ���. ɬ�����������Ԥä�
+��������.
 </para>
 <para>
 <programlisting>
@@ -102,8 +102,8 @@ edit-type(^E) で Content-Type フィールドの編集ができますので, �
 </programlisting>
 </para>
 <para>
-機種依存文字があるとその文字以降の文字列は文字化けします. これを防ぐために次の
-設定を行ってください. ただし, これは日本語パッチの機能です.
+�����¸ʸ��������Ȥ���ʸ���ʹߤ�ʸ�����ʸ���������ޤ�. ������ɤ�����˼���
+�����ԤäƤ�������. ������, ��������ܸ�ѥå��ε�ǽ�Ǥ�.
 </para>
 <para>
 <programlisting>
@@ -111,9 +111,9 @@ edit-type(^E) で Content-Type フィールドの編集ができますので, �
 </programlisting>
 </para>
 <para>
-添付ファイルのファイル名が日本語である場合, MIME B encoding の形式に符号化され
-たものがほとんどです. これは RFC 違反(RFC 2231 の形式で符号化するべき)であるた
-め Mutt は標準では復号化しようとしません. そのため次の設定を行ってください.
+ź�եե�����Υե�����̾�����ܸ�Ǥ�����, MIME B encoding �η�������沽����
+����Τ��ۤȤ�ɤǤ�. ����� RFC ��ȿ(RFC 2231 �η�������沽����٤�)�Ǥ��뤿
+�� Mutt ��ɸ��Ǥ����沽���褦�Ȥ��ޤ���. ���Τ��ἡ�������ԤäƤ�������.
 </para>
 <para>
 <programlisting>
@@ -121,8 +121,8 @@ edit-type(^E) で Content-Type フィールドの編集ができますので, �
 </programlisting>
 </para>
 <para>
-メッセージを転送する際に不具合が生じる可能性があるため, 次の設定値はデフォルト
-値のままにして変更しないでください.
+��å�������ž������ݤ��Զ�礬�������ǽ�������뤿��, ���������ͤϥǥե����
+�ͤΤޤޤˤ����ѹ����ʤ��Ǥ�������.
 </para>
 <para>
 <programlisting>
@@ -131,8 +131,8 @@ edit-type(^E) で Content-Type フィールドの編集ができますので, �
 </programlisting>
 </para>
 <para>
-必ず設定しなければいけないものではないですが, 作成するメッセージのSubjectなどを
-編集するのはエディタ上の方が行ないやすいため次の設定を行なってください.
+ɬ�����ꤷ�ʤ���Ф����ʤ���ΤǤϤʤ��Ǥ���, ���������å�������Subject�ʤɤ�
+�Խ�����Τϥ��ǥ�����������Ԥʤ��䤹�����ἡ�������ԤʤäƤ�������.
 </para>
 <para>
 <programlisting>
@@ -141,11 +141,11 @@ edit-type(^E) で Content-Type フィールドの編集ができますので, �
 </para>
 </sect2>
 <sect2>
-<title>日本語回りの動作に関連する設定</title>
+<title>���ܸ����ư��˴�Ϣ��������</title>
 <para>
-日本語で記述された text/enriched なメールや text/html なメールは Mutt では正常
-に表示できないことがあります. そのため, 設定ファイルに次の一行を追加してくださ
-い.
+���ܸ�ǵ��Ҥ��줿 text/enriched �ʥ᡼��� text/html �ʥ᡼��� Mutt �Ǥ�����
+��ɽ���Ǥ��ʤ����Ȥ�����ޤ�. ���Τ���, ����ե�����˼��ΰ�Ԥ��ɲä��Ƥ�����
+��.
 </para>
 <para>
 <programlisting>
@@ -153,10 +153,10 @@ edit-type(^E) で Content-Type フィールドの編集ができますので, �
 </programlisting>
 </para>
 <para>
-text/html なメールをインラインで表示しない場合は 'text/html' を auto_view の設
-定からはずしてもかまいません. このときは、mailcap の設定で, text/html の項目行
-の最後の '; copiousoutput' を取り除いてください. 次に mailcap ファイルのパスを
-指定してください.
+text/html �ʥ᡼��򥤥�饤���ɽ�����ʤ����� 'text/html' �� auto_view ����
+�꤫��Ϥ����Ƥ⤫�ޤ��ޤ���. ���ΤȤ��ϡ�mailcap �������, text/html �ι��ܹ�
+�κǸ�� '; copiousoutput' ��������Ƥ�������. ���� mailcap �ե�����Υѥ���
+���ꤷ�Ƥ�������.
 </para>
 <para>
 <programlisting>
@@ -164,12 +164,12 @@ text/html なメールをインラインで表示しない場合は 'text/html' 
 </programlisting>
 </para>
 <para>
-次に, mailcap の設定ファイルにそれぞれの種類のファイルを表示できるプログラムを
-指定してください. auto_view 用いるときは文字符号化方式の変換が行なわれないため,
-nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（ここではEUC-JP）に変換
-した後に表示するプログラムに渡してください. 次の例は richtext (metamail) と w3m
-を使って表示する例です. 共にlvを用いてEUC-JPに変換した後に表示するプログラムに
-渡しています。
+����, mailcap ������ե�����ˤ��줾��μ���Υե������ɽ���Ǥ���ץ�������
+���ꤷ�Ƥ�������. auto_view �Ѥ���Ȥ���ʸ����沽�������Ѵ����Ԥʤ��ʤ�����,
+nkf �� lv (�ä˿侩)�ʤɤ��Ѥ���ɽ���Ѥ�ʸ����沽�����ʤ����Ǥ�EUC-JP�ˤ��Ѵ�
+�������ɽ������ץ��������Ϥ��Ƥ�������. ������� richtext (metamail) �� w3m
+��Ȥä�ɽ��������Ǥ�. ����lv���Ѥ���EUC-JP���Ѵ��������ɽ������ץ�������
+�Ϥ��Ƥ��ޤ���
 </para>
 <para>
 <programlisting>
@@ -178,12 +178,12 @@ nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（�
 </programlisting>
 </para>
 <para>
-添付するファイルのファイル名が日本語である場合, Mutt はRFC 2231の形式で符号化し
-ます。しかし, RFC 2231形式のパラメータを理解できないメイラーがあるため, 受取り
-側がそのファイル名を読めない場合があります. 次の設定を行なうと, Content-Type フ
-ィールドに MIME B encoding 形式の name パラメータを追加するようになります. ただ
-し, このパラメータはRFC違反であるため, 必要な場合以外はこの設定を行なわないでく
-ださい. なお, これは日本語パッチの機能です.
+ź�դ���ե�����Υե�����̾�����ܸ�Ǥ�����, Mutt ��RFC 2231�η�������沽��
+�ޤ���������, RFC 2231�����Υѥ�᡼��������Ǥ��ʤ��ᥤ�顼�����뤿��, �����
+¦�����Υե�����̾���ɤ�ʤ���礬����ޤ�. ���������Ԥʤ���, Content-Type ��
+������ɤ� MIME B encoding ������ name �ѥ�᡼�����ɲä���褦�ˤʤ�ޤ�. ����
+��, ���Υѥ�᡼����RFC��ȿ�Ǥ��뤿��, ɬ�פʾ��ʳ��Ϥ��������Ԥʤ�ʤ��Ǥ�
+������. �ʤ�, ��������ܸ�ѥå��ε�ǽ�Ǥ�.
 </para>
 <para>
 <programlisting>
@@ -192,11 +192,11 @@ nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（�
 </para>
 </sect2>
 <sect2>
-<title>ユーザの情報の設定</title>
+<title>�桼���ξ��������</title>
 <para>
-あなたのメールアドレス, 名前などを設定してください. hostname はメールアドレスの
-ドメイン部(@の右側)だけを記述しましょう. From フィールドや Message-ID フィール
-ドがこの情報に基づいて生成されます.
+���ʤ��Υ᡼�륢�ɥ쥹, ̾���ʤɤ����ꤷ�Ƥ�������. hostname �ϥ᡼�륢�ɥ쥹��
+�ɥᥤ����(@�α�¦)�����򵭽Ҥ��ޤ��礦. From �ե�����ɤ� Message-ID �ե�����
+�ɤ����ξ���˴�Ť�����������ޤ�.
 </para>
 <para>
 <programlisting>
@@ -207,10 +207,10 @@ nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（�
 </para>
 </sect2>
 <sect2>
-<title>ディレクトリの設定</title>
+<title>�ǥ��쥯�ȥ������</title>
 <para>
-ディレクトリの設定を行ってください. Maildir 形式のメイルボックスを使った時の一
-例を示します. この通りに設定する必要はありません.
+�ǥ��쥯�ȥ�������ԤäƤ�������. Maildir �����Υᥤ��ܥå�����Ȥä����ΰ�
+��򼨤��ޤ�. �����̤�����ꤹ��ɬ�פϤ���ޤ���.
 </para>
 <para>
 <programlisting>
@@ -225,9 +225,9 @@ nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（�
 </para>
 </sect2>
 <sect2>
-<title>エディタの設定</title>
+<title>���ǥ���������</title>
 <para>
-使用するエディタの設定を行ってください. 次の行は jed を使う例です.
+���Ѥ��륨�ǥ����������ԤäƤ�������. ���ιԤ� jed ��Ȥ���Ǥ�.
 </para>
 <para>
 <programlisting>
@@ -236,10 +236,10 @@ nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（�
 </para>
 </sect2>
 <sect2>
-<title>PGP の設定例</title>
+<title>PGP ��������</title>
 <para>
-次の例は GnuPG を使う例です. 日本語を使う場合は必ず pgp_strict_enc=no を設定し
-てください. そうでないと quoted-printable で符号化されます.
+������� GnuPG ��Ȥ���Ǥ�. ���ܸ��Ȥ�����ɬ�� pgp_strict_enc=no �����ꤷ
+�Ƥ�������. �����Ǥʤ��� quoted-printable ����沽����ޤ�.
 </para>
 <para>
 <programlisting>
@@ -252,15 +252,15 @@ nkf や lv (特に推奨)などを用いて表示用の文字符号化方式（�
 </para>
 </sect2>
 <sect2>
-<title>色の設定</title>
+<title>��������</title>
 <para>
-kterm など termcap(terminfo でも?)での color support が示されていない端末では
-COLORTERM という環境変数になにか設定する必要があります. 設定されているかどうか
-だけを確認するので内容は '' 以外ならなんでも構いません.
+kterm �ʤ� termcap(terminfo �Ǥ�?)�Ǥ� color support ��������Ƥ��ʤ�ü���Ǥ�
+COLORTERM �Ȥ����Ķ��ѿ��ˤʤˤ����ꤹ��ɬ�פ�����ޤ�. ���ꤵ��Ƥ��뤫�ɤ���
+�������ǧ����Τ����Ƥ� '' �ʳ��ʤ�ʤ�Ǥ⹽���ޤ���.
 </para>
 <para>
-色の設定例です. 好きなようにカスタマイズしてください. なお, このときは環境変数
-COLORFGBG="white;black" を設定しています.
+����������Ǥ�. �����ʤ褦�˥������ޥ������Ƥ�������. �ʤ�, ���ΤȤ��ϴĶ��ѿ�
+COLORFGBG="white;black" �����ꤷ�Ƥ��ޤ�.
 </para>
 <para>
 <programlisting>
@@ -294,9 +294,9 @@ COLORFGBG="white;black" を設定しています.
 </para>
 </sect2>
 <sect2>
-<title>メイリングリストの場合に便利かもしれない設定例</title>
+<title>�ᥤ��󥰥ꥹ�Ȥξ����������⤷��ʤ�������</title>
 <para>
-次の設定をすることによりインデックス画面でスレッド表示をします.
+��������򤹤뤳�Ȥˤ�ꥤ��ǥå������̤ǥ���å�ɽ���򤷤ޤ�.
 </para>
 <para>
 <programlisting>
@@ -304,8 +304,8 @@ COLORFGBG="white;black" を設定しています.
 </programlisting>
 </para>
 <para>
-スレッド表示をしたくないフォルダがあったら, 次のように folder-hook で日付順にで
-も設定しましょう.
+����å�ɽ���򤷤����ʤ��ե���������ä���, ���Τ褦�� folder-hook �����ս�ˤ�
+�����ꤷ�ޤ��礦.
 </para>
 <para>
 <programlisting>
@@ -313,7 +313,7 @@ COLORFGBG="white;black" を設定しています.
 </programlisting>
 </para>
 <para>
-日本のメイリングリストでは
+���ܤΥᥤ��󥰥ꥹ�ȤǤ�
 </para>
 <para>
 <programlisting>
@@ -321,10 +321,10 @@ COLORFGBG="white;black" を設定しています.
 </programlisting>
 </para>
 <para>
-のように Subject フィールドにプレフィックスをつける場合が多いです. しかし, プレ
-フィックスが長いと, 肝心の Subject の内容が行からはみ出てしまって読めません. そ
-のため, 次の設定を行うと, このプレフィックスをインデックス画面では表示しなくな
-ります. また, 返信や転送する際も除去します.
+�Τ褦�� Subject �ե�����ɤ˥ץ�ե��å�����Ĥ����礬¿���Ǥ�. ������, �ץ�
+�ե��å�����Ĺ����, �ο��� Subject �����Ƥ��Ԥ���Ϥ߽ФƤ��ޤä��ɤ�ޤ���. ��
+�Τ���, ���������Ԥ���, ���Υץ�ե��å����򥤥�ǥå������̤Ǥ�ɽ�����ʤ���
+��ޤ�. �ޤ�, �ֿ���ž������ݤ����ޤ�.
 </para>
 <para>
 <programlisting>
@@ -332,8 +332,8 @@ COLORFGBG="white;black" を設定しています.
 </programlisting>
 </para>
 <para>
-このプレフィックスのパターンは次のように正規表現で設定できます. なお, この例は
-デフォルト値です.
+���Υץ�ե��å����Υѥ�����ϼ��Τ褦������ɽ��������Ǥ��ޤ�. �ʤ�, �������
+�ǥե�����ͤǤ�.
 </para>
 <para>
 <programlisting>
@@ -341,14 +341,14 @@ COLORFGBG="white;black" を設定しています.
 </programlisting>
 </para>
 <para>
-この delete_prefix と delete_regexp は日本語パッチの拡張機能です.
+���� delete_prefix �� delete_regexp �����ܸ�ѥå��γ�ĥ��ǽ�Ǥ�.
 </para>
 </sect2>
 <sect2>
-<title>その他</title>
+<title>����¾</title>
 <para>
-ここに書いた例は滝澤が設定を行っているものです. 参考程度に捉えてください.
-manual.txt や Muttrc の説明を読んで適当に設定を行ってください.
+�����˽񤤤������߷�������ԤäƤ����ΤǤ�. �������٤�ª���Ƥ�������.
+manual.txt �� Muttrc ���������ɤ��Ŭ���������ԤäƤ�������.
 </para>
 <para>
 <programlisting>
@@ -372,10 +372,10 @@ manual.txt や Muttrc の説明を読んで適当に設定を行ってくださ�
 </sect2>
 </sect1>
 <sect1>
-<title>著作権</title>
+<title>���</title>
 <para>
-Copyright (C) 2000-2002 TAKIZAWA Takashi (滝澤隆史) &#60;taki@cyber.email.ne.jp&#62;
+Copyright (C) 2000-2002 TAKIZAWA Takashi (��߷δ��) &#60;taki@cyber.email.ne.jp&#62;
 </para>
-<para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
+<para>����ʸ��� DocBook/XML ��: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
 </sect1>
 </article>

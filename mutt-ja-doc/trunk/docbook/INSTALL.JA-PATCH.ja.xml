@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="euc-jp" ?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author><firstname></firstname><surname>mutt-j 開発チーム</surname></author>
-<title>Mutt 1.4i用日本語版パッチインストール方法</title>
+<author><firstname></firstname><surname>mutt-j ��ȯ������</surname></author>
+<title>Mutt 1.4i�����ܸ��ǥѥå����󥹥ȡ�����ˡ</title>
 </articleinfo>
 <sect1>
-<title>必要なもの</title>
+<title>ɬ�פʤ��</title>
 <sect2>
-<title>Mutt日本語版のコンパイル前に取りそろえておくもの</title>
+<title>Mutt���ܸ��ǤΥ���ѥ������˼�ꤽ�����Ƥ������</title>
 <para>
-無い場合は修行が必要な物もあります.
+̵�����Ͻ��Ԥ�ɬ�פ�ʪ�⤢��ޤ�.
 <itemizedlist>
 <listitem>
 <para>
@@ -35,38 +35,38 @@ GNU make(gmake)
 </listitem>
 <listitem>
 <para>
-日本語を表示できるターミナルエミュレータ─と日本語フォント
+���ܸ��ɽ���Ǥ��륿���ߥʥ륨�ߥ�졼���������ܸ�ե����
 </para>
 </listitem>
 <listitem>
 <para>
-C のプログラミングに関する多少の知識
+C �Υץ�����ߥ󥰤˴ؤ���¿�����μ�
 </para>
 </listitem>
 <listitem>
 <para>
-コンパイルが上手くいかなくても自分で修正する根性
+����ѥ��뤬��꤯�����ʤ��Ƥ⼫ʬ�ǽ������뺬��
 </para>
 </listitem>
 <listitem>
 <para>
-若干の英語読解力
+�㴳�αѸ��ɲ���
 </para>
 </listitem>
 </itemizedlist>
 </para>
 </sect2>
 <sect2>
-<title>Mutt日本語版をコンパイルするため必要なもの</title>
+<title>Mutt���ܸ��Ǥ򥳥�ѥ��뤹�뤿��ɬ�פʤ��</title>
 <itemizedlist>
 <listitem>
 <para>
-mutt-1.4 オリジナルソース
+mutt-1.4 ���ꥸ�ʥ륽����
 </para>
 </listitem>   
 <listitem>
 <para>
-mutt-1.4用日本語パッチ
+mutt-1.4�����ܸ�ѥå�
 </para>
 </listitem>   
 <listitem>
@@ -76,35 +76,35 @@ S-Lang
 </listitem>   
 <listitem>
 <para>
-文字符号化方式の変換関数 iconv を実装している C ライブラリで日本語の文字符号化方式と UTF-8 に対応しているもの（恐らく, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 以上）（glibc-2.1.3 + ja-locale でも動作確認済）あるいは GNU libiconv
+ʸ����沽�������Ѵ��ؿ� iconv ��������Ƥ��� C �饤�֥������ܸ��ʸ����沽������ UTF-8 ���б����Ƥ����Ρʶ��餯, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 �ʾ�ˡ�glibc-2.1.3 + ja-locale �Ǥ�ư���ǧ�ѡˤ��뤤�� GNU libiconv
 </para>
 </listitem>   
 <listitem>
 <para>
-ワイド文字関数を実装している C ライブラリで日本語のロケールの実装がまともであるもの. （恐らく, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 以上）（無い場合は Mutt 付属のものでもかまわない (*2)）
+�磻��ʸ���ؿ���������Ƥ��� C �饤�֥������ܸ�Υ�������μ������ޤȤ�Ǥ�����. �ʶ��餯, GNU/Linux(glibc-2.2), Solaris 2.7, AIX 4.3 �ʾ�ˡ�̵������ Mutt ��°�Τ�ΤǤ⤫�ޤ�ʤ� (*2)��
 </para>
 </listitem>   
 </itemizedlist>
 
 <para>
-以上で挙げた他に POP/IMAP over TLS/SSL を使いたい人は OpenSSL を, POP/IMAP でSASL 認証が必要な方は Cyrus SASL Library を, PGP を使いたい人は PGP あるいはGnuPG を予めインストールしてください。
+�ʾ�ǵ󤲤�¾�� POP/IMAP over TLS/SSL ��Ȥ������ͤ� OpenSSL ��, POP/IMAP ��SASL ǧ�ڤ�ɬ�פ����� Cyrus SASL Library ��, PGP ��Ȥ������ͤ� PGP ���뤤��GnuPG ��ͽ�ᥤ�󥹥ȡ��뤷�Ƥ���������
 </para>
 <para>
-以上のものは次の URL あるいはこのページからリンクされているページからダウンロードできるようにしています. <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>
+�ʾ�Τ�Τϼ��� URL ���뤤�Ϥ��Υڡ��������󥯤���Ƥ���ڡ����������������ɤǤ���褦�ˤ��Ƥ��ޤ�. <ulink url="http://www.emaillab.org/mutt/"><citetitle>http://www.emaillab.org/mutt/</citetitle></ulink>
 </para>
 <para>
-*2) 簡易的な実装であるため, 表示／入力用の文字符号化方式としては EUC-JP かShift_JIS しか扱えません. Mutt 付属のワイド文字関数を使うためには ./configureするときに --without-wc-funcs を指定してください.</para>
+*2) �ʰ�Ū�ʼ����Ǥ��뤿��, ɽ���������Ѥ�ʸ����沽�����Ȥ��Ƥ� EUC-JP ��Shift_JIS ���������ޤ���. Mutt ��°�Υ磻��ʸ���ؿ���Ȥ�����ˤ� ./configure����Ȥ��� --without-wc-funcs ����ꤷ�Ƥ�������.</para>
 </sect2>
 </sect1>
 <sect1>
-<title>インストール方法</title>
+<title>���󥹥ȡ�����ˡ</title>
 <sect2>
-<title>S-Lang をインストールする</title>
+<title>S-Lang �򥤥󥹥ȡ��뤹��</title>
 <para>
-すでに, 日本語パッチの当った S-Lang がインストールされている, あるいはオリジナルの S-Lang で SLANG_HAS_KANJI_SUPPORT が定義されてインストールされていれば次の項目に移ってください.
+���Ǥ�, ���ܸ�ѥå������ä� S-Lang �����󥹥ȡ��뤵��Ƥ���, ���뤤�ϥ��ꥸ�ʥ�� S-Lang �� SLANG_HAS_KANJI_SUPPORT ���������ƥ��󥹥ȡ��뤵��Ƥ���м��ι��ܤ˰ܤäƤ�������.
 </para>
 <para>
-適当なディレクトリに展開し, そのディレクトリに移ります. オリジナルの S-Lang の場合は src/sl-feat.h を次のように編集して, SLANG_HAS_KANJI_SUPPORT を 1 に定義します.
+Ŭ���ʥǥ��쥯�ȥ��Ÿ����, ���Υǥ��쥯�ȥ�˰ܤ�ޤ�. ���ꥸ�ʥ�� S-Lang �ξ��� src/sl-feat.h �򼡤Τ褦���Խ�����, SLANG_HAS_KANJI_SUPPORT �� 1 ��������ޤ�.
 </para>
 <para>
 <programlisting>
@@ -112,7 +112,7 @@ S-Lang
 </programlisting>
 </para>
 <para>
-コンパイルします.
+����ѥ��뤷�ޤ�.
 </para>
 <para>
 <programlisting>
@@ -122,7 +122,7 @@ S-Lang
 </programlisting>
 </para>
 <para>
-静的ライブラリとしてインストールする場合は次にようにします.
+��Ū�饤�֥��Ȥ��ƥ��󥹥ȡ��뤹����ϼ��ˤ褦�ˤ��ޤ�.
 </para>
 <para>
 <programlisting>
@@ -130,7 +130,7 @@ S-Lang
 </programlisting>
 </para>
 <para>
-ELF形式の共有ライブラリとしてインストールする場合はさらに次のようにします.
+ELF�����ζ�ͭ�饤�֥��Ȥ��ƥ��󥹥ȡ��뤹����Ϥ���˼��Τ褦�ˤ��ޤ�.
 </para>
 <para>
 <programlisting>
@@ -140,41 +140,41 @@ ELF形式の共有ライブラリとしてインストールする場合はさ�
 </programlisting>
 </para>
 <para>
-この場合はインストール後に ldconfig などでキャッシュの更新を行なってください。
+���ξ��ϥ��󥹥ȡ����� ldconfig �ʤɤǥ���å���ι�����ԤʤäƤ���������
 </para>
 </sect2>
 <sect2>
-<title>libiconv をインストールする</title>
+<title>libiconv �򥤥󥹥ȡ��뤹��</title>
 <para>
-すでに, GNU libiconv が実装されている方および日本語や UTF-8 に完全に対応したiconv を含んでいる C ライブラリを持っている環境方は次の項目に移ってください. ただし, C ライブラリの iconv を使ってもうまくいかない場合は, GNU libiconv を使ってみてください.
+���Ǥ�, GNU libiconv ����������Ƥ�������������ܸ�� UTF-8 �˴������б�����iconv ��ޤ�Ǥ��� C �饤�֥�����äƤ���Ķ����ϼ��ι��ܤ˰ܤäƤ�������. ������, C �饤�֥��� iconv ��ȤäƤ⤦�ޤ������ʤ�����, GNU libiconv ��ȤäƤߤƤ�������.
 </para>
 <para>
-適当なディレクトリに展開し, そのディレクトリに移り, ./configure;make;make install でできます. インストール後に libiconv を使うための環境変数の設定や共有ライブラリのキャッシュの更新(ldconfig)を行ってください.
+Ŭ���ʥǥ��쥯�ȥ��Ÿ����, ���Υǥ��쥯�ȥ�˰ܤ�, ./configure;make;make install �ǤǤ��ޤ�. ���󥹥ȡ����� libiconv ��Ȥ�����δĶ��ѿ�������䶦ͭ�饤�֥��Υ���å���ι���(ldconfig)��ԤäƤ�������.
 </para>
 <para>
 <programlisting>
-  GNU/Linux(glibc-2.1) と Solaris                                              
-      Bsh 系                                                                   
+  GNU/Linux(glibc-2.1) �� Solaris                                              
+      Bsh ��                                                                   
         $ LD_PRELOAD=/usr/local/lib/libiconv_plug.so                           
         $ export LD_PRELOAD                                                    
-      csh 系                                                                   
+      csh ��                                                                   
         % setenv LD_PRELOAD /usr/local/lib/libiconv_plug.so                    
-  その他                                                                       
-      Bsh 系                                                                   
+  ����¾                                                                       
+      Bsh ��                                                                   
         $ LD_LIBRARY_PATH=/usr/local/lib                                       
         $ export LD_LIBRARY_PATH                                               
-      csh 系                                                                   
+      csh ��                                                                   
         % setenv LD_LIBRARY_PATH /usr/local/lib                                
 </programlisting>
 </para>
 </sect2>
 <sect2>
-<title>Mutt のソースに日本語パッチを当てる</title>
+<title>Mutt �Υ����������ܸ�ѥå������Ƥ�</title>
 <para>
-Mutt の tar ball を展開し, 日本語パッチを当ててください.
+Mutt �� tar ball ��Ÿ����, ���ܸ�ѥå������ƤƤ�������.
 </para>
 <para>
-例）
+���
 </para>
 <para>
 <programlisting>
@@ -186,9 +186,9 @@ Mutt の tar ball を展開し, 日本語パッチを当ててください.
 </para>
 </sect2>
 <sect2>
-<title>./configure に必要なオプションを付けて実行する</title>
+<title>./configure ��ɬ�פʥ��ץ������դ��Ƽ¹Ԥ���</title>
 <para>
-次のオプションは Mutt で日本語を使うために必要です.
+���Υ��ץ����� Mutt �����ܸ��Ȥ������ɬ�פǤ�.
 </para>
 <para>
 <itemizedlist>
@@ -197,10 +197,10 @@ Mutt の tar ball を展開し, 日本語パッチを当ててください.
 --with-iconv=DIR
 </para>
 <para>   
- GNU libiconv を使う場合はこのオプションを付けないとうまくいかないことがあります.
+ GNU libiconv ��Ȥ����Ϥ��Υ��ץ������դ��ʤ��Ȥ��ޤ������ʤ����Ȥ�����ޤ�.
 </para>
 <para>
-例) --with-iconv=/usr/local
+��) --with-iconv=/usr/local
 </para>
 </listitem>
 <listitem>
@@ -208,7 +208,7 @@ Mutt の tar ball を展開し, 日本語パッチを当ててください.
 --without-wc-funcs
 </para>
 <para>
-ワイド文字関数と日本語のロケールデータがまともに動く環境（恐らく GNU/Linux/glibc-2.2, Solaris 2.7, AIX 4.3 以上）以外の方はこのオプションを忘れずに付けてください.
+�磻��ʸ���ؿ������ܸ�Υ�������ǡ������ޤȤ��ư���Ķ��ʶ��餯 GNU/Linux/glibc-2.2, Solaris 2.7, AIX 4.3 �ʾ�˰ʳ������Ϥ��Υ��ץ�����˺�줺���դ��Ƥ�������.
 </para>
 </listitem>
 <listitem>
@@ -216,10 +216,10 @@ Mutt の tar ball を展開し, 日本語パッチを当ててください.
 --with-slang[=DIR]
 </para>
 <para>
-S-Lang を使う場合は必ず付けてください. システムにライブラリとして存在する場合は基本的にはディレクトリを指定する必要はありません. なお、一部のLinuxディストリビューションでは共有ライブラリ名が libslang-ja.so である場合があります. この場合は configure と configure.in に記述されている"-lslang"を"-lslang-ja"に予め置換しておいてください.
+S-Lang ��Ȥ�����ɬ���դ��Ƥ�������. �����ƥ�˥饤�֥��Ȥ���¸�ߤ�����ϴ���Ū�ˤϥǥ��쥯�ȥ����ꤹ��ɬ�פϤ���ޤ���. �ʤ���������Linux�ǥ����ȥ�ӥ塼�����Ǥ϶�ͭ�饤�֥��̾�� libslang-ja.so �Ǥ����礬����ޤ�. ���ξ��� configure �� configure.in �˵��Ҥ���Ƥ���"-lslang"��"-lslang-ja"��ͽ���ִ����Ƥ����Ƥ�������.
 </para>
 <para>
-例) --with-slang=/usr/local
+��) --with-slang=/usr/local
 </para>
 </listitem>
 <listitem>
@@ -227,20 +227,20 @@ S-Lang を使う場合は必ず付けてください. システムにライブ�
 --enable-default-japanese
 </para>
 <para>
-設定変数のデフォルト値を日本語を使うために適したものに設定します. このオプションを無効にしても, 設定変数を適切に設定すれば日本語を使うことができます.
+�����ѿ��Υǥե�����ͤ����ܸ��Ȥ������Ŭ������Τ����ꤷ�ޤ�. ���Υ��ץ�����̵���ˤ��Ƥ�, �����ѿ���Ŭ�ڤ����ꤹ������ܸ��Ȥ����Ȥ��Ǥ��ޤ�.
 </para>
 </listitem>
 </itemizedlist>
 </para>
 <para>
-./configure にはそのほかにもいくつかのオプションがあります. ./configure --help
-で確認してください.
+./configure �ˤϤ��Τۤ��ˤ⤤���Ĥ��Υ��ץ���󤬤���ޤ�. ./configure --help
+�ǳ�ǧ���Ƥ�������.
 </para>
 </sect2>
 <sect2>
-<title>コンパイル後インストールする</title>
+<title>����ѥ���奤�󥹥ȡ��뤹��</title>
 <para>
-make;make install でいけます.
+make;make install �Ǥ����ޤ�.
 </para>
 <para>
 <programlisting>
@@ -250,9 +250,9 @@ make;make install でいけます.
 </para>
 </sect2>
 <sect2>
-<title>日本語版のドキュメントをインストールする</title>
+<title>���ܸ��ǤΥɥ�����Ȥ򥤥󥹥ȡ��뤹��</title>
 <para>
-まず, オリジナルのMuttのドキュメントがインストールされたディレクトリを確認するために, オリジナルのソースディレクトリで次のコマンドを実行します.
+�ޤ�, ���ꥸ�ʥ��Mutt�Υɥ�����Ȥ����󥹥ȡ��뤵�줿�ǥ��쥯�ȥ���ǧ���뤿���, ���ꥸ�ʥ�Υ������ǥ��쥯�ȥ�Ǽ��Υ��ޥ�ɤ�¹Ԥ��ޤ�.
 </para>
 <para>
 <programlisting>
@@ -260,46 +260,46 @@ make;make install でいけます.
 </programlisting>
 </para>
 <para>
-次に, 日本語パッチのディレクトリに移動してMakefileのDOCDIRの値を修正し, rootになって, make installを実行します.
+����, ���ܸ�ѥå��Υǥ��쥯�ȥ�˰�ư����Makefile��DOCDIR���ͤ�����, root�ˤʤä�, make install��¹Ԥ��ޤ�.
 </para>
 <para>
 <programlisting>
     $ cd ../mutt-1.4i-ja.1                                                     
-    [Makefileを修正]
+    [Makefile����]
     # make install                                                             
 </programlisting>
 </para>
 </sect2>
 <sect2>
-<title>メッセージカタログに関する注意事項</title>
+<title>��å��������������˴ؤ������ջ���</title>
 <para>
-NEC UX/4800のように, 標準のlocaleが変則的なものは, Muttが使う ja locale ディレクトリと標準のディレクトリ(UX/4800シリーズでは japan)をシンボリックリンクしてください. こうすることで, メッセージカタログが正常にに利用できます.
+NEC UX/4800�Τ褦��, ɸ���locale����§Ū�ʤ�Τ�, Mutt���Ȥ� ja locale �ǥ��쥯�ȥ��ɸ��Υǥ��쥯�ȥ�(UX/4800���꡼���Ǥ� japan)�򥷥�ܥ�å���󥯤��Ƥ�������. �������뤳�Ȥ�, ��å�������������������ˤ����ѤǤ��ޤ�.
 </para>
 </sect2>
 <sect2>
-<title>関連ツールをインストールする</title>
+<title>��Ϣ�ġ���򥤥󥹥ȡ��뤹��</title>
 <para>
-必要なら, urlview と metamail もインストールしてください. Mutt から直接 Web ブラウザを起動したり, 色々と便利なことができます.
+ɬ�פʤ�, urlview �� metamail �⥤�󥹥ȡ��뤷�Ƥ�������. Mutt ����ľ�� Web �֥饦����ư������, �����������ʤ��Ȥ��Ǥ��ޤ�.
 </para>
 </sect2>
 <sect2>
-<title>送信用プログラムをインストールする</title>
+<title>�����ѥץ������򥤥󥹥ȡ��뤹��</title>
 <para>
-Muttでは送信に関しては外部プログラムを使います. システムにMTAがインストールされていて, 外部のドメインあるいは中継用サーバに送信できる環境であれば, 特に別のプログラムをインストールする必要はありません. そうでない場合は, qmail, exim,postfixなどの MTA や Nomail, smtppush, nullmailer, ssmtp などの送信専用のプログラムをインストールする必要があります. ダイアルアップ環境でしたら Nomail が, 常時接続環境であれば smtppush が設定が簡単です.
+Mutt�Ǥ������˴ؤ��Ƥϳ����ץ�������Ȥ��ޤ�. �����ƥ��MTA�����󥹥ȡ��뤵��Ƥ���, �����Υɥᥤ�󤢤뤤������ѥ����Ф������Ǥ���Ķ��Ǥ����, �ä��̤Υץ������򥤥󥹥ȡ��뤹��ɬ�פϤ���ޤ���. �����Ǥʤ�����, qmail, exim,postfix�ʤɤ� MTA �� Nomail, smtppush, nullmailer, ssmtp �ʤɤ��������ѤΥץ������򥤥󥹥ȡ��뤹��ɬ�פ�����ޤ�. �������륢�å״Ķ��Ǥ����� Nomail ��, �����³�Ķ��Ǥ���� smtppush �����꤬��ñ�Ǥ�.
 </para>
 </sect2>
 </sect1>
 <sect1>
-<title>設定</title>
+<title>����</title>
 <para>
-日本語環境の設定は usage-japanese.html をご覧下さい. 1.2.x 以前のものも基本的には使えますが, 日本語回りでいくつか不具合がでる可能性があるため設定を再確認してください.
+���ܸ�Ķ�������� usage-japanese.html ����������. 1.2.x �����Τ�Τ����Ū�ˤϻȤ��ޤ���, ���ܸ���Ǥ����Ĥ��Զ�礬�Ǥ��ǽ�������뤿�������Ƴ�ǧ���Ƥ�������.
 </para>
 <para>
-どうしても日本語の表示がうまくいかないという方は前のインストールの手順を確認し,S-Lang, iconv, ワイド文字関数を使うようになっているかを確かめてください.
+�ɤ����Ƥ����ܸ��ɽ�������ޤ������ʤ��Ȥ����������Υ��󥹥ȡ���μ����ǧ��,S-Lang, iconv, �磻��ʸ���ؿ���Ȥ��褦�ˤʤäƤ��뤫��Τ���Ƥ�������.
 </para>
 </sect1>
 <sect1>
-<title>この文書の著作権</title>
+<title>����ʸ������</title>
 <itemizedlist>
 <listitem><para>
 Copyright (C) 2000-2001 Oota Toshiya &#60;oota@ppd.fc.nec.co.jp&#62;
@@ -311,6 +311,6 @@ Copyright (C) 2000-2001 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
 Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
 </para></listitem>
 </itemizedlist>
-<para>この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
+<para>����ʸ��� DocBook/XML ��: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62;</para>
 </sect1>
 </article>

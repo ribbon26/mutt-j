@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="euc-jp" ?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
 	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
 <article>
 <articleinfo>
-<author><firstname></firstname><surname>mutt-j ML 開発チーム</surname></author>
-<publisher><publishername>mutt-j ML 開発チーム</publishername></publisher>
-<title>日本語パッチ拡張機能マニュアル</title>
+<author><firstname></firstname><surname>mutt-j ML ��ȯ������</surname></author>
+<publisher><publishername>mutt-j ML ��ȯ������</publishername></publisher>
+<title>���ܸ�ѥå���ĥ��ǽ�ޥ˥奢��</title>
 <revhistory>
 <revision>
 <revnumber>mutt-1.4i-ja.1</revnumber>
@@ -16,11 +16,11 @@
 
 
 <sect1>
-<title>日本語パッチ拡張機能マニュアル</title>
+<title>���ܸ�ѥå���ĥ��ǽ�ޥ˥奢��</title>
 <sect2>
-<title>設定用変数</title>
+<title>�������ѿ�</title>
 <para>
-"Default:" の項目で括弧内()に記述したものは./configure時に --enalbe-default-japaneseオプションを付けた場合のものです。
+"Default:" �ι��ܤǳ����()�˵��Ҥ�����Τ�./configure���� --enalbe-default-japanese���ץ������դ������Τ�ΤǤ���
 </para>
 <sect3>
 <title>assumed_charset</title>
@@ -31,7 +31,7 @@ Default: "us-ascii" ("iso-2022-jp:euc-jp:shift_jis:utf-8")
 </programlisting>
 </para>
 <para>
-文字符号化方式の指定が行われていないへッダフィールドやボディはデフォルトでは us-ascii とみなされます. このオプションを設定すると, 設定した文字符号化方式であると推定を行います. 推定できる文字符号化方式はコロンで区切られた複数のものを設定できます. 例えば, 日本語の場合では次のように設定するとよいでしょう.
+ʸ����沽�����λ��꤬�Ԥ��Ƥ��ʤ��إå��ե�����ɤ�ܥǥ��ϥǥե���ȤǤ� us-ascii �Ȥߤʤ���ޤ�. ���Υ��ץ��������ꤹ���, ���ꤷ��ʸ����沽�����Ǥ���ȿ����Ԥ��ޤ�. ����Ǥ���ʸ����沽�����ϥ�����Ƕ��ڤ�줿ʣ���Τ�Τ�����Ǥ��ޤ�. �㤨��, ���ܸ�ξ��Ǥϼ��Τ褦�����ꤹ��Ȥ褤�Ǥ��礦.
 </para>
 <para>
 <programlisting>
@@ -39,7 +39,7 @@ Default: "us-ascii" ("iso-2022-jp:euc-jp:shift_jis:utf-8")
 </programlisting>
 </para>
 <para>
-ただし, メッセージボディの場合は最初のものしか有効ではありません. なお, このオプションは strict_mime=no を設定しないと有効になりません.
+������, ��å������ܥǥ��ξ��Ϻǽ�Τ�Τ���ͭ���ǤϤ���ޤ���. �ʤ�, ���Υ��ץ����� strict_mime=no �����ꤷ�ʤ���ͭ���ˤʤ�ޤ���.
 </para>
 </sect3>
 <sect3>
@@ -51,7 +51,7 @@ Default: no
 </programlisting>
 </para>
 <para>
-この変数を設定すると, Muttは添付ファイルのファイル名として次のようなRFC2047形式で符号化されたパラメータをContent-Typeフィールドに追加します。
+�����ѿ������ꤹ���, Mutt��ź�եե�����Υե�����̾�Ȥ��Ƽ��Τ褦��RFC2047��������沽���줿�ѥ�᡼����Content-Type�ե�����ɤ��ɲä��ޤ���
 </para>
 <para>
 <programlisting>
@@ -59,7 +59,7 @@ Default: no
 </programlisting>
 </para>
 <para>
-注記: このようなRFC2047形式の符号化の使用はRFC2047により明示的に禁止されています。受信者のメイラーがRFC2231形式のパラメータを解析できない場合のみ、この変数を設定してください。なお, このオプションは strict_mime=no を設定しないと有効になりません.
+����: ���Τ褦��RFC2047��������沽�λ��Ѥ�RFC2047�ˤ������Ū�˶ػߤ���Ƥ��ޤ��������ԤΥᥤ�顼��RFC2231�����Υѥ�᡼������ϤǤ��ʤ����Τߡ������ѿ������ꤷ�Ƥ����������ʤ�, ���Υ��ץ����� strict_mime=no �����ꤷ�ʤ���ͭ���ˤʤ�ޤ���.
 </para>
 </sect3>
 <sect3>
@@ -71,7 +71,7 @@ Default: unset
 </programlisting>
 </para>
 <para>
-設定するとメーリングリストにおける Subject フィールドのプレフィックス（[prefix:0123]のようなもの）をインデックス画面および返信時のメッセージで削除することができます. 削除するプレフィックスのパターンは $delete_regexp で記述できます.
+���ꤹ��ȥ᡼��󥰥ꥹ�Ȥˤ����� Subject �ե�����ɤΥץ�ե��å�����[prefix:0123]�Τ褦�ʤ�Ρˤ򥤥�ǥå������̤�����ֿ����Υ�å������Ǻ�����뤳�Ȥ��Ǥ��ޤ�. �������ץ�ե��å����Υѥ������ $delete_regexp �ǵ��ҤǤ��ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -83,7 +83,7 @@ Default: "^(\[[A-Za-z0-9_.: \-]*\][ ]*)"
 </programlisting>
 </para>
 <para>
-$delete_prefix で用いられる正規表現です.
+$delete_prefix ���Ѥ���������ɽ���Ǥ�.
 </para>
 </sect3>
 <sect3>
@@ -95,7 +95,7 @@ Default: "" ("iso-2022-jp:euc-jp:shift_jis:utf-8")
 </programlisting>
 </para>
 <para>
-テキストファイルを添付する場合の想定される文字符号化方式を設定します. コロンで区切られリストとして記述できます. 例えば, 日本語を使う場合は次のように設定します.
+�ƥ����ȥե������ź�դ���������ꤵ���ʸ����沽���������ꤷ�ޤ�. ������Ƕ��ڤ��ꥹ�ȤȤ��Ƶ��ҤǤ��ޤ�. �㤨��, ���ܸ��Ȥ����ϼ��Τ褦�����ꤷ�ޤ�.
 </para>
 <para>
 <programlisting>
@@ -103,7 +103,7 @@ Default: "" ("iso-2022-jp:euc-jp:shift_jis:utf-8")
 </programlisting>
 </para>
 <para>
-iso-2022-* を使う場合は必ずリストの先頭に持ってきてください. このオプションが設定されていない場合は, $charset で指定したものが代わりに想定されます.
+iso-2022-* ��Ȥ�����ɬ���ꥹ�Ȥ���Ƭ�˻��äƤ��Ƥ�������. ���Υ��ץ�������ꤵ��Ƥ��ʤ�����, $charset �ǻ��ꤷ����Τ���������ꤵ��ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -115,7 +115,7 @@ Default: ""
 </programlisting>
 </para>
 <para>
-mh_path option で ~/Mailなどと指定しておくと .mh_sequences がなくても ~/Mail以下の subdirectory で他の folder 条件に引っ掛からず, なおかつ, さらにその下に subdirectory を持たない directory は MH folder として解釈するようになります. 他の MH tool で生成した folder を mutt で扱う際の "xxx はメールボックスではありません" の誤判定を減らせます.
+mh_path option �� ~/Mail�ʤɤȻ��ꤷ�Ƥ����� .mh_sequences ���ʤ��Ƥ� ~/Mail�ʲ��� subdirectory ��¾�� folder ���˰��óݤ��餺, �ʤ�����, ����ˤ��β��� subdirectory ������ʤ� directory �� MH folder �Ȥ��Ʋ�᤹��褦�ˤʤ�ޤ�. ¾�� MH tool ���������� folder �� mutt �ǰ����ݤ� "xxx �ϥ᡼��ܥå����ǤϤ���ޤ���" �θ�Ƚ��򸺤餻�ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -127,7 +127,7 @@ Default: yes
 </programlisting>
 </para>
 <para>
-このオプションが設定されていると, メール送信時に mutt自身が Message-ID フィールドを生成します. MTAに Message-ID フィールドを生成させたい場合は設定を解除します.
+���Υ��ץ�������ꤵ��Ƥ����, �᡼���������� mutt���Ȥ� Message-ID �ե�����ɤ��������ޤ�. MTA�� Message-ID �ե�����ɤ���������������������������ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -139,10 +139,10 @@ Default: yes
 </programlisting>
 </para>
 <para>
-このオプションが設定されていると, Message-ID フィールドに使う文字列を $hostnameの代わりに $from で設定した文字列（メールアドレス）を使います. そのため,Message-ID のユニーク性が高まります.
+���Υ��ץ�������ꤵ��Ƥ����, Message-ID �ե�����ɤ˻Ȥ�ʸ����� $hostname������� $from �����ꤷ��ʸ����ʥ᡼�륢�ɥ쥹�ˤ�Ȥ��ޤ�. ���Τ���,Message-ID �Υ�ˡ���������ޤ�ޤ�.
 </para>
 <para>
-例えば, 次のように設定してある場合,
+�㤨��, ���Τ褦�����ꤷ�Ƥ�����,
 </para>
 <para>
 <programlisting>
@@ -152,7 +152,7 @@ Default: yes
 </programlisting>
 </para>
 <para>
-次のような From と Message-ID を生成します.
+���Τ褦�� From �� Message-ID ���������ޤ�.
 </para>
 <para>
 <programlisting>
@@ -170,7 +170,7 @@ Default: no
 </programlisting>
 </para>
 <para>
-インデックスからメッセージを選択したときに, すぐに本文を表示するかを決めます.セットされていると最初はヘッダ部しか表示せず, ページ送りや行送り動作を行なった時点で本文が表示されます.
+����ǥå��������å����������򤷤��Ȥ���, ��������ʸ��ɽ�����뤫����ޤ�.���åȤ���Ƥ���Ⱥǽ�ϥإå�������ɽ������, �ڡ�������������ư���Ԥʤä���������ʸ��ɽ������ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -182,10 +182,10 @@ Default: no
 </programlisting>
 </para>
 <para>
-pager_hdrs_only がセットされているときの本文の表示の仕方を決めます. セットされていると, 本文の文字を pager_spoiler に指定されたキャラクタで置き換えます. セットされていなければ本文の行数だけ空行を出力します.
+pager_hdrs_only �����åȤ���Ƥ���Ȥ�����ʸ��ɽ���λ�������ޤ�. ���åȤ���Ƥ����, ��ʸ��ʸ���� pager_spoiler �˻��ꤵ�줿����饯�����֤������ޤ�. ���åȤ���Ƥ��ʤ������ʸ�ιԿ��������Ԥ���Ϥ��ޤ�.
 </para>
 <para>
-注意: セットされていないとき, 本文の行数は実際のメールの行数をもとに計算します.ファイルが添付されている場合や本文が折り返されて表示される場合には, 出力される空行数と本文を表示したときの行数とが合わなくなります.
+����: ���åȤ���Ƥ��ʤ��Ȥ�, ��ʸ�ιԿ��ϼºݤΥ᡼��ιԿ����Ȥ˷׻����ޤ�.�ե����뤬ź�դ���Ƥ��������ʸ���ޤ��֤����ɽ���������ˤ�, ���Ϥ������Կ�����ʸ��ɽ�������Ȥ��ιԿ��Ȥ����ʤ��ʤ�ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -197,7 +197,7 @@ Default: "*"
 </programlisting>
 </para>
 <para>
-pager_hdrs_only と pager_spoil がセットされているときに本文の文字を置き換えるキャラクタを指定します.
+pager_hdrs_only �� pager_spoil �����åȤ���Ƥ���Ȥ�����ʸ��ʸ�����֤������륭��饯������ꤷ�ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -209,7 +209,7 @@ Default: no
 </programlisting>
 </para>
 <para>
-このオプションを設定すると, 日本語の機種依存文字を〓に置き換え, また, JIS X 0201 kana("ESC ) I" の場合のみ) を ? に置き換えて表示が乱れるのを防ぎます. ただし, JIS X 0201 kana が 8bit のままでてきた場合は処理しません. また, $charset がEUC-JP に設定している場合は, EUC-JP には JIS X 0201 roman が含まれないため, 受け取ったメッセージの ISO-2022-JP の文字列にそのエスケープシーケンスが含まれている場合, EUC-JP には変換できません. 逆に, Shift_JIS には ASCII が含まれないため,受け取ったメッセージの ISO-2022-JP の文字列にそのエスケープシーケンスが含まれている場合は Shift_JIS には変換できません. そのため, このようなケースの場合には文字化けが生じます. このオプションを設定すると, JIS X 0201 roman と ASCII ののエスケープシーケンスを互いに置き換え, 文字化けを防ぐことができます.
+���Υ��ץ��������ꤹ���, ���ܸ�ε����¸ʸ���򢮤��֤�����, �ޤ�, JIS X 0201 kana("ESC ) I" �ξ��Τ�) �� ? ���֤�������ɽ��������Τ��ɤ��ޤ�. ������, JIS X 0201 kana �� 8bit �ΤޤޤǤƤ������Ͻ������ޤ���. �ޤ�, $charset ��EUC-JP �����ꤷ�Ƥ������, EUC-JP �ˤ� JIS X 0201 roman ���ޤޤ�ʤ�����, ������ä���å������� ISO-2022-JP ��ʸ����ˤ��Υ��������ץ������󥹤��ޤޤ�Ƥ�����, EUC-JP �ˤ��Ѵ��Ǥ��ޤ���. �դ�, Shift_JIS �ˤ� ASCII ���ޤޤ�ʤ�����,������ä���å������� ISO-2022-JP ��ʸ����ˤ��Υ��������ץ������󥹤��ޤޤ�Ƥ������ Shift_JIS �ˤ��Ѵ��Ǥ��ޤ���. ���Τ���, ���Τ褦�ʥ������ξ��ˤ�ʸ�������������ޤ�. ���Υ��ץ��������ꤹ���, JIS X 0201 roman �� ASCII �ΤΥ��������ץ������󥹤�ߤ����֤�����, ʸ���������ɤ����Ȥ��Ǥ��ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -221,7 +221,7 @@ Default: yes
 </programlisting>
 </para>
 <para>
-このオプションを解除すると, MIME に従っていないメッセージなど表示できるようになります. 具体的には, charset の指定がないメッセージを表示します. $assumed_charset も見てください. さらに, encoded-word と *text の間の linear-white-space を space に置き換えます. これにより, MIME 符号化された Subject フィールドの表示が複数行にわかれることを防ぐことができます.
+���Υ��ץ������������, MIME �˽��äƤ��ʤ���å������ʤ�ɽ���Ǥ���褦�ˤʤ�ޤ�. ����Ū�ˤ�, charset �λ��꤬�ʤ���å�������ɽ�����ޤ�. $assumed_charset �⸫�Ƥ�������. �����, encoded-word �� *text �δ֤� linear-white-space �� space ���֤������ޤ�. ����ˤ��, MIME ��沽���줿 Subject �ե�����ɤ�ɽ����ʣ���Ԥˤ狼��뤳�Ȥ��ɤ����Ȥ��Ǥ��ޤ�.
 </para>
 </sect3>
 <sect3>
@@ -233,27 +233,27 @@ Default: no
 </programlisting>
 </para>
 <para>
-vt-100 非互換端末では ACS 文字を表示できません. このオプションを設定すると, スレッドや添付ファイルのツリーを表示する際に任意の文字を設定することができます.例えば, 日本語であれば, JIS 0208 の罫線を用いることもできます. 文字の設定は $tree_llcorner, $tree_ulcorner, $tree_ltee, $tree_hline, $tree_vline,$tree_ttee, $tree_btee, $tree_space, $tree_rarrow, $tree_star, $tree_hidden,$tree_equals, $tree_missing で行います. ただし, 設定ファイルの記述で用いられる文字符号化方式と $charset に設定したものを同じにしてください. デフォルトでは$ascii_chars をセットしたときに使われる文字を使って表示します.
+vt-100 ��ߴ�ü���Ǥ� ACS ʸ����ɽ���Ǥ��ޤ���. ���Υ��ץ��������ꤹ���, ����åɤ�ź�եե�����Υĥ꡼��ɽ������ݤ�Ǥ�դ�ʸ�������ꤹ�뤳�Ȥ��Ǥ��ޤ�.�㤨��, ���ܸ�Ǥ����, JIS 0208 �η������Ѥ��뤳�Ȥ�Ǥ��ޤ�. ʸ��������� $tree_llcorner, $tree_ulcorner, $tree_ltee, $tree_hline, $tree_vline,$tree_ttee, $tree_btee, $tree_space, $tree_rarrow, $tree_star, $tree_hidden,$tree_equals, $tree_missing �ǹԤ��ޤ�. ������, ����ե�����ε��Ҥ��Ѥ�����ʸ����沽������ $charset �����ꤷ����Τ�Ʊ���ˤ��Ƥ�������. �ǥե���ȤǤ�$ascii_chars �򥻥åȤ����Ȥ��˻Ȥ���ʸ����Ȥä�ɽ�����ޤ�.
 </para>
 <para>
-設定例：JIS X 0208 の罫線を用いた例
+�����㡧JIS X 0208 �η������Ѥ�����
 </para>
 <para>
 <programlisting>
   set tree_chars=yes
-  set tree_llcorner="└"
-  set tree_ulcorner="┌"
-  set tree_ltee="├"
-  set tree_hline="─"
-  set tree_vline="│"
-  set tree_ttee="┬"
-  set tree_btee="┴"
-  set tree_space="　"
-  set tree_rarrow="＞"
-  set tree_star="＊"
-  set tree_hidden="＆"
-  set tree_equals="＝"
-  set tree_missing="？"
+  set tree_llcorner="��"
+  set tree_ulcorner="��"
+  set tree_ltee="��"
+  set tree_hline="��"
+  set tree_vline="��"
+  set tree_ttee="��"
+  set tree_btee="��"
+  set tree_space="��"
+  set tree_rarrow="��"
+  set tree_star="��"
+  set tree_hidden="��"
+  set tree_equals="��"
+  set tree_missing="��"
 </programlisting>
 </para>
 </sect3>
@@ -266,7 +266,7 @@ Default: "`"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -278,7 +278,7 @@ Default: ","
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -290,7 +290,7 @@ Default: "|"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -302,7 +302,7 @@ Default: "-"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -314,7 +314,7 @@ Default: "|"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -326,7 +326,7 @@ Default: "-"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -338,7 +338,7 @@ Default: "-"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -350,7 +350,7 @@ Default: " "
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -362,7 +362,7 @@ Default: ">"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -374,7 +374,7 @@ Default: "*"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -386,7 +386,7 @@ Default: "&#38;"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -398,7 +398,7 @@ Default: "="
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -410,7 +410,7 @@ Default: "?"
 </programlisting>
 </para>
 <para>
-$tree_chars を参照.
+$tree_chars �򻲾�.
 </para>
 </sect3>
 <sect3>
@@ -422,12 +422,12 @@ Default: no (yes)
 </programlisting>
 </para>
 <para>
-このオプションを設定すると、UTF-8ロケールにおいてJIS X 0208の記号・ギリシャ文字・キルリ文字の幅が2桁であると判断します。
+���Υ��ץ��������ꤹ��ȡ�UTF-8��������ˤ�����JIS X 0208�ε��桦���ꥷ��ʸ���������ʸ��������2��Ǥ����Ƚ�Ǥ��ޤ���
 </para>
 </sect3>
 </sect2>
 <sect2>
-<title>著作権</title>
+<title>���</title>
 <para>
 Copyright (C) 2000-2002 TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;
 </para><para>
@@ -436,7 +436,7 @@ Copyright (C) 2000 Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;
 Copyright (C) 2000 Kawaguti Ginga &#60;ginga@ginganet.org&#62;
 </para>
 <para>
-この文書の DocBook/XML 化: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62; 
+����ʸ��� DocBook/XML ��: SHINGUU Atsuhiro &#60;icebell@fujii-kiso.co.jp&#62; 
 </para>
 </sect2>
 </sect1>
