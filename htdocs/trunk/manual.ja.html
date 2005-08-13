@@ -10,7 +10,7 @@
 <H1>The Mutt E-Mail Client</H1>
 
 <H2>by Michael Elkins 
-<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.8 +20050213
+<A HREF="mailto:me@cs.hmc.edu">&lt;me@cs.hmc.edu&gt;</A></H2>version 1.5.10 +20050813
 <P><HR>
 <EM>``All mail clients suck.  This one just sucks less.'' -me, circa 1995</EM>
 <HR>
@@ -961,6 +961,7 @@ alias,attach,browser,index,compose,postpone,pgp と書く方が確実。)
 <PRE>
 \t              タブ (Tab)
 &lt;tab>           タブ (Tab)
+&lt;backtab>       Backtab / Shift-Tab
 \r              キャリッジリターン
 \n              改行
 \e              エスケイプ (Esc)
@@ -2272,6 +2273,7 @@ NFS 越しに書き込んでいるときでさえも重ならないような方法で選ばれています。
 <A HREF="#mbox">$mbox</A> メイルボックスを指す</LI>
 <LI>&lt;　……　
 <A HREF="#record">$record</A> メイルボックスを指す</LI>
+<LI>^　……　現在のメイルボックスを指す</LI>
 <LI>- と !!　……　前にいたメイルボックスを指す</LI>
 <LI>~　……　ホウムディレクトリを指す</LI>
 <LI>= と +　……　
@@ -2372,8 +2374,43 @@ procmail その他のメイルフィルタリングエイジェントで簡単に挿入できます。
 なぜなら、興味がなければ簡単にスレッドごと削除することができ、
 価値ある話題を素早く見つけられるからです。
 <P>
-<H2>4.9 配送状況通知 (Delivery Status Notification = DSN) サポート</H2>
+<H2>4.9 スレッドを編集する</H2>
 
+<P>Mutt には、壊れたスレッドをその場で作り直す機能があります。
+スレッドが壊れる理由は相手の設定ミスや癖などですが、そのように
+話を追いにくくする迷惑行為からメイルボックスを救い出すことが
+できるのです。
+<P>IMAP でこの機能を使いたい場合には Mutt をコンパイルする際に
+<EM>--enable-imap-edit-threads</EM> フラグを付けて configure する
+必要があります。
+<P>
+<H3>スレッドをつなぐ</H3>
+
+<P>
+<P>返信時に正しく &quot;In-Reply-To:&quot; や
+&quot;References:&quot; ヘッダを付けるのを忘れてしまうメイラが
+あります。すると Mutt が正しくスレッドを構成するために必要な情報を
+得られず、話題が切れてしまう結果になります。
+<P>これを修整するには、まず返事にタグを付け、次に親メッセイジまで
+カーソルを移動して、link-threads 関数 (既定では &amp; に割り当て
+られている) を使います。するとその返信メッセイジが親メッセイジに
+つながるというわけです。
+<P>複数の子メッセイジを一度につなぐこともできます。すべてにタグを
+付けて、tag-prefix 関数 (;) か auto_tag オプションを使うのです。
+<P>
+<H3>スレッドをはずす</H3>
+
+<P>
+<P>メイリングリストで新しい話題を始めるとき、適当なメッセイジに
+「返信」を押して、題名だけまったく無関係なものに変えるという
+悪い癖を持つ人がいます。
+<P>これは break-thread 関数 (既定で # に割り当て) を使って
+修整することができます。この関数で、そのメッセイジ以降のスレッドを
+まったく別のスレッドにしてしまうのです。
+<P>
+<H2>4.10 配送状況通知 (Delivery Status Notification = DSN) サポート</H2>
+
+<P>
 <P>RFC1894 は、電子メイルメッセイジの状態に関する情報を伝達するための、
 一連の MIME コンテントタイプを定義しています。
 これは「受領証」と考えることができます。
@@ -2391,7 +2428,7 @@ procmail その他のメイルフィルタリングエイジェントで簡単に挿入できます。
 DSN に関するさらに詳細な点については
 sendmailの man ペイジを参照してください。
 <P>
-<H2>4.10 POP3 サポート (オプション)</H2>
+<H2>4.11 POP3 サポート (オプション)</H2>
 
 <P>
 <P>Mutt は、POP3 サポートありで (<EM>configure</EM> スクリプト実行時に
@@ -2434,7 +2471,7 @@ Mutt はそれ以降、そのメイルがまるでずっとロウカルにあったかのように
 開発者の意図としては <CODE>macro index G !fetchmail\n</CODE>
 のように設定すれば事足りるのだから無駄な機能だということであろう。)
 <P>
-<H2>4.11 IMAP サポート (オプション)</H2>
+<H2>4.12 IMAP サポート (オプション)</H2>
 
 <P>
 <P>IMAPサポートありで (<EM>configure</EM> スクリプト実行時に
@@ -2509,9 +2546,12 @@ Cyrus 系サーバの場合にはしばしばフォルダの中に
 もしそのフォルダ自体のメッセイジを見たい場合には (既定では
 <CODE>スペイス</CODE> に割り当てられている)
 <CODE>view-file</CODE> を使わなければなりません。</LI>
-<LI>メイルボックスを消すには <CODE>delete-mailbox</CODE> コマンド
-(既定では d) を使います。また、メイルボックスの購読
-<CODE>subscribe</CODE> と、購読解除 <CODE>unsubscribe</CODE> もできます
+<LI>メイルボックスを作ったり、消したり、移動したりするには、
+<CODE>create-mailbox</CODE>, <CODE>delete-mailbox</CODE>,
+<CODE>rename-mailbox</CODE> コマンド (既定では <CODE>C</CODE>, <CODE>d</CODE>,
+<CODE>r</CODE>) を使います。
+また、メイルボックスの購読 <CODE>subscribe</CODE> と、
+購読解除 <CODE>unsubscribe</CODE> もできます
 (通常は s と u に割り当てられています)。</LI>
 </UL>
 <P>
@@ -2552,7 +2592,7 @@ IMAP 認証方法リストです。設定されていると、この変数が mutt の既定値
 (あらゆる方法を上記の順に試す) を上書きします。</LI>
 </UL>
 <P>
-<H2><A NAME="account-hook"></A> 4.12 複数の IMAP/POP アカウントを使う (オプション)</H2>
+<H2><A NAME="account-hook"></A> 4.13 複数の IMAP/POP アカウントを使う (オプション)</H2>
 
 <P>
 <P>いくつもの IMAP や POP サーバにアカウントを持っていると、
@@ -2571,7 +2611,7 @@ account-hook imap://host2/ 'set tunnel="ssh host2 /usr/libexec/imapd"'
 </PRE>
 </CODE></BLOCKQUOTE>
 <P>
-<H2><A NAME="urlview"></A> 4.13 URL に対して WWW ブラウザを起動する (外部コマンド)</H2>
+<H2><A NAME="urlview"></A> 4.14 URL に対して WWW ブラウザを起動する (外部コマンド)</H2>
 
 <P>メイルに URL (<EM>unified resource locator</EM> = WWW 空間における住所。
 例えば <EM>http://www.mutt.org/</EM>) が含まれているとき、
@@ -3151,6 +3191,7 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 -a      メッセイジにファイルを添付
 -b      ブラインドカーボンコピー (BCC) アドレスを指定
 -c      カーボンコピー (Cc) アドレスを指定
+-D      すべての設定変数を表示
 -e      設定コマンドを指定して、初期化ファイルを読んだ後に実行
 -f      読み込むメイルボックスを指定
 -F      初期化コマンドを読むファイルとして別のものを指定
@@ -3549,6 +3590,18 @@ Default: yes
 <P>この変数が設定されているときにはメッセイジ中継の際に
 Mutt が Delivered-To ヘッダを付けてくれる。
 Postfix ユーザはこの変数を解除したいと思うだろう。
+<P>
+<P>
+<H3><A NAME="braille_friendly"></A> braille_friendly</H3>
+
+<P>Type: boolean<BR>
+Default: no
+<P>
+<P>arrow_cursor 変数が解除されていても、この変数が設定されて
+いれば、カーソルがメニューの行頭に置かれるようになる。こうすると
+目の不自由な人が点字ディスプレイを使ってメニューを理解するのが
+容易になる。このオプションが既定で無効になっているのは、カーソル
+を消すことのできない画面端末が少なくないからだ。
 <P>
 <P>
 <H3><A NAME="charset"></A> charset</H3>
@@ -4110,30 +4163,6 @@ Mutt が編集バッファに取り込むようになる。
 <A HREF="#weed">$weed</A> の設定が適用される。
 <P>
 <P>
-<H3><A NAME="header_cache"></A> header_cache</H3>
-
-<P>Type: path<BR>
-Default: &quot;&quot;
-<P>
-<P>header_cache 変数はヘッダキャッシュのデイタベイスを指し示す。
-もしディレクトリを指していれば、メイルフォルダ一つにつき
-デイタベイス一つが作成される。ディレクトリを指していない場合には
-すべてのフォルダに対する単一のキャッシュが用いられる。
-既定では設定されていないので、ヘッダキャッシュが使われない。
-<P>
-<P>
-<H3><A NAME="header_cache_pagesize"></A> header_cache_pagesize</H3>
-
-<P>Type: string<BR>
-Default: &quot;16384&quot;
-<P>
-<P>ヘッダキャッシュデイタベイスのペイジサイズを変更する。
-大きすぎたり小さすぎたりすると、容量やメモリや CPU
-を無駄に使ってしまうことがある。既定値がほぼ最善のはずだ。
-詳細については &quot;mutt header cache&quot; で google
-検索すること (最初に出てくるサイト)。
-<P>
-<P>
 <H3><A NAME="help"></A> help</H3>
 
 <P>Type: boolean<BR>
@@ -4261,13 +4290,24 @@ Default: &quot;&quot;
 IMAP サーバにログインしようとする。並びは Mutt が試行する順になっている。
 認証方式には、'login' か IMAP の能力文字列 'AUTH=xxx' の右辺を使う
 (例えば 'digest-md5', 'gssapi', 'cram-md5')。このパラメータは大文字と
-小文字を区別しない。なおパラメータが未設定 (既定) のときには、Mutt
-は利用できる方式をすべて、最も安全な方式から最も安全でない方式の順番に
-試行する。
+小文字を区別しない。なおパラメータが<EM>未設定</EM> (既定) のときには、
+Mutt は利用できる方式をすべて、最も安全な方式から最も安全でない方式の
+順番に試行する。
 <P>例: set imap_authenticators=&quot;gssapi:cram-md5:login&quot;
 <P><B>注記:</B> Mutt が他の認証方式へ移るのは方式が利用できない場合のみ
 である。方式が利用できるが認証に失敗したというときには IMAP サーバに
 接続しないことになる。
+<P>
+<P>
+<H3><A NAME="imap_check_subscribed"></A> imap_check_subscribed</H3>
+
+<P>Type: boolean<BR>
+Default: no
+<P>
+<P><EM>設定</EM>されていると Mutt は、サーバに接続する際に、そのサーバで
+購読しているフォルダを調査して、そのフォルダの新着メイルを確認する
+ようにする。
+<A HREF="#mailboxes">mailboxes</A> コマンドも参照。
 <P>
 <P>
 <H3><A NAME="imap_delim_chars"></A> imap_delim_chars</H3>
@@ -4279,15 +4319,6 @@ Default: &quot;/.&quot;
 文字の一覧が入る。特にこれが役立つのは <EM>folder</EM> 変数
 の内容を示すために &quot;=&quot; ショートカットを使うときである。
 (訳注：つまり &quot;/.=&quot; のように設定するということか?)
-<P>
-<P>
-<H3><A NAME="imap_force_ssl"></A> imap_force_ssl</H3>
-
-<P>Type: boolean<BR>
-Default: no
-<P>
-<P>この変数が設定されていると、Mutt は常に SSL を使って IMAP
-サーバに接続する。
 <P>
 <P>
 <H3><A NAME="imap_headers"></A> imap_headers</H3>
@@ -4336,13 +4367,23 @@ Default: no
 <EM>toggle-subscribed</EM> 関数を使って切り替えることもできる。
 <P>
 <P>
+<H3><A NAME="imap_login"></A> imap_login</H3>
+
+<P>Type: string<BR>
+Default: &quot;&quot;
+<P>
+<P>IMAP サーバへのログイン名。
+<P>この変数が設定されていなければ 
+<A HREF="#imap_user">imap_user</A> の値が使われる。
+<P>
+<P>
 <H3><A NAME="imap_pass"></A> imap_pass</H3>
 
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>IMAP アカウントのパスワードを指定する。設定されていないと、Mutt は
-fetch-mail 関数の実行時にパスワードを求めることになる。
+<P>IMAP アカウントのパスワードを指定する。<EM>未設定</EM>だと、
+Mutt は fetch-mail 関数の実行時にパスワードを求めることになる。
 <B>警告</B>: このオプションは十分に安全なマシン上でのみ
 使うべきである。なぜなら、muttrc ファイルを自分以外が読めないように
 したつもりでも、スーパユーザは読めるからだ。
@@ -4353,9 +4394,9 @@ fetch-mail 関数の実行時にパスワードを求めることになる。
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>設定されているときには、新着メイル確認のために Mutt が新しく
-IMAP 接続を開くことはない。Mutt は新着メイルを既存の IMAP
-接続でのみ確認することになる。これが有用となるのは、Mutt
+<P><EM>設定</EM>されているときには、新着メイル確認のために Mutt
+が新しく IMAP 接続を開くことはない。Mutt は新着メイルを既存の
+IMAP 接続でのみ確認することになる。これが有用となるのは、Mutt
 起動時にユーザ名とパスワードの入力を促されたくない場合や、
 接続を開くのに時間がかかる場合などである。
 <P>
@@ -4365,9 +4406,9 @@ IMAP 接続を開くことはない。Mutt は新着メイルを既存の IMAP
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>設定されていると Mutt は、サーバからメッセイジを取得しただけで
-メイルが既読として印付けられてしまうことのないようにする。
-これは一般的に良いことであるが、IMAP フォルダを閉じるのが
+<P><EM>設定</EM>されていると Mutt は、サーバからメッセイジを取得
+しただけでメイルが既読として印付けられてしまうことのないように
+する。これは一般的に良いことであるが、IMAP フォルダを閉じるのが
 幾らか遅くなることがある。このオプションはスピード狂の人たちを
 なだめるためにのみ存在しているのだ。
 <P>
@@ -4377,8 +4418,8 @@ Default: yes
 <P>Type: boolean<BR>
 Default: yes
 <P>
-<P>設定されているときには、IMAP サーバからの警告メッセイジを
-Mutt が表示するようになる。こうしたメッセイジはほとんど
+<P><EM>設定</EM>されているときには、IMAP サーバからの警告メッセイジ
+を Mutt が表示するようになる。こうしたメッセイジはほとんど
 無害なことに関するものであったり、サーバ側の設定ミスのために
 ユーザからはどうしようもないものであったりすることが多いので、
 抑止したいと思うこともあるだろう。
@@ -4389,7 +4430,7 @@ Mutt が表示するようになる。こうしたメッセイジはほとんど
 <P>Type: string<BR>
 Default: &quot;&quot;
 <P>
-<P>IMAP サーバへのログイン名。
+<P>IMAP サーバ上で扱うメイルの所有ユーザ名。
 <P>この変数の既定値はロウカルマシン上のユーザ名になる。
 <P>
 <P>
@@ -4580,6 +4621,42 @@ DOING!<BR>
 この設定は、完全に理解することなく変更してはならない!</B>
 <P>
 <P>
+<H3><A NAME="header_cache"></A> header_cache</H3>
+
+<P>Type: path<BR>
+Default: &quot;&quot;
+<P>
+<P>ヘッダキャッシュ・デイタベイスの場所を指示する。ディレクトリを
+指していれば、そこにフォルダごとのヘッダキャッシュが置かれる。
+ファイルを指していれば、そのファイルが全体のヘッダキャッシュ
+となる。既定では未設定であり、ヘッダキャッシュ機能は使われない。
+<P>
+<P>
+<H3><A NAME="maildir_header_cache_verify"></A> maildir_header_cache_verify</H3>
+
+<P>Type: boolean<BR>
+Default: yes
+<P>
+<P>Maildir 未対応のプログラムが Maildir 内のファイルを変更して
+いないかどうかを、ヘッダキャッシュ使用時に確認する。
+(訳注: 未対応とは、ファイルを変更してもファイル名を変更しない
+プログラムのことを指す。)
+するとフォルダを開くたびに、メッセイジ一つにつき一度の stat(2)
+を引き起こす。
+<P>
+<P>
+<H3><A NAME="header_cache_pagesize"></A> header_cache_pagesize</H3>
+
+<P>Type: string<BR>
+Default: &quot;16384&quot;
+<P>
+<P>ヘッダキャッシュ・デイタベイスのペイジサイズを変更する。
+大きすぎたり小さすぎたりすると、ディスク、メモリ、CPU を無駄遣い
+することがある。既定値がまあまあ最適な値のはずだ。詳細については
+google で mutt header cache として検索すること。(最初に出るものを
+見れば良い)
+<P>
+<P>
 <H3><A NAME="maildir_trash"></A> maildir_trash</H3>
 
 <P>Type: boolean<BR>
@@ -4661,6 +4738,17 @@ Default: 0
 <P>この変数は、メニューをスクロウルする際に残される行数を制御する。
 (
 <A HREF="#pager_context">$pager_context</A> のようなもの。)
+<P>
+<P>
+<H3><A NAME="menu_move_off"></A> menu_move_off</H3>
+
+<P>Type: boolean<BR>
+Default: yes
+<P>
+<P><EM>解除</EM>されていると、メニュー最後の項目が画面の最下部より
+上に表示されることがない。ただし画面の行数より項目の数が少ない
+場合を除く。また<EM>設定</EM>されていると、最後の項目も上まで
+動くことができる。
 <P>
 <P>
 <H3><A NAME="menu_scroll"></A> menu_scroll</H3>
@@ -5640,6 +5728,19 @@ Default: &quot;&quot;
 <P>クライアント証明書とその秘密鍵を含んだファイル。
 <P>
 <P>
+<H3><A NAME="ssl_force_tls"></A> ssl_force_tls</H3>
+
+<P>Type: boolean<BR>
+Default: no
+<P>
+<P>この変数が設定されていると、すべてのリモートサーバへの接続が
+暗号化されていなくてはならないことになる。さらに、サーバが能力を
+公言しない場合でも TLS 接続を試みる。というのは、そのようなサーバ
+への接続はいずれにせよ中止しなくてはならないからだ。これは
+<A HREF="#ssl_starttls">$ssl_starttls</A>
+オプションより優先される。
+<P>
+<P>
 <H3><A NAME="ssl_starttls"></A> ssl_starttls</H3>
 
 <P>Type: quadoption<BR>
@@ -5704,6 +5805,26 @@ Default: yes
 Default: yes
 <P>
 <P>SSL 認証処理に TLSv1 を使おうとするかどうか指定する。
+<P>
+<P>
+<H3><A NAME="ssl_min_dh_prime_bits"></A> ssl_min_dh_prime_bits</H3>
+
+<P>Type: number<BR>
+Default: 0
+<P>
+<P>Diffie-Hellman 鍵交換に使う素数の最小条件をビット数で指定する。
+0 を指定すると GNUTLS ライブラリの既定値を使用する。
+<P>
+<P>
+<H3><A NAME="ssl_ca_certificates_file"></A> ssl_ca_certificates_file</H3>
+
+<P>Type: path<BR>
+Default: &quot;&quot;
+<P>
+<P>信用する CA 証明書を入れたファイルの場所を指定する。
+この中にある CA 証明書で署名されたサーバ証明書は自動的に
+受け入れられることになる。
+<P>例: set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
 <P>
 <P>
 <H3><A NAME="pipe_split"></A> pipe_split</H3>

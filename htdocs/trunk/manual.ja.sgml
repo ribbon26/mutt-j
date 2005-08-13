@@ -4,7 +4,7 @@
 
 <title>The Mutt E-Mail Client
 <author>by Michael Elkins <htmlurl url="mailto:me@cs.hmc.edu" name="&lt;me@cs.hmc.edu&gt;">
-<date>version 1.5.8 +20050213
+<date>version 1.5.10 +20050813
 <abstract>
 ``All mail clients suck.  This one just sucks less.'' -me, circa 1995
 </abstract>
@@ -986,6 +986,7 @@ PGP メニューを使って、送信メッセイジの暗号に使う OpenPGP 鍵を選択します。
 <tscreen><verb>
 \t              タブ (Tab)
 <tab>           タブ (Tab)
+<backtab>       Backtab / Shift-Tab
 \r              キャリッジリターン
 \n              改行
 \e              エスケイプ (Esc)
@@ -2394,6 +2395,7 @@ NFS 越しに書き込んでいるときでさえも重ならないような方法で選ばれています。
 <item>!　……　<ref id="spoolfile" name="&dollar;spoolfile" > (受信用) メイルボックスを指す
 <item>&gt;　……　<ref id="mbox" name="&dollar;mbox" > メイルボックスを指す
 <item>&lt;　……　<ref id="record" name="&dollar;record" > メイルボックスを指す
+<item>^　……　現在のメイルボックスを指す
 <item>- と !!　……　前にいたメイルボックスを指す
 <item>&tilde;　……　ホウムディレクトリを指す
 <item>= と +　……　<ref id="folder" name="&dollar;folder" > メイルボックスを指す
@@ -2498,8 +2500,47 @@ name="スレッド" >で<ref id="sort" name="整列" >させる能力があります。
 なぜなら、興味がなければ簡単にスレッドごと削除することができ、
 価値ある話題を素早く見つけられるからです。
 
+<sect1>スレッドを編集する
+<p>
+Mutt には、壊れたスレッドをその場で作り直す機能があります。
+スレッドが壊れる理由は相手の設定ミスや癖などですが、そのように
+話を追いにくくする迷惑行為からメイルボックスを救い出すことが
+できるのです。
+
+IMAP でこの機能を使いたい場合には Mutt をコンパイルする際に
+<em/--enable-imap-edit-threads/ フラグを付けて configure する
+必要があります。
+
+<sect2>スレッドをつなぐ
+<p>
+
+返信時に正しく &dquot;In-Reply-To:&dquot; や
+&dquot;References:&dquot; ヘッダを付けるのを忘れてしまうメイラが
+あります。すると Mutt が正しくスレッドを構成するために必要な情報を
+得られず、話題が切れてしまう結果になります。
+<!-- 原文にはないが、ここで段落を切りたい --><p>
+これを修整するには、まず返事にタグを付け、次に親メッセイジまで
+カーソルを移動して、link-threads 関数 (既定では &amp; に割り当て
+られている) を使います。するとその返信メッセイジが親メッセイジに
+つながるというわけです。
+
+複数の子メッセイジを一度につなぐこともできます。すべてにタグを
+付けて、tag-prefix 関数 (;) か auto_tag オプションを使うのです。
+
+<sect2>スレッドをはずす
+<p>
+
+メイリングリストで新しい話題を始めるとき、適当なメッセイジに
+「返信」を押して、題名だけまったく無関係なものに変えるという
+悪い癖を持つ人がいます。
+<!-- やはりここで切りたい --><p>
+これは break-thread 関数 (既定で &num; に割り当て) を使って
+修整することができます。この関数で、そのメッセイジ以降のスレッドを
+まったく別のスレッドにしてしまうのです。
+
 <sect1>配送状況通知 (Delivery Status Notification = DSN) サポート
 <p>
+
 RFC1894 は、電子メイルメッセイジの状態に関する情報を伝達するための、
 一連の MIME コンテントタイプを定義しています。
 これは「受領証」と考えることができます。
@@ -2648,9 +2689,12 @@ Cyrus 系サーバの場合にはしばしばフォルダの中に
 もしそのフォルダ自体のメッセイジを見たい場合には (既定では
 <tt>スペイス</tt> に割り当てられている)
 <tt>view-file</tt> を使わなければなりません。
-<item>メイルボックスを消すには <tt>delete-mailbox</tt> コマンド
-(既定では d) を使います。また、メイルボックスの購読
-<tt>subscribe</tt> と、購読解除 <tt>unsubscribe</tt> もできます
+<item>メイルボックスを作ったり、消したり、移動したりするには、
+<tt>create-mailbox</tt>, <tt>delete-mailbox</tt>,
+<tt>rename-mailbox</tt> コマンド (既定では <tt>C</tt>, <tt>d</tt>,
+<tt>r</tt>) を使います。
+また、メイルボックスの購読 <tt>subscribe</tt> と、
+購読解除 <tt>unsubscribe</tt> もできます
 (通常は s と u に割り当てられています)。
 </itemize>
 
@@ -3267,6 +3311,7 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 -a      メッセイジにファイルを添付
 -b      ブラインドカーボンコピー (BCC) アドレスを指定
 -c      カーボンコピー (Cc) アドレスを指定
+-D      すべての設定変数を表示
 -e      設定コマンドを指定して、初期化ファイルを読んだ後に実行
 -f      読み込むメイルボックスを指定
 -F      初期化コマンドを読むファイルとして別のものを指定
@@ -3687,6 +3732,19 @@ Default: yes
 この変数が設定されているときにはメッセイジ中継の際に
 Mutt が Delivered-To ヘッダを付けてくれる。
 Postfix ユーザはこの変数を解除したいと思うだろう。
+
+
+<sect2>braille&lowbar;friendly<label id="braille_friendly">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+arrow&lowbar;cursor 変数が解除されていても、この変数が設定されて
+いれば、カーソルがメニューの行頭に置かれるようになる。こうすると
+目の不自由な人が点字ディスプレイを使ってメニューを理解するのが
+容易になる。このオプションが既定で無効になっているのは、カーソル
+を消すことのできない画面端末が少なくないからだ。
 
 
 <sect2>charset<label id="charset">
@@ -4293,32 +4351,6 @@ Mutt が編集バッファに取り込むようになる。
 <ref id="weed" name="&dollar;weed"> の設定が適用される。
 
 
-<sect2>header&lowbar;cache<label id="header_cache">
-<p>
-Type: path<newline>
-Default: &dquot;&dquot;
-
-<p>
-header&lowbar;cache 変数はヘッダキャッシュのデイタベイスを指し示す。
-もしディレクトリを指していれば、メイルフォルダ一つにつき
-デイタベイス一つが作成される。ディレクトリを指していない場合には
-すべてのフォルダに対する単一のキャッシュが用いられる。
-既定では設定されていないので、ヘッダキャッシュが使われない。
-
-
-<sect2>header&lowbar;cache&lowbar;pagesize<label id="header_cache_pagesize">
-<p>
-Type: string<newline>
-Default: &dquot;16384&dquot;
-
-<p>
-ヘッダキャッシュデイタベイスのペイジサイズを変更する。
-大きすぎたり小さすぎたりすると、容量やメモリや CPU
-を無駄に使ってしまうことがある。既定値がほぼ最善のはずだ。
-詳細については &dquot;mutt header cache&dquot; で google
-検索すること (最初に出てくるサイト)。
-
-
 <sect2>help<label id="help">
 <p>
 Type: boolean<newline>
@@ -4458,15 +4490,26 @@ Default: &dquot;&dquot;
 IMAP サーバにログインしようとする。並びは Mutt が試行する順になっている。
 認証方式には、'login' か IMAP の能力文字列 'AUTH=xxx' の右辺を使う
 (例えば 'digest-md5', 'gssapi', 'cram-md5')。このパラメータは大文字と
-小文字を区別しない。なおパラメータが未設定 (既定) のときには、Mutt
-は利用できる方式をすべて、最も安全な方式から最も安全でない方式の順番に
-試行する。
+小文字を区別しない。なおパラメータが<em>未設定</em> (既定) のときには、
+Mutt は利用できる方式をすべて、最も安全な方式から最も安全でない方式の
+順番に試行する。
 <p>
 例: set imap&lowbar;authenticators=&dquot;gssapi:cram-md5:login&dquot;
 <p>
 <bf>注記:</bf> Mutt が他の認証方式へ移るのは方式が利用できない場合のみ
 である。方式が利用できるが認証に失敗したというときには IMAP サーバに
 接続しないことになる。
+
+
+<sect2>imap&lowbar;check&lowbar;subscribed<label id="imap_check_subscribed">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+<em>設定</em>されていると Mutt は、サーバに接続する際に、そのサーバで
+購読しているフォルダを調査して、そのフォルダの新着メイルを確認する
+ようにする。<ref id="mailboxes" name="mailboxes"> コマンドも参照。
 
 
 <sect2>imap&lowbar;delim&lowbar;chars<label id="imap_delim_chars">
@@ -4479,16 +4522,6 @@ Default: &dquot;/.&dquot;
 文字の一覧が入る。特にこれが役立つのは <em>folder</em> 変数
 の内容を示すために &dquot;=&dquot; ショートカットを使うときである。
 (訳注：つまり &dquot;/.=&dquot; のように設定するということか?)
-
-
-<sect2>imap&lowbar;force&lowbar;ssl<label id="imap_force_ssl">
-<p>
-Type: boolean<newline>
-Default: no
-
-<p>
-この変数が設定されていると、Mutt は常に SSL を使って IMAP
-サーバに接続する。
 
 
 <sect2>imap&lowbar;headers<label id="imap_headers">
@@ -4542,14 +4575,26 @@ Default: no
 <em>toggle-subscribed</em> 関数を使って切り替えることもできる。
 
 
+<sect2>imap&lowbar;login<label id="imap_login">
+<p>
+Type: string<newline>
+Default: &dquot;&dquot;
+
+<p>
+IMAP サーバへのログイン名。
+<p>
+この変数が設定されていなければ <ref id="imap_user"
+name="imap&lowbar;user"> の値が使われる。
+
+
 <sect2>imap&lowbar;pass<label id="imap_pass">
 <p>
 Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-IMAP アカウントのパスワードを指定する。設定されていないと、Mutt は
-fetch-mail 関数の実行時にパスワードを求めることになる。
+IMAP アカウントのパスワードを指定する。<em>未設定</em>だと、
+Mutt は fetch-mail 関数の実行時にパスワードを求めることになる。
 <bf>警告</bf>: このオプションは十分に安全なマシン上でのみ
 使うべきである。なぜなら、muttrc ファイルを自分以外が読めないように
 したつもりでも、スーパユーザは読めるからだ。
@@ -4561,9 +4606,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-設定されているときには、新着メイル確認のために Mutt が新しく
-IMAP 接続を開くことはない。Mutt は新着メイルを既存の IMAP
-接続でのみ確認することになる。これが有用となるのは、Mutt
+<em>設定</em>されているときには、新着メイル確認のために Mutt
+が新しく IMAP 接続を開くことはない。Mutt は新着メイルを既存の
+IMAP 接続でのみ確認することになる。これが有用となるのは、Mutt
 起動時にユーザ名とパスワードの入力を促されたくない場合や、
 接続を開くのに時間がかかる場合などである。
 
@@ -4574,9 +4619,9 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-設定されていると Mutt は、サーバからメッセイジを取得しただけで
-メイルが既読として印付けられてしまうことのないようにする。
-これは一般的に良いことであるが、IMAP フォルダを閉じるのが
+<em>設定</em>されていると Mutt は、サーバからメッセイジを取得
+しただけでメイルが既読として印付けられてしまうことのないように
+する。これは一般的に良いことであるが、IMAP フォルダを閉じるのが
 幾らか遅くなることがある。このオプションはスピード狂の人たちを
 なだめるためにのみ存在しているのだ。
 
@@ -4587,8 +4632,8 @@ Type: boolean<newline>
 Default: yes
 
 <p>
-設定されているときには、IMAP サーバからの警告メッセイジを
-Mutt が表示するようになる。こうしたメッセイジはほとんど
+<em>設定</em>されているときには、IMAP サーバからの警告メッセイジ
+を Mutt が表示するようになる。こうしたメッセイジはほとんど
 無害なことに関するものであったり、サーバ側の設定ミスのために
 ユーザからはどうしようもないものであったりすることが多いので、
 抑止したいと思うこともあるだろう。
@@ -4600,7 +4645,7 @@ Type: string<newline>
 Default: &dquot;&dquot;
 
 <p>
-IMAP サーバへのログイン名。
+IMAP サーバ上で扱うメイルの所有ユーザ名。
 <p>
 この変数の既定値はロウカルマシン上のユーザ名になる。
 
@@ -4801,6 +4846,45 @@ DOING!<newline>
 この設定は、完全に理解することなく変更してはならない!</bf>
 
 
+<sect2>header&lowbar;cache<label id="header_cache">
+<p>
+Type: path<newline>
+Default: &dquot;&dquot;
+
+<p>
+ヘッダキャッシュ・デイタベイスの場所を指示する。ディレクトリを
+指していれば、そこにフォルダごとのヘッダキャッシュが置かれる。
+ファイルを指していれば、そのファイルが全体のヘッダキャッシュ
+となる。既定では未設定であり、ヘッダキャッシュ機能は使われない。
+
+
+<sect2>maildir&lowbar;header&lowbar;cache&lowbar;verify<label id="maildir_header_cache_verify">
+<p>
+Type: boolean<newline>
+Default: yes
+
+<p>
+Maildir 未対応のプログラムが Maildir 内のファイルを変更して
+いないかどうかを、ヘッダキャッシュ使用時に確認する。
+(訳注: 未対応とは、ファイルを変更してもファイル名を変更しない
+プログラムのことを指す。)
+するとフォルダを開くたびに、メッセイジ一つにつき一度の stat(2)
+を引き起こす。
+
+
+<sect2>header&lowbar;cache&lowbar;pagesize<label id="header_cache_pagesize">
+<p>
+Type: string<newline>
+Default: &dquot;16384&dquot;
+
+<p>
+ヘッダキャッシュ・デイタベイスのペイジサイズを変更する。
+大きすぎたり小さすぎたりすると、ディスク、メモリ、CPU を無駄遣い
+することがある。既定値がまあまあ最適な値のはずだ。詳細については
+google で mutt header cache として検索すること。(最初に出るものを
+見れば良い)
+
+
 <sect2>maildir&lowbar;trash<label id="maildir_trash">
 <p>
 Type: boolean<newline>
@@ -4887,6 +4971,18 @@ Default: 0
 <p>
 この変数は、メニューをスクロウルする際に残される行数を制御する。
 (<ref id="pager_context" name="&dollar;pager&lowbar;context"> のようなもの。)
+
+
+<sect2>menu&lowbar;move&lowbar;off<label id="menu_move_off">
+<p>
+Type: boolean<newline>
+Default: yes
+
+<p>
+<em>解除</em>されていると、メニュー最後の項目が画面の最下部より
+上に表示されることがない。ただし画面の行数より項目の数が少ない
+場合を除く。また<em>設定</em>されていると、最後の項目も上まで
+動くことができる。
 
 
 <sect2>menu&lowbar;scroll<label id="menu_scroll">
@@ -5966,6 +6062,20 @@ Default: &dquot;&dquot;
 クライアント証明書とその秘密鍵を含んだファイル。
 
 
+<sect2>ssl&lowbar;force&lowbar;tls<label id="ssl_force_tls">
+<p>
+Type: boolean<newline>
+Default: no
+
+<p>
+この変数が設定されていると、すべてのリモートサーバへの接続が
+暗号化されていなくてはならないことになる。さらに、サーバが能力を
+公言しない場合でも TLS 接続を試みる。というのは、そのようなサーバ
+への接続はいずれにせよ中止しなくてはならないからだ。これは
+<ref id="ssl_starttls" name="&dollar;ssl&lowbar;starttls">
+オプションより優先される。
+
+
 <sect2>ssl&lowbar;starttls<label id="ssl_starttls">
 <p>
 Type: quadoption<newline>
@@ -6039,6 +6149,29 @@ Default: yes
 
 <p>
 SSL 認証処理に TLSv1 を使おうとするかどうか指定する。
+
+
+<sect2>ssl&lowbar;min&lowbar;dh&lowbar;prime&lowbar;bits<label id="ssl_min_dh_prime_bits">
+<p>
+Type: number<newline>
+Default: 0
+
+<p>
+Diffie-Hellman 鍵交換に使う素数の最小条件をビット数で指定する。
+0 を指定すると GNUTLS ライブラリの既定値を使用する。
+
+
+<sect2>ssl&lowbar;ca&lowbar;certificates&lowbar;file<label id="ssl_ca_certificates_file">
+<p>
+Type: path<newline>
+Default: &dquot;&dquot;
+
+<p>
+信用する CA 証明書を入れたファイルの場所を指定する。
+この中にある CA 証明書で署名されたサーバ証明書は自動的に
+受け入れられることになる。
+<p>
+例: set ssl&lowbar;ca&lowbar;certificates&lowbar;file=/etc/ssl/certs/ca-certificates.crt
 
 
 <sect2>pipe&lowbar;split<label id="pipe_split">
