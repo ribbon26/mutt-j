@@ -25,6 +25,9 @@ Muttは次に示すUNIXオペレーティングシステムでコンパイルと動作が報告され
 	Ultrix
 	UnixWare
 
+- CVS からビルドしようとしていたり、Mutt の 一部、特にビルドシステムを
+  変更しようとしているなら、doc/devel-notes.txt をお読みください。
+
 - (gccのような) ANSI C コンパイラが必要です。
 
 - SysV 互換 curses ライブラリも必要です。なければ、GNU ncurses か
@@ -38,6 +41,10 @@ Muttは次に示すUNIXオペレーティングシステムでコンパイルと動作が報告され
 
         http://www.gnu.org/software/libiconv/
 
+- マニュアルのビルドには DocBook XSL スタイルシートと DocBook DTD 4.2
+  がローカルにインストールされている必要があります。
+  詳しくは doc/devel-notes.txt の "Generating Mutt Documentation From
+  Source" の項をご覧ください。
 
 
 インストール
@@ -294,4 +301,4 @@ Digital Unix (OSF/1)
 	システムの curses ライブラリはひどく壊れているようです。
 	GNU ncurses か S-Lang を代わりに使ってください。
 
-Original Id: INSTALL,v 3.1 2002/11/25 14:16:46 roessler Exp
+Original: Tue Aug 08 23:04:01 2006 +0000 (944585d432f6)

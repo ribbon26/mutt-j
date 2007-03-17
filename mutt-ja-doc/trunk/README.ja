@@ -1,6 +1,9 @@
 README for mutt-1.5
 ===================
 
+以前のリリースや CVS からアップデートする際には、互換性に関する
+注意事項の書かれている「UPDATING」をしっかり読むようにしてください。
+
 公開CVSリポジトリからMuttソースコードを取得する場合は、
 doc/devel-notes.txtを読んで、開発環境が一式揃っていることを確かめて
 ください。
@@ -45,4 +48,4 @@ Muttの一次配布元は次のURLです。
 // 訳注: 国内のミラーは次のURLです。
 //       http://www.emaillab.org/mutt/www.mutt.org/
 
-Original Id: README,v 3.1 2002/11/12 08:41:18 roessler Exp
+Original: Fri May 19 18:30:10 2006 +0000 (1ca9ee805cbf)
