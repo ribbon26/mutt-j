@@ -1,0 +1,300 @@
+Mutt 1.5.6i用日本語版パッチリリースノート
+
+mutt-j 開発チーム
+
+Copyright © 2000-2001 Oota Toshiya <ribbon@ns.ribbon.or.jp>
+
+Copyright © 2000-2001 Kawaguti Ginga <ginga@ginganet.org>
+
+Copyright © 2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+目次
+
+Mutt日本語版について
+オリジナル版との違い
+   
+    オリジナル版のバグの修正
+    日本語回りの実用上の問題の修正
+    便利な機能の追加
+   
+動作確認環境
+インストールと設定
+関連リンク
+その他
+   
+    著作権等
+    日本語パッチ
+    メッセージカタログの邦訳
+    マニュアルの邦訳
+    マニュアル以外の文書の邦訳・英訳
+    その他
+    一次配布先
+    ライセンス
+    メーリングリスト
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+Mutt日本語版について
+
+Mutt 日本語版とは，高速に動き，スレッド表示も可能，カスタマイズやPOP/IMAPも利用
+可能な Mutt を日本語が使えるようにしたバージョンです．本家の Mutt に対して日本
+語化パッチを適用することで Mutt 日本語版になります．Mutt 日本語版は，本家のMutt
+と上位互換の機能を提供します．
+
+Mutt の先の開発系列である mutt-1.3.x シリーズにおいて国際化され日本語パッチがな
+くとも日本語のメールが取り扱えるようになりました．しかし，日本語特有の事情（い
+わゆる生JIS問題など）があるため，実用上はそのままでは使いにくいものです．そこで
+，特に日本語回りでの実用上の各種問題を修正しほぼ通常利用に差し支えなくし，さら
+にいくつかの便利な機能を追加したものが Mutt 日本語版です．
+
+日本語パッチとしては 1.2.x までのバージョンとは基本的に独立に開発されているため
+，従来あった日本語版独自の機能などは一部省略されて，また新たに1.3.x 系以降の独
+自の新機能などが追加されています．(日本語化の実装は 1.2.x とは全く別物になって
+います)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+オリジナル版との違い
+
+オリジナル版のバグの修正
+
+カプセル化した転送メッセージを作成すると転送元の charset の取得がおかしく，
+us-ascii 扱いになります．この問題に対して，新たに file_charset という変数を追加
+することにより対処しています．ただし，設定ファイルにおいて，２つの変数
+
+ ● forward_decode
+   
+ ● mime_forward_decode
+   
+はデフォルト値のままでないとうまく動きません．
+
+作成したメッセージの最後の文字が改行コードで終わらず，JIS X 0208 の文字で終わっ
+ている場合に，送信用に ISO-2022-JP に変換したメッセージの ISO 2022 のシフト状態
+がASCII に戻りません．これを修正するために，作成したメッセージの最後の文字が改
+行コードで無い場合には改行コードを追加するようにしました．
+
+ステータス行のマルチバイト文字に対する処理が不完全であるため，これを修正しまし
+た．
+
+スレッド表示や添付ファイル画面で用いられるツリーの罫線(ACS)文字がマルチバイト文
+字であるときの処理がオリジナルでは全く行なわれていないため，その修正を行ないま
+した．
+
+UTF-8ロケールにおいてはJIS X 0208の記号・ギリシャ文字・キルリ文字の幅は1桁幅の
+文字として扱われます．しかし，mlterm上でUCSフォントでない従来のフォントを用いた
+場合にはこれらの文字は2桁幅のJIS X 0208のフォントが使われます．そのため，不整合
+が生じ，表示が乱れます．これを防ぐために次の設定変数
+
+ ● use_jisx0208
+   
+を用意し，この値をyesに設定することにより2桁幅の文字として扱うようになり，表示
+が乱れるのを防ぎます．ただし，この設定変数はMutt内蔵のワイド文字関数を使うとき
+のみ有効です．
+
+Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは，根本的に全く
+マルチバイト文字に対応していないため，文字化けする可能性があります．しかし，運
+用で対処できるため，今のところは対応しません．詳細は usage-japanese.ja.html を
+ご覧下さい．
+
+日本語回りの実用上の問題の修正
+
+オリジナル版でも MIME 関連の RFC に従っている日本語のメッセージは問題なく取り扱
+えます．しかし，機種依存文字があると文字化けしたり，非 MIME 生JIS message body,
+生JIS subject などは表示用の文字符号化方式に変換してくれないため読むことができ
+ません．そのため，日本語版では，それらのメッセージを読むことができる次のような
+設定オプションを追加しました．詳細は manual-ja-patch.ja.html および 
+usage-japanese.ja.html をご覧下さい．
+
+ 1. 非 MIME 生JIS message body，生JIS subject 対策，日本語ファイル名
+   
+     ● strict_mime
+     ● assumed_charset
+     ● create_rfc2047_parameters
+   
+ 2. 機種依存文字対策
+   
+     ● sanitize_ja_chars
+   
+ 3. 日本語テキストの添付ファイル及び転送に関する対策
+   
+     ● file_charset
+   
+便利な機能の追加
+
+いくつかの便利な機能を使うための設定オプションを追加しています．次のようなもの
+があります．詳細は manual-ja-patch.ja.html をご覧下さい．
+
+ 1. メイリングリストの Subject prefix の削除
+   
+     ● delete_prefix
+     ● delete_regexp
+   
+ 2. MH path の指定
+   
+     ● mh_path
+   
+ 3. Message-ID の生成に関する設定
+   
+     ● msgid
+     ● msgid_use_from
+   
+ 4. pager の表示に関する設定（遅い回線やマシンで使うと便利な機能）
+   
+     ● pager_hdrs_only
+     ● pager_spoil
+     ● pager_spoiler
+       
+ 5. スレッド表示のツリーに用いる文字の設定 (vt-100 非互換端末用で使うと便利)
+   
+     ● tree_chars
+     ● tree_llcorner
+     ● tree_ulcorner
+     ● tree_ltee
+     ● tree_hline
+     ● tree_vline
+     ● tree_ttee
+     ● tree_btee
+     ● tree_space
+     ● tree_rarrow
+     ● tree_star
+     ● tree_hidden
+     ● tree_equals
+     ● tree_missing
+   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+動作確認環境
+
+現在のバージョンでは以下の環境で動作確認をしています．
+
+表 1. 動作確認
+
+┌────────────┬─────┬────────┐
+│        システム        │オプション│      確認      │
+├────────────┼─────┼────────┤
+│Linux 2.4.18/glibc-2.2.5│IW        │TAKIZAWA Takashi│
+├────────────┼─────┼────────┤
+│FreeBSD 4.5-stable      │iw        │IWASHITA Yoji   │
+├────────────┼─────┼────────┤
+│NetBSD 1.6P             │iw        │Hiroyuki Maehara│
+└────────────┴─────┴────────┘
+
+オプション
+
+ ● I: C ライブラリに実装されている iconv
+ ● i: Bruno 氏の libiconv
+ ● W: C ライブラリに実装されているワイド文字関数
+ ● w: Mutt 付属のワイド文字関数 (--without-wc-funcs)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+インストールと設定
+
+インストールに関しては INSTALL.JA-PATCH をお読み下さい．なお，mutt-j ML のメン
+バーの手により FreeBSD，NetBSD，Linux(RedHat系，Debian)用のパッケージが作成され
+ています．詳しくは http://www.emaillab.org/mutt/download15.htmlのページをご覧く
+ださい．
+
+また，インストールや設定に関して役に立つ文書へのリンクが http://
+www.emaillab.org/mutt/のドキュメントのコーナーにありますので，一度ご覧ください
+．
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+関連リンク
+
+ ● Mutt Home Page
+   
+     ○ http://www.mutt.org/
+       
+     ○ Mutt 本家のページ
+       
+ ● Mutt Japanese Edition
+   
+     ○ http://www.emaillab.org/mutt/
+       
+     ○ Mutt 日本語版のページ
+       
+ ● Japanese Mutt Manual
+   
+     ○ http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/
+       
+     ○ 人見さんと西岡さんによる Mutt のマニュアルの邦訳
+       
+ ● Ribbon's Home Page
+   
+     ○ http://www.geocities.co.jp/SiliconValley-PaloAlto/2594/
+       
+     ○ mutt-j ML のメンテナーの太田さんのページ．mutt-j ML のアーカイブがある
+        ．
+       
+        mutt-1.2.x-jp の情報がある．
+       
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+その他
+
+著作権等
+
+Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバーの協力により開発が
+行なわれています．なお，現在の取りまとめの中心者にはメールアドレスの後ろに '*'
+を付けました．バグやおかしい点がありましたら，mutt-j ML あるいは取りまとめの中
+心者にメールをお送り下さい．
+
+日本語パッチ
+
+ ● Copyright (C) 2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp> *
+   
+ ● Copyright (C) 2000 Yukinori YOSHIDA <yyo@pjs.nevt.nec.co.jp>
+   
+ ● Copyright (C) 2000 Kawaguti Ginga <ginga@ginganet.org>
+   
+メッセージカタログの邦訳
+
+ ● Kikutani Makoto <kikutani@galaxy.net>
+   
+ ● Oota Toshiya <ribbon@ns.ribbon.or.jp>
+   
+ ● "TAKAHASHI，Tamotsu" <tamo@momonga-linux.org> *
+   
+マニュアルの邦訳
+
+ ● Takuhiro Nishioka <takuhiro@super.win.ne.jp>
+   
+ ● Kohtaro Hitomi <hitomi@hiei.kit.ac.jp> *
+   
+マニュアル以外の文書の邦訳・英訳
+
+ ● TAKIZAWA Takashi <taki@cyber.email.ne.jp> *
+   
+ ● "TAKAHASHI，Tamotsu" <tamo@momonga-linux.org> *
+   
+ ● Kawaguti Ginga <ginga@ginganet.org>
+   
+ ● SHIOZAKI Takehiko <takehiko.shiozaki@reuters.co.jp>
+   
+その他
+
+日本語パッチの付属文書の DocBook/XML 化は SHINGUU Atsuhiro
+<icebell@fujii-kiso.co.jp> によって行われました．
+
+一次配布先
+
+日本語化パッチの一次配布先は http://mutt-j.sourceforge.jp/ です．
+
+ライセンス
+
+日本語化パッチはオリジナルの Mutt と同様に無保証であり，Free Software
+Foundation の GNU General Public License Version 2 に従って配布および修正を行う
+ことができます．GNU General Public License Version 2 に関してはオリジナルのMutt
+のパッケージに含まれている GPL をお読み下さい．
+
+メーリングリスト
+
+本家のメーリングリストは http://www.mutt.org/ をご覧ください．
+
+mutt-j ML は mutt-j-ctl@ns.ribbon.or.jp に本文 "subscribe ローマ字の名前" のメ
+ールを送ると参加できます．
+
