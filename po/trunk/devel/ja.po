@@ -1,20 +1,23 @@
+# translation of ja.po to
 # Japanese messages for Mutt.
 # Copyright (C) 2002, 2003, 2004, 2005, 2007, 2008 mutt-j ML members.
 # FIRST AUTHOR Kikutani Makoto <kikutani@Galaxy.net>, 1999.
 # 2nd AUTHOR OOTA,Toshiya <ribbon@users.sourceforge.net>, 2002.
-#  (with TAKAHASHI Tamotsu <tamo@momonga-linux.org>, 2003, 2004, 2005, 2007, 2008)
+#  (with TAKAHASHI Tamotsu <tamo@momonga-linux.org>, 2003, 2004, 2005, 2007, 2008).
+# oota toshiya <ribbon@users.sourceforgew.net>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.5.18\n"
+"Project-Id-Version: ja\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-12-17 15:15+0900\n"
-"PO-Revision-Date: 2008-12-17 16:57+0900\n"
-"Last-Translator: YOUR NAME <E-MAIL@ADDRESS>\n"
-"Language-Team: mutt-j <mutt-j-users@lists.sourceforge.jp>\n"
+"PO-Revision-Date: 2008-12-17 20:32+0900\n"
+"Last-Translator: oota toshiya <ribbon@users.sourceforgew.net>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=euc-jp\n"
+"Content-Type: text/plain; charset=EUCJP\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 3.4.2\n"
 
 #: account.c:161
 #, c-format
@@ -37,7 +40,7 @@ msgstr "削除"
 
 #: addrbook.c:39 curs_main.c:407 postpone.c:43
 msgid "Undel"
-msgstr "削除を解除"
+msgstr "削除を取り消し"
 
 #: addrbook.c:40
 msgid "Select"
@@ -470,8 +473,7 @@ msgstr ""
 msgid ""
 "Sort (d)ate/(f)rm/(r)ecv/(s)ubj/t(o)/(t)hread/(u)nsort/si(z)e/s(c)ore/s(p)"
 "am?: "
-msgstr ""
-"整列 (d:時 f:送者 r:着順 s:題 o:宛先 t:スレ u:無 z:サイズ c:得点 p:スパム)"
+msgstr "整列 (d:時 f:送者 r:着順 s:題 o:宛先 t:スレ u:無 z:サイズ c:得点 p:スパム)"
 
 #: commands.c:514
 msgid "dfrsotuzcp"
@@ -585,7 +587,7 @@ msgstr " (インライン)"
 
 #: compose.c:147
 msgid " (PGP/MIME)"
-msgstr " (MIME)"
+msgstr " (PGP/MIME)"
 
 #: compose.c:155 compose.c:159
 msgid " sign as: "
@@ -1862,8 +1864,7 @@ msgstr "[-- %s の標準エラー出力を自動表示 --]\n"
 # 「指定」って必要？はみでそうなんですけど
 #: handler.c:1387
 msgid "[-- Error: message/external-body has no access-type parameter --]\n"
-msgstr ""
-"[-- エラー: message/external-body に access-type パラメータの指定がない --]\n"
+msgstr "[-- エラー: message/external-body に access-type パラメータの指定がない --]\n"
 
 #: handler.c:1408
 #, c-format
@@ -2489,6 +2490,10 @@ msgid ""
 "Mutt is free software, and you are welcome to redistribute it\n"
 "under certain conditions; type `mutt -vv' for details.\n"
 msgstr ""
+"Copyright (C) 1996-2008 Michael R. Elkins and others.\n"
+"Mutt comes with ABSOLUTELY NO WARRANTY; for details type `mutt -vv'.\n"
+"Mutt is free software, and you are welcome to redistribute it\n"
+"under certain conditions; type `mutt -vv' for details.\n"
 
 #: main.c:73
 msgid ""
@@ -2504,6 +2509,17 @@ msgid ""
 "Many others not mentioned here contributed code, fixes,\n"
 "and suggestions.\n"
 msgstr ""
+"Copyright (C) 1996-2007 Michael R. Elkins <me@mutt.org>\n"
+"Copyright (C) 1996-2002 Brandon Long <blong@fiction.net>\n"
+"Copyright (C) 1997-2007 Thomas Roessler <roessler@does-not-exist.org>\n"
+"Copyright (C) 1998-2005 Werner Koch <wk@isil.d.shuttle.de>\n"
+"Copyright (C) 1999-2008 Brendan Cully <brendan@kublai.com>\n"
+"Copyright (C) 1999-2002 Tommi Komulainen <Tommi.Komulainen@iki.fi>\n"
+"Copyright (C) 2000-2002 Edmund Grimley Evans <edmundo@rano.org>\n"
+"Copyright (C) 2006-2008 Rocco Rutte <pdmef@gmx.net>\n"
+"\n"
+"Many others not mentioned here contributed code, fixes,\n"
+"and suggestions.\n"
 
 #: main.c:86
 msgid ""
@@ -2517,6 +2533,15 @@ msgid ""
 "    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
 "    GNU General Public License for more details.\n"
 msgstr ""
+"    This program is free software; you can redistribute it and/or modify\n"
+"    it under the terms of the GNU General Public License as published by\n"
+"    the Free Software Foundation; either version 2 of the License, or\n"
+"    (at your option) any later version.\n"
+"\n"
+"    This program is distributed in the hope that it will be useful,\n"
+"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"    GNU General Public License for more details.\n"
 
 #: main.c:96
 msgid ""
@@ -2525,6 +2550,10 @@ msgid ""
 "    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-"
 "1301, USA.\n"
 msgstr ""
+"    You should have received a copy of the GNU General Public License\n"
+"    along with this program; if not, write to the Free Software\n"
+"    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-"
+"1301, USA.\n"
 
 #: main.c:113
 msgid ""
@@ -2703,8 +2732,7 @@ msgstr "メールボックスロック不能!"
 #.
 #: mbox.c:771
 msgid "sync: mbox modified, but no modified messages! (report this bug)"
-msgstr ""
-"sync: メールボックスが変更されたが、変更メッセージがない(このバグを報告せよ)!"
+msgstr "sync: メールボックスが変更されたが、変更メッセージがない(このバグを報告せよ)!"
 
 #: mbox.c:795 mh.c:1640 mx.c:766
 #, c-format
@@ -2935,22 +2963,20 @@ msgid "Server certificate has expired"
 msgstr "サーバの証明書が期限切れ"
 
 #: mutt_ssl.c:685
-#, fuzzy
 msgid "cannot get certificate subject"
 msgstr "証明書の subject を得られない"
 
 #: mutt_ssl.c:697
-#, fuzzy
 msgid "cannot get certificate common name"
 msgstr "証明書の common name を得られない"
 
 #: mutt_ssl.c:706
-#, fuzzy, c-format
+#, c-format
 msgid "certificate owner does not match hostname %s"
 msgstr "証明書所有者がホスト名に一致しない: %s"
 
 #: mutt_ssl.c:745
-#, fuzzy, c-format
+#, c-format
 msgid "Certificate host check failed: %s"
 msgstr "証明書ホスト検査に不合格: %s"
 
@@ -3807,8 +3833,7 @@ msgid "Mixmaster doesn't accept Cc or Bcc headers."
 msgstr "Mixmaster は Cc または Bcc ヘッダを受けつけない。"
 
 #: remailer.c:738
-msgid ""
-"Please set the hostname variable to a proper value when using mixmaster!"
+msgid "Please set the hostname variable to a proper value when using mixmaster!"
 msgstr "mixmaster を使う時には、hostname 変数に適切な値を設定せよ。"
 
 #: remailer.c:772
@@ -4134,10 +4159,8 @@ msgstr ""
 "[-- S/MIME 署名データ終了 --]\n"
 
 #: smime.c:1950
-msgid ""
-"S/MIME (e)ncrypt, (s)ign, encrypt (w)ith, sign (a)s, (b)oth, or (c)lear? "
-msgstr ""
-"S/MIME e:暗号化, s:署名, w:暗号選択, a:署名鍵選択, b:暗号+署名, c:なし "
+msgid "S/MIME (e)ncrypt, (s)ign, encrypt (w)ith, sign (a)s, (b)oth, or (c)lear? "
+msgstr "S/MIME e:暗号化, s:署名, w:暗号選択, a:署名鍵選択, b:暗号+署名, c:なし "
 
 #: smime.c:1951
 msgid "eswabfc"
@@ -5030,82 +5053,3 @@ msgstr "サポートされている公開鍵を抽出"
 msgid "show S/MIME options"
 msgstr "S/MIME オプションを表示"
 
-#~ msgid "            created: "
-#~ msgstr "　署名日付: "
-
-#~ msgid "*BAD* signature claimed to be from: "
-#~ msgstr "**不正な署名**　主張: "
-
-#~ msgid "Error checking signature"
-#~ msgstr "署名検証エラー"
-
-#~ msgid "SASL failed to get local IP address"
-#~ msgstr "SASL がローカル IP アドレスの取得に失敗した"
-
-#~ msgid "SASL failed to parse local IP address"
-#~ msgstr "SASL がローカル IP アドレスの解析に失敗した"
-
-#~ msgid "SASL failed to get remote IP address"
-#~ msgstr "SASL がリモート IP アドレスの取得に失敗した"
-
-#~ msgid "SASL failed to parse remote IP address"
-#~ msgstr "SASL がリモート IP アドレスの解析に失敗した"
-
-#~ msgid "Getting namespaces..."
-#~ msgstr "ネームスペース取得中..."
-
-
-#~ msgid "Can't change 'important' flag on POP server."
-#~ msgstr "POP サーバ上では「重要」フラグを変更できない。"
-
-#~ msgid "Can't edit message on POP server."
-#~ msgstr "POP サーバ上ではメッセージを編集できない。"
-
-#~ msgid "Reading %s... %d (%d%%)"
-#~ msgstr "読み出し中 %s... %d (%d%%)"
-
-#~ msgid "Writing messages... %d (%d%%)"
-#~ msgstr "メッセージ書き込み中... %d (%d%%)"
-
-#~ msgid "Reading %s... %d"
-#~ msgstr "%s から読み出し中... %d"
-
-#~ msgid "Invoking pgp..."
-#~ msgstr "PGP 起動中..."
-
-#~ msgid "Fatal error.  Message count is out of sync!"
-#~ msgstr "致命的エラー。メッセージ数が同期していない!"
-
-#~ msgid "Checking mailbox subscriptions"
-#~ msgstr "メールボックスの購読状況を確認中"
-
-#~ msgid "CLOSE failed"
-#~ msgstr "クローズに失敗した"
-
-#~ msgid ""
-#~ "1: DES, 2: Triple-DES, 3: RC2-40, 4: RC2-64, 5: RC2-128, or (f)orget it? "
-#~ msgstr "1:DES, 2:Triple-DES, 3:RC2-40, 4:RC2-64, 5:RC2-128, f:変更なし "
-
-#~ msgid "12345f"
-#~ msgstr "12345f"
-
-#~ msgid "First entry is shown."
-#~ msgstr "最初のエントリが表示されている。"
-
-#~ msgid "Last entry is shown."
-#~ msgstr "最後のエントリが表示されている。"
-
-#~ msgid "Unexpected response received from server: %s"
-#~ msgstr "サーバから予期せぬ反応を受け取った: %s"
-
-#~ msgid "Unable to append to IMAP mailboxes at this server"
-#~ msgstr "このサーバの IMAP メールボックスには追加できない"
-
-#~ msgid "unspecified protocol error"
-#~ msgstr "特定できないプロトコルエラー"
-
-#~ msgid "Closing connection to IMAP server..."
-#~ msgstr "IMAP サーバへの接続を終了中..."
-
-#~ msgid "Create a traditional (inline) PGP message?"
-#~ msgstr "伝統的な (インラインの) PGP メッセージを作成?"
