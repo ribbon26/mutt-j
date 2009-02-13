@@ -14,6 +14,7 @@ Muttは次に示すUNIXオペレーティングシステムでコンパイルと動作が報告され
 	HP-UX
 	IRIX
 	Linux
+	Mac OS X
 	Atari MiNT
 	MkLinux
 	NetBSD
@@ -25,7 +26,7 @@ Muttは次に示すUNIXオペレーティングシステムでコンパイルと動作が報告され
 	Ultrix
 	UnixWare
 
-- CVS からビルドしようとしていたり、Mutt の 一部、特にビルドシステムを
+- CVSからビルドしようとしていたり、Mutt の 一部、特にビルドシステムを
   変更しようとしているなら、doc/devel-notes.txt をお読みください。
 
 - (gccのような) ANSI C コンパイラが必要です。
@@ -196,8 +197,6 @@ Mutt は GNU autoconf パッケージを利用しているため簡単にインストールで
 	アドレスを書きます。
 	注記: これは著しく多大なメモリを必要とします。
 
-	警告: このオプションを使ってはいけません。これは壊れています。
-
 
 "configure"が終了した後は、単に "make install" と打ってください。
 
@@ -300,5 +299,3 @@ Digital Unix (OSF/1)
 
 	システムの curses ライブラリはひどく壊れているようです。
 	GNU ncurses か S-Lang を代わりに使ってください。
-
-Original: Tue Aug 08 23:04:01 2006 +0000 (944585d432f6)
