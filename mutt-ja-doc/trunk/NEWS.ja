@@ -159,6 +159,7 @@
 訳注:この項目は翻訳ではありません。
      日本語版で拡張された設定変数に関しては日本語パッチの付属文書
      manual-ja-patch.ja.htmlを読んでください。
+     1.5対応に付いてはまだ記述されていません。
 
 - 1.2-jpでは使用する文字符号化方式は決め打ちでしたが、1.4-jaではオリジ
   ナルの国際化機能に従って動作します。しかし、このままでは実用上、使い
@@ -189,4 +190,3 @@
 - $pager_spoiler, $pager_spoiler_charは機能を少し変えて $pager_spoil, 
   $pager_spoilerになりました。
 
-The original file is NEWS.
