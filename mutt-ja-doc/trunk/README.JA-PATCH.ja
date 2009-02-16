@@ -1,6 +1,6 @@
 		Mutt 1.5.19用日本語版パッチリリースノート
 
-							2009/02/13
+							2009/02/16
 							mutt-j 開発チーム
 
 Copyright (C)2000-2009 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -108,11 +108,11 @@ Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは、根本的に全く
 設定オプションを追加しました。詳細は manual-ja-patch.ja.html および 
 usage-japanese.ja.html をご覧下さい。
 
- 1. 非 MIME 生JIS message body、生JIS subject 対策、日本語ファイル名
+ 1. 非 MIME 日本語ファイル名
    
-     ● strict_mime
-     ● assumed_charset
      ● create_rfc2047_parameters
+
+この機能は、create_rfc2047パッチで実現しています。
    
  2. 機種依存文字対策
    
