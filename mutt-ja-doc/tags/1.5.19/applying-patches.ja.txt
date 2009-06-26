@@ -1,0 +1,26 @@
+Subject: パッチのあて方
+From: Thomas Roessler <roessler@guug.de>
+Date: Thu,  8 Oct 1998 14:32:53 +0200
+
+mutt にパッチをあてると、aclocal, autoconf, automake といった
+プログラムが変なエラーを吐くことがあります。これは、マシンの
+ビルド環境が中途半端な場合に起こります (devel-notes.txt には
+mutt 開発に何が必要か書いてあるので、そちらをご覧ください)。
+つまり、mutt は configure.in などの「メタソースファイル」への
+変更を検出して、それに基づいて aclocal.m4 や Makefile.in といった
+他のファイルをリビルドしようとするのですが、ビルド環境が
+完全でないと失敗してしまうというわけです。
+
+このタイプの問題に出くわしたなら、以下のファイルを touch して、
+その後でパッチをあてるとうまくいくかもしれません。
+
+	Makefile.in
+	config.h.in
+	configure
+	aclocal.m4
+
+そのようにしてから、ただ単純に "make" と打ちます。すると各種の
+依存性に応じて、必要なリビルドがおこなわれます (多くの場合は
+./configure の再実行も含まれます)。
+
+Original Id: applying-patches.txt,v 3.0 2002/01/24 13:35:07 roessler Exp

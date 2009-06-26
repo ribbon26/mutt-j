@@ -1,0 +1,265 @@
+Original id: PGP-Notes.txt,v 3.0 2002/01/24 13:35:07 roessler
+
+		      MUTT の中から PGP を使う
+
+
+警告: 設定方法が 0.96.3 とはまったく異なっています!
+注意: ver1.5では未検証です。
+
+
+			    ユーザガイド
+
+
+mutt で PGP や PGP5, GnuPG を使うにはどうするか?
+------------------------------------------------
+
+ソースツリーの contrib というサブディレクトリに行ってください。
+pgp2.rc, pgp5.rc, gpg.rc という三つのファイルがあります。これには、
+mutt で pgp2, pgp5, gpg を使うための設定が書いてあります。
+
+その中の一つをそのまま ~/.muttrc に入れれば、それだけで
+うまく動くはずです。
+
+とはいえ、PGP バイナリに与える言語パラメータや PGP のパスがすべて
+自分に合っているかどうかは確認しておきたいものですね。
+
+
+
+よくある質問と小ワザ
+--------------------
+
+Q: 「みんな mutt の認識しない PGP メッセイジを送ってきます。
+    どうすればいいですか?」
+
+新しい方法は、ヘッダをいじらずに mutt の check-traditional-pgp
+関数を使うというものです。これは、その場で PGP メッセイジを
+検出して content-type を調整してくれる関数です。
+
+昔の方法は、ヘッダを直すようにメイルフィルタを設定する
+というものです。以下に説明します。
+
+以下の内容を ~/.procmailrc に書き込みます。
+(procmail 使ってますよね?)
+
+		   ------------------------------
+
+##
+## PGP
+##
+  
+:0
+* !^Content-Type: message/
+* !^Content-Type: multipart/
+* !^Content-Type: application/pgp
+{
+        :0 fBw
+        * ^-----BEGIN PGP MESSAGE-----
+        * ^-----END PGP MESSAGE-----
+        | formail \
+            -i "Content-Type: application/pgp; format=text; x-action=encrypt"
+
+        :0 fBw
+        * ^-----BEGIN PGP SIGNED MESSAGE-----
+        * ^-----BEGIN PGP SIGNATURE-----
+        * ^-----END PGP SIGNATURE-----
+        | formail \
+            -i "Content-Type: application/pgp; format=text; x-action=sign"
+}
+
+
+		   ------------------------------
+
+maildrop ユーザには
+"Mark Weinem" <mark.weinem@unidui.uni-duisburg.de> が
+次の処方を提案しています。
+
+
+		   ------------------------------
+
+BPGPM="-----BEGIN PGP MESSAGE-----"
+EPGPM="-----END PGP MESSAGE-----"
+BPGPS="-----BEGIN PGP SIGNATURE-----"
+EPGPS="-----END PGP SIGNATURE-----"
+
+if (!/^Content-Type: message/ && !/^Content-Type: multipart/ \
+	&& !/^Content-Type: application\/pgp/)
+{	
+if (/^$BPGPM/:b && /^$EPGPM/:b)
+	xfilter "reformail -A 'Content-Type: application/pgp; format=text; \
+		x-action=encrypt'"
+
+if (/^$BPGPS/:b && /^$EPGPS/:b)
+	xfilter "reformail -A 'Content-Type: application/pgp; format=text; \
+		x-action=sign'"
+}
+
+		   ------------------------------
+
+
+
+Q: 「あの PGP/MIME っていうやつがどうも気に入らないので、
+    昔ながらの方法でメイルを PGP 署名したいと思っています。
+    その機能を mutt に入れてくれませんか?」
+
+以前は、この質問に対する答えはこういうものでした。
+
+  だめです。実のところ application/pgp は、MIME の非テクストな
+  パートなどのある世界には適していないのです。それでもなお、本気で
+  旧式の添付ファイルを生成したいというのであれば、次のマクロを
+  ~/.muttrc に入れてください。(読みやすくするために行が分割されて
+  いますが、実際には一行です)
+
+  macro compose S "Fpgp +verbose=0 -fast
+  	+clearsig=on\ny^T^Uapplication/pgp; format=text;
+	x-action=sign\n"
+
+
+今なら新しい答えがあります。設定変数 $pgp_create_traditional
+(yes, no [=デフォルト], ask-yes, ask-no の値を取る) を
+"no" 以外に設定するのです。そうすれば mutt は、
+使える場面ではいつでも application/pgp を選択肢に含めます。
+具体的に言うと、マルチパート、また非 ASCII や非テクストの
+ボディにおいて application/pgp を使うのはまったくナンセンスです。
+そうした状況では無条件で PGP/MIME が使われます。
+
+しかし、そうは言っても、application/pgp は使用しないよう
+強くお勧めします。
+
+
+
+Q: 「PGP の、^G とかいろいろ出てきてうるさいのがイヤなんですけど」
+
+この問題に対する非常に美しい解を Roland Rosenfeld
+<roland@spinnaker.rhein.de> が発見しています。PGP には、とても良い
+外国語サポートがあるので、ただ表示されたくないメッセイジに対する訳が
+空文になっている "mutt" という言語を導入するだけでいいのです。
+この言語を使うには、language.txt か language50.txt のいずれか
+(使っている PGP のヴァージョンによる) を $PGPPATH にコピーします。
+PGP コマンドの設定を確認して、PGP のバイナリにすべて
+"+language=mutt" を渡すようにしてください (ただし pgpring には
+渡さないように!)。
+
+PGP 2.6 用には、ドイツ語版の "muttde" もあります。
+
+
+Q: 「署名が不正になってしまいます。Courier の MTA を使ってます」
+
+Courier MTA の作者は、multipart/signed を規定している標準仕様が
+おかしいと思い込んでいます。そのため、multipart/signed な
+パートを保護するような実装はしないことに決めたようです。
+
+我々としては、courier を捨てて sendmail か postfix, または exim に
+乗り換えるよう提案します。
+
+
+
+				深層
+
+
+外部プログラム
+--------------
+
+mutt の PGP サポートには二つの外部プログラム、pgpewrap と pgpring
+が必要となっています。
+
+
+1. pgpring
+
+pgpring は鍵束の内容を表示します。PGP のバイナリ形式の鍵束から
+情報を取り出して、mutt の鍵選択ルーティンが理解できるような
+(ほぼ) 人間でも読める形式で出力してくれるのです。これは
+GNU Privacy Guard (GPG) で使われている出力形式をまねたものです。
+
+PGP 2 と PGP 5 にはこのプログラムが必要です。
+
+コマンドラインオプション
+
+	-k <鍵束>	-k のあとに指定された鍵束の内容を出力します。
+
+	-2, -5		デフォルトの鍵束を使います。
+			順に PGP の 2 と 5 に対応します。
+
+	-s		秘密鍵の鍵束を出力します。
+
+
+
+2. pgpewrap
+
+ちょっとしたコマンドライン改変をおこなう、小さな C プログラムです。
+一つめの引数は実行するコマンドです。pgpewrap は "--" (ダッシュ二つ)
+を引数として受け取ると、その次の引数を以降の引数すべての前に付けて
+いきます。
+
+(例)
+
+	pgpewrap pgpe file -- -r a b c
+
+は実際にはこう実行されます。
+
+	pgpe file -r a -r b -r c
+
+このスクリプトが必要なのは PGP 5 と GPG です。これは、それらの
+コマンドラインの書式が mutt の仕組みでは正しく扱えないためです。
+
+
+
+設定方式
+--------
+
+mutt 内の他の設定と同様、PGP コマンドの設定方式も printf 風の
+書式を使っています。すべての PGP コマンドに対して、以下の
+%-シークエンスが定義されています。
+
+  %p	パスフレイズが不要なら空文字列、必要なら "PGPPASSFD=0"
+  	という文字列になります。
+
+	おもに、条件分岐する %-シークエンス内で使われます。
+
+  %f	ほとんどの PGP コマンドは、単一のファイルか
+  	メッセイジを入れた一時ファイルに対するものです。
+  	%f は、このファイル名に展開されます。
+
+  %s	署名を検証する時には、分離署名を入れた一時ファイルもできます。
+  	%s は、このファイル名に展開されます。
+
+  %a	署名に関連した場面で、これは設定変数 $pgp_sign_as の値に
+  	展開されます。たぶん条件文の %-シークエンスの中で使う必要が
+	あります。
+
+  %r	多くの場面で mutt は鍵 ID を pgp に渡します。
+  	%r は鍵 ID のリストに展開されます。
+
+以下のコマンド変数が定義されています。
+
+  $pgp_decode_command	application/pgp メッセイジを復号化します。
+  			パスフレイズが必要な場合も不要な場合もあります。
+
+  $pgp_verify_command	PGP/MIME 署名を検証します。
+
+  $pgp_decrypt_command	PGP/MIME で暗号化されたボディを復号化します。
+  			このコマンドは必ずパスフレイズを使います。
+
+  $pgp_sign_command	ボディを PGP/MIME で署名します。
+  			必ずパスフレイズを使います。
+
+  $pgp_encrypt_sign_command 暗号化と署名を MIME ボディに施します。
+  			このコマンドは必ずパスフレイズを使います。
+
+  $pgp_encrypt_only_command MIME ボディを暗号化しますが署名はしません。
+
+  $pgp_import_command	ファイルから PGP 鍵をインポートします。
+
+  $pgp_export_command	ファイルへ PGP 鍵をエクスポートします。出力は
+  			ASCII 包装されていなくてはなりません。
+
+  $pgp_verify_key_command 公開鍵を検査します。このコマンドは
+  			鍵選択メニューで使われます。
+
+  $pgp_list_secring_command 秘密鍵のうち、%r のヒントに合致するものを
+  			一覧表示します。
+
+  $pgp_list_pubring_command 公開鍵のうち、%r のヒントに合致するものを
+  			一覧表示します。
+
+パスフレイズは標準出力で渡されます。コマンドの出力はすべて
+標準出力と標準エラー出力に送出しなくてはなりません。
