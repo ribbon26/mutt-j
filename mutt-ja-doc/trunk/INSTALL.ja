@@ -1,8 +1,8 @@
-���ݡ��Ȥ��Ƥ���ץ�åȥۡ���
+サポートしているプラットホーム
 ==============================
 
-Mutt�ϼ��˼���UNIX���ڥ졼�ƥ��󥰥����ƥ�ǥ���ѥ����ư���𤵤�
-�Ƥ��ޤ���
+Muttは次に示すUNIXオペレーティングシステムでコンパイルと動作が報告され
+ています。
 
 	AIX
 	BSDI
@@ -26,276 +26,276 @@ Mutt�ϼ��˼���UNIX���ڥ졼�ƥ��󥰥����ƥ�ǥ���ѥ����ư���𤵤�
 	Ultrix
 	UnixWare
 
-- CVS����ӥ�ɤ��褦�Ȥ��Ƥ����ꡢMutt �� �������ä˥ӥ�ɥ����ƥ��
-  �ѹ����褦�Ȥ��Ƥ���ʤ顢doc/devel-notes.txt ���ɤߤ���������
+- CVSからビルドしようとしていたり、Mutt の 一部、特にビルドシステムを
+  変更しようとしているなら、doc/devel-notes.txt をお読みください。
 
-- (gcc�Τ褦��) ANSI C ����ѥ��餬ɬ�פǤ���
+- (gccのような) ANSI C コンパイラが必要です。
 
-- SysV �ߴ� curses �饤�֥���ɬ�פǤ����ʤ���С�GNU ncurses ��
-  S-Lang �򥤥󥹥ȡ��뤹��ɬ�פ�����ޤ���
+- SysV 互換 curses ライブラリも必要です。なければ、GNU ncurses か
+  S-Lang をインストールする必要があります。
 
 	GNU ncurses, ftp://prep.ai.mit.edu/pub/gnu/
 	S-Lang, ftp://space.mit.edu/pub/davis/slang/
 
-- Mutt ��ʸ�������ɤ��Ѵ��� iconv API �μ�����ɬ�פǤ���
-  �ե꡼�ʼ����ΰ�Ĥ˼��� URL �Ǽ�����Τ�����ޤ���
+- Mutt は文字コードの変換に iconv API の実装が必要です。
+  フリーな実装の一つに次の URL で示すものがあります。
 
         http://www.gnu.org/software/libiconv/
 
-- �ޥ˥奢��Υӥ�ɤˤ� DocBook XSL �������륷���Ȥ� DocBook DTD 4.2
-  ����������˥��󥹥ȡ��뤵��Ƥ���ɬ�פ�����ޤ���
-  �ܤ����� doc/devel-notes.txt �� "Generating Mutt Documentation From
-  Source" �ι��������������
+- マニュアルのビルドには DocBook XSL スタイルシートと DocBook DTD 4.2
+  がローカルにインストールされている必要があります。
+  詳しくは doc/devel-notes.txt の "Generating Mutt Documentation From
+  Source" の項をご覧ください。
 
 
-���󥹥ȡ���
+インストール
 ============
 
-Mutt �� GNU autoconf �ѥå����������Ѥ��Ƥ��뤿���ñ�˥��󥹥ȡ����
-���ޤ���Mutt ������ʪ��ñ�� untar ���ơ�"configure"������ץȤ�¹Ԥ�
-������Ǥ���CVS��ܥ��ȥ꤫������ʪ������������ˤϡ�configure ����
-���Τ�Ʊ�����ޥ�ɥ饤��ѥ�᡼�����դ���"prepare"������ץȤ�¹Ԥ�
-�ޤ������� prepare ������ץȤ� Mutt �ι��۴Ķ���������tar ball�ˤ�¸
-�ߤ��뤱���CVS��ݥ��ȥ�ˤ�¸�ߤ��ʤ��ե�������ɲä��ޤ���
+Mutt は GNU autoconf パッケージを利用しているため簡単にインストールで
+きます。Mutt の配布物を単に untar して、"configure"スクリプトを実行す
+るだけです。CVSリボジトリから配布物を取得した場合には、configure に渡
+すのと同じコマンドラインパラメータを付けて"prepare"スクリプトを実行し
+ます。この prepare スクリプトは Mutt の構築環境を整え、tar ballには存
+在するけれどCVSリポジトリには存在しないファイルを追加します。
 
-����ξ��ˤϡ�configure �ϥ���ѥ��뤹�뤿����Τ�ɬ�פ���������
-�Ƽ�ưŪ�˼��̤��ޤ�����������configure �κ�Ȥ���������ꡢ�ǥե���
-�Ȥ�ư����Ѥ����ꤹ�뤿��ˡ������Ĥ��Υ��ץ���󤬤���ޤ���
+大抵の場合には、configure はコンパイルするために知る必要があるもの全
+て自動的に識別します。しかし、configure の作業を補助したり、デフォル
+トの動作を変えたりするために、いくつかのオプションがあります。
 
 --prefix=DIR
-	/usr/local ������� DIR �� Mutt �򥤥󥹥ȡ��뤷�ޤ���
+	/usr/local の代わりに DIR に Mutt をインストールします。
 
 --with-curses=DIR
-	DIR/lib �ˤ��� curses �饤�֥���Ȥ��ޤ���
-	ncurses ������С�configure ����ưŪ�� /usr/include/ncurses
-	�򸫤ơ����� include �ե������õ���Ƥ���ޤ���
+	DIR/lib にある curses ライブラリを使います。
+	ncurses があれば、configure が自動的に /usr/include/ncurses
+	を見て、その include ファイルを探してくれます。
 
 --with-slang[=DIR]
-	ncurses �饤�֥�������� S-Lang �饤�֥���Ȥ��ޤ���
-	���Υ饤�֥��� ncurses �ۤɸ��ʤ�Ŭ�ڤ� termcap ����ȥ��
-	ɬ�פȤ��ʤ����ᡢ��������������ޤ���ǽ����ͤ⤤��褦�Ǥ���
-	Mutt �ǤϺ���Ǥ�С������ 0.99-38 �ʹߤ�Ȥ����Ȥ��侩����ޤ���
+	ncurses ライブラリの代わりに S-Lang ライブラリを使います。
+	このライブラリは ncurses ほど厳格に適切な termcap エントリを
+	必要としないため、こちらの方がうまく機能する人もいるようです。
+	Mutt では最低でもバージョン 0.99-38 以降を使うことが推奨されます。
 
 --with-mailpath=DIR
-	���ʤ��Υ����ƥ�ǥ��ס���᡼��ܥå������֤���Ƥ������
-	���ꤷ�ޤ���
+	あなたのシステムでスプールメールボックスの置かれている場所を
+	指定します。
 
 --with-homespool[=FILE]
-	�桼���Υۡ���ǥ��쥯�ȥ�ˤ���ե�����򥹥ס���᡼��ܥå�
-	���Ȥ��ư����ޤ���FILE �ϥե�ѥ��ǤϤʤ��桼���Υۡ���ǥ���
-	���ȥ���Ф������Хѥ��Ǥ��뤳�Ȥ����դ��Ƥ���������FILE ������
-	����ʤ����ϥǥե���Ȥ�"mailbox"���Ȥ��ޤ���
+	ユーザのホームディレクトリにあるファイルをスプールメールボック
+	スとして扱います。FILE はフルパスではなくユーザのホームディレ
+	クトリに対する相対パスであることに注意してください。FILE が指定
+	されない場合はデフォルトで"mailbox"が使われます。
 
 --enable-pop
-	POP3���ݡ��Ȥ�ͭ���ˤ��ޤ���
+	POP3サポートを有効にします。
 
 --enable-imap
-	IMAP���ݡ��Ȥ�ͭ���ˤ��ޤ���
+	IMAPサポートを有効にします。
 
 --with-gss[=PFX]
-	IMAP�����Фؤ� GSSAPI ǧ�ڤ�ͭ���ˤ��ޤ���
-	����� MIT �� Heimdal �Τɤ���� GSSAPI �����Ǥ�ư���Ϥ��Ǥ���
-	¾�μ����ϥƥ��Ȥ���Ƥ��ޤ���Cyrus SASL �饤�֥��� GSSAPI ��
-	���ݡ��Ȥ��Ƥ��ꡢ������Ѥ��ƥ��å�����Ź沽�Ǥ��뤳�Ȥ�
-	�Ф��Ƥ����Ƥ�����������ǽ�ʤ� SASL ������Ȥ��٤��Ǥ���
+	IMAPサーバへの GSSAPI 認証を有効にします。
+	これは MIT と Heimdal のどちらの GSSAPI 実装でも動作するはずです。
+	他の実装はテストされていません。Cyrus SASL ライブラリも GSSAPI を
+	サポートしており、それを用いてセッションを暗号化できることを
+	覚えておいてください。可能なら SASL の方を使うべきです。
 
 --with-ssl[=PFX]
-	IMAP �� POP �� SSL ���ݡ��Ȥ�ͭ���ˤ��ޤ���
-	SSL ���ݡ��Ȥ� Mutt �Υ���ѥ������� OpenSSL �Υإå��ȥ饤��
-	��꤬���������󥹥ȡ��뤵��Ƥ��뤳�Ȥ��׵ᤷ�ޤ���OpenSSL��
-	�إå��ȥ饤�֥�꤬�ǥե���ȤΥ����ƥ�ѥ���̵�����ˤϡ�
-	���󥹥ȡ�����Υ롼�ȥǥ��쥯�ȥ����� PFX �������դ���
-	���Ȥ�����ޤ������ΤȤ��ˡ��饤�֥��� PFX/lib �ˡ��إå��� 
-	PFX/include/openssl �˸��Ĥ��뤳�Ȥ����Ԥ���ޤ���
+	IMAP と POP で SSL サポートを有効にします。
+	SSL サポートは Mutt のコンパイル前に OpenSSL のヘッダとライブ
+	ラリが正しくインストールされていることを要求します。OpenSSLの
+	ヘッダとライブラリがデフォルトのシステムパスに無い場合には、
+	インストール場所のルートディレクトリを決める PFX 引数を付ける
+	ことが出来ます。このときに、ライブラリは PFX/lib に、ヘッダは 
+	PFX/include/openssl に見つかることが期待されます。
 
 --with-sasl[=PFX]
-	IMAP��POP��ǧ�ڤ� Cyrus SASL �饤�֥�����Ѥ��ޤ���
-	���Υ饤�֥��ϡ������Ĥ���ǧ����ˡ�����Ū�ʥ��ݡ��Ȥ��󶡤�
-	�ޤ����б�����ǧ����ˡ�ϡ�Mutt ��ƥ���ѥ��뤷�ʤ��Ƥ⥷����
-	������Ԥ����Ȥ��ɲäǤ��ޤ���SSL �����ѤǤ��ʤ��Ƥ� SASL ��
-	�᡼��Υ��å�����Ź沽�Ǥ����礬����ޤ���
+	IMAPとPOPの認証に Cyrus SASL ライブラリを使用します。
+	このライブラリは、いくつかの認証方法に包括的なサポートを提供し
+	ます。対応する認証方法は、Mutt を再コンパイルしなくてもシステ
+	ム管理者があとで追加できます。SSL が利用できなくても SASL が
+	メールのセッションを暗号化できる場合があります。
 
 --disable-nls
-	���Υ����å��� Mutt �����쥵�ݡ��Ȥ�̵���ˤ��ޤ���
+	このスイッチは Mutt の母国語サポートを無効にします。
 
 --with-included-gettext 
-	intl/ ���֥ǥ��쥯�ȥ�˴ޤޤ�Ƥ��� GNU gettext �饤�֥���
-	�Ȥä� Mutt �Ϲ��ۤ���ޤ���configure ������ץȤˤȤä�
-	gettext �餷���������Τ��ޥ���ˤ���Τˤ��줬 Mutt �Υ�����
-	���ե�����򤦤ޤ������Ǥ��ʤ����Ȥ������ˤϡ����Υ����å���
-	�Ȥ�ɬ�פ����뤫�⤷��ޤ���
+	intl/ サブディレクトリに含まれている GNU gettext ライブラリを
+	使って Mutt は構築されます。configure スクリプトにとって
+	gettext らしく見えるものがマシンにあるのにそれが Mutt のカタロ
+	グファイルをうまく処理できない、という場合には、このスイッチを
+	使う必要があるかもしれません。
 
 --with-regex
-	��������� regexp �롼���������� GNU regex ��Ȥ��ޤ���
-	POSIX ���ͤ� regcomp/regexec/regfree ���ʤ������ƥ��¿�����ᡢ
-	���Υ롼���󤬤���򥵥ݡ��Ȥ��뤿�����ˡ���󶡤��ޤ���
+	ローカルの regexp ルーチンの代わりに GNU regex を使います。
+	POSIX 仕様の regcomp/regexec/regfree がないシステムも多いため、
+	このルーチンがそれをサポートするための方法を提供します。
 
 --enable-flock
-	�ե��������å����뤿��� flock() ��Ȥ��ޤ���
+	ファイルをロックするために flock() を使います。
 
 --disable-fcntl
-	�ǥե���ȤǤϡ�Mutt �ϥե��������å����뤿��� fcntl() ���
-	���ޤ�������� NFS �ۤ������ɤ߽�®�٤�Ҥɤ��㲼�����ޤ���
-	dotlock ��̵���ˤʤäƤ�����ˤ��Υ��ץ�������Ѥ��뤳�Ȥ�
-	�����ˤʤ����뤳�Ȥ����դ��Ƥ���������
+	デフォルトでは、Mutt はファイルをロックするために fcntl() を使
+	います。これは NFS 越しだと読み書き速度をひどく低下させます。
+	dotlock も無効になっている場合にこのオプションを使用することは
+	危険になり得ることに注意してください。
 
 --enable-nfs-fix
-	�����Ĥ��� NFS �μ����Ͼ������ե������ atime/mtime ��ɬ������
-	�񤭴����ޤ��󡣤���� Mutt �� "mailboxes" ��ǽ��ɬ������ͭ��
-	�˵�ǽ���ʤ����Ȥ��̣���ޤ�������ϥե����뤬����᡼������
-	�Ƥ��뤫��Ƚ�Ǥ��뤿��ˤ���������ȤäƤ��뤿��Ǥ���
-	���Υ��ץ����Ϥ��ΥХ����Ф���ͭ����Ư���ޤ���
+	いくつかの NFS の実装は小さいファイルの atime/mtime を必ずしも
+	書き換えません。これは Mutt の "mailboxes" 機能が必ずしも有効
+	に機能しないことを意味します。これはファイルが新着メールを持っ
+	ているかを判断するためにこの特性を使っているためです。
+	このオプションはこのバグに対して有効に働きます。
 
 --enable-locales-fix
-	�����ƥ�ˤ�äƤϡ��Ķ��ѿ� LANG �����ꤷ�Ƥ�����Ǥ����⡢
-	�ɤ�ʸ����ɽ����ǽʸ���ʤΤ���Ƚ�Ǥ��뤿��� isprint() 	�η��
-	���ꤹ�뤳�Ȥ��Ǥ��ޤ��󡣤��Υ��ץ��������ꤷ����硢Mutt
-	�� ISO-8859-* ���ϰϤ����Ƥ�ʸ����ɽ����ǽʸ���Ǥ���Ȳ��ꤷ��
-	�������Υ��ץ��������ꤷ�ʤ��ޤޤǤ���С�Mutt �ϴĶ��ѿ� 
-	LANG, LC_ALL, LC_CTYPE �Τɤ줫�����ꤵ��Ƥ���� isprint() ��
-	�Ȥ����Ȼ�ߤޤ������δĶ��ѿ����ɤ�����ꤵ��Ƥ��ʤ����� 
-	ISO-8859-* ���ϰϤ�ɽ����ǽʸ���Ǥ���Ȳ��ꤷ�ޤ���
-	--enable-locales-fix ��ɬ�פȤ���ΤǤ���С�¿ʬ --without-wc-funcs
-	��ɬ�פǤ��礦�������������������ꤵ�줿�ǿ��Υ����ƥ�Ǥϡ���
-	�����ɬ�פʤ��Ϥ��Ǥ������������ LANG, LC_ALL, LC_CTYPE ��
-	���ꤷ�ƤߤƤ���������
+	システムによっては、環境変数 LANG を設定している場合でさえも、
+	どの文字が表示可能文字なのかを判断するために isprint() 	の結果
+	を信頼することができません。このオプションを設定した場合、Mutt
+	は ISO-8859-* の範囲の全ての文字が表示可能文字であると仮定しま
+	す。このオプションを設定しないままであれば、Mutt は環境変数 
+	LANG, LC_ALL, LC_CTYPE のどれかが設定されていれば isprint() を
+	使おうと試みます。この環境変数がどれも設定されていない場合は 
+	ISO-8859-* の範囲を表示可能文字であると仮定します。
+	--enable-locales-fix を必要とするのであれば、多分 --without-wc-funcs
+	も必要でしょう。しかし、正しく設定された最新のシステムでは、ど
+	ちらも必要ないはずです。その代わりに LANG, LC_ALL, LC_CTYPE を
+	設定してみてください。
 
 --without-wc-funcs
-	�ǥե���ȤǤϡ�Mutt �����Ѳ�ǽ�Ǥ���Х����ƥ���󶡤���Ƥ���
-	�ؿ� mbrtowc(), wctomb(), wcwidth() ��Ȥ��ޤ������Υ��ץ�����
-	�դ���ȡ�Mutt �ϼ��Ȥ����äƤ���С������δؿ���Ȥ��ޤ�����
-	��ϥ����ƥब�̾�Ǥϥޥ���Х��Ȥ�ʸ�������ɤ򥵥ݡ��Ȥ��Ƥ���
-	�����Ǥ����⡢UTF-8, euc-jp, shift_jis �Ȥ��ä�8�ӥåȤ�ɽ����
-	��ʸ�������ɤǤ��ޤ�ư���Ϥ��Ǥ���
+	デフォルトでは、Mutt は利用可能であればシステムで提供されている
+	関数 mbrtowc(), wctomb(), wcwidth() を使います。このオプションを
+	付けると、Mutt は自身が持っているバージョンの関数を使います。こ
+	れはシステムが通常ではマルチバイトの文字コードをサポートしていな
+	い場合でさえも、UTF-8, euc-jp, shift_jis といった8ビットの表示用
+	の文字コードでうまく動くはずです。
 
-	�Ķ��ѿ� LANG �� LC_CTYPE �����������ꤷ�Ƥ���Τ� Mutt ��(\243��
-	�褦��)Ȭ�ʿ��Υ��������ץ������󥹤Ȥ�����ASCIIʸ����ɽ�����Ƥ�
-	��Τ򸫤Ĥ����顢--enable-locales-fix �� --without-wc-funcs ��
-	ξ�����뤤���������դ��ơ�����������褹�뤳�Ȥ�����뤫�⤷��
-	�ޤ���
+	環境変数 LANG や LC_CTYPE を正しく設定しているのに Mutt が(\243の
+	ような)八進数のエスケープシーケンスとして非ASCII文字を表示してい
+	るのを見つけたら、--enable-locales-fix と --without-wc-funcs の
+	両方あるいは片方を付けて、その問題を解決することが出来るかもしれ
+	ません。
 
 --with-exec-shell=SHELL
-	UNIX �ΥС������ˤ�äƤϡ�/bin/sh �� Mutt �Ǥ� emacs �λ��Ѥ�
-	���˺���ˤ���Х�������ޤ���emacs �� control-G
-	�򲡤���ɬ�� Mutt �� emacs �����𤹤�Ȥ������꤬����ʤ�С�
-	/bin/sh �ʳ��� Bourne �ϥ������ȤäƤߤ����Ȼפ����⤷��ޤ���
-	���ޤ�ư��������� bash, zsh, ksh �Ǥ���csh �� tcsh �Τ褦�� C
-	������Ϥְܴۤ㤤�ʤ������ư��ޤ��󡣤��Υ��ץ����� '!'
-	�򲡤����Ȥ��� Mutt ���鵯ư���륷����Ȥ�̵�ط��Ǥ��뤳�Ȥ�����
-	���Ƥ������������Υ��ץ����Ͼ嵭��������褹�뤿��ˤΤ߻���
-	�����嵭�Υ�����Τ����줫��Ĥ���������Ȥ��ƻ��ꤷ�Ƥ���������
+	UNIX のバージョンによっては、/bin/sh は Mutt での emacs の使用を
+	非常に困難にするバグがあります。emacs で control-G
+	を押すと必ず Mutt と emacs が混乱するという問題があるならば、
+	/bin/sh 以外の Bourne 系シェルを使ってみたいと思うかもしれません。
+	うまく動くシェルは bash, zsh, ksh です。csh と tcsh のような C
+	シェルはほぼ間違いなく正常に動作しません。このオプションは '!'
+	を押したときに Mutt から起動するシェルとは無関係であることに注意
+	してください。このオプションは上記の問題を解決するためにのみ使用
+	し、上記のシェルのいずれか一つだけを引数として指定してください。
 
-	(�⤷���ץ�åȥۡ�������� Bourne �����������˽в�ä��顢
-	mutt-dev@mutt.org ��û���������äƤ�����������������˴ؤ���
-	û�����Ҥ�ʲ��Υ��������Υץ�åȥۡ��������դ��ɲä��ޤ���)
+	(もし、プラットホーム本来の Bourne シェルで問題に出会ったら、
+	mutt-dev@mutt.org に短い報告を送ってください。この話題に関する
+	短い記述を以下のセクションのプラットホーム別注意に追加します。)
 
 --enable-exact-address
-	�ǥե���ȤǤϡ�Mutt �����Ϥ˴ؤ�餺���η��������ƤΥ��ɥ쥹
-	��񤭴����ޤ���
+	デフォルトでは、Mutt は入力に関わらず次の形式で全てのアドレス
+	を書き換えます。
 		Personal Name <user@host.domain>
-	���Υ��ץ�����ͭ���ˤ��뤳�Ȥˤ�äơ����Ϥ��줿Ʊ��������
-	���ɥ쥹��񤭤ޤ���
-	����: �����������¿��ʥ����ɬ�פȤ��ޤ���
+	このオプションを有効にすることによって、解析された同じ形式で
+	アドレスを書きます。
+	注記: これは著しく多大なメモリを必要とします。
 
 
-"configure"����λ������ϡ�ñ�� "make install" ���ǤäƤ���������
+"configure"が終了した後は、単に "make install" と打ってください。
 
-Mutt ��(���顼̵����)���줤�˥���ѥ��뤹��Ϥ��Ǥ��������ơ��Ǹ�ˤ�
-"mutt"�ȸƤФ��Х��ʥ�ˤʤ�Ϥ��Ǥ���A_NORMAL �Ȥ� KEY_MIN �Τ褦��
-̤����Υ���ܥ�ˤĤ��ƤΥ��顼���Ф��顢¿ʬ SysV�Ϥ� curses �饤��
-��꤬�ʤ��ΤǤ���ncurses �� S-Lang (�嵭����)�Τɤ��餫�򥤥󥹥ȡ���
-���٤��Ǥ��������ơ��Ƥ� "configure" ������ץȤ�¹Ԥ��Ƥ���������
+Mutt は(エラー無しに)きれいにコンパイルするはずです。そして、最後には
+"mutt"と呼ばれるバイナリになるはずです。A_NORMAL とか KEY_MIN のような
+未定義のシンボルについてのエラーが出たら、多分 SysV系の curses ライブ
+ラリがないのです。ncurses か S-Lang (上記参照)のどちらかをインストール
+すべきです。そして、再び "configure" スクリプトを実行してください。
 
-"VPATH" �ӥ�ɤϸ��ߤϵ�ǽ���ʤ����Ȥ����դ��Ƥ���������
+"VPATH" ビルドは現在は機能しないことに注意してください。
 
 
 
-ʸ����沽�����Υ��ݡ���
+文字符号化方式のサポート
 ========================
 
-ʸ����沽�������Ѵ��Τ���δؿ��� Mutt �Ϥ�Ϥ�ޤ�Ǥ��ޤ���
-����ˡ�iconv �ؿ� (iconv_open, iconv, iconv_close)���󶡤���뤳�Ȥ�
-���Ԥ��Ƥ��ޤ����Ƕ�ΤۤȤ�ɤΥ����ƥ�Ϥ��δؿ����󶡤��Ƥ��ꡢ�褯
-C �饤�֥��ΰ����Ȥ����󶡤��Ƥ��ޤ������δؿ�����äƤ��ʤ������ƥ��
-Mutt �򥤥󥹥ȡ��뤹��ΤǤ���С�Bruno Haible ��� libiconv �饤�֥��
-�򥤥󥹥ȡ��뤹�뤳�Ȥ��侩����ޤ������Υ饤�֥��ϼ��ξ�꤫������
-��ޤ���
+文字符号化方式の変換のための関数を Mutt はもはや含んでいません。
+代わりに、iconv 関数 (iconv_open, iconv, iconv_close)が提供されることを
+期待しています。最近のほとんどのシステムはこの関数を提供しており、よく
+C ライブラリの一部として提供しています。この関数を持っていないシステムに
+Mutt をインストールするのであれば、Bruno Haible 氏の libiconv ライブラリ
+をインストールすることが推奨されます。このライブラリは次の場所から手に入
+ります。
 
 	       ftp://ftp.ilog.fr/pub/Users/haible/gnu/
 
-�����ƥब iconv �ؿ����󶡤��Ƥ�����Ǥ����⡢��ǽ�����˸��ꤷ��
-�С������� iconv �����󶡤��Ƥ��ʤ������ƥ�⤢��Τǡ�libiconv ��
-���󥹥ȡ��뤷�����Ȥ������Ȥ����뤫�⤷��ޤ���
+システムが iconv 関数を提供している場合でさえも、機能を非常に限定した
+バージョンの iconv しか提供していないシステムもあるので、libiconv を
+インストールしたいということがあるかもしれません。
 
 
-���ʤ��Υ����ƥ�� iconv �μ�����Ȥ����Ȥ��᤿�顢�����Ĥ���ʸ����
-�沽�����ˤĤ��Ƽ��������̾�� Mutt �˶�����ɬ�פ�����ޤ����͡��ʥ�
-���ƥ�ˤ����륵��ץ�����ե����뤬�����Υ���������ʪ�� contrib/iconv/
-�ǥ��쥯�ȥ���֤��Ƥ���ޤ����ޤ���Mutt ��ʸ��ΰ����Ȥ��� samples/iconv
-�ǥ��쥯�ȥ�˥��󥹥ȡ��뤵��ޤ���
+あなたのシステムの iconv の実装を使うことを決めたら、いくつかの文字符
+号化方式について実装の定義名を Mutt に教える必要があります。様々なシ
+ステムにおけるサンプル設定ファイルが、このソース配布物の contrib/iconv/
+ディレクトリに置いてあります。また、Mutt の文書の一部として samples/iconv
+ディレクトリにインストールされます。
 
-���Υ���ץ�����ե������Ȥ�����ˡ����褦�ʹԤ򤢤ʤ��Υ����ƥඦ��
-�� Muttrc ���ɲä��Ƥ������������� Muttrc ������ /etc �� /usr/local/etc 
-�ˤ���ޤ���
+このサンプル設定ファイルを使うために、次ような行をあなたのシステム共通
+の Muttrc に追加してください。この Muttrc は普通 /etc か /usr/local/etc 
+にあります。
 
      source /usr/local/doc/mutt/samples/iconv/iconv.osf1-4.0d.rc
 
-�⤷�����ˤ������ΤǤ���С�--disable-iconv ���դ��� Mutt �����ꤹ�뤳
-�Ȥ�Ǥ��ޤ�����������ʸ����沽�������Ѵ���Ԥ��ޤ���
+もし本当にしたいのであれば、--disable-iconv を付けて Mutt を設定するこ
+ともできます。しかし、文字符号化方式の変換を行いません。
 
 
-�ץ�åȥۡ���������
+プラットホーム別注意
 ====================
 
 All platforms
 
-	Meta ������ Mutt �ǵ�ǽ����Τ�˸����Х���(���ƤǤϤʤ���
-	���Ƥ�)	����ΥС������� S-Lang �ˤ���ޤ����ѥå��Ϥ���
-	Mutt ������ʪ�� contrib/patch.slang-1.2.2.keypad.1 �Ȥ���
-	�ե�����ˤ���ޤ���
+	Meta キーが Mutt で機能するのを妨げるバグが(全てではないに
+	しても)	大抵のバージョンの S-Lang にあります。パッチはこの
+	Mutt の配布物の contrib/patch.slang-1.2.2.keypad.1 という
+	ファイルにあります。
 
 Solaris 2.4
 
-	�����ƥ�� regcomp() �� regexec() �롼��������ѤҤɤ������
-	���ޤ�������� configure ������ץȤǼ�ưŪ�˸��Ф����Ϥ���
-	���������Ǥʤ���С�Mutt �� configure �κݤˡ�--with-regex ��
-	���å���ȤäƤ���������
+	システムの regcomp() と regexec() ルーチンは大変ひどく壊れて
+	います。これは configure スクリプトで自動的に検出されるはずで
+	す。そうでなければ、Mutt の configure の際に、--with-regex ス
+	イッチを使ってください。
 	
-	Solaris 2.4 �� NLS �饤�֥�꤬ "C" �ʳ��Υ��������ȤäƤ�
-	��Ȥ��� Mutt �� core dump ����Ȥ�����������Ƥ��ޤ���
-	���������и������� --with-included-gettext �� configure 
-	�Υ����å���ȤäƤ���������
+	Solaris 2.4 の NLS ライブラリが "C" 以外のロカールを使ってい
+	るときに Mutt が core dump するという報告を受けています。
+	この問題を経験したら --with-included-gettext の configure 
+	のスイッチを使ってください。
 
-	Solaris �� curses �Ǥϥ��顼�����ޤ���ǽ���ޤ��󡣥��顼���ݡ�
-	�Ȥ���ǽ����褦�� ncurses �� S-Lang �Τɤ��餫�ȶ��˥���ѥ�
-	�뤹��ɬ�פ�����ޤ���
+	Solaris の curses ではカラーがうまく機能しません。カラーサポー
+	トが機能するように ncurses か S-Lang のどちらかと共にコンパイ
+	ルする必要があります。
 
 Solaris 2.6
 
-	�����ƥ�� regexp �饤�֥��ȥ�󥯤������ˡ�Mutt���Ѥ�ư��
-	����Ȥ���𤬤���ޤ������Υץ�åȥۡ���� configure ��Ԥ�
-	�ݤ� --with-regex �����å���ȤäƤ���������
+	システムの regexp ライブラリとリンクした時に、Muttが変に動作
+	するとの報告があります。このプラットホームで configure を行う
+	際に --with-regex スイッチを使ってください。
 
-	�ºݤν����Τ���ˤϡ�sunsolve.sun.com ���� Sun �Υѥå�
-	# 105490-05 (linker patch) �� # 105210-17 (libc and malloc patch)
-	�����Ƥ뤳�Ȥˤ�ꡢ�������꤬������Τ�ߤ�����𤵤�Ƥ�
-	�ޤ���
+	実際の修正のためには、sunsolve.sun.com から Sun のパッチ
+	# 105490-05 (linker patch) と # 105210-17 (libc and malloc patch)
+	を当てることにより、この問題が生じるのを止めると報告されてい
+	ます。
 
 Linux
 
-	�Ƕ�� Linux �����ƥ�ˤ����ơ�flock() �� fcntl()�Υ��å���
-	Ʊ���˻Ȥ��ޤ��󡣤��Τ褦�ʥ����ƥ�ˤ����� --enable-flock 
-	�����å���Ȥ��ΤǤ���С� --disable-fcntl ��Ʊ�ͤ�ɬ��Ϳ��
-	�Ƥ���������
+	最近の Linux システムにおいて、flock() と fcntl()のロックが
+	同時に使えません。そのようなシステムにおいて --enable-flock 
+	スイッチを使うのであれば、 --disable-fcntl も同様に必ず与え
+	てください。
 
 Sparc Linux
 
-	Redhat 4.2 Sparc �桼���� Mutt ��ӥ�ɤ���ݤˤ����Ĥ���
-	�����ƥ� include �ե���������꤬�������𤷤Ƥ��ޤ���
-	--disable-warnings �����å����դ��� Mutt �� configure �����
-	����������Ф����н褵���褦�Ǥ���
+	Redhat 4.2 Sparc ユーザは Mutt をビルドする際にいくつかの
+	システム include ファイルで問題があると報告しています。
+	--disable-warnings スイッチを付けて Mutt を configure すると
+	この問題に対して対処されるようです。
 
 Digital Unix (OSF/1)
 
-	�����ƥ�� curses �饤�֥��ϤҤɤ�����Ƥ���褦�Ǥ���
-	GNU ncurses �� S-Lang ������˻ȤäƤ���������
+	システムの curses ライブラリはひどく壊れているようです。
+	GNU ncurses か S-Lang を代わりに使ってください。
