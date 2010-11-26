@@ -1,9 +1,9 @@
 		Mutt 1.5.19用日本語版パッチリリースノート
 
-							2009/06/18
+							20010/11/26
 							mutt-j 開発チーム
 
-Copyright (C)2000-2009 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C)2000-2010 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -147,9 +147,10 @@ usage-japanese.ja.html をご覧下さい。
 ┌────────────┬─────┬────────┐
 │        システム        │オプション│      確認      │
 ├────────────┼─────┼────────┤
-│CentOS 4.7   2          │IW        │Oota Toshiya    │
+│CentOS 4.7              │IW        │Oota Toshiya    │
 ├────────────┼─────┼────────┤
-│FreeBSD 6.4             │iw        │Oota Toshiya    │(予定)
+│FreeBSD 6.4             │iw        │Oota Toshiya    │
+│FreeBSD 8.1             │iw        │Oota Toshiya    │
 └───────────────────────────┘
 
 
@@ -217,7 +218,7 @@ Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバーの協力により開発が
 
 6.1.1 日本語パッチ
 
- ・ Copyright (C) 2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+ ・ Copyright (C) 2000-2010 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
    
  ・ Copyright (C) 2000 Yukinori YOSHIDA <yyo@pjs.nevt.nec.co.jp>
    

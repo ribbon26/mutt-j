@@ -1,45 +1,45 @@
 Original id: PGP-Notes.txt,v 3.0 2002/01/24 13:35:07 roessler
 
-		      MUTT ���椫�� PGP ��Ȥ�
+		      MUTT の中から PGP を使う
 
 
-�ٹ�: ������ˡ�� 0.96.3 �ȤϤޤä����ۤʤäƤ��ޤ�!
-����: ver1.5�Ǥ�̤���ڤǤ���
+警告: 設定方法が 0.96.3 とはまったく異なっています!
+注意: ver1.5では未検証です。
 
 
-			    �桼��������
+			    ユーザガイド
 
 
-mutt �� PGP �� PGP5, GnuPG ��Ȥ��ˤϤɤ����뤫?
+mutt で PGP や PGP5, GnuPG を使うにはどうするか?
 ------------------------------------------------
 
-�������ĥ꡼�� contrib �Ȥ������֥ǥ��쥯�ȥ�˹ԤäƤ���������
-pgp2.rc, pgp5.rc, gpg.rc �Ȥ������ĤΥե����뤬����ޤ�������ˤϡ�
-mutt �� pgp2, pgp5, gpg ��Ȥ���������꤬�񤤤Ƥ���ޤ���
+ソースツリーの contrib というサブディレクトリに行ってください。
+pgp2.rc, pgp5.rc, gpg.rc という三つのファイルがあります。これには、
+mutt で pgp2, pgp5, gpg を使うための設定が書いてあります。
 
-������ΰ�Ĥ򤽤Τޤ� ~/.muttrc �������С����������
-���ޤ�ư���Ϥ��Ǥ���
+その中の一つをそのまま ~/.muttrc に入れれば、それだけで
+うまく動くはずです。
 
-�ȤϤ�����PGP �Х��ʥ��Ϳ�������ѥ�᡼���� PGP �Υѥ������٤�
-��ʬ�˹�äƤ��뤫�ɤ����ϳ�ǧ���Ƥ���������ΤǤ��͡�
+とはいえ、PGP バイナリに与える言語パラメータや PGP のパスがすべて
+自分に合っているかどうかは確認しておきたいものですね。
 
 
 
-�褯�������Ⱦ��略
+よくある質問と小ワザ
 --------------------
 
-Q: �֤ߤ�� mutt ��ǧ�����ʤ� PGP ��å����������äƤ��ޤ���
-    �ɤ�����Ф����Ǥ���?��
+Q: 「みんな mutt の認識しない PGP メッセイジを送ってきます。
+    どうすればいいですか?」
 
-��������ˡ�ϡ��إå��򤤤��餺�� mutt �� check-traditional-pgp
-�ؿ���Ȥ��Ȥ�����ΤǤ�������ϡ����ξ�� PGP ��å�������
-���Ф��� content-type ��Ĵ�����Ƥ����ؿ��Ǥ���
+新しい方法は、ヘッダをいじらずに mutt の check-traditional-pgp
+関数を使うというものです。これは、その場で PGP メッセイジを
+検出して content-type を調整してくれる関数です。
 
-�Τ���ˡ�ϡ��إå���ľ���褦�˥ᥤ��ե��륿�����ꤹ��
-�Ȥ�����ΤǤ����ʲ����������ޤ���
+昔の方法は、ヘッダを直すようにメイルフィルタを設定する
+というものです。以下に説明します。
 
-�ʲ������Ƥ� ~/.procmailrc �˽񤭹��ߤޤ���
-(procmail �ȤäƤޤ����?)
+以下の内容を ~/.procmailrc に書き込みます。
+(procmail 使ってますよね?)
 
 		   ------------------------------
 
@@ -69,9 +69,9 @@ Q: �֤ߤ�� mutt ��ǧ�����ʤ� PGP ��å����������äƤ��ޤ���
 
 		   ------------------------------
 
-maildrop �桼���ˤ�
-"Mark Weinem" <mark.weinem@unidui.uni-duisburg.de> ��
-���ν�������Ƥ��Ƥ��ޤ���
+maildrop ユーザには
+"Mark Weinem" <mark.weinem@unidui.uni-duisburg.de> が
+次の処方を提案しています。
 
 
 		   ------------------------------
@@ -97,169 +97,169 @@ if (/^$BPGPS/:b && /^$EPGPS/:b)
 
 
 
-Q: �֤��� PGP/MIME �äƤ�����Ĥ��ɤ��ⵤ������ʤ��Τǡ�
-    �Τʤ������ˡ�ǥᥤ��� PGP ��̾�������ȻפäƤ��ޤ���
-    ���ε�ǽ�� mutt ������Ƥ���ޤ���?��
+Q: 「あの PGP/MIME っていうやつがどうも気に入らないので、
+    昔ながらの方法でメイルを PGP 署名したいと思っています。
+    その機能を mutt に入れてくれませんか?」
 
-�����ϡ����μ�����Ф��������Ϥ���������ΤǤ�����
+以前は、この質問に対する答えはこういうものでした。
 
-  ����Ǥ����¤ΤȤ��� application/pgp �ϡ�MIME ����ƥ����Ȥ�
-  �ѡ��ȤʤɤΤ��������ˤ�Ŭ���Ƥ��ʤ��ΤǤ�������Ǥ�ʤ����ܵ���
-  �켰��ź�եե�����������������Ȥ����ΤǤ���С����Υޥ�����
-  ~/.muttrc ������Ƥ���������(�ɤߤ䤹�����뤿��˹Ԥ�ʬ�䤵���
-  ���ޤ������ºݤˤϰ�ԤǤ�)
+  だめです。実のところ application/pgp は、MIME の非テクストな
+  パートなどのある世界には適していないのです。それでもなお、本気で
+  旧式の添付ファイルを生成したいというのであれば、次のマクロを
+  ~/.muttrc に入れてください。(読みやすくするために行が分割されて
+  いますが、実際には一行です)
 
   macro compose S "Fpgp +verbose=0 -fast
   	+clearsig=on\ny^T^Uapplication/pgp; format=text;
 	x-action=sign\n"
 
 
-���ʤ鿷��������������ޤ��������ѿ� $pgp_create_traditional
-(yes, no [=�ǥե����], ask-yes, ask-no ���ͤ���) ��
-"no" �ʳ������ꤹ��ΤǤ������������ mutt �ϡ�
-�Ȥ�����̤ǤϤ��ĤǤ� application/pgp �������˴ޤ�ޤ���
-����Ū�˸����ȡ��ޥ���ѡ��ȡ��ޤ��� ASCII ����ƥ����Ȥ�
-�ܥǥ��ˤ����� application/pgp ��Ȥ��ΤϤޤä����ʥ󥻥󥹤Ǥ���
-�������������Ǥ�̵���� PGP/MIME ���Ȥ��ޤ���
+今なら新しい答えがあります。設定変数 $pgp_create_traditional
+(yes, no [=デフォルト], ask-yes, ask-no の値を取る) を
+"no" 以外に設定するのです。そうすれば mutt は、
+使える場面ではいつでも application/pgp を選択肢に含めます。
+具体的に言うと、マルチパート、また非 ASCII や非テクストの
+ボディにおいて application/pgp を使うのはまったくナンセンスです。
+そうした状況では無条件で PGP/MIME が使われます。
 
-�������������ϸ��äƤ⡢application/pgp �ϻ��Ѥ��ʤ��褦
-���������ᤷ�ޤ���
-
-
-
-Q: ��PGP �Ρ�^G �Ȥ����������ФƤ��Ƥ��뤵���Τ�����ʤ�Ǥ����ɡ�
-
-����������Ф���������������� Roland Rosenfeld
-<roland@spinnaker.rhein.de> ��ȯ�����Ƥ��ޤ���PGP �ˤϡ��ȤƤ��ɤ�
-����쥵�ݡ��Ȥ�����Τǡ�����ɽ�����줿���ʤ���å��������Ф�������
-��ʸ�ˤʤäƤ��� "mutt" �Ȥ��������Ƴ����������Ǥ����ΤǤ���
-���θ����Ȥ��ˤϡ�language.txt �� language50.txt �Τ����줫
-(�ȤäƤ��� PGP �Υ����������ˤ��) �� $PGPPATH �˥��ԡ����ޤ���
-PGP ���ޥ�ɤ�������ǧ���ơ�PGP �ΥХ��ʥ�ˤ��٤�
-"+language=mutt" ���Ϥ��褦�ˤ��Ƥ������� (������ pgpring �ˤ�
-�Ϥ��ʤ��褦��!)��
-
-PGP 2.6 �Ѥˤϡ��ɥ��ĸ��Ǥ� "muttde" �⤢��ޤ���
-
-
-Q: �ֽ�̾�������ˤʤäƤ��ޤ��ޤ���Courier �� MTA ��ȤäƤޤ���
-
-Courier MTA �κ�Ԥϡ�multipart/signed ���ꤷ�Ƥ���ɸ����ͤ�
-���������Ȼפ�����Ǥ��ޤ������Τ��ᡢmultipart/signed ��
-�ѡ��Ȥ��ݸ��褦�ʼ����Ϥ��ʤ����Ȥ˷�᤿�褦�Ǥ���
-
-�桹�Ȥ��Ƥϡ�courier ��ΤƤ� sendmail �� postfix, �ޤ��� exim ��
-��괹����褦��Ƥ��ޤ���
+しかし、そうは言っても、application/pgp は使用しないよう
+強くお勧めします。
 
 
 
-				����
+Q: 「PGP の、^G とかいろいろ出てきてうるさいのがイヤなんですけど」
+
+この問題に対する非常に美しい解を Roland Rosenfeld
+<roland@spinnaker.rhein.de> が発見しています。PGP には、とても良い
+外国語サポートがあるので、ただ表示されたくないメッセイジに対する訳が
+空文になっている "mutt" という言語を導入するだけでいいのです。
+この言語を使うには、language.txt か language50.txt のいずれか
+(使っている PGP のヴァージョンによる) を $PGPPATH にコピーします。
+PGP コマンドの設定を確認して、PGP のバイナリにすべて
+"+language=mutt" を渡すようにしてください (ただし pgpring には
+渡さないように!)。
+
+PGP 2.6 用には、ドイツ語版の "muttde" もあります。
 
 
-�����ץ������
+Q: 「署名が不正になってしまいます。Courier の MTA を使ってます」
+
+Courier MTA の作者は、multipart/signed を規定している標準仕様が
+おかしいと思い込んでいます。そのため、multipart/signed な
+パートを保護するような実装はしないことに決めたようです。
+
+我々としては、courier を捨てて sendmail か postfix, または exim に
+乗り換えるよう提案します。
+
+
+
+				深層
+
+
+外部プログラム
 --------------
 
-mutt �� PGP ���ݡ��Ȥˤ���Ĥγ����ץ�����ࡢpgpewrap �� pgpring
-��ɬ�פȤʤäƤ��ޤ���
+mutt の PGP サポートには二つの外部プログラム、pgpewrap と pgpring
+が必要となっています。
 
 
 1. pgpring
 
-pgpring �ϸ�«�����Ƥ�ɽ�����ޤ���PGP �ΥХ��ʥ�����θ�«����
-�������Ф��ơ�mutt �θ�����롼�ƥ�������Ǥ���褦��
-(�ۤ�) �ʹ֤Ǥ��ɤ������ǽ��Ϥ��Ƥ����ΤǤ��������
-GNU Privacy Guard (GPG) �ǻȤ��Ƥ�����Ϸ�����ޤͤ���ΤǤ���
+pgpring は鍵束の内容を表示します。PGP のバイナリ形式の鍵束から
+情報を取り出して、mutt の鍵選択ルーティンが理解できるような
+(ほぼ) 人間でも読める形式で出力してくれるのです。これは
+GNU Privacy Guard (GPG) で使われている出力形式をまねたものです。
 
-PGP 2 �� PGP 5 �ˤϤ��Υץ�����बɬ�פǤ���
+PGP 2 と PGP 5 にはこのプログラムが必要です。
 
-���ޥ�ɥ饤�󥪥ץ����
+コマンドラインオプション
 
-	-k <��«>	-k �Τ��Ȥ˻��ꤵ�줿��«�����Ƥ���Ϥ��ޤ���
+	-k <鍵束>	-k のあとに指定された鍵束の内容を出力します。
 
-	-2, -5		�ǥե���Ȥθ�«��Ȥ��ޤ���
-			��� PGP �� 2 �� 5 ���б����ޤ���
+	-2, -5		デフォルトの鍵束を使います。
+			順に PGP の 2 と 5 に対応します。
 
-	-s		��̩���θ�«����Ϥ��ޤ���
+	-s		秘密鍵の鍵束を出力します。
 
 
 
 2. pgpewrap
 
-����äȤ������ޥ�ɥ饤����Ѥ򤪤��ʤ��������� C �ץ������Ǥ���
-��Ĥ�ΰ����ϼ¹Ԥ��륳�ޥ�ɤǤ���pgpewrap �� "--" (���å������)
-������Ȥ��Ƽ������ȡ����μ��ΰ�����ʹߤΰ������٤Ƥ������դ���
-�����ޤ���
+ちょっとしたコマンドライン改変をおこなう、小さな C プログラムです。
+一つめの引数は実行するコマンドです。pgpewrap は "--" (ダッシュ二つ)
+を引数として受け取ると、その次の引数を以降の引数すべての前に付けて
+いきます。
 
-(��)
+(例)
 
 	pgpewrap pgpe file -- -r a b c
 
-�ϼºݤˤϤ����¹Ԥ���ޤ���
+は実際にはこう実行されます。
 
 	pgpe file -r a -r b -r c
 
-���Υ�����ץȤ�ɬ�פʤΤ� PGP 5 �� GPG �Ǥ�������ϡ�������
-���ޥ�ɥ饤��ν񼰤� mutt �λ��ȤߤǤ������������ʤ�����Ǥ���
+このスクリプトが必要なのは PGP 5 と GPG です。これは、それらの
+コマンドラインの書式が mutt の仕組みでは正しく扱えないためです。
 
 
 
-��������
+設定方式
 --------
 
-mutt ���¾�������Ʊ�͡�PGP ���ޥ�ɤ����������� printf ����
-�񼰤�ȤäƤ��ޤ������٤Ƥ� PGP ���ޥ�ɤ��Ф��ơ��ʲ���
-%-���������󥹤��������Ƥ��ޤ���
+mutt 内の他の設定と同様、PGP コマンドの設定方式も printf 風の
+書式を使っています。すべての PGP コマンドに対して、以下の
+%-シークエンスが定義されています。
 
-  %p	�ѥ��ե쥤�������פʤ��ʸ����ɬ�פʤ� "PGPPASSFD=0"
-  	�Ȥ���ʸ����ˤʤ�ޤ���
+  %p	パスフレイズが不要なら空文字列、必要なら "PGPPASSFD=0"
+  	という文字列になります。
 
-	����ˡ����ʬ������ %-������������ǻȤ��ޤ���
+	おもに、条件分岐する %-シークエンス内で使われます。
 
-  %f	�ۤȤ�ɤ� PGP ���ޥ�ɤϡ�ñ��Υե����뤫
-  	��å����������줿����ե�������Ф����ΤǤ���
-  	%f �ϡ����Υե�����̾��Ÿ������ޤ���
+  %f	ほとんどの PGP コマンドは、単一のファイルか
+  	メッセイジを入れた一時ファイルに対するものです。
+  	%f は、このファイル名に展開されます。
 
-  %s	��̾�򸡾ڤ�����ˤϡ�ʬΥ��̾�����줿����ե������Ǥ��ޤ���
-  	%s �ϡ����Υե�����̾��Ÿ������ޤ���
+  %s	署名を検証する時には、分離署名を入れた一時ファイルもできます。
+  	%s は、このファイル名に展開されます。
 
-  %a	��̾�˴�Ϣ�������̤ǡ�����������ѿ� $pgp_sign_as ���ͤ�
-  	Ÿ������ޤ������֤���ʸ�� %-���������󥹤���ǻȤ�ɬ�פ�
-	����ޤ���
+  %a	署名に関連した場面で、これは設定変数 $pgp_sign_as の値に
+  	展開されます。たぶん条件文の %-シークエンスの中で使う必要が
+	あります。
 
-  %r	¿���ξ��̤� mutt �ϸ� ID �� pgp ���Ϥ��ޤ���
-  	%r �ϸ� ID �Υꥹ�Ȥ�Ÿ������ޤ���
+  %r	多くの場面で mutt は鍵 ID を pgp に渡します。
+  	%r は鍵 ID のリストに展開されます。
 
-�ʲ��Υ��ޥ���ѿ����������Ƥ��ޤ���
+以下のコマンド変数が定義されています。
 
-  $pgp_decode_command	application/pgp ��å����������沽���ޤ���
-  			�ѥ��ե쥤����ɬ�פʾ������פʾ��⤢��ޤ���
+  $pgp_decode_command	application/pgp メッセイジを復号化します。
+  			パスフレイズが必要な場合も不要な場合もあります。
 
-  $pgp_verify_command	PGP/MIME ��̾�򸡾ڤ��ޤ���
+  $pgp_verify_command	PGP/MIME 署名を検証します。
 
-  $pgp_decrypt_command	PGP/MIME �ǰŹ沽���줿�ܥǥ������沽���ޤ���
-  			���Υ��ޥ�ɤ�ɬ���ѥ��ե쥤����Ȥ��ޤ���
+  $pgp_decrypt_command	PGP/MIME で暗号化されたボディを復号化します。
+  			このコマンドは必ずパスフレイズを使います。
 
-  $pgp_sign_command	�ܥǥ��� PGP/MIME �ǽ�̾���ޤ���
-  			ɬ���ѥ��ե쥤����Ȥ��ޤ���
+  $pgp_sign_command	ボディを PGP/MIME で署名します。
+  			必ずパスフレイズを使います。
 
-  $pgp_encrypt_sign_command �Ź沽�Ƚ�̾�� MIME �ܥǥ��˻ܤ��ޤ���
-  			���Υ��ޥ�ɤ�ɬ���ѥ��ե쥤����Ȥ��ޤ���
+  $pgp_encrypt_sign_command 暗号化と署名を MIME ボディに施します。
+  			このコマンドは必ずパスフレイズを使います。
 
-  $pgp_encrypt_only_command MIME �ܥǥ���Ź沽���ޤ�����̾�Ϥ��ޤ���
+  $pgp_encrypt_only_command MIME ボディを暗号化しますが署名はしません。
 
-  $pgp_import_command	�ե����뤫�� PGP ���򥤥�ݡ��Ȥ��ޤ���
+  $pgp_import_command	ファイルから PGP 鍵をインポートします。
 
-  $pgp_export_command	�ե������ PGP ���򥨥����ݡ��Ȥ��ޤ������Ϥ�
-  			ASCII ��������Ƥ��ʤ��ƤϤʤ�ޤ���
+  $pgp_export_command	ファイルへ PGP 鍵をエクスポートします。出力は
+  			ASCII 包装されていなくてはなりません。
 
-  $pgp_verify_key_command �������򸡺����ޤ������Υ��ޥ�ɤ�
-  			�������˥塼�ǻȤ��ޤ���
+  $pgp_verify_key_command 公開鍵を検査します。このコマンドは
+  			鍵選択メニューで使われます。
 
-  $pgp_list_secring_command ��̩���Τ�����%r �Υҥ�Ȥ˹��פ����Τ�
-  			����ɽ�����ޤ���
+  $pgp_list_secring_command 秘密鍵のうち、%r のヒントに合致するものを
+  			一覧表示します。
 
-  $pgp_list_pubring_command �������Τ�����%r �Υҥ�Ȥ˹��פ����Τ�
-  			����ɽ�����ޤ���
+  $pgp_list_pubring_command 公開鍵のうち、%r のヒントに合致するものを
+  			一覧表示します。
 
-�ѥ��ե쥤����ɸ����Ϥ��Ϥ���ޤ������ޥ�ɤν��ϤϤ��٤�
-ɸ����Ϥ�ɸ�२�顼���Ϥ����Ф��ʤ��ƤϤʤ�ޤ���
+パスフレイズは標準出力で渡されます。コマンドの出力はすべて
+標準出力と標準エラー出力に送出しなくてはなりません。
