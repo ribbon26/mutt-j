@@ -1,7 +1,7 @@
-		Mutt 1.5.21�����ܸ��ǥѥå���꡼���Ρ���
+		Mutt 1.5.21用日本語版パッチリリースノート
 
 							2011/01/26
-							mutt-j ��ȯ������
+							mutt-j 開発チーム
 
 Copyright (C)2000-2011 Oota Toshiya <ribbon@users.sourceforge.jp>
 
@@ -9,264 +9,264 @@ Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
 Copyright (C)2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
 
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-�ܼ�
+目次
 
-1. Mutt���ܸ��ǤˤĤ���
+1. Mutt日本語版について
 
-2. ���ꥸ�ʥ��ǤȤΰ㤤
-2.1 ���ꥸ�ʥ��ǤΥХ��ν���
-2.2 ���ܸ���μ��Ѿ������ν���
-2.3 �����ʵ�ǽ���ɲ�
+2. オリジナル版との違い
+2.1 オリジナル版のバグの修正
+2.2 日本語回りの実用上の問題の修正
+2.3 便利な機能の追加
    
-3. ư���ǧ�Ķ�
+3. 動作確認環境
 
-4. ���󥹥ȡ��������
+4. インストールと設定
 
-5. ��Ϣ���
+5. 関連リンク
 
-6. ����¾
-6.1 �����
-6.1.1 ���ܸ�ѥå�
-6.1.2 ��å���������������ˮ��
-6.1.3 �ޥ˥奢���ˮ��
-6.1.4 �ޥ˥奢��ʳ���ʸ���ˮ��������
-6.2 ����¾
-6.2.1 �켡������
-6.2.2 �饤����
-6.2.3 �᡼��󥰥ꥹ��
+6. その他
+6.1 著作権等
+6.1.1 日本語パッチ
+6.1.2 メッセージカタログの邦訳
+6.1.3 マニュアルの邦訳
+6.1.4 マニュアル以外の文書の邦訳・英訳
+6.2 その他
+6.2.1 一次配布先
+6.2.2 ライセンス
+6.2.3 メーリングリスト
    
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-1. Mutt���ܸ��ǤˤĤ���
+1. Mutt日本語版について
 
-Mutt ���ܸ��ǤȤϡ���®��ư��������å�ɽ�����ǽ���������ޥ�����POP/IMAP������
-��ǽ�� Mutt �����ܸ줬�Ȥ���褦�ˤ����С������Ǥ����ܲȤ� Mutt ���Ф�������
-�첽�ѥå���Ŭ�Ѥ��뤳�Ȥ� Mutt ���ܸ��Ǥˤʤ�ޤ���Mutt ���ܸ��Ǥϡ��ܲȤ�Mutt
-�Ⱦ�̸ߴ��ε�ǽ���󶡤��ޤ���
+Mutt 日本語版とは、高速に動き、スレッド表示も可能、カスタマイズやPOP/IMAPも利用
+可能な Mutt を日本語が使えるようにしたバージョンです。本家の Mutt に対して日本
+語化パッチを適用することで Mutt 日本語版になります。Mutt 日本語版は、本家のMutt
+と上位互換の機能を提供します。
 
-Mutt ����γ�ȯ����Ǥ��� mutt-1.3.x ���꡼���ˤ����ƹ�ݲ��������ܸ�ѥå�����
-���Ȥ����ܸ�Υ᡼�뤬��갷����褦�ˤʤ�ޤ����������������ܸ���ͭ�λ���ʤ�
-������JIS����ʤɡˤ����뤿�ᡢ���Ѿ�Ϥ��ΤޤޤǤϻȤ��ˤ�����ΤǤ���������
-���ä����ܸ���Ǥμ��Ѿ�γƼ�����������ۤ��̾����Ѥ˺����٤��ʤ���������
-�ˤ����Ĥ��������ʵ�ǽ���ɲä�����Τ� Mutt ���ܸ��ǤǤ���
+Mutt の先の開発系列である mutt-1.3.x シリーズにおいて国際化され日本語パッチがな
+くとも日本語のメールが取り扱えるようになりました。しかし、日本語特有の事情（い
+わゆる生JIS問題など）があるため、実用上はそのままでは使いにくいものです。そこで
+、特に日本語回りでの実用上の各種問題を修正しほぼ通常利用に差し支えなくし、さら
+にいくつかの便利な機能を追加したものが Mutt 日本語版です。
 
-���ܸ�ѥå��Ȥ��Ƥ� 1.2.x �ޤǤΥС������Ȥϴ���Ū����Ω�˳�ȯ����Ƥ��뤿��
-�����褢�ä����ܸ����ȼ��ε�ǽ�ʤɤϰ�����ά����ơ��ޤ�������1.3.x �ϰʹߤ���
-���ο���ǽ�ʤɤ��ɲä���Ƥ��ޤ�(���ܸ첽�μ����� 1.2.x �Ȥ�������ʪ�ˤʤä�
-���ޤ�)��
+日本語パッチとしては 1.2.x までのバージョンとは基本的に独立に開発されているため
+、従来あった日本語版独自の機能などは一部省略されて、また新たに1.3.x 系以降の独
+自の新機能などが追加されています(日本語化の実装は 1.2.x とは全く別物になって
+います)。
 
-�ޤ���1.5.6��1.5.10�б��Υѥå��ϡ����Τ����Ĥ����ܲȤ˼����ޤ�ޤ���������
-�ˡ�¾�Υ饤�֥�����������䡢�⤦�Ȥ��ʤ��ʤä���ǽ�⤤���Ĥ�¸�ߤ��Ƥ��ޤ���
-�����ǡ�1.5.21�б��Υѥå��ϡ����ޤǤ����ܸ��ǥѥå�����������ͭ���Ȼפ���
-��ΤΤߤ��󶡤��Ƥ��ޤ���
+また、1.5.6〜1.5.10対応のパッチは、そのいくつかが本家に取り込まれました。さら
+に、他のライブラリ等の整備や、もう使われなくなった機能もいくつか存在しています。
+そこで、1.5.21対応のパッチは、今までの日本語版パッチを整理し、有効と思われる
+もののみを提供しています。
 
-�ʤ������Υɥ�����Ȥ�Ӥ�Ʊ������Ƥ���ե�����ˤĤ��Ƥϡ��Ť��ޤޤΤ�Τ�
-����ޤ�����λ������������
+なお、このドキュメントよびと同梱されているファイルについては、古いままのものが
+あります。ご了承ください。
 
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-2. ���ꥸ�ʥ��ǤȤΰ㤤
+2. オリジナル版との違い
 
-2.1 ���ꥸ�ʥ��ǤΥХ��ν���
+2.1 オリジナル版のバグの修正
 
-2.2.1 ���ץ��벽����ž����å������μ�갷��
+2.2.1 カプセル化した転送メッセージの取り扱い
 
-  mutt-1.5.6 �ޤǤ����ܸ��ǥѥå���¸�ߤ���file_charset�ѥ�᡼����
-�ɲä��Ƥ��ޤ�������mutt-1.5.9����attach_charset �ѥ�᡼�������ε�ǽ
-������Ѥ������ᡢ���ܸ��ǥѥå��Ϥʤ��ʤ�ޤ�����attach_charset�ѥ�᡼��
-�����ꤷ�ʤ����ˤϡ����ܸ��å�������ޤ�᡼��ǡ�����ź�դ���ȡ�
-ʸ�������ɤ�us-ascii�ȸ��ʤ��졢ʸ�������������ޤ��Τ����դ��Ƥ���������
+  mutt-1.5.6 までは日本語版パッチが存在し、file_charsetパラメータを
+追加していましたが、mutt-1.5.9からattach_charset パラメータがこの機能
+を引き継いだため、日本語版パッチはなくなりました。attach_charsetパラメータ
+を設定しない場合には、日本語メッセージを含むメールデータを添付すると、
+文字コードがus-asciiと見なされ、文字化けを生じますので注意してください。
 
-���ơ������ԤΥޥ���Х���ʸ�����Ф���������Դ����Ǥ��뤿�ᡢ����������ޤ�
-����
+ステータス行のマルチバイト文字に対する処理が不完全であるため、これを修正しまし
+た。
 
-����å�ɽ����ź�եե�������̤��Ѥ�����ĥ꡼�η���(ACS)ʸ�����ޥ���Х���ʸ
-���Ǥ���Ȥ��ν��������ꥸ�ʥ�Ǥ������Ԥʤ��Ƥ��ʤ����ᡢ���ν�����Ԥʤ���
-������
+スレッド表示や添付ファイル画面で用いられるツリーの罫線(ACS)文字がマルチバイト文
+字であるときの処理がオリジナルでは全く行なわれていないため、その修正を行ないま
+した。
 
-UTF-8��������ˤ����Ƥ�JIS X 0208�ε��桦���ꥷ��ʸ���������ʸ��������1������
-ʸ���Ȥ��ư����ޤ�����������mlterm���UCS�ե���ȤǤʤ�����Υե���Ȥ��Ѥ���
-���ˤϤ�����ʸ����2������JIS X 0208�Υե���Ȥ��Ȥ��ޤ������Τ��ᡢ������
-��������ɽ�������ޤ���������ɤ�����˼��������ѿ�
+UTF-8ロケールにおいてはJIS X 0208の記号・ギリシャ文字・キルリ文字の幅は1桁幅の
+文字として扱われます。しかし、mlterm上でUCSフォントでない従来のフォントを用いた
+場合にはこれらの文字は2桁幅のJIS X 0208のフォントが使われます。そのため、不整合
+が生じ、表示が乱れます。これを防ぐために次の設定変数
 
- �� cjk_width
+ ● cjk_width
    
-���Ѱդ��������ͤ�yes�����ꤹ�뤳�Ȥˤ��2������ʸ���Ȥ��ư����褦�ˤʤꡢɽ��
-������Τ��ɤ��ޤ��������������������ѿ���Mutt��¢�Υ磻��ʸ���ؿ���Ȥ��Ȥ�
-�Τ�ͭ���Ǥ���
+を用意し、この値をyesに設定することにより2桁幅の文字として扱うようになり、表示
+が乱れるのを防ぎます。ただし、この設定変数はMutt内蔵のワイド文字関数を使うとき
+のみ有効です。
 
-Content-Type: text/enriched; charset=iso-2022-jp �ʥ�å������Ǥϡ�����Ū������
-�ޥ���Х���ʸ�����б����Ƥ��ʤ����ᡢʸ�����������ǽ��������ޤ�������������
-�Ѥ��н�Ǥ��뤿�ᡢ���ΤȤ������б����ޤ��󡣾ܺ٤� usage-japanese.ja.html ��
-������������
+Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは、根本的に全く
+マルチバイト文字に対応していないため、文字化けする可能性があります。しかし、運
+用で対処できるため、今のところは対応しません。詳細は usage-japanese.ja.html を
+ご覧下さい。
 
-2.2 ���ܸ���μ��Ѿ������ν���
+2.2 日本語回りの実用上の問題の修正
 
-���ꥸ�ʥ��ǤǤ� MIME ��Ϣ�� RFC �˽��äƤ������ܸ�Υ�å�����������ʤ���갷
-���ޤ����������������¸ʸ���������ʸ�����������ꡢ�� MIME ��JIS message body,
-��JIS subject �ʤɤ�ɽ���Ѥ�ʸ����沽�������Ѵ����Ƥ���ʤ������ɤळ�Ȥ��Ǥ�
-�ޤ��󡣤��Τ��ᡢ���ܸ��ǤǤϡ������Υ�å��������ɤळ�Ȥ��Ǥ��뼡�Τ褦��
-���ꥪ�ץ������ɲä��ޤ������ܺ٤� manual-ja-patch.ja.html ����� 
-usage-japanese.ja.html ������������
+オリジナル版でも MIME 関連の RFC に従っている日本語のメッセージは問題なく取り扱
+えます。しかし、機種依存文字があると文字化けしたり、非 MIME 生JIS message body,
+生JIS subject などは表示用の文字符号化方式に変換してくれないため読むことができ
+ません。そのため、日本語版では、それらのメッセージを読むことができる次のような
+設定オプションを追加しました。詳細は manual-ja-patch.ja.html および 
+usage-japanese.ja.html をご覧下さい。
 
- 1. �� MIME ���ܸ�ե�����̾
+ 1. 非 MIME 日本語ファイル名
    
-     �� create_rfc2047_parameters
+     ● create_rfc2047_parameters
 
-���ε�ǽ�ϡ�create_rfc2047�ѥå��Ǽ¸����Ƥ��ޤ���
+この機能は、create_rfc2047パッチで実現しています。
    
- 2. �����¸ʸ���к�
+ 2. 機種依存文字対策
    
-     �� sanitize_ja_chars
+     ● sanitize_ja_chars
 
-���ε�ǽ�� sanitize_ja_chars�ѥå��Ǽ¸����Ƥ��ޤ���
+この機能は sanitize_ja_charsパッチで実現しています。
    
-2.3 �����ʵ�ǽ���ɲ�
+2.3 便利な機能の追加
 
-�����Ĥ��������ʵ�ǽ��Ȥ���������ꥪ�ץ������ɲä��Ƥ��ޤ������Τ褦�ʤ��
-������ޤ����ܺ٤� manual-ja-patch.ja.html ������������
+いくつかの便利な機能を使うための設定オプションを追加しています。次のようなもの
+があります。詳細は manual-ja-patch.ja.html をご覧下さい。
 
-2.3.1 �᡼��󥰥ꥹ�Ȥ� Subject prefix �κ��
+2.3.1 メーリングリストの Subject prefix の削除
    
-   �� delete_prefix
-   �� delete_regexp
+   ・ delete_prefix
+   ・ delete_regexp
 
-���ε�ǽ�ϡ�delete_prefix �ѥå��Ǽ¸����Ƥ��ޤ���
+この機能は、delete_prefix パッチで実現しています。
    
    
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-3. ư���ǧ�Ķ�
+3. 動作確認環境
 
-���ߤΥС������Ǥϰʲ��δĶ���ư���ǧ�򤷤Ƥ��ޤ���
+現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 8.1    iwcn        Oota Toshiya (/usr/ports�Ķ��ǥƥ���)
+1) FreeBSD 8.1    iwcn        Oota Toshiya (/usr/ports環境でテスト)
 
-���ץ����ΰ�̣
+オプションの意味
 
- �� I: C �饤�֥��˼�������Ƥ��� iconv
- �� i: Bruno ��� libiconv
- �� W: C �饤�֥��˼�������Ƥ���磻��ʸ���ؿ�
- �� w: Mutt ��°�Υ磻��ʸ���ؿ� (--without-wc-funcs)
- �� c: ncurses�饤�֥��
- �� s: libslang2�饤�֥��
+ ● I: C ライブラリに実装されている iconv
+ ● i: Bruno 氏の libiconv
+ ● W: C ライブラリに実装されているワイド文字関数
+ ● w: Mutt 付属のワイド文字関数 (--without-wc-funcs)
+ ● c: ncursesライブラリ
+ ● s: libslang2ライブラリ
 
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-4. ���󥹥ȡ��������
+4. インストールと設定
 
-4.1 ����������Υ��󥹥ȡ���
+4.1 ソースからのインストール
 
-���󥹥ȡ���˴ؤ��Ƥ� INSTALL.JA-PATCH ���ɤ߲��������ʤ���mutt-j ML �Υ��
-�С��μ�ˤ�� FreeBSD��NetBSD��Linux(RedHat�ϡ�Debian)�ѤΥѥå���������������
-�Ƥ��ޤ����ܤ����� http://www.emaillab.org/mutt/download15.html�Υڡ���������
-��������
+インストールに関しては INSTALL.JA-PATCH をお読み下さい。なお、mutt-j ML のメン
+バーの手により FreeBSD、NetBSD、Linux(RedHat系、Debian)用のパッケージが作成され
+ています。詳しくは http://www.emaillab.org/mutt/download15.htmlのページをご覧く
+ださい。
 
-�ޤ������󥹥ȡ��������˴ؤ������Ω��ʸ��ؤΥ�󥯤� http://
-www.emaillab.org/mutt/�Υɥ�����ȤΥ����ʡ��ˤ���ޤ��Τǡ����٤�����������
-��
+また、インストールや設定に関して役に立つ文書へのリンクが http://
+www.emaillab.org/mutt/のドキュメントのコーナーにありますので、一度ご覧ください
+。
 
-4.2 ports�ǤΥ��󥹥ȡ���
+4.2 portsでのインストール
 
-FreeBSD �Ǥϡ�2011ǯ1��ʹߡ��ѥå���ۼ�����ports���󶡤���Ƥ��ޤ���
-FreeBSD�Ǥ����ѤκݤˤϤ���������Ѥ���������
+FreeBSD では、2011年1月以降、パッチを吸収したportsが提供されています。
+FreeBSDでご利用の際にはこちらをご利用ください。
 
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-5. ��Ϣ���
+5. 関連リンク
 
- �� Mutt Home Page
+ ● Mutt Home Page
    
-     �� http://www.mutt.org/
+     ○ http://www.mutt.org/
        
-     �� Mutt �ܲȤΥڡ���
+     ○ Mutt 本家のページ
        
- �� Mutt Japanese Edition
+ ● Mutt Japanese Edition
    
-     �� http://www.emaillab.org/mutt/
+     ○ http://www.emaillab.org/mutt/
        
-     �� Mutt ���ܸ��ǤΥڡ���
+     ○ Mutt 日本語版のページ
        
- �� Japanese Mutt Manual
+ ● Japanese Mutt Manual
    
-     �� http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/
+     ○ http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/
        
-     �� �͸��������������ˤ�� Mutt �Υޥ˥奢���ˮ��
+     ○ 人見さんと西岡さんによる Mutt のマニュアルの邦訳
        
- �� Ribbon's Home Page
+ ● Ribbon's Home Page
    
-     �� http://www.geocities.co.jp/SiliconValley-PaloAlto/2594/
+     ○ http://www.geocities.co.jp/SiliconValley-PaloAlto/2594/
        
-     �� mutt-j ML �Υ��ƥʡ������Ĥ���Υڡ�����mutt-j ML �Υ��������֤�����
-        ��
+     ○ mutt-j ML のメンテナーの太田さんのページ。mutt-j ML のアーカイブがある
+        。
        
-        mutt-1.2.x-jp �ξ��󤬤��롣
+        mutt-1.2.x-jp の情報がある。
        
-������������������������������������������������������������������������������ 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
-6. ����¾
+6. その他
 
-6.1 �����
+6.1 著作権等
 
-Mutt ���ܸ��Ǥϰʲ��˵󤲤�ͤ����Ǥʤ� mutt-j ML �Υ��С��ζ��Ϥˤ�곫ȯ��
-�Ԥʤ��Ƥ��ޤ����ʤ������ߤμ��ޤȤ���濴�Ԥˤϥ᡼�륢�ɥ쥹�θ���� '*'
-���դ��ޤ������Х��䤪��������������ޤ����顢mutt-j ML ���뤤�ϼ��ޤȤ����
-���Ԥ˥᡼������겼������
+Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバーの協力により開発が
+行なわれています。なお、現在の取りまとめの中心者にはメールアドレスの後ろに '*'
+を付けました。バグやおかしい点がありましたら、mutt-j ML あるいは取りまとめの中
+心者にメールをお送り下さい。
 
-6.1.1 ���ܸ�ѥå�
+6.1.1 日本語パッチ
 
- �� Copyright (C) 2000-2010 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+ ・ Copyright (C) 2000-2010 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
    
- �� Copyright (C) 2000 Yukinori YOSHIDA <yyo@pjs.nevt.nec.co.jp>
+ ・ Copyright (C) 2000 Yukinori YOSHIDA <yyo@pjs.nevt.nec.co.jp>
    
- �� Copyright (C) 2000 Kawaguti Ginga <ginga@ginganet.org>
+ ・ Copyright (C) 2000 Kawaguti Ginga <ginga@ginganet.org>
    
- �� Oota Toshiya <ribbon@users.sourceforge.jp> *
+ ・ Oota Toshiya <ribbon@users.sourceforge.jp> *
    
-6.1.2 ��å���������������ˮ��
+6.1.2 メッセージカタログの邦訳
 
- �� Kikutani Makoto <kikutani@galaxy.net>
+ ・ Kikutani Makoto <kikutani@galaxy.net>
    
- �� Oota Toshiya <ribbon@users.sourceforge.jp>
+ ・ Oota Toshiya <ribbon@users.sourceforge.jp>
    
- �� "TAKAHASHI��Tamotsu" <tamo@momonga-linux.org> *
+ ・ "TAKAHASHI、Tamotsu" <tamo@momonga-linux.org> *
    
-6.1.3 �ޥ˥奢���ˮ��
+6.1.3 マニュアルの邦訳
 
- �� Takuhiro Nishioka <takuhiro@super.win.ne.jp>
+ ・ Takuhiro Nishioka <takuhiro@super.win.ne.jp>
    
- �� Kohtaro Hitomi <hitomi@hiei.kit.ac.jp>
+ ・ Kohtaro Hitomi <hitomi@hiei.kit.ac.jp>
    
-6.1.4 �ޥ˥奢��ʳ���ʸ���ˮ��������
+6.1.4 マニュアル以外の文書の邦訳・英訳
 
- �� TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+ ・ TAKIZAWA Takashi <taki@cyber.email.ne.jp>
    
- �� "TAKAHASHI��Tamotsu" <tamo@momonga-linux.org>
+ ・ "TAKAHASHI、Tamotsu" <tamo@momonga-linux.org>
    
- �� Kawaguti Ginga <ginga@ginganet.org>
+ ・ Kawaguti Ginga <ginga@ginganet.org>
    
- �� SHIOZAKI Takehiko <takehiko.shiozaki@reuters.co.jp>
+ ・ SHIOZAKI Takehiko <takehiko.shiozaki@reuters.co.jp>
    
-6.2 ����¾
+6.2 その他
 
-���ܸ�ѥå�����°ʸ��� DocBook/XML ���� SHINGUU Atsuhiro
-<icebell@fujii-kiso.co.jp> �ˤ�äƹԤ��ޤ�����
+日本語パッチの付属文書の DocBook/XML 化は SHINGUU Atsuhiro
+<icebell@fujii-kiso.co.jp> によって行われました。
 
-6.2.1 �켡������
+6.2.1 一次配布先
 
-���ܸ첽�ѥå��ΰ켡������� http://mutt-j.sourceforge.jp/ �Ǥ���
+日本語化パッチの一次配布先は http://mutt-j.sourceforge.jp/ です。
 
-6.2.2 �饤����
+6.2.2 ライセンス
 
-���ܸ첽�ѥå��ϥ��ꥸ�ʥ�� Mutt ��Ʊ�ͤ�̵�ݾڤǤ��ꡢFree Software
-Foundation �� GNU General Public License Version 2 �˽��ä����ۤ���ӽ�����Ԥ�
-���Ȥ��Ǥ��ޤ���GNU General Public License Version 2 �˴ؤ��Ƥϥ��ꥸ�ʥ��Mutt
-�Υѥå������˴ޤޤ�Ƥ��� GPL ���ɤ߲�������
+日本語化パッチはオリジナルの Mutt と同様に無保証であり、Free Software
+Foundation の GNU General Public License Version 2 に従って配布および修正を行う
+ことができます。GNU General Public License Version 2 に関してはオリジナルのMutt
+のパッケージに含まれている GPL をお読み下さい。
 
-6.2.3 �᡼��󥰥ꥹ��
+6.2.3 メーリングリスト
 
-�ܲȤΥ᡼��󥰥ꥹ�Ȥ� http://www.mutt.org/ ��������������
+本家のメーリングリストは http://www.mutt.org/ をご覧ください。
 
-mutt-j ML �� sourceforge.jp �������������ޤ��ΤǤ�����򻲾Ȥ��Ƥ���������
+mutt-j ML は sourceforge.jp 上に説明がありますのでそちらを参照してください。
