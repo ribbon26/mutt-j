@@ -2,7 +2,7 @@ Mutt 1.5.21用日本語版パッチインストール方法
 
 mutt-j 開発チーム
 
-Copyright (C) 2000-2010 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C) 2000-2011 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C) 2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -47,7 +47,7 @@ Mutt日本語版のコンパイル前に取りそろえておくもの
    
  ● GNU make(gmake)
    
- ● 日本語を表示できるターミナルエミュレータ─と日本語フォント
+ ● 日本語を表示できるターミナルエミュレータと日本語フォント
    
  ● C のプログラミングに関する多少の知識
    
@@ -84,6 +84,8 @@ S-Lang をインストールする
 すでに，日本語パッチの当った S-Lang がインストールされている，あるいはオリジナ
 ルの S-Lang で SLANG_HAS_KANJI_SUPPORT が定義されてインストールされていれば次の
 項目に移ってください．
+FreeBSD環境では、ja-libslangパッケージを使用すると、UTF-8環境では正常に動作
+しません。ncursesかlibslang2パッケージを使用してください。
 
 適当なディレクトリに展開し，そのディレクトリに移ります．オリジナルの S-Lang の
 場合は src/sl-feat.h を次のように編集して，SLANG_HAS_KANJI_SUPPORT を 1 に定義
