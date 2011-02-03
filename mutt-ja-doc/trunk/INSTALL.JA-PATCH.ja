@@ -61,7 +61,7 @@ Mutt日本語版をコンパイルするため必要なもの
    
  ● mutt-1.5.x用日本語パッチ
    
- ● S-Lang
+ ● S-Langまたはncurses
    
  ● 文字符号化方式の変換関数 iconv を実装している C ライブラリで日本語の文字符
     号化方式と UTF-8 に対応しているもの（恐らく，GNU/Linux(glibc-2.2)，Solaris
@@ -93,7 +93,9 @@ FreeBSD環境では、ja-libslangパッケージを使用すると、UTF-8環境
 
     #define SLANG_HAS_KANJI_SUPPORT         1
 
-コンパイルします．
+コンパイルします。configureスクリプトを変更するため、autoconf/automake
+が起動し、configureスクリプトを作り替えるはずです。そうならない場合には、
+autoconf/automakeが使えない状態になっています。インストールしてください。
 
     $ ./configure --prefix=/usr/local
     $ make
