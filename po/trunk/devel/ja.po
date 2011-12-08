@@ -3,15 +3,15 @@
 # Copyright (C) 2002, 2003, 2004, 2005, 2007, 2008 mutt-j ML members.
 # FIRST AUTHOR Kikutani Makoto <kikutani@Galaxy.net>, 1999.
 # 2nd AUTHOR OOTA,Toshiya <ribbon@users.sourceforge.net>, 2002.
-#  (with TAKAHASHI Tamotsu <tamo@momonga-linux.org>, 2003, 2004, 2005, 2007, 2008, 2009, 2011).
-# oota toshiya <ribbon@users.sourceforgew.net>, 2008.
+#  (with TAKAHASHI Tamotsu <ttakah@lapis.plala.or.jp>, 2003, 2004, 2005, 2007, 2008, 2009, 2011).
+# oota toshiya <ribbon@users.sourceforge.net>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.5.21\n"
 "Report-Msgid-Bugs-To: http://sourceforge.jp/tracker/?atid=1398&group_id=351\n"
-"POT-Creation-Date: 2011-09-19 13:39+0900\n"
-"PO-Revision-Date: 2011-09-19 15:04+0900\n"
+"POT-Creation-Date: 2011-12-08 09:57+0900\n"
+"PO-Revision-Date: 2011-12-08 10:08+0900\n"
 "Last-Translator: TAKAHASHI Tamotsu <ttakah@lapis.plala.or.jp>\n"
 "Language-Team: mutt-j <mutt-j-users@lists.sourceforge.jp>\n"
 "Language: Japanese\n"
@@ -2283,7 +2283,7 @@ msgstr "メッセージ %d を %s にコピー中..."
 msgid "Continue?"
 msgstr "継続?"
 
-#: init.c:60 init.c:1758 pager.c:50
+#: init.c:60 init.c:1759 pager.c:50
 #, c-format
 msgid "Not available in this menu."
 msgstr "このメニューでは利用できない。"
@@ -2355,122 +2355,122 @@ msgstr "%s は不明な整列方法"
 msgid "mutt_restore_default(%s): error in regexp: %s\n"
 msgstr "mutt_restore_default(%s): 正規表現でエラー: %s\n"
 
-#: init.c:1735 init.c:1848
+#: init.c:1736 init.c:1849
 #, c-format
 msgid "%s: unknown variable"
 msgstr "%s は不明な変数"
 
-#: init.c:1744
+#: init.c:1745
 #, c-format
 msgid "prefix is illegal with reset"
 msgstr "reset と共に使う接頭辞が不正"
 
-#: init.c:1750
+#: init.c:1751
 #, c-format
 msgid "value is illegal with reset"
 msgstr "reset と共に使う値が不正"
 
-#: init.c:1786 init.c:1798
+#: init.c:1787 init.c:1799
 #, c-format
 msgid "Usage: set variable=yes|no"
 msgstr "使用法: set 変数=yes|no"
 
-#: init.c:1806
+#: init.c:1807
 #, c-format
 msgid "%s is set"
 msgstr "%s は設定されている"
 
-#: init.c:1806
+#: init.c:1807
 #, c-format
 msgid "%s is unset"
 msgstr "%s は解除されている"
 
-#: init.c:1909
+#: init.c:1910
 #, c-format
 msgid "Invalid value for option %s: \"%s\""
 msgstr "変数 %s には不正な値: \"%s\""
 
-#: init.c:2046
+#: init.c:2047
 #, c-format
 msgid "%s: invalid mailbox type"
 msgstr "%s は不正なメールボックス形式"
 
-#: init.c:2077
+#: init.c:2078
 #, c-format
 msgid "%s: invalid value (%s)"
 msgstr "%s: 不正な値 (%s)"
 
-#: init.c:2078
+#: init.c:2079
 msgid "format error"
 msgstr "書式エラー"
 
-#: init.c:2078
+#: init.c:2079
 msgid "number overflow"
 msgstr "数字が範囲外"
 
-#: init.c:2138
+#: init.c:2139
 #, c-format
 msgid "%s: invalid value"
 msgstr "%s は不正な値"
 
-#: init.c:2179
+#: init.c:2180
 #, c-format
 msgid "%s: Unknown type."
 msgstr "%s は不明なタイプ"
 
-#: init.c:2206
+#: init.c:2207
 #, c-format
 msgid "%s: unknown type"
 msgstr "%s は不明なタイプ"
 
-#: init.c:2268
+#: init.c:2269
 #, c-format
 msgid "Error in %s, line %d: %s"
 msgstr "%s 中の %d 行目でエラー: %s"
 
 #. the muttrc source keyword
-#: init.c:2291
+#: init.c:2292
 #, c-format
 msgid "source: errors in %s"
 msgstr "source: %s 中でエラー"
 
-#: init.c:2292
+#: init.c:2293
 #, c-format
 msgid "source: reading aborted due too many errors in %s"
 msgstr "source: %s 中にエラーが多すぎるので読み出し中止"
 
-#: init.c:2306
+#: init.c:2307
 #, c-format
 msgid "source: error at %s"
 msgstr "source: %s でエラー"
 
-#: init.c:2311
+#: init.c:2312
 msgid "source: too many arguments"
 msgstr "source: 引数が多すぎる"
 
-#: init.c:2365
+#: init.c:2366
 #, c-format
 msgid "%s: unknown command"
 msgstr "%s: 不明なコマンド"
 
-#: init.c:2850
+#: init.c:2851
 #, c-format
 msgid "Error in command line: %s\n"
 msgstr "コマンドラインでエラー: %s\n"
 
-#: init.c:2923
+#: init.c:2924
 msgid "unable to determine home directory"
 msgstr "ホームディレクトリを識別できない"
 
-#: init.c:2931
+#: init.c:2932
 msgid "unable to determine username"
 msgstr "ユーザ名を識別できない"
 
-#: init.c:3167
+#: init.c:3168
 msgid "-group: no group name"
 msgstr "-group: グループ名がない"
 
-#: init.c:3177
+#: init.c:3178
 msgid "out of arguments"
 msgstr "引数が少なすぎる"
 
@@ -4077,16 +4077,20 @@ msgstr "%s は標準ファイルではない。"
 msgid "Could not open %s"
 msgstr "%s をオープンできなかった"
 
-#: sendlib.c:2414
+#: sendlib.c:2350
+msgid "$sendmail must be set in order to send mail."
+msgstr "$sendmail を指定しないとメールを送信できない。"
+
+#: sendlib.c:2421
 #, c-format
 msgid "Error sending message, child exited %d (%s)."
 msgstr "メッセージ送信エラー。子プロセスが %d (%s) で終了した。"
 
-#: sendlib.c:2420
+#: sendlib.c:2427
 msgid "Output of the delivery process"
 msgstr "配信プロセスの出力"
 
-#: sendlib.c:2594
+#: sendlib.c:2601
 #, c-format
 msgid "Bad IDN %s while preparing resent-from."
 msgstr "不正な IDN %s を resent-from の準備中に発見。"
