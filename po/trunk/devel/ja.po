@@ -2378,12 +2378,12 @@ msgstr "使用法: set 変数=yes|no"
 #: init.c:1807
 #, c-format
 msgid "%s is set"
-msgstr "%s は設定されている"
+msgstr "%s は設定済み"
 
 #: init.c:1807
 #, c-format
 msgid "%s is unset"
-msgstr "%s は解除されている"
+msgstr "%s は未設定"
 
 #: init.c:1910
 #, c-format
@@ -4070,7 +4070,7 @@ msgstr "%s はもはや存在しない!"
 #: sendlib.c:878
 #, c-format
 msgid "%s isn't a regular file."
-msgstr "%s は標準ファイルではない。"
+msgstr "%s は通常のファイルではない。"
 
 #: sendlib.c:1050
 #, c-format
