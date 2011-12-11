@@ -1,17 +1,17 @@
 # translation of ja.po to
 # Japanese messages for Mutt.
-# Copyright (C) 2002, 2003, 2004, 2005, 2007, 2008 mutt-j ML members.
+# Copyright (C) 2002, 2003, 2004, 2005, 2007, 2008, 2011 mutt-j ML members.
 # FIRST AUTHOR Kikutani Makoto <kikutani@Galaxy.net>, 1999.
 # 2nd AUTHOR OOTA,Toshiya <ribbon@users.sourceforge.net>, 2002.
 #  (with TAKAHASHI Tamotsu <ttakah@lapis.plala.or.jp>, 2003, 2004, 2005, 2007, 2008, 2009, 2011).
-# oota toshiya <ribbon@users.sourceforge.net>, 2008.
+# oota toshiya <ribbon@users.sourceforge.net>, 2008, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.5.21\n"
 "Report-Msgid-Bugs-To: http://sourceforge.jp/tracker/?atid=1398&group_id=351\n"
 "POT-Creation-Date: 2011-12-08 09:57+0900\n"
-"PO-Revision-Date: 2011-12-08 10:14+0900\n"
+"PO-Revision-Date: 2011-12-11 19:41+0900\n"
 "Last-Translator: TAKAHASHI Tamotsu <ttakah@lapis.plala.or.jp>\n"
 "Language-Team: mutt-j <mutt-j-users@lists.sourceforge.jp>\n"
 "Language: Japanese\n"
@@ -4066,7 +4066,6 @@ msgstr "boundary パラメータがみつからない! [このエラーを報告せよ]"
 msgid "%s no longer exists!"
 msgstr "%s はもはや存在しない!"
 
-# regular file って「通常ファイル」ですか？
 #: sendlib.c:878
 #, c-format
 msgid "%s isn't a regular file."
