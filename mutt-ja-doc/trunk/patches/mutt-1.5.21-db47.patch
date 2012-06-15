@@ -1,0 +1,11 @@
+--- mutt-1.5.21/configure	2010-08-26 01:31:47.000000000 +0900
++++ mutt-1.5.21new/configure	2012-06-14 17:23:41.396688014 +0900
+@@ -10240,7 +10240,7 @@
+                 bdbpfx="$bdbpfx $d/$v"
+             done
+         done
+-        BDB_VERSIONS="db-4 db4 db-4.6 db4.6 db46 db-4.5 db4.5 db45 db-4.4 db4.4 db44 db-4.3 db4.3 db43 db-4.2 db4.2 db42 db-4.1 db4.1 db41 db ''"
++        BDB_VERSIONS="db-4 db4 db4-4.7 db-4.7 db4.7 db-4.6 db4.6 db46 db-4.5 db4.5 db45 db-4.4 db4.4 db44 db-4.3 db4.3 db43 db-4.2 db4.2 db42 db-4.1 db4.1 db41 db ''"
+         { $as_echo "$as_me:${as_lineno-$LINENO}: checking for BerkeleyDB > 4.0" >&5
+ $as_echo_n "checking for BerkeleyDB > 4.0... " >&6; }
+         for d in $bdbpfx; do
