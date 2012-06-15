@@ -1,8 +1,23 @@
+%bcond_with debug
+%bcond_without imap
+%bcond_without pop
+%bcond_without smtp
+%bcond_without gnutls
+%bcond_without gss
+%bcond_without sasl
+%bcond_without idn
+%bcond_without hcache
+%bcond_with tokyocabinet
+%bcond_with bdb
+%bcond_with qdbm
+%bcond_with gdbm
+%bcond_with gpgme
+
 Summary: A text mode mail user agent
 Name: mutt
-Version: 1.5.19
-Release: 1%{?dist}001
-Epoch: 1
+Version: 1.5.21
+Release: 7ja%{?dist}
+Epoch: 5
 # The entire source code is GPLv2+ except
 # pgpewrap.c setenv.c sha1.c wcwidth.c which are Public Domain
 License: GPLv2+ and Public Domain
@@ -10,25 +25,40 @@ Group: Applications/Internet
 Source: ftp://ftp.mutt.org/pub/mutt/devel/mutt-%{version}.tar.gz
 Source1: mutt_ldap_query
 Patch2: mutt-1.5.13-nodotlock.patch
-Patch3: mutt-1.5.19-muttrc.patch
-Patch4: mutt-1.5.19-manual.patch
-#Patch7: mutt-1.5.19-db47.patch
-#Patch11: mutt-1.5.19-wcwidth.0
-#Patch12: mutt-1.5.19params.0
-#Patch13: mutt-1.5.19-pgp_charsethack.0
-#Patch14: mutt-1.5.19-sanitize_ja_char.0
-#Patch15: mutt-1.5.19-default_japanese.0
-#Patch16: mutt-1.5.19-msgid.0
-#Patch17: mutt-1.5.19-delete_prefix.0
+Patch3: mutt-1.5.18-muttrc.patch
+Patch4: mutt-1.5.18-manual.patch
+Patch5: mutt-1.5.21-updating.patch
+Patch6: mutt-1.5.21-hdrcnt.patch
+Patch7: mutt-1.5.21-testcert.patch
+Patch8: mutt-1.5.21.tt+yy.delete_prefix.1
+Patch9: mutt-1.5.21.tt.sanitize_ja_char.1
+Patch10: mutt-1.5.21.tt.wcwidth.1
+Patch11: mutt-1.5.21.tt.create_rfc2047_params.1
+Patch12: mutt-1.5.21-db47.patch
 Url: http://www.mutt.org/
-Requires: mailcap 
+Requires: mailcap urlview
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires: /usr/sbin/sendmail
-BuildRequires: cyrus-sasl-devel db4-devel krb5-devel ncurses-devel
-BuildRequires: libidn-devel gettext
+BuildRequires: ncurses-devel
+BuildRequires: gettext
+BuildRequires: automake
 # required to build documentation
-BuildRequires: docbook-style-xsl libxslt
-BuildRequires: automake autoconf
+BuildRequires: docbook-style-xsl libxslt lynx
+
+%if %{with hcache}
+%{?with_tokyocabinet:BuildRequires: tokyocabinet-devel}
+%{?with_bdb:BuildRequires: db4-devel}
+%{?with_qdbm:BuildRequires: qdbm-devel}
+%{?with_gdbm:BuildRequires: gdbm-devel}
+%endif
+%if %{with imap} || %{with pop} || %{with smtp}
+%{?with_gnutls:BuildRequires: gnutls-devel}
+%{?with_sasl:BuildRequires: cyrus-sasl-devel}
+%endif
+%if %{with imap}
+%{?with_gss:BuildRequires: krb5-devel}
+%endif
+%{?with_idn:BuildRequires: libidn-devel}
+%{?with_gpgme:BuildRequires: gpgme-devel}
 
 %description
 Mutt is a small but very powerful text-based MIME mail client.  Mutt
@@ -39,32 +69,56 @@ for selecting groups of messages.
 
 %prep
 %setup -q
-# %patch1 -p1 -b .md5
-./prepare -V
+#./prepare -V
 # Thou shalt use fcntl, and only fcntl
-# %patch2 -p1 -b .nodl
+%patch2 -p1 -b .nodl
 %patch3 -p1 -b .muttrc
 %patch4 -p1 -b .manual
-#%patch7 -p1 -b .db47
-#%patch11 -p1 -b .wcwidth.0
-#%patch12 -p1 -b .create_params
-#%patch13 -p1 -b .pgp_charsethack
-#%patch14 -p1 -b .sanitize_ja_char
-#%patch15 -p1 -b .default_japanese
-#%patch16 -p1 -b .msgid
-#%patch17 -p1 -b .delete_prefix
+%patch5 -p1 -b .updating
+%patch6 -p1 -b .hdrcnt
+%patch7 -p1 -b .testcert
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+
+sed -i.gpgerror 's/`$GPGME_CONFIG --libs`/"\0 -lgpg-error"/' configure
+
 install -p -m644 %{SOURCE1} mutt_ldap_query
+
+%define hgreldate \\.(201[0-9])([0-1][0-9])([0-3][0-9])hg
+if echo %{release} | grep -E -q '%{hgreldate}'; then
+	echo -n 'const char *ReleaseDate = ' > reldate.h
+	echo %{release} | sed -r 's/.*%{hgreldate}.*/"\1-\2-\3";/' >> reldate.h
+fi
 
 %build
 %configure \
-	--enable-pop --enable-imap --enable-debug\
-	--enable-smtp \
-	--with-sasl \
-	--with-idn \
-	--enable-inodesort \
-	--enable-hcache \
-	 --enable-cjk-ambiguous-width \
-	--with-docdir=%{_docdir}/%{name}-%{version}
+		SENDMAIL=%{_sbindir}/sendmail \
+		ISPELL=%{_bindir}/hunspell \
+%{?with_debug:	--enable-debug}\
+%{?with_pop:	--enable-pop}\
+%{?with_imap:	--enable-imap} \
+%{?with_smtp:	--enable-smtp} \
+%if %{with hcache}
+		--enable-hcache \
+%{!?with_tokyocabinet:	--without-tokyocabinet} \
+%{!?with_gdbm:	--without-gdbm} \
+%{!?with_qdbm:	--without-qdbm} \
+%endif
+%if %{with imap} || %{with pop} || %{with smtp}
+%{?with_gnutls:	--with-gnutls} \
+%{?with_sasl:	--with-sasl} \
+%endif
+%if %{with imap}
+%{?with_gss: 	--with-gss} \
+%endif
+%{!?with_idn:	--without-idn} \
+%{?with_gpgme:	--enable-gpgme} \
+		--enable-cjk-ambiguous-width \
+		--with-docdir=%{_docdir}/%{name}-%{version}
+
 make %{?_smp_mflags}
 
 %install
@@ -78,11 +132,7 @@ cat contrib/gpg.rc >> \
 grep -5 "^color" contrib/sample.muttrc >> \
 	$RPM_BUILD_ROOT%{_sysconfdir}/Muttrc
 
-# and we use aspell
 cat >> $RPM_BUILD_ROOT%{_sysconfdir}/Muttrc <<EOF
-# use aspell
-set ispell="%{_bindir}/aspell --mode=email check"
-
 source %{_sysconfdir}/Muttrc.local
 EOF
 
@@ -90,9 +140,8 @@ echo "# Local configuration for Mutt." > $RPM_BUILD_ROOT%{_sysconfdir}/Muttrc.lo
 
 # remove unpackaged files from the buildroot
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/{*.dist,mime.types}
-rm -f $RPM_BUILD_ROOT%{_bindir}/{flea,muttbug}
-#rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{flea,muttbug,mutt_dotlock}.1*
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{flea,muttbug}.1*
+rm -f $RPM_BUILD_ROOT%{_bindir}/{flea,muttbug,mutt_dotlock}
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{flea,muttbug,mutt_dotlock}.1*
 rm -f $RPM_BUILD_ROOT%{_mandir}/man5/{mbox,mmdf}.5*
 
 %find_lang %{name}
@@ -111,14 +160,106 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/pgpring
 %{_bindir}/pgpewrap
 %{_bindir}/smime_keys
-%{_bindir}/mutt_dotlock
 %{_mandir}/man1/mutt.*
-%{_mandir}/man1/mutt_dotlock*
+%{_mandir}/man1/smime_keys.*
 %{_mandir}/man5/muttrc.*
 
 %changelog
-* Wed Feb 06 2008 Oota Toshiya <ribbon@users.sourceforge.jp> 1.5.17-1
-- apply Japanese patch
+* Fri Jun 15 2012 Oota Toshiya <ribbon@users.sourceforge.jp>
+- Include Ja patches.
+
+* Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5:1.5.21-7
+- Rebuilt for glibc bug#747377
+
+* Wed Jun 29 2011 Honza Horak <hhorak@redhat.com> - 5:1.5.21-6
+- Fixed message indexes when skipping fetch response (mutt bug #3288)
+
+* Fri Apr 15 2011 Honza Horak <hhorak@redhat.com> - 5:1.5.21-5
+- Fixed hostname verification of x.509 certificates.
+  (rhbz#688756, CVE-2011-1429)
+
+* Tue Mar 29 2011 Honza Horak <hhorak@redhat.com> - 5:1.5.21-4
+- Fixed segmentation faults during reading message headers (rhbz#676074)
+
+* Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5:1.5.21-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
+* Wed Sep 29 2010 jkeating - 5:1.5.21-2
+- Rebuilt for gcc bug 634757
+
+* Tue Sep 21 2010 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.21-1
+- update to 1.5.21
+- link with gpg-error when building with gpgme support (#621626)
+
+* Fri Jul 30 2010 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.20-3.20100718hg1a35f0
+- update to hg snapshot 20100718hg1a35f0
+
+* Thu Dec 17 2009 Deji Akingunola <dakingun@gmail.com> - 5:1.5.20-2.20091214hg736b6a.1
+- Rebuild for tokyocabinet new release soname bump
+
+* Wed Dec 16 2009 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.20-2.20091214hg736b6a
+- update to hg snapshot 20091214hg736b6a
+
+* Fri Sep 18 2009 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.20-1.20090827hg605559
+- update to post 1.5.20 hg snapshot (#515148)
+- use hunspell by default (#510358)
+
+* Sat Jul 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5:1.5.19-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
+
+* Tue Jun 09 2009 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.19-5
+- fix certificate verification (CVE-2009-1390)
+- add support for gnutls INSECURE_ALGORITHM error code (#499390) 
+
+* Wed Apr 01 2009 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.19-4
+- use PATH_MAX for buffers passed to realpath (#492861)
+- unconditionally inode-sort Maildir and MH folders
+- restore connection polling callback when closing SASL connection
+
+* Wed Feb 25 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5:1.5.19-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
+* Wed Jan 14 2009 Alex Lancaster <alexlan[AT]fedoraproject org> - 5:1.5.19-2
+- Rebuild for deps
+
+* Wed Jan 07 2009 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.19-1
+- update to 1.5.19
+- switch hcache backend to tokyocabinet
+- drop intr patch
+
+* Mon Jul 28 2008 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.18-4
+- rebuild with db4.7 (Robert Scheck) (#455144)
+
+* Wed Jun 25 2008 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.18-3
+- buildrequire aspell (#452133)
+- rebuild with new gnutls
+
+* Mon Jun 02 2008 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.18-2
+- allow interrupts when reading, writing or closing sockets (#447887)
+- fix possible crash when opening IMAP mailbox
+
+* Mon May 19 2008 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.18-1
+- update to 1.5.18
+
+* Fri Apr 04 2008 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.17-4
+- fix sending long commands when using gnutls (#438275)
+- glob tilde in smime_keys (#424311)
+- fix awk script in mutt_ldap_query
+- force building with libdb
+- make enabling/disabling features in spec easier
+
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 5:1.5.17-3
+- Autorebuild for GCC 4.3
+
+* Fri Nov 23 2007 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.17-2
+- don't ignore $from in batch send mode (#392861)
+- check Maildir for not being NULL when expanding '='-paths
+- prevent mailto parsing buffer overflow by ignoring too long header
+- use strtok_r() to parse mailto: links, not strtok()
+- update UPDATING
+
+* Fri Nov 02 2007 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.17-1
+- update to 1.5.17
 
 * Mon Sep 17 2007 Miroslav Lichvar <mlichvar@redhat.com> 5:1.5.16-4
 - fix md5 on big-endian systems
