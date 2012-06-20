@@ -1,9 +1,9 @@
 		Mutt 1.5.21用日本語版パッチリリースノート
 
-							2011/03/24
+							2011/06/20
 							mutt-j 開発チーム
 
-Copyright (C)2000-2011 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C)2000-2012 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -23,6 +23,9 @@ Copyright (C)2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
 3. 動作確認環境
 
 4. インストールと設定
+4.1 ソースからのインストール
+4.2 portsでのインストール
+4.3 CentOSでのRPMインストール
 
 5. 関連リンク
 
@@ -192,6 +195,49 @@ www.emaillab.org/mutt/のドキュメントのコーナーにありますので�
 
 FreeBSD では、2011年1月以降、パッチを吸収したportsが提供されています。
 FreeBSDでご利用の際にはこちらをご利用ください。
+
+4.3 CentOSでのRPMインストール
+CentOSではRPMでインストールできるように、SPECファイルを提供しています。
+現在の所、CentOS 6.2でのみ評価しています。
+4.3.1 ベースとなるSRPMの入手
+CentOSでは、Fedora用のSRPMファイルを元に、mutt日本語パッチを適用して
+RPMファイルを作ります。ベースとなるSRPMファイルはFedora 16用を使って
+います。このファイルは、たとえば
+http://rpm.pbone.net/index.php3/stat/26/dist/82/size/3745549/name/mutt-1.5.21-7.fc16.src.rpm
+から入手することが出来ます。
+4.3.2 ファイルの展開
+CentOS6から、RPMの作成は一般ユーザでも出来ますが、muttの場合は、
+最終段階でroot権限が必要なため、最初からrootで作業してください。
+root権限になった後に、
+
+# rpm -ihv mutt-1.5.21-7.fc16.src.rpm
+
+で、srpmファイルを展開してください。展開すると/root直下に
+rpmbuildというディレクトリが出来、その中にソースファイルが
+展開されます。
+
+4.3.3 日本語版パッチ、SPECファイルの展開
+
+日本語版パッチファイルの中から、実際にソースコードに適用する
+パッチ
+mutt-1.5.21-db47.patch
+mutt-1.5.21.tt.create_rfc2047_params.1
+mutt-1.5.21.tt.sanitize_ja_char.1
+mutt-1.5.21.tt.wcwidth.1
+mutt-1.5.21.tt+yy.delete_prefix.1
+を抜き出し、rpmbuild/SOURCESファイルに置いてください。また、
+CentOS用のSPECファイルを抜き出し、改名の上、rpmbuild/SPECS
+にあるmutt.specファイルを上書きしてください。
+
+4.3.4 コンパイル
+
+rpmbuild/SPECS ディレクトリに移動後、
+
+# rpmbuild -ba mutt.spec
+
+を実行してコンパイルしてください。実行時に必要なライブラリ等
+がない場合、エラーとなりますので、適宜追加してください。
+
 
 5. 文字化け対策
 
