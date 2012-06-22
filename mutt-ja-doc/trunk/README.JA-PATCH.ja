@@ -1,6 +1,6 @@
 		Mutt 1.5.21用日本語版パッチリリースノート
 
-							2011/06/21
+							2011/06/22
 							mutt-j 開発チーム
 
 Copyright (C)2000-2012 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -109,6 +109,12 @@ usage-japanese.ja.html をご覧下さい。
      ● sanitize_ja_chars
 
 この機能は sanitize_ja_charsパッチで実現しています。
+また、これらの機能を既定値で有効にするため、assumed_charset の
+既定値を
+
+"iso-2022-jp:utf-8:euc-jp:shift_jis"
+
+に変更しています。
 
  3. UCS文字の文字幅対策
 
