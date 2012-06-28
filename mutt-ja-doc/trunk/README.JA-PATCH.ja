@@ -1,6 +1,6 @@
 		Mutt 1.5.21用日本語版パッチリリースノート
 
-							2011/06/22
+							2011/06/28
 							mutt-j 開発チーム
 
 Copyright (C)2000-2012 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -253,63 +253,11 @@ rpmbuild/SPECS ディレクトリに移動後、
 　localeがUTF-8の場合、muttでUnicodeの記号等を表示させようとすると、カーソル
 位置が正常に移動しなかったり、文字が化けたりすることがあります。これは、Unicode
 の仕様で、いくつかの文字について ambiguous character widthという特別な定義
-がなされているからです。ambiguous character widthは、コンソールのような、
-表示する文字幅が一義的に決まっている場合に、1バイト幅で表示するか、2バイト
-幅で表示するかをアプリケーション側が決める事を意味します。そのため、
-アプリケーション側が認識している文字幅と、コンソール側が認識している文字幅が
-異なる場合、画面の表示がうまくいかず、文字が化けたりすることがあります。
-たとえばmuttをWindows環境のteratermで表示した場合、この現象が発生します。
-　muttそのものは、ambiguous character width を意識した文字処理を行って
-いますが、muttが使う画面表示ライブラリが同じような処理を行っていない場合、
-結果としてうまくいきません。
-　対応策はmuttと同じような処理を画面表示ライブラリに組み込む事になります。
-　なお、対応策を行っても、環境によってはうまく動かない可能性があります。
-副作用が出る場合もあります。十分に検証してください。
-
-5.1 FreeBSDでの対応方法
-
-　FreeBSDで、ncursesを使う場合、ncursesがシステム側のwcwidthライブラリ
-(実際には__wcwidth())を呼び出します。この関数はシステムの関数であり、
-引数として渡された文字の文字幅を返します。実際には、/usr/share/locale/
-(localeの値)/LC_CTYPE を参照して文字幅を確定しています。localeが
-ja_JP.UTF-8の場合には、/usr/share/locale/UTF-8/LC_CTYPE が対応する
-テーブルになります。このファイルはバイナリファイルで、ソースは、
-/usr/src/share/mklocale/UTF-8.src がソースです。これをmklocaleで
-コンパイルしています。このテーブルを書き換える事により、文字化けが
-なくなります。
-  書き換えたテーブルは、samples/UTF-9.src というファイルです。他の
-localeと異なることがすぐに分かるよう、UTF-9という名前にしています。
-これをmklocaleで変換してください。そして、
-
-  #cd /usr/share/locale
-  #cp -pr ja_JP.UTF-8 ja_JP.UTF-9
-
-とし、新たに生成されたバイナリファイルをja_JP.UTF-9/LC_CTYPEとして
-ください。
-  その後、使用するlocaleを
-
-  % setenv LC_ALL ja_JP.UTF-9
-
-とすることで、文字化けが解消されます。
-
-5.2 Linuxでの文字化け対策
-
-　Linuxでは、/usr/share/i18n/charmaps/UTF-8.gz が文字幅情報を含んでいる
-テーブルです。これを書き換えます。
-  ただし、直接書き換えるのは危険なので、新たにUTF-8-CJK.gzを作成します。
-手順は以下の通りです。
-
-   1. samples/UTF-8-CJK を用意する。
-   2. gzip で圧縮する。
-   3. rootになり、cp -p UTF-8-CJK.gz /usr/share/i18n/charmaps/ を実行する。
-   4. localedef -i ja_JP -c -f UTF-8-CJK ja_JP.UTF-8-CJK を実行する。 
-
-このあと、使用するlocaleを変更します。 tcshの場合は、
-
-  % setenv LANG ja_JP.utf8cjk
-
-とします。なお、上記はCentOS 4.xで行ったものです。ディストリビューション
-が異なる場合は方法が変わる可能性があります。
+がなされているからです。
+　この問題を解決するためには、現在の所UNICODEテーブルそのものを書き換える
+必要があります。UTF-8.txtにその記述方法を記載していますので参照してください。
+　なお、表示文字コードをEUCにしている場合には問題は発生しません。その代わり、
+UNICODEで定義されている文字を表示できなくなります。
 
 
 6. 関連リンク
