@@ -1,6 +1,6 @@
 		Mutt 1.5.21用日本語版で使用するUTF-8改造について
 
-							2011/07/02
+							2011/07/05
 							mutt-j 開発チーム
 
 Copyright (C)2012 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -78,6 +78,8 @@ localeと異なることがすぐに分かるよう、UTF-9という名前にし
 テーブルです。これを書き換えます。このテーブルは、OS毎に異なります。そ
 の時点でのUNICODEバージョンに対応した表を取り込んでいるからです。
 
+2.2.1 新しいロケールを作る方法
+
 　変更の手順は以下の通りです。
 
    1. samples/UTF-8-CJK を用意する。
@@ -89,7 +91,17 @@ localeと異なることがすぐに分かるよう、UTF-9という名前にし
 
   % setenv LANG ja_JP.utf8cjk
 
-とします。なお、上記はCentOS 4.xで行ったものです。ディストリビューション
+2.2.2 既存のロケールを上書きする方法
+
+　変更の手順は以下の通りです。
+
+   1. samples/UTF-8 を用意する。
+   2. gzip で圧縮する。
+   3. rootになり、cp -p UTF-8.gz /usr/share/i18n/charmaps/ を実行する。
+   4. localedef --replace -i ja_JP -c -f UTF-8 ja_JP.UTF-8 を実行する。 
+
+
+とします。なお、上記はCentOS 6.2で行ったものです。ディストリビューション
 が異なる場合は方法が変わる可能性があります。
 
 
