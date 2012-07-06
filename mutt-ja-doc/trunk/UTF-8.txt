@@ -1,6 +1,6 @@
 		Mutt 1.5.21用日本語版で使用するUTF-8改造について
 
-							2011/07/05
+							2011/07/06
 							mutt-j 開発チーム
 
 Copyright (C)2012 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -10,7 +10,8 @@ Copyright (C)2012 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 1. はじめに
 2. 注意事項
-x. 関連リンク
+3. その他
+4. 関連リンク
 
 1. はじめに
 
@@ -91,19 +92,27 @@ localeと異なることがすぐに分かるよう、UTF-9という名前にし
 
   % setenv LANG ja_JP.utf8cjk
 
+　なお、上記はCentOS4で行ったものです。
+
 2.2.2 既存のロケールを上書きする方法
 
 　変更の手順は以下の通りです。
 
-   1. samples/UTF-8 を用意する。
-   2. gzip で圧縮する。
+   1. /usr/share/i18n/charmaps/UTF-8.gz をコピーし、回答する。
+   2. このファイルの末尾部分を、UTF-8.centos62.patchに差し替える。
+   3. 出来上がったファイルをgzip で圧縮する。
    3. rootになり、cp -p UTF-8.gz /usr/share/i18n/charmaps/ を実行する。
    4. localedef --replace -i ja_JP -c -f UTF-8 ja_JP.UTF-8 を実行する。 
 
-
-とします。なお、上記はCentOS 6.2で行ったものです。ディストリビューション
+なお、上記はCentOS 6.2で行ったものです。ディストリビューション
 が異なる場合は方法が変わる可能性があります。
 
+UNICODEテーブルを直接書き換えているため、「日本語以外での使用には
+副作用が出ます」。いわゆるASCII文字のみを使用して表示を行う分には
+問題ありませんが、それ以外の、UNICODE文字を使用する場合、文字幅が
+不正になる場合があります。
+
+3. その他
 
 東アジア向けの、ambiguous character width属性を持つ文字は、
 http://unicode.org/Public/UNIDATA/EastAsianWidth.txt に "A" という
@@ -113,21 +122,9 @@ http://unicode.org/Public/UNIDATA/EastAsianWidth.txt に "A" という
 
 で抜き出すことができます。
 
+4. 関連リンク
 
-2. 注意事項
-
-UNICODEテーブルを直接書き換えているため、「日本語以外での使用には
-副作用が出ます」。いわゆるASCII文字のみを使用して表示を行う分には
-問題ありませんが、それ以外の、UNICODE文字を使用する場合、文字幅が
-不正になる場合があります。
-
-
-x. 関連リンク
-
-
-2. 関連リンク
-
-x.1 UNICODE関連
+4.1 UNICODE関連
 
 ● 東アジア向けのwidthテーブル表
 
