@@ -1,12 +1,15 @@
-Mutt 1.5.21用日本語版パッチインストール方法
+	Mutt 1.5.21用日本語版パッチインストール方法
 
-mutt-j 開発チーム
+							2012/07/10
+							mutt-j 開発チーム
 
-Copyright (C) 2000-2011 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C) 2000-2012 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C) 2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
 Copyright (C) 2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+
+注意:このドキュメントは最新版に追従していません。
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
