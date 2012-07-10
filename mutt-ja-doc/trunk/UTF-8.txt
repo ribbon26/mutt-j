@@ -1,6 +1,6 @@
 		Mutt 1.5.21用日本語版で使用するUTF-8改造について
 
-							2011/07/06
+							2011/07/10
 							mutt-j 開発チーム
 
 Copyright (C)2012 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -9,7 +9,7 @@ Copyright (C)2012 Oota Toshiya <ribbon@users.sourceforge.jp>
 目次
 
 1. はじめに
-2. 注意事項
+2. 文字化けの理由
 3. その他
 4. 関連リンク
 
@@ -148,6 +148,3 @@ http://unicode.org/Public/UNIDATA/EastAsianWidth.txt に "A" という
        
 
   そのほか、EastAsianAmbiguous などのキーワードで検索すると情報が得られます。 
-
-
-
