@@ -140,8 +140,8 @@ echo "# Local configuration for Mutt." > $RPM_BUILD_ROOT%{_sysconfdir}/Muttrc.lo
 
 # remove unpackaged files from the buildroot
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/{*.dist,mime.types}
-rm -f $RPM_BUILD_ROOT%{_bindir}/{flea,muttbug,mutt_dotlock}
-rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{flea,muttbug,mutt_dotlock}.1*
+rm -f $RPM_BUILD_ROOT%{_bindir}/{flea,muttbug}
+rm -f $RPM_BUILD_ROOT%{_mandir}/man1/{flea,muttbug}.1*
 rm -f $RPM_BUILD_ROOT%{_mandir}/man5/{mbox,mmdf}.5*
 
 %find_lang %{name}
@@ -157,15 +157,17 @@ rm -rf $RPM_BUILD_ROOT
 %doc contrib/*.rc contrib/sample.* contrib/ca-bundle.crt contrib/colors.*
 %doc doc/manual.txt doc/smime-notes.txt
 %{_bindir}/mutt
+%{_bindir}/mutt_dotlock
 %{_bindir}/pgpring
 %{_bindir}/pgpewrap
 %{_bindir}/smime_keys
 %{_mandir}/man1/mutt.*
+%{_mandir}/man1/mutt_dotlock*
 %{_mandir}/man1/smime_keys.*
 %{_mandir}/man5/muttrc.*
 
 %changelog
-* Fri Jun 15 2012 Oota Toshiya <ribbon@users.sourceforge.jp>
+* Thu Aug 22 2012 Oota Toshiya <ribbon@users.sourceforge.jp>
 - Include Ja patches.
 
 * Wed Oct 26 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5:1.5.21-7
