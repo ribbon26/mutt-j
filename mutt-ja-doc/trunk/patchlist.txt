@@ -1,26 +1,9 @@
 BSD RPM  patchname
- o   x   extra-patch-aspell
-extra-patch-doc-ref
-extra-patch-doc-xml
-extra-patch-greeting
-extra-patch-ifdef
-extra-patch-maildir-mtime
-extra-patch-maildir-mtime-nntp
-extra-patch-no-mbox-manpage
-extra-patch-nodoc-contrib
-extra-patch-parent-child-match
-extra-patch-pgp-dw
-extra-patch-reverse_reply
-extra-patch-sidebar
-extra-patch-sidebar-nntp
-extra-patch-signature-menu
-extra-patch-smime-outlook
-extra-patch-trash-purge
-patch-02
-patch-05
-patch-08
-patch-Makefile.am
-patch-Makefile.am.doc
+ o   o   patch-02                                 w3mによるhtmlファイル作成を抑制
+ o   o   patch-05                                 curs_lib.c に対するパッチ
+ o   o   patch-08                                 Muttrc に followup_to=no を設定
+ o   o   patch-Makefile.am                        Makefile.amからmime.typeインストールを削除
+ o   o   patch-Makefile.am.doc                    同上
 patch-bdb
 patch-color-eol
 patch-configure.ac
