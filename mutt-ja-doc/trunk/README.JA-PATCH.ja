@@ -1,6 +1,7 @@
 		Mutt 1.5.21用日本語版パッチリリースノート
 
-							2011/09/06
+							2012/11/30
+							Ver 1.5.21-j2
 							mutt-j 開発チーム
 
 Copyright (C)2000-2012 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -17,29 +18,39 @@ Copyright (C)2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
 
 2. オリジナル版との違い
 2.1 オリジナル版のバグの修正
+2.2.1 カプセル化した転送メッセージの取り扱い
 2.2 日本語回りの実用上の問題の修正
 2.3 便利な機能の追加
-   
+2.3.1 メーリングリストの Subject prefix の削除
+2.4 FreeBSD portsからのパッチ取り込み
+
 3. 動作確認環境
 
 4. インストールと設定
 4.1 ソースからのインストール
 4.2 portsでのインストール
 4.3 CentOSでのRPMインストール
+4.3.1 ベースとなるSRPMの入手
+4.3.2 ファイルの展開
+4.3.3 日本語版パッチ、SPECファイルの展開
+4.3.4 コンパイル
 
-5. 関連リンク
+5. 文字化け対策
 
-6. その他
-6.1 著作権等
-6.1.1 日本語パッチ
-6.1.2 メッセージカタログの邦訳
-6.1.3 マニュアルの邦訳
-6.1.4 マニュアル以外の文書の邦訳・英訳
-6.2 その他
-6.2.1 一次配布先
-6.2.2 ライセンス
-6.2.3 メーリングリスト
-   
+6. 関連リンク
+
+7. その他
+7.1 著作権等
+7.1.1 日本語パッチ
+7.1.2 メッセージカタログの邦訳
+7.1.3 マニュアルの邦訳
+7.1.4 マニュアル以外の文書の邦訳・英訳
+7.2 その他
+7.2.1 一次配布先
+7.2.2 ライセンス
+7.2.3 メーリングリスト
+
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
 1. Mutt日本語版について
@@ -159,7 +170,13 @@ Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは、根�
    ・ delete_regexp
 
 この機能は、delete_prefix パッチで実現しています。
-   
+
+2.4 FreeBSD portsからのパッチ取り込み
+
+FreeBSDのportsには、数多くのパッチが適用されています。それらについて、力武健次
+さんが独自portsとして取り込んだものを用意されました。各パッチはFreeBSD以外の
+OSでも有用なので、今回その成果を取り込んであります。
+また、日本語版パッチと重複する部分があるため、db47パッチは削除しました。
    
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
@@ -167,9 +184,9 @@ Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは、根�
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 8.2    iws        Oota Toshiya (/usr/ports環境でテスト)
-2) FreeBSD 9.0    iws	     Oota Tochiya (/usr/ports環境でテスト)
-3) CentOS  6.3    Is         Oota Toshiya
+1) FreeBSD 8.3p4    iws        Oota Toshiya
+2) FreeBSD 9.1rc3   iws	       Oota Tochiya
+3) CentOS  6.3      Is         Oota Toshiya
 
 オプションの意味
 
@@ -177,7 +194,6 @@ Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは、根�
  ● i: Bruno 氏の libiconv
  ● W: C ライブラリに実装されているワイド文字関数
  ● w: Mutt 付属のワイド文字関数 (--without-wc-funcs)
- ● c: ncursesライブラリ
  ● s: libslang2ライブラリ
 
 ja-libslangではUTF-8環境において正常な動作をしません。
@@ -200,7 +216,8 @@ www.emaillab.org/mutt/のドキュメントのコーナーにありますので�
 4.2 portsでのインストール
 
 FreeBSD では、2011年1月以降、パッチを吸収したportsが提供されています。
-FreeBSDでご利用の際にはこちらをご利用ください。
+必ずしも最新版ではないので、バージョンを確認の上、FreeBSDでご利用の際には
+そちらをご利用ください。
 
 4.3 CentOSでのRPMインストール
 
@@ -228,12 +245,7 @@ rpmbuildというディレクトリが出来、その中にソースファイル
 4.3.3 日本語版パッチ、SPECファイルの展開
 
 日本語版パッチファイルの中から、実際にソースコードに適用する
-パッチ
-mutt-1.5.21-db47.patch
-mutt-1.5.21.tt.create_rfc2047_params.1
-mutt-1.5.21.tt.sanitize_ja_char.1
-mutt-1.5.21.tt.wcwidth.1
-mutt-1.5.21.tt+yy.delete_prefix.1
+パッチ(ディレクトリ patches配下)
 を抜き出し、rpmbuild/SOURCESファイルに置いてください。また、
 CentOS用のSPECファイルを抜き出し、改名の上、rpmbuild/SPECS
 にあるmutt.specファイルを上書きしてください。
@@ -284,11 +296,8 @@ UNICODEで定義されている文字を表示できなくなります。
    
      ○ http://www.geocities.co.jp/SiliconValley-PaloAlto/2594/
        
-     ○ mutt-j ML のメンテナーの太田さんのページ。mutt-j ML のアーカイブがある
-        。
-       
+     ○ mutt-j ML のメンテナーの太田さんのページ。mutt-j ML のアーカイブがある。
         mutt-1.2.x-jp の情報がある。
-
 
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
@@ -297,10 +306,10 @@ UNICODEで定義されている文字を表示できなくなります。
 
 7.1 著作権等
 
-Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバーの協力により開発が
-行なわれています。なお、現在の取りまとめの中心者にはメールアドレスの後ろに '*'
-を付けました。バグやおかしい点がありましたら、mutt-j ML あるいは取りまとめの中
-心者にメールをお送り下さい。
+Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML メンバの協力により
+開発が行なわれています。なお、現在の取りまとめの中心者にはメールアド
+レスの後ろに '*'を付けました。バグやおかしい点がありましたら、mutt-j
+ML あるいは取りまとめの中心者にメールをお送り下さい。
 
 7.1.1 日本語パッチ
 
@@ -335,11 +344,14 @@ Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバ�
  ・ Kawaguti Ginga <ginga@ginganet.org>
    
  ・ SHIOZAKI Takehiko <takehiko.shiozaki@reuters.co.jp>
-   
+
 7.2 その他
 
 日本語パッチの付属文書の DocBook/XML 化は SHINGUU Atsuhiro
 <icebell@fujii-kiso.co.jp> によって行われました。
+また、FreeBSD portsから日本語版portsへの移植は、力武健次氏
+(kenji.rikitake@acm.org)によるものです。ご協力に感謝します。
+
 
 7.2.1 一次配布先
 
@@ -347,10 +359,11 @@ Mutt 日本語版は以下に挙げる人だけでなく mutt-j ML のメンバ�
 
 7.2.2 ライセンス
 
-日本語化パッチはオリジナルの Mutt と同様に無保証であり、Free Software
-Foundation の GNU General Public License Version 2 に従って配布および修正を行う
-ことができます。GNU General Public License Version 2 に関してはオリジナルのMutt
-のパッケージに含まれている GPL をお読み下さい。
+日本語化パッチはオリジナルの Mutt と同様に無保証であり、Free
+Software Foundation の GNU General Public License Version 2 に従って
+配布および修正を行うことができます。GNU General Public License
+Version 2 に関してはオリジナルのMuttのパッケージに含まれている GPL を
+お読み下さい。
 
 7.2.3 メーリングリスト
 
