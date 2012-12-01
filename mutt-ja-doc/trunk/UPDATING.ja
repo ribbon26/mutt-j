@@ -1,150 +1,150 @@
-$B$3$N%U%!%$%k$K$O!"(BMutt $B$KBP$7$F$J$5$l$?8_49@-$N$J$$JQ99$d?75!G=$,Ns5s$5$l(B
-$B$F$$$^$9!#%"%C%W%0%l!<%I$N:]$K$O!"$3$N%U%!%$%k$r$h$/$*FI$_$/$@$5$$!#(B
+このファイルには、Mutt に対してなされた互換性のない変更や新機能が列挙され
+ています。アップグレードの際には、このファイルをよくお読みください。
 
-$B;H$o$l$F$$$k5-9f$N@bL@(B:
-  !: $B;EMM$NJQ99(B, -: $B5!G=$N:o=|(B, +: $B?75!G=(B
+使われている記号の説明:
+  !: 仕様の変更, -: 機能の削除, +: 新機能
 
-  ! format=flowed $B%5%]!<%H$N2~A1!"(B$wrap $B$,(B 0 $B$G$J$1$l$P(B $wrap $B7e$G2~9T(B
-  + $wrap (0 $B$h$jBg$-$1$l$P$=$N7e?t!"(B0 $BL$K~$J$i(B $wrapmargin $B$N7e$G2~9T(B)
+  ! format=flowed サポートの改善、$wrap が 0 でなければ $wrap 桁で改行
+  + $wrap (0 より大きければその桁数、0 未満なら $wrapmargin の桁で改行)
   + $assumed_charset, $attach_charset, $ignore_linear_white_space
-  + $save_history, $history_file ($B:F5/F0$7$F$bMzNr$rJ]B8(B)
-  + $smtp_url (ESMTP $BG[Aw%5%]!<%H(B)
-  + $crypt_use_pka (GPGME $B$N(B PKA $B=pL>8!>Z$r;HMQ(B)
+  + $save_history, $history_file (再起動しても履歴を保存)
+  + $smtp_url (ESMTP 配送サポート)
+  + $crypt_use_pka (GPGME の PKA 署名検証を使用)
 
 1.5.13 (2006-08-14):
 
-  + $B%9%l%C%I%Q%?!<%s!#3g8L$G(B ~(...) $B$H$9$k$H!"(B... $B$K9gCW$9$k%a%C%;!<%8$N(B
-    $B$"$k%9%l%C%IA4BN$K9gCW(B
+  + スレッドパターン。括弧で ~(...) とすると、... に合致するメッセージの
+    あるスレッド全体に合致
 
 1.5.12 (2006-07-14):
 
-  - $imap_cachedir $B$O(B $message_cachedir $B$KE}9g(B
-  + POP $B$N%X%C%@(B/$BK\J8%-%c%C%7%e(B ($message_cachedir)
-  + MH $B%U%)%k%@$N%X%C%@%-%c%C%7%e(B
-  ! $record $B$N4{DjCM$r(B ~/sent $B$K(B
+  - $imap_cachedir は $message_cachedir に統合
+  + POP のヘッダ/本文キャッシュ ($message_cachedir)
+  + MH フォルダのヘッダキャッシュ
+  ! $record の既定値を ~/sent に
   ! $imap_idle now defaults to "yes" instead of "no"
-  + $my_* $B$NJQ?tL>$*$h$SCM$K$*$1$k%?%VJd40(B
-  + Mutt $B@_DjJQ?t$NE83+(B ($B%7%'%k$r=|$/(B)
-  + $B%f!<%6Dj5AJQ?t(B $my_*
-  + $B%Q%?!<%s%0%k!<%W(B (group $B%3%^%s%I(B)
+  + $my_* の変数名および値におけるタブ補完
+  + Mutt 設定変数の展開 (シェルを除く)
+  + ユーザ定義変数 $my_*
+  + パターングループ (group コマンド)
   + $imap_cachedir
-  + IMAP $B%U%)%k%@>e$N(B 'old' $B%U%i%0(B
-  + IMAP $B$N(B SASL-IR $B%5%]!<%H(B
-  + IMAP IDLE $B%5%]!<%H$H(B $imap_idle
-  + IMAP $B%Q%$%W%i%$%sDL?.(B
-  + 32 $B%S%C%HD6%U%!%$%k$N%5%]!<%H(B
-  + $BE:IU%U%!%$%k?t(B: attachments $B$*$h$S(B unattachments $B%3%^%s%I!"(B
-    $attach_format $B$N(B %Q $B$*$h$S(B %X, $index_format $B$N(B %X
-  + Basque $B%P%9%/8l%a%C%;!<%8(B
-  + $B%X%C%@%-%c%C%7%e$N(B QDBM $B%P%C%/%(%s%I(B
-  + Irish $B%"%$%k%i%s%I8l%a%C%;!<%8(B
+  + IMAP フォルダ上の 'old' フラグ
+  + IMAP の SASL-IR サポート
+  + IMAP IDLE サポートと $imap_idle
+  + IMAP パイプライン通信
+  + 32 ビット超ファイルのサポート
+  + 添付ファイル数: attachments および unattachments コマンド、
+    $attach_format の %Q および %X, $index_format の %X
+  + Basque バスク語メッセージ
+  + ヘッダキャッシュの QDBM バックエンド
+  + Irish アイルランド語メッセージ
 
 1.5.11 (2005-09-15):
 
-  ! $envelope_from_address $B$,DI2C$5$l!"(B$envelope_from $B$O(B $use_envelope_from $B$K(B
-  + $net_inc $BC10L$N?JD=>u67I=<((B
-  + IMAP $B%5!<%P%5%$%IC1=cJ8;zNs8!:w(B
-  + $B@55,I=8=$G$O$J$/C1$J$kJ8;zNs$G9gCW$9$k%Q%?!<%s=$>~;R!V(B=$B!W(B
-    ($B!V(B~$B!W$NBe$o$j$K;H$&(B)
-  ! ~l $B$G%a!<%j%s%0%j%9%H$9$Y$F!"(B~u $B$G9XFI%j%9%H$N$_$K9gCW(B
-  - SASL 1.5 $B%5%]!<%H(B
-  ! $B%^%K%e%"%k$N@8@.$K(B Linuxdoc/SGML $B%=!<%9$G$O$J$/(B DocBook/XML $B$r;HMQ(B
+  ! $envelope_from_address が追加され、$envelope_from は $use_envelope_from に
+  + $net_inc 単位の進捗状況表示
+  + IMAP サーバサイド単純文字列検索
+  + 正規表現ではなく単なる文字列で合致するパターン修飾子「=」
+    (「~」の代わりに使う)
+  ! ~l でメーリングリストすべて、~u で購読リストのみに合致
+  - SASL 1.5 サポート
+  ! マニュアルの生成に Linuxdoc/SGML ソースではなく DocBook/XML を使用
 
 1.5.10 (2005-08-11):
 
   + $imap_check_subscribed
-  + IMAP $B%[%9%H$N%?%VJd40(B
-  ! $imap_force_ssl $B$OGQ;_!#(B$ssl_force_tls $B$KE}9g(B
-  - NSS $B%5%]!<%H(B
-  ! $menu_move_off $B$N4{DjCM$O(B "no" $B$+$i(B "yes" $B$X(B
-  ! <limit> $B$G2~9T$@$1$9$k$HI=<(@)8B$r2r=|$9$k$h$&$KJQ99(B
-  + <break-thread> $B$*$h$S(B <link-threads> $B$K$h$k%9%l%C%I2C9)(B
-  + -D $B%3%^%s%I%i%$%s%*%W%7%g%s(B ($B@_DjJQ?t$r$9$Y$FI=<((B)
-  + $B%U%)%k%@;XDj%7%g!<%H%+%C%H!V(B^$B!W$G8=:_$N%U%)%k%@$rI=$9(B
-  + $imap_login ($B%m%0%$%sL>$H(B $imap_user $B$,0c$&>l9g$N$?$a(B)
-  + $braille_friendly ($BE@;zC<KvMQ$K%+!<%=%k0LCV$rD4@0(B)
-  + Maildir $B%U%)%k%@$N%X%C%@%-%c%C%7%e(B
+  + IMAP ホストのタブ補完
+  ! $imap_force_ssl は廃止。$ssl_force_tls に統合
+  - NSS サポート
+  ! $menu_move_off の既定値は "no" から "yes" へ
+  ! <limit> で改行だけすると表示制限を解除するように変更
+  + <break-thread> および <link-threads> によるスレッド加工
+  + -D コマンドラインオプション (設定変数をすべて表示)
+  + フォルダ指定ショートカット「^」で現在のフォルダを表す
+  + $imap_login (ログイン名と $imap_user が違う場合のため)
+  + $braille_friendly (点字端末用にカーソル位置を調整)
+  + Maildir フォルダのヘッダキャッシュ
 
 Mutt 1.5.9 (2005-03-13):
 
   + $menu_move_off
-  + IMAP $B$N(B <rename-mailbox> $B5!G=(B
+  + IMAP の <rename-mailbox> 機能
 
 Mutt 1.5.8 (2005-02-12):
 
   + $menu_context
-  ! IDNA $B%G%3!<%I$r(B $use_idn $B$GL58z$K$9$k$3$H$,2DG=$K!#4{DjCM$O(B "yes"
-    ($B!V%H!W$H!VKN!W$N$h$&$J!V$J$j$9$^$7!W$N4m81@-$rGS=|$7$?$$?MMQ(B)
-  + $crypt_use_gpgme $B$G(B GPGME $B%5%]!<%H(B
+  ! IDNA デコードを $use_idn で無効にすることが可能に。既定値は "yes"
+    (「ト」と「卜」のような「なりすまし」の危険性を排除したい人用)
+  + $crypt_use_gpgme で GPGME サポート
 
 Mutt 1.5.7 (2005-01-28):
 
-  + GNUTLS $B$K$h$k(B SSL $B$b%5%]!<%H(B
-  + $header_cache $B$*$h$S(B $header_cache_pagesize $B$G(B IMAP $B%X%C%@%-%c%C%7%e(B
-  + send2-hook ($B%a%C%;!<%8JQ99$N$?$S$K<B9T(B)
+  + GNUTLS による SSL もサポート
+  + $header_cache および $header_cache_pagesize で IMAP ヘッダキャッシュ
+  + send2-hook (メッセージ変更のたびに実行)
   + $ssl_client_cert
   + $hide_thread_subject
-  + $BHFMQ%9%Q%`8!=P(B: $B?7%3%^%s%I(B: 'spam' $B$H(B 'nospam',
-    $B?7JQ?t(B: $spam_separator, $B?7(Bexpando: %H ($index_format $BMQ(B)
-    $B?7%Q%?!<%s(B: ~H
-  + $include_onlyfirst ($BE:IU%U%!%$%k$r0zMQ$7$J$$(B)
-  ! $pgp_mime_ask $B$rGQ;_!#(B$pgp_mime_auto $B$H$J$j!"4{DjCM$O(B "no" $B$G$O$J$/(B
-    "ask-yes" $B$K(B
-  + $B%$%s%i%$%s(B PGP $B:n@.%5%]!<%H!#(B$pgp_replyinline, $pgp_autoinline,
+  + 汎用スパム検出: 新コマンド: 'spam' と 'nospam',
+    新変数: $spam_separator, 新expando: %H ($index_format 用)
+    新パターン: ~H
+  + $include_onlyfirst (添付ファイルを引用しない)
+  ! $pgp_mime_ask を廃止。$pgp_mime_auto となり、既定値は "no" ではなく
+    "ask-yes" に
+  + インライン PGP 作成サポート。$pgp_replyinline, $pgp_autoinline,
     $pgp_mime_ask
-  ! 'bind' $B%3%^%s%I$GJ#?t%a%K%e!<$rF1;~;HMQ2DG=$K(B ($BNc(B: generic,pager)
+  ! 'bind' コマンドで複数メニューを同時使用可能に (例: generic,pager)
   + $config_charset
-  + ~$ $B%Q%?!<%s(B ($B$@$l$N?F$K$b$J$C$F$$$J$$%a%C%;!<%8$K9gCW(B)
+  + ~$ パターン (だれの親にもなっていないメッセージに合致)
 
 1.5.6 (2004-02-01):
 
-  ! 'list' $B$H(B 'subscribe' $B%3%^%s%I$N0z?t$,J8;zNs$+$i@55,I=8=$K(B
-  ! $alternates $BJQ?t$O(B 'alternates' $B%3%^%s%I$K!#0z?t$O@55,I=8=(B
-  + POP3 $B$N(B STLS (STARTTLS) $B%5%]!<%H(B
+  ! 'list' と 'subscribe' コマンドの引数が文字列から正規表現に
+  ! $alternates 変数は 'alternates' コマンドに。引数は正規表現
+  + POP3 の STLS (STARTTLS) サポート
 
 1.5.5 (2003-11-05):
 
-  + Bulgarian $B%V%k%,%j%"8l%a%C%;!<%8(B
-  - Kendra $B%a!<%k%\%C%/%9%5%]!<%H(B
-  + <tag-prefix-cond> $B$H(B <cond-end>
-  + '%:' $B$G;O$a$k$H!V(B.$B!W$r!V(B_$B!W$KJQ49(B ($BNc(B '%:A')
-  + $crypt_autopgp $B$H(B $crypt_autosmime
-  + $pgp_check_exit (PGP $B;R%W%m%;%9JV$jCM%A%'%C%/(B)
+  + Bulgarian ブルガリア語メッセージ
+  - Kendra メールボックスサポート
+  + <tag-prefix-cond> と <cond-end>
+  + '%:' で始めると「.」を「_」に変換 (例 '%:A')
+  + $crypt_autopgp と $crypt_autosmime
+  + $pgp_check_exit (PGP 子プロセス返り値チェック)
 
 1.5.4 (2003-03-19):
 
-  + IDNA ($B9q:]2=%I%a%$%sL>(B) $B%5%]!<%H(B
+  + IDNA (国際化ドメイン名) サポート
   + $bounce
-  ! $crypt_replyencrypt $B$H(B $pgp_replyencrypt $B$N4{DjCM$,(B "no" $B$+$i(B "yes" $B$K(B
+  ! $crypt_replyencrypt と $pgp_replyencrypt の既定値が "no" から "yes" に
   + $pgp_auto_traditional
-  + $index_format $B$K(B %A (reply-to $B%"%I%l%9(B)
+  + $index_format に %A (reply-to アドレス)
 
 1.5.3 (2002-12-17):
 
-  + <next-new-then-unread> $B$H(B <previous-new-then-unread>
-  ! $mark_old: $B%a!<%k%\%C%/%9$r=P$k$H$-$K?7Ce%a%C%;!<%8$r(B old $B$K$9$k(B
-    $B$+$I$&$+;XDj$9$k$@$1!#(B($B0JA0$O(B old $B$rL5;k$9$k$+$I$&$+$b4^$s$G$$$?(B)
+  + <next-new-then-unread> と <previous-new-then-unread>
+  ! $mark_old: メールボックスを出るときに新着メッセージを old にする
+    かどうか指定するだけ。(以前は old を無視するかどうかも含んでいた)
   + <what-key>
 
 1.5.2 (2002-12-06):
 
-  + -A $B%3%^%s%I%i%$%s%*%W%7%g%s(B ($BJLL>$+$iK\L>$XE83+(B)
-  + SASL2 $B%5%]!<%H(B
-  + <buffy-list> ($B?7Ce%a!<%k$N$"$k%U%)%k%@$rI=<((B)
-  + $forward_edit ($B%(%G%#%?$r3+$+$:E>Aw$7$?$$?M$O(B no $B$K(B)
-  + $content_type (text/plain $B0J30$GAw?.$9$k$3$H$NB?$$?MMQ(B)
-  + unmailboxes $B%3%^%s%I(B
-  + unalternative_order $B%3%^%s%I(B
-  + reply-hook ($BJV?.85$N!"$D$^$jAj<j$N%a%C%;!<%8$K4p$E$/(B)
+  + -A コマンドラインオプション (別名から本名へ展開)
+  + SASL2 サポート
+  + <buffy-list> (新着メールのあるフォルダを表示)
+  + $forward_edit (エディタを開かず転送したい人は no に)
+  + $content_type (text/plain 以外で送信することの多い人用)
+  + unmailboxes コマンド
+  + unalternative_order コマンド
+  + reply-hook (返信元の、つまり相手のメッセージに基づく)
 
 1.5.1 (2002-01-24):
 
   + $smime_default_key
   + $narrow_tree
-  + -Q $B%3%^%s%I%i%$%s%*%W%7%g%s(B ($B@_DjJQ?t$NLd$$9g$o$;(B)
+  + -Q コマンドラインオプション (設定変数の問い合わせ)
   + $crypt_timestamp
-  + ~V $B%Q%?!<%s(B ($B=pL>$,8!>Z$5$l$?%a%C%;!<%8(B)
-  + S/MIME $B%5%]!<%H(B
-  + mime_lookup $B%3%^%s%I(B ($B3HD%;R$r8+$k$Y$-(B content-type $B$N%j%9%H(B)
+  + ~V パターン (署名が検証されたメッセージ)
+  + S/MIME サポート
+  + mime_lookup コマンド (拡張子を見るべき content-type のリスト)
 
 Original was: Tue Mar 06 17:59:57 2007 -0800 (5e47385893fe)
