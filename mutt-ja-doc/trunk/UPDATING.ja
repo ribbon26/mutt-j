@@ -11,6 +11,26 @@
   + $smtp_url (ESMTP 配送サポート)
   + $crypt_use_pka (GPGME の PKA 署名検証を使用)
 
+1.5.18 (2008-05-17):
+
+  ! 内部のヘッダキャッシュは現在のロケールにかかわらずutf-8
+  + $query_format (外部問い合わせメニューのカスタマイズ)
+  ! inode順整列は常時有効
+  + $time_inc suppresses progress updates less than $time_inc
+    milliseconds apart.
+  + X-Label: ヘッダはRFC2047エンコードしなければならなくなった
+
+1.5.17 (2007-11-01):
+
+  ! --enable-exact-address が再度動くようになった
+
+1.5.16 (2007-06-09):
+
+  + next-unread-mailbox
+  + $message_cache_clean (clean cache on sync)
+  + $smtp_pass
+  ! $header_cache_compressの既定値をyesに
+
 1.5.15 (2007-04-06):
 
   - $imap_home_namespace (useless clutter)
