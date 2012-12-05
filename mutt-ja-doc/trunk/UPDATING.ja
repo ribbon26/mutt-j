@@ -4,12 +4,26 @@
 使われている記号の説明:
   !: 仕様の変更, -: 機能の削除, +: 新機能
 
-  ! format=flowed サポートの改善、$wrap が 0 でなければ $wrap 桁で改行
-  + $wrap (0 より大きければその桁数、0 未満なら $wrapmargin の桁で改行)
-  + $assumed_charset, $attach_charset, $ignore_linear_white_space
-  + $save_history, $history_file (再起動しても履歴を保存)
-  + $smtp_url (ESMTP 配送サポート)
-  + $crypt_use_pka (GPGME の PKA 署名検証を使用)
+1.5.20 (2009-06-14):
+
+  ! mbox/mmdf new mail flag is kept when leaving folders with new mail
+  ! $fcc_attach is a quadoption now
+  + $honor_disposition to honor Content-Disposition headers
+  + $search_context specifies number of context lines for search results
+    in pager/page-based menus
+  ! ssl_use_sslv2 の既定値が no に
+  + uncolor が header + body オブジェクトでも動くように
+  + the "flagged" and "replied" flags are enabled/supported for
+    POP when built with header caching
+  ! browser correctly displays maildir's mtime
+  + <set-flag> and <clear-flag> work in the pager, too
+  + ~x pattern also matches against In-Reply-To
+  + lower case patterns for string searches perform case-insensitive
+    search as regex patterns do (except IMAP)
+  + $ssl_verify_dates controls whether mutt checks the validity period of
+    SSL certificates
+  + $ssl_verify_host controls whether mutt will accept certificates whose
+    host names do not match the host name in the folder URL.
 
 1.5.19 (2009-01-05):
 
@@ -48,11 +62,11 @@
   - $imap_home_namespace (useless clutter)
   + $check_mbox_size (新メール到着確認にatimeの代わりにサイズ変更を使う)
   ! improved f=f support wraps lines at $wrap if $wrap is not 0
-  + $wrap (>0 wraps at $wrap, <0 = $wrapmargin)
-  + $assumed_charset, $attach_charset, $ignore_linear_white_space を追加
-  + $save_history, $history_file (セッションをまたがったヒストリを保存)
-  + $smtp_url (ESMTP relay のサポート)
-  + $crypt_use_pka (GPGME PKA 署名検証を使用)
+  + $wrap (0 より大きければその桁数、0 未満なら $wrapmargin の桁で改行)
+  + $assumed_charset, $attach_charset, $ignore_linear_white_space
+  + $save_history, $history_file (再起動しても履歴を保存)
+  + $smtp_url (ESMTP 配送サポート)
+  + $crypt_use_pka (GPGME の PKA 署名検証を使用)
   ! format pipe サポート: format strings ending in | are filtered
   ! buffy size is configurable at runtime (no --enable-buffy-size
     configure option, new $check_mbox_size variable)
