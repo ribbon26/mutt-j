@@ -25,4 +25,5 @@ BSD RPM  patchname
  o   o   patch-smime-self                           smime keyの扱い方変更
  o   o   patch-smime-sender                         smimeの扱い方変更
  o   o   patch-threadcomplete                       スレッドの扱い方変更
+ o   o   patch-fedora-1.5.21-cabundle.patch         期限切れのca-bundle.crtをインストールしない
 
