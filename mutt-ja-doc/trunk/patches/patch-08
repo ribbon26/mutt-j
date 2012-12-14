@@ -1,10 +1,10 @@
---- doc/Muttrc.orig	Sat May 13 08:30:44 2000
-+++ doc/Muttrc	Sat May 13 08:32:05 2000
-@@ -629,6 +629,7 @@
- # Type: boolean
- # Default: yes
+--- doc/Muttrc.orig	2010-09-16 02:07:19.000000000 +0900
++++ doc/Muttrc	2012-12-14 14:37:18.000000000 +0900
+@@ -626,6 +626,7 @@
+ # will be saved for later references.  Also see $record,
+ # $save_name, $force_name and ``fcc-hook''.
  # 
 +set followup_to=no
  # 
- # Controls whether or not the Mail-Followup-To header field is
- # generated when sending mail.  When set, Mutt will generate this
+ # set crypt_autoencrypt=no
+ #
