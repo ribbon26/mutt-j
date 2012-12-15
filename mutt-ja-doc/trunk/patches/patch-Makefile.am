@@ -1,6 +1,6 @@
 --- Makefile.am.orig	2008-05-19 19:00:44.000000000 +0200
 +++ Makefile.am	2008-05-19 19:03:20.000000000 +0200
-@@ -136,10 +136,6 @@
+@@ -144,10 +144,6 @@
  
  install-data-local:
  	$(srcdir)/mkinstalldirs $(DESTDIR)$(sysconfdir)
