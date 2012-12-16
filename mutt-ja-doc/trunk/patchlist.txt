@@ -7,7 +7,7 @@ BSD RPM  patchname
  o   o   patch-bdb                                  bdbをバージョン5.2まで使えるようにする
  o   o   patch-color-eol                            画面最後まで色づけ?
  o   o   patch-configure.ac                         非ANSI-Cコンパイラ判断を削除
- o   o   patch-contrib-Makefile.am                  pgp5.rcを削除
+ x   x   patch-contrib-Makefile.am                  pgp5.rcを削除(オリジナル版を削除)
  o   o   patch-crypt-gpgme.c                        gpgmeのチェックを追加
  o   o   patch-date-conditional                     時刻の扱いに対するパッチ?
  o   o   patch-doc-manual.xml.head                  docbookの読み込み先をローカルに
