@@ -5,7 +5,7 @@
 diff -Pur mutt-1.5.1-base/muttlib.c mutt-1.5.1/muttlib.c
 --- muttlib.c	Tue Mar 26 16:47:06 2002
 +++ muttlib.c	Thu Jun 13 15:28:20 2002
-@@ -978,6 +978,12 @@
+@@ -1252,6 +1252,12 @@
  	count = 0;
          while (count < sizeof (ifstring) && *src && *src != '?' && *src != '&')
  	{
@@ -18,7 +18,7 @@ diff -Pur mutt-1.5.1-base/muttlib.c mutt-1.5.1/muttlib.c
            *cp++ = *src++;
  	  count++;
  	}
-@@ -990,7 +996,13 @@
+@@ -1264,7 +1264,13 @@
  	count = 0;
  	while (count < sizeof (elsestring) && *src && *src != '?')
  	{
@@ -43,7 +43,7 @@ Index: muttlib.c
 ===================================================================
 --- muttlib.c	(revision 22)
 +++ muttlib.c	(revision 22)
-@@ -944,7 +944,16 @@
+@@ -1218,7 +1218,16 @@
        if (*src == '?')
        {
  	flags |= M_FORMAT_OPTIONAL;
@@ -61,7 +61,7 @@ Index: muttlib.c
        }
        else
        {
-@@ -960,12 +969,12 @@
+@@ -1234,12 +1234,12 @@
  	  count++;
  	}
  	*cp = 0;
@@ -80,7 +80,7 @@ Index: muttlib.c
        {
 --- hdrline.c.orig	Tue Jun 29 15:01:28 2004
 +++ hdrline.c	Tue Jun 29 15:02:59 2004
-@@ -316,6 +316,64 @@
+@@ -325,6 +325,64 @@
  	const char *cp;
  	struct tm *tm; 
  	time_t T;
