@@ -11,7 +11,7 @@ BSD RPM  patchname
  o   o   patch-crypt-gpgme.c                        gpgmeのチェックを追加
  o   o   patch-date-conditional                     時刻の扱いに対するパッチ?
  o   o   patch-doc-manual.xml.head                  docbookの読み込み先をローカルに
- o   o   patch-examples                             sampleのディレクトリ変更
+ o   x   patch-examples                             sampleのディレクトリ変更
  o   o   patch-gnutls-CN-validation                 gnutls使用時の修正
  o   o   patch-imap-message.c                       bug #3288の修正
  o   o   patch-init.c                               host名決定の修正
