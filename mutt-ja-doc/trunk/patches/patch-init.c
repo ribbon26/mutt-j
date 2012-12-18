@@ -1,6 +1,6 @@
---- init.c.orig	Wed Jul 24 10:41:29 2002
-+++ init.c	Sat May  3 08:46:29 2003
-@@ -1707,7 +1707,11 @@
+--- init.c.orig	2010-08-26 01:31:40.000000000 +0900
++++ init.c	2012-12-18 20:37:26.000000000 +0900
+@@ -2876,7 +2876,11 @@
  void mutt_init (int skip_sys_rc, LIST *commands)
  {
    struct passwd *pw;
@@ -12,7 +12,7 @@
    char *p, buffer[STRING], error[STRING];
    int i, default_rc = 0, need_pause = 0;
    BUFFER err;
-@@ -1765,16 +1769,21 @@
+@@ -2941,16 +2945,21 @@
  #endif
  
    /* And about the host... */
