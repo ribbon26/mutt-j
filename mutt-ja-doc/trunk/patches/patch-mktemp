@@ -1,6 +1,6 @@
 --- muttlib.c.orig	2010-09-19 09:58:24.000000000 +0200
 +++ muttlib.c	2010-09-19 10:36:26.000000000 +0200
-@@ -788,14 +788,15 @@
+@@ -781,14 +781,15 @@
  
  void _mutt_mktemp (char *s, size_t slen, const char *src, int line)
  {
