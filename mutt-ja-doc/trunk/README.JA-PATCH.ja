@@ -28,7 +28,7 @@ Copyright (C)2000-2004 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
 
 4. インストールと設定
 4.1 ソースからのインストール
-4.2 portsでのインストール
+4.2 FreeBSDでのインストール
 4.3 CentOSでのRPMインストール
 4.3.1 ベースとなるSRPMの入手
 4.3.2 ファイルの展開
@@ -233,11 +233,14 @@ ja-libslangではUTF-8環境において正常な動作をしません。
 www.emaillab.org/mutt/のドキュメントのコーナーにありますので、一度ご覧ください
 。
 
-4.2 portsでのインストール
+4.2 FreeBSDでのインストール
 
 FreeBSD では、2011年1月以降、パッチを吸収したportsが提供されています。
 必ずしも最新版ではないので、バージョンを確認の上、FreeBSDでご利用の際には
-そちらをご利用ください。
+そちらをご利用ください。私家版のports(力武氏が作成したものをベースに
+したもの)についてはsourceforge.jp に置いてあります。
+また、FreeBSD 8.3 の32ビット版用packageを作成しています。sourceforge.jp
+においてありますのでご利用ください。
 
 4.3 CentOSでのRPMインストール
 
