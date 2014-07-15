@@ -1,0 +1,907 @@
+diff comment: this patch is modified to conform the
+diff comment: COLORAFTEREOL patch (patch-color-eol)
+diff comment: modified by Kenji Rikitake
+diff -u mutt-1.5.21.orig/PATCHES mutt-1.5.21/PATCHES
+--- PATCHES	2010-11-08 09:44:31.692997710 +0900
++++ PATCHES	2010-11-15 18:48:14.619312090 +0900
+@@ -0,0 +1 @@
++patch-1.5.21.tt.wcwidth.1
+diff -u mutt-1.5.21.orig/config.h.in mutt-1.5.21/config.h.in
+--- config.h.in	2010-11-08 09:44:31.662998179 +0900
++++ config.h.in	2010-11-15 18:44:34.000000000 +0900
+@@ -29,6 +29,9 @@
+ /* Define your domain name. */
+ #undef DOMAIN
+ 
++/* Define if you want to support East Asian Ambiguous class. */
++#undef ENABLE_CJK_WIDTH
++
+ /* Define to 1 if translation of program messages to the user's native
+    language is requested. */
+ #undef ENABLE_NLS
+diff -u mutt-1.5.21.orig/configure mutt-1.5.21/configure
+--- configure	2010-11-08 09:44:31.542997886 +0900
++++ configure	2010-11-15 18:48:14.629311261 +0900
+@@ -788,6 +788,7 @@
+ enable_nls
+ with_included_gettext
+ with_idn
++enable_cjk_ambiguous_width
+ with_wc_funcs
+ enable_full_doc
+ '
+@@ -1439,6 +1440,9 @@
+   --enable-hcache         Enable header caching
+   --disable-iconv         Disable iconv support
+   --disable-nls           Do not use Native Language Support
++  --enable-cjk-ambiguous-width
++                          Enable East Asian Ambiguous characters support
++                          (using own wcwidth)
+   --disable-full-doc      Omit disabled variables
+ 
+ Optional Packages:
+@@ -11853,6 +11857,21 @@
+ fi
+ 
+ 
++# Check whether --enable-cjk-ambiguous-width was given.
++if test "${enable_cjk_ambiguous_width+set}" = set; then :
++  enableval=$enable_cjk_ambiguous_width;  if test "x$enableval" = "xyes" ; then
++               cjk_width=yes
++          fi
++
++fi
++
++if test "x$cjk_width" = "xyes" ; then
++
++$as_echo "#define ENABLE_CJK_WIDTH 1" >>confdefs.h
++
++       MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS wcwidth.o"
++fi
++
+ for ac_header in wchar.h
+ do :
+   ac_fn_c_check_header_mongrel "$LINENO" "wchar.h" "ac_cv_header_wchar_h" "$ac_includes_default"
+@@ -12084,7 +12103,10 @@
+ $as_echo "#define HAVE_WC_FUNCS 1" >>confdefs.h
+ 
+ else
+-	MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS utf8.o wcwidth.o"
++        MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS utf8.o"
++        if test "x$cjk_width" != "xyes"; then
++                MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS wcwidth.o"
++        fi
+ fi
+ 
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for nl_langinfo and CODESET" >&5
+diff -u mutt-1.5.21.orig/configure.ac mutt-1.5.21/configure.ac
+--- configure.ac	2010-11-08 09:44:31.652997836 +0900
++++ configure.ac	2010-11-15 18:48:14.629311261 +0900
+@@ -1187,6 +1187,16 @@
+ 
+ dnl -- locales --
+ 
++AC_ARG_ENABLE(cjk-ambiguous-width, AC_HELP_STRING([--enable-cjk-ambiguous-width], [ Enable East Asian Ambiguous characters support (using own wcwidth)]),
++        [ if test "x$enableval" = "xyes" ; then
++               cjk_width=yes
++          fi
++       ])
++if test "x$cjk_width" = "xyes" ; then
++       AC_DEFINE(ENABLE_CJK_WIDTH,1,[ Define if you want to support East Asian Ambiguous class. ])
++       MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS wcwidth.o"
++fi
++
+ AC_CHECK_HEADERS(wchar.h)
+ 
+ AC_CACHE_CHECK([for wchar_t], mutt_cv_wchar_t,
+@@ -1268,7 +1278,10 @@
+ if test $wc_funcs = yes; then
+         AC_DEFINE(HAVE_WC_FUNCS,1,[ Define if you are using the system's wchar_t functions. ])
+ else
+-	MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS utf8.o wcwidth.o"
++        MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS utf8.o"
++        if test "x$cjk_width" != "xyes"; then
++                MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS wcwidth.o"
++        fi
+ fi
+ 
+ AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
+diff -u mutt-1.5.21.orig/curs_lib.c mutt-1.5.21/curs_lib.c
+--- curs_lib.c	2010-11-08 09:44:31.702997928 +0900
++++ curs_lib.c	2010-11-15 18:48:14.629311261 +0900
+@@ -44,6 +44,8 @@
+ #include <langinfo.h>
+ #endif
+ 
++extern const char *TreeUTF8Chars[];
++
+ /* not possible to unget more than one char under some curses libs, and it
+  * is impossible to unget function keys in SLang, so roll our own input
+  * buffering routines.
+@@ -731,7 +733,12 @@
+       wc = replacement_char ();
+     }
+     if (arboreal && wc < M_TREE_MAX)
+-      w = 1; /* hack */
++    {
++      if (Charset_is_utf8)
++        w = mutt_strwidth ((char *)TreeUTF8Chars[wc]);
++      else
++        w = 1;
++    }
+     else
+     {
+ #ifdef HAVE_ISWBLANK
+@@ -946,11 +953,11 @@
+ }
+ 
+ /*
+- * mutt_strwidth is like mutt_strlen except that it returns the width
++ * _mutt_strwidth is like mutt_strlen except that it returns the width
+  * refering to the number of characters cells.
+  */
+ 
+-int mutt_strwidth (const char *s)
++int _mutt_strwidth (const char *s, int arboreal)
+ {
+   wchar_t wc;
+   int w;
+@@ -969,9 +976,19 @@
+       k = (k == (size_t)(-1)) ? 1 : n;
+       wc = replacement_char ();
+     }
+-    if (!IsWPrint (wc))
+-      wc = '?';
+-    w += wcwidth (wc);
++    if (arboreal && wc < M_TREE_MAX)
++    {
++      if (Charset_is_utf8)
++        w += mutt_strwidth ((char *)TreeUTF8Chars[wc]);
++      else
++        w++;
++    }
++    else {
++      if (!IsWPrint (wc))
++        wc = '?';
++      w += wcwidth (wc);
++    }
+   }
+   return w;
+ }
++
+diff -u mutt-1.5.21.orig/init.h mutt-1.5.21/init.h
+--- init.h.orig	2010-09-16 00:39:31.000000000 +0900
++++ init.h	2012-12-18 22:22:47.000000000 +0900
+@@ -370,6 +370,20 @@
+   ** mailbox by performing a fast mailbox scan when it is defined.
+   ** Afterwards the new mail status is tracked by file size changes.
+   */
++#ifdef ENABLE_CJK_WIDTH
++  { "cjk_width",	DT_BOOL, R_NONE, OPTCJKWIDTH, 0 },
++  /*
++  ** .pp
++  ** When this option is set, characters in the East Asian Ambiguous (A)
++  ** category as defined in Unicode Technical Report #11 have a column
++  ** width of 2. Othrwise, they have a column width of 1.
++  ** This variant might be useful for users of CJK legacy encodings
++  ** who want to migrate to UCS without changing the traditional terminal
++  ** character-width behaviour.
++  ** .pp
++  ** \fBNote:\fP this option only affects in UTF-8 encoding.
++  */
++#endif
+   { "check_new",	DT_BOOL, R_NONE, OPTCHECKNEW, 1 },
+   /*
+   ** .pp
+diff -u mutt-1.5.21.orig/main.c mutt-1.5.21/main.c
+--- main.c	2010-11-08 09:44:31.532998225 +0900
++++ main.c	2010-11-15 18:48:14.629311261 +0900
+@@ -402,6 +402,12 @@
+ 	"-LOCALES_HACK  "
+ #endif
+ 	      
++#ifdef ENABLE_CJK_WIDTH
++	"+ENABLE_CJK_WIDTH  "
++#else
++	"-ENABLE_CJK_WIDTH  "
++#endif
++
+ #ifdef HAVE_WC_FUNCS
+ 	"+HAVE_WC_FUNCS  "
+ #else
+diff -u mutt-1.5.21.orig/mbyte.c mutt-1.5.21/mbyte.c
+--- mbyte.c	2010-11-08 09:44:31.552997939 +0900
++++ mbyte.c	2010-11-15 18:48:14.629311261 +0900
+@@ -17,7 +17,7 @@
+  */
+ 
+ /*
+- * Japanese support by TAKIZAWA Takashi <taki@luna.email.ne.jp>.
++ * CJK support by TAKIZAWA Takashi <taki@luna.email.ne.jp>.
+  */
+ 
+ #if HAVE_CONFIG_H
+@@ -37,8 +37,8 @@
+ #endif
+ 
+ int Charset_is_utf8 = 0;
++static int charset_is_cjk = 0;
+ #ifndef HAVE_WC_FUNCS
+-static int charset_is_ja = 0;
+ static iconv_t charset_to_utf8 = (iconv_t)(-1);
+ static iconv_t charset_from_utf8 = (iconv_t)(-1);
+ #endif
+@@ -50,8 +50,8 @@
+   mutt_canonical_charset (buffer, sizeof (buffer), charset);
+ 
+   Charset_is_utf8 = 0;
++  charset_is_cjk = 0;
+ #ifndef HAVE_WC_FUNCS
+-  charset_is_ja = 0;
+   if (charset_to_utf8 != (iconv_t)(-1))
+   {
+     iconv_close (charset_to_utf8);
+@@ -66,12 +66,18 @@
+ 
+   if (mutt_is_utf8 (buffer))
+     Charset_is_utf8 = 1;
+-#ifndef HAVE_WC_FUNCS
+-  else if (!ascii_strcasecmp(buffer, "euc-jp") || !ascii_strcasecmp(buffer, "shift_jis")
+-  	|| !ascii_strcasecmp(buffer, "cp932") || !ascii_strcasecmp(buffer, "eucJP-ms"))
++  else if (!ascii_strcasecmp (buffer, "gb2312") ||
++       !ascii_strcasecmp (buffer, "gb18030") ||
++       !ascii_strcasecmp (buffer, "big5") ||
++       !ascii_strcasecmp (buffer, "euc-tw") ||
++       !ascii_strcasecmp (buffer, "EUC-JP") ||
++       !ascii_strcasecmp (buffer, "eucJP-ms") ||
++       !ascii_strcasecmp (buffer, "Shift_JIS") ||
++       !ascii_strcasecmp (buffer, "cp932") ||
++       !ascii_strcasecmp (buffer, "euc-kr"))
+   {
+-    charset_is_ja = 1;
+-
++    charset_is_cjk = 1;
++#ifndef HAVE_WC_FUNCS
+     /* Note flags=0 to skip charset-hooks: User masters the $charset
+      * name, and we are sure of our "utf-8" constant. So there is no
+      * possibility of wrong name that we would want to try to correct
+@@ -80,24 +86,67 @@
+      */
+     charset_to_utf8 = mutt_iconv_open ("utf-8", charset, 0);
+     charset_from_utf8 = mutt_iconv_open (charset, "utf-8", 0);
+-  }
+ #endif
++  }
+ 
+ #if defined(HAVE_BIND_TEXTDOMAIN_CODESET) && defined(ENABLE_NLS)
+   bind_textdomain_codeset(PACKAGE, buffer);
+ #endif
+ }
+ 
++#if defined(ENABLE_CJK_WIDTH) || !defined(HAVE_WC_FUNCS)
++/*
++ * For systems that don't have wcwidth() which functions correctly,
++ * we provide our own wcwidth().
++ * Furthermore, this wcwidth() enables change of character-cell width of
++ * the East Asian Ambiguous class by using $cjk_width.
++ * The function which most systems have cannot do it.
++ * Please read the comment of wcwidth.c about the East Asian Ambiguous
++ * class for details.
++ */
++int wcwidth_ucs(wchar_t ucs);
++int wcwidth_cjk(wchar_t ucs);
++
++int wcwidth (wchar_t wc)
++{
++  if (!Charset_is_utf8)
++  {
++    if (!charset_is_cjk)
++    {
++      /* 8-bit case */
++      if (!wc)
++        return 0;
++      else if ((0 <= wc && wc < 256) && IsPrint (wc))
++        return 1;
++      else
++        return -1;
++    }
++    else
++    {
++      /* CJK */
++      return wcwidth_cjk (wc);
++    }
++  }
++  else {
++#ifdef ENABLE_CJK_WIDTH
++    if (option (OPTCJKWIDTH))
++      return wcwidth_cjk (wc);
++#endif /* ENABLE_CJK_WIDTH */
++    return wcwidth_ucs (wc);
++  }
++}
++#endif /* ENABLE_CJK_WIDTH || !HAVE_WC_FUNCS */
++
+ #ifndef HAVE_WC_FUNCS
+ 
+ /*
+  * For systems that don't have them, we provide here our own
+- * implementations of wcrtomb(), mbrtowc(), iswprint() and wcwidth().
++ * implementations of wcrtomb(), mbrtowc() and iswprint().
+  * Instead of using the locale, as these functions normally would,
+  * we use Mutt's Charset variable. We support 3 types of charset:
+  * (1) For 8-bit charsets, wchar_t uses the same encoding as char.
+  * (2) For UTF-8, wchar_t uses UCS.
+- * (3) For stateless Japanese encodings, we use UCS and convert
++ * (3) For stateless CJK encodings, we use UCS and convert
+  *     via UTF-8 using iconv.
+  * Unfortunately, we can't handle non-stateless encodings.
+  */
+@@ -256,7 +305,7 @@
+ 
+ int iswprint (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return ((0x20 <= wc && wc < 0x7f) || 0xa0 <= wc);
+   else
+     return (0 <= wc && wc < 256) ? IsPrint (wc) : 0;
+@@ -264,7 +313,7 @@
+ 
+ int iswspace (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return (9 <= wc && wc <= 13) || wc == 32;
+   else
+     return (0 <= wc && wc < 256) ? isspace (wc) : 0;
+@@ -347,7 +396,7 @@
+ 
+ wint_t towupper (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return towupper_ucs (wc);
+   else
+     return (0 <= wc && wc < 256) ? toupper (wc) : wc;
+@@ -355,7 +404,7 @@
+ 
+ wint_t towlower (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return towlower_ucs (wc);
+   else
+     return (0 <= wc && wc < 256) ? tolower (wc) : wc;
+@@ -363,7 +412,7 @@
+ 
+ int iswalnum (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return iswalnum_ucs (wc);
+   else
+     return (0 <= wc && wc < 256) ? isalnum (wc) : 0;
+@@ -371,7 +420,7 @@
+ 
+ int iswalpha (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return iswalpha_ucs (wc);
+   else
+     return (0 <= wc && wc < 256) ? isalpha (wc) : 0;
+@@ -379,58 +428,12 @@
+ 
+ int iswupper (wint_t wc)
+ {
+-  if (Charset_is_utf8 || charset_is_ja)
++  if (Charset_is_utf8 || charset_is_cjk)
+     return iswupper_ucs (wc);
+   else
+     return (0 <= wc && wc < 256) ? isupper (wc) : 0;
+ }
+ 
+-/*
+- * l10n for Japanese:
+- *   Symbols, Greek and Cyrillic in JIS X 0208, Japanese Kanji
+- *   Character Set, have a column width of 2.
+- */
+-int wcwidth_ja (wchar_t ucs)
+-{
+-  if (ucs >= 0x3021)
+-    return -1; /* continue with the normal check */
+-  /* a rough range for quick check */
+-  if ((ucs >= 0x00a1 && ucs <= 0x00fe) || /* Latin-1 Supplement */
+-      (ucs >= 0x0391 && ucs <= 0x0451) || /* Greek and Cyrillic */
+-      (ucs >= 0x2010 && ucs <= 0x266f) || /* Symbols */
+-      (ucs >= 0x3000 && ucs <= 0x3020))   /* CJK Symbols and Punctuation */
+-    return 2;
+-  else
+-    return -1;
+-}
+-
+-int wcwidth_ucs(wchar_t ucs);
+-
+-int wcwidth (wchar_t wc)
+-{
+-  if (!Charset_is_utf8)
+-  {
+-    if (!charset_is_ja)
+-    {
+-      /* 8-bit case */
+-      if (!wc)
+-	return 0;
+-      else if ((0 <= wc && wc < 256) && IsPrint (wc))
+-	return 1;
+-      else
+-	return -1;
+-    }
+-    else
+-    {
+-      /* Japanese */
+-      int k = wcwidth_ja (wc);
+-      if (k != -1)
+-	return k;
+-    }
+-  }
+-  return wcwidth_ucs (wc);
+-}
+-
+ size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps)
+ {
+   static wchar_t mbstate;
+diff -u mutt-1.5.21.orig/mbyte.h mutt-1.5.21/mbyte.h
+--- mbyte.h	2010-11-08 09:44:31.522997953 +0900
++++ mbyte.h	2010-11-15 18:48:14.629311261 +0900
+@@ -41,10 +41,9 @@
+ int iswupper (wint_t wc);
+ wint_t towupper (wint_t wc);
+ wint_t towlower (wint_t wc);
+-int wcwidth (wchar_t wc);
+ # endif /* !HAVE_WC_FUNCS */
+ 
+-
++int wcwidth (wchar_t wc);
+ void mutt_set_charset (char *charset);
+ extern int Charset_is_utf8;
+ size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
+diff -u mutt-1.5.21.orig/menu.c mutt-1.5.21/menu.c
+--- menu.c	2010-11-08 09:44:31.702997928 +0900
++++ menu.c	2010-11-15 18:48:14.629311261 +0900
+@@ -34,6 +34,42 @@
+ 
+ char* SearchBuffers[MENU_MAX];
+ 
++static const char TreeAsciiChars[] =
++{
++  0,   /* not used */
++  '`', /* M_TREE_LLCORNER */
++  ',', /* M_TREE_ULCORNER */
++  '|', /* M_TREE_LTEE */
++  '-', /* M_TREE_HLINE */
++  '|', /* M_TREE_VLINE */
++  ' ', /* M_TREE_SPACE */
++  '>', /* M_TREE_RARROW */
++  '*', /* M_TREE_STAR  fake thread indicator */
++  '&', /* M_TREE_HIDDEN */
++  '=', /* M_TREE_EQUALS */
++  '-', /* M_TREE_TTEE */
++  '-', /* M_TREE_BTEE */
++  '?'  /* M_TREE_MISSING */
++};
++
++const char *TreeUTF8Chars[] =
++{
++  "",             /* not used */
++  "\342\224\224", /* M_TREE_LLCORNER  WACS_LLCORNER */
++  "\342\224\214", /* M_TREE_ULCORNER  WACS_ULCORNER */
++  "\342\224\234", /* M_TREE_LTEE      WACS_LTEE */
++  "\342\224\200", /* M_TREE_HLINE     WACS_HLINE */
++  "\342\224\202", /* M_TREE_VLINE     WACS_VLINE */
++  " ",            /* M_TREE_SPACE */
++  ">",            /* M_TREE_RARROW */
++  "*",            /* M_TREE_STAR  fake thread indicator */
++  "&",            /* M_TREE_HIDDEN */
++  "=",            /* M_TREE_EQUALS */
++  "\342\224\254", /* M_TREE_TTEE      WACS_TTEE */
++  "\342\224\264", /* M_TREE_BTEE      WACS_BTEE */
++  '?'             /* M_TREE_MISSING */
++};
++
+ static void print_enriched_string (int attr, unsigned char *s, int do_color)
+ {
+   wchar_t wc;
+@@ -48,84 +84,47 @@
+     {
+       if (do_color)
+ 	SETCOLOR (MT_COLOR_TREE);
+-      while (*s && *s < M_TREE_MAX)
+-      {
+-	switch (*s)
++      if (option (OPTASCIICHARS))
++	while (*s && *s < M_TREE_MAX)
+ 	{
+-	  case M_TREE_LLCORNER:
+-	    if (option (OPTASCIICHARS))
+-	      addch ('`');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\224"); /* WACS_LLCORNER */
+-	    else
+-	      addch (ACS_LLCORNER);
+-	    break;
+-	  case M_TREE_ULCORNER:
+-	    if (option (OPTASCIICHARS))
+-	      addch (',');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\214"); /* WACS_ULCORNER */
+-	    else
+-	      addch (ACS_ULCORNER);
+-	    break;
+-	  case M_TREE_LTEE:
+-	    if (option (OPTASCIICHARS))
+-	      addch ('|');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\234"); /* WACS_LTEE */
+-	    else
+-	      addch (ACS_LTEE);
+-	    break;
+-	  case M_TREE_HLINE:
+-	    if (option (OPTASCIICHARS))
+-	      addch ('-');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\200"); /* WACS_HLINE */
+-	    else
+-	      addch (ACS_HLINE);
+-	    break;
+-	  case M_TREE_VLINE:
+-	    if (option (OPTASCIICHARS))
+-	      addch ('|');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\202"); /* WACS_VLINE */
+-	    else
+-	      addch (ACS_VLINE);
+-	    break;
+-	  case M_TREE_TTEE:
+-	    if (option (OPTASCIICHARS))
+-	      addch ('-');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\254"); /* WACS_TTEE */
+-	    else
+-	      addch (ACS_TTEE);
+-	    break;
+-	  case M_TREE_BTEE:
+-	    if (option (OPTASCIICHARS))
+-	      addch ('-');
+-	    else if (Charset_is_utf8)
+-	      addstr ("\342\224\264"); /* WACS_BTEE */
+-	    else
+-	      addch (ACS_BTEE);
+-	    break;
+-	  case M_TREE_SPACE:
+-	    addch (' ');
+-	    break;
+-	  case M_TREE_RARROW:
+-	    addch ('>');
+-	    break;
+-	  case M_TREE_STAR:
+-	    addch ('*'); /* fake thread indicator */
+-	    break;
+-	  case M_TREE_HIDDEN:
+-	    addch ('&');
+-	    break;
+-	  case M_TREE_EQUALS:
+-	    addch ('=');
+-	    break;
+-	  case M_TREE_MISSING:
+-	    addch ('?');
+-	    break;
++	  addch (TreeAsciiChars[(int)*s]);
++	  s++, n--;
++	}
++      else if (Charset_is_utf8)
++	while (*s && *s < M_TREE_MAX)
++	{
++	  addstr ((char *)TreeUTF8Chars[(int)*s]);
++	  s++, n--;
++	}
++      else
++	while (*s && *s < M_TREE_MAX)
++	{
++	  switch (*s)
++	  {
++	    case M_TREE_LLCORNER:
++	        addch (ACS_LLCORNER);
++	      break;
++	    case M_TREE_ULCORNER:
++	        addch (ACS_ULCORNER);
++	      break;
++	    case M_TREE_LTEE:
++	        addch (ACS_LTEE);
++	      break;
++	    case M_TREE_HLINE:
++	        addch (ACS_HLINE);
++	      break;
++	    case M_TREE_VLINE:
++	        addch (ACS_VLINE);
++	      break;
++	    case M_TREE_TTEE:
++	        addch (ACS_TTEE);
++	      break;
++	    case M_TREE_BTEE:
++	        addch (ACS_BTEE);
++	      break;
++	    default:
++	      addch (TreeAsciiChars[(int)*s]);
++	      break;
+ 	}
+ 	s++, n--;
+       }
+@@ -134,7 +133,7 @@
+     else if ((k = mbrtowc (&wc, (char *)s, n, &mbstate)) > 0)
+     {
+       addnstr ((char *)s, k);
+-      s += k, n-= k;
++      s += k, n -= k;
+     }
+     else
+       break;
+diff -u mutt-1.5.21.orig/mutt.h mutt-1.5.21/mutt.h (including coloreol patch)
+--- mutt.h	2010-11-08 09:44:31.532998225 +0900
++++ mutt.h	2010-11-15 18:48:14.639311059 +0900
+@@ -328,7 +328,8 @@
+   OPTBRAILLEFRIENDLY,
+   OPTCHECKMBOXSIZE,
+   OPTCHECKNEW,
++  OPTCJKWIDTH,
+   OPTCOLORAFTEREOL,
+   OPTCOLLAPSEUNREAD,
+   OPTCONFIRMAPPEND,
+   OPTCONFIRMCREATE,
+diff -u mutt-1.5.21.orig/muttlib.c mutt-1.5.21/muttlib.c
+--- muttlib.c	2010-11-08 09:44:31.652997836 +0900
++++ muttlib.c	2010-11-15 18:48:14.639311059 +0900
+@@ -1293,7 +1293,7 @@
+ 	  /* get contents after padding */
+ 	  mutt_FormatString (buf, sizeof (buf), 0, src + pl, callback, data, flags);
+ 	  len = mutt_strlen (buf);
+-	  wid = mutt_strwidth (buf);
++	  wid = mutt_strwidth_tree (buf);
+ 
+ 	  /* try to consume as many columns as we can, if we don't have
+ 	   * memory for that, use as much memory as possible */
+@@ -1390,7 +1390,7 @@
+ 	memcpy (wptr, buf, len);
+ 	wptr += len;
+ 	wlen += len;
+-	col += mutt_strwidth (buf);
++	col += mutt_strwidth_tree (buf);
+       }
+     }
+     else if (*src == '\\')
+diff -u mutt-1.5.21.orig/protos.h mutt-1.5.21/protos.h
+--- protos.h	2010-11-08 09:44:31.532998225 +0900
++++ protos.h	2010-11-15 18:48:14.639311059 +0900
+@@ -355,7 +355,9 @@
+ #endif
+ int mutt_wstr_trunc (const char *, size_t, size_t, size_t *);
+ int mutt_charlen (const char *s, int *);
+-int mutt_strwidth (const char *);
++#define mutt_strwidth(s) _mutt_strwidth(s,0)
++#define mutt_strwidth_tree(s) _mutt_strwidth(s,1)
++int _mutt_strwidth (const char *s, int arboreal);
+ int mutt_compose_menu (HEADER *, char *, size_t, HEADER *);
+ int mutt_thread_set_flag (HEADER *, int, int, int);
+ int mutt_user_is_recipient (HEADER *);
+diff -u mutt-1.5.21.orig/wcwidth.c mutt-1.5.21/wcwidth.c
+--- wcwidth.c	2010-11-08 09:44:31.652997836 +0900
++++ wcwidth.c	2010-11-15 18:48:14.639311059 +0900
+@@ -20,16 +20,33 @@
+  *   unsigned short to fix compiler warnings, 2007-11-13, Rocco Rutte
+  */
+ 
+-#if HAVE_CONFIG_H
+-# include "config.h"
+-#endif
++#include <wchar.h>
++
++struct interval {
++  wchar_t first;
++  wchar_t last;
++};
+ 
+-#ifndef HAVE_WC_FUNCS
++/* auxiliary function for binary search in interval table */
++static int bisearch(wchar_t ucs, const struct interval *table, int max) {
++  int min = 0;
++  int mid;
+ 
+-#include "mutt.h"
+-#include "mbyte.h"
++  if (ucs < table[0].first || ucs > table[max].last)
++    return 0;
++  while (max >= min) {
++    mid = (min + max) / 2;
++    if (ucs > table[mid].last)
++      min = mid + 1;
++    else if (ucs < table[mid].first)
++      max = mid - 1;
++    else
++      return 1;
++  }
++
++  return 0;
++}
+ 
+-#include <ctype.h>
+ 
+ /* The following two functions define the column width of an ISO 10646
+  * character as follows:
+@@ -67,10 +84,7 @@
+ {
+   /* sorted list of non-overlapping intervals of non-spacing characters */
+   /* generated by "uniset +cat=Me +cat=Mn +cat=Cf -00AD +1160-11FF +200B c" */
+-  static const struct interval {
+-    wchar_t first;
+-    wchar_t last;
+-  } combining[] = {
++  static const struct interval combining[] = {
+     { 0x0300, 0x036f }, { 0x0483, 0x0486 }, { 0x0488, 0x0489 },
+     { 0x0591, 0x05bd }, { 0x05bf, 0x05bf }, { 0x05c1, 0x05c2 },
+     { 0x05c4, 0x05c5 }, { 0x05c7, 0x05c7 }, { 0x0600, 0x0603 },
+@@ -120,9 +134,6 @@
+     { 0x1d242, 0x1d244 }, { 0xe0001, 0xe0001 }, { 0xe0020, 0xe007f },
+     { 0xe0100, 0xe01ef }
+   };
+-  int min = 0;
+-  int max = sizeof(combining) / sizeof(struct interval) - 1;
+-  int mid;
+ 
+   /* test for 8-bit control characters */
+   if (ucs == 0)
+@@ -130,20 +141,10 @@
+   if (ucs < 32 || (ucs >= 0x7f && ucs < 0xa0))
+     return -1;
+ 
+-  /* first quick check for Latin-1 etc. characters */
+-  if (ucs < combining[0].first)
+-    return 1;
+-
+   /* binary search in table of non-spacing characters */
+-  while (max >= min) {
+-    mid = (min + max) / 2;
+-    if (combining[mid].last < ucs)
+-      min = mid + 1;
+-    else if (combining[mid].first > ucs)
+-      max = mid - 1;
+-    else if (combining[mid].first <= ucs && combining[mid].last >= ucs)
+-      return 0;
+-  }
++  if (bisearch(ucs, combining,
++               sizeof(combining) / sizeof(struct interval) - 1))
++    return 0;
+ 
+   /* if we arrive here, ucs is not a combining or C0/C1 control character */
+ 
+@@ -167,15 +168,119 @@
+       (ucs >= 0x30000 && ucs <= 0x3fffd)));
+ }
+ 
+-#endif /* !HAVE_WC_FUNCS */
++#if 0 /* original */
++int wcswidth_ucs(const wchar_t *pwcs, size_t n)
++{
++  int w, width = 0;
++
++  for (;*pwcs && n-- > 0; pwcs++)
++    if ((w = wcwidth_ucs(*pwcs)) < 0)
++      return -1;
++    else
++      width += w;
++
++  return width;
++}
++#endif
++
++/*
++ * The following functions are the same as wcwidth_ucs() and
++ * wcwidth_cjk(), except that spacing characters in the East Asian
++ * Ambiguous (A) category as defined in Unicode Technical Report #11
++ * have a column width of 2. This variant might be useful for users of
++ * CJK legacy encodings who want to migrate to UCS without changing
++ * the traditional terminal character-width behaviour. It is not
++ * otherwise recommended for general use.
++ */
++/*
++ * In addition to the explanation mentioned above,
++ * several characters in the East Asian Narrow (Na) and Not East Asian
++ * (Neutral) category as defined in Unicode Technical Report #11
++ * actually have a column width of 2 in CJK legacy encodings.
++ */
++int wcwidth_cjk(wchar_t ucs)
++{
++  /* sorted list of non-overlapping intervals of East Asian Ambiguous
++   * characters, generated by "uniset +WIDTH-A -cat=Me -cat=Mn -cat=Cf c" */
++  static const struct interval ambiguous[] = {
++    { 0x00a1, 0x00a1 }, { 0x00a4, 0x00a4 }, { 0x00a7, 0x00a8 },
++    { 0x00aa, 0x00aa }, { 0x00ae, 0x00ae }, { 0x00b0, 0x00b4 },
++    { 0x00b6, 0x00ba }, { 0x00bc, 0x00bf }, { 0x00c6, 0x00c6 },
++    { 0x00d0, 0x00d0 }, { 0x00d7, 0x00d8 }, { 0x00de, 0x00e1 },
++    { 0x00e6, 0x00e6 }, { 0x00e8, 0x00ea }, { 0x00ec, 0x00ed },
++    { 0x00f0, 0x00f0 }, { 0x00f2, 0x00f3 }, { 0x00f7, 0x00fa },
++    { 0x00fc, 0x00fc }, { 0x00fe, 0x00fe }, { 0x0101, 0x0101 },
++    { 0x0111, 0x0111 }, { 0x0113, 0x0113 }, { 0x011b, 0x011b },
++    { 0x0126, 0x0127 }, { 0x012b, 0x012b }, { 0x0131, 0x0133 },
++    { 0x0138, 0x0138 }, { 0x013f, 0x0142 }, { 0x0144, 0x0144 },
++    { 0x0148, 0x014b }, { 0x014d, 0x014d }, { 0x0152, 0x0153 },
++    { 0x0166, 0x0167 }, { 0x016b, 0x016b }, { 0x01ce, 0x01ce },
++    { 0x01d0, 0x01d0 }, { 0x01d2, 0x01d2 }, { 0x01d4, 0x01d4 },
++    { 0x01d6, 0x01d6 }, { 0x01d8, 0x01d8 }, { 0x01da, 0x01da },
++    { 0x01dc, 0x01dc }, { 0x0251, 0x0251 }, { 0x0261, 0x0261 },
++    { 0x02c4, 0x02c4 }, { 0x02c7, 0x02c7 }, { 0x02c9, 0x02cb },
++    { 0x02cd, 0x02cd }, { 0x02d0, 0x02d0 }, { 0x02d8, 0x02db },
++    { 0x02dd, 0x02dd }, { 0x02df, 0x02df }, { 0x0391, 0x03a1 },
++    { 0x03a3, 0x03a9 }, { 0x03b1, 0x03c1 }, { 0x03c3, 0x03c9 },
++    { 0x0401, 0x0401 }, { 0x0410, 0x044f }, { 0x0451, 0x0451 },
++    { 0x2010, 0x2010 }, { 0x2013, 0x2016 }, { 0x2018, 0x2019 },
++    { 0x201c, 0x201d }, { 0x2020, 0x2022 }, { 0x2024, 0x2027 },
++    { 0x2030, 0x2030 }, { 0x2032, 0x2033 }, { 0x2035, 0x2035 },
++    { 0x203b, 0x203b }, { 0x203e, 0x203e }, { 0x2074, 0x2074 },
++    { 0x207f, 0x207f }, { 0x2081, 0x2084 }, { 0x20ac, 0x20ac },
++    { 0x2103, 0x2103 }, { 0x2105, 0x2105 }, { 0x2109, 0x2109 },
++    { 0x2113, 0x2113 }, { 0x2116, 0x2116 }, { 0x2121, 0x2122 },
++    { 0x2126, 0x2126 }, { 0x212b, 0x212b }, { 0x2153, 0x2154 },
++    { 0x215b, 0x215e }, { 0x2160, 0x216b }, { 0x2170, 0x2179 },
++    { 0x2190, 0x2199 }, { 0x21b8, 0x21b9 }, { 0x21d2, 0x21d2 },
++    { 0x21d4, 0x21d4 }, { 0x21e7, 0x21e7 }, { 0x2200, 0x2200 },
++    { 0x2202, 0x2203 }, { 0x2207, 0x2208 }, { 0x220b, 0x220b },
++    { 0x220f, 0x220f }, { 0x2211, 0x2211 }, { 0x2215, 0x2215 },
++    { 0x221a, 0x221a }, { 0x221d, 0x2220 }, { 0x2223, 0x2223 },
++    { 0x2225, 0x2225 }, { 0x2227, 0x222c }, { 0x222e, 0x222e },
++    { 0x2234, 0x2237 }, { 0x223c, 0x223d }, { 0x2248, 0x2248 },
++    { 0x224c, 0x224c }, { 0x2252, 0x2252 }, { 0x2260, 0x2261 },
++    { 0x2264, 0x2267 }, { 0x226a, 0x226b }, { 0x226e, 0x226f },
++    { 0x2282, 0x2283 }, { 0x2286, 0x2287 }, { 0x2295, 0x2295 },
++    { 0x2299, 0x2299 }, { 0x22a5, 0x22a5 }, { 0x22bf, 0x22bf },
++    { 0x2312, 0x2312 }, { 0x2460, 0x24e9 }, { 0x24eb, 0x254b },
++    { 0x2550, 0x2573 }, { 0x2580, 0x258f }, { 0x2592, 0x2595 },
++    { 0x25a0, 0x25a1 }, { 0x25a3, 0x25a9 }, { 0x25b2, 0x25b3 },
++    { 0x25b6, 0x25b7 }, { 0x25bc, 0x25bd }, { 0x25c0, 0x25c1 },
++    { 0x25c6, 0x25c8 }, { 0x25cb, 0x25cb }, { 0x25ce, 0x25d1 },
++    { 0x25e2, 0x25e5 }, { 0x25ef, 0x25ef }, { 0x2605, 0x2606 },
++    { 0x2609, 0x2609 }, { 0x260e, 0x260f }, { 0x2614, 0x2615 },
++    { 0x261c, 0x261c }, { 0x261e, 0x261e }, { 0x2640, 0x2640 },
++    { 0x2642, 0x2642 }, { 0x2660, 0x2661 }, { 0x2663, 0x2665 },
++    { 0x2667, 0x266a }, { 0x266c, 0x266d }, { 0x266f, 0x266f },
++    { 0x273d, 0x273d }, { 0x2776, 0x277f }, { 0xe000, 0xf8ff },
++    { 0xfffd, 0xfffd }, { 0xf0000, 0xffffd }, { 0x100000, 0x10fffd }
++  };
++
++  /* For Japanese legacy encodings, the following characters are added. */
++  static const struct interval legacy_ja[] = {
++    { 0x00A2, 0x00A3 }, { 0x00A5, 0x00A6 }, { 0x00AC, 0x00AC },
++    { 0x00AF, 0x00AF }, { 0x2212, 0x2212 }
++  };
++
++  /* binary search in table of non-spacing characters */
++  if (bisearch(ucs, ambiguous,
++              sizeof(ambiguous) / sizeof(struct interval) - 1))
++    return 2;
++  if (bisearch(ucs, legacy_ja,
++              sizeof(legacy_ja) / sizeof(struct interval) - 1))
++    return 2;
++
++  return wcwidth_ucs(ucs);
++}
+ 
+ #if 0 /* original */
+-int wcswidth(const wchar_t *pwcs, size_t n)
++int wcswidth_cjk(const wchar_t *pwcs, size_t n)
+ {
+   int w, width = 0;
+ 
+   for (;*pwcs && n-- > 0; pwcs++)
+-    if ((w = wcwidth(*pwcs)) < 0)
++    if ((w = wcwidth_cjk(*pwcs)) < 0)
+       return -1;
+     else
+       width += w;

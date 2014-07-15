@@ -1,0 +1,301 @@
+サポートしているプラットホーム
+==============================
+
+Muttは次に示すUNIXオペレーティングシステムでコンパイルと動作が報告され
+ています。
+
+	AIX
+	BSDI
+	Convex
+	Data General Unix (DG/UX)
+	Digital Unix (OSF/1)
+	DYNIX/ptx
+	FreeBSD
+	HP-UX
+	IRIX
+	Linux
+	Mac OS X
+	Atari MiNT
+	MkLinux
+	NetBSD
+	OpenBSD
+	QNX
+	SCO Unix 3.2v4/5
+	Solaris
+	SunOS
+	Ultrix
+	UnixWare
+
+- CVSからビルドしようとしていたり、Mutt の 一部、特にビルドシステムを
+  変更しようとしているなら、doc/devel-notes.txt をお読みください。
+
+- (gccのような) ANSI C コンパイラが必要です。
+
+- SysV 互換 curses ライブラリも必要です。なければ、GNU ncurses か
+  S-Lang をインストールする必要があります。
+
+	GNU ncurses, ftp://prep.ai.mit.edu/pub/gnu/
+	S-Lang, ftp://space.mit.edu/pub/davis/slang/
+
+- Mutt は文字コードの変換に iconv API の実装が必要です。
+  フリーな実装の一つに次の URL で示すものがあります。
+
+        http://www.gnu.org/software/libiconv/
+
+- マニュアルのビルドには DocBook XSL スタイルシートと DocBook DTD 4.2
+  がローカルにインストールされている必要があります。
+  詳しくは doc/devel-notes.txt の "Generating Mutt Documentation From
+  Source" の項をご覧ください。
+
+
+インストール
+============
+
+Mutt は GNU autoconf パッケージを利用しているため簡単にインストールで
+きます。Mutt の配布物を単に untar して、"configure"スクリプトを実行す
+るだけです。CVSリボジトリから配布物を取得した場合には、configure に渡
+すのと同じコマンドラインパラメータを付けて"prepare"スクリプトを実行し
+ます。この prepare スクリプトは Mutt の構築環境を整え、tar ballには存
+在するけれどCVSリポジトリには存在しないファイルを追加します。
+
+大抵の場合には、configure はコンパイルするために知る必要があるもの全
+て自動的に識別します。しかし、configure の作業を補助したり、デフォル
+トの動作を変えたりするために、いくつかのオプションがあります。
+
+--prefix=DIR
+	/usr/local の代わりに DIR に Mutt をインストールします。
+
+--with-curses=DIR
+	DIR/lib にある curses ライブラリを使います。
+	ncurses があれば、configure が自動的に /usr/include/ncurses
+	を見て、その include ファイルを探してくれます。
+
+--with-slang[=DIR]
+	ncurses ライブラリの代わりに S-Lang ライブラリを使います。
+	このライブラリは ncurses ほど厳格に適切な termcap エントリを
+	必要としないため、こちらの方がうまく機能する人もいるようです。
+	Mutt では最低でもバージョン 0.99-38 以降を使うことが推奨されます。
+
+--with-mailpath=DIR
+	あなたのシステムでスプールメールボックスの置かれている場所を
+	指定します。
+
+--with-homespool[=FILE]
+	ユーザのホームディレクトリにあるファイルをスプールメールボック
+	スとして扱います。FILE はフルパスではなくユーザのホームディレ
+	クトリに対する相対パスであることに注意してください。FILE が指定
+	されない場合はデフォルトで"mailbox"が使われます。
+
+--enable-pop
+	POP3サポートを有効にします。
+
+--enable-imap
+	IMAPサポートを有効にします。
+
+--with-gss[=PFX]
+	IMAPサーバへの GSSAPI 認証を有効にします。
+	これは MIT と Heimdal のどちらの GSSAPI 実装でも動作するはずです。
+	他の実装はテストされていません。Cyrus SASL ライブラリも GSSAPI を
+	サポートしており、それを用いてセッションを暗号化できることを
+	覚えておいてください。可能なら SASL の方を使うべきです。
+
+--with-ssl[=PFX]
+	IMAP と POP で SSL サポートを有効にします。
+	SSL サポートは Mutt のコンパイル前に OpenSSL のヘッダとライブ
+	ラリが正しくインストールされていることを要求します。OpenSSLの
+	ヘッダとライブラリがデフォルトのシステムパスに無い場合には、
+	インストール場所のルートディレクトリを決める PFX 引数を付ける
+	ことが出来ます。このときに、ライブラリは PFX/lib に、ヘッダは 
+	PFX/include/openssl に見つかることが期待されます。
+
+--with-sasl[=PFX]
+	IMAPとPOPの認証に Cyrus SASL ライブラリを使用します。
+	このライブラリは、いくつかの認証方法に包括的なサポートを提供し
+	ます。対応する認証方法は、Mutt を再コンパイルしなくてもシステ
+	ム管理者があとで追加できます。SSL が利用できなくても SASL が
+	メールのセッションを暗号化できる場合があります。
+
+--disable-nls
+	このスイッチは Mutt の母国語サポートを無効にします。
+
+--with-included-gettext 
+	intl/ サブディレクトリに含まれている GNU gettext ライブラリを
+	使って Mutt は構築されます。configure スクリプトにとって
+	gettext らしく見えるものがマシンにあるのにそれが Mutt のカタロ
+	グファイルをうまく処理できない、という場合には、このスイッチを
+	使う必要があるかもしれません。
+
+--with-regex
+	ローカルの regexp ルーチンの代わりに GNU regex を使います。
+	POSIX 仕様の regcomp/regexec/regfree がないシステムも多いため、
+	このルーチンがそれをサポートするための方法を提供します。
+
+--enable-flock
+	ファイルをロックするために flock() を使います。
+
+--disable-fcntl
+	デフォルトでは、Mutt はファイルをロックするために fcntl() を使
+	います。これは NFS 越しだと読み書き速度をひどく低下させます。
+	dotlock も無効になっている場合にこのオプションを使用することは
+	危険になり得ることに注意してください。
+
+--enable-nfs-fix
+	いくつかの NFS の実装は小さいファイルの atime/mtime を必ずしも
+	書き換えません。これは Mutt の "mailboxes" 機能が必ずしも有効
+	に機能しないことを意味します。これはファイルが新着メールを持っ
+	ているかを判断するためにこの特性を使っているためです。
+	このオプションはこのバグに対して有効に働きます。
+
+--enable-locales-fix
+	システムによっては、環境変数 LANG を設定している場合でさえも、
+	どの文字が表示可能文字なのかを判断するために isprint() 	の結果
+	を信頼することができません。このオプションを設定した場合、Mutt
+	は ISO-8859-* の範囲の全ての文字が表示可能文字であると仮定しま
+	す。このオプションを設定しないままであれば、Mutt は環境変数 
+	LANG, LC_ALL, LC_CTYPE のどれかが設定されていれば isprint() を
+	使おうと試みます。この環境変数がどれも設定されていない場合は 
+	ISO-8859-* の範囲を表示可能文字であると仮定します。
+	--enable-locales-fix を必要とするのであれば、多分 --without-wc-funcs
+	も必要でしょう。しかし、正しく設定された最新のシステムでは、ど
+	ちらも必要ないはずです。その代わりに LANG, LC_ALL, LC_CTYPE を
+	設定してみてください。
+
+--without-wc-funcs
+	デフォルトでは、Mutt は利用可能であればシステムで提供されている
+	関数 mbrtowc(), wctomb(), wcwidth() を使います。このオプションを
+	付けると、Mutt は自身が持っているバージョンの関数を使います。こ
+	れはシステムが通常ではマルチバイトの文字コードをサポートしていな
+	い場合でさえも、UTF-8, euc-jp, shift_jis といった8ビットの表示用
+	の文字コードでうまく動くはずです。
+
+	環境変数 LANG や LC_CTYPE を正しく設定しているのに Mutt が(\243の
+	ような)八進数のエスケープシーケンスとして非ASCII文字を表示してい
+	るのを見つけたら、--enable-locales-fix と --without-wc-funcs の
+	両方あるいは片方を付けて、その問題を解決することが出来るかもしれ
+	ません。
+
+--with-exec-shell=SHELL
+	UNIX のバージョンによっては、/bin/sh は Mutt での emacs の使用を
+	非常に困難にするバグがあります。emacs で control-G
+	を押すと必ず Mutt と emacs が混乱するという問題があるならば、
+	/bin/sh 以外の Bourne 系シェルを使ってみたいと思うかもしれません。
+	うまく動くシェルは bash, zsh, ksh です。csh と tcsh のような C
+	シェルはほぼ間違いなく正常に動作しません。このオプションは '!'
+	を押したときに Mutt から起動するシェルとは無関係であることに注意
+	してください。このオプションは上記の問題を解決するためにのみ使用
+	し、上記のシェルのいずれか一つだけを引数として指定してください。
+
+	(もし、プラットホーム本来の Bourne シェルで問題に出会ったら、
+	mutt-dev@mutt.org に短い報告を送ってください。この話題に関する
+	短い記述を以下のセクションのプラットホーム別注意に追加します。)
+
+--enable-exact-address
+	デフォルトでは、Mutt は入力に関わらず次の形式で全てのアドレス
+	を書き換えます。
+		Personal Name <user@host.domain>
+	このオプションを有効にすることによって、解析された同じ形式で
+	アドレスを書きます。
+	注記: これは著しく多大なメモリを必要とします。
+
+
+"configure"が終了した後は、単に "make install" と打ってください。
+
+Mutt は(エラー無しに)きれいにコンパイルするはずです。そして、最後には
+"mutt"と呼ばれるバイナリになるはずです。A_NORMAL とか KEY_MIN のような
+未定義のシンボルについてのエラーが出たら、多分 SysV系の curses ライブ
+ラリがないのです。ncurses か S-Lang (上記参照)のどちらかをインストール
+すべきです。そして、再び "configure" スクリプトを実行してください。
+
+"VPATH" ビルドは現在は機能しないことに注意してください。
+
+
+
+文字符号化方式のサポート
+========================
+
+文字符号化方式の変換のための関数を Mutt はもはや含んでいません。
+代わりに、iconv 関数 (iconv_open, iconv, iconv_close)が提供されることを
+期待しています。最近のほとんどのシステムはこの関数を提供しており、よく
+C ライブラリの一部として提供しています。この関数を持っていないシステムに
+Mutt をインストールするのであれば、Bruno Haible 氏の libiconv ライブラリ
+をインストールすることが推奨されます。このライブラリは次の場所から手に入
+ります。
+
+	       ftp://ftp.ilog.fr/pub/Users/haible/gnu/
+
+システムが iconv 関数を提供している場合でさえも、機能を非常に限定した
+バージョンの iconv しか提供していないシステムもあるので、libiconv を
+インストールしたいということがあるかもしれません。
+
+
+あなたのシステムの iconv の実装を使うことを決めたら、いくつかの文字符
+号化方式について実装の定義名を Mutt に教える必要があります。様々なシ
+ステムにおけるサンプル設定ファイルが、このソース配布物の contrib/iconv/
+ディレクトリに置いてあります。また、Mutt の文書の一部として samples/iconv
+ディレクトリにインストールされます。
+
+このサンプル設定ファイルを使うために、次ような行をあなたのシステム共通
+の Muttrc に追加してください。この Muttrc は普通 /etc か /usr/local/etc 
+にあります。
+
+     source /usr/local/doc/mutt/samples/iconv/iconv.osf1-4.0d.rc
+
+もし本当にしたいのであれば、--disable-iconv を付けて Mutt を設定するこ
+ともできます。しかし、文字符号化方式の変換を行いません。
+
+
+プラットホーム別注意
+====================
+
+All platforms
+
+	Meta キーが Mutt で機能するのを妨げるバグが(全てではないに
+	しても)	大抵のバージョンの S-Lang にあります。パッチはこの
+	Mutt の配布物の contrib/patch.slang-1.2.2.keypad.1 という
+	ファイルにあります。
+
+Solaris 2.4
+
+	システムの regcomp() と regexec() ルーチンは大変ひどく壊れて
+	います。これは configure スクリプトで自動的に検出されるはずで
+	す。そうでなければ、Mutt の configure の際に、--with-regex ス
+	イッチを使ってください。
+	
+	Solaris 2.4 の NLS ライブラリが "C" 以外のロカールを使ってい
+	るときに Mutt が core dump するという報告を受けています。
+	この問題を経験したら --with-included-gettext の configure 
+	のスイッチを使ってください。
+
+	Solaris の curses ではカラーがうまく機能しません。カラーサポー
+	トが機能するように ncurses か S-Lang のどちらかと共にコンパイ
+	ルする必要があります。
+
+Solaris 2.6
+
+	システムの regexp ライブラリとリンクした時に、Muttが変に動作
+	するとの報告があります。このプラットホームで configure を行う
+	際に --with-regex スイッチを使ってください。
+
+	実際の修正のためには、sunsolve.sun.com から Sun のパッチ
+	# 105490-05 (linker patch) と # 105210-17 (libc and malloc patch)
+	を当てることにより、この問題が生じるのを止めると報告されてい
+	ます。
+
+Linux
+
+	最近の Linux システムにおいて、flock() と fcntl()のロックが
+	同時に使えません。そのようなシステムにおいて --enable-flock 
+	スイッチを使うのであれば、 --disable-fcntl も同様に必ず与え
+	てください。
+
+Sparc Linux
+
+	Redhat 4.2 Sparc ユーザは Mutt をビルドする際にいくつかの
+	システム include ファイルで問題があると報告しています。
+	--disable-warnings スイッチを付けて Mutt を configure すると
+	この問題に対して対処されるようです。
+
+Digital Unix (OSF/1)
+
+	システムの curses ライブラリはひどく壊れているようです。
+	GNU ncurses か S-Lang を代わりに使ってください。

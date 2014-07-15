@@ -1,0 +1,24 @@
+# mutt-ja.rc:  configuration to use Japanese
+#   If you want to use Japanese, you should change your configuration 
+#   to include this file.
+#   For example: 
+#      source /usr/local/doc/mutt/samples/mutt-ja.rc
+#
+
+# enable charset for your terminal
+set charset="euc-jp"
+#set charset="shift_jis"
+
+# you should not change the following configurations.
+set send_charset="us-ascii:iso-2022-jp"
+set file_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+set strict_mime=no
+set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+set thorough_search=yes
+set sanitize_ja_chars=yes
+set rfc2047_parameters=yes
+#set create_rfc2047_parameters=yes
+set use_jisx0208
+set forward_decode=yes
+set mime_forward_decode=no
+set edit_headers=yes
