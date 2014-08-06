@@ -4,6 +4,32 @@
 使われている記号の説明:
   !: 仕様の変更, -: 機能の削除, +: 新機能
 
+1.5.23 (2014-03-11):
+
+  ! FCC is now preserved when postponing a message.
+  ! Mail-Followup-To is now preserved when recalling a postponed message.
+  ! Allow filename prompt when saving multiple attachments to a directory.
+
+1.5.22 (2013-10-18):
+
+  ! $imap_keepalive default lowered to 300
+  + $reflow_text, $reflow_wrap for finer control of flowed wrapping
+  + Support for TLSv1.1 and TLSv1.2.  $ssl_use_tlsv1_1 and $ssl_tlsv1_2
+    variables control whether the new protocols are used.
+  ! $ssl_use_tlsv1 now specifically refers to TLSv1.0.
+
+1.5.21 (2010-09-15):
+
+  + $mail_check_recent は、最後にメールボックスを見たときから、すべての未読
+    メール又は新規メールのどちらかを新規として表示するかを制御する。
+  + %D format expando for $folder_format
+  ! $thorough_search は既定値で yes となった
+  + imap-logout-all はすべての開いているIMAP接続をクローズする
+  ! header/body パスは常時 UTF-8 となった
+  + $wrap_headers は発信メッセージのヘッダ長を制御する
+  + all text/* パートはmailcapなしでインラインで表示できるようになった
+  + send-hooks はバッチモードで動くようになった; previously only send2-hooks ran.
+
 1.5.20 (2009-06-14):
 
   ! mbox/mmdf new mail flag is kept when leaving folders with new mail
