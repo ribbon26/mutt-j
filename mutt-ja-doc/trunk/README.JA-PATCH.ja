@@ -1,10 +1,10 @@
-		Mutt 1.5.21用日本語版パッチリリースノート
+		Mutt 1.5.23用日本語版パッチリリースノート
 
-							2012/12/21
-							Ver 1.5.21-j2
+							2014/08/06
+							Ver 1.5.23-j1
 							mutt-j 開発チーム
 
-Copyright (C)2000-2012 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C)2000-2014 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -205,7 +205,7 @@ Fedora Projectでも、いくつかのパッチが適用されています。そ
 現在のバージョンでは以下の環境で動作確認をしています。
 
 1) FreeBSD 8.3p4    iws        Oota Toshiya
-2) FreeBSD 9.1      iws	       Oota Tochiya
+2) FreeBSD 9.2      iws	       Oota Tochiya
 3) CentOS  6.3      Is         Oota Toshiya
 
 オプションの意味
