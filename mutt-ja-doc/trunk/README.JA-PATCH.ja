@@ -1,10 +1,10 @@
 		Mutt 1.5.23用日本語版パッチリリースノート
 
-							2014/10/30
-							Ver 1.5.23-j1
+							2015/01/02
+							Ver 1.5.23-j3
 							mutt-j 開発チーム
 
-Copyright (C)2000-2014 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C)2000-2015 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -76,7 +76,7 @@ Mutt の先の開発系列である mutt-1.3.x シリーズにおいて国際化
 また、1.5.6から1.5.10対応のパッチは、そのいくつかが本家に取り込まれました。さら
 に、他のライブラリ等の整備や、もう使われなくなった機能もいくつか存在しています。
 そのほか、FreeBSDのportsには、いくつか有用なパッチが含まれています。
-そこで、1.5.21対応のパッチは、今までの日本語版パッチを整理し、有効と思われる
+そこで、1.5.23対応のパッチは、今までの日本語版パッチを整理し、有効と思われる
 もの、さらに(後述のように)FreeBSDのportsで適用されているパッチを集めて日本語版
 としています。
 
@@ -189,8 +189,6 @@ FreeBSDのportsには、数多くのパッチが適用されています。そ�
 さんが独自portsとして取り込んだものを用意されました。各パッチはFreeBSD以外の
 OSでも有用なので、今回その成果を取り込んであります。なお、一部利用していない
 ものもあります。
-また、日本語版パッチと重複する部分があるため、過去の版で提供していたdb47パッチは
-削除しました。
 
 2.4.2 Fedora Projectからのパッチの取り込み
 
@@ -200,7 +198,7 @@ Fedora Projectでも、いくつかのパッチが適用されています。そ
 
 2.5 FreeBSD Ports
 
-1.5.23-j1 ではFreeBSD Portsを別途作成しています。
+1.5.23-j3 ではFreeBSD Portsを別途作成しています。
 日本語パッチ部分は同じものですが、ドキュメントについては、このドキュメント
 しか入っていません。残りはsourceforge.jp から随時ダウンロードしてください。
 mutt のオリジナルportsをベースに日本語化機能を組み込む形でportsを作成して
@@ -245,7 +243,7 @@ FreeBSD では、2011年1月以降、パッチを吸収したportsが提供さ�
 必ずしも最新版ではないので、バージョンを確認の上、FreeBSDでご利用の際には
 そちらをご利用ください。私家版のports(力武氏が作成したものをベースに
 したもの)についてはsourceforge.jp に置いてあります(1.5.21用)。
-また、1.5.23-j1においては、FreeBSD 9.2 の32ビット版用packageを作成しています。
+また、1.5.23-j3においては、FreeBSD 9.2 の32ビット版用packageを作成しています。
 sourceforge.jpにおいてありますのでご利用ください。
 
 4.3 CentOSでのRPMインストール
@@ -329,7 +327,7 @@ ML あるいは取りまとめの中心者にメールをお送り下さい。
 
 7.1.1 日本語パッチ
 
- ・ Copyright (C) 2000-2010 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+ ・ Copyright (C) 2000-2014 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
    
  ・ Copyright (C) 2000 Yukinori YOSHIDA <yyo@pjs.nevt.nec.co.jp>
    
