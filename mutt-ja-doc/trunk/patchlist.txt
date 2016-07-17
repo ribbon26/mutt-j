@@ -4,26 +4,31 @@ BSD RPM  patchname
  o   o   patch-08                                   Muttrc に followup_to=no を設定
  o   o   patch-Makefile.am                          Makefile.amからmime.typeインストールを削除
  o   o   patch-Makefile.am.doc                      同上
- o   o   patch-bdb                                  bdbをバージョン5.2まで使えるようにする
- o   o   patch-color-eol                            画面最後まで色づけ?
- o   o   patch-configure.ac                         非ANSI-Cコンパイラ判断を削除
- o   o   patch-crypt-gpgme.c                        gpgmeのチェックを追加
- o   o   patch-date-conditional                     時刻の扱いに対するパッチ?
+ o       patch-browser.c
+ x   o   patch-color-eol                            画面最後まで色づけ?
+ x   o   patch-configure.ac                         非ANSI-Cコンパイラ判断を削除
+ o       patch-contrib-Makefile.am
+ x   o   patch-crypt-gpgme.c                        gpgmeのチェックを追加
+ x   o   patch-date-conditional                     時刻の扱いに対するパッチ?
+ o       patch-doc-Makefile.am
+ o       patch-doc-Muttrc
  o   o   patch-doc-manual.xml.head                  docbookの読み込み先をローカルに
  o   x   patch-examples                             sampleのディレクトリ変更
- o   x   patch-fedora-1.5.21-cabundle.patch         期限切れのca-bundle.crtをインストールしない
- o   x   patch-gnutls-CN-validation                 gnutls使用時の修正
+ x   x   patch-fedora-1.5.21-cabundle.patch         期限切れのca-bundle.crtをインストールしない
+ x   x   patch-gnutls-CN-validation                 gnutls使用時の修正
  o   o   patch-imap-message.c                       bug #3288の修正
- o   o   patch-init.c                               host名決定の修正
+ x   o   patch-init.c                               host名決定の修正
  o   o   ja-patch-1.5.23.tt+yy.delete_prefix.1       日本語パッチ
  o   o   ja-patch-1.5.23.tt.cjk_width_tree_chars.1　 日本語パッチ
  o   o   ja-patch-1.5.23.tt.create_rfc2047_params.1  日本語パッチ
  o   o   ja-patch-1.5.23.tt.sanitize_ja_char.1       日本語パッチ
  o   o   ja-patch-1.5.23.tt.wcwidth.1                日本語パッチ
+ o   ?   patch-m4-gssapi.m4
  o   o   patch-mktemp                               テンポラリファイル作成方法の変更
- o   o   patch-nbsp                                 0xA0を空白扱いとする
- o   o   patch-pgp                                  PGPセパレータの改行文字扱い変更
+ x   o   patch-nbsp                                 0xA0を空白扱いとする
+ x   o   patch-pgp                                  PGPセパレータの改行文字扱い変更
  o   o   patch-smime-self                           smime keyの扱い方変更
  o   o   patch-smime-sender                         smimeの扱い方変更
+ o   ?   patch-staging-Makefile.am
  o   o   patch-threadcomplete                       スレッドの扱い方変更
 
