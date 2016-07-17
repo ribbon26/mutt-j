@@ -1,0 +1,37 @@
+--- mutt.h.orig2	Mon Sep  6 09:24:17 2004
++++ mutt.h	Mon Sep  6 09:27:04 2004
+@@ -193,6 +193,7 @@
+   M_LIMIT,
+   M_EXPIRED,
+   M_SUPERSEDED,
++  M_THREADCOMPLETE,
+ 
+   /* actions for mutt_pattern_comp/mutt_pattern_exec */
+   M_AND,
+--- pattern.c.orig	2010-08-25 01:34:21.000000000 +0900
++++ pattern.c	2012-12-20 20:47:05.000000000 +0900
+@@ -56,6 +56,7 @@
+ }
+ Flags[] =
+ {
++  { 'a', M_THREADCOMPLETE,	0,		NULL },
+   { 'A', M_ALL,			0,		NULL },
+   { 'b', M_BODY,		M_FULL_MSG,	eat_regexp },
+   { 'B', M_WHOLE_MSG,		M_FULL_MSG,	eat_regexp },
+@@ -1175,6 +1176,16 @@
+                                              2, h->env->to, h->env->cc));
+     case M_LIST:	/* known list, subscribed or not */
+       return (pat->not ^ mutt_is_list_cc (pat->alladdr, h->env->to, h->env->cc));
++    case M_THREADCOMPLETE:
++      { static pattern_t tmp;
++        static short pattern_set = 0;
++        if(! pattern_set) {
++          memset (&tmp, 0, sizeof (tmp));
++          tmp.op = M_TAG;
++          pattern_set = 1;
++        }
++        return (pat->not ^ (h->env && match_threadcomplete(&tmp, flags, ctx, h->thread, 1, 1, 1, 1)));
++      } 
+     case M_SUBSCRIBED_LIST:
+       return (pat->not ^ mutt_is_list_recipient (pat->alladdr, h->env->to, h->env->cc));
+     case M_PERSONAL_RECIP:

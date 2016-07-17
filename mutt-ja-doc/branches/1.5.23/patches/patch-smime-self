@@ -1,0 +1,65 @@
+Base: http://descolada.dartmouth.edu/mutt/patch-1.5.4+-ow.smime-encrypt-self.2
+--- crypt.c	7 Mar 2003 08:23:27 -0000	3.17
++++ crypt.c	7 May 2003 14:57:00 -0000
+@@ -215,8 +215,18 @@
+     if ((WithCrypto & APPLICATION_SMIME)
+         && (msg->security & APPLICATION_SMIME))
+     {
+-      if (!(tmp_pbody = crypt_smime_build_smime_entity (tmp_smime_pbody,
+-                                                        keylist)))
++	   char *new_keylist = keylist;
++
++		 if (SmimeDefaultKey && query_quadoption(OPT_SMIMEENCRYPTSELF, _("Encrypt message to S/MIME Default Key also?")) == M_YES)
++		 {
++			int size = mutt_strlen(keylist) + mutt_strlen (SmimeDefaultKey) + 2; /* +1 for NULL, +1 for \n */
++			new_keylist = safe_malloc(size);
++			snprintf(new_keylist, size, "%s%s\n", keylist, SmimeDefaultKey);
++	   }
++		 
++	  tmp_pbody = crypt_smime_build_smime_entity (tmp_smime_pbody, new_keylist);
++	  safe_free((void **)&new_keylist);
++	  if (!tmp_pbody)
+       {
+ 	/* signed ? free it! */
+ 	return (-1);
+--- init.h.orig	2010-09-16 00:39:31.000000000 +0900
++++ init.h	2012-12-20 19:37:08.000000000 +0900
+@@ -2636,6 +2636,11 @@
+   ** possible \fCprintf(3)\fP-like sequences.
+   ** (S/MIME only)
+   */
++  { "smime_encrypt_self",	DT_QUAD,	 R_NONE, OPT_SMIMEENCRYPTSELF, 1 },
++  /*
++  ** .pp
++  ** Encrypt the message to smime_default_key too.
++  */
+   { "smime_encrypt_with",	DT_STR,	 R_NONE, UL &SmimeCryptAlg, 0 },
+   /*
+   ** .pp
+--- mutt.h.orig	2010-09-14 02:19:55.000000000 +0900
++++ mutt.h	2012-12-20 19:45:45.000000000 +0900
+@@ -266,6 +266,7 @@
+   OPT_FORWEDIT,
+   OPT_FCCATTACH,
+   OPT_INCLUDE,
++  OPT_SMIMEENCRYPTSELF,
+   OPT_MFUPTO,
+   OPT_MIMEFWD,
+   OPT_MIMEFWDREST,
+--- contrib/smime.rc.orig	Sat Mar  2 13:11:35 2002
++++ contrib/smime.rc	Sat Oct 25 17:56:28 2003
+@@ -23,9 +23,12 @@
+ 
+ # The (default) keyfile for signing/decrypting.  Uncomment the following
+ # line and replace the keyid with your own.
+-set smime_default_key="12345678.0"
++# set smime_default_key="12345678.0"
++# Uncomment the following line in addition to the one above, if you want that
++# all encrypted messages are also encrypted with your default key.
++# set smime_encrypt_self = yes
+ 
+-# Uncommen to make mutt ask what key to use when trying to decrypt a message.
++# Uncomment to make mutt ask what key to use when trying to decrypt a message.
+ # It will use the default key above (if that was set) else.
+ # unset smime_decrypt_use_default_key
+ 

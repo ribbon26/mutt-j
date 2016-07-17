@@ -1,0 +1,62 @@
+--- mutt.h.orig	2010-09-14 02:19:55.000000000 +0900
++++ mutt.h	2012-12-15 21:19:42.000000000 +0900
+@@ -328,6 +328,7 @@
+   OPTBRAILLEFRIENDLY,
+   OPTCHECKMBOXSIZE,
+   OPTCHECKNEW,
++  OPTCOLORAFTEREOL,
+   OPTCOLLAPSEUNREAD,
+   OPTCONFIRMAPPEND,
+   OPTCONFIRMCREATE,
+--- init.h.orig	2010-09-16 00:39:31.000000000 +0900
++++ init.h	2012-12-15 21:19:42.000000000 +0900
+@@ -383,6 +383,12 @@
+   ** this variable is \fIunset\fP, no check for new mail is performed
+   ** while the mailbox is open.
+   */
++  { "color_after_eol",	DT_BOOL, R_NONE, OPTCOLORAFTEREOL, 1 },
++  /*
++  ** .pp
++  ** When \fIset\fP, Mutt will color a line after the last character extending
++  ** to the end of the window.
++  */
+   { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
+   /*
+   ** .pp
+--- pager.c.orig	2010-08-26 01:31:40.000000000 +0900
++++ pager.c	2012-12-15 21:19:42.000000000 +0900
+@@ -1467,7 +1467,7 @@
+    * ncurses does an implicit clrtoeol() when you do addch('\n') so we have
+    * to make sure to reset the color *after* that
+    */
+-  if (flags & M_SHOWCOLOR)
++  if (option (OPTCOLORAFTEREOL) && (flags & M_SHOWCOLOR))
+   {
+     m = ((*lineInfo)[n].continuation) ? ((*lineInfo)[n].syntax)[0].first : n;
+     if ((*lineInfo)[m].type == MT_COLOR_HEADER)
+@@ -1481,6 +1481,16 @@
+ #endif
+   }
+ 
++  /*
++   * reset the color back to normal.  This *must* come before the
++   * addch('\n') for the color not to be filled to the right margin.
++   */
++  if (!option (OPTCOLORAFTEREOL) && (flags & M_SHOWCOLOR))
++  {
++    SETCOLOR(MT_COLOR_NORMAL);
++    BKGDSET(MT_COLOR_NORMAL);
++  }
++
+   /* ncurses always wraps lines when you get to the right side of the
+    * screen, but S-Lang seems to only wrap if the next character is *not*
+    * a newline (grr!).
+@@ -1495,7 +1505,7 @@
+    * addch('\n'), otherwise the color for this line will not be
+    * filled to the right margin.
+    */
+-  if (flags & M_SHOWCOLOR)
++  if (option (OPTCOLORAFTEREOL) && (flags & M_SHOWCOLOR))
+   {
+     SETCOLOR(MT_COLOR_NORMAL);
+     BKGDSET(MT_COLOR_NORMAL);

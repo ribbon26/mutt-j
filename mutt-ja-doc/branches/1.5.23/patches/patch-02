@@ -1,0 +1,32 @@
+--- doc/Makefile.am.orig	2009-08-26 04:08:52.000000000 +0900
++++ doc/Makefile.am	2012-12-14 13:25:58.000000000 +0900
+@@ -46,7 +46,7 @@
+ 
+ all: makedoc-all
+ 
+-makedoc-all: mutt.1 smime_keys.1 muttrc.man manual.html stamp-doc-rc stamp-doc-chunked manual.txt
++makedoc-all: mutt.1 smime_keys.1 muttrc.man
+ 
+ install-data-local: makedoc-all instdoc
+ 	$(top_srcdir)/mkinstalldirs $(DESTDIR)$(mandir)/man1
+@@ -69,9 +69,6 @@
+ 		$(INSTALL) -m 644 $(srcdir)/$$f $(DESTDIR)$(docdir) ; \
+ 	done
+ 	-$(INSTALL) -m 644 manual.txt $(DESTDIR)$(docdir)
+-	-for f in $(HTML_DOCFILES) ; do \
+-		$(INSTALL) -m 644 $$f $(DESTDIR)$(docdir) ; \
+-	done
+ 	$(INSTALL) -m 644 Muttrc $(DESTDIR)$(sysconfdir)/Muttrc.dist
+ 	-if [ -f $(DESTDIR)$(pkgdatadir)/Muttrc ] ; then \
+ 		mv $(DESTDIR)$(pkgdatadir)/Muttrc* $(DESTDIR)$(sysconfdir) ; \
+@@ -102,9 +99,7 @@
+ 
+ check:
+ manual.txt: manual.html
+-	-LC_ALL=C lynx -dump -nolist -with_backspaces -display_charset=us-ascii manual.html > $@ || \
+-	LC_ALL=C w3m -dump manual.html > $@ || \
+-	LC_ALL=C elinks -dump -no-numbering -no-references manual.html | sed -e 's,\\001, ,g' > $@
++	-LC_ALL=C lynx -dump -nolist -with_backspaces -display_charset=us-ascii manual.html > $@
+ 
+ Muttrc: stamp-doc-rc
+ 

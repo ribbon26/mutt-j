@@ -1,0 +1,129 @@
+diff -ur mutt-1.5.22.orig/PATCHES mutt-1.5.22/PATCHES
+--- mutt-1.5.22.orig/PATCHES	2010-02-21 14:51:26.000000000 +0900
++++ mutt-1.5.22/PATCHES	2013-10-26 12:29:30.664167910 +0900
+@@ -0,0 +1 @@
++patch-1.5.22.tt.cjk_width_tree_chars.1
+diff -ur mutt-1.5.22.orig/curs_lib.c mutt-1.5.22/curs_lib.c
+--- mutt-1.5.22.orig/curs_lib.c	2013-10-18 13:48:24.000000000 +0900
++++ mutt-1.5.22/curs_lib.c	2013-10-26 19:25:34.397358597 +0900
+@@ -734,7 +734,14 @@
+       wc = replacement_char ();
+     }
+     if (arboreal && wc < M_TREE_MAX)
+-      w = 1; /* hack */
++    {
++#ifdef USE_CJK_WIDTH
++      if (Charset_is_utf8 && option (OPTCJKWIDTHTREECHARS) && !option (OPTASCIICHARS))
++        w = wcwidth (TreeChars[wc]);
++      else
++#endif
++        w = 1;
++    }
+     else
+     {
+ #ifdef HAVE_ISWBLANK
+@@ -959,10 +966,12 @@
+   int w;
+   size_t k, n;
+   mbstate_t mbstate;
++  int arboreal;
+ 
+   if (!s) return 0;
+ 
+   n = mutt_strlen (s);
++  arboreal = (s[0] < M_TREE_MAX) ? 1 : 0;
+ 
+   memset (&mbstate, 0, sizeof (mbstate));
+   for (w=0; n && (k = mbrtowc (&wc, s, n, &mbstate)); s += k, n -= k)
+@@ -972,9 +981,21 @@
+       k = (k == (size_t)(-1)) ? 1 : n;
+       wc = replacement_char ();
+     }
+-    if (!IsWPrint (wc))
+-      wc = '?';
+-    w += wcwidth (wc);
++    if (wc < M_TREE_MAX && arboreal && k == 1)
++    {
++#ifdef USE_CJK_WIDTH
++      if (Charset_is_utf8 && option (OPTCJKWIDTHTREECHARS) && !option (OPTASCIICHARS))
++        w += wcwidth (TreeChars[wc]);
++      else
++#endif
++        w++;
++    }
++    else
++    {
++      if (!IsWPrint (wc))
++        wc = '?';
++      w += wcwidth (wc);
++    }
+   }
+   return w;
+ }
+diff -ur mutt-1.5.22.orig/globals.h mutt-1.5.22/globals.h
+--- mutt-1.5.22.orig/globals.h	2011-12-04 04:10:04.000000000 +0900
++++ mutt-1.5.22/globals.h	2013-10-26 14:23:22.408450424 +0900
+@@ -271,9 +271,31 @@
+ 
+ const char * const BodyTypes[] = { "x-unknown", "audio", "application", "image", "message", "model", "multipart", "text", "video" };
+ const char * const BodyEncodings[] = { "x-unknown", "7bit", "8bit", "quoted-printable", "base64", "binary", "x-uuencoded" };
++#ifdef USE_CJK_WIDTH
++const wchar_t TreeChars[] =
++{
++  0xFEFF, /* not used */
++  0x2514, /* M_TREE_LLCORNER  WACS_LLCORNER */
++  0x250C, /* M_TREE_ULCORNER  WACS_ULCORNER */
++  0x251C, /* M_TREE_LTEE      WACS_LTEE */
++  0x2500, /* M_TREE_HLINE     WACS_HLINE */
++  0x2502, /* M_TREE_VLINE     WACS_VLINE */
++  0x0020, /* M_TREE_SPACE */
++  0x003E, /* M_TREE_RARROW */
++  0x002A, /* M_TREE_STAR  fake thread indicator */
++  0x0026, /* M_TREE_HIDDEN */
++  0x003D, /* M_TREE_EQUALS */
++  0x252C, /* M_TREE_TTEE      WACS_TTEE */
++  0x2534, /* M_TREE_BTEE      WACS_BTEE */
++  0x003F  /* M_TREE_MISSING */
++};
++#endif /* USE_CJK_WIDTH */
+ #else
+ extern const char * const Weekdays[];
+ extern const char * const Months[];
++#ifdef USE_CJK_WIDTH
++extern const wchar_t TreeChars[];
++#endif /* USE_CJK_WIDTH */
+ #endif
+ 
+ #ifdef MAIN_C
+diff -ur mutt-1.5.22.orig/init.h mutt-1.5.22/init.h
+--- mutt-1.5.22.orig/init.h	2013-10-26 11:28:51.348288672 +0900
++++ mutt-1.5.22/init.h	2013-10-26 12:28:05.060164044 +0900
+@@ -396,6 +396,17 @@
+   ** .pp
+   ** \fBNote:\fP this option only affects in UTF-8 encoding.
+   */
++  { "cjk_width_tree_chars",	DT_BOOL, R_NONE, OPTCJKWIDTHTREECHARS, 0 },
++  /*
++  ** .pp
++  ** If \fIset\fP,  Mutt will use the result of $cjk_width as a column 
++  ** width of WACS characters when displaying thread and attachment trees.
++  ** This variant might be useful for users of CJK legacy encodings
++  ** who want to migrate to UCS without changing the traditional terminal
++  ** character-width behaviour.
++  ** .pp
++  ** \fBNote:\fP this option only affects in UTF-8 encoding.
++  */
+ #endif
+   { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
+   /*
+diff -ur mutt-1.5.22.orig/mutt.h mutt-1.5.22/mutt.h
+--- mutt-1.5.22.orig/mutt.h	2013-10-26 11:30:28.944278310 +0900
++++ mutt-1.5.22/mutt.h	2013-10-26 12:28:55.096165917 +0900
+@@ -328,6 +328,7 @@
+   OPTCHECKNEW,
+ #ifdef USE_CJK_WIDTH
+   OPTCJKWIDTH,
++  OPTCJKWIDTHTREECHARS,
+ #endif /* USE_CJK_WIDTH */
+   OPTCOLLAPSEUNREAD,
+   OPTCONFIRMAPPEND,
