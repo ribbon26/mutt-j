@@ -1,12 +1,12 @@
-diff -ur mutt-1.5.22.orig/PATCHES mutt-1.5.22/PATCHES
---- mutt-1.5.22.orig/PATCHES	2010-02-21 14:51:26.000000000 +0900
-+++ mutt-1.5.22/PATCHES	2013-10-26 11:28:51.348288672 +0900
+diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
+--- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/PATCHES	2016-08-16 23:03:23.000000000 +0900
 @@ -0,0 +1 @@
 +patch-1.5.22.tt.wcwidth.1
-diff -ur mutt-1.5.22.orig/configure.ac mutt-1.5.22/configure.ac
---- mutt-1.5.22.orig/configure.ac	2013-04-22 15:14:53.000000000 +0900
-+++ mutt-1.5.22/configure.ac	2013-10-26 11:28:51.348288672 +0900
-@@ -1191,6 +1191,16 @@
+diff -urN mutt-1.6.1/configure.ac mutt-1.6.1new/configure.ac
+--- mutt-1.6.1/configure.ac	2016-05-01 06:18:22.000000000 +0900
++++ mutt-1.6.1new/configure.ac	2016-08-16 23:03:23.000000000 +0900
+@@ -1223,6 +1223,16 @@
  
  dnl -- locales --
  
@@ -23,7 +23,7 @@ diff -ur mutt-1.5.22.orig/configure.ac mutt-1.5.22/configure.ac
  AC_CHECK_HEADERS(wchar.h)
  
  AC_CACHE_CHECK([for wchar_t], mutt_cv_wchar_t,
-@@ -1261,7 +1271,10 @@
+@@ -1293,7 +1303,10 @@
  if test $wc_funcs = yes; then
          AC_DEFINE(HAVE_WC_FUNCS,1,[ Define if you are using the system's wchar_t functions. ])
  else
@@ -35,9 +35,9 @@ diff -ur mutt-1.5.22.orig/configure.ac mutt-1.5.22/configure.ac
  fi
  
  AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
-diff -ur mutt-1.5.22.orig/init.h mutt-1.5.22/init.h
---- mutt-1.5.22.orig/init.h	2013-01-15 16:37:15.000000000 +0900
-+++ mutt-1.5.22/init.h	2013-10-26 11:28:51.348288672 +0900
+diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
+--- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
++++ mutt-1.6.1new/init.h	2016-08-16 23:03:23.000000000 +0900
 @@ -383,6 +383,20 @@
    ** this variable is \fIunset\fP, no check for new mail is performed
    ** while the mailbox is open.
@@ -59,10 +59,10 @@ diff -ur mutt-1.5.22.orig/init.h mutt-1.5.22/init.h
    { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
    /*
    ** .pp
-diff -ur mutt-1.5.22.orig/main.c mutt-1.5.22/main.c
---- mutt-1.5.22.orig/main.c	2013-04-22 15:14:53.000000000 +0900
-+++ mutt-1.5.22/main.c	2013-10-26 11:28:51.352288739 +0900
-@@ -432,6 +432,12 @@
+diff -urN mutt-1.6.1/main.c mutt-1.6.1new/main.c
+--- mutt-1.6.1/main.c	2016-05-01 06:14:03.000000000 +0900
++++ mutt-1.6.1new/main.c	2016-08-16 23:03:23.000000000 +0900
+@@ -434,6 +434,12 @@
  	"-LOCALES_HACK  "
  #endif
  	      
@@ -75,9 +75,9 @@ diff -ur mutt-1.5.22.orig/main.c mutt-1.5.22/main.c
  #ifdef HAVE_WC_FUNCS
  	"+HAVE_WC_FUNCS  "
  #else
-diff -ur mutt-1.5.22.orig/mbyte.c mutt-1.5.22/mbyte.c
---- mutt-1.5.22.orig/mbyte.c	2012-07-22 09:20:59.000000000 +0900
-+++ mutt-1.5.22/mbyte.c	2013-10-26 11:28:51.352288739 +0900
+diff -urN mutt-1.6.1/mbyte.c mutt-1.6.1new/mbyte.c
+--- mutt-1.6.1/mbyte.c	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/mbyte.c	2016-08-16 23:03:23.000000000 +0900
 @@ -17,7 +17,7 @@
   */
  
@@ -317,9 +317,9 @@ diff -ur mutt-1.5.22.orig/mbyte.c mutt-1.5.22/mbyte.c
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps)
  {
    static wchar_t mbstate;
-diff -ur mutt-1.5.22.orig/mbyte.h mutt-1.5.22/mbyte.h
---- mutt-1.5.22.orig/mbyte.h	2010-02-22 07:10:41.000000000 +0900
-+++ mutt-1.5.22/mbyte.h	2013-10-26 11:28:51.352288739 +0900
+diff -urN mutt-1.6.1/mbyte.h mutt-1.6.1new/mbyte.h
+--- mutt-1.6.1/mbyte.h	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/mbyte.h	2016-08-16 23:03:23.000000000 +0900
 @@ -8,6 +8,12 @@
  #  ifdef HAVE_WCTYPE_H
  #   include <wctype.h>
@@ -351,10 +351,10 @@ diff -ur mutt-1.5.22.orig/mbyte.h mutt-1.5.22/mbyte.h
  void mutt_set_charset (char *charset);
  extern int Charset_is_utf8;
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
-diff -ur mutt-1.5.22.orig/mutt.h mutt-1.5.22/mutt.h
---- mutt-1.5.22.orig/mutt.h	2013-10-18 13:48:24.000000000 +0900
-+++ mutt-1.5.22/mutt.h	2013-10-26 11:30:28.944278310 +0900
-@@ -326,6 +326,9 @@
+diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
+--- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/mutt.h	2016-08-16 23:03:23.000000000 +0900
+@@ -329,6 +329,9 @@
    OPTBRAILLEFRIENDLY,
    OPTCHECKMBOXSIZE,
    OPTCHECKNEW,
@@ -364,9 +364,9 @@ diff -ur mutt-1.5.22.orig/mutt.h mutt-1.5.22/mutt.h
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
-diff -ur mutt-1.5.22.orig/wcwidth.c mutt-1.5.22/wcwidth.c
---- mutt-1.5.22.orig/wcwidth.c	2010-02-22 07:10:42.000000000 +0900
-+++ mutt-1.5.22/wcwidth.c	2013-10-26 11:28:51.352288739 +0900
+diff -urN mutt-1.6.1/wcwidth.c mutt-1.6.1new/wcwidth.c
+--- mutt-1.6.1/wcwidth.c	2016-05-01 06:07:25.000000000 +0900
++++ mutt-1.6.1new/wcwidth.c	2016-08-16 23:03:23.000000000 +0900
 @@ -5,6 +5,51 @@
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcwidth.html
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcswidth.html
