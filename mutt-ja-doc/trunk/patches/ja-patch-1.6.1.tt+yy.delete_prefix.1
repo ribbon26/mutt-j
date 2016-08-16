@@ -1,12 +1,12 @@
-diff -ur mutt-1.5.22.orig/PATCHES mutt-1.5.22/PATCHES
---- mutt-1.5.22.orig/PATCHES	2010-02-21 14:51:26.000000000 +0900
-+++ mutt-1.5.22/PATCHES	2013-10-23 22:32:09.232592188 +0900
+diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
+--- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/PATCHES	2016-08-16 22:13:32.000000000 +0900
 @@ -0,0 +1 @@
 +patch-1.5.22.tt+yy.delete_prefix.1
-diff -ur mutt-1.5.22.orig/hdrline.c mutt-1.5.22/hdrline.c
---- mutt-1.5.22.orig/hdrline.c	2010-02-22 07:10:41.000000000 +0900
-+++ mutt-1.5.22/hdrline.c	2013-10-23 22:29:01.652599961 +0900
-@@ -253,6 +253,7 @@
+diff -urN mutt-1.6.1/hdrline.c mutt-1.6.1new/hdrline.c
+--- mutt-1.6.1/hdrline.c	2016-05-01 06:14:03.000000000 +0900
++++ mutt-1.6.1new/hdrline.c	2016-08-16 22:13:32.000000000 +0900
+@@ -255,6 +255,7 @@
  #define THREAD_NEW (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 1)
  #define THREAD_OLD (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 2)
    size_t len;
@@ -14,7 +14,7 @@ diff -ur mutt-1.5.22.orig/hdrline.c mutt-1.5.22/hdrline.c
  
    hdr = hfi->hdr;
    ctx = hfi->ctx;
-@@ -550,11 +551,12 @@
+@@ -568,11 +569,12 @@
  
      case 's':
        
@@ -28,7 +28,7 @@ diff -ur mutt-1.5.22.orig/hdrline.c mutt-1.5.22/hdrline.c
  	  snprintf (buf2, sizeof (buf2), "%s%s", hdr->tree, dest);
  	  mutt_format_s_tree (dest, destlen, prefix, buf2);
  	}
-@@ -562,7 +564,7 @@
+@@ -580,7 +582,7 @@
  	  mutt_format_s_tree (dest, destlen, prefix, hdr->tree);
        }
        else
@@ -37,10 +37,10 @@ diff -ur mutt-1.5.22.orig/hdrline.c mutt-1.5.22/hdrline.c
        break;
  
      case 'S':
-diff -ur mutt-1.5.22.orig/init.h mutt-1.5.22/init.h
---- mutt-1.5.22.orig/init.h	2013-01-15 16:37:15.000000000 +0900
-+++ mutt-1.5.22/init.h	2013-10-23 22:29:01.652599961 +0900
-@@ -607,6 +607,19 @@
+diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
+--- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
++++ mutt-1.6.1new/init.h	2016-08-16 22:13:32.000000000 +0900
+@@ -639,6 +639,19 @@
    ** If this option is \fIset\fP, mutt's received-attachments menu will not show the subparts of
    ** individual messages in a multipart/digest.  To see these subparts, press ``v'' on that menu.
    */
@@ -60,10 +60,10 @@ diff -ur mutt-1.5.22.orig/init.h mutt-1.5.22/init.h
    { "display_filter",	DT_PATH, R_PAGER, UL &DisplayFilter, UL "" },
    /*
    ** .pp
-diff -ur mutt-1.5.22.orig/mutt.h mutt-1.5.22/mutt.h
---- mutt-1.5.22.orig/mutt.h	2013-10-18 13:48:24.000000000 +0900
-+++ mutt-1.5.22/mutt.h	2013-10-23 22:29:01.652599961 +0900
-@@ -330,6 +330,7 @@
+diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
+--- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/mutt.h	2016-08-16 22:13:32.000000000 +0900
+@@ -333,6 +333,7 @@
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
    OPTDELETEUNTAG,
@@ -71,9 +71,9 @@ diff -ur mutt-1.5.22.orig/mutt.h mutt-1.5.22/mutt.h
    OPTDIGESTCOLLAPSE,
    OPTDUPTHREADS,
    OPTEDITHDRS,
-diff -ur mutt-1.5.22.orig/mutt_regex.h mutt-1.5.22/mutt_regex.h
---- mutt-1.5.22.orig/mutt_regex.h	2008-11-12 04:55:47.000000000 +0900
-+++ mutt-1.5.22/mutt_regex.h	2013-10-23 22:29:01.652599961 +0900
+diff -urN mutt-1.6.1/mutt_regex.h mutt-1.6.1new/mutt_regex.h
+--- mutt-1.6.1/mutt_regex.h	2016-05-01 06:07:23.000000000 +0900
++++ mutt-1.6.1new/mutt_regex.h	2016-08-16 22:13:32.000000000 +0900
 @@ -51,5 +51,6 @@
  WHERE REGEXP ReplyRegexp;
  WHERE REGEXP Smileys;
@@ -81,10 +81,10 @@ diff -ur mutt-1.5.22.orig/mutt_regex.h mutt-1.5.22/mutt_regex.h
 +WHERE REGEXP DeleteRegexp;
  
  #endif /* MUTT_REGEX_H */
-diff -ur mutt-1.5.22.orig/parse.c mutt-1.5.22/parse.c
---- mutt-1.5.22.orig/parse.c	2013-10-18 13:48:24.000000000 +0900
-+++ mutt-1.5.22/parse.c	2013-10-23 22:29:01.652599961 +0900
-@@ -1448,6 +1448,18 @@
+diff -urN mutt-1.6.1/parse.c mutt-1.6.1new/parse.c
+--- mutt-1.6.1/parse.c	2016-05-01 06:07:24.000000000 +0900
++++ mutt-1.6.1new/parse.c	2016-08-16 22:13:32.000000000 +0900
+@@ -1453,6 +1453,18 @@
  	e->real_subj = e->subject + pmatch[0].rm_eo;
        else
  	e->real_subj = e->subject;
