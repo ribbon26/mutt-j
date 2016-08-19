@@ -1,11 +1,11 @@
 diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
 --- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-16 22:39:42.000000000 +0900
++++ mutt-1.6.1new/PATCHES	2016-08-19 22:39:14.000000000 +0900
 @@ -0,0 +1 @@
-+patch-1.5.22.tt.create_rfc2047_params.1
++patch-1.6.1.tt.create_rfc2047_params.1
 diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
 --- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-16 22:39:42.000000000 +0900
++++ mutt-1.6.1new/init.h	2016-08-19 22:39:14.000000000 +0900
 @@ -588,6 +588,17 @@
    ** If \fI``no''\fP, never attempt to verify cryptographic signatures.
    ** (Crypto only)
@@ -26,7 +26,7 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
    ** .pp
 diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
 --- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-16 22:39:42.000000000 +0900
++++ mutt-1.6.1new/mutt.h	2016-08-19 22:39:14.000000000 +0900
 @@ -332,6 +332,7 @@
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
@@ -37,7 +37,7 @@ diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
    OPTDUPTHREADS,
 diff -urN mutt-1.6.1/sendlib.c mutt-1.6.1new/sendlib.c
 --- mutt-1.6.1/sendlib.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/sendlib.c	2016-08-16 22:39:42.000000000 +0900
++++ mutt-1.6.1new/sendlib.c	2016-08-19 22:39:14.000000000 +0900
 @@ -348,6 +348,30 @@
      }
    }
