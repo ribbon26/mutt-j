@@ -1,11 +1,11 @@
 diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
 --- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-16 23:03:23.000000000 +0900
++++ mutt-1.6.1new/PATCHES	2016-08-20 15:13:29.000000000 +0900
 @@ -0,0 +1 @@
-+patch-1.5.22.tt.wcwidth.1
++patch-1.6.1.tt.wcwidth+cjk_width.1
 diff -urN mutt-1.6.1/configure.ac mutt-1.6.1new/configure.ac
 --- mutt-1.6.1/configure.ac	2016-05-01 06:18:22.000000000 +0900
-+++ mutt-1.6.1new/configure.ac	2016-08-16 23:03:23.000000000 +0900
++++ mutt-1.6.1new/configure.ac	2016-08-20 15:12:08.000000000 +0900
 @@ -1223,6 +1223,16 @@
  
  dnl -- locales --
@@ -35,10 +35,102 @@ diff -urN mutt-1.6.1/configure.ac mutt-1.6.1new/configure.ac
  fi
  
  AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
+diff -urN mutt-1.6.1/curs_lib.c mutt-1.6.1new/curs_lib.c
+--- mutt-1.6.1/curs_lib.c	2016-05-01 06:14:03.000000000 +0900
++++ mutt-1.6.1new/curs_lib.c	2016-08-20 15:12:36.000000000 +0900
+@@ -795,7 +795,14 @@
+       wc = replacement_char ();
+     }
+     if (arboreal && wc < M_TREE_MAX)
+-      w = 1; /* hack */
++    {
++#ifdef USE_CJK_WIDTH
++      if (Charset_is_utf8 && option (OPTCJKWIDTHTREECHARS) && !option (OPTASCIICHARS))
++        w = wcwidth (TreeChars[wc]);
++      else
++#endif
++        w = 1;
++    }
+     else
+     {
+ #ifdef HAVE_ISWBLANK
+@@ -1024,10 +1031,12 @@
+   int w;
+   size_t k, n;
+   mbstate_t mbstate;
++  int arboreal;
+ 
+   if (!s) return 0;
+ 
+   n = mutt_strlen (s);
++  arboreal = (s[0] < M_TREE_MAX) ? 1 : 0;
+ 
+   memset (&mbstate, 0, sizeof (mbstate));
+   for (w=0; n && (k = mbrtowc (&wc, s, n, &mbstate)); s += k, n -= k)
+@@ -1037,9 +1046,21 @@
+       k = (k == (size_t)(-1)) ? 1 : n;
+       wc = replacement_char ();
+     }
+-    if (!IsWPrint (wc))
+-      wc = '?';
+-    w += wcwidth (wc);
++    if (wc < M_TREE_MAX && arboreal && k == 1)
++    {
++#ifdef USE_CJK_WIDTH
++      if (Charset_is_utf8 && option (OPTCJKWIDTHTREECHARS) && !option (OPTASCIICHARS))
++        w += wcwidth (TreeChars[wc]);
++      else
++#endif
++        w++;
++    }
++    else
++    {
++      if (!IsWPrint (wc))
++        wc = '?';
++      w += wcwidth (wc);
++    }
+   }
+   return w;
+ }
+diff -urN mutt-1.6.1/globals.h mutt-1.6.1new/globals.h
+--- mutt-1.6.1/globals.h	2016-05-01 06:07:24.000000000 +0900
++++ mutt-1.6.1new/globals.h	2016-08-20 15:12:36.000000000 +0900
+@@ -278,9 +278,31 @@
+ 
+ const char * const BodyTypes[] = { "x-unknown", "audio", "application", "image", "message", "model", "multipart", "text", "video" };
+ const char * const BodyEncodings[] = { "x-unknown", "7bit", "8bit", "quoted-printable", "base64", "binary", "x-uuencoded" };
++#ifdef USE_CJK_WIDTH
++const wchar_t TreeChars[] =
++{
++  0xFEFF, /* not used */
++  0x2514, /* M_TREE_LLCORNER  WACS_LLCORNER */
++  0x250C, /* M_TREE_ULCORNER  WACS_ULCORNER */
++  0x251C, /* M_TREE_LTEE      WACS_LTEE */
++  0x2500, /* M_TREE_HLINE     WACS_HLINE */
++  0x2502, /* M_TREE_VLINE     WACS_VLINE */
++  0x0020, /* M_TREE_SPACE */
++  0x003E, /* M_TREE_RARROW */
++  0x002A, /* M_TREE_STAR  fake thread indicator */
++  0x0026, /* M_TREE_HIDDEN */
++  0x003D, /* M_TREE_EQUALS */
++  0x252C, /* M_TREE_TTEE      WACS_TTEE */
++  0x2534, /* M_TREE_BTEE      WACS_BTEE */
++  0x003F  /* M_TREE_MISSING */
++};
++#endif /* USE_CJK_WIDTH */
+ #else
+ extern const char * const Weekdays[];
+ extern const char * const Months[];
++#ifdef USE_CJK_WIDTH
++extern const wchar_t TreeChars[];
++#endif /* USE_CJK_WIDTH */
+ #endif
+ 
+ #ifdef MAIN_C
 diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
 --- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-16 23:03:23.000000000 +0900
-@@ -383,6 +383,20 @@
++++ mutt-1.6.1new/init.h	2016-08-20 15:12:36.000000000 +0900
+@@ -383,6 +383,31 @@
    ** this variable is \fIunset\fP, no check for new mail is performed
    ** while the mailbox is open.
    */
@@ -55,13 +147,24 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
 +  ** .pp
 +  ** \fBNote:\fP this option only affects in UTF-8 encoding.
 +  */
++  { "cjk_width_tree_chars",	DT_BOOL, R_NONE, OPTCJKWIDTHTREECHARS, 0 },
++  /*
++  ** .pp
++  ** If \fIset\fP,  Mutt will use the result of $cjk_width as a column 
++  ** width of WACS characters when displaying thread and attachment trees.
++  ** This variant might be useful for users of CJK legacy encodings
++  ** who want to migrate to UCS without changing the traditional terminal
++  ** character-width behaviour.
++  ** .pp
++  ** \fBNote:\fP this option only affects in UTF-8 encoding.
++  */
 +#endif
    { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
    /*
    ** .pp
 diff -urN mutt-1.6.1/main.c mutt-1.6.1new/main.c
 --- mutt-1.6.1/main.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/main.c	2016-08-16 23:03:23.000000000 +0900
++++ mutt-1.6.1new/main.c	2016-08-20 15:12:08.000000000 +0900
 @@ -434,6 +434,12 @@
  	"-LOCALES_HACK  "
  #endif
@@ -77,7 +180,7 @@ diff -urN mutt-1.6.1/main.c mutt-1.6.1new/main.c
  #else
 diff -urN mutt-1.6.1/mbyte.c mutt-1.6.1new/mbyte.c
 --- mutt-1.6.1/mbyte.c	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mbyte.c	2016-08-16 23:03:23.000000000 +0900
++++ mutt-1.6.1new/mbyte.c	2016-08-20 15:12:08.000000000 +0900
 @@ -17,7 +17,7 @@
   */
  
@@ -319,7 +422,7 @@ diff -urN mutt-1.6.1/mbyte.c mutt-1.6.1new/mbyte.c
    static wchar_t mbstate;
 diff -urN mutt-1.6.1/mbyte.h mutt-1.6.1new/mbyte.h
 --- mutt-1.6.1/mbyte.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mbyte.h	2016-08-16 23:03:23.000000000 +0900
++++ mutt-1.6.1new/mbyte.h	2016-08-20 15:12:08.000000000 +0900
 @@ -8,6 +8,12 @@
  #  ifdef HAVE_WCTYPE_H
  #   include <wctype.h>
@@ -353,20 +456,21 @@ diff -urN mutt-1.6.1/mbyte.h mutt-1.6.1new/mbyte.h
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
 diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
 --- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-16 23:03:23.000000000 +0900
-@@ -329,6 +329,9 @@
++++ mutt-1.6.1new/mutt.h	2016-08-20 15:12:36.000000000 +0900
+@@ -329,6 +329,10 @@
    OPTBRAILLEFRIENDLY,
    OPTCHECKMBOXSIZE,
    OPTCHECKNEW,
 +#ifdef USE_CJK_WIDTH
 +  OPTCJKWIDTH,
++  OPTCJKWIDTHTREECHARS,
 +#endif /* USE_CJK_WIDTH */
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
 diff -urN mutt-1.6.1/wcwidth.c mutt-1.6.1new/wcwidth.c
 --- mutt-1.6.1/wcwidth.c	2016-05-01 06:07:25.000000000 +0900
-+++ mutt-1.6.1new/wcwidth.c	2016-08-16 23:03:23.000000000 +0900
++++ mutt-1.6.1new/wcwidth.c	2016-08-20 15:12:08.000000000 +0900
 @@ -5,6 +5,51 @@
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcwidth.html
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcswidth.html
