@@ -1,11 +1,11 @@
 diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
 --- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/PATCHES	2016-08-20 12:43:09.000000000 +0900
 @@ -0,0 +1 @@
-+patch-1.5.22.tt.sanitize_ja.1
++patch-1.6.1.tt.sanitize_ja.1
 diff -urN mutt-1.6.1/charset.c mutt-1.6.1new/charset.c
 --- mutt-1.6.1/charset.c	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/charset.c	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/charset.c	2016-08-20 12:43:09.000000000 +0900
 @@ -481,6 +481,9 @@
    if (!s || !*s)
      return 0;
@@ -207,7 +207,7 @@ diff -urN mutt-1.6.1/charset.c mutt-1.6.1new/charset.c
 +
 diff -urN mutt-1.6.1/charset.h mutt-1.6.1new/charset.h
 --- mutt-1.6.1/charset.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/charset.h	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/charset.h	2016-08-20 12:43:09.000000000 +0900
 @@ -36,6 +36,9 @@
  
  int mutt_convert_string (char **, const char *, const char *, int);
@@ -220,7 +220,7 @@ diff -urN mutt-1.6.1/charset.h mutt-1.6.1new/charset.h
  
 diff -urN mutt-1.6.1/handler.c mutt-1.6.1new/handler.c
 --- mutt-1.6.1/handler.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/handler.c	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/handler.c	2016-08-20 12:43:09.000000000 +0900
 @@ -100,6 +100,9 @@
      return;
    }
@@ -252,7 +252,7 @@ diff -urN mutt-1.6.1/handler.c mutt-1.6.1new/handler.c
      if(!piped)
 diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
 --- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/init.h	2016-08-20 12:43:09.000000000 +0900
 @@ -2549,6 +2549,28 @@
    ** that mutt \fIgenerates\fP this kind of encoding.  Instead, mutt will
    ** unconditionally use the encoding specified in RFC2231.
@@ -284,7 +284,7 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
    ** .pp
 diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
 --- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/mutt.h	2016-08-20 12:43:09.000000000 +0900
 @@ -424,6 +424,7 @@
    OPTREVNAME,
    OPTREVREAL,
@@ -295,7 +295,7 @@ diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
    OPTSAVENAME,
 diff -urN mutt-1.6.1/rfc2047.c mutt-1.6.1new/rfc2047.c
 --- mutt-1.6.1/rfc2047.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/rfc2047.c	2016-08-16 22:59:45.000000000 +0900
++++ mutt-1.6.1new/rfc2047.c	2016-08-20 12:43:09.000000000 +0900
 @@ -62,6 +62,9 @@
    size_t obl, n;
    int e;
