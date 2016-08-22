@@ -1,10 +1,10 @@
-	Mutt 1.5.23用日本語版パッチインストール方法
+	Mutt 1.6.1 用日本語版パッチインストール方法
 
-							2014/07/15
-							Ver 1.5.23-j1
+							2016/08/22
+							Ver 1.6.1-j1
 							mutt-j 開発チーム
 
-Copyright (C) 2000-2014 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C) 2000-2016 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C) 2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -53,8 +53,8 @@ Mutt日本語版のコンパイル前に取りそろえておくものは以下�
    
 1.2 Mutt日本語版をコンパイルするため必要なもの
 
- ● mutt-1.5.x オリジナルソース
- ● mutt-1.5.x用日本語パッチ
+ ● mutt-1.6.x オリジナルソース
+ ● mutt-1.6.x用日本語パッチ
  ● S-Langまたはncurses
  ● 文字符号化方式の変換関数 iconv を実装している C ライブラリで日本語の文字符
     号化方式と UTF-8 に対応しているもの（恐らく，GNU/Linux(glibc-2.2)，Solaris
@@ -134,9 +134,9 @@ Mutt の tar ball を展開し，日本語パッチを当ててください．
 例）
 
     $ gzip -dc mutt-1.5.x-ja.1.tar.gz | tar xvf -
-    $ gzip -dc mutt-1.5.x.tar.gz | tar xvf -
-    $ cd mutt-1.5.x
-    $ patch -p1 < ../mutt-1.5.x-ja.1/展開されたパッチファイル
+    $ gzip -dc mutt-1.6.x.tar.gz | tar xvf -
+    $ cd mutt-1.6.x
+    $ patch -p1 < ../mutt-1.6.x-ja.1/展開されたパッチファイル
 
 パッチは複数個ありますので、複数回パッチを当ててください。
 
@@ -199,7 +199,7 @@ make;make install でいけます．
 次に，日本語パッチのディレクトリに移動してMakefileのDOCDIRの値を修正し，rootに
 なって，make installを実行します．
 
-    $ cd ../mutt-1.5.x-ja.1
+    $ cd ../mutt-1.6.x-ja.1
     [Makefileを修正]
     # make install
 
