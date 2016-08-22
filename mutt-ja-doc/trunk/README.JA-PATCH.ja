@@ -179,8 +179,8 @@ Content-Type: text/enriched; charset=iso-2022-jp なメッセージでは、根�
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 9.3      iws	       Oota Tochiya
-
+1) FreeBSD 9.3      iw	       Oota Tochiya
+2) OpenSUSE 13.2    IW	       Oota Toshiya
 オプションの意味
 
  ● I: C ライブラリに実装されている iconv

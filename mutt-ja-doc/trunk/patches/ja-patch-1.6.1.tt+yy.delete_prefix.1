@@ -1,11 +1,11 @@
 diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
 --- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-16 22:13:32.000000000 +0900
++++ mutt-1.6.1new/PATCHES	2016-08-22 15:51:02.000000000 +0900
 @@ -0,0 +1 @@
 +patch-1.5.22.tt+yy.delete_prefix.1
 diff -urN mutt-1.6.1/hdrline.c mutt-1.6.1new/hdrline.c
 --- mutt-1.6.1/hdrline.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/hdrline.c	2016-08-16 22:13:32.000000000 +0900
++++ mutt-1.6.1new/hdrline.c	2016-08-22 15:51:02.000000000 +0900
 @@ -255,6 +255,7 @@
  #define THREAD_NEW (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 1)
  #define THREAD_OLD (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 2)
@@ -39,7 +39,7 @@ diff -urN mutt-1.6.1/hdrline.c mutt-1.6.1new/hdrline.c
      case 'S':
 diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
 --- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-16 22:13:32.000000000 +0900
++++ mutt-1.6.1new/init.h	2016-08-22 15:51:02.000000000 +0900
 @@ -639,6 +639,19 @@
    ** If this option is \fIset\fP, mutt's received-attachments menu will not show the subparts of
    ** individual messages in a multipart/digest.  To see these subparts, press ``v'' on that menu.
@@ -62,7 +62,7 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
    ** .pp
 diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
 --- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-16 22:13:32.000000000 +0900
++++ mutt-1.6.1new/mutt.h	2016-08-22 15:51:02.000000000 +0900
 @@ -333,6 +333,7 @@
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
@@ -73,7 +73,7 @@ diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
    OPTEDITHDRS,
 diff -urN mutt-1.6.1/mutt_regex.h mutt-1.6.1new/mutt_regex.h
 --- mutt-1.6.1/mutt_regex.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt_regex.h	2016-08-16 22:13:32.000000000 +0900
++++ mutt-1.6.1new/mutt_regex.h	2016-08-22 15:51:02.000000000 +0900
 @@ -51,5 +51,6 @@
  WHERE REGEXP ReplyRegexp;
  WHERE REGEXP Smileys;
@@ -83,7 +83,7 @@ diff -urN mutt-1.6.1/mutt_regex.h mutt-1.6.1new/mutt_regex.h
  #endif /* MUTT_REGEX_H */
 diff -urN mutt-1.6.1/parse.c mutt-1.6.1new/parse.c
 --- mutt-1.6.1/parse.c	2016-05-01 06:07:24.000000000 +0900
-+++ mutt-1.6.1new/parse.c	2016-08-16 22:13:32.000000000 +0900
++++ mutt-1.6.1new/parse.c	2016-08-22 15:51:02.000000000 +0900
 @@ -1453,6 +1453,18 @@
  	e->real_subj = e->subject + pmatch[0].rm_eo;
        else
