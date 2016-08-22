@@ -4,6 +4,75 @@
 使われている記号の説明:
   !: 仕様の変更, -: 機能の削除, +: 新機能
 
+1.6.1 (2016-05-01):
+
+  ! バグフィックスリリース。機能の追加変更はない。
+
+1.6.0 (2016-04-04):
+
+  + IMAP で utf-8 のメールボックスサポートを有効に。
+  + New expandos %r and %R for comma separated list of To: and Cc:
+    recipients respectively.
+  + 国際化 email と SMTPUTF8 (RFC653[0-3]) に対するサポートの改善。
+  ! $use_idn を $idn_decode に改名。
+  + $idn_encode controls whether outgoing email address domains will
+    be IDNA encoded.  If your MTA supports it, unset to use utf-8
+    email address domains.
+  + The S/MIME message digest algorithm is now specified using the
+    option $smime_sign_digest_alg.  Note that $smime_sign_command
+    should be modified to include "-md %d".  Please see
+    contrib/smime.rc.
+  + $reflow_space_quotes allows format=flowed email quotes to be
+    displayed with spacing between them.
+  ! multipart draft files are now supported.
+  + The "-E" command line argument causes mutt to edit draft or include files.
+    All changes made in mutt will be saved back out to those files.
+  + $resume_draft_files and $resume_edited_draft_files control how
+    mutt processes draft files.
+  + For classic gpg mode, $pgp_decryption_okay should be set to verify
+    multipart/encrypted are actually encrypted.  Please see
+    contrib/gpg.rc for the suggested value.
+  ! mailto URL header parameters by default are now restricted to
+    'body' and 'subject'.
+  + mailto_allow and unmailto_allow can be used to add or remove
+    allowed mailto header parameters.
+  ! The method of setting $hostname has been changed.  Rather than
+    scanning /etc/resolv.conf, the domain will now be determined using
+    DNS calls.
+
+1.5.24 (2015-08-31):
+
+  + ターミナルステータス行 (TS) のサポート, a.k.a. xterm title. see the
+    following variables: $ts_enabled, $ts_icon_format, $ts_status_format
+  ! $ssl_use_sslv3 is disabled by default.
+  ! command-line arguments: -H now combines template and command-line
+    address arguments.
+  ! GnuPG signature name is set to signature.asc
+  + New color object "prompt" added.
+  + Ability to encrypt postponed messages.  See $postpone_encrypt and
+    $postpone_encrypt_as.
+  ! History ring now has a scratch buffer.
+  ! mail-key is implemented for GPGME.  (Requires a recent GPGME).
+  ! Removed GPG_AGENT_INFO check for GnuPG 2.1 compatibility.  Please
+    set pgp_use_gpg_agent if using GnuPG 2.1 or later.
+  ! $smime_encrypt_with now defaults to aes256.
+  ! GnuPG fingerprints are used internally when possible.
+    "--with-fingerprint" should be added to $pgp_list_pubring_command and
+    $pgp_list_secring_command to enable this.  Please see contrib/gpg.rc.
+    Fingerprints may also be used at the prompts for key selection.
+  + $crypt_opportunistic_encrypt automatically enables/disables encryption
+    based on message recipients.
+  ! Attachments for signed, unencrypted emails may be deleted.
+  ! Multiple crypt-hooks may be defined for the same regexp.
+    This means multiple keys may be used for a recipient.
+  + $crypt_confirmhook allows the confirmation prompt for crypt-hooks to
+    be disabled.
+  + $ssl_ciphers allows the SSL ciphers to be directly set.
+  ! sime_keys better handles importing certificate chains.
+  ! sime_keys now records certificate purposes (sign/encrypt).  Run
+    "sime_keys refresh" to update smime index files.
+  + $maildir_check_cur polls the maildir "cur" directory for new mail.
+
 1.5.23 (2014-03-11):
 
   ! FCC is now preserved when postponing a message.
