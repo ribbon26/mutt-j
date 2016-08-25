@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="euc-jp" ?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD Docbook XML V4.1.2//EN"
+	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article>
+<articleinfo>
+<title>Mutt 1.5.6用日本語パッチ拡張機能マニュアル</title>
+<authorgroup>
+<corpauthor>mutt-j 開発チーム</corpauthor>
+</authorgroup>
+<copyright>
+  <year>2000</year>
+  <year>2001</year>
+  <year>2002</year>
+  <year>2003</year>
+  <year>2004</year>
+  <holder>TAKIZAWA Takashi &#60;taki@cyber.email.ne.jp&#62;</holder>
+</copyright>
+<copyright>
+  <year>2000</year>
+  <holder>Yukinori YOSHIDA &#60;yyo@pjs.nevt.nec.co.jp&#62;</holder>
+</copyright>
+<copyright>
+  <year>2000</year>
+  <holder>Kawaguti Ginga &#60;ginga@ginganet.org&#62;</holder>
+</copyright>
+</articleinfo>
+
+<sect1>
+<title>日本語パッチ拡張機能マニュアル</title>
+<sect2>
+<title>設定用変数</title>
+<para>
+"Default:" の項目で括弧内()に記述したものは ./configure 時に --enalbe-default-japaneseオプションを付けた場合のものです．
+</para>
+<sect3>
+<title>assumed_charset</title>
+<para>
+<programlisting>
+Type: string
+Default: "us-ascii" ("iso-2022-jp:euc-jp:shift_jis:utf-8")
+</programlisting>
+</para>
+<para>
+文字符号化方式の指定が行われていないへッダフィールドやボディはデフォルトでは us-ascii とみなされます．このオプションを設定すると，設定した文字符号化方式であると推定を行います．推定できる文字符号化方式はコロンで区切られた複数のものを設定できます．例えば，日本語の場合では次のように設定するとよいでしょう．
+</para>
+<para>
+<programlisting>
+  set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+</programlisting>
+</para>
+<para>
+ただし，メッセージボディの場合は最初のものしか有効ではありません．なお，このオプションは strict_mime=no を設定しないと有効になりません．
+</para>
+</sect3>
+<sect3>
+<title>create_rfc2047_parameters</title>
+<para>
+<programlisting>
+Type: boolean
+Default: no
+</programlisting>
+</para>
+<para>
+この変数を設定すると，Muttは添付ファイルのファイル名として次のようなRFC2047形式で符号化されたパラメータをContent-Typeフィールドに追加します．
+</para>
+<para>
+<programlisting>
+  name="=?iso-2022-jp?B?GyRCO244MxsoQi50eHQ=?="
+</programlisting>
+</para>
+<para>
+注記: このようなRFC2047形式の符号化の使用はRFC2047により明示的に禁止されています．受信者のメイラーがRFC2231形式のパラメータを解析できない場合のみ，この変数を設定してください．なお，このオプションは strict_mime=no を設定しないと有効になりません．
+</para>
+</sect3>
+<sect3>
+<title>delete_prefix</title>
+<para>
+<programlisting>
+Type: boolean
+Default: unset
+</programlisting>
+</para>
+<para>
+設定するとメーリングリストにおける Subject フィールドのプレフィックス（[prefix:0123]のようなもの）をインデックス画面および返信時のメッセージで削除することができます．削除するプレフィックスのパターンは $delete_regexp で記述できます．
+</para>
+</sect3>
+<sect3>
+<title>delete_regexp</title>
+<para>
+<programlisting>
+Type: regular expression
+Default: "^(\[[A-Za-z0-9_.: \-]*\][ ]*)"
+</programlisting>
+</para>
+<para>
+$delete_prefix で用いられる正規表現です．
+</para>
+</sect3>
+<sect3>
+<title>file_charset</title>
+<para>
+<programlisting>
+Type: string
+Default: "" ("iso-2022-jp:euc-jp:shift_jis:utf-8")
+</programlisting>
+</para>
+<para>
+テキストファイルを添付する場合の想定される文字符号化方式を設定します．コロンで区切られリストとして記述できます．例えば，日本語を使う場合は次のように設定します．
+</para>
+<para>
+<programlisting>
+  set file_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+</programlisting>
+</para>
+<para>
+iso-2022-* を使う場合は必ずリストの先頭に持ってきてください．このオプションが設定されていない場合は，$charset で指定したものが代わりに想定されます．
+</para>
+</sect3>
+<sect3>
+<title>mh_path</title>
+<para>
+<programlisting>
+Type: path
+Default: ""
+</programlisting>
+</para>
+<para>
+mh_path option で ~/Mailなどと指定しておくと .mh_sequences がなくても ~/Mail以下の subdirectory で他の folder 条件に引っ掛からず，なおかつ，さらにその下に subdirectory を持たない directory は MH folder として解釈するようになります．他の MH tool で生成した folder を mutt で扱う際の "xxx はメールボックスではありません" の誤判定を減らせます．
+</para>
+</sect3>
+<sect3>
+<title>msgid</title>
+<para>
+<programlisting>
+Type: boolean
+Default: yes
+</programlisting>
+</para>
+<para>
+このオプションが設定されていると，メール送信時に mutt自身が Message-ID フィールドを生成します．MTAに Message-ID フィールドを生成させたい場合は設定を解除します．
+</para>
+</sect3>
+<sect3>
+<title>msgid_use_from</title>
+<para>
+<programlisting>
+Type: boolean
+Default: yes
+</programlisting>
+</para>
+<para>
+このオプションが設定されていると，Message-ID フィールドに使う文字列を $hostnameの代わりに $from で設定した文字列（メールアドレス）を使います．そのため,Message-ID のユニーク性が高まります．
+</para>
+<para>
+例えば，次のように設定してある場合,
+</para>
+<para>
+<programlisting>
+    set msgid_use_from=yes
+    set realname="foo"
+    set from="foo@example.org"
+</programlisting>
+</para>
+<para>
+次のような From と Message-ID を生成します．
+</para>
+<para>
+<programlisting>
+    Message-ID: &#60;20000907080905.A5250%foo@example.org&#62;
+    From: Foo Bar &#60;foo@example.org&#62;
+</programlisting>
+</para>
+</sect3>
+<sect3>
+<title>pager_hdrs_only</title>
+<para>
+<programlisting>
+Type: boolean
+Default: no
+</programlisting>
+</para>
+<para>
+インデックスからメッセージを選択したときに，すぐに本文を表示するかを決めます.セットされていると最初はヘッダ部しか表示せず，ページ送りや行送り動作を行なった時点で本文が表示されます．
+</para>
+</sect3>
+<sect3>
+<title>pager_spoil</title>
+<para>
+<programlisting>
+Type: boolean
+Default: no
+</programlisting>
+</para>
+<para>
+pager_hdrs_only がセットされているときの本文の表示の仕方を決めます．セットされていると，本文の文字を pager_spoiler に指定されたキャラクタで置き換えます．セットされていなければ本文の行数だけ空行を出力します．
+</para>
+<para>
+注意: セットされていないとき，本文の行数は実際のメールの行数をもとに計算します.ファイルが添付されている場合や本文が折り返されて表示される場合には，出力される空行数と本文を表示したときの行数とが合わなくなります．
+</para>
+</sect3>
+<sect3>
+<title>pager_spoiler</title>
+<para>
+<programlisting>
+Type: string
+Default: "*"
+</programlisting>
+</para>
+<para>
+pager_hdrs_only と pager_spoil がセットされているときに本文の文字を置き換えるキャラクタを指定します．
+</para>
+</sect3>
+<sect3>
+<title>sanitize_ja_chars</title>
+<para>
+<programlisting>
+Type: boolean
+Default: no
+</programlisting>
+</para>
+<para>
+このオプションを設定すると，日本語の機種依存文字を〓に置き換え，また，JIS X 0201 kana("ESC ) I" の場合のみ) を ? に置き換えて表示が乱れるのを防ぎます．ただし，JIS X 0201 kana が 8bit のままでてきた場合は処理しません．また，$charset がEUC-JP に設定している場合は，EUC-JP には JIS X 0201 roman が含まれないため，受け取ったメッセージの ISO-2022-JP の文字列にそのエスケープシーケンスが含まれている場合，EUC-JP には変換できません．逆に，Shift_JIS には ASCII が含まれないため,受け取ったメッセージの ISO-2022-JP の文字列にそのエスケープシーケンスが含まれている場合は Shift_JIS には変換できません．そのため，このようなケースの場合には文字化けが生じます．このオプションを設定すると，JIS X 0201 roman と ASCII ののエスケープシーケンスを互いに置き換え，文字化けを防ぐことができます．
+</para>
+</sect3>
+<sect3>
+<title>strict_mime</title>
+<para>
+<programlisting>
+Type: boolean
+Default: yes
+</programlisting>
+</para>
+<para>
+このオプションを解除すると，MIME に従っていないメッセージなど表示できるようになります．具体的には，charset の指定がないメッセージを表示します．$assumed_charset も見てください．さらに，encoded-word と *text の間の linear-white-space を space に置き換えます．これにより，MIME 符号化された Subject フィールドの表示が複数行にわかれることを防ぐことができます．
+</para>
+</sect3>
+<sect3>
+<title>tree_chars</title>
+<para>
+<programlisting>
+Type: boolean
+Default: no
+</programlisting>
+</para>
+<para>
+vt-100 非互換端末では ACS 文字を表示できません．このオプションを設定すると，スレッドや添付ファイルのツリーを表示する際に任意の文字を設定することができます.例えば，日本語であれば，JIS 0208 の罫線を用いることもできます．文字の設定は $tree_llcorner，$tree_ulcorner，$tree_ltee，$tree_hline，$tree_vline,$tree_ttee，$tree_btee，$tree_space，$tree_rarrow，$tree_star，$tree_hiddeni，tree_equals，$tree_missing で行います．ただし，設定ファイルの記述で用いられる文字符号化方式と $charset に設定したものを同じにしてください．デフォルトでは $ascii_chars をセットしたときに使われる文字を使って表示します．
+</para>
+<para>
+設定例：JIS X 0208 の罫線を用いた例
+</para>
+<para>
+<programlisting>
+  set tree_chars=yes
+  set tree_llcorner="└"
+  set tree_ulcorner="┌"
+  set tree_ltee="├"
+  set tree_hline="─"
+  set tree_vline="│"
+  set tree_ttee="┬"
+  set tree_btee="┴"
+  set tree_space="　"
+  set tree_rarrow="＞"
+  set tree_star="＊"
+  set tree_hidden="＆"
+  set tree_equals="＝"
+  set tree_missing="？"
+</programlisting>
+</para>
+</sect3>
+<sect3>
+<title>tree_llcorner</title>
+<para>
+<programlisting>
+Type: string
+Default: "`"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_ulcorner</title>
+<para>
+<programlisting>
+Type: string
+Default: ","
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_ltee</title>
+<para>
+<programlisting>
+Type: string
+Default: "|"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_hline</title>
+<para>
+<programlisting>
+Type: string
+Default: "-"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_vline</title>
+<para>
+<programlisting>
+Type: string
+Default: "|"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_ttee</title>
+<para>
+<programlisting>
+Type: string
+Default: "-"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_btee</title>
+<para>
+<programlisting>
+Type: string
+Default: "-"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_space</title>
+<para>
+<programlisting>
+Type: string
+Default: " "
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_rarrow</title>
+<para>
+<programlisting>
+Type: string
+Default: ">"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_star</title>
+<para>
+<programlisting>
+Type: string
+Default: "*"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_hidden</title>
+<para>
+<programlisting>
+Type: string
+Default: "&#38;"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_equals</title>
+<para>
+<programlisting>
+Type: string
+Default: "="
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>tree_missing</title>
+<para>
+<programlisting>
+Type: string
+Default: "?"
+</programlisting>
+</para>
+<para>
+$tree_chars を参照．
+</para>
+</sect3>
+<sect3>
+<title>use_jisx0208</title>
+<para>
+<programlisting>
+Type: boolean
+Default: no (yes)
+</programlisting>
+</para>
+<para>
+このオプションを設定すると，UTF-8ロケールにおいてJIS X 0208の記号・ギリシャ文字・キリル文字の幅が2桁であると判断します．
+</para>
+</sect3>
+</sect2>
+</sect1>
+</article>
+

@@ -1,0 +1,238 @@
+	Mutt 1.6.1 用日本語版パッチインストール方法
+
+							2016/08/22
+							Ver 1.6.1-j1
+							mutt-j 開発チーム
+
+Copyright (C) 2000-2016 Oota Toshiya <ribbon@users.sourceforge.jp>
+
+Copyright (C) 2000-2001 Kawaguti Ginga <ginga@ginganet.org>
+
+Copyright (C) 2000-2014 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
+
+注意:このドキュメントは最新版に、完全には追従していません。
+
+
+目次
+
+1. 必要なもの
+
+1.1 Mutt日本語版のコンパイル前に取りそろえておくもの
+1.2 Mutt日本語版をコンパイルするため必要なもの
+   
+2. インストール方法
+   
+    S-Lang をインストールする
+    libiconv をインストールする
+    Mutt のソースに日本語パッチを当てる
+    ./configure に必要なオプションを付けて実行する
+    コンパイル後インストールする
+    日本語版のドキュメントをインストールする
+    メッセージカタログに関する注意事項
+    関連ツールをインストールする
+    送信用プログラムをインストールする
+   
+設定
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+1. 必要なもの
+
+1.1 事前に用意するもの
+
+Mutt日本語版のコンパイル前に取りそろえておくものは以下の通りです。
+無い場合は修行が必要な物もあります。
+
+ ● GNU automake
+ ● GNU autoconf
+ ● GNU m4
+ ● GNU make(gmake)
+ ● 日本語を表示できるターミナルエミュレータと日本語フォント
+ ● C のプログラミングに関する多少の知識
+ ● コンパイルが上手くいかなくても自分で修正する根性
+ ● 若干の英語読解力
+   
+1.2 Mutt日本語版をコンパイルするため必要なもの
+
+ ● mutt-1.6.x オリジナルソース
+ ● mutt-1.6.x用日本語パッチ
+ ● S-Langまたはncurses
+ ● 文字符号化方式の変換関数 iconv を実装している C ライブラリで日本語の文字符
+    号化方式と UTF-8 に対応しているもの（恐らく，GNU/Linux(glibc-2.2)，Solaris
+    2.7，AIX 4.3 以上）あるいは GNU libiconv
+ ● ワイド文字関数を実装している C ライブラリで日本語のロケールの実装がまともで
+    あるもの．（恐らく，GNU/Linux(glibc-2.2)，Solaris 2.7，AIX 4.3 以上）（無い
+    場合は Mutt 付属のものでもかまわない (*2)）
+   
+以上で挙げた他に POP/IMAP over TLS/SSL を使いたい人は OpenSSL を，POP/IMAP で
+SASL 認証が必要な方は Cyrus SASL Library を，PGP を使いたい人は PGP あるいは
+GnuPG を，S/MIME を使いたい人は OpenSSL を予めインストールしてください．
+
+2. インストール方法
+
+S-Lang をインストールする
+
+すでに，日本語パッチの当った S-Lang がインストールされている，あるいはオリジナ
+ルの S-Lang で SLANG_HAS_KANJI_SUPPORT が定義されてインストールされていれば次の
+項目に移ってください．
+FreeBSD環境では、ja-libslangパッケージを使用すると、UTF-8環境では正常に動作
+しません。ncursesかlibslang2パッケージを使用してください。
+
+適当なディレクトリに展開し，そのディレクトリに移ります．オリジナルの S-Lang の
+場合は src/sl-feat.h を次のように編集して，SLANG_HAS_KANJI_SUPPORT を 1 に定義
+します．
+
+    #define SLANG_HAS_KANJI_SUPPORT         1
+
+コンパイルします。configureスクリプトを変更するため、autoconf/automake
+が起動し、configureスクリプトを作り替えるはずです。そうならない場合には、
+autoconf/automakeが使えない状態になっています。インストールしてください。
+
+    $ ./configure --prefix=/usr/local
+    $ make
+    $ make runtests
+
+静的ライブラリとしてインストールする場合は次にようにします．
+
+    # make install
+
+ELF形式の共有ライブラリとしてインストールする場合はさらに次のようにします．
+
+    $ make elf
+    # make install-elf
+    # make install-links
+
+この場合はインストール後に ldconfig などでキャッシュの更新を行なってください．
+
+libiconv をインストールする
+
+すでに，GNU libiconv が実装されている方および日本語や UTF-8 に完全に対応した
+iconv を含んでいる C ライブラリを持っている環境方は次の項目に移ってください．た
+だし，標準の C ライブラリの iconv を使ってもうまくいかない場合は，GNU libiconv
+を使ってみてください．
+
+適当なディレクトリに展開し，そのディレクトリに移り，./configure;make;make
+install でできます．インストール後に libiconv を使うための環境変数の設定や共有
+ライブラリのキャッシュの更新(ldconfig)を行ってください．
+
+  GNU/Linux(glibc-2.1) と Solaris
+      Bsh 系
+        $ LD_PRELOAD=/usr/local/lib/libiconv_plug.so
+        $ export LD_PRELOAD
+      csh 系
+        % setenv LD_PRELOAD /usr/local/lib/libiconv_plug.so
+  その他
+      Bsh 系
+        $ LD_LIBRARY_PATH=/usr/local/lib
+        $ export LD_LIBRARY_PATH
+      csh 系
+        % setenv LD_LIBRARY_PATH /usr/local/lib
+
+Mutt のソースに日本語パッチを当てる
+
+Mutt の tar ball を展開し，日本語パッチを当ててください．
+
+例）
+
+    $ gzip -dc mutt-1.5.x-ja.1.tar.gz | tar xvf -
+    $ gzip -dc mutt-1.6.x.tar.gz | tar xvf -
+    $ cd mutt-1.6.x
+    $ patch -p1 < ../mutt-1.6.x-ja.1/展開されたパッチファイル
+
+パッチは複数個ありますので、複数回パッチを当ててください。
+
+./configure に必要なオプションを付けて実行する
+
+次のオプションは Mutt で日本語を使うために必要です．
+
+ ● --with-libiconv-prefix=DIR
+   
+    GNU libiconv を使う場合はこのオプションを付けないとうまくいかないことがあり
+    ます．
+   
+    例) --with-libiconv-prefix=/usr/local
+   
+ ● --without-wc-funcs
+   
+    ワイド文字関数と日本語のロケールデータがまともに動く環境（恐らく GNU/Linux/
+    glibc-2.2，Solaris 2.7，AIX 4.3 以上）以外の方はこのオプションを忘れずに付
+    けてください．
+   
+ ● --with-slang[=DIR]
+   
+    S-Lang を使う場合は必ず付けてください．システムにライブラリとして存在する場
+    合は基本的にはディレクトリを指定する必要はありません．
+   
+    例) --with-slang=/usr/local
+   
+ ● --with-slanglib[=NAME]
+   
+    共有ライブラリ名が libslang.so 以外の場合に，このオプションで共有ライブラリ
+    名を指定してください．例えば，共有ライブラリ名のファイル名が libslang-ja.so
+    の場合は以下のように指定します．
+   
+    例) --with-slanglib=slang-ja
+   
+ ● --enable-default-japanese
+   
+    設定変数のデフォルト値を日本語を使うために適したものに設定します．このオプ
+    ションを無効にしても，設定変数を適切に設定すれば日本語を使うことができます
+    ．
+   
+./configure にはそのほかにもいくつかのオプションがあります．./configure --help
+で確認してください．なお，make したときに aclocal，autoconf，automake に関連し
+たエラーが出た場合は付属文書の applying-patches.txt を読んでください．
+
+コンパイル後インストールする
+
+make;make install でいけます．
+
+    $ make
+    # make install
+
+日本語版のドキュメントをインストールする
+
+まず，オリジナルのMuttのドキュメントがインストールされたディレクトリを確認する
+ために，オリジナルのソースディレクトリで次のコマンドを実行します．
+
+    $ grep docdir Makefile
+
+次に，日本語パッチのディレクトリに移動してMakefileのDOCDIRの値を修正し，rootに
+なって，make installを実行します．
+
+    $ cd ../mutt-1.6.x-ja.1
+    [Makefileを修正]
+    # make install
+
+メッセージカタログに関する注意事項
+
+NEC UX/4800のように，標準のlocaleが変則的なものは、Muttが使う ja locale ディレ
+クトリと標準のディレクトリ(UX/4800シリーズでは japan)をシンボリックリンクしてく
+ださい。こうすることで、メッセージカタログが正常にに利用できます。ただし、
+NEC UX/4800は、製品寿命が終了しているため、このような事態になることはないと
+思われます。
+
+関連ツールをインストールする
+
+必要ならば、urlview と metamail もインストールしてください。Mutt から直接 Web ブ
+ラウザを起動したり、色々と便利なことができます。
+
+送信用プログラムをインストールする
+
+Muttでは送信に関しては外部プログラムを使います．システムにMTAがインストールされ
+ていて，外部のドメインあるいは中継用サーバに送信できる環境であれば，特に別のプ
+ログラムをインストールする必要はありません．そうでない場合は，qmail，exim,
+postfixなどの MTA や Nomail，nullmailer，ssmtp などの送信専用のプログラムをイン
+ストールする必要があります．ダイアルアップ環境でしたら Nomail が，常時接続環境
+であれば ssmtp が設定が簡単です．
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
+
+設定
+
+日本語環境の設定は usage-japanese.ja.html をご覧下さい．1.2.x 以前のものも基本
+的には使えますが，日本語回りでいくつか不具合がでる可能性があるため設定を再確認
+してください．
+
+どうしても日本語の表示がうまくいかないという方は前のインストールの手順を確認し
+，S-Lang，iconv，ワイド文字関数を使うようになっているかを確かめてください．
+

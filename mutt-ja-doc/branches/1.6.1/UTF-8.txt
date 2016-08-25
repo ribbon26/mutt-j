@@ -1,0 +1,150 @@
+		Mutt 1.5.21用日本語版で使用するUTF-8改造について
+
+							2011/07/10
+							mutt-j 開発チーム
+
+Copyright (C)2012 Oota Toshiya <ribbon@users.sourceforge.jp>
+
+
+目次
+
+1. はじめに
+2. 文字化けの理由
+3. その他
+4. 関連リンク
+
+1. はじめに
+
+README- の4節で説明したように、UNICODEには、コンソール等で表示する
+文字の幅を動的に決めるための設定情報が含まれています。しかし、残念な
+ことに、標準のライブラリ(glibc等)では、日本を含む東アジア圏に適した
+設定を利用できません。
+そこで、mutt日本語版では、日本語を使用する際に問題がないよう、
+標準で提供されているUNICODEテーブルを書き換えたものを提供しています。
+
+　README.JA-PATCH.ja の5節で説明したように、UNICODEには、コンソール等で
+表示する文字の幅を動的に決めるための設定情報が含まれています。しかし、
+残念なことに、標準のライブラリ(glibc等)では、日本を含む東アジア圏に適し
+た設定を利用できません。
+　そこで、mutt日本語版では、日本語を使用する際に問題がないよう、標準で
+提供されているUNICODEテーブルを書き換えたものを提供しています。
+
+
+2. 文字化けの理由
+
+　UNICODEテーブルには、ambiguous character width という概念があります。
+これは、コンソールのような、表示する文字幅が一義的に決まっている場合に、
+1バイト幅で表示するか、2バイト幅で表示するかをアプリケーション側が決め
+る事を意味します。そのため、アプリケーション側が認識している文字幅と、
+コンソール側が認識している文字幅が異なる場合、画面の表示がうまくいかず、
+文字が化けたりすることがあります。たとえばmuttをWindows環境のteratermで
+表示した場合、この現象が発生します。
+　　muttそのものは、ambiguous character width を意識した文字処理を行っ
+ていますが、muttが使う画面表示ライブラリが同じような処理を行っていない
+場合、結果としてうまくいきません。対応策はmuttと同じような処理を画面表
+示ライブラリに組み込む事になります。
+
+　なお、対応策を行っても、環境によってはうまく動かない可能性があります。
+副作用が出る場合もあります。十分に検証してください。
+
+2.1 FreeBSDでの対応方法
+
+　FreeBSDで、ncursesを使う場合、ncursesがシステム側のwcwidthライブラリ
+(実際には__wcwidth())を呼び出します。この関数はシステムの関数であり、
+引数として渡された文字の文字幅を返します。実際には、/usr/share/locale/
+(localeの値)/LC_CTYPE を参照して文字幅を確定しています。localeが
+ja_JP.UTF-8の場合には、/usr/share/locale/UTF-8/LC_CTYPE が対応する
+テーブルになります。このファイルはバイナリファイルで、ソースは、
+/usr/src/share/mklocale/UTF-8.src がソースです。これをmklocaleで
+コンパイルしています。このテーブルを書き換える事により、文字化けが
+なくなります。
+  書き換えたテーブルは、samples/UTF-9.src というファイルです。他の
+localeと異なることがすぐに分かるよう、UTF-9という名前にしています。
+これをmklocaleで変換してください。そして、
+
+  #cd /usr/share/locale
+  #cp -pr ja_JP.UTF-8 ja_JP.UTF-9
+
+とし、新たに生成されたバイナリファイルをja_JP.UTF-9/LC_CTYPEとして
+ください。
+  その後、使用するlocaleを
+
+  % setenv LC_ALL ja_JP.UTF-9
+
+とすることで、文字化けが解消されます。
+
+2.2 Linuxでの文字化け対策
+
+　Linuxでは、/usr/share/i18n/charmaps/UTF-8.gz が文字幅情報を含んでいる
+テーブルです。これを書き換えます。このテーブルは、OS毎に異なります。そ
+の時点でのUNICODEバージョンに対応した表を取り込んでいるからです。
+
+2.2.1 新しいロケールを作る方法
+
+　変更の手順は以下の通りです。
+
+   1. samples/UTF-8-CJK を用意する。
+   2. gzip で圧縮する。
+   3. rootになり、cp -p UTF-8-CJK.gz /usr/share/i18n/charmaps/ を実行する。
+   4. localedef -i ja_JP -c -f UTF-8-CJK ja_JP.UTF-8-CJK を実行する。 
+
+このあと、使用するlocaleを変更します。 tcshの場合は、
+
+  % setenv LANG ja_JP.utf8cjk
+
+　なお、上記はCentOS4で行ったものです。
+
+2.2.2 既存のロケールを上書きする方法
+
+　変更の手順は以下の通りです。
+
+   1. /usr/share/i18n/charmaps/UTF-8.gz をコピーし、回答する。
+   2. このファイルの末尾部分を、UTF-8.centos62.patchに差し替える。
+   3. 出来上がったファイルをgzip で圧縮する。
+   3. rootになり、cp -p UTF-8.gz /usr/share/i18n/charmaps/ を実行する。
+   4. localedef --replace -i ja_JP -c -f UTF-8 ja_JP.UTF-8 を実行する。 
+
+なお、上記はCentOS 6.2で行ったものです。ディストリビューション
+が異なる場合は方法が変わる可能性があります。
+
+UNICODEテーブルを直接書き換えているため、「日本語以外での使用には
+副作用が出ます」。いわゆるASCII文字のみを使用して表示を行う分には
+問題ありませんが、それ以外の、UNICODE文字を使用する場合、文字幅が
+不正になる場合があります。
+
+3. その他
+
+東アジア向けの、ambiguous character width属性を持つ文字は、
+http://unicode.org/Public/UNIDATA/EastAsianWidth.txt に "A" という
+記号で表されています。この文字は、
+
+ % grep '^[^;]*;[A]' EastAsianWidth.txt
+
+で抜き出すことができます。
+
+4. 関連リンク
+
+4.1 UNICODE関連
+
+● 東アジア向けのwidthテーブル表
+
+   ○ http://unicode.org/Public/UNIDATA/EastAsianWidth.txt
+
+   ○ http://ja.wikipedia.org/wiki/%E6%9D%B1%E3%82%A2%E3%82%B8%E3%82%A2%E3%81%AE%E6%96%87%E5%AD%97%E5%B9%85
+
+● [Debian][Unicode] glibc の wcwidth() の「曖昧な文字幅」についての動作
+   
+   ○ http://d.hatena.ne.jp/macks/20090304/p2
+       
+   ○ http://d.hatena.ne.jp/macks/20090305
+       
+ ● [debian-devel:16693] East Asian Width Problem at rxvt-unicode-ml
+   
+   ○ http://lists.debian.or.jp/debian-devel/200703/msg00037.html
+       
+ ● 東アジアの文字幅
+   
+   ○ http://ja.wikipedia.org/wiki/%E6%9D%B1%E3%82%A2%E3%82%B8%E3%82%A2%E3%81%AE%E6%96%87%E5%AD%97%E5%B9%85
+       
+
+  そのほか、EastAsianAmbiguous などのキーワードで検索すると情報が得られます。 
