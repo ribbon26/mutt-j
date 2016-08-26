@@ -1,12 +1,12 @@
-diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
---- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-22 15:51:02.000000000 +0900
+diff -urN mutt-1.7.0/PATCHES mutt-1.7.0new/PATCHES
+--- mutt-1.7.0/PATCHES	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/PATCHES	2016-08-25 17:19:06.000000000 +0900
 @@ -0,0 +1 @@
-+patch-1.5.22.tt+yy.delete_prefix.1
-diff -urN mutt-1.6.1/hdrline.c mutt-1.6.1new/hdrline.c
---- mutt-1.6.1/hdrline.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/hdrline.c	2016-08-22 15:51:02.000000000 +0900
-@@ -255,6 +255,7 @@
++patch-1.7.0.tt+yy.delete_prefix.1
+diff -urN mutt-1.7.0/hdrline.c mutt-1.7.0new/hdrline.c
+--- mutt-1.7.0/hdrline.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/hdrline.c	2016-08-25 17:22:51.000000000 +0900
+@@ -256,6 +256,7 @@
  #define THREAD_NEW (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 1)
  #define THREAD_OLD (threads && hdr->collapsed && hdr->num_hidden > 1 && mutt_thread_contains_unread (ctx, hdr) == 2)
    size_t len;
@@ -14,21 +14,21 @@ diff -urN mutt-1.6.1/hdrline.c mutt-1.6.1new/hdrline.c
  
    hdr = hfi->hdr;
    ctx = hfi->ctx;
-@@ -568,11 +569,12 @@
+@@ -569,11 +570,12 @@
  
      case 's':
        
 +      subj = option (OPTDELETEPREFIX) ? hdr->env->real_subj : hdr->env->subject;
-       if (flags & M_FORMAT_TREE && !hdr->collapsed)
+       if (flags & MUTT_FORMAT_TREE && !hdr->collapsed)
        {
- 	if (flags & M_FORMAT_FORCESUBJ)
+ 	if (flags & MUTT_FORMAT_FORCESUBJ)
  	{
 -	  mutt_format_s (dest, destlen, "", NONULL (hdr->env->subject));
 +	  mutt_format_s (dest, destlen, "", NONULL (subj));
  	  snprintf (buf2, sizeof (buf2), "%s%s", hdr->tree, dest);
  	  mutt_format_s_tree (dest, destlen, prefix, buf2);
  	}
-@@ -580,7 +582,7 @@
+@@ -581,7 +583,7 @@
  	  mutt_format_s_tree (dest, destlen, prefix, hdr->tree);
        }
        else
@@ -37,10 +37,10 @@ diff -urN mutt-1.6.1/hdrline.c mutt-1.6.1new/hdrline.c
        break;
  
      case 'S':
-diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
---- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-22 15:51:02.000000000 +0900
-@@ -639,6 +639,19 @@
+diff -urN mutt-1.7.0/init.h mutt-1.7.0new/init.h
+--- mutt-1.7.0/init.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/init.h	2016-08-25 17:19:06.000000000 +0900
+@@ -642,6 +642,19 @@
    ** If this option is \fIset\fP, mutt's received-attachments menu will not show the subparts of
    ** individual messages in a multipart/digest.  To see these subparts, press ``v'' on that menu.
    */
@@ -60,10 +60,10 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
    { "display_filter",	DT_PATH, R_PAGER, UL &DisplayFilter, UL "" },
    /*
    ** .pp
-diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
---- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-22 15:51:02.000000000 +0900
-@@ -333,6 +333,7 @@
+diff -urN mutt-1.7.0/mutt.h mutt-1.7.0new/mutt.h
+--- mutt-1.7.0/mutt.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/mutt.h	2016-08-25 17:19:06.000000000 +0900
+@@ -335,6 +335,7 @@
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
    OPTDELETEUNTAG,
@@ -71,9 +71,9 @@ diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
    OPTDIGESTCOLLAPSE,
    OPTDUPTHREADS,
    OPTEDITHDRS,
-diff -urN mutt-1.6.1/mutt_regex.h mutt-1.6.1new/mutt_regex.h
---- mutt-1.6.1/mutt_regex.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt_regex.h	2016-08-22 15:51:02.000000000 +0900
+diff -urN mutt-1.7.0/mutt_regex.h mutt-1.7.0new/mutt_regex.h
+--- mutt-1.7.0/mutt_regex.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/mutt_regex.h	2016-08-25 17:19:06.000000000 +0900
 @@ -51,5 +51,6 @@
  WHERE REGEXP ReplyRegexp;
  WHERE REGEXP Smileys;
@@ -81,9 +81,9 @@ diff -urN mutt-1.6.1/mutt_regex.h mutt-1.6.1new/mutt_regex.h
 +WHERE REGEXP DeleteRegexp;
  
  #endif /* MUTT_REGEX_H */
-diff -urN mutt-1.6.1/parse.c mutt-1.6.1new/parse.c
---- mutt-1.6.1/parse.c	2016-05-01 06:07:24.000000000 +0900
-+++ mutt-1.6.1new/parse.c	2016-08-22 15:51:02.000000000 +0900
+diff -urN mutt-1.7.0/parse.c mutt-1.7.0new/parse.c
+--- mutt-1.7.0/parse.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/parse.c	2016-08-25 17:19:06.000000000 +0900
 @@ -1453,6 +1453,18 @@
  	e->real_subj = e->subject + pmatch[0].rm_eo;
        else
