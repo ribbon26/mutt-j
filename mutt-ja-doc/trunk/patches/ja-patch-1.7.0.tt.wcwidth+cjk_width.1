@@ -1,12 +1,12 @@
-diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
---- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-20 15:13:29.000000000 +0900
+diff -urN mutt-1.7.0/PATCHES mutt-1.7.0new/PATCHES
+--- mutt-1.7.0/PATCHES	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/PATCHES	2016-08-27 22:01:28.000000000 +0900
 @@ -0,0 +1 @@
-+patch-1.6.1.tt.wcwidth+cjk_width.1
-diff -urN mutt-1.6.1/configure.ac mutt-1.6.1new/configure.ac
---- mutt-1.6.1/configure.ac	2016-05-01 06:18:22.000000000 +0900
-+++ mutt-1.6.1new/configure.ac	2016-08-20 15:12:08.000000000 +0900
-@@ -1223,6 +1223,16 @@
++patch-1.7.0.tt.wcwidth+cjk_width.1
+diff -urN mutt-1.7.0/configure.ac mutt-1.7.0new/configure.ac
+--- mutt-1.7.0/configure.ac	2016-08-18 10:56:20.000000000 +0900
++++ mutt-1.7.0new/configure.ac	2016-08-27 22:01:28.000000000 +0900
+@@ -1233,6 +1233,16 @@
  
  dnl -- locales --
  
@@ -23,7 +23,7 @@ diff -urN mutt-1.6.1/configure.ac mutt-1.6.1new/configure.ac
  AC_CHECK_HEADERS(wchar.h)
  
  AC_CACHE_CHECK([for wchar_t], mutt_cv_wchar_t,
-@@ -1293,7 +1303,10 @@
+@@ -1303,7 +1313,10 @@
  if test $wc_funcs = yes; then
          AC_DEFINE(HAVE_WC_FUNCS,1,[ Define if you are using the system's wchar_t functions. ])
  else
@@ -35,13 +35,13 @@ diff -urN mutt-1.6.1/configure.ac mutt-1.6.1new/configure.ac
  fi
  
  AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
-diff -urN mutt-1.6.1/curs_lib.c mutt-1.6.1new/curs_lib.c
---- mutt-1.6.1/curs_lib.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/curs_lib.c	2016-08-20 15:12:36.000000000 +0900
-@@ -795,7 +795,14 @@
+diff -urN mutt-1.7.0/curs_lib.c mutt-1.7.0new/curs_lib.c
+--- mutt-1.7.0/curs_lib.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/curs_lib.c	2016-08-27 22:08:32.000000000 +0900
+@@ -949,7 +949,14 @@
        wc = replacement_char ();
      }
-     if (arboreal && wc < M_TREE_MAX)
+     if (arboreal && wc < MUTT_TREE_MAX)
 -      w = 1; /* hack */
 +    {
 +#ifdef USE_CJK_WIDTH
@@ -54,7 +54,7 @@ diff -urN mutt-1.6.1/curs_lib.c mutt-1.6.1new/curs_lib.c
      else
      {
  #ifdef HAVE_ISWBLANK
-@@ -1024,10 +1031,12 @@
+@@ -1178,10 +1185,12 @@
    int w;
    size_t k, n;
    mbstate_t mbstate;
@@ -67,7 +67,7 @@ diff -urN mutt-1.6.1/curs_lib.c mutt-1.6.1new/curs_lib.c
  
    memset (&mbstate, 0, sizeof (mbstate));
    for (w=0; n && (k = mbrtowc (&wc, s, n, &mbstate)); s += k, n -= k)
-@@ -1037,9 +1046,21 @@
+@@ -1193,9 +1202,21 @@
        k = (k == (size_t)(-1)) ? 1 : n;
        wc = replacement_char ();
      }
@@ -92,10 +92,10 @@ diff -urN mutt-1.6.1/curs_lib.c mutt-1.6.1new/curs_lib.c
    }
    return w;
  }
-diff -urN mutt-1.6.1/globals.h mutt-1.6.1new/globals.h
---- mutt-1.6.1/globals.h	2016-05-01 06:07:24.000000000 +0900
-+++ mutt-1.6.1new/globals.h	2016-08-20 15:12:36.000000000 +0900
-@@ -278,9 +278,31 @@
+diff -urN mutt-1.7.0/globals.h mutt-1.7.0new/globals.h
+--- mutt-1.7.0/globals.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/globals.h	2016-08-27 22:01:28.000000000 +0900
+@@ -291,9 +291,31 @@
  
  const char * const BodyTypes[] = { "x-unknown", "audio", "application", "image", "message", "model", "multipart", "text", "video" };
  const char * const BodyEncodings[] = { "x-unknown", "7bit", "8bit", "quoted-printable", "base64", "binary", "x-uuencoded" };
@@ -127,10 +127,10 @@ diff -urN mutt-1.6.1/globals.h mutt-1.6.1new/globals.h
  #endif
  
  #ifdef MAIN_C
-diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
---- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-20 15:12:36.000000000 +0900
-@@ -383,6 +383,31 @@
+diff -urN mutt-1.7.0/init.h mutt-1.7.0new/init.h
+--- mutt-1.7.0/init.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/init.h	2016-08-27 22:01:28.000000000 +0900
+@@ -386,6 +386,31 @@
    ** this variable is \fIunset\fP, no check for new mail is performed
    ** while the mailbox is open.
    */
@@ -162,10 +162,10 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
    { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
    /*
    ** .pp
-diff -urN mutt-1.6.1/main.c mutt-1.6.1new/main.c
---- mutt-1.6.1/main.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/main.c	2016-08-20 15:12:08.000000000 +0900
-@@ -434,6 +434,12 @@
+diff -urN mutt-1.7.0/main.c mutt-1.7.0new/main.c
+--- mutt-1.7.0/main.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/main.c	2016-08-27 22:01:28.000000000 +0900
+@@ -437,6 +437,12 @@
  	"-LOCALES_HACK  "
  #endif
  	      
@@ -178,9 +178,9 @@ diff -urN mutt-1.6.1/main.c mutt-1.6.1new/main.c
  #ifdef HAVE_WC_FUNCS
  	"+HAVE_WC_FUNCS  "
  #else
-diff -urN mutt-1.6.1/mbyte.c mutt-1.6.1new/mbyte.c
---- mutt-1.6.1/mbyte.c	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mbyte.c	2016-08-20 15:12:08.000000000 +0900
+diff -urN mutt-1.7.0/mbyte.c mutt-1.7.0new/mbyte.c
+--- mutt-1.7.0/mbyte.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/mbyte.c	2016-08-27 22:01:28.000000000 +0900
 @@ -17,7 +17,7 @@
   */
  
@@ -420,9 +420,9 @@ diff -urN mutt-1.6.1/mbyte.c mutt-1.6.1new/mbyte.c
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps)
  {
    static wchar_t mbstate;
-diff -urN mutt-1.6.1/mbyte.h mutt-1.6.1new/mbyte.h
---- mutt-1.6.1/mbyte.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mbyte.h	2016-08-20 15:12:08.000000000 +0900
+diff -urN mutt-1.7.0/mbyte.h mutt-1.7.0new/mbyte.h
+--- mutt-1.7.0/mbyte.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/mbyte.h	2016-08-27 22:01:28.000000000 +0900
 @@ -8,6 +8,12 @@
  #  ifdef HAVE_WCTYPE_H
  #   include <wctype.h>
@@ -454,10 +454,10 @@ diff -urN mutt-1.6.1/mbyte.h mutt-1.6.1new/mbyte.h
  void mutt_set_charset (char *charset);
  extern int Charset_is_utf8;
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
-diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
---- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-20 15:12:36.000000000 +0900
-@@ -329,6 +329,10 @@
+diff -urN mutt-1.7.0/mutt.h mutt-1.7.0new/mutt.h
+--- mutt-1.7.0/mutt.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/mutt.h	2016-08-27 22:01:28.000000000 +0900
+@@ -331,6 +331,10 @@
    OPTBRAILLEFRIENDLY,
    OPTCHECKMBOXSIZE,
    OPTCHECKNEW,
@@ -468,9 +468,9 @@ diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
-diff -urN mutt-1.6.1/wcwidth.c mutt-1.6.1new/wcwidth.c
---- mutt-1.6.1/wcwidth.c	2016-05-01 06:07:25.000000000 +0900
-+++ mutt-1.6.1new/wcwidth.c	2016-08-20 15:12:08.000000000 +0900
+diff -urN mutt-1.7.0/wcwidth.c mutt-1.7.0new/wcwidth.c
+--- mutt-1.7.0/wcwidth.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/wcwidth.c	2016-08-27 22:01:28.000000000 +0900
 @@ -5,6 +5,51 @@
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcwidth.html
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcswidth.html
