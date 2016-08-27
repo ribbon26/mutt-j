@@ -1,11 +1,11 @@
-diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
---- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/PATCHES	2016-08-20 12:43:09.000000000 +0900
+diff -urN mutt-1.7.0/PATCHES mutt-1.7.0new/PATCHES
+--- mutt-1.7.0/PATCHES	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/PATCHES	2016-08-26 13:31:46.000000000 +0900
 @@ -0,0 +1 @@
-+patch-1.6.1.tt.sanitize_ja.1
-diff -urN mutt-1.6.1/charset.c mutt-1.6.1new/charset.c
---- mutt-1.6.1/charset.c	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/charset.c	2016-08-20 12:43:09.000000000 +0900
++patch-1.7.0.tt.sanitize_ja.1
+diff -urN mutt-1.7.0/charset.c mutt-1.7.0new/charset.c
+--- mutt-1.7.0/charset.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/charset.c	2016-08-26 13:31:46.000000000 +0900
 @@ -481,6 +481,9 @@
    if (!s || !*s)
      return 0;
@@ -205,9 +205,9 @@ diff -urN mutt-1.6.1/charset.c mutt-1.6.1new/charset.c
 +  return 0;
 +}
 +
-diff -urN mutt-1.6.1/charset.h mutt-1.6.1new/charset.h
---- mutt-1.6.1/charset.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/charset.h	2016-08-20 12:43:09.000000000 +0900
+diff -urN mutt-1.7.0/charset.h mutt-1.7.0new/charset.h
+--- mutt-1.7.0/charset.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/charset.h	2016-08-26 13:31:46.000000000 +0900
 @@ -36,6 +36,9 @@
  
  int mutt_convert_string (char **, const char *, const char *, int);
@@ -218,9 +218,9 @@ diff -urN mutt-1.6.1/charset.h mutt-1.6.1new/charset.h
  iconv_t mutt_iconv_open (const char *, const char *, int);
  size_t mutt_iconv (iconv_t, ICONV_CONST char **, size_t *, char **, size_t *, ICONV_CONST char **, const char *);
  
-diff -urN mutt-1.6.1/handler.c mutt-1.6.1new/handler.c
---- mutt-1.6.1/handler.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/handler.c	2016-08-20 12:43:09.000000000 +0900
+diff -urN mutt-1.7.0/handler.c mutt-1.7.0new/handler.c
+--- mutt-1.7.0/handler.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/handler.c	2016-08-26 13:31:46.000000000 +0900
 @@ -100,6 +100,9 @@
      return;
    }
@@ -231,15 +231,15 @@ diff -urN mutt-1.6.1/handler.c mutt-1.6.1new/handler.c
    ib = bufi, ibl = *l;
    for (;;)
    {
-@@ -1311,6 +1314,7 @@
+@@ -1312,6 +1315,7 @@
    int piped = FALSE;
    pid_t thepid;
    int rc = 0;
 +  char *charset;
  
    snprintf (type, sizeof (type), "%s/%s", TYPE (a), a->subtype);
-   rfc1524_mailcap_lookup (a, type, entry, M_AUTOVIEW);
-@@ -1341,6 +1345,10 @@
+   rfc1524_mailcap_lookup (a, type, entry, MUTT_AUTOVIEW);
+@@ -1342,6 +1346,10 @@
        return -1;
      }
      
@@ -250,10 +250,10 @@ diff -urN mutt-1.6.1/handler.c mutt-1.6.1new/handler.c
      mutt_copy_bytes (s->fpin, fpin, a->length);
  
      if(!piped)
-diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
---- mutt-1.6.1/init.h	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/init.h	2016-08-20 12:43:09.000000000 +0900
-@@ -2549,6 +2549,28 @@
+diff -urN mutt-1.7.0/init.h mutt-1.7.0new/init.h
+--- mutt-1.7.0/init.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/init.h	2016-08-26 13:31:46.000000000 +0900
+@@ -2576,6 +2576,28 @@
    ** that mutt \fIgenerates\fP this kind of encoding.  Instead, mutt will
    ** unconditionally use the encoding specified in RFC2231.
    */
@@ -282,10 +282,10 @@ diff -urN mutt-1.6.1/init.h mutt-1.6.1new/init.h
    { "save_address",	DT_BOOL, R_NONE, OPTSAVEADDRESS, 0 },
    /*
    ** .pp
-diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
---- mutt-1.6.1/mutt.h	2016-05-01 06:07:23.000000000 +0900
-+++ mutt-1.6.1new/mutt.h	2016-08-20 12:43:09.000000000 +0900
-@@ -424,6 +424,7 @@
+diff -urN mutt-1.7.0/mutt.h mutt-1.7.0new/mutt.h
+--- mutt-1.7.0/mutt.h	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/mutt.h	2016-08-26 13:31:46.000000000 +0900
+@@ -427,6 +427,7 @@
    OPTREVNAME,
    OPTREVREAL,
    OPTRFC2047PARAMS,
@@ -293,9 +293,9 @@ diff -urN mutt-1.6.1/mutt.h mutt-1.6.1new/mutt.h
    OPTSAVEADDRESS,
    OPTSAVEEMPTY,
    OPTSAVENAME,
-diff -urN mutt-1.6.1/rfc2047.c mutt-1.6.1new/rfc2047.c
---- mutt-1.6.1/rfc2047.c	2016-05-01 06:14:03.000000000 +0900
-+++ mutt-1.6.1new/rfc2047.c	2016-08-20 12:43:09.000000000 +0900
+diff -urN mutt-1.7.0/rfc2047.c mutt-1.7.0new/rfc2047.c
+--- mutt-1.7.0/rfc2047.c	2016-08-11 10:47:00.000000000 +0900
++++ mutt-1.7.0new/rfc2047.c	2016-08-26 13:31:46.000000000 +0900
 @@ -62,6 +62,9 @@
    size_t obl, n;
    int e;
