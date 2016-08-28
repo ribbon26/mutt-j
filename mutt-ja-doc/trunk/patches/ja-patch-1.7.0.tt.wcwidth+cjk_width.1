@@ -1,11 +1,54 @@
 diff -urN mutt-1.7.0/PATCHES mutt-1.7.0new/PATCHES
 --- mutt-1.7.0/PATCHES	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/PATCHES	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/PATCHES	2016-08-28 14:57:20.000000000 +0900
 @@ -0,0 +1 @@
 +patch-1.7.0.tt.wcwidth+cjk_width.1
+diff -urN mutt-1.7.0/configure mutt-1.7.0new/configure
+--- mutt-1.7.0/configure	2016-08-18 10:56:27.000000000 +0900
++++ mutt-1.7.0new/configure	2016-08-28 14:57:20.000000000 +0900
+@@ -821,6 +821,7 @@
+ enable_nls
+ with_included_gettext
+ with_idn
++enable_cjk_ambiguous_width
+ with_wc_funcs
+ enable_full_doc
+ '
+@@ -1489,6 +1490,9 @@
+   --enable-hcache         Enable header caching
+   --disable-iconv         Disable iconv support
+   --disable-nls           Do not use Native Language Support
++  --enable-cjk-ambiguous-width
++                          Enable East Asian Ambiguous characters support
++                          (using own wcwidth)
+   --disable-full-doc      Omit disabled variables
+ 
+ Optional Packages:
+@@ -12589,6 +12593,21 @@
+ fi
+ 
+ 
++# Check whether --enable-cjk-ambiguous-width was given.
++if test "${enable_cjk_ambiguous_width+set}" = set; then :
++  enableval=$enable_cjk_ambiguous_width;  if test "x$enableval" = "xyes" ; then
++               cjk_width=yes
++          fi
++
++fi
++
++if test "x$cjk_width" = "xyes" ; then
++
++$as_echo "#define USE_CJK_WIDTH 1" >>confdefs.h
++
++       MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS wcwidth.o"
++fi
++
+ for ac_header in wchar.h
+ do :
+   ac_fn_c_check_header_mongrel "$LINENO" "wchar.h" "ac_cv_header_wchar_h" "$ac_includes_default"
 diff -urN mutt-1.7.0/configure.ac mutt-1.7.0new/configure.ac
 --- mutt-1.7.0/configure.ac	2016-08-18 10:56:20.000000000 +0900
-+++ mutt-1.7.0new/configure.ac	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/configure.ac	2016-08-28 14:57:20.000000000 +0900
 @@ -1233,6 +1233,16 @@
  
  dnl -- locales --
@@ -37,7 +80,7 @@ diff -urN mutt-1.7.0/configure.ac mutt-1.7.0new/configure.ac
  AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
 diff -urN mutt-1.7.0/curs_lib.c mutt-1.7.0new/curs_lib.c
 --- mutt-1.7.0/curs_lib.c	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/curs_lib.c	2016-08-28 14:40:09.000000000 +0900
++++ mutt-1.7.0new/curs_lib.c	2016-08-28 14:57:20.000000000 +0900
 @@ -949,7 +949,14 @@
        wc = replacement_char ();
      }
@@ -94,7 +137,7 @@ diff -urN mutt-1.7.0/curs_lib.c mutt-1.7.0new/curs_lib.c
  }
 diff -urN mutt-1.7.0/globals.h mutt-1.7.0new/globals.h
 --- mutt-1.7.0/globals.h	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/globals.h	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/globals.h	2016-08-28 14:57:20.000000000 +0900
 @@ -291,9 +291,31 @@
  
  const char * const BodyTypes[] = { "x-unknown", "audio", "application", "image", "message", "model", "multipart", "text", "video" };
@@ -129,7 +172,7 @@ diff -urN mutt-1.7.0/globals.h mutt-1.7.0new/globals.h
  #ifdef MAIN_C
 diff -urN mutt-1.7.0/init.h mutt-1.7.0new/init.h
 --- mutt-1.7.0/init.h	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/init.h	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/init.h	2016-08-28 14:57:20.000000000 +0900
 @@ -386,6 +386,31 @@
    ** this variable is \fIunset\fP, no check for new mail is performed
    ** while the mailbox is open.
@@ -164,7 +207,7 @@ diff -urN mutt-1.7.0/init.h mutt-1.7.0new/init.h
    ** .pp
 diff -urN mutt-1.7.0/main.c mutt-1.7.0new/main.c
 --- mutt-1.7.0/main.c	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/main.c	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/main.c	2016-08-28 14:57:20.000000000 +0900
 @@ -437,6 +437,12 @@
  	"-LOCALES_HACK  "
  #endif
@@ -180,7 +223,7 @@ diff -urN mutt-1.7.0/main.c mutt-1.7.0new/main.c
  #else
 diff -urN mutt-1.7.0/mbyte.c mutt-1.7.0new/mbyte.c
 --- mutt-1.7.0/mbyte.c	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/mbyte.c	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/mbyte.c	2016-08-28 14:57:20.000000000 +0900
 @@ -17,7 +17,7 @@
   */
  
@@ -422,7 +465,7 @@ diff -urN mutt-1.7.0/mbyte.c mutt-1.7.0new/mbyte.c
    static wchar_t mbstate;
 diff -urN mutt-1.7.0/mbyte.h mutt-1.7.0new/mbyte.h
 --- mutt-1.7.0/mbyte.h	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/mbyte.h	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/mbyte.h	2016-08-28 14:57:20.000000000 +0900
 @@ -8,6 +8,12 @@
  #  ifdef HAVE_WCTYPE_H
  #   include <wctype.h>
@@ -456,7 +499,7 @@ diff -urN mutt-1.7.0/mbyte.h mutt-1.7.0new/mbyte.h
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
 diff -urN mutt-1.7.0/mutt.h mutt-1.7.0new/mutt.h
 --- mutt-1.7.0/mutt.h	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/mutt.h	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/mutt.h	2016-08-28 14:57:20.000000000 +0900
 @@ -331,6 +331,10 @@
    OPTBRAILLEFRIENDLY,
    OPTCHECKMBOXSIZE,
@@ -470,7 +513,7 @@ diff -urN mutt-1.7.0/mutt.h mutt-1.7.0new/mutt.h
    OPTCONFIRMCREATE,
 diff -urN mutt-1.7.0/wcwidth.c mutt-1.7.0new/wcwidth.c
 --- mutt-1.7.0/wcwidth.c	2016-08-11 10:47:00.000000000 +0900
-+++ mutt-1.7.0new/wcwidth.c	2016-08-28 14:39:58.000000000 +0900
++++ mutt-1.7.0new/wcwidth.c	2016-08-28 14:57:20.000000000 +0900
 @@ -5,6 +5,51 @@
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcwidth.html
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcswidth.html
