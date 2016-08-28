@@ -1,3 +1,46 @@
+diff -urN mutt-1.6.1/configure mutt-1.6.1new/configure
+--- mutt-1.6.1/configure	2016-05-01 06:18:36.000000000 +0900
++++ mutt-1.6.1new/configure	2016-08-27 23:09:12.000000000 +0900
+@@ -820,6 +819,7 @@
+ enable_nls
+ with_included_gettext
+ with_idn
++enable_cjk_ambiguous_width
+ with_wc_funcs
+ enable_full_doc
+ '
+@@ -1487,6 +1476,9 @@
+   --enable-hcache         Enable header caching
+   --disable-iconv         Disable iconv support
+   --disable-nls           Do not use Native Language Support
++  --enable-cjk-ambiguous-width
++                          Enable East Asian Ambiguous characters support
++                          (using own wcwidth)
+   --disable-full-doc      Omit disabled variables
+ 
+ Optional Packages:
+@@ -12533,6 +12526,21 @@
+ fi
+ 
+ 
++# Check whether --enable-cjk-ambiguous-width was given.
++if test "${enable_cjk_ambiguous_width+set}" = set; then :
++  enableval=$enable_cjk_ambiguous_width;  if test "x$enableval" = "xyes" ; then
++               cjk_width=yes
++          fi
++
++fi
++
++if test "x$cjk_width" = "xyes" ; then
++
++$as_echo "#define USE_CJK_WIDTH 1" >>confdefs.h
++
++       MUTT_LIB_OBJECTS="$MUTT_LIB_OBJECTS wcwidth.o"
++fi
++
+ for ac_header in wchar.h
+ do :
+   ac_fn_c_check_header_mongrel "$LINENO" "wchar.h" "ac_cv_header_wchar_h" "$ac_includes_default"
 diff -urN mutt-1.6.1/PATCHES mutt-1.6.1new/PATCHES
 --- mutt-1.6.1/PATCHES	2016-05-01 06:07:23.000000000 +0900
 +++ mutt-1.6.1new/PATCHES	2016-08-20 15:13:29.000000000 +0900
