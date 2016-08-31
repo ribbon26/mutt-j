@@ -1,6 +1,6 @@
 		Mutt 1.7.0用日本語版パッチリリースノート
 
-							2016/08/28
+							2016/08/31
 							Ver 1.7.0-j1
 							mutt-j 開発チーム
 
@@ -191,7 +191,8 @@ usage-japanese.ja.html をご覧下さい。
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 9.3      iw	       Oota Tochiya
+1) FreeBSD 9.3(32bit)      iw	       Oota Tochiya
+2) FreeBSD 10.3(32bit)     iw         Oota Toshiya
 2) OpenSUSE 13.2    IW	       Oota Toshiya
 オプションの意味
 
