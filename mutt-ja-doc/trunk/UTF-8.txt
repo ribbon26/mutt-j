@@ -1,6 +1,6 @@
 		Mutt 日本語版で使用するUTF-8改造について
 
-							2016/10/29
+							2016/11/08
 							mutt-j 開発チーム
 
 Copyright (C)2012-2016 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -94,7 +94,7 @@ ja_JP.UTF-8の場合には、/usr/share/locale/UTF-8/LC_CTYPE が対応する
 
 　変更の手順は以下の通りです。
 
-   1. /usr/share/i18n/charmaps/UTF-8.gz をコピーし、回答する。
+   1. /usr/share/i18n/charmaps/UTF-8.gz をコピーし、解凍する。
    2. このファイルの末尾部分を、UTF-8.centos62.patchに差し替える。
    3. 出来上がったファイルをgzip で圧縮する。
    3. rootになり、cp -p UTF-8.gz /usr/share/i18n/charmaps/ を実行する。
