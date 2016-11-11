@@ -1,6 +1,6 @@
 		Mutt 日本語版で使用するUTF-8改造について
 
-							2016/11/08
+							2016/11/11
 							mutt-j 開発チーム
 
 Copyright (C)2012-2016 Oota Toshiya <ribbon@users.sourceforge.jp>
@@ -124,9 +124,12 @@ http://unicode.org/Public/UNIDATA/EastAsianWidth.txt に "A" という
 
 ● 東アジア向けのwidthテーブル表
 
+   ○ http://www.unicode.org/reports/tr11/tr11-21.html
    ○ http://unicode.org/Public/UNIDATA/EastAsianWidth.txt
 
-   ○ http://ja.wikipedia.org/wiki/%E6%9D%B1%E3%82%A2%E3%82%B8%E3%82%A2%E3%81%AE%E6%96%87%E5%AD%97%E5%B9%85
+● 修正したlocaleデータの入手先
+
+   ○ https://github.com/hamano/locale-eaw
 
 ● [Debian][Unicode] glibc の wcwidth() の「曖昧な文字幅」についての動作
    
@@ -143,4 +146,5 @@ http://unicode.org/Public/UNIDATA/EastAsianWidth.txt に "A" という
    ○ http://ja.wikipedia.org/wiki/%E6%9D%B1%E3%82%A2%E3%82%B8%E3%82%A2%E3%81%AE%E6%96%87%E5%AD%97%E5%B9%85
        
 
-  そのほか、EastAsianAmbiguous などのキーワードで検索すると情報が得られます。 
+  そのほか、EastAsian, Ambiguous,character,width  などのキーワードを適宜並べて
+  で検索すると情報が得られます。 
