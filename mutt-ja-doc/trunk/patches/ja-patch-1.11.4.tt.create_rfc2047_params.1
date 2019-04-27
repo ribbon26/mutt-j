@@ -1,14 +1,9 @@
-diff -urN mutt-1.7.1/PATCHES mutt-1.7.1new/PATCHES
---- mutt-1.7.1/PATCHES	2016-10-09 04:30:21.000000000 +0900
-+++ mutt-1.7.1new/PATCHES	2016-10-22 21:55:44.000000000 +0900
-@@ -0,0 +1 @@
-+patch-1.7.1.tt.create_rfc2047_params.1
-diff -urN mutt-1.7.1/init.h mutt-1.7.1new/init.h
---- mutt-1.7.1/init.h	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/init.h	2016-10-22 21:55:44.000000000 +0900
-@@ -591,6 +591,17 @@
-   ** If \fI``no''\fP, never attempt to verify cryptographic signatures.
-   ** (Crypto only)
+diff -urN mutt-1.11.4/init.h mutt-1.11.4.new/init.h
+--- mutt-1.11.4/init.h	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/init.h	2019-04-27 18:24:06.411446000 +0900
+@@ -4077,6 +4077,17 @@
+   ** Also see the $$read_inc, $$net_inc and $$time_inc variables and the
+   ** ``$tuning'' section of the manual for performance considerations.
    */
 +  { "create_rfc2047_parameters", DT_BOOL, R_NONE, OPTCREATERFC2047PARAMS, 0 },
 +  /*
@@ -21,13 +16,13 @@ diff -urN mutt-1.7.1/init.h mutt-1.7.1new/init.h
 +  ** by the standard. You may set this variable only if a mailer
 +  ** of recipients can not parse RFC 2231 parameters.
 +  */
-   { "date_format",	DT_STR,	 R_BOTH, UL &DateFmt, UL "!%a, %b %d, %Y at %I:%M:%S%p %Z" },
+   {"xterm_icon",	DT_SYN,  R_NONE, UL "ts_icon_format", 0 },
    /*
-   ** .pp
-diff -urN mutt-1.7.1/mutt.h mutt-1.7.1new/mutt.h
---- mutt-1.7.1/mutt.h	2016-10-09 04:30:21.000000000 +0900
-+++ mutt-1.7.1new/mutt.h	2016-10-22 21:55:44.000000000 +0900
-@@ -334,6 +334,7 @@
+   */
+diff -urN mutt-1.11.4/mutt.h mutt-1.11.4.new/mutt.h
+--- mutt-1.11.4/mutt.h	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/mutt.h	2019-04-27 18:19:14.331794000 +0900
+@@ -375,6 +375,7 @@
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
@@ -35,9 +30,14 @@ diff -urN mutt-1.7.1/mutt.h mutt-1.7.1new/mutt.h
    OPTDELETEUNTAG,
    OPTDIGESTCOLLAPSE,
    OPTDUPTHREADS,
-diff -urN mutt-1.7.1/sendlib.c mutt-1.7.1new/sendlib.c
---- mutt-1.7.1/sendlib.c	2016-10-09 04:30:22.000000000 +0900
-+++ mutt-1.7.1new/sendlib.c	2016-10-22 21:55:44.000000000 +0900
+diff -urN mutt-1.11.4/PATCHES mutt-1.11.4.new/PATCHES
+--- mutt-1.11.4/PATCHES	2017-12-03 12:10:17.000000000 +0900
++++ mutt-1.11.4.new/PATCHES	2019-04-27 18:19:14.326451000 +0900
+@@ -0,0 +1 @@
++patch-1.11.4.tt.create_rfc2047_params.1
+diff -urN mutt-1.11.4/sendlib.c mutt-1.11.4.new/sendlib.c
+--- mutt-1.11.4/sendlib.c	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/sendlib.c	2019-04-27 18:19:14.333406000 +0900
 @@ -348,6 +348,30 @@
      }
    }
