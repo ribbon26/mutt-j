@@ -1,30 +1,25 @@
-diff -urN mutt-1.7.1/PATCHES mutt-1.7.1new/PATCHES
---- mutt-1.7.1/PATCHES	2016-10-09 04:30:21.000000000 +0900
-+++ mutt-1.7.1new/PATCHES	2016-10-22 22:03:58.000000000 +0900
-@@ -0,0 +1 @@
-+patch-1.7.1.tt.wcwidth+cjk_width.1
-diff -urN mutt-1.7.1/configure mutt-1.7.1new/configure
---- mutt-1.7.1/configure	2016-10-09 04:40:50.000000000 +0900
-+++ mutt-1.7.1new/configure	2016-10-22 22:03:58.000000000 +0900
-@@ -821,6 +821,7 @@
+diff -urN mutt-1.11.4/configure mutt-1.11.4.new/configure
+--- mutt-1.11.4/configure	2019-03-13 14:34:27.000000000 +0900
++++ mutt-1.11.4.new/configure	2019-04-27 21:09:50.502288000 +0900
+@@ -833,6 +833,7 @@
  enable_nls
  with_included_gettext
  with_idn
 +enable_cjk_ambiguous_width
+ with_idn2
  with_wc_funcs
- enable_full_doc
- '
-@@ -1489,6 +1490,9 @@
+ enable_doc
+@@ -1505,6 +1506,9 @@
    --enable-hcache         Enable header caching
    --disable-iconv         Disable iconv support
    --disable-nls           Do not use Native Language Support
 +  --enable-cjk-ambiguous-width
 +                          Enable East Asian Ambiguous characters support
 +                          (using own wcwidth)
+   --disable-doc           Do not build the documentation
    --disable-full-doc      Omit disabled variables
  
- Optional Packages:
-@@ -12590,6 +12594,21 @@
+@@ -13354,6 +13358,21 @@
  fi
  
  
@@ -46,10 +41,10 @@ diff -urN mutt-1.7.1/configure mutt-1.7.1new/configure
  for ac_header in wchar.h
  do :
    ac_fn_c_check_header_mongrel "$LINENO" "wchar.h" "ac_cv_header_wchar_h" "$ac_includes_default"
-diff -urN mutt-1.7.1/configure.ac mutt-1.7.1new/configure.ac
---- mutt-1.7.1/configure.ac	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/configure.ac	2016-10-22 22:03:58.000000000 +0900
-@@ -1236,6 +1236,16 @@
+diff -urN mutt-1.11.4/configure.ac mutt-1.11.4.new/configure.ac
+--- mutt-1.11.4/configure.ac	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/configure.ac	2019-04-27 21:09:50.503260000 +0900
+@@ -1464,6 +1464,16 @@
  
  dnl -- locales --
  
@@ -66,7 +61,7 @@ diff -urN mutt-1.7.1/configure.ac mutt-1.7.1new/configure.ac
  AC_CHECK_HEADERS(wchar.h)
  
  AC_CACHE_CHECK([for wchar_t], mutt_cv_wchar_t,
-@@ -1306,7 +1316,10 @@
+@@ -1534,7 +1544,10 @@
  if test $wc_funcs = yes; then
          AC_DEFINE(HAVE_WC_FUNCS,1,[ Define if you are using the system's wchar_t functions. ])
  else
@@ -78,10 +73,10 @@ diff -urN mutt-1.7.1/configure.ac mutt-1.7.1new/configure.ac
  fi
  
  AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
-diff -urN mutt-1.7.1/curs_lib.c mutt-1.7.1new/curs_lib.c
---- mutt-1.7.1/curs_lib.c	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/curs_lib.c	2016-10-22 22:03:58.000000000 +0900
-@@ -949,7 +949,14 @@
+diff -urN mutt-1.11.4/curs_lib.c mutt-1.11.4.new/curs_lib.c
+--- mutt-1.11.4/curs_lib.c	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/curs_lib.c	2019-04-27 21:09:50.504091000 +0900
+@@ -1220,7 +1220,14 @@
        wc = replacement_char ();
      }
      if (arboreal && wc < MUTT_TREE_MAX)
@@ -97,7 +92,7 @@ diff -urN mutt-1.7.1/curs_lib.c mutt-1.7.1new/curs_lib.c
      else
      {
  #ifdef HAVE_ISWBLANK
-@@ -1178,10 +1185,12 @@
+@@ -1449,10 +1456,12 @@
    int w;
    size_t k, n;
    mbstate_t mbstate;
@@ -110,7 +105,7 @@ diff -urN mutt-1.7.1/curs_lib.c mutt-1.7.1new/curs_lib.c
  
    memset (&mbstate, 0, sizeof (mbstate));
    for (w=0; n && (k = mbrtowc (&wc, s, n, &mbstate)); s += k, n -= k)
-@@ -1193,9 +1202,21 @@
+@@ -1464,9 +1473,21 @@
        k = (k == (size_t)(-1)) ? 1 : n;
        wc = replacement_char ();
      }
@@ -135,10 +130,10 @@ diff -urN mutt-1.7.1/curs_lib.c mutt-1.7.1new/curs_lib.c
    }
    return w;
  }
-diff -urN mutt-1.7.1/globals.h mutt-1.7.1new/globals.h
---- mutt-1.7.1/globals.h	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/globals.h	2016-10-22 22:03:58.000000000 +0900
-@@ -291,9 +291,31 @@
+diff -urN mutt-1.11.4/globals.h mutt-1.11.4.new/globals.h
+--- mutt-1.11.4/globals.h	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/globals.h	2019-04-27 21:09:50.504736000 +0900
+@@ -303,9 +303,31 @@
  
  const char * const BodyTypes[] = { "x-unknown", "audio", "application", "image", "message", "model", "multipart", "text", "video" };
  const char * const BodyEncodings[] = { "x-unknown", "7bit", "8bit", "quoted-printable", "base64", "binary", "x-uuencoded" };
@@ -170,10 +165,10 @@ diff -urN mutt-1.7.1/globals.h mutt-1.7.1new/globals.h
  #endif
  
  #ifdef MAIN_C
-diff -urN mutt-1.7.1/init.h mutt-1.7.1new/init.h
---- mutt-1.7.1/init.h	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/init.h	2016-10-22 22:03:58.000000000 +0900
-@@ -386,6 +386,31 @@
+diff -urN mutt-1.11.4/init.h mutt-1.11.4.new/init.h
+--- mutt-1.11.4/init.h	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/init.h	2019-04-27 21:09:50.506841000 +0900
+@@ -442,6 +442,31 @@
    ** this variable is \fIunset\fP, no check for new mail is performed
    ** while the mailbox is open.
    */
@@ -205,10 +200,10 @@ diff -urN mutt-1.7.1/init.h mutt-1.7.1new/init.h
    { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
    /*
    ** .pp
-diff -urN mutt-1.7.1/main.c mutt-1.7.1new/main.c
---- mutt-1.7.1/main.c	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/main.c	2016-10-22 22:03:58.000000000 +0900
-@@ -437,6 +437,12 @@
+diff -urN mutt-1.11.4/main.c mutt-1.11.4.new/main.c
+--- mutt-1.11.4/main.c	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/main.c	2019-04-27 21:09:50.507618000 +0900
+@@ -456,6 +456,12 @@
  	"-LOCALES_HACK  "
  #endif
  	      
@@ -221,9 +216,9 @@ diff -urN mutt-1.7.1/main.c mutt-1.7.1new/main.c
  #ifdef HAVE_WC_FUNCS
  	"+HAVE_WC_FUNCS  "
  #else
-diff -urN mutt-1.7.1/mbyte.c mutt-1.7.1new/mbyte.c
---- mutt-1.7.1/mbyte.c	2016-10-09 04:35:50.000000000 +0900
-+++ mutt-1.7.1new/mbyte.c	2016-10-22 22:03:58.000000000 +0900
+diff -urN mutt-1.11.4/mbyte.c mutt-1.11.4.new/mbyte.c
+--- mutt-1.11.4/mbyte.c	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/mbyte.c	2019-04-27 21:09:50.508387000 +0900
 @@ -17,7 +17,7 @@
   */
  
@@ -463,9 +458,9 @@ diff -urN mutt-1.7.1/mbyte.c mutt-1.7.1new/mbyte.c
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps)
  {
    static wchar_t mbstate;
-diff -urN mutt-1.7.1/mbyte.h mutt-1.7.1new/mbyte.h
---- mutt-1.7.1/mbyte.h	2016-10-09 04:30:21.000000000 +0900
-+++ mutt-1.7.1new/mbyte.h	2016-10-22 22:03:58.000000000 +0900
+diff -urN mutt-1.11.4/mbyte.h mutt-1.11.4.new/mbyte.h
+--- mutt-1.11.4/mbyte.h	2017-12-19 05:27:19.000000000 +0900
++++ mutt-1.11.4.new/mbyte.h	2019-04-27 21:09:50.508921000 +0900
 @@ -8,6 +8,12 @@
  #  ifdef HAVE_WCTYPE_H
  #   include <wctype.h>
@@ -497,11 +492,11 @@ diff -urN mutt-1.7.1/mbyte.h mutt-1.7.1new/mbyte.h
  void mutt_set_charset (char *charset);
  extern int Charset_is_utf8;
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
-diff -urN mutt-1.7.1/mutt.h mutt-1.7.1new/mutt.h
---- mutt-1.7.1/mutt.h	2016-10-09 04:30:21.000000000 +0900
-+++ mutt-1.7.1new/mutt.h	2016-10-22 22:03:58.000000000 +0900
-@@ -331,6 +331,10 @@
-   OPTBRAILLEFRIENDLY,
+diff -urN mutt-1.11.4/mutt.h mutt-1.11.4.new/mutt.h
+--- mutt-1.11.4/mutt.h	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/mutt.h	2019-04-27 21:09:50.509664000 +0900
+@@ -372,6 +372,10 @@
+   OPTBROWSERABBRMAILBOXES,
    OPTCHECKMBOXSIZE,
    OPTCHECKNEW,
 +#ifdef USE_CJK_WIDTH
@@ -511,9 +506,14 @@ diff -urN mutt-1.7.1/mutt.h mutt-1.7.1new/mutt.h
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
-diff -urN mutt-1.7.1/wcwidth.c mutt-1.7.1new/wcwidth.c
---- mutt-1.7.1/wcwidth.c	2016-10-09 04:30:22.000000000 +0900
-+++ mutt-1.7.1new/wcwidth.c	2016-10-22 22:03:58.000000000 +0900
+diff -urN mutt-1.11.4/PATCHES mutt-1.11.4.new/PATCHES
+--- mutt-1.11.4/PATCHES	2017-12-03 12:10:17.000000000 +0900
++++ mutt-1.11.4.new/PATCHES	2019-04-27 21:09:50.494812000 +0900
+@@ -0,0 +1 @@
++patch-1.11.4.tt.wcwidth+cjk_width.1
+diff -urN mutt-1.11.4/wcwidth.c mutt-1.11.4.new/wcwidth.c
+--- mutt-1.11.4/wcwidth.c	2019-03-13 14:32:13.000000000 +0900
++++ mutt-1.11.4.new/wcwidth.c	2019-04-27 21:09:50.510362000 +0900
 @@ -5,6 +5,51 @@
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcwidth.html
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcswidth.html
