@@ -1,6 +1,6 @@
 		Mutt 1.11.4用日本語版パッチリリースノート
 
-							2019-04-27
+							2019-04-28
 							Ver 1.11.4-j1
 							mutt-j 開発チーム
 
@@ -78,7 +78,7 @@ ports や Fedora RPM 由来のパッチを一旦削除し、日本語パッチ�
 しました。
 
 1.11.4 以降は、メーリングリストの Subject prefix の削除機能を外しまし
-た。
+た。また、FreeBSD向けパッチを新たに提供しています。
 
 なお、このドキュメントおよび同梱されているファイルについては、古いまま
 のものがあります。ご了承ください。
@@ -172,13 +172,21 @@ usage-japanese.ja.html をご覧下さい。
 
   1.11.4 でのFreeBSD ports は、Webサイト上に置いています。
 
+　FreeBSD の port では、portsのMakefile自身で、mutt-1.11.4のdocや
+contrib配下にあるMakefileを書き換えます。しかし、日本語パッチを適用
+した場合、Makefile.amも書き換えるため、再度 autotools関連の処理が走
+ります。そのため、書き換えが無効になってしまいます。そこで、FreeBSD
+が行うとの同じようなことをするパッチを新たに作っています。
+　さらに、1.11.4 での ports の Makefile での標準的なパッチ適用手法
+に沿ったやりかたでパッチを行う場合、今まで作成してきたパッチと少々
+変更が必要なため、FreeBSD向け日本語パッチも専用のものを作っています。
+　パッチはこのアーカイブ中の freebsd ディレクトリに格納しています。
 
 3. 動作確認環境
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
 1) FreeBSD 11.2(64bit)       iw	     Oota Tochiya
-2) openSUSE Leap 15.0(64bit) IW      Oota Toshiya
 
 オプションの意味
 
@@ -203,9 +211,6 @@ http://www.emaillab.org/mutt/download15.htmlのページをご覧ください。
 
 また、インストールや設定に関して役に立つ文書へのリンクが http://
 www.emaillab.org/mutt/のドキュメントのコーナーにありますので、一度ご覧
-ください。
-
-openSUSE Leap 42.1/42.2 では、configure実行前に autoreconf を実行して
 ください。
 
 4.2 分かっている問題
