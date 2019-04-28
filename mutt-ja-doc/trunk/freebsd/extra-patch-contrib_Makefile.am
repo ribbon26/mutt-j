@@ -1,0 +1,31 @@
+--- contrib/Makefile.am.org	2017-12-19 05:31:37.000000000 +0900
++++ contrib/Makefile.am	2019-04-28 18:52:12.568137000 +0900
+@@ -14,20 +14,20 @@
+ 	iconv/make.sh
+ 
+ install-data-local:
+-	$(MKDIR_P) $(DESTDIR)$(docdir)/samples $(DESTDIR)$(docdir)/samples/iconv
+-	for f in $(SAMPLES) ; do \
+-		$(INSTALL) -m 644 $(srcdir)/$$f $(DESTDIR)$(docdir)/samples ;	\
++	$(MKDIR_P) $(DESTDIR)/usr/local/share/examples/mutt $(DESTDIR)/usr/local/share/examples/mutt/iconv
++	for f in $(SAMPLES) ; do \
++		$(INSTALL) -m 644 $(srcdir)/$$f $(DESTDIR)/usr/local/share//examples/mutt ;	\
+ 	done
+ 	for f in $(srcdir)/iconv/*.rc ; do					\
+-		$(INSTALL) -m 644 $$f $(DESTDIR)$(docdir)/samples/iconv	  ;	\
++		$(INSTALL) -m 644 $$f $(DESTDIR)/usr/local/share/examples/mutt/iconv	  ;	\
+ 	done
+ 
+ uninstall-local:
+-	for f in $(SAMPLES) ; do \
+-		rm -f $(DESTDIR)$(docdir)/samples/$$f ; \
++	for f in $(SAMPLES) ; do \
++		rm -f $(DESTDIR)/usr/local/share/examples/mutt/$$f ; \
+ 	done
+-	-rm -rf $(DESTDIR)$(docdir)/samples/iconv
+-	-rmdir $(DESTDIR)$(docdir)/samples
++	-rm -rf $(DESTDIR)/usr/local/share/examples/mutt/iconv
++	-rmdir $(DESTDIR)/usr/local/share/examples/mutt
+ 	-rmdir $(DESTDIR)$(docdir)
+ 
+ distdir = ../$(PACKAGE)-$(VERSION)/$(subdir)
