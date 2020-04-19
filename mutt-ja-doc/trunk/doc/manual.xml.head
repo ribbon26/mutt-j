@@ -20,95 +20,99 @@ me, circa 1995
 </bookinfo>
 
 <chapter id="intro">
-<title>Introduction</title>
+<title>はじめに</title>
 
 <para>
-<emphasis role="bold">Mutt</emphasis> is a small but very powerful
-text-based MIME mail client.  Mutt is highly configurable, and is well
-suited to the mail power user with advanced features like key bindings,
-keyboard macros, mail threading, regular expression searches and a
-powerful pattern matching language for selecting groups of messages.
+<emphasis role="bold">Mutt</emphasis> は小さいながらも非常にパワフルな
+テキストベースの MIME メールクライアントです。Mutt は、その高い柔軟性に加えて、
+キー割り当てや キーボードマクロ、メールのスレッド表示、正規表現検索、さらには
+メッセージ選択用の強力なパターン言語といった高度な機能により、 まさしくメール
+のパワーユーザにぴったりであると言えます。 
 </para>
 
 <sect1 id="homepage">
-<title>Mutt Home Page</title>
+<title>Mutt ホームページ</title>
 
 <para>
-The official homepage can be found at
+公式のホームページは以下の通りです。
 <ulink url="http://www.mutt.org/">http://www.mutt.org/</ulink>.
 </para>
 
 </sect1>
 
 <sect1 id="muttlists">
-<title>Mailing Lists</title>
+<title>メーリングリスト</title>
 
 <para>
-To subscribe to one of the following mailing lists, send a message with
-the word <emphasis>subscribe</emphasis> in the body to
-<emphasis>list-name</emphasis><literal>-request@mutt.org</literal>.
+以下のメーリングリストを購読するには、メッセージ本文に
+<emphasis>subscribe</emphasis> を書き、
+<emphasis>リスト名</emphasis><literal>-request@mutt.org</literal>
+に送信してください。
 </para>
 
 <itemizedlist>
 <listitem>
 
 <para>
-<email>mutt-announce-request@mutt.org</email> &mdash; low traffic list for
-announcements
+<email>mutt-announce-request@mutt.org</email> &mdash; 流量の少ない、アナウンス
+用のリスト
 </para>
 </listitem>
 <listitem>
 
 <para>
-<email>mutt-users-request@mutt.org</email> &mdash; help, bug reports and
-feature requests
+<email>mutt-users-request@mutt.org</email> &mdash; 質問、バグ報告、要望
 </para>
 </listitem>
 <listitem>
 
 <para>
-<email>mutt-dev-request@mutt.org</email> &mdash; development mailing list
+<email>mutt-dev-request@mutt.org</email> &mdash; 開発メーリングリスト
 </para>
 </listitem>
 
 </itemizedlist>
 
 <para>
-All messages posted to <emphasis>mutt-announce</emphasis> are
-automatically forwarded to <emphasis>mutt-users</emphasis>, so you do
-not need to be subscribed to both lists.
+<emphasis>mutt-announce</emphasis> に投稿されたすべてのメッセージは
+自動的に<emphasis>mutt-users</emphasis>に転送されるため、両方を購読
+する必要はありません。
 </para>
 
 </sect1>
 
 <sect1 id="distribution">
-<title>Getting Mutt</title>
+<title>Mutt の入手</title>
 
 <para>
-Mutt releases can be downloaded from <ulink
-url="ftp://ftp.mutt.org/pub/mutt/">ftp://ftp.mutt.org/pub/mutt/</ulink>.  For a
-list of mirror sites, please refer to <ulink
-url="http://www.mutt.org/download.html">http://www.mutt.org/download.html</ulink>.
+Mutt リリース版は <ulink
+url="ftp://ftp.mutt.org/pub/mutt/">ftp://ftp.mutt.org/pub/mutt/</ulink>以下か
+らダウンロードできます。
+ミラーサイトのリストは <ulink
+url="http://www.mutt.org/download.html">http://www.mutt.org/download.html</ulink>
+を参照してください。
 </para>
 
 <para>
-For version control access, please refer to the
-<ulink url="https://gitlab.com/muttmua/mutt">Mutt development site</ulink>.
+開発版は
+<ulink url="https://gitlab.com/muttmua/mutt">Mutt development site</ulink> を
+参照してください。
 </para>
 
 </sect1>
 
 <sect1 id="irc">
-<title>Mutt Online Resources</title>
+<title>Mutt オンラインリソース</title>
 
 <variablelist>
 
 <varlistentry>
-<term>Bug Tracking System</term>
+<term>バグ追跡システム</term>
 <listitem>
 <para>
-The official Mutt bug tracking system can be found at
+公式の Mutt バグ追跡システムは
 <ulink url="https://gitlab.com/muttmua/mutt/issues">https://gitlab.com/muttmua/mutt/issues</ulink>
+です。
 </para>
 </listitem>
 </varlistentry>
@@ -117,8 +121,10 @@ The official Mutt bug tracking system can be found at
 <term>Wiki</term>
 <listitem>
 <para>
-An (unofficial) wiki can be found
-at <ulink url="https://gitlab.com/muttmua/mutt/wikis/home">https://gitlab.com/muttmua/mutt/wikis/home</ulink>.
+(非公式の) wiki は
+at <ulink
+url="https://gitlab.com/muttmua/mutt/wikis/home">https://gitlab.com/muttmua/mutt/wikis/home</ulink>
+にあります。
 </para>
 </listitem>
 </varlistentry>
@@ -127,8 +133,9 @@ at <ulink url="https://gitlab.com/muttmua/mutt/wikis/home">https://gitlab.com/mu
 <term>IRC</term>
 <listitem>
 <para>
-For the IRC user community, visit channel <emphasis>#mutt</emphasis> on
-<ulink url="http://www.freenode.net/">irc.freenode.net</ulink>.
+IRC ユーザコミュニティは
+<ulink url="http://www.freenode.net/">irc.freenode.net</ulink> のチャンネル
+<emphasis>#mutt</emphasis> にあります。
 </para>
 </listitem>
 </varlistentry>
@@ -137,7 +144,8 @@ For the IRC user community, visit channel <emphasis>#mutt</emphasis> on
 <term>USENET</term>
 <listitem>
 <para>
-For USENET, see the newsgroup <ulink url="news:comp.mail.mutt">comp.mail.mutt</ulink>.
+USENET はニュースグループ <ulink
+url="news:comp.mail.mutt">comp.mail.mutt</ulink>を参照してください。
 </para>
 </listitem>
 </varlistentry>
@@ -147,60 +155,59 @@ For USENET, see the newsgroup <ulink url="news:comp.mail.mutt">comp.mail.mutt</u
 </sect1>
 
 <sect1 id="contrib">
-<title>Contributing to Mutt</title>
+<title>Mutt への貢献</title>
 
 <para>
-There are various ways to contribute to the Mutt project.
+Mutt プロジェクトに対する貢献方法はいくつもあります。
 </para>
 
 <para>
-Especially for new users it may be helpful to meet other new and
-experienced users to chat about Mutt, talk about problems and share
-tricks.
+特に新しくユーザになられた人には、他の、新規および熟練ユーザにあって Mutt につ
+いてチャットしたり、問題について話したり、解決方法を共有することは有用です。
 </para>
 
 <para>
-Since translations of Mutt into other languages are highly appreciated,
-the Mutt developers always look for skilled translators that help
-improve and continue to maintain stale translations.
+Mutt の他の言語への翻訳は高く評価されているため、Mutt 開発者は、
+翻訳の改善と維持を手助けしてくれる熟練の翻訳者を探しています。
 </para>
 
 <para>
-For contributing code patches for new features and bug fixes, please
-refer to the developer pages at
-<ulink url="https://gitlab.com/muttmua/mutt">https://gitlab.com/muttmua/mutt</ulink> for more details.
+新しい機能とバグ修正のためのパッチの寄贈についての詳細は、以下の開発ページを参照してください
+<ulink url="https://gitlab.com/muttmua/mutt">https://gitlab.com/muttmua/mutt</ulink>。
 </para>
 
 </sect1>
 
 <sect1 id="typo">
-<title>Typographical Conventions</title>
+<title>表記について</title>
 
 <para>
-This section lists typographical conventions followed throughout this
-manual. See table <xref linkend="tab-typo"/> for typographical
-conventions for special terms.
+この節では、このマニュアル全体における表記方法について記しています。
+特別の単語についての表記方法については、テーブル  
+<xref linkend="tab-typo"/> を参照してください。
 </para>
 
 <table id="tab-typo">
-<title>Typographical conventions for special terms</title>
+<title>特別の単語についての表記方法</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Item</entry><entry>Refers to...</entry></row>
+<row><entry>項目</entry><entry>Refers to...</entry></row>
 </thead>
 <tbody>
-<row><entry><literal>printf(3)</literal></entry><entry>UNIX manual pages, execute <literal>man 3 printf</literal></entry></row>
-<row><entry><literal>&lt;PageUp&gt;</literal></entry><entry>named keys</entry></row>
-<row><entry><literal>&lt;create-alias&gt;</literal></entry><entry>named Mutt function</entry></row>
-<row><entry><literal>^G</literal></entry><entry>Control+G key combination</entry></row>
-<row><entry>$mail_check</entry><entry>Mutt configuration option</entry></row>
-<row><entry><literal>$HOME</literal></entry><entry>environment variable</entry></row>
+<row><entry><literal>printf(3)</literal></entry><entry>UNIX マニュアルページ。
+<literal>man 3 printf</literal> を実行。</entry></row>
+<row><entry><literal>&lt;PageUp&gt;</literal></entry><entry>名前付きのキー</entry></row>
+<row><entry><literal>&lt;create-alias&gt;</literal></entry><entry>名前付きの
+Mutt の関数</entry></row>
+<row><entry><literal>^G</literal></entry><entry>Control+G キー</entry></row>
+<row><entry>$mail_check</entry><entry>Mutt 設定オプション</entry></row>
+<row><entry><literal>$HOME</literal></entry><entry>環境変数</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-Examples are presented as:
+例は以下の通りです:
 </para>
 
 <screen>
