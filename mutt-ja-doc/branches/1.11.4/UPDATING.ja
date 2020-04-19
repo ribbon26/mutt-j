@@ -1,0 +1,306 @@
+このファイルには、Mutt に対してなされた互換性のない変更や新機能が列挙され
+ています。アップグレードの際には、このファイルをよくお読みください。
+
+使われている記号の説明:
+  !: 仕様の変更, -: 機能の削除, +: 新機能
+
+1.6.1 (2016-05-01):
+
+  ! バグフィックスリリース。機能の追加変更はない。
+
+1.6.0 (2016-04-04):
+
+  + IMAP で utf-8 のメールボックスサポートを有効に。
+  + New expandos %r and %R for comma separated list of To: and Cc:
+    recipients respectively.
+  + 国際化 email と SMTPUTF8 (RFC653[0-3]) に対するサポートの改善。
+  ! $use_idn を $idn_decode に改名。
+  + $idn_encode controls whether outgoing email address domains will
+    be IDNA encoded.  If your MTA supports it, unset to use utf-8
+    email address domains.
+  + The S/MIME message digest algorithm is now specified using the
+    option $smime_sign_digest_alg.  Note that $smime_sign_command
+    should be modified to include "-md %d".  Please see
+    contrib/smime.rc.
+  + $reflow_space_quotes allows format=flowed email quotes to be
+    displayed with spacing between them.
+  ! multipart draft files are now supported.
+  + The "-E" command line argument causes mutt to edit draft or include files.
+    All changes made in mutt will be saved back out to those files.
+  + $resume_draft_files and $resume_edited_draft_files control how
+    mutt processes draft files.
+  + For classic gpg mode, $pgp_decryption_okay should be set to verify
+    multipart/encrypted are actually encrypted.  Please see
+    contrib/gpg.rc for the suggested value.
+  ! mailto URL header parameters by default are now restricted to
+    'body' and 'subject'.
+  + mailto_allow and unmailto_allow can be used to add or remove
+    allowed mailto header parameters.
+  ! The method of setting $hostname has been changed.  Rather than
+    scanning /etc/resolv.conf, the domain will now be determined using
+    DNS calls.
+
+1.5.24 (2015-08-31):
+
+  + ターミナルステータス行 (TS) のサポート, a.k.a. xterm title. see the
+    following variables: $ts_enabled, $ts_icon_format, $ts_status_format
+  ! $ssl_use_sslv3 is disabled by default.
+  ! command-line arguments: -H now combines template and command-line
+    address arguments.
+  ! GnuPG signature name is set to signature.asc
+  + New color object "prompt" added.
+  + Ability to encrypt postponed messages.  See $postpone_encrypt and
+    $postpone_encrypt_as.
+  ! History ring now has a scratch buffer.
+  ! mail-key is implemented for GPGME.  (Requires a recent GPGME).
+  ! Removed GPG_AGENT_INFO check for GnuPG 2.1 compatibility.  Please
+    set pgp_use_gpg_agent if using GnuPG 2.1 or later.
+  ! $smime_encrypt_with now defaults to aes256.
+  ! GnuPG fingerprints are used internally when possible.
+    "--with-fingerprint" should be added to $pgp_list_pubring_command and
+    $pgp_list_secring_command to enable this.  Please see contrib/gpg.rc.
+    Fingerprints may also be used at the prompts for key selection.
+  + $crypt_opportunistic_encrypt automatically enables/disables encryption
+    based on message recipients.
+  ! Attachments for signed, unencrypted emails may be deleted.
+  ! Multiple crypt-hooks may be defined for the same regexp.
+    This means multiple keys may be used for a recipient.
+  + $crypt_confirmhook allows the confirmation prompt for crypt-hooks to
+    be disabled.
+  + $ssl_ciphers allows the SSL ciphers to be directly set.
+  ! sime_keys better handles importing certificate chains.
+  ! sime_keys now records certificate purposes (sign/encrypt).  Run
+    "sime_keys refresh" to update smime index files.
+  + $maildir_check_cur polls the maildir "cur" directory for new mail.
+
+1.5.23 (2014-03-11):
+
+  ! FCC is now preserved when postponing a message.
+  ! Mail-Followup-To is now preserved when recalling a postponed message.
+  ! Allow filename prompt when saving multiple attachments to a directory.
+
+1.5.22 (2013-10-18):
+
+  ! $imap_keepalive default lowered to 300
+  + $reflow_text, $reflow_wrap for finer control of flowed wrapping
+  + Support for TLSv1.1 and TLSv1.2.  $ssl_use_tlsv1_1 and $ssl_tlsv1_2
+    variables control whether the new protocols are used.
+  ! $ssl_use_tlsv1 now specifically refers to TLSv1.0.
+
+1.5.21 (2010-09-15):
+
+  + $mail_check_recent は、最後にメールボックスを見たときから、すべての未読
+    メール又は新規メールのどちらかを新規として表示するかを制御する。
+  + %D format expando for $folder_format
+  ! $thorough_search は既定値で yes となった
+  + imap-logout-all はすべての開いているIMAP接続をクローズする
+  ! header/body パスは常時 UTF-8 となった
+  + $wrap_headers は発信メッセージのヘッダ長を制御する
+  + all text/* パートはmailcapなしでインラインで表示できるようになった
+  + send-hooks はバッチモードで動くようになった; previously only send2-hooks ran.
+
+1.5.20 (2009-06-14):
+
+  ! mbox/mmdf new mail flag is kept when leaving folders with new mail
+  ! $fcc_attach is a quadoption now
+  + $honor_disposition to honor Content-Disposition headers
+  + $search_context specifies number of context lines for search results
+    in pager/page-based menus
+  ! ssl_use_sslv2 の既定値が no に
+  + uncolor が header + body オブジェクトでも動くように
+  + the "flagged" and "replied" flags are enabled/supported for
+    POP when built with header caching
+  ! browser correctly displays maildir's mtime
+  + <set-flag> and <clear-flag> work in the pager, too
+  + ~x pattern also matches against In-Reply-To
+  + lower case patterns for string searches perform case-insensitive
+    search as regex patterns do (except IMAP)
+  + $ssl_verify_dates controls whether mutt checks the validity period of
+    SSL certificates
+  + $ssl_verify_host controls whether mutt will accept certificates whose
+    host names do not match the host name in the folder URL.
+
+1.5.19 (2009-01-05):
+
+  ! コマンド行の引数: -a now mandates -- at end of file list
+  + SSL 証明書チェーンのサポート
+  + <what-key> 機能がページャ内でも動くように
+  + tokyocabinet (qdbmの改良版)のサポート
+  ! $move now defaults の既定値が "ask-no" から "no" に
+  + $imap_pipeline_depth controls the number of commands that mutt can issue
+    to an IMAP server before it must collect the responses
+  + $ssl_client_cert available with gnutls as well as openssl
+  + 'mime_lookup application/octet-stream' がシステムの Muttrc に追加
+
+1.5.18 (2008-05-17):
+
+  ! 内部のヘッダキャッシュは現在のロケールにかかわらずutf-8
+  + $query_format (外部問い合わせメニューのカスタマイズ)
+  ! inode順整列は常時有効
+  + $time_inc suppresses progress updates less than $time_inc
+    milliseconds apart.
+  + X-Label: ヘッダはRFC2047エンコードしなければならなくなった
+
+1.5.17 (2007-11-01):
+
+  ! --enable-exact-address が再度動くようになった
+
+1.5.16 (2007-06-09):
+
+  + next-unread-mailbox
+  + $message_cache_clean (clean cache on sync)
+  + $smtp_pass
+  ! $header_cache_compressの既定値をyesに
+
+1.5.15 (2007-04-06):
+
+  - $imap_home_namespace (useless clutter)
+  + $check_mbox_size (新メール到着確認にatimeの代わりにサイズ変更を使う)
+  ! improved f=f support wraps lines at $wrap if $wrap is not 0
+  + $wrap (0 より大きければその桁数、0 未満なら $wrapmargin の桁で改行)
+  + $assumed_charset, $attach_charset, $ignore_linear_white_space
+  + $save_history, $history_file (再起動しても履歴を保存)
+  + $smtp_url (ESMTP 配送サポート)
+  + $crypt_use_pka (GPGME の PKA 署名検証を使用)
+  ! format pipe サポート: format strings ending in | are filtered
+  ! buffy size is configurable at runtime (no --enable-buffy-size
+    configure option, new $check_mbox_size variable)
+
+
+1.5.13 (2006-08-14):
+
+  + スレッドパターン。括弧で ~(...) とすると、... に合致するメッセージの
+    あるスレッド全体に合致
+
+1.5.12 (2006-07-14):
+
+  - $imap_cachedir は $message_cachedir に統合
+  + POP のヘッダ/本文キャッシュ ($message_cachedir)
+  + MH フォルダのヘッダキャッシュ
+  ! $record の既定値を ~/sent に
+  ! $imap_idle now defaults to "yes" instead of "no"
+  + $my_* の変数名および値におけるタブ補完
+  + Mutt 設定変数の展開 (シェルを除く)
+  + ユーザ定義変数 $my_*
+  + パターングループ (group コマンド)
+  + $imap_cachedir
+  + IMAP フォルダ上の 'old' フラグ
+  + IMAP の SASL-IR サポート
+  + IMAP IDLE サポートと $imap_idle
+  + IMAP パイプライン通信
+  + 32 ビット超ファイルのサポート
+  + 添付ファイル数: attachments および unattachments コマンド、
+    $attach_format の %Q および %X, $index_format の %X
+  + Basque バスク語メッセージ
+  + ヘッダキャッシュの QDBM バックエンド
+  + Irish アイルランド語メッセージ
+
+1.5.11 (2005-09-15):
+
+  ! $envelope_from_address が追加され、$envelope_from は $use_envelope_from に
+  + $net_inc 単位の進捗状況表示
+  + IMAP サーバサイド単純文字列検索
+  + 正規表現ではなく単なる文字列で合致するパターン修飾子「=」
+    (「~」の代わりに使う)
+  ! ~l でメーリングリストすべて、~u で購読リストのみに合致
+  - SASL 1.5 サポート
+  ! マニュアルの生成に Linuxdoc/SGML ソースではなく DocBook/XML を使用
+
+1.5.10 (2005-08-11):
+
+  + $imap_check_subscribed
+  + IMAP ホストのタブ補完
+  ! $imap_force_ssl は廃止。$ssl_force_tls に統合
+  - NSS サポート
+  ! $menu_move_off の既定値は "no" から "yes" へ
+  ! <limit> で改行だけすると表示制限を解除するように変更
+  + <break-thread> および <link-threads> によるスレッド加工
+  + -D コマンドラインオプション (設定変数をすべて表示)
+  + フォルダ指定ショートカット「^」で現在のフォルダを表す
+  + $imap_login (ログイン名と $imap_user が違う場合のため)
+  + $braille_friendly (点字端末用にカーソル位置を調整)
+  + Maildir フォルダのヘッダキャッシュ
+
+Mutt 1.5.9 (2005-03-13):
+
+  + $menu_move_off
+  + IMAP の <rename-mailbox> 機能
+
+Mutt 1.5.8 (2005-02-12):
+
+  + $menu_context
+  ! IDNA デコードを $use_idn で無効にすることが可能に。既定値は "yes"
+    (「ト」と「卜」のような「なりすまし」の危険性を排除したい人用)
+  + $crypt_use_gpgme で GPGME サポート
+
+Mutt 1.5.7 (2005-01-28):
+
+  + GNUTLS による SSL もサポート
+  + $header_cache および $header_cache_pagesize で IMAP ヘッダキャッシュ
+  + send2-hook (メッセージ変更のたびに実行)
+  + $ssl_client_cert
+  + $hide_thread_subject
+  + 汎用スパム検出: 新コマンド: 'spam' と 'nospam',
+    新変数: $spam_separator, 新expando: %H ($index_format 用)
+    新パターン: ~H
+  + $include_onlyfirst (添付ファイルを引用しない)
+  ! $pgp_mime_ask を廃止。$pgp_mime_auto となり、既定値は "no" ではなく
+    "ask-yes" に
+  + インライン PGP 作成サポート。$pgp_replyinline, $pgp_autoinline,
+    $pgp_mime_ask
+  ! 'bind' コマンドで複数メニューを同時使用可能に (例: generic,pager)
+  + $config_charset
+  + ~$ パターン (だれの親にもなっていないメッセージに合致)
+
+1.5.6 (2004-02-01):
+
+  ! 'list' と 'subscribe' コマンドの引数が文字列から正規表現に
+  ! $alternates 変数は 'alternates' コマンドに。引数は正規表現
+  + POP3 の STLS (STARTTLS) サポート
+
+1.5.5 (2003-11-05):
+
+  + Bulgarian ブルガリア語メッセージ
+  - Kendra メールボックスサポート
+  + <tag-prefix-cond> と <cond-end>
+  + '%:' で始めると「.」を「_」に変換 (例 '%:A')
+  + $crypt_autopgp と $crypt_autosmime
+  + $pgp_check_exit (PGP 子プロセス返り値チェック)
+
+1.5.4 (2003-03-19):
+
+  + IDNA (国際化ドメイン名) サポート
+  + $bounce
+  ! $crypt_replyencrypt と $pgp_replyencrypt の既定値が "no" から "yes" に
+  + $pgp_auto_traditional
+  + $index_format に %A (reply-to アドレス)
+
+1.5.3 (2002-12-17):
+
+  + <next-new-then-unread> と <previous-new-then-unread>
+  ! $mark_old: メールボックスを出るときに新着メッセージを old にする
+    かどうか指定するだけ。(以前は old を無視するかどうかも含んでいた)
+  + <what-key>
+
+1.5.2 (2002-12-06):
+
+  + -A コマンドラインオプション (別名から本名へ展開)
+  + SASL2 サポート
+  + <buffy-list> (新着メールのあるフォルダを表示)
+  + $forward_edit (エディタを開かず転送したい人は no に)
+  + $content_type (text/plain 以外で送信することの多い人用)
+  + unmailboxes コマンド
+  + unalternative_order コマンド
+  + reply-hook (返信元の、つまり相手のメッセージに基づく)
+
+1.5.1 (2002-01-24):
+
+  + $smime_default_key
+  + $narrow_tree
+  + -Q コマンドラインオプション (設定変数の問い合わせ)
+  + $crypt_timestamp
+  + ~V パターン (署名が検証されたメッセージ)
+  + S/MIME サポート
+  + mime_lookup コマンド (拡張子を見るべき content-type のリスト)
+
+Original was: Tue Mar 06 17:59:57 2007 -0800 (5e47385893fe)

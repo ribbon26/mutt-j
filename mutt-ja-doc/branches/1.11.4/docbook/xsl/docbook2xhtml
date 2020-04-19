@@ -1,0 +1,24 @@
+#!/bin/sh
+# convert DocBook to XHTML
+#   Requirement:
+#      libxml2     http://xmlsoft.org/
+#      libxslt     http://xmlsoft.org/XSLT/
+#      iconv       C library
+#                  or GNU libiconv(http://www.gnu.org/software/libiconv/)
+if test $# -le 1; then
+  echo "Usage: docbook2xhtml stylesheet file"
+  exit 1
+fi
+
+XSL=$1
+INPUT=$2
+OUTPUT=${INPUT%%xml}html
+
+xsltproc ${XSL} ${INPUT} | \
+sed '
+  s{<p class="copyright">À½ºîÃøºî{<p class="copyright">Copyright {g
+  s{</div><div class="sect1"{</div><hr /><div class="sect1"{g;
+' > ${OUTPUT}
+
+exit 0
+
