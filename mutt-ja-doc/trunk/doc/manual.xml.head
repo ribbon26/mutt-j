@@ -575,38 +575,34 @@ bind editor &lt;delete&gt; backspace
 <title>履歴</title>
 
 <para>
-Mutt maintains a history for the built-in editor.  The number of items
-is controlled by the <link linkend="history">$history</link> variable
-and can be made persistent using an external file specified using <link
-linkend="history-file">$history_file</link> and <link
-linkend="save-history">$save_history</link>.  You may cycle through them
-at an editor prompt by using the <literal>&lt;history-up&gt;</literal>
-and/or <literal>&lt;history-down&gt;</literal> commands.  Mutt will
-remember the currently entered text as you cycle through history, and
-will wrap around to the initial entry line.
+Mutt はビルトインエディタ用に履歴を管理しています。項目の数は <link linkend="history">$history</link>
+変数によって制御され、<link linkend="history-file">$history_file</link>と
+<link linkend="save-history">$save_history</link>を使う事によって
+指定された外部ファイルを使う事で恒久的にすることができます。
+<literal>&lt;history-up&gt;</literal>または<literal>&lt;history-down&gt;</literal>
+コマンドを使うことによって、エディタ中でそれらを循環させることができます。
+Mutt は現在入力したテキストを循環ヒストリに記憶し、最初のエントリ行まで折り返します。
 </para>
 
 <para>
-Mutt maintains several distinct history lists, one for each of the
-following categories:
+  Mutt はいくつかの異なる履歴リストを管理していて、それらは以下のカテゴリのようになっています:
 </para>
 
 <itemizedlist>
-<listitem><para><literal>.muttrc</literal> commands</para></listitem>
-<listitem><para>addresses and aliases</para></listitem>
-<listitem><para>shell commands</para></listitem>
-<listitem><para>filenames</para></listitem>
-<listitem><para>patterns</para></listitem>
-<listitem><para>everything else</para></listitem>
+<listitem><para><literal>.muttrc</literal> コマンド</para></listitem>
+<listitem><para>アドレスと別名</para></listitem>
+<listitem><para>シェルコマンド</para></listitem>
+<listitem><para>ファイル名</para></listitem>
+<listitem><para>パターン</para></listitem>
+<listitem><para>上記以外</para></listitem>
 </itemizedlist>
 
 <para>
-Mutt automatically filters out consecutively repeated items from the
-history.  If <link linkend="history-remove-dups">$history_remove_dups</link>
-is set, all repeated items are removed from the history.  It also mimics the
-behavior of some shells by ignoring items starting with a space. The latter
-feature can be useful in macros to not clobber the history's valuable entries
-with unwanted entries.
+Mutt は自動的に履歴から繰り返された項目を自動的にフィルタリングします。
+<link linkend="history-remove-dups">$history_remove_dups</link> が設定されている場合、
+すべての繰り返された項目はヒストリから削除されます。また、空白で始まる項目を無視する
+ことで、いくつかのシェルの動作を模倣しています。後者の機能は、マクロで、履歴の貴重な
+項目を不要なエントリで無駄にしないようにするために便利です。
 </para>
 
 </sect2>
@@ -614,123 +610,117 @@ with unwanted entries.
 </sect1>
 
 <sect1 id="reading">
-<title>Reading Mail</title>
+<title>メールを読む</title>
 
 <para>
-Similar to many other mail clients, there are two modes in which mail is
-read in Mutt.  The first is a list of messages in the mailbox, which is
-called the <quote>index</quote> menu in Mutt.  The second mode is the
-display of the message contents.  This is called the
-<quote>pager.</quote>
+他の多くのメールクライアントと同様、Mutt ではメールを読むモードが二つあります。
+第一のモードはメールボックス内のメッセージ一覧表示機能で、これは、Mutt では
+<quote>インデックス</quote>メニューと呼びます。 第二のモードはメッセージの内容表示です。
+これは<quote>ページャ</quote>と呼ばれています。
 </para>
 
 <para>
-The next few sections describe the functions provided in each of these
-modes.
+続く数節で、これらのモードそれぞれに提供されている機能を説明します。
 </para>
 
 <sect2 id="index-menu">
-<title>The Message Index</title>
+<title>メッセージインデックス</title>
 
 <para>
-Common keys used to navigate through and manage messages in the index
-are shown in <xref linkend="tab-key-index"/>. How messages are presented
-in the index menu can be customized using the <link
-linkend="index-format">$index_format</link> variable.
+インデックス内で、移動操作とメッセージの操作に使われる共通のキーは<xref linkend="tab-key-index"/>
+にあります。インデックスメニュー中で、どのようにメッセージが表示されるかについては、
+<link linkend="index-format">$index_format</link>変数を使う事でカスタマイズできます。
 </para>
 
 <table id="tab-key-index">
-<title>Most common message index keys</title>
+<title>もっとも共通的なメッセージインデックスキー</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Key</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>c</entry><entry>change to a different mailbox</entry></row>
-<row><entry>Esc c</entry><entry>change to a folder in read-only mode</entry></row>
-<row><entry>C</entry><entry>copy the current message to another mailbox</entry></row>
-<row><entry>Esc C</entry><entry>decode a message and copy it to a folder</entry></row>
-<row><entry>Esc s</entry><entry>decode a message and save it to a folder</entry></row>
-<row><entry>D</entry><entry>delete messages matching a pattern</entry></row>
-<row><entry>d</entry><entry>delete the current message</entry></row>
-<row><entry>F</entry><entry>mark as important</entry></row>
-<row><entry>l</entry><entry>show messages matching a pattern</entry></row>
-<row><entry>N</entry><entry>mark message as new</entry></row>
-<row><entry>o</entry><entry>change the current sort method</entry></row>
-<row><entry>O</entry><entry>reverse sort the mailbox</entry></row>
-<row><entry>q</entry><entry>save changes and exit</entry></row>
-<row><entry>s</entry><entry>save-message</entry></row>
-<row><entry>T</entry><entry>tag messages matching a pattern</entry></row>
-<row><entry>t</entry><entry>toggle the tag on a message</entry></row>
-<row><entry>Esc t</entry><entry>toggle tag on entire message thread</entry></row>
-<row><entry>U</entry><entry>undelete messages matching a pattern</entry></row>
-<row><entry>u</entry><entry>undelete-message</entry></row>
-<row><entry>v</entry><entry>view-attachments</entry></row>
-<row><entry>x</entry><entry>abort changes and exit</entry></row>
-<row><entry>&lt;Return&gt;</entry><entry>display-message</entry></row>
-<row><entry>&lt;Tab&gt;</entry><entry>jump to the next new or unread message</entry></row>
-<row><entry>@</entry><entry>show the author's full e-mail address</entry></row>
-<row><entry>$</entry><entry>save changes to mailbox</entry></row>
-<row><entry>/</entry><entry>search</entry></row>
-<row><entry>Esc /</entry><entry>search-reverse</entry></row>
-<row><entry>^L</entry><entry>clear and redraw the screen</entry></row>
-<row><entry>^T</entry><entry>untag messages matching a pattern</entry></row>
+<row><entry>c</entry><entry>メールボックスを変更</entry></row>
+<row><entry>Esc c</entry><entry>フォルダを読み出し専用モードに変更</entry></row>
+<row><entry>C</entry><entry>現在のメッセージを他のメールボックスにコピー</entry></row>
+<row><entry>Esc C</entry><entry>メッセージを復号化してフォルダにコピー</entry></row>
+<row><entry>Esc s</entry><entry>メッセージを復号化してフォルダに保存</entry></row>
+<row><entry>D</entry><entry>パターンに一致するメッセージを削除</entry></row>
+<row><entry>d</entry><entry>現在のメッセージを削除</entry></row>
+<row><entry>F</entry><entry>重要としてマーク</entry></row>
+<row><entry>l</entry><entry>パターンに一致したメッセージを表示</entry></row>
+<row><entry>N</entry><entry>メッセージを新規としてマーク</entry></row>
+<row><entry>o</entry><entry>現在の整列方法を変更</entry></row>
+<row><entry>O</entry><entry>メールボックスを逆順に整列</entry></row>
+<row><entry>q</entry><entry>変更を保存して終了</entry></row>
+<row><entry>s</entry><entry>メッセージを保存</entry></row>
+<row><entry>T</entry><entry>パターンに一致するメッセージにタグ付け</entry></row>
+<row><entry>t</entry><entry>メッセージのタグを反転</entry></row>
+<row><entry>Esc t</entry><entry>全部のメッセージスレッド中のタグを反転</entry></row>
+<row><entry>U</entry><entry>パターンに一致したメッセージをの削除状態を解除</entry></row>
+<row><entry>u</entry><entry>メッセージの削除状態を解除</entry></row>
+<row><entry>v</entry><entry>添付を表示</entry></row>
+<row><entry>x</entry><entry>変更を中断して終了</entry></row>
+<row><entry>&lt;Return&gt;</entry><entry>メッセージを表示</entry></row>
+<row><entry>&lt;Tab&gt;</entry><entry>次の新規又は未読のメッセージに移動</entry></row>
+<row><entry>@</entry><entry>差出人の完全なメールアドレスを表示</entry></row>
+<row><entry>$</entry><entry>メールボックスに変更を保存</entry></row>
+<row><entry>/</entry><entry>検索</entry></row>
+<row><entry>Esc /</entry><entry>逆向き検索</entry></row>
+<row><entry>^L</entry><entry>画面を消去して再描画</entry></row>
+<row><entry>^T</entry><entry>パターンに一致したメッセージのタグを削除</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-In addition to who sent the message and the subject, a short summary of
-the disposition of each message is printed beside the message number.
-Zero or more of the <quote>flags</quote> in <xref
-linkend="tab-msg-status-flags"/> may appear, some of which can be turned
-on or off using these functions: <literal>&lt;set-flag&gt;</literal> and
-<literal>&lt;clear-flag&gt;</literal> bound by default to
-<quote>w</quote> and <quote>W</quote> respectively.
+さらに、メッセージの送信者と題名に加えて、メッセージ番号の横には各メッセージに対する
+処理の短い要約が表示されます。<xref linkend="tab-msg-status-flags"/> に説明がある、
+0個以上の<quote>フラグ</quote>が表示され、そのうちのいくつかは、既定で
+<quote>w</quote> と <quote>W</quote> にバインドされている、
+<literal>&lt;set-flag&gt;</literal>と<literal>&lt;clear-flag&gt;</literal>
+で、ON/OFFできます。
 </para>
 
 <para>
-Furthermore, the flags in <xref linkend="tab-msg-recip-flags"/> reflect
-who the message is addressed to. They can be customized with the <link
-linkend="to-chars">$to_chars</link> variable.
+さらに、<xref linkend="tab-msg-recip-flags"/>中のフラグは、メッセージの宛先を反映しています。
 </para>
 
 <table id="tab-msg-status-flags">
-<title>Message status flags</title>
+<title>メッセージステータスフラグ</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Flag</entry><entry>Description</entry></row>
+<row><entry>フラグ</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>D</entry><entry>message is deleted (is marked for deletion)</entry></row>
-<row><entry>d</entry><entry>message has attachments marked for deletion</entry></row>
-<row><entry>K</entry><entry>contains a PGP public key</entry></row>
-<row><entry>N</entry><entry>message is new</entry></row>
-<row><entry>O</entry><entry>message is old</entry></row>
-<row><entry>P</entry><entry>message is PGP encrypted</entry></row>
-<row><entry>r</entry><entry>message has been replied to</entry></row>
-<row><entry>S</entry><entry>message is signed, and the signature is successfully verified</entry></row>
-<row><entry>s</entry><entry>message is signed</entry></row>
-<row><entry>!</entry><entry>message is flagged</entry></row>
-<row><entry>*</entry><entry>message is tagged</entry></row>
-<row><entry>n</entry><entry>thread contains new messages (only if collapsed)</entry></row>
-<row><entry>o</entry><entry>thread contains old messages (only if collapsed)</entry></row>
+<row><entry>D</entry><entry>メッセージは削除された(削除マークがついている)</entry></row>
+<row><entry>d</entry><entry>メッセージには削除予定の添付がある</entry></row>
+<row><entry>K</entry><entry>PGP公開鍵を含んでいる</entry></row>
+<row><entry>N</entry><entry>新規メッセージ</entry></row>
+<row><entry>O</entry><entry>古いメッセージ</entry></row>
+<row><entry>P</entry><entry>メッセージはPGPで暗号化されている</entry></row>
+<row><entry>r</entry><entry>メッセージは返信済み</entry></row>
+<row><entry>S</entry><entry>メッセージは署名されていて、署名は正しく検証された</entry></row>
+<row><entry>s</entry><entry>メッセージは署名されている</entry></row>
+<row><entry>!</entry><entry>メッセージにはフラグがついている</entry></row>
+<row><entry>*</entry><entry>メッセージはタグづけられている</entry></row>
+<row><entry>n</entry><entry>スレッドには新しいメッセージがある(折りたたまれている場合)</entry></row>
+<row><entry>o</entry><entry>スレッドには古いメッセージがある(折りたたまれている場合)</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <table id="tab-msg-recip-flags">
-<title>Message recipient flags</title>
+<title>メッセージ受信フラグ</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Flag</entry><entry>Description</entry></row>
+<row><entry>フラグ</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>+</entry><entry>message is to you and you only</entry></row>
-<row><entry>T</entry><entry>message is to you, but also to or CC'ed to others</entry></row>
-<row><entry>C</entry><entry>message is CC'ed to you</entry></row>
-<row><entry>F</entry><entry>message is from you</entry></row>
-<row><entry>L</entry><entry>message is sent to a subscribed mailing list</entry></row>
+<row><entry>+</entry><entry>メッセージは自分宛だけに送られている</entry></row>
+<row><entry>T</entry><entry>メッセージは自分宛だが、他の人にも Cc かその他で送られている</entry></row>
+<row><entry>C</entry><entry>メッセージは Cc で自分に送られている</entry></row>
+<row><entry>F</entry><entry>メッセージは自分からのものである</entry></row>
+<row><entry>L</entry><entry>メッセージは購読されたメーリングリストに送られている</entry></row>
 </tbody>
 </tgroup>
 </table>
