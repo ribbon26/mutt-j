@@ -198,7 +198,7 @@ Mutt の他の言語への翻訳は高く評価されているため、Mutt 開�
 <literal>man 3 printf</literal> を実行。</entry></row>
 <row><entry><literal>&lt;PageUp&gt;</literal></entry><entry>名前付きのキー</entry></row>
 <row><entry><literal>&lt;create-alias&gt;</literal></entry><entry>名前付きの
-Mutt の関数</entry></row>
+Mutt のファンクション</entry></row>
 <row><entry><literal>^G</literal></entry><entry>Control+G キー</entry></row>
 <row><entry>$mail_check</entry><entry>Mutt 設定オプション</entry></row>
 <row><entry><literal>$HOME</literal></entry><entry>環境変数</entry></row>
@@ -304,7 +304,7 @@ Mutt は利用者が恒久的に既定値以外の値を使いたい場合に、
 
 <para>
 Mutt はほとんどのキーバインディングを変更することができるので、いわゆる
-<quote>関数</quote>を(コマンド行を使って)手動で実行したり、マクロで実行させた
+<quote>ファンクション</quote>を(コマンド行を使って)手動で実行したり、マクロで実行させた
 りできます。マクロは、一連の動作を繰り返す代わりに、1つのキーや短いキーシーケ
 ンスにバインドすることもできます。
 </para>
@@ -321,7 +321,7 @@ Mutt はほとんどのキーバインディングを変更することができ
 
 <para>
 Mutt は、フォルダに入ったり、新規メッセージを作ったり、既存のメッセージに返信
-するような特定の状況において、設定コマンドと関数をユーザが実行できる、
+するような特定の状況において、設定コマンドとファンクションをユーザが実行できる、
 <quote>hook</quote>というコンセプトをサポートしています。hook は、複数のアイデ
 ンティティの管理、フォルダ表示のカスタマイズフォルダ単位での自動アーカイブの実
 装などやその他を含む、高度にカスタマイズされた Mutt の動作を行うのに使われます。
@@ -384,86 +384,80 @@ Mutt は、フォルダに入ったり、新規メッセージを作ったり、
 <title>ファイルブラウザ</title>
 
 <para>
-The file browser is the interface to the local or remote file
-system. When selecting a mailbox to open, the browser allows custom
-sorting of items, limiting the items shown by a regular expression and a
-freely adjustable format of what to display in which way. It also allows
-for easy navigation through the file system when selecting file(s) to
-attach to a message, select multiple files to attach and many more.
+ファイルブラウザは、ローカルまたはリモートにあるファイルシステムへのインタフェース
+です。オープンするためにメールボックスを選択する時、ブラウザは、項目整列順の変
+更、正規表現による項目表示の制限、表示したいように表示形式を自由に変更できます。
+また、メッセージに添付するため、(複数の)ファイルを選択する時や、複数のファイル
+添付する時などにファイルシステム内を介した簡単な操作ができます。
 </para>
 
 <para>
-Some mail systems can nest mail folders inside other mail folders.
-The normal open entry commands in mutt will open the mail folder and
-you can't see the sub-folders.  If you instead use the
-<literal>&lt;descend-directory&gt;</literal> function it will go into
-the directory and not open it as a mail directory.
+いくつかのメールシステムは、他のメールフォルダ内にメールフォルダをネストできま
+す。通常の、mutt 内にあるオープンエントリコマンドはメールフォルダをオープンす
+るので、サブフォルダを見ることはできません。そのかわり、
+<literal>&lt;descend-directory&gt;</literal>ファンクションを使うと、ディレクト
+リ内に入ることが出来ますが、メールディレクトリとしてはオープンしません。
 </para>
 
 </sect2>
 
 <sect2 id="intro-sidebar">
-  <title>Sidebar</title>
+  <title>サイドバー</title>
   <para>
-    The Sidebar shows a list of all your mailboxes.  The list can be
-    turned on and off, it can be themed and the list style can be
-    configured.
+    サイドバーは、メールボックスの一覧を表示します。一覧表示はON/OFFでき、テー
+    マを設定したり、一覧形式を設定したりできます。
   </para>
 </sect2>
 
 <sect2 id="intro-help">
-<title>Help</title>
+<title>ヘルプ</title>
 
 <para>
-The help screen is meant to offer a quick help to the user. It lists the
-current configuration of key bindings and their associated commands
-including a short description, and currently unbound functions that
-still need to be associated with a key binding (or alternatively, they
-can be called via the Mutt command prompt).
+ヘルプ画面は利用者に簡単なヘルプを提供します。これには、現在のキーバインディン
+グの設定状況と割り当てられているコマンド、簡単な説明、および、キーに割り当て慣
+れなければならない現在未割り当てのファンクション付きでを一覧で表示します(代わ
+りに Mutt のコマンドプロンプト経由で呼び出すこともができます)。
 </para>
 
 </sect2>
 
 <sect2 id="intro-compose">
-<title>Compose Menu</title>
+<title>編集メニュー</title>
 
 <para>
-The compose menu features a split screen containing the information
-which really matter before actually sending a message by mail: who gets
-the message as what (recipients and who gets what kind of
-copy). Additionally, users may set security options like deciding
-whether to sign, encrypt or sign and encrypt a message with/for what
-keys. Also, it's used to attach messages, to re-edit any attachment
-including the message itself.
+編集メニューは、メッセージを実際にメールで送信する前に、重要な項目情報を含む分
+割画面を提供します。これは、だれがどのようなメッセージを受け取るか(受信者がど
+のようなコピーを受け取るか)が含まれています。さらに、メッセージに対してどのよ
+うなキーを使って署名をするかどうか、暗号化するか、署名して暗号化するかというよ
+うなセキュリティオプションを設定することもできます。そのほか、メッセージを添付
+したり、メッセージそれ自身を含む任意の添付を再編集することにも使います。
 </para>
 
 </sect2>
 
 <sect2 id="intro-alias">
-<title>Alias Menu</title>
+<title>別名メニュー</title>
 
 <para>
-The alias menu is used to help users finding the recipients of
-messages. For users who need to contact many people, there's no need to
-remember addresses or names completely because it allows for searching,
-too. The alias mechanism and thus the alias menu also features grouping
-several addresses by a shorter nickname, the actual alias, so that users
-don't have to select each single recipient manually.
+別名メニューは、メッセージの受信者を見つける手伝いをします。検索もできますので、
+たくさんの人に連絡を取りたい場合、アドレスや名前を完全に覚えておく必要はありま
+せん。別名メカニズムと別名メニューは、より短いニックネームや実際の別名を使う事で、いくつか
+のアドレスをグルーピングする機能も提供します。そのため、個々の受信者を手動で選
+択する必要はありません。
 </para>
 
 </sect2>
 
 <sect2 id="intro-attach">
-<title>Attachment Menu</title>
+<title>添付メニュー</title>
 
 <para>
-As will be later discussed in detail, Mutt features a good and stable
-MIME implementation, that is, it supports sending and receiving messages
-of arbitrary MIME types. The attachment menu displays a message's
-structure in detail: what content parts are attached to which parent
-part (which gives a true tree structure), which type is of what type and
-what size.  Single parts may saved, deleted or modified to offer great
-and easy access to message's internals.
+あとで詳細は説明しますが、Mutt は 優れて安定した MIME の実装を備えているので、
+任意の MIME タイプをつかうメッセージの送受信ができます。添付メニューはメッセー
+ジの詳細構造を表示します:そこには、どのコンテンツパーツがどの親のパーツに添付
+されているか(完全な木構造を表示)、どのタイプがどの種類で、どのくらいの大きさな
+のかが表示されます。単一のパーツは保存、削除、変更でき、メッセージの内部に簡単
+にアクセス出来ます。
 </para>
 
 </sect2>
@@ -471,46 +465,69 @@ and easy access to message's internals.
 </sect1>
 
 <sect1 id="menus">
-<title>Moving Around in Menus</title>
+<title>メニュー内での移動</title>
 
 <para>
-The most important navigation keys common to line- or entry-based menus
-are shown in <xref linkend="tab-keys-nav-line"/> and in <xref
-linkend="tab-keys-nav-page"/> for page-based menus.
+もっとも重要な操作キーは、行又はエントリベースのメニューで共通で、
+<xref linkend="tab-keys-nav-line"/>に記載してあり、ページベースのメニューについては
+<xref linkend="tab-keys-nav-page"/> に記載してあります。
 </para>
 
 <table id="tab-keys-nav-line">
-<title>Most common navigation keys in entry-based menus</title>
+<title>エントリベースのメニューにおけるもっとも共通の操作キー</title>
 <tgroup cols="3">
 <thead>
-<row><entry>Key</entry><entry>Function</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>j or &lt;Down&gt;</entry><entry><literal>&lt;next-entry&gt;</literal></entry><entry>move to the next entry</entry></row>
-<row><entry>k or &lt;Up&gt;</entry><entry><literal>&lt;previous-entry&gt;</literal></entry><entry>move to the previous entry</entry></row>
-<row><entry>z or &lt;PageDn&gt;</entry><entry><literal>&lt;page-down&gt;</literal></entry><entry>go to the next page</entry></row>
-<row><entry>Z or &lt;PageUp&gt;</entry><entry><literal>&lt;page-up&gt;</literal></entry><entry>go to the previous page</entry></row>
-<row><entry>= or &lt;Home&gt;</entry><entry><literal>&lt;first-entry&gt;</literal></entry><entry>jump to the first entry</entry></row>
-<row><entry>* or &lt;End&gt;</entry><entry><literal>&lt;last-entry&gt;</literal></entry><entry>jump to the last entry</entry></row>
-<row><entry>q</entry><entry><literal>&lt;quit&gt;</literal></entry><entry>exit the current menu</entry></row>
-<row><entry>?</entry><entry><literal>&lt;help&gt;</literal></entry><entry>list all keybindings for the current menu</entry></row>
+<row><entry>j 又は
+&lt;Down&gt;</entry><entry><literal>&lt;next-entry&gt;</literal></entry><entry>
+次のエントリに移動</entry></row>
+<row><entry>k 又は
+&lt;Up&gt;</entry><entry><literal>&lt;previous-entry&gt;</literal></entry><entry>
+前のエントリに移動</entry></row>
+<row><entry>z 又は
+&lt;PageDn&gt;</entry><entry><literal>&lt;page-down&gt;</literal></entry><entry>
+次のページに移動</entry></row>
+<row><entry>Z 又は
+&lt;PageUp&gt;</entry><entry><literal>&lt;page-up&gt;</literal></entry><entry>
+前のページに移動</entry></row>
+<row><entry>= 又は
+&lt;Home&gt;</entry><entry><literal>&lt;first-entry&gt;</literal></entry><entry>
+最初のエントリに移動</entry></row>
+<row><entry>* 又は
+&lt;End&gt;</entry><entry><literal>&lt;last-entry&gt;</literal></entry><entry>
+最後のエントリに移動</entry></row>
+<row><entry>q</entry><entry><literal>&lt;quit&gt;</literal></entry><entry>現在
+のメニューを終了</entry></row>
+<row><entry>?</entry><entry><literal>&lt;help&gt;</literal></entry><entry>現在
+のメニューにおけるキーバインド一覧を表示</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <table id="tab-keys-nav-page">
-<title>Most common navigation keys in page-based menus</title>
+<title>ページベースのメニューにおけるもっとも共通の操作キー</title>
 <tgroup cols="3">
 <thead>
-<row><entry>Key</entry><entry>Function</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>J or &lt;Return&gt;</entry><entry><literal>&lt;next-line&gt;</literal></entry><entry>scroll down one line</entry></row>
-<row><entry>&lt;Backspace&gt;</entry><entry><literal>&lt;previous-line&gt;</literal></entry><entry>scroll up one line</entry></row>
-<row><entry>K, &lt;Space&gt; or &lt;PageDn&gt;</entry><entry><literal>&lt;next-page&gt;</literal></entry><entry>move to the next page</entry></row>
-<row><entry>- or &lt;PageUp&gt;</entry><entry><literal>&lt;previous-page&gt;</literal></entry><entry>move the previous page</entry></row>
-<row><entry>&lt;Home&gt;</entry><entry><literal>&lt;top&gt;</literal></entry><entry>move to the top</entry></row>
-<row><entry>&lt;End&gt;</entry><entry><literal>&lt;bottom&gt;</literal></entry><entry>move to the bottom</entry></row>
+<row><entry>J 又は
+&lt;Return&gt;</entry><entry><literal>&lt;next-line&gt;</literal></entry><entry>1
+行スクロールダウン</entry></row>
+<row><entry>&lt;Backspace&gt;</entry><entry><literal>&lt;previous-line&gt;</literal></entry><entry>1
+行スクロールアップ</entry></row>
+<row><entry>K, &lt;Space&gt; 又は
+&lt;PageDn&gt;</entry><entry><literal>&lt;next-page&gt;</literal></entry><entry>
+次のページに移動</entry></row>
+<row><entry>- 又は
+&lt;PageUp&gt;</entry><entry><literal>&lt;previous-page&gt;</literal></entry><entry>
+前のページに移動</entry></row>
+<row><entry>&lt;Home&gt;</entry><entry><literal>&lt;top&gt;</literal></entry><entry>
+先頭に移動</entry></row>
+<row><entry>&lt;End&gt;</entry><entry><literal>&lt;bottom&gt;</literal></entry><entry>
+末尾に移動</entry></row>
 </tbody>
 </tgroup>
 </table>
@@ -518,10 +535,10 @@ linkend="tab-keys-nav-page"/> for page-based menus.
 </sect1>
 
 <sect1 id="editing">
-<title>Editing Input Fields</title>
+<title>入力フィールドの編集</title>
 
 <sect2 id="editing-intro">
-<title>Introduction</title>
+<title>イントロダクション</title>
 
 <para>
 Mutt has a built-in line editor for inputting text, e.g. email addresses
