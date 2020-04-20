@@ -480,28 +480,14 @@ Mutt は、フォルダに入ったり、新規メッセージを作ったり、
 <row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>j 又は
-&lt;Down&gt;</entry><entry><literal>&lt;next-entry&gt;</literal></entry><entry>
-次のエントリに移動</entry></row>
-<row><entry>k 又は
-&lt;Up&gt;</entry><entry><literal>&lt;previous-entry&gt;</literal></entry><entry>
-前のエントリに移動</entry></row>
-<row><entry>z 又は
-&lt;PageDn&gt;</entry><entry><literal>&lt;page-down&gt;</literal></entry><entry>
-次のページに移動</entry></row>
-<row><entry>Z 又は
-&lt;PageUp&gt;</entry><entry><literal>&lt;page-up&gt;</literal></entry><entry>
-前のページに移動</entry></row>
-<row><entry>= 又は
-&lt;Home&gt;</entry><entry><literal>&lt;first-entry&gt;</literal></entry><entry>
-最初のエントリに移動</entry></row>
-<row><entry>* 又は
-&lt;End&gt;</entry><entry><literal>&lt;last-entry&gt;</literal></entry><entry>
-最後のエントリに移動</entry></row>
-<row><entry>q</entry><entry><literal>&lt;quit&gt;</literal></entry><entry>現在
-のメニューを終了</entry></row>
-<row><entry>?</entry><entry><literal>&lt;help&gt;</literal></entry><entry>現在
-のメニューにおけるキーバインド一覧を表示</entry></row>
+<row><entry>j 又は&lt;Down&gt;</entry><entry><literal>&lt;next-entry&gt;</literal></entry><entry>次のエントリに移動</entry></row>
+<row><entry>k 又は&lt;Up&gt;</entry><entry><literal>&lt;previous-entry&gt;</literal></entry><entry>前のエントリに移動</entry></row>
+<row><entry>z 又は&lt;PageDn&gt;</entry><entry><literal>&lt;page-down&gt;</literal></entry><entry>次のページに移動</entry></row>
+<row><entry>Z 又は&lt;PageUp&gt;</entry><entry><literal>&lt;page-up&gt;</literal></entry><entry>前のページに移動</entry></row>
+<row><entry>= 又は&lt;Home&gt;</entry><entry><literal>&lt;first-entry&gt;</literal></entry><entry>最初のエントリに移動</entry></row>
+<row><entry>* 又は&lt;End&gt;</entry><entry><literal>&lt;last-entry&gt;</literal></entry><entry>最後のエントリに移動</entry></row>
+<row><entry>q</entry><entry><literal>&lt;quit&gt;</literal></entry><entry>現在のメニューを終了</entry></row>
+<row><entry>?</entry><entry><literal>&lt;help&gt;</literal></entry><entry>現在のメニューにおけるキーバインド一覧を表示</entry></row>
 </tbody>
 </tgroup>
 </table>
@@ -513,21 +499,12 @@ Mutt は、フォルダに入ったり、新規メッセージを作ったり、
 <row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>J 又は
-&lt;Return&gt;</entry><entry><literal>&lt;next-line&gt;</literal></entry><entry>1
-行スクロールダウン</entry></row>
-<row><entry>&lt;Backspace&gt;</entry><entry><literal>&lt;previous-line&gt;</literal></entry><entry>1
-行スクロールアップ</entry></row>
-<row><entry>K, &lt;Space&gt; 又は
-&lt;PageDn&gt;</entry><entry><literal>&lt;next-page&gt;</literal></entry><entry>
-次のページに移動</entry></row>
-<row><entry>- 又は
-&lt;PageUp&gt;</entry><entry><literal>&lt;previous-page&gt;</literal></entry><entry>
-前のページに移動</entry></row>
-<row><entry>&lt;Home&gt;</entry><entry><literal>&lt;top&gt;</literal></entry><entry>
-先頭に移動</entry></row>
-<row><entry>&lt;End&gt;</entry><entry><literal>&lt;bottom&gt;</literal></entry><entry>
-末尾に移動</entry></row>
+<row><entry>J 又は&lt;Return&gt;</entry><entry><literal>&lt;next-line&gt;</literal></entry><entry>1行スクロールダウン</entry></row>
+<row><entry>&lt;Backspace&gt;</entry><entry><literal>&lt;previous-line&gt;</literal></entry><entry>1行スクロールアップ</entry></row>
+<row><entry>K, &lt;Space&gt; 又は&lt;PageDn&gt;</entry><entry><literal>&lt;next-page&gt;</literal></entry><entry>次のページに移動</entry></row>
+<row><entry>- 又は&lt;PageUp&gt;</entry><entry><literal>&lt;previous-page&gt;</literal></entry><entry>前のページに移動</entry></row>
+<row><entry>&lt;Home&gt;</entry><entry><literal>&lt;top&gt;</literal></entry><entry>先頭に移動</entry></row>
+<row><entry>&lt;End&gt;</entry><entry><literal>&lt;bottom&gt;</literal></entry><entry>末尾に移動</entry></row>
 </tbody>
 </tgroup>
 </table>
@@ -541,52 +518,51 @@ Mutt は、フォルダに入ったり、新規メッセージを作ったり、
 <title>イントロダクション</title>
 
 <para>
-Mutt has a built-in line editor for inputting text, e.g. email addresses
-or filenames. The keys used to manipulate text input are very similar to
-those of Emacs. See <xref linkend="tab-keys-editor"/> for a full
-reference of available functions, their default key bindings, and short
-descriptions.
+Mutt はテキスト入力、たとえばメールアドレスやファイル名入力用に、ビルトイン行エディタを用意しています。
+テキスト入力を操作するのに使われるキーは、Emacs のものと大変よく似ています。
+有効な機能の完全一覧は<xref linkend="tab-keys-editor"/>を参照してください。そこには
+規定のバインディングと簡単な説明が記載されています。
 </para>
 
 <table id="tab-keys-editor">
-<title>Most common line editor keys</title>
+<title>もっとも共通の行エディタキー</title>
 <tgroup cols="3">
 <thead>
-<row><entry>Key</entry><entry>Function</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>^A or &lt;Home&gt;</entry><entry><literal>&lt;bol&gt;</literal></entry><entry>move to the start of the line</entry></row>
-<row><entry>^B or &lt;Left&gt;</entry><entry><literal>&lt;backward-char&gt;</literal></entry><entry>move back one char</entry></row>
-<row><entry>Esc B</entry><entry><literal>&lt;backward-word&gt;</literal></entry><entry>move back one word</entry></row>
-<row><entry>^D or &lt;Delete&gt;</entry><entry><literal>&lt;delete-char&gt;</literal></entry><entry>delete the char under the cursor</entry></row>
-<row><entry>^E or &lt;End&gt;</entry><entry><literal>&lt;eol&gt;</literal></entry><entry>move to the end of the line</entry></row>
-<row><entry>^F or &lt;Right&gt;</entry><entry><literal>&lt;forward-char&gt;</literal></entry><entry>move forward one char</entry></row>
-<row><entry>Esc F</entry><entry><literal>&lt;forward-word&gt;</literal></entry><entry>move forward one word</entry></row>
-<row><entry>&lt;Tab&gt;</entry><entry><literal>&lt;complete&gt;</literal></entry><entry>complete filename, alias, or label</entry></row>
-<row><entry>^T</entry><entry><literal>&lt;complete-query&gt;</literal></entry><entry>complete address with query</entry></row>
-<row><entry>^K</entry><entry><literal>&lt;kill-eol&gt;</literal></entry><entry>delete to the end of the line</entry></row>
-<row><entry>Esc d</entry><entry><literal>&lt;kill-eow&gt;</literal></entry><entry>delete to the end of the word</entry></row>
-<row><entry>^W</entry><entry><literal>&lt;kill-word&gt;</literal></entry><entry>kill the word in front of the cursor</entry></row>
-<row><entry>^U</entry><entry><literal>&lt;kill-line&gt;</literal></entry><entry>delete entire line</entry></row>
-<row><entry>^V</entry><entry><literal>&lt;quote-char&gt;</literal></entry><entry>quote the next typed key</entry></row>
-<row><entry>&lt;Up&gt;</entry><entry><literal>&lt;history-up&gt;</literal></entry><entry>recall previous string from history</entry></row>
-<row><entry>&lt;Down&gt;</entry><entry><literal>&lt;history-down&gt;</literal></entry><entry>recall next string from history</entry></row>
-<row><entry>^R</entry><entry><literal>&lt;history-search&gt;</literal></entry><entry>use current input to search history</entry></row>
-<row><entry>&lt;BackSpace&gt;</entry><entry><literal>&lt;backspace&gt;</literal></entry><entry>kill the char in front of the cursor</entry></row>
-<row><entry>Esc u</entry><entry><literal>&lt;upcase-word&gt;</literal></entry><entry>convert word to upper case</entry></row>
-<row><entry>Esc l</entry><entry><literal>&lt;downcase-word&gt;</literal></entry><entry>convert word to lower case</entry></row>
-<row><entry>Esc c</entry><entry><literal>&lt;capitalize-word&gt;</literal></entry><entry>capitalize the word</entry></row>
-<row><entry>^G</entry><entry>n/a</entry><entry>abort</entry></row>
-<row><entry>&lt;Return&gt;</entry><entry>n/a</entry><entry>finish editing</entry></row>
+<row><entry>^A 又は &lt;Home&gt;</entry><entry><literal>&lt;bol&gt;</literal></entry><entry>行の先頭に移動</entry></row>
+<row><entry>^B 又は &lt;Left&gt;</entry><entry><literal>&lt;backward-char&gt;</literal></entry><entry>1文字前に移動</entry></row>
+<row><entry>Esc B</entry><entry><literal>&lt;backward-word&gt;</literal></entry><entry>1語前に移動</entry></row>
+<row><entry>^D 又は &lt;Delete&gt;</entry><entry><literal>&lt;delete-char&gt;</literal></entry><entry>カーソル下の文字を削除</entry></row>
+<row><entry>^E 又は &lt;End&gt;</entry><entry><literal>&lt;eol&gt;</literal></entry><entry>行末に移動</entry></row>
+<row><entry>^F 又は &lt;Right&gt;</entry><entry><literal>&lt;forward-char&gt;</literal></entry><entry>1文字後ろに移動</entry></row>
+<row><entry>Esc F</entry><entry><literal>&lt;forward-word&gt;</literal></entry><entry>1単語後ろに移動</entry></row>
+<row><entry>&lt;Tab&gt;</entry><entry><literal>&lt;complete&gt;</literal></entry><entry>ファイル名、別名又はラベルを補完</entry></row>
+<row><entry>^T</entry><entry><literal>&lt;complete-query&gt;</literal></entry><entry>問い合わせでアドレスを補完</entry></row>
+<row><entry>^K</entry><entry><literal>&lt;kill-eol&gt;</literal></entry><entry>行末まで削除</entry></row>
+<row><entry>Esc d</entry><entry><literal>&lt;kill-eow&gt;</literal></entry><entry>単語の終わりまで削除</entry></row>
+<row><entry>^W</entry><entry><literal>&lt;kill-word&gt;</literal></entry><entry>カーソルの前の1語を消す</entry></row>
+<row><entry>^U</entry><entry><literal>&lt;kill-line&gt;</literal></entry><entry>1行全体を削除</entry></row>
+<row><entry>^V</entry><entry><literal>&lt;quote-char&gt;</literal></entry><entry>次に入力するキーに引用符をつける</entry></row>
+<row><entry>&lt;Up&gt;</entry><entry><literal>&lt;history-up&gt;</literal></entry><entry>履歴から前の入力文字列を呼び出す</entry></row>
+<row><entry>&lt;Down&gt;</entry><entry><literal>&lt;history-down&gt;</literal></entry><entry>履歴から次の入力文字列を呼び出す</entry></row>
+<row><entry>^R</entry><entry><literal>&lt;history-search&gt;</literal></entry><entry>現在の入力を検索履歴に使う</entry></row>
+<row><entry>&lt;BackSpace&gt;</entry><entry><literal>&lt;backspace&gt;</literal></entry><entry>カーソルの前の1文字を削除</entry></row>
+<row><entry>Esc u</entry><entry><literal>&lt;upcase-word&gt;</literal></entry><entry>単語を大文字に変換</entry></row>
+<row><entry>Esc l</entry><entry><literal>&lt;downcase-word&gt;</literal></entry><entry>単語を小文字に変換</entry></row>
+<row><entry>Esc c</entry><entry><literal>&lt;capitalize-word&gt;</literal></entry><entry>単語の最初の文字を大文字に変換</entry></row>
+<row><entry>^G</entry><entry>n/a</entry><entry>中止</entry></row>
+<row><entry>&lt;Return&gt;</entry><entry>n/a</entry><entry>編集終了</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-You can remap the <emphasis>editor</emphasis> functions using the <link
-linkend="bind"><command>bind</command></link> command.  For example, to
-make the &lt;Delete&gt; key delete the character in front of the cursor
-rather than under, you could use:
+You can remap the <emphasis>editor</emphasis> 機能をリマップするためには
+<link linkend="bind"><command>bind</command></link> コマンドを使います。たとえば、
+&lt;Delete&gt; キーを押した時に、カーソル直下の文字ではなく、カーソルの前にある文字を削除するためには、
+以下のように行います:
 </para>
 
 <screen>
@@ -596,7 +572,7 @@ bind editor &lt;delete&gt; backspace
 </sect2>
 
 <sect2 id="editing-history">
-<title>History</title>
+<title>履歴</title>
 
 <para>
 Mutt maintains a history for the built-in editor.  The number of items
