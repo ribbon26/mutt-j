@@ -728,62 +728,57 @@ Mutt は自動的に履歴から繰り返された項目を自動的にフィル
 </sect2>
 
 <sect2 id="pager-menu">
-<title>The Pager</title>
+<title>ページャ</title>
 
 <para>
-By default, Mutt uses its built-in pager to display the contents of
-messages (an external pager such as <literal>less(1)</literal> can be
-configured, see <link linkend="pager">$pager</link> variable).  The
-pager is very similar to the Unix program <literal>less(1)</literal>
-though not nearly as featureful.
+既定値では、Mutt はメッセージの内容を表示するのに、内蔵のページャを使います(たとえば
+<literal>less(1)</literal>のような外部のページャも設定することができます。詳しくは、
+<link linkend="pager">$pager</link> 変数を参照してください。)ページャは あまり機能的では
+ありませんが、Unix のプログラム<literal>less(1)</literal>と大変よく似ています。
 </para>
 
 <table id="tab-key-pager">
-<title>Most common pager keys</title>
+<title>もっとも共通的なページャのキー</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Key</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>&lt;Return&gt;</entry><entry>go down one line</entry></row>
-<row><entry>&lt;Space&gt;</entry><entry>display the next page (or next message if at the end of a message)</entry></row>
-<row><entry>-</entry><entry>go back to the previous page</entry></row>
-<row><entry>n</entry><entry>search for next match</entry></row>
-<row><entry>S</entry><entry>skip beyond quoted text</entry></row>
-<row><entry>T</entry><entry>toggle display of quoted text</entry></row>
-<row><entry>?</entry><entry>show keybindings</entry></row>
-<row><entry>/</entry><entry>regular expression search</entry></row>
-<row><entry>Esc /</entry><entry>backward regular expression search</entry></row>
-<row><entry>\</entry><entry>toggle highlighting of search matches</entry></row>
-<row><entry>^</entry><entry>jump to the top of the message</entry></row>
+<row><entry>&lt;Return&gt;</entry><entry>1行下に移動</entry></row>
+<row><entry>&lt;Space&gt;</entry><entry>次のページを表示(又はメッセージの終端だった場合には次のメッセージ)</entry></row>
+<row><entry>-</entry><entry>前のページに移動</entry></row>
+<row><entry>n</entry><entry>次に一致する部分を検索</entry></row>
+<row><entry>S</entry><entry>引用文を飛ばす</entry></row>
+<row><entry>T</entry><entry>引用分の表示をON/OFF</entry></row>
+<row><entry>?</entry><entry>キーバインディングを表示</entry></row>
+<row><entry>/</entry><entry>正規表現による検索</entry></row>
+<row><entry>Esc /</entry><entry>正規表現による逆方向の検索</entry></row>
+<row><entry>\</entry><entry>検索結果のハイライトをON/OFF</entry></row>
+<row><entry>^</entry><entry>メッセージの先頭に移動</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-In addition to key bindings in <xref linkend="tab-key-pager"/>, many of
-the functions from the index menu are also available in the pager, such
-as <literal>&lt;delete-message&gt;</literal> or
-<literal>&lt;copy-message&gt;</literal> (this is one advantage over
-using an external pager to view messages).
+<xref linkend="tab-key-pager"/>中にあるキーバインディングに加え、インデックスメニュー
+での多くの機能、たとえば<literal>&lt;delete-message&gt;</literal> や
+<literal>&lt;copy-message&gt;</literal>(これはメッセージを外部ビューワで
+表示するよりも優位な点の1つ)がページャでも有効です。
 </para>
 
 <para>
-Also, the internal pager supports a couple other advanced features. For
-one, it will accept and translate the <quote>standard</quote> nroff
-sequences for bold and underline. These sequences are a series of either
-the letter, backspace (<quote>^H</quote>), the letter again for bold or
-the letter, backspace, <quote>_</quote> for denoting underline. Mutt
-will attempt to display these in bold and underline respectively if your
-terminal supports them. If not, you can use the bold and underline <link
-linkend="color">color</link> objects to specify a
-<command>color</command> or mono attribute for them.
+また、内部ページャはさらにいくつかの高度な機能をサポートしています。そのうちの1つは
+太字と下線に対する<quote>標準</quote>シーケンスを処理できるということです。
+シーケンスは連続で、文字、バックスペース(<quote>^H</quote>)、同じ文字なら太字、
+文字、バックスペース、<quote>_</quote>ならば下線付き文字です。Mutt はターミナルがサポート
+している場合、それぞれ太字と下線付き文字で表示しようとします。サポートされていない場合は
+太字と下線は<link linkend="color">color</link> のオブジェクトを使って、<command>色</command>
+か、白黒属性を指定できます。
 </para>
 
 <para>
-Additionally, the internal pager supports the ANSI escape sequences for
-character attributes.  Mutt translates them into the correct color and
-character settings.  The sequences Mutt supports are:
+さらに、内部ページャは ANSI エスケープシーケンスの文字属性をサポートしています。Mutt はそれを
+正しい色と文字設定に解釈します。Mutt がサポートしているシーケンスは以下の通りです:
 </para>
 
 <screen>
@@ -791,161 +786,151 @@ character settings.  The sequences Mutt supports are:
 </screen>
 
 <para>
-where <emphasis>Ps</emphasis> can be one of the codes shown in <xref
-linkend="tab-ansi-esc"/>.
+ここで<emphasis>Ps</emphasis>は以下の<xref linkend="tab-ansi-esc"/>に示されているコードのどれかです。
 </para>
 
 <table id="tab-ansi-esc">
-<title>ANSI escape sequences</title>
+<title>ANSI エスケープシーケンス</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Escape code</entry><entry>Description</entry></row>
+<row><entry>エスケープコード</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>0</entry><entry>All attributes off</entry></row>
-<row><entry>1</entry><entry>Bold on</entry></row>
-<row><entry>4</entry><entry>Underline on</entry></row>
-<row><entry>5</entry><entry>Blink on</entry></row>
-<row><entry>7</entry><entry>Reverse video on</entry></row>
-<row><entry>3<emphasis>&lt;color&gt;</emphasis></entry><entry>Foreground color is <emphasis>&lt;color&gt;</emphasis> (see <xref linkend="tab-color"/>)</entry></row>
-<row><entry>4<emphasis>&lt;color&gt;</emphasis></entry><entry>Background color is <emphasis>&lt;color&gt;</emphasis> (see <xref linkend="tab-color"/>)</entry></row>
+<row><entry>0</entry><entry>全属性削除</entry></row>
+<row><entry>1</entry><entry>太字をON</entry></row>
+<row><entry>4</entry><entry>下線をON</entry></row>
+<row><entry>5</entry><entry>点滅をON</entry></row>
+<row><entry>7</entry><entry>反転表示をON</entry></row>
+<row><entry>3<emphasis>&lt;color&gt;</emphasis></entry><entry>前景色を<emphasis>&lt;color&gt;</emphasis> (<xref linkend="tab-color"/>を参照)</entry></row>
+<row><entry>4<emphasis>&lt;color&gt;</emphasis></entry><entry>背景色を<emphasis>&lt;color&gt;</emphasis> (<xref linkend="tab-color"/>を参照)</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <table id="tab-color">
-<title>Color sequences</title>
+<title>カラーシーケンス</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Color code</entry><entry>Color</entry></row>
+<row><entry>カラーコード</entry><entry>色</entry></row>
 </thead>
 <tbody>
-<row><entry>0</entry><entry>Black</entry></row>
-<row><entry>1</entry><entry>Red</entry></row>
-<row><entry>2</entry><entry>Green</entry></row>
-<row><entry>3</entry><entry>Yellow</entry></row>
-<row><entry>4</entry><entry>Blue</entry></row>
-<row><entry>5</entry><entry>Magenta</entry></row>
-<row><entry>6</entry><entry>Cyan</entry></row>
-<row><entry>7</entry><entry>White</entry></row>
+<row><entry>0</entry><entry>黒</entry></row>
+<row><entry>1</entry><entry>赤</entry></row>
+<row><entry>2</entry><entry>緑</entry></row>
+<row><entry>3</entry><entry>黄色</entry></row>
+<row><entry>4</entry><entry>青</entry></row>
+<row><entry>5</entry><entry>マゼンタ</entry></row>
+<row><entry>6</entry><entry>シアン</entry></row>
+<row><entry>7</entry><entry>白</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-Mutt uses these attributes for handling <literal>text/enriched</literal>
-messages, and they can also be used by an external <link
-linkend="auto-view">autoview</link> script for highlighting purposes.
+Mutt はこれらの属性を<literal>text/enriched</literal>メッセージのハンドリングに使い、
+外部の<link linkend="auto-view">autoview</link> スクリプトに、ハイライティングを
+行う目的でも使う事もあります。
 </para>
 
 <note>
 <para>
-If you change the colors for your display, for example by changing the
-color associated with color2 for your xterm, then that color will be
-used instead of green.
+使用するディスプレイに合わせて色を変更した場合、たとえば、xterm で color2 に割り当てられている
+色を変更した場合、緑色の代わりにその色が使われます。
 </para>
 </note>
 
 <note>
 <para>
-Note that the search commands in the pager take regular expressions,
-which are not quite the same as the more complex <link
-linkend="patterns">patterns</link> used by the search command in the
-index. This is because patterns are used to select messages by criteria
-whereas the pager already displays a selected message.
+ページャ中の検索コマンドは正規表現が使えますが、インデックス中で使われる検索コマンドで使われる
+<link linkend="patterns">パターン</link>よりも少し複雑で、全く同じではないことに注意してください。
+これは、ページャが選択されたメッセージをすでに表示されているのに対し、パターンは基準によって
+メッセージを選択するために使われるからです。
 </para>
 </note>
 
 </sect2>
 
 <sect2 id="threads">
-<title>Threaded Mode</title>
+<title>スレッドモード</title>
 
 <para>
-So-called <quote>threads</quote> provide a hierarchy of messages where
-replies are linked to their parent message(s). This organizational form
-is extremely useful in mailing lists where different parts of the
-discussion diverge. Mutt displays threads as a tree structure.
+いわゆる<quote>スレッド</quote>は、返信がその元メッセージにリンクされたメッセージの階層構造を
+提供します。この組織化された形式は、議論の異なった部分が分岐しているメーリングリストでは特に
+有用です。Mutt は木構造でスレッドを表示します。
 </para>
 
 <para>
-In Mutt, when a mailbox is <link linkend="sort">sorted</link>
-by <emphasis>threads</emphasis>, there are a few additional functions
-available in the <emphasis>index</emphasis>
-and <emphasis>pager</emphasis> modes as shown in
-<xref linkend="tab-key-threads"/>.
+Mutt では、メールボックスが<emphasis>スレッド</emphasis>によって<link linkend="sort">整列</link>
+されている場合、<emphasis>インデックス</emphasis>と<emphasis>ページャ</emphasis>モードにおいて、
+<xref linkend="tab-key-threads"/>に示すような形で、いくつか追加の機能が利用できます。
 </para>
 
 <table id="tab-key-threads">
-<title>Most common thread mode keys</title>
+<title>もっとも一般的なスレッドモードのキー</title>
 <tgroup cols="3">
 <thead>
 <row><entry>Key</entry><entry>Function</entry><entry>Description</entry></row>
 </thead>
 <tbody>
-<row><entry>^D</entry><entry><literal>&lt;delete-thread&gt;</literal></entry><entry>delete all messages in the current thread</entry></row>
-<row><entry>^U</entry><entry><literal>&lt;undelete-thread&gt;</literal></entry><entry>undelete all messages in the current thread</entry></row>
-<row><entry>^N</entry><entry><literal>&lt;next-thread&gt;</literal></entry><entry>jump to the start of the next thread</entry></row>
-<row><entry>^P</entry><entry><literal>&lt;previous-thread&gt;</literal></entry><entry>jump to the start of the previous thread</entry></row>
-<row><entry>^R</entry><entry><literal>&lt;read-thread&gt;</literal></entry><entry>mark the current thread as read</entry></row>
-<row><entry>Esc d</entry><entry><literal>&lt;delete-subthread&gt;</literal></entry><entry>delete all messages in the current subthread</entry></row>
-<row><entry>Esc u</entry><entry><literal>&lt;undelete-subthread&gt;</literal></entry><entry>undelete all messages in the current subthread</entry></row>
-<row><entry>Esc n</entry><entry><literal>&lt;next-subthread&gt;</literal></entry><entry>jump to the start of the next subthread</entry></row>
-<row><entry>Esc p</entry><entry><literal>&lt;previous-subthread&gt;</literal></entry><entry>jump to the start of the previous subthread</entry></row>
-<row><entry>Esc r</entry><entry><literal>&lt;read-subthread&gt;</literal></entry><entry>mark the current subthread as read</entry></row>
-<row><entry>Esc t</entry><entry><literal>&lt;tag-thread&gt;</literal></entry><entry>toggle the tag on the current thread</entry></row>
-<row><entry>Esc v</entry><entry><literal>&lt;collapse-thread&gt;</literal></entry><entry>toggle collapse for the current thread</entry></row>
-<row><entry>Esc V</entry><entry><literal>&lt;collapse-all&gt;</literal></entry><entry>toggle collapse for all threads</entry></row>
-<row><entry>P</entry><entry><literal>&lt;parent-message&gt;</literal></entry><entry>jump to parent message in thread</entry></row>
+<row><entry>^D</entry><entry><literal>&lt;delete-thread&gt;</literal></entry><entry>現在のスレッド中ですべてのメッセージを削除</entry></row>
+<row><entry>^U</entry><entry><literal>&lt;undelete-thread&gt;</literal></entry><entry>現在のスレッド中ですべてのメッセージの削除を取り消し</entry></row>
+<row><entry>^N</entry><entry><literal>&lt;next-thread&gt;</literal></entry><entry>次のスレッドの始点に飛ぶ</entry></row>
+<row><entry>^P</entry><entry><literal>&lt;previous-thread&gt;</literal></entry><entry>前のスレッドの始点に飛ぶ</entry></row>
+<row><entry>^R</entry><entry><literal>&lt;read-thread&gt;</literal></entry><entry>現在のスレッドを既読にする</entry></row>
+<row><entry>Esc d</entry><entry><literal>&lt;delete-subthread&gt;</literal></entry><entry>現在のサブスレッド中のすべてのメッセージを削除する</entry></row>
+<row><entry>Esc u</entry><entry><literal>&lt;undelete-subthread&gt;</literal></entry><entry>現在のサブスレッド中のすべてのメッセージの削除を取り消し</entry></row>
+<row><entry>Esc n</entry><entry><literal>&lt;next-subthread&gt;</literal></entry><entry>次のサブスレッドの始点に移動</entry></row>
+<row><entry>Esc p</entry><entry><literal>&lt;previous-subthread&gt;</literal></entry><entry>前のサブスレッドの始点に移動</entry></row>
+<row><entry>Esc r</entry><entry><literal>&lt;read-subthread&gt;</literal></entry><entry>現在のサブスレッドを既読にする</entry></row>
+<row><entry>Esc t</entry><entry><literal>&lt;tag-thread&gt;</literal></entry><entry>現在のスレッド上のタグをON/OFF</entry></row>
+<row><entry>Esc v</entry><entry><literal>&lt;collapse-thread&gt;</literal></entry><entry>現在のスレッドの折りたたみをON/OFF</entry></row>
+<row><entry>Esc V</entry><entry><literal>&lt;collapse-all&gt;</literal></entry><entry>すべてのスレッドの折りたたみをON/OFF</entry></row>
+<row><entry>P</entry><entry><literal>&lt;parent-message&gt;</literal></entry><entry>スレッド中の親メッセージに移動</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-In the <emphasis>index</emphasis>, the subject of threaded children
-messages will be prepended with thread tree characters.  By default,
-the subject itself will not be duplicated unless <link
-linkend="hide-thread-subject">$hide_thread_subject</link> is unset.
-Special characters will be added to the thread tree as detailed in
-<xref linkend="tab-thread-chars"/>.
+<emphasis>インデックス</emphasis>中では、スレッドの子メッセージの題名には先頭にスレッドの
+木構造を表す文字が付きます。既定値では、 <link linkend="hide-thread-subject">$hide_thread_subject</link>
+が設定されていない限り、題名自身は複製されません。スレッドに付加される特別な文字の詳細は、
+<xref linkend="tab-thread-chars"/>にあります。
 </para>
 
 <table id="tab-thread-chars">
-  <title>Special Thread Characters</title>
+  <title>特別なスレッド中の文字</title>
   <tgroup cols="3">
     <thead>
       <row>
-        <entry>Character</entry>
-        <entry>Description</entry>
-        <entry>Notes</entry>
+        <entry>文字</entry>
+        <entry>説明</entry>
+        <entry>備考</entry>
       </row>
     </thead>
     <tbody>
       <row>
         <entry>&amp;</entry>
-        <entry>hidden message</entry>
-        <entry>see <link linkend="hide-limited">$hide_limited</link> and
-        <link linkend="hide-top-limited">$hide_top_limited</link></entry>
+        <entry>メッセージを隠す</entry>
+        <entry><link linkend="hide-limited">$hide_limited</link> と
+        <link linkend="hide-top-limited">$hide_top_limited</link>を参照</entry>
       </row>
       <row>
         <entry>?</entry>
         <entry>missing message</entry>
-        <entry>see <link linkend="hide-missing">$hide_missing</link> and
-        <link linkend="hide-top-missing">$hide_top_missing</link></entry>
+        <entry><link linkend="hide-missing">$hide_missing</link> と
+        <link linkend="hide-top-missing">$hide_top_missing</link>を参照</entry>
       </row>
       <row>
         <entry>*</entry>
         <entry>pseudo thread</entry>
-        <entry>see <link linkend="strict-threads">$strict_threads</link>;
-        not displayed when
-        <link linkend="narrow-tree">$narrow_tree</link> is set</entry>
+        <entry><link linkend="strict-threads">$strict_threads</link>を参照;
+        <link linkend="narrow-tree">$narrow_tree</link>が設定されている場合表示されない</entry>
       </row>
       <row>
         <entry>=</entry>
-        <entry>duplicate thread</entry>
-        <entry>see <link linkend="duplicate-threads">$duplicate_threads</link>;
-        not displayed when
-        <link linkend="narrow-tree">$narrow_tree</link> is set</entry>
+        <entry>スレッドの複製</entry>
+        <entry><link linkend="duplicate-threads">$duplicate_threads</link>を参照;
+        <link linkend="narrow-tree">$narrow_tree</link>が設定されている場合表示されない</entry>
       </row>
     </tbody>
   </tgroup>
