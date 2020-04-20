@@ -937,33 +937,32 @@ Mutt では、メールボックスが<emphasis>スレッド</emphasis>によっ
 </table>
 
 <para>
-Collapsing a thread displays only the first message in the thread and
-hides the others. This is useful when threads contain so many messages
-that you can only see a handful of threads on the screen. See %M in
-<link linkend="index-format">$index_format</link>.  For example, you
-could use <quote>%?M?(#%03M)&amp;(%4l)?</quote> in <link
-linkend="index-format">$index_format</link> to optionally display the
-number of hidden messages if the thread is collapsed. The
+折りたたまれているスレッドではスレッド中の最初のメッセージのみ表示し、その他は隠します。
+これは、スレッドにたくさんのメッセージがあり、画面にはわずかなスレッドしか表示されない
+場合に便利です。<link linkend="index-format">$index_format</link>の %M を参照してくださ
+い。たとえば、スレッドが折りたたまれている時に、隠されているメッセージの数を表示するため
+<link linkend="index-format">$index_format</link>に <quote>%?M?(#%03M)&amp;(%4l)?</quote>
+という設定を使う事ができます。
 <literal>%?&lt;char&gt;?&lt;if-part&gt;&amp;&lt;else-part&gt;?</literal>
-syntax is explained in detail in <link
-linkend="formatstrings-conditionals">format string conditionals</link>.
+という文法の詳細は、<link linkend="formatstrings-conditionals">format string conditionals</link>
+に説明があります。
 </para>
 
 <para>
-Technically, every reply should contain a list of its parent messages in
-the thread tree, but not all do. In these cases, Mutt groups them by
-subject which can be controlled using the <link
-linkend="strict-threads">$strict_threads</link> variable.
+技術的には、すべての返信にはスレッドツリー中の親メッセージのリストが含まれているべき
+ですが、必ずしもすべてがそうとは限りません。そのような場合、Mutt は
+<link linkend="strict-threads">$strict_threads</link>変数を使って制御できる題名に
+よってグループ化を行います。
 </para>
 
 </sect2>
 
 <sect2 id="reading-misc">
-<title>Miscellaneous Functions</title>
+<title>その他の機能</title>
 
 <para>
-In addition, the <emphasis>index</emphasis> and
-<emphasis>pager</emphasis> menus have these interesting functions:
+さらに、<emphasis>インデックス</emphasis> と
+<emphasis>ページャ</emphasis> メニューにはいくつかの興味深い機能があります:
 </para>
 
 <variablelist>
@@ -974,10 +973,10 @@ In addition, the <emphasis>index</emphasis> and
 </term>
 <listitem>
 <para>
-Calculate statistics for all monitored mailboxes declared using the
-<command>mailboxes</command> command.
-It will calculate statistics despite
-<link linkend="mail-check-stats">$mail_check_stats</link> being unset.
+<command>mailboxes</command> コマンドを使って宣言された、すべての監視対象
+メールボックスに対する統計情報を計算します。これは、
+<link linkend="mail-check-stats">$mail_check_stats</link>が未設定でも
+統計情報を計算します。
 </para>
 </listitem>
 </varlistentry>
@@ -985,22 +984,21 @@ It will calculate statistics despite
 <varlistentry>
 <term>
 <literal>&lt;create-alias&gt;</literal><anchor id="create-alias"/>
-(default: a)
+(既定値: a)
 </term>
 <listitem>
 <para>
-Creates a new alias based upon the current message (or prompts for a new
-one).  Once editing is complete, an <link
-linkend="alias"><command>alias</command></link> command is added to the
-file specified by the <link linkend="alias-file">$alias_file</link>
-variable for future use
+現在のメッセージ(あるいうは新規プロンプト)をもとに、新しい別名を作成します。
+編集を終えると、<link linkend="alias"><command>alias</command></link>
+コマンドが<link linkend="alias-file">$alias_file</link>によって指定された
+ファイルに、あとで使うために追加されます。
 </para>
 
 <note>
 <para>
-Mutt does not read the <link linkend="alias-file">$alias_file</link>
-upon startup so you must explicitly <link
-linkend="source"><command>source</command></link> the file.
+Mutt は開始時以降は<link linkend="alias-file">$alias_file</link> を読み込みません。
+そのため、ファイルは<link linkend="source"><command>source</command></link>
+を使って明示的に読み込む必要があります。
 </para>
 </note>
 </listitem>
@@ -1009,57 +1007,54 @@ linkend="source"><command>source</command></link> the file.
 <varlistentry>
 <term>
 <literal>&lt;check-traditional-pgp&gt;</literal><anchor
-id="check-traditional-pgp"/> (default: Esc P)
+id="check-traditional-pgp"/> (既定値: Esc P)
 </term>
 <listitem>
 <para>
-This function will search the current message for content signed or
-encrypted with PGP the <quote>traditional</quote> way, that is, without
-proper MIME tagging.  Technically, this function will temporarily change
-the MIME content types of the body parts containing PGP data; this is
-similar to the <link
-linkend="edit-type"><literal>&lt;edit-type&gt;</literal></link>
-function's effect.
+この機能は、現在のメッセージを調べ、<quote>従来の</quote>方法で PGP による
+署名または暗号化が行われている内容を検索します。すなわち、 MIME タグがない
+場合のことです。技術的には、この機能は PGP データが含まれているボデイパートの
+MIME content type を一時的に変更します。すなわち、
+<link linkend="edit-type"><literal>&lt;edit-type&gt;</literal></link>
+機能の効果と似ています。
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term>
-<literal>&lt;edit&gt;</literal><anchor id="edit"/> (default: e)
+<literal>&lt;edit&gt;</literal><anchor id="edit"/> (既定値: e)
 </term>
 <listitem>
 <para>
-This command (available in the index and pager) allows you to edit the
-raw current message as it's present in the mail folder.  After you have
-finished editing, the changed message will be appended to the current
-folder, and the original message will be marked for deletion; if the
-message is unchanged it won't be replaced.
+このコマンド(インデックスとページャで有効)は、現在のメッセージを、
+メールフォルダ中にあるままの形で、そのまま編集します。編集を終えると、
+変更されたメッセージは現在のフォルダに追加され、オリジナルのメッセージには
+削除フラグがつけられます。メッセージが変更されなかった場合には置き換えは
+行われません。
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term>
-<literal>&lt;edit-type&gt;</literal><anchor id="edit-type"/> (default:
-^E on the attachment menu, and in the pager and index menus; ^T on the
-compose menu)
+<literal>&lt;edit-type&gt;</literal><anchor id="edit-type"/> (既定値:
+添付メニュー、ページャ、インデックスメニューでは ^E ; 編集メニューでは ^T)
 </term>
 <listitem>
 <para>
-This command is used to temporarily edit an attachment's content type to
-fix, for instance, bogus character set parameters.  When invoked from
-the index or from the pager, you'll have the opportunity to edit the
-top-level attachment's content type.  On the <link
-linkend="attach-menu">attachment menu</link>, you can change any
-attachment's content type. These changes are not persistent, and get
-lost upon changing folders.
+このコマンドは添付の content type を一時的に編集し、修正するのに使います。
+たとえば、間違った文字セットパラメータなどを直す時などです。インデックスか
+ページャから使うと、最上位の添付ファイルの content type を修正できます。
+<link linkend="attach-menu">添付メニュー</link>から使う場合には、どの添付ファイルの
+content type も修正できます。この変更は恒久的なものではなく、フォルダを変更すると
+消えてしまいます。
 </para>
 
 <para>
-Note that this command is also available on the <link
-linkend="compose-menu">compose menu</link>.  There, it's used to
-fine-tune the properties of attachments you are going to send.
+このコマンドは<link linkend="compose-menu">編集メニュー</link>でも使えることに
+注意してください。その場合、送信使用としている添付ファイルの属性を微調整するのに
+使います。
 </para>
 </listitem>
 </varlistentry>
@@ -1067,7 +1062,7 @@ fine-tune the properties of attachments you are going to send.
 <varlistentry>
 <term>
 <literal>&lt;enter-command&gt;</literal><anchor id="enter-command"/>
-(default: <quote>:</quote>)
+(既定値: <quote>:</quote>)
 </term>
 <listitem>
 <para>
