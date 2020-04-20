@@ -215,16 +215,16 @@ mutt -v
 </screen>
 
 <para>
-Within command synopsis, curly brackets (<quote>{}</quote>) denote a set
+コマンド概要の説明中で中括弧 (<quote>{}</quote>) は、オプションの組を表し、
 of options of which one is mandatory, square brackets
-(<quote>[]</quote>) denote optional arguments, three dots
-denote that the argument may be repeated arbitrary times.
+(<quote>[]</quote>) で囲まれたものは必須のものです。また、3つのドットは引数が
+任意の回数繰り返される可能性があることを意味します。
 </para>
 
 </sect1>
 
 <sect1 id="copyright">
-<title>Copyright</title>
+<title>著作権</title>
 
 <para>
 Mutt is Copyright &copy; 1996-2020 Michael R. Elkins
@@ -232,23 +232,21 @@ Mutt is Copyright &copy; 1996-2020 Michael R. Elkins
 </para>
 
 <para>
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License, or (at your
-option) any later version.
+このプログラムはフリーソフトウェアです。Free Software Foundation による GNU
+General Public License のバージョン 2 もしくはそれ以降のバージョン (任意選択)
+のいずれかに従う限り、自由に変更および再配布できます。
 </para>
 
 <para>
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-General Public License for more details.
+このプログラムは役に立つことを願って配布されていますが、「まったく無保証」です。
+商品能力や特定の目的への適性について、暗黙の保証さえありません。詳細は GNU
+General Public License を参照してください。
 </para>
 
 <para>
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+GNU General Public License の文面は、このプログラムに付いてきたはずです。そう
+でなければ、Free Software Foudation, Inc., 59 Temple Place - Suite 330,
+Boston, MA 02111, USA に手紙をください。
 </para>
 
 </sect1>
@@ -256,150 +254,134 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 </chapter>
 
 <chapter id="gettingstarted">
-<title>Getting Started</title>
+<title>最初のステップ</title>
 
 <para>
-This section is intended as a brief overview of how to use Mutt.  There
-are many other features which are described elsewhere in the manual.
-There is even more information available in the Mutt FAQ and various web
-pages. See the <ulink url="http://www.mutt.org/">Mutt homepage</ulink>
-for more details.
+この章の目的は Mutt の使い方を概観することです。 ほかにもマニュアルの別の場所
+で説明されている機能はたくさんあります。 さらには Mutt FAQ や種々の Web ページ
+で手に入る情報もあります。詳しくは
+<ulink url="http://www.mutt.org/">Mutt ホームページ</ulink>を参照してください。
 </para>
 
 <para>
-The keybindings described in this section are the defaults as
-distributed.  Your local system administrator may have altered the
-defaults for your site.  You can always type <quote>?</quote> in any
-menu to display the current bindings.
+この章では、配布されているままの既定のキー割り当てで説明します。 自分のサイト
+ではシステム管理者が既定値を変えてしまっている かもしれません。どのメニューでも
+<quote>?</quote> を押して 現在のキー割り当てを表示できます。 
 </para>
 
 <para>
-The first thing you need to do is invoke Mutt, simply by typing
-<literal>mutt</literal> at the command line.  There are various
-command-line options, see either the Mutt man page or the <link
-linkend="commandline">reference</link>.
+まず必要なのは Mutt を起動することです。これは、コマンドラインから
+<literal>mutt</literal> と入力するだけです。起動時の種々のオプションについては
+mutt のマニュアルページか、<link linkend="commandline">リファレンス</link> を
+参照してください。
 </para>
 
 <sect1 id="core-concepts">
-<title>Core Concepts</title>
+<title>基本的な考え方</title>
 
 <para>
-Mutt is a text-based application which interacts with users through
-different menus which are mostly line-/entry-based or page-based. A
-line-based menu is the so-called <quote>index</quote> menu (listing all
-messages of the currently opened folder) or the <quote>alias</quote>
-menu (allowing you to select recipients from a list). Examples for
-page-based menus are the <quote>pager</quote> (showing one message at a
-time) or the <quote>help</quote> menu listing all available key
-bindings.
+Mutt は、ほとんどの場合、行/エントリまたはページベースの、異なったメ
+ニューを対話的に使って操作する、テキストベースのアプリケーションです。
+行ベースのメニューは<quote>index</quote>メニュー(現在オープンしているフォルダ
+のすべてのメッセージを表示)または<quote>alias</quote>メニュー(リストから受信者
+を選択できる)のようなものです。ページベースのメニュー例は、
+<quote>pager</quote>(一度に1つのメッセージを表示)または有効なキーバインディン
+グを一覧表示する<quote>help</quote>メニューです。
 </para>
 
 <para>
-The user interface consists of a context sensitive help line at the top,
-the menu's contents followed by a context sensitive status line and
-finally the command line. The command line is used to display
-informational and error messages as well as for prompts and for entering
-interactive commands.
+ユーザインタフェースには、最上部に状況によって変化するヘルプ行、メニューの内容、
+状況によって変化するステータス行、コマンド行という構成になっています。コマンド
+行は、プロンプトのように情報やエラーメッセージを表示したり、対話的なコマンドを
+入力するのに使われます。
 </para>
 
 <para>
-Mutt is configured through variables which, if the user wants to
-permanently use a non-default value, are written to configuration
-files. Mutt supports a rich config file syntax to make even complex
-configuration files readable and commentable.
+Mutt は利用者が恒久的に既定値以外の値を使いたい場合に、設定ファイルに記述した
+変数を使って構成されます。Mutt は読みやすく、コメントも書ける、やや複
+雑な設定ファイルに、リッチな設定構文で記述できることをサポートしています。
 </para>
 
 <para>
-Because Mutt allows for customizing almost all key bindings, there are
-so-called <quote>functions</quote> which can be executed manually (using
-the command line) or in macros. Macros allow the user to bind a sequence
-of commands to a single key or a short key sequence instead of repeating
-a sequence of actions over and over.
+Mutt はほとんどのキーバインディングを変更することができるので、いわゆる
+<quote>関数</quote>を(コマンド行を使って)手動で実行したり、マクロで実行させた
+りできます。マクロは、一連の動作を繰り返す代わりに、1つのキーや短いキーシーケ
+ンスにバインドすることもできます。
 </para>
 
 <para>
-Many commands (such as saving or copying a message to another folder)
-can be applied to a single message or a set of messages (so-called
-<quote>tagged</quote> messages). To help selecting messages, Mutt
-provides a rich set of message patterns (such as recipients, sender,
-body contents, date sent/received, etc.) which can be combined into
-complex expressions using the boolean <emphasis>and</emphasis> and
-<emphasis>or</emphasis> operations as well as negating. These patterns
-can also be used to (for example) search for messages or to limit the
-index to show only matching messages.
+(他のフォルダにメッセージをセーブまたはコピーするような)多くのコマンドは、
+単一のメッセージまたは(いわゆる<quote>タグ付けられた</quote>)ひとまとまりのメッ
+セージに適用できます。メッセージ選択を手助けするため、Mutt は、否定と同様、論
+理的な<emphasis>and</emphasis>と<emphasis>or</emphasis>操作を組み合わせること
+ができる、たくさんのメッセージパターン(たとえば受信者、送信者、本体の内容、
+送受信日付など)を提供しています。パターンは、一致したメッセージのみをインデッ
+クスに表示させるため、(たとえば)メッセージの検索にも使う事ができます。
 </para>
 
 <para>
-Mutt supports a <quote>hook</quote> concept which allows the user to
-execute arbitrary configuration commands and functions in certain
-situations such as entering a folder, starting a new message or replying
-to an existing one. These hooks can be used to highly customize Mutt's
-behavior including managing multiple identities, customizing the
-display for a folder or even implementing auto-archiving based on a
-per-folder basis and much more.
+Mutt は、フォルダに入ったり、新規メッセージを作ったり、既存のメッセージに返信
+するような特定の状況において、設定コマンドと関数をユーザが実行できる、
+<quote>hook</quote>というコンセプトをサポートしています。hook は、複数のアイデ
+ンティティの管理、フォルダ表示のカスタマイズフォルダ単位での自動アーカイブの実
+装などやその他を含む、高度にカスタマイズされた Mutt の動作を行うのに使われます。
 </para>
 
 <para>
-Besides an interactive mode, Mutt can also be used as a command-line
-tool to send messages. It also supports a
-<literal>mailx(1)</literal>-compatible interface, see <xref
-linkend="tab-commandline-options"/> for a complete list of command-line
-options.
+インタラクティブモードのほかに、Mutt はメッセージ送信を行うコマンド行ツールと
+しても使えます。この場合、<literal>mailx(1)</literal> 互換のインタフェースをサ
+ポートしています。コマンド行オプション一覧の詳細は<xref linkend="tab-commandline-options"/>
+を参照してください。
 </para>
 
 </sect1>
 
 <sect1 id="concept-screens-and-menus">
-<title>Screens and Menus</title>
+<title>画面とメニュー</title>
 
 <sect2 id="intro-index">
-<title>Index</title>
+<title>インデックス</title>
 
 <para>
-The index is the screen that you usually see first when you start
-Mutt. It gives an overview over your emails in the currently opened
-mailbox. By default, this is your system mailbox.  The information you
-see in the index is a list of emails, each with its number on the left,
-its flags (new email, important email, email that has been forwarded or
-replied to, tagged email, ...), the date when email was sent, its
-sender, the email size, and the subject. Additionally, the index also
-shows thread hierarchies: when you reply to an email, and the other
-person replies back, you can see the other person's email in a
-"sub-tree" below.  This is especially useful for personal email between
-a group of people or when you've subscribed to mailing lists.
+インデックスは、Mutt を起動した時に通常最初に見る画面のことです。ここには、現
+在オープンしているメールボックス中にあるメールの概要が表示されます。既定値では、
+これはシステムのメールボックスです。インデックス中に表示されている情報は、左側
+に番号がついているメールの一覧、フラグ(新規メール、重要メール、転送または返信
+されたメール、タグづけられたメールなど)、メール送信日付、送信者、メールサイズ
+と題名です。さらに、メールに返信した場合や他の人がリプライした場合、インデック
+スにはスレッド階層を表示することもできます。この場合、他者のメールを"サブツリー
+"配下で見ることができます。この機能は、複数の人によるグループにおいての個人的なメー
+ルや、メーリングリストを購読している場合には特に便利です。
 </para>
 
 </sect2>
 
 <sect2 id="intro-pager">
-<title>Pager</title>
+<title>ページャ</title>
 
 <para>
-The pager is responsible for showing the email content. On the top of
-the pager you have an overview over the most important email headers
-like the sender, the recipient, the subject, and much more
-information. How much information you actually see depends on your
-configuration, which we'll describe below.
+ページャはメールの内容を表示するのに使います。ページャの最上部には、たとえば送
+信者、受信者、題名とその他の情報がある、最も重要なメールのヘッダがあります。ど
+のような情報を実際に見ることができるかは、以下で詳細に記述がある、設定に依存し
+ます。
 </para>
 
 <para>
-Below the headers, you see the email body which usually contains the
-message. If the email contains any attachments, you will see more
-information about them below the email body, or, if the attachments are
-text files, you can view them directly in the pager.
+ヘッダの下には、通常、メッセージを含むメールの本体が表示されます。メールに添付が
+ある場合、その情報をメール本体のあとで見ることができます。添付がテキストの場合、
+ページャ中で直接見ることができます。
 </para>
 
 <para>
-To give the user a good overview, it is possible to configure Mutt to
-show different things in the pager with different colors. Virtually
-everything that can be described with a regular expression can be
-colored, e.g. URLs, email addresses or smileys.
+概要を見やすく表示するため、ページャ中で異なったものを異なった色で表示するよう
+にMutt を設定できます。URL、メールアドレス、スマイリーなど、正規表現で記述でき
+るものは事実上すべてに色をつけることができます。
 </para>
 
 </sect2>
 
 <sect2 id="intro-browser">
-<title>File Browser</title>
+<title>ファイルブラウザ</title>
 
 <para>
 The file browser is the interface to the local or remote file
