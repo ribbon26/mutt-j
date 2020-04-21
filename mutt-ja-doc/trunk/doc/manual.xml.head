@@ -1066,10 +1066,9 @@ content type も修正できます。この変更は恒久的なものではな�
 </term>
 <listitem>
 <para>
-This command is used to execute any command you would normally put in a
-configuration file.  A common use is to check the settings of variables,
-or in conjunction with <link linkend="macro">macros</link> to change
-settings on the fly.
+このコマンドは通常設定ファイル中に記述するコマンドを実行するのに使います。
+一般的な使い方としては、変数の設定を確認したり、<link linkend="macro">macros</link>
+と組み合わせて、動作中に設定を変更するのに使います。
 </para>
 </listitem>
 </varlistentry>
@@ -1077,12 +1076,12 @@ settings on the fly.
 <varlistentry>
 <term>
 <literal>&lt;extract-keys&gt;</literal><anchor id="extract-keys"/>
-(default: ^K)
+(既定値: ^K)
 </term>
 <listitem>
 <para>
-This command extracts PGP public keys from the current or tagged
-message(s) and adds them to your PGP public key ring.
+このコマンドは PGP 公開鍵を、現在またはタグづけられたメッセージから
+抽出して自分の PGP 公開鍵キーリングに追加します。 
 </para>
 </listitem>
 </varlistentry>
@@ -1090,33 +1089,33 @@ message(s) and adds them to your PGP public key ring.
 <varlistentry>
 <term>
 <literal>&lt;forget-passphrase&gt;</literal><anchor
-id="forget-passphrase"/> (default: ^F)
+id="forget-passphrase"/> (既定値: ^F)
 </term>
 <listitem>
 <para>
-This command wipes the passphrase(s) from memory. It is useful, if you
-misspelled the passphrase.
+このコマンドはパスフレーズをメモリから削除します。パスフレーズを間違って
+入力した時に使います。
 </para>
 </listitem>
 </varlistentry>
 
 <varlistentry>
 <term>
-<literal>&lt;list-reply&gt;</literal><anchor id="list-reply"/> (default:
-L)
+<literal>&lt;list-reply&gt;</literal><anchor id="list-reply"/> (既定値:L)
 </term>
 <listitem>
 <para>
-Reply to the current or tagged message(s) by extracting any addresses
-which match the regular expressions given by the <link
-linkend="lists"><command>lists</command> or
-<command>subscribe</command></link> commands, but also honor any
-<literal>Mail-Followup-To</literal> header(s) if the <link
-linkend="honor-followup-to">$honor_followup_to</link> configuration
-variable is set.  In addition, the <literal>List-Post</literal> header field is
-examined for <literal>mailto:</literal> URLs specifying a mailing list address.
-Using this when replying to messages posted to mailing lists helps avoid
-duplicate copies being sent to the author of the message you are replying to.
+<link linkend="lists"><command>lists</command> または
+<command>subscribe</command></link> コマンドを使って得られた、
+正規表現に一致するアドレスから抽出された、現在またはタグづけられたメッセージに
+返信します。それだけではなく、もし、
+<link linkend="honor-followup-to">$honor_followup_to</link> 変数が設定で
+有効になっている場合、<literal>Mail-Followup-To</literal> ヘッダを信用します。
+さらに、<literal>List-Post</literal> ヘッダフィールドが、
+メーリングリストアドレスとして、<literal>mailto:</literal> URL が
+指定された場合に検査されます。
+メーリングリストに投稿されたメッセージに返信する時にこれを使うと、
+返信する元メッセージの送信者とメーリングリストへ二重に送信するのを避ける助けになります。 
 </para>
 </listitem>
 </varlistentry>
@@ -1124,17 +1123,16 @@ duplicate copies being sent to the author of the message you are replying to.
 <varlistentry>
 <term>
 <literal>&lt;pipe-message&gt;</literal><anchor id="pipe-message"/>
-(default: |)
+(既定値: |)
 </term>
 <listitem>
 <para>
-Asks for an external Unix command and pipes the current or tagged
-message(s) to it.  The variables <link
-linkend="pipe-decode">$pipe_decode</link>, <link
-linkend="pipe-split">$pipe_split</link>, <link
-linkend="pipe-sep">$pipe_sep</link> and <link
-linkend="wait-key">$wait_key</link> control the exact behavior of this
-function.
+外部 Unix コマンドの入力を要求し、現在又はタグづけられたメッセージをそこにパイプします。
+変数
+<link linkend="pipe-decode">$pipe_decode</link>,
+<link linkend="pipe-split">$pipe_split</link>,
+<link linkend="pipe-sep">$pipe_sep</link> と
+<link linkend="wait-key">$wait_key</link> はこの機能の正確な動作を制御します。
 </para>
 </listitem>
 </varlistentry>
@@ -1142,21 +1140,19 @@ function.
 <varlistentry>
 <term>
 <literal>&lt;resend-message&gt;</literal><anchor id="resend-message"/>
-(default: Esc e)
+(既定値: Esc e)
 </term>
 <listitem>
 <para>
-Mutt takes the current message as a template for a new message.  This
-function is best described as "recall from arbitrary folders".  It can
-conveniently be used to forward MIME messages while preserving the
-original mail structure. Note that the amount of headers included here
-depends on the value of the <link linkend="weed">$weed</link> variable.
+resend-message を使うと、Mutt は現在のメッセージを雛型として新しいメッセージを作成します。
+この機能は "任意のフォルダの復元" と説明するのが最適でしょう。MIME メッセージを、
+もともとのメール構造を保ったまま転送するのに便利です。このときに含まれるへッダは 
+<link linkend="weed">$weed</link> 変数の値に依存していることに注意してください。
 </para>
 
 <para>
-This function is also available from the attachment menu. You can use
-this to easily resend a message which was included with a bounce message
-as a <literal>message/rfc822</literal> body part.
+この機能は添付メニューからも利用できます。これを使えば<literal>message/rfc822</literal>
+ボディパートとして転送されてきたメッセージを簡単に再送できます。 
 </para>
 </listitem>
 </varlistentry>
@@ -1164,16 +1160,15 @@ as a <literal>message/rfc822</literal> body part.
 <varlistentry>
 <term>
 <literal>&lt;shell-escape&gt;</literal><anchor id="shell-escape"/>
-(default: !)
+(既定値: !)
 </term>
 <listitem>
 <para>
-Asks for an external Unix command and executes it.  The <link
-linkend="wait-key">$wait_key</link> can be used to control whether Mutt
-will wait for a key to be pressed when the command returns (presumably
-to let the user read the output of the command), based on the return
-status of the named command. If no command is given, an interactive
-shell is executed.
+外部 Unix コマンドの入力を要求し、それを実行します。
+<link linkend="wait-key">$wait_key</link> を使って、コマンドが終了したときに
+(おそらくコマンドの出力をユーザが読めるようにするため)、Mutt が何か
+キーが押されるまで 待つかどうかをコマンドの戻り値で制御するようにできます。
+コマンドが指定されなかった場合は、シェルが起動します。
 </para>
 </listitem>
 </varlistentry>
@@ -1181,15 +1176,14 @@ shell is executed.
 <varlistentry>
 <term>
 <literal>&lt;toggle-quoted&gt;</literal><anchor id="toggle-quoted"/>
-(default: T)
+(既定値: T)
 </term>
 <listitem>
 <para>
-The pager uses the <link linkend="quote-regexp">$quote_regexp</link>
-variable to detect quoted text when displaying the body of the message.
-This function toggles the display of the quoted material in the message.
-It is particularly useful when being interested in just the response and
-there is a large amount of quoted text in the way.
+ページャは、メッセージの本文を表示する時に、
+<link linkend="quote-regexp">$quote_regexp</link>変数を使って引用文を
+検出します。この機能は、メッセージ中の引用部分を表示するかどうかを切り替えます。
+特に、返事だけに興味があるのに大量の引用文があって邪魔だというようなときに役に立ちます。 
 </para>
 </listitem>
 </varlistentry>
@@ -1197,12 +1191,11 @@ there is a large amount of quoted text in the way.
 <varlistentry>
 <term>
 <literal>&lt;skip-quoted&gt;</literal><anchor id="skip-quoted"/>
-(default: S)
+(既定値: S)
 </term>
 <listitem>
 <para>
-This function will go to the next line of non-quoted text which comes
-after a line of quoted text in the internal pager.
+この機能は内部ページャにおいて、引用文の行のあとの非引用文の行に移動します。
 </para>
 </listitem>
 </varlistentry>
@@ -1214,10 +1207,10 @@ after a line of quoted text in the internal pager.
 </sect1>
 
 <sect1 id="sending">
-<title>Sending Mail</title>
+<title>メールの送信</title>
 
 <sect2 id="sending-intro">
-<title>Introduction</title>
+<title>イントロダクション</title>
 
 <para>
 The bindings shown in <xref linkend="tab-key-send"/> are available in
