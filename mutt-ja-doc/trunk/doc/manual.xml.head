@@ -1318,86 +1318,81 @@ Cc で送信します。<link linkend="alternates"><command>alternates</command>
 </para>
 
 <para>
-Once you have finished editing the body of your mail message, you are
-returned to the <emphasis>compose</emphasis> menu providing the
-functions shown in <xref linkend="tab-func-compose"/> to modify, send or
-postpone the message.
+メール本文の修正完了後は <emphasis>compose</emphasis>メニューに戻ります。
+<xref linkend="tab-func-compose"/>にある選択肢で、再編集、送信または一時保存を選べます。
 </para>
 
 <table id="tab-func-compose">
-<title>Most common compose menu keys</title>
+<title>もっとも一般的な編集メニューキー</title>
 <tgroup cols="3">
 <thead>
-<row><entry>Key</entry><entry>Function</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>a</entry><entry><literal>&lt;attach-file&gt;</literal></entry><entry>attach a file</entry></row>
-<row><entry>A</entry><entry><literal>&lt;attach-message&gt;</literal></entry><entry>attach message(s) to the message</entry></row>
-<row><entry>Esc k</entry><entry><literal>&lt;attach-key&gt;</literal></entry><entry>attach a PGP public key</entry></row>
-<row><entry>d</entry><entry><literal>&lt;edit-description&gt;</literal></entry><entry>edit description on attachment</entry></row>
-<row><entry>D</entry><entry><literal>&lt;detach-file&gt;</literal></entry><entry>detach a file</entry></row>
-<row><entry>t</entry><entry><literal>&lt;edit-to&gt;</literal></entry><entry>edit the To field</entry></row>
-<row><entry>Esc f</entry><entry><literal>&lt;edit-from&gt;</literal></entry><entry>edit the From field</entry></row>
-<row><entry>r</entry><entry><literal>&lt;edit-reply-to&gt;</literal></entry><entry>edit the Reply-To field</entry></row>
-<row><entry>c</entry><entry><literal>&lt;edit-cc&gt;</literal></entry><entry>edit the Cc field</entry></row>
-<row><entry>b</entry><entry><literal>&lt;edit-bcc&gt;</literal></entry><entry>edit the Bcc field</entry></row>
-<row><entry>y</entry><entry><literal>&lt;send-message&gt;</literal></entry><entry>send the message</entry></row>
-<row><entry>s</entry><entry><literal>&lt;edit-subject&gt;</literal></entry><entry>edit the Subject</entry></row>
-<row><entry>S</entry><entry><literal>&lt;smime-menu&gt;</literal></entry><entry>select S/MIME options</entry></row>
-<row><entry>f</entry><entry><literal>&lt;edit-fcc&gt;</literal></entry><entry>specify an <quote>Fcc</quote> mailbox</entry></row>
-<row><entry>p</entry><entry><literal>&lt;pgp-menu&gt;</literal></entry><entry>select PGP options</entry></row>
-<row><entry>P</entry><entry><literal>&lt;postpone-message&gt;</literal></entry><entry>postpone this message until later</entry></row>
-<row><entry>q</entry><entry><literal>&lt;quit&gt;</literal></entry><entry>quit (abort) sending the message</entry></row>
-<row><entry>w</entry><entry><literal>&lt;write-fcc&gt;</literal></entry><entry>write the message to a folder</entry></row>
-<row><entry>i</entry><entry><literal>&lt;ispell&gt;</literal></entry><entry>check spelling (if available on your system)</entry></row>
-<row><entry>^F</entry><entry><literal>&lt;forget-passphrase&gt;</literal></entry><entry>wipe passphrase(s) from memory</entry></row>
+<row><entry>a</entry><entry><literal>&lt;attach-file&gt;</literal></entry><entry>ファイルの添付</entry></row>
+<row><entry>A</entry><entry><literal>&lt;attach-message&gt;</literal></entry><entry>メッセージにメッセージを添付</entry></row>
+<row><entry>Esc k</entry><entry><literal>&lt;attach-key&gt;</literal></entry><entry>PGP 公開鍵を添付</entry></row>
+<row><entry>d</entry><entry><literal>&lt;edit-description&gt;</literal></entry><entry>添付の説明を編集</entry></row>
+<row><entry>D</entry><entry><literal>&lt;detach-file&gt;</literal></entry><entry>添付ファルを外す</entry></row>
+<row><entry>t</entry><entry><literal>&lt;edit-to&gt;</literal></entry><entry>To フィールドを編集</entry></row>
+<row><entry>Esc f</entry><entry><literal>&lt;edit-from&gt;</literal></entry><entry>From フィールドを編集</entry></row>
+<row><entry>r</entry><entry><literal>&lt;edit-reply-to&gt;</literal></entry><entry>Reply-To フィールドを編集</entry></row>
+<row><entry>c</entry><entry><literal>&lt;edit-cc&gt;</literal></entry><entry>Cc フィールドを編集</entry></row>
+<row><entry>b</entry><entry><literal>&lt;edit-bcc&gt;</literal></entry><entry>フィールドを編集</entry></row>
+<row><entry>y</entry><entry><literal>&lt;send-message&gt;</literal></entry><entry>メッセージを送信</entry></row>
+<row><entry>s</entry><entry><literal>&lt;edit-subject&gt;</literal></entry><entry>題名を編集</entry></row>
+<row><entry>S</entry><entry><literal>&lt;smime-menu&gt;</literal></entry><entry>S/MIME オプションを選択</entry></row>
+<row><entry>f</entry><entry><literal>&lt;edit-fcc&gt;</literal></entry><entry><quote>Fcc</quote> メールボックスを指定</entry></row>
+<row><entry>p</entry><entry><literal>&lt;pgp-menu&gt;</literal></entry><entry>PGP オプションを選択</entry></row>
+<row><entry>P</entry><entry><literal>&lt;postpone-message&gt;</literal></entry><entry>あとで使うためメッセージを一時保存</entry></row>
+<row><entry>q</entry><entry><literal>&lt;quit&gt;</literal></entry><entry>メッセージの送信を中断(中止)</entry></row>
+<row><entry>w</entry><entry><literal>&lt;write-fcc&gt;</literal></entry><entry>フォルダにメッセージを書き込む</entry></row>
+<row><entry>i</entry><entry><literal>&lt;ispell&gt;</literal></entry><entry>スペルチェック(システムで有効な場合)</entry></row>
+<row><entry>^F</entry><entry><literal>&lt;forget-passphrase&gt;</literal></entry><entry>メモリからパスフレーズを削除</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-The compose menu is also used to edit the attachments for a message
-which can be either files or other messages. The
-<literal>&lt;attach-message&gt;</literal> function to will prompt you
-for a folder to attach messages from. You can now tag messages in that
-folder and they will be attached to the message you are sending.
+編集メニューは、ファイルまたは他のメッセージからなる添付の編集にも使えます。
+<literal>&lt;attach-message&gt;</literal>機能はを使うと、メッセージを添付するフォルダを指定するプロ
+ンプトが表示されます。そのフォルダでメッセージにタグをつけると送信するメッセージにそれらが添付されま
+す。
 </para>
 
 <note>
 <para>
-Note that certain operations like composing a new mail, replying,
-forwarding, etc. are not permitted when you are in that folder. The %r
-in <link linkend="status-format">$status_format</link> will change to a
-<quote>A</quote> to indicate that you are in attach-message mode.
+そのフォルダにいる場合には、新しいメールの作成、返信、転送などのようないくつかの操作ができないことに
+注意してください。<link linkend="status-format">$status_format</link> 中の %r が <quote>A</quote>
+になると、添付メッセージモードにいることを表示します。
 </para>
 </note>
 
 <para>
-After exiting the compose menu via <literal>&lt;send-message&gt;</literal>,
-the message will be sent.  If configured and enabled, this can happen via
-<link linkend="sending-mixmaster">mixmaster</link> or
-<link linkend="smtp">$smtp_url</link>.  Otherwise
-<link linkend="sendmail">$sendmail</link> will be invoked.  Prior to
-version 1.13, Mutt enabled <link linkend="write-bcc">$write_bcc</link> by
-default, assuming the MTA would automatically remove a
-<literal>Bcc:</literal> header as part of delivery.  Starting with 1.13, the
-option is unset by default, but no longer affects the fcc copy of the message.
+<literal>&lt;send-message&gt;</literal>経由で編集メニューを終了したあと、メッセージが送信されます。
+設定されてそれが有効な場合、
+<link linkend="sending-mixmaster">mixmaster</link>または
+<link linkend="smtp">$smtp_url</link> 経由で行うことができます。
+それ以外では、<link linkend="sendmail">$sendmail</link> が起動されます。
+バージョン 1.13 より前では、Mutt は既定値で<link linkend="write-bcc">$write_bcc</link>を
+有効にしていて、MTA が自動的に<literal>Bcc:</literal>ヘッダを配信の一部として削除することを
+仮定しています。1.13からは、オプションは既定値では設定されませんが、メッセージの fcc コピーにはもは
+や何も影響しません。
 </para>
 
 </sect2>
 
 <sect2 id="edit-header">
-<title>Editing the Message Header</title>
+<title>メッセージヘッダの編集</title>
 
 <para>
-When editing the header because of <link
-linkend="edit-headers">$edit_headers</link> being set, there are a
-several pseudo headers available which will not be included in sent
-messages but trigger special Mutt behavior.
+<link linkend="edit-headers">$edit_headers</link> が設定されているためヘッダを編集する場合、
+送信メッセージには含まれませんが、特別な Mutt の動作を起動する、いくつかの疑似ヘッダが利用
+可能です。  
 </para>
 
 <sect3 id="fcc-header">
-<title>Fcc: Pseudo Header</title>
+<title>Fcc: 疑似ヘッダ</title>
 
 <para>
 If you specify
