@@ -1213,118 +1213,108 @@ resend-message を使うと、Mutt は現在のメッセージを雛型として
 <title>イントロダクション</title>
 
 <para>
-The bindings shown in <xref linkend="tab-key-send"/> are available in
-the <emphasis>index</emphasis> and <emphasis>pager</emphasis> to start a
-new message.
+<xref linkend="tab-key-send"/>に記載のあるバインディングは、<emphasis>インデックス</emphasis> と
+<emphasis>ページャ</emphasis>で新しくメッセージを書き始める時に有効です。
 </para>
 
 <table id="tab-key-send">
-<title>Most common mail sending keys</title>
+<title>もっとも一般的なメール送信キー</title>
 <tgroup cols="3">
 <thead>
-<row><entry>Key</entry><entry>Function</entry><entry>Description</entry></row>
+<row><entry>キー</entry><entry>機能</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>m</entry><entry><literal>&lt;compose&gt;</literal></entry><entry>compose a new message</entry></row>
-<row><entry>r</entry><entry><literal>&lt;reply&gt;</literal></entry><entry>reply to sender</entry></row>
-<row><entry>g</entry><entry><literal>&lt;group-reply&gt;</literal></entry><entry>reply to all recipients</entry></row>
-<row><entry></entry><entry><literal>&lt;group-chat-reply&gt;</literal></entry><entry>reply to all recipients preserving To/Cc</entry></row>
-<row><entry>L</entry><entry><literal>&lt;list-reply&gt;</literal></entry><entry>reply to mailing list address</entry></row>
-<row><entry>f</entry><entry><literal>&lt;forward&gt;</literal></entry><entry>forward message</entry></row>
-<row><entry>b</entry><entry><literal>&lt;bounce&gt;</literal></entry><entry>bounce (remail) message</entry></row>
-<row><entry>Esc k</entry><entry><literal>&lt;mail-key&gt;</literal></entry><entry>mail a PGP public key to someone</entry></row>
+<row><entry>m</entry><entry><literal>&lt;compose&gt;</literal></entry><entry>新規メッセージを作成</entry></row>
+<row><entry>r</entry><entry><literal>&lt;reply&gt;</literal></entry><entry>送信者に返信</entry></row>
+<row><entry>g</entry><entry><literal>&lt;group-reply&gt;</literal></entry><entry>受信者全員に返信</entry></row>
+<row><entry></entry><entry><literal>&lt;group-chat-reply&gt;</literal></entry><entry>To/Cc を保持して、すべての受信者に返信</entry></row>
+<row><entry>L</entry><entry><literal>&lt;list-reply&gt;</literal></entry><entry>メーリングリストのアドレスに返信</entry></row>
+<row><entry>f</entry><entry><literal>&lt;forward&gt;</literal></entry><entry>メッセージを転送</entry></row>
+<row><entry>b</entry><entry><literal>&lt;bounce&gt;</literal></entry><entry>メッセージを中継(再送)</entry></row>
+<row><entry>Esc k</entry><entry><literal>&lt;mail-key&gt;</literal></entry><entry>誰かに PGP 公開鍵を送信</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-<emphasis>Bouncing</emphasis> a message sends the message as-is to the
-recipient you specify.  <emphasis>Forwarding</emphasis> a message allows
-you to add comments or modify the message you are forwarding.  These
-items are discussed in greater detail in the next section <quote><link
-linkend="forwarding-mail">Forwarding and Bouncing Mail</link>.</quote>
+<emphasis>メッセージの中継(Bouncing)</emphasis> は、指定した受信者に、メッセージをそのまま送信します。
+<emphasis>メッセージの転送(Forwarding)</emphasis>は、転送する時に、メッセージにコメントをつけたり、
+編集したりできます。これらにつては、次の節
+<quote><link linkend="forwarding-mail">メールの転送と中継</link>でより詳細に説明します。</quote>
 </para>
 
 <para>
-Mutt will then enter the <emphasis>compose</emphasis> menu and prompt
-you for the recipients to place on the <quote>To:</quote> header field
-when you hit <literal>m</literal> to start a new message. Next, it will
-ask you for the <quote>Subject:</quote> field for the message, providing
-a default if you are replying to or forwarding a message. You again have
-the chance to adjust recipients, subject, and security settings right
-before actually sending the message. See also <link
-linkend="askcc">$askcc</link>, <link linkend="askbcc">$askbcc</link>,
-<link linkend="autoedit">$autoedit</link>, <link
-linkend="bounce">$bounce</link>, <link
-linkend="fast-reply">$fast_reply</link>, and <link
-linkend="include">$include</link> for changing how and if Mutt asks
-these questions.
+上記のコマンドを使うと Mutt は<emphasis>compose</emphasis>メニューに入り、
+<quote>To:</quote>ヘッダフィールドに入れる宛先の入力を促します。
+<literal>m</literal>キーを押すと、新規メッセージの作成を開始します。
+次に、メッセージの<quote>Subject:</quote>フィールドを聞いてきますが、
+メッセージの返信や転送の際には既定値が入っています。送信者、題名とセキュリティ
+設定を、実際にメッセージを送信する前に再度修正することはできます。
+Mutt がどのように質問するかを変更するについては、
+<link linkend="askcc">$askcc</link>, <link linkend="askbcc">$askbcc</link>,
+<link linkend="autoedit">$autoedit</link>, <link linkend="bounce">$bounce</link>,
+<link linkend="fast-reply">$fast_reply</link> と <link linkend="include">$include</link>
+を参照してください。
 </para>
 
 <para>
-When replying, Mutt fills these fields with proper values depending on
-the reply type.  The types of replying supported are:
+返信する場合、Mutt は、返信するタイプによって、それらのフィールドに適切な値を入れます。
+サポートしている返信のタイプは以下の通りです:
 </para>
 
 <variablelist>
 <varlistentry>
-<term>Simple reply</term>
+<term>単純な返信</term>
 <listitem>
 <para>
-Reply to the author directly.
+送信者に直接返信。  
 </para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>Group reply</term>
+<term>グループ返信</term>
 <listitem>
 <para>
-Reply to the author; cc all other recipients; consults
-<link linkend="alternates"><command>alternates</command></link>
-and excludes you.
+送信者、cc に指定してあるすべての受信者に返信;
+<link linkend="alternates"><command>alternates</command></link>を確認し、
+自分自身を除外します。
 </para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>Group Chat reply</term>
+<term>グループチャット返信</term>
 <listitem>
 <para>
-Reply to the author and other recipients in the To list;
-cc other recipients in the Cc list; consults
-<link linkend="alternates"><command>alternates</command></link>
-and excludes you.
+To リスト中の、送信者と他の受信者に返信します。 Cc リスト中の受信者には
+Cc で送信します。<link linkend="alternates"><command>alternates</command></link>
+を考慮し、自分自身は除外します。
 </para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>List reply</term>
+<term>リストへの返信</term>
 <listitem>
 <para>
-Reply to all mailing list addresses found, either specified via
-configuration or auto-detected.  See <xref linkend="lists"/> for
-details.
+設定で指定されたものあるいは自動検出した、見つかったメーリングリストアドレスすべてに返信します。
+詳細は、<xref linkend="lists"/>を参照してください。
 </para>
 </listitem>
 </varlistentry>
 </variablelist>
 
 <para>
-After getting recipients for new messages, forwards or replies, Mutt
-will then automatically start your <link linkend="editor">$editor</link>
-on the message body. If the <link
-linkend="edit-headers">$edit_headers</link> variable is set, the headers
-will be at the top of the message in your editor; the message body
-should start on a new line after the existing blank line at the end of
-headers.  Any messages you are replying to will be added in sort order
-to the message, with appropriate
-<link linkend="attribution">$attribution</link>, <link
-linkend="indent-string">$indent_string</link> and <link
-linkend="post-indent-string">$post_indent_string</link>.  When
-forwarding a message, if the <link
-linkend="mime-forward">$mime_forward</link> variable is unset, a copy of
-the forwarded message will be included.  If you have specified a <link
-linkend="signature">$signature</link>, it will be appended to the
-message.
+新しいメッセージへ、転送または返信の受信者が決まったら、Mutt は自動的にメッセージ本文に
+対して<link linkend="editor">$editor</link> を起動します。
+<link linkend="edit-headers">$edit_headers</link>変数が設定されている場合には、メッセージ
+本文の一番はじめの所にヘッダも含まれます。ヘッダの最後の行のあとに空白行と改行が来た
+その後から始まる必要があります。返信するメッセージは整列順に追加され、適切な
+<link linkend="attribution">$attribution</link>,
+<link linkend="indent-string">$indent_string</link> と
+<link linkend="post-indent-string">$post_indent_string</link> が付きます。
+メッセージ転送の場合、<link linkend="mime-forward">$mime_forward</link>
+変数が設定されていないと、転送するメッセージのコピーが本文に取り込まれます。
+<link linkend="signature">$signature</link>が指定されていれば、メッセージに
+そのファイルが追加されます。
 </para>
 
 <para>
