@@ -1582,94 +1582,92 @@ Mutt のようなテキストモードのクライアントでは、標準の 80
 <title>Mutt のサポート</title>
 
 <para>
-Mutt only supports setting the required <literal>format=flowed</literal>
-MIME parameter on outgoing messages if the <link
-linkend="text-flowed">$text_flowed</link> variable is set, specifically
-it does not add the trailing spaces.
+Mutt は <link linkend="text-flowed">$text_flowed</link> 変数が設定されている
+場合、特に、末尾の空白が追加されていない時に、送信メッセージで必要な
+<literal>format=flowed</literal> MIME パラメータの設定のみをサポートします。
 </para>
 
 <para>
-After editing, Mutt properly space-stuffs the message.
-<emphasis>Space-stuffing</emphasis> is required by RfC3676 defining
-<literal>format=flowed</literal> and means to prepend a space to:
+編集後、Mutt はメッセージに、適切な空白を埋め込みます。
+<emphasis>適切な空白の埋め込み(Space-stuffing)</emphasis>は、
+<literal>format=flowed</literal>を定義するRFC3676 で要求され、
+次のように空白を埋め込むことを意味します:
+
 </para>
 
 <itemizedlist>
-<listitem><para>all lines starting with a space</para></listitem>
-<listitem><para>lines starting with the word
-<quote><literal>From</literal></quote> followed by
-space</para></listitem>
-<listitem><para>all lines starting with
-<quote><literal>&gt;</literal></quote> which is not intended to be a
-quote character</para></listitem>
+<listitem><para>空白で始まるすべての行</para></listitem>
+<listitem><para><quote><literal>From</literal></quote>で始まる行で、
+空白を伴うもの</para></listitem>
+<listitem><para><quote><literal>&gt;</literal></quote>で始まるすべての行で、
+引用文字を意図しないもの</para></listitem>
 </itemizedlist>
 
 <note>
 <para>
-Mutt only supports space-stuffing for the first two types of lines but
-not for the third: It is impossible to safely detect whether a leading
-<literal>&gt;</literal> character starts a quote or not.
+Mutt は最初の2つのものについて空白の埋め込みをサポートしますが、3番目のものについては
+対象外です。先頭の<literal>&gt;</literal>文字が引用の開始なのか否かを
+安全に検出するのは不可能だからです。
 </para>
 </note>
 
 <para>
-All leading spaces are to be removed by receiving clients to restore the
-original message prior to further processing.
+後続の処理の前に、もとのメッセージを復元するため、
+すべての先頭の空白は、受信したクライアントによって削除されます。
 </para>
 
 </sect3>
 
 <sect3 id="ff-editor">
-<title>Editor Considerations</title>
+<title>エディタの考慮事項</title>
 
 <para>
-As Mutt provides no additional features to compose
-<literal>f=f</literal> messages, it's completely up to the user and his
-editor to produce proper messages. Please consider your editor's
-documentation if you intend to send <literal>f=f</literal> messages.
+Mutt は<literal>f=f</literal>メッセージの編集時には、何ら追加の機能を提供しないので、
+適切なメッセージを作成するのは、ユーザとエディタ次第です。
+<literal>f=f</literal>メッセージを送信する場合はエディタのドキュメントを
+よく見てください。
 </para>
 
 <para>
-For example, <emphasis>vim</emphasis> provides the <literal>w</literal>
-flag for its <literal>formatoptions</literal> setting to assist in
-creating <literal>f=f</literal> messages, see <literal>:help
-fo-table</literal> for details.
+たとえば、<emphasis>vim</emphasis>は、<literal>f=f</literal>メッセージを作成する
+ことを支援するために、<literal>formatoptions</literal>の設定のための
+<literal>w</literal>フラグを提供します。
+詳細は<literal>:help fo-table</literal>を参照してください。
 </para>
 
 </sect3>
 
 <sect3 id="ff-pager">
-<title>Reformatting</title>
+<title>再フォーマット</title>
 
 <para>
-  Mutt has some support for reformatting when viewing and replying to
-  <literal>format=flowed</literal> messages.  In order to take advantage of these,
-  <link linkend="reflow-text">$reflow_text</link> must be set.
+  Mutt は<literal>format=flowed</literal>メッセージの表示と返信時に
+  いくつかの再フォーマット機能を提供しています。これらを活用するためには、
+  <link linkend="reflow-text">$reflow_text</link>を設定しなければなりません。
 </para>
 
 <itemizedlist>
   <listitem>
   <para>
-    Paragraphs are automatically reflowed and wrapped at a width specified
-    by <link linkend="reflow-wrap">$reflow_wrap</link>.
+    段落は、<link linkend="reflow-wrap">$reflow_wrap</link>で指定された幅で、
+    自動的にリフローされて折り返しされます。
   </para>
   </listitem>
   <listitem>
   <para>
-    In its original format, the quoting style of <literal>format=flowed</literal>
-    messages can be difficult to read, and doesn't intermix well with
-    non-flowed replies.
-    Setting <link linkend="reflow-space-quotes">$reflow_space_quotes</link>
-    adds spaces after each level of quoting when in the pager and
-    replying in a non-flowed format
     (i.e. with <link linkend="text-flowed">$text_flowed</link> unset).
+    オリジナルのフォーマットでは、<literal>format=flowed</literal>メッセージの
+    引用スタイルは、読解が困難で、フローされていない返信とうまく混ざりません。
+    <link linkend="reflow-space-quotes">$reflow_space_quotes</link>を設定すると、
+    ページャと非フロー形式での返信時に書くレベルの引用のあとに空白を追加します。
+    (すなわち、<link linkend="text-flowed">$text_flowed</link> が未設定)。
   </para>
   </listitem>
   <listitem>
   <para>
-    If <link linkend="reflow-space-quotes">$reflow_space_quotes</link>
-    is unset, mutt will still add one trailing space after all the
-    quotes in the pager (but not when replying).
+    もしも<link linkend="reflow-space-quotes">$reflow_space_quotes</link>
+    が未設定の場合、mutt はページャ中で(返信時ではなく)すべての引用のあとに
+    1つの空白を付与します。
   </para>
   </listitem>
 </itemizedlist>
@@ -1681,7 +1679,7 @@ fo-table</literal> for details.
 </sect1>
 
 <sect1 id="forwarding-mail">
-<title>Forwarding and Bouncing Mail</title>
+<title>メールの転送と中継</title>
 
 <para>
 Bouncing and forwarding let you send an existing message to recipients
