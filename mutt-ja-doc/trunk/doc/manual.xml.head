@@ -1395,49 +1395,43 @@ Cc で送信します。<link linkend="alternates"><command>alternates</command>
 <title>Fcc: 疑似ヘッダ</title>
 
 <para>
-If you specify
+<literal>Fcc:</literal> <emphasis>ファイル名</emphasis>
 </para>
 
 <para>
-<literal>Fcc:</literal> <emphasis>filename</emphasis>
-</para>
-
-<para>
-as a header, Mutt will pick up <emphasis>filename</emphasis> just as if
-you had used the <literal>&lt;edit-fcc&gt;</literal> function in the
-<emphasis>compose</emphasis> menu.  It can later be changed from the
-compose menu.
+をヘッダとして指定すると、Mutt は<emphasis>compose</emphasis>メニュー中で
+<literal>&lt;edit-fcc&gt;</literal>機能を使ったと同じように、
+<emphasis>ファイル名</emphasis>を扱います。
 </para>
 
 </sect3>
 
 <sect3 id="attach-header">
-<title>Attach: Pseudo Header</title>
+<title>Attach: 疑似ヘッダ</title>
 
 <para>
-You can also attach files to your message by specifying
+以下のように指定することで、メッセージにファイルを添付できます。
 </para>
 
 <para>
-<literal>Attach:</literal> <emphasis>filename</emphasis>
-[ <emphasis>description</emphasis> ]
+<literal>Attach:</literal> <emphasis>ファイル名</emphasis>
+[ <emphasis>説明</emphasis> ]
 </para>
 
 <para>
-where <emphasis>filename</emphasis> is the file to attach and
-<emphasis>description</emphasis> is an optional string to use as the
-description of the attached file. Spaces in filenames have to be escaped
-using backslash (<quote>\</quote>).  The file can be removed as well as
-more added from the compose menu.
+ここで、<emphasis>ファル名</emphasis>は添付されるファイルで、
+<emphasis>説明</emphasis>は添付ファイルの説明として使う、オプションの文字列です。
+ファイル名中の空白は、バックスラッシュ(<quote>\</quote>)を使う事でエスケープできます。
+ファイルは編集メニューから追加するように削除できます。
 </para>
 
 </sect3>
 
 <sect3 id="pgp-header">
-<title>Pgp: Pseudo Header</title>
+<title>Pgp: 疑似ヘッダ</title>
 
 <para>
-If you want to use PGP, you can specify
+PGP を使いたい場合、以下のように指定します。
 </para>
 
 <para>
@@ -1446,32 +1440,30 @@ If you want to use PGP, you can specify
 </para>
 
 <para>
-<quote>E</quote> selects encryption, <quote>S</quote> selects signing
-and <quote>S&lt;id&gt;</quote> selects signing with the given key,
-setting <link linkend="pgp-sign-as">$pgp_sign_as</link> permanently. The
-selection can later be changed in the compose menu.
+<quote>E</quote> は暗号化、<quote>S</quote> は署名、そして
+<quote>S&lt;id&gt;</quote> は指定されたキーで署名します。
+<link linkend="pgp-sign-as">$pgp_sign_as</link> を設定すれば、鍵は恒久的になります。
+選択した項目は編集メニューであとで変更できます。
 </para>
 
 </sect3>
 
 <sect3 id="in-reply-to-header">
-<title>In-Reply-To: Header</title>
+<title>In-Reply-To: ヘッダ</title>
 
 <para>
-When replying to messages, the <emphasis>In-Reply-To:</emphasis> header
-contains the Message-Id of the message(s) you reply to. If you remove or
-modify its value, Mutt will not generate a
-<emphasis>References:</emphasis> field, which allows you to create a new
-message thread, for example to create a new message to a mailing list
-without having to enter the mailing list's address.
+メッセージに返信する場合、<emphasis>In-Reply-To:</emphasis>ヘッダには
+返信したいメールのメッセージ ID が含まれています。この値を削除したり変更した
+場合は、Mutt は、たとえば、メーリングリストのアドレスを入力せずに、メーリング
+リスト向けの新しいメッセージを作成するような、新しいメッセージスレッドを作成する、
+<emphasis>References:</emphasis>フィールドを作成しません。
 </para>
 
 <para>
-If you intend to start a new thread by replying, please make really sure
-you remove the <emphasis>In-Reply-To:</emphasis> header in your
-editor. Otherwise, though you'll produce a technically valid reply, some
-netiquette guardians will be annoyed by this so-called <quote>thread
-hijacking</quote>.
+返信時に新しいスレッドを開始したい時には、エディタ中で<emphasis>In-Reply-To:</emphasis>
+を確実に取り去ってください。そうでないと、技術的に有効な返信とは言え、
+ネチケットに口うるさい誰かには、いわゆる<quote>thread hijacking</quote>
+で迷惑を被るかもしれません。
 </para>
 
 </sect3>
@@ -1479,90 +1471,86 @@ hijacking</quote>.
 </sect2>
 
 <sect2 id="sending-crypto">
-<title>Sending Cryptographically Signed/Encrypted Messages</title>
+<title>暗号化機能を使った、署名/暗号化したメールの送信</title>
 
 <para>
-If you have told Mutt to PGP or S/MIME encrypt a message, it will guide
-you through a key selection process when you try to send the message.
-Mutt will not ask you any questions about keys which have a certified
-user ID matching one of the message recipients' mail addresses.
-However, there may be situations in which there are several keys, weakly
-certified user ID fields, or where no matching keys can be found.
+Mutt で PGP または S/MIME でメッセージの暗号化を行う場合、メッセージを
+送ろうとする時には、Mutt は鍵選択プロセス中で処理のガイドを行います。
+Mutt は メッセージ受信者のメールアドレスに一致する認証されたユーザ ID を
+持つ鍵について、何ら問い合わせません。しかし、複数の鍵があったり、
+認証されたユーザ ID フィールドが弱かったり、一致する鍵が見つからなかったり
+する場合があります。
 </para>
 
 <para>
-In these cases, you are dropped into a menu with a list of keys from
-which you can select one.  When you quit this menu, or Mutt can't find
-any matching keys, you are prompted for a user ID.  You can, as usually,
-abort this prompt using <literal>^G</literal>.  When you do so, Mutt
-will return to the compose screen.
+このような場合、鍵の一覧メニューに移行し、その中から鍵を選ぶことができます。
+このメニューを終了するか、一致する鍵がなかった場合には、ユーザ ID の入力が
+要求されます。通常と同じように、<literal>^G</literal>を使って、この入力待ち
+状態を中止できます。そうすると、Mutt は編集画面に戻ります。
 </para>
 
 <para>
-Once you have successfully finished the key selection, the message will
-be encrypted using the selected public keys when sent out.
+鍵の選択が正しく終了すると、メッセージは 選択した公開鍵を使って暗号化され
+送信されます。
 </para>
 
 <para>
-To ensure you can view encrypted messages you have sent, you
-may wish to set <link linkend="pgp-self-encrypt">$pgp_self_encrypt</link>
-and <link linkend="pgp-default-key">$pgp_default_key</link> for PGP, or
-<link linkend="smime-self-encrypt">$smime_self_encrypt</link>
-and <link linkend="smime-default-key">$smime_default_key</link> for S/MIME.
+送信した暗号化メッセージを見られるようにするためには、PGP では
+<link linkend="pgp-self-encrypt">$pgp_self_encrypt</link> と
+<link linkend="pgp-default-key">$pgp_default_key</link>を、S/MIME では
+<link linkend="smime-default-key">$smime_default_key</link>を
+設定してください。
 </para>
 
 <para>
-Most fields of the entries in the key selection menu (see also <link
-linkend="pgp-entry-format">$pgp_entry_format</link>) have obvious
-meanings.  But some explanations on the capabilities, flags, and
-validity fields are in order.
+鍵選択メニュー(<link linkend="pgp-entry-format">$pgp_entry_format</link>
+を参照)中の、エントリのほとんどのフィールドは、明確な意味を持っています。
+しかし、ケーパビリティ、フラグと有効性のフィールドについては説明が必要でしょう。
 </para>
 
 <para>
-The flags sequence (<quote>%f</quote>) will expand to one of the flags
-in <xref linkend="tab-pgp-menuflags"/>.
+フラグシーケンス(<quote>%f</quote>) は<xref linkend="tab-pgp-menuflags"/>中の
+フラグのどれかに展開されます。
 </para>
 
 <table id="tab-pgp-menuflags">
-<title>PGP key menu flags</title>
+<title>PGP 鍵メニューのフラグ</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Flag</entry><entry>Description</entry></row>
+<row><entry>フラグ</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>R</entry><entry>The key has been revoked and can't be used.</entry></row>
-<row><entry>X</entry><entry>The key is expired and can't be used.</entry></row>
-<row><entry>d</entry><entry>You have marked the key as disabled.</entry></row>
-<row><entry>c</entry><entry>There are unknown critical self-signature packets.</entry></row>
+<row><entry>R</entry><entry>鍵は破棄されていて使えない。</entry></row>
+<row><entry>X</entry><entry>鍵は期限切れになっており、使えない。</entry></row>
+<row><entry>d</entry><entry>自分で鍵を使用不可に印付けた。</entry></row>
+<row><entry>c</entry><entry>未知の重要な自己署名パケットがある。</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-The capabilities field (<quote>%c</quote>) expands to a two-character
-sequence representing a key's capabilities.  The first character gives
-the key's encryption capabilities: A minus sign (<quote>-</quote>) means
-that the key cannot be used for encryption.  A dot (<quote>.</quote>)
-means that it's marked as a signature key in one of the user IDs, but
-may also be used for encryption.  The letter <quote>e</quote> indicates
-that this key can be used for encryption.
+ケーパビリティフィールド(<quote>%c</quote>)は、鍵のケーパビリティを表す
+2文字の並びに展開されます。最初の文字は鍵の暗号化ケーパビリティです。
+マイナス記号(<quote>-</quote>)は、鍵が暗号化に使えないという意味です。
+ドット(<quote>.</quote>)は、いずれかのユーザ ID の署名鍵としてマーク
+されているけれど、暗号化にも使えるという意味です。文字<quote>e</quote>は、
+このキーが暗号化に使えるという意味です。
 </para>
 
 <para>
-The second character indicates the key's signing capabilities.  Once
-again, a <quote>-</quote> implies <quote>not for signing</quote>,
-<quote>.</quote> implies that the key is marked as an encryption key in
-one of the user-ids, and <quote>s</quote> denotes a key which can be
-used for signing.
+2番目の文字は鍵の署名ケーパビリティを示しています。こちらもやはり、
+<quote>-</quote>は<quote>署名用ではない</quote>ことを意味し、<quote>.</quote>
+は鍵があるユーザ ID の暗号化鍵としてマークされていることを意味し、
+<quote>s</quote>は署名用に使えるという意味です。
+
 </para>
 
 <para>
-Finally, the validity field (<quote>%t</quote>) indicates how
-well-certified a user-id is.  A question mark (<quote>?</quote>)
-indicates undefined validity, a minus character (<quote>-</quote>) marks
-an untrusted association, a space character means a partially trusted
-association, and a plus character (<quote>+</quote>) indicates complete
-validity.
+最後に、信用度フィールド(<quote>%t</quote>)は、ユーザID がどれほどしっかり
+検証されているかを示します。疑問符(<quote>?</quote>)は信用度が未定義で、
+マイナス文字(<quote>-</quote>)は、信頼されていない関係を示し、
+空白は部分的に信頼できることを意味し、プラス文字(<quote>+</quote>)は、
+完全な信用度を表しています。
 </para>
 
 </sect2>
