@@ -1556,31 +1556,30 @@ Mutt は メッセージ受信者のメールアドレスに一致する認証�
 </sect2>
 
 <sect2 id="ff">
-<title>Sending Format=Flowed Messages</title>
+<title>Format=Flowed 形式のメッセージ送信</title>
 
 <sect3 id="ff-concept">
-<title>Concept</title>
+<title>コンセプト</title>
 
 <para>
-<literal>format=flowed</literal>-style messages (or
-<literal>f=f</literal> for short) are <literal>text/plain</literal>
-messages that consist of paragraphs which a receiver's mail client may
-reformat to its own needs which mostly means to customize line lengths
-regardless of what the sender sent. Technically this is achieved by
-letting lines of a <quote>flowable</quote> paragraph end in spaces
-except for the last line.
+<literal>format=flowed</literal>形式のメッセージ(又は短い形式では
+<literal>f=f</literal>)は、ほとんどの場合、送信者が何を送ったかに
+よらず、行の長さをカスタマイズできる、受信者のメールクライアントが
+独自のニーズに合わせて再フォーマットすることができる段落から構成されています。
+技術的には、これは、最後の行を除いて、<quote>flowable</quote>な段落
+の最後を空白で終了することによって実現します。
 </para>
 
 <para>
-While for text-mode clients like Mutt it's the best way to assume only a
-standard 80x25 character cell terminal, it may be desired to let the
-receiver decide completely how to view a message.
+Mutt のようなテキストモードのクライアントでは、標準の 80x25文字サイズの
+ターミナルのみを仮定するのにもっともよい方法ですが、メッセージの受信者に
+見方を完全に決めさせたい場合もあるでしょう。
 </para>
 
 </sect3>
 
 <sect3 id="ff-support">
-<title>Mutt Support</title>
+<title>Mutt のサポート</title>
 
 <para>
 Mutt only supports setting the required <literal>format=flowed</literal>
