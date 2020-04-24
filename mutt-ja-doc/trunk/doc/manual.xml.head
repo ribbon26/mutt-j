@@ -1813,46 +1813,45 @@ set crypt_use_gpgme
 </para>
 
 <para>
-Starting with version 2.1.0, GnuPG automatically uses an
-<literal>agent</literal> to prompt for your passphrase.  If you are
-using a version older than that, you'll need to ensure an agent is
-running (alternatively, you can unset <link
-linkend="pgp-use-gpg-agent">$pgp_use_gpg_agent</link> and Mutt will
-prompt you for your passphrase).  The agent in turn uses a
-<literal>pinentry</literal> program to display the prompt.  There are
-many different kinds of pinentry programs that can be used: qt, gtk2,
-gnome3, fltk, and curses.  However, Mutt does <emphasis>not</emphasis>
-work properly with the tty pinentry program.  Please ensure you have
-one of the GUI or curses pinentry programs installed and configured to
-be the default for your system.
+バージョン 2.1.0 から GnuPG は自動的にパスフレーズの入力要求のために、
+<literal>エージェント</literal>を使うようになりました。それより古いバージョン
+を使っている場合は、エージェントが動作しているようにしておく必要があります
+(かわりに <link linkend="pgp-use-gpg-agent">$pgp_use_gpg_agent</link>
+を未設定にすると Mutt はパスフレーズを聞いてきます)。次に、エージェントは、
+<literal>pinentry</literal>プログラムを使ってプロンプトを表示します。
+たとえば、qt、gtk2、gnome3、fltk や curses というような、使用可能な、
+数多くの異なった pinentry プログラムがあります。Mutt は tty pinentry
+プログラムではうまく動作<emphasis>しません</emphasis>。そのかわりに、
+GUI または curses ベースの pinentry プログラム をインストールし、
+システムで既定のものとして設定してください。
 </para>
 </sect2>
 
 <sect2 id="enc-smime">
-<title>S/MIME Configuration</title>
+<title>S/MIME の設定</title>
 
 <para>
-As with OpenPGP, the two most important settings are <link
-linkend="smime-default-key">$smime_default_key</link> and <link
-linkend="smime-sign-as">$smime_sign_as</link>.  To perform encryption
-and decryption, you must set the first variable.  If you have a
-separate signing key, or only have a signing key, then set the second.
-Most people will only need to set <link
-linkend="smime-default-key">$smime_default_key</link>.
+OpenPGP と同様、2つの重要な設定、
+<link linkend="smime-default-key">$smime_default_key</link> と
+<link linkend="smime-sign-as">$smime_sign_as</link> があります。
+暗号化と復号化を行うためには、最初の変数の設定が必要です。分割された
+署名鍵あるいは署名鍵のみの場合は、2番目の設定が必要です。
+ほとんどの場合は、<link linkend="smime-default-key">$smime_default_key</link>
+のみの設定が必要でしょう。
 </para>
 
 <para>
-In <quote>classic mode</quote>, keys and certificates are managed by
-the <literal>smime_keys</literal> program that comes with Mutt.  By
-default they are stored under <literal>~/.smime/</literal>. (This is
-set by the <literal>smime.rc</literal> file with <link
-linkend="smime-certificates">$smime_certificates</link> and <link
-linkend="smime-keys">$smime_keys</link>.)  To initialize this
-directory, use the command <quote><literal>smime_keys
-init</literal></quote> from a shell prompt.  The program can be then
-be used to import and list certificates.  You may also want to
-periodically run <quote><literal>smime_keys refresh</literal></quote>
-to update status flags for your certificates.
+<quote>クラシックモード</quote>では、キーと証明書は、mutt に同梱されている
+<literal>smime_keys</literal>プログラムによって管理されます。既定値では、
+それらは<literal>~/.smime/</literal>配下に格納されます。(これは
+<literal>smime.rc</literal>ファイルの
+<link linkend="smime-certificates">$smime_certificates</link> と
+<link linkend="smime-keys">$smime_keys</link> によって設定されます。)
+このディレクトリを初期化したい場合は、シェルプロンプトから、
+<quote><literal>smime_keys init</literal></quote>コマンドを使います。
+プログラムは、証明書のステータスフラグを更新するために、
+<quote><literal>smime_keys refresh</literal></quote>を定期的に実行するのに
+使われます。
 </para>
 </sect2>
 
@@ -1861,90 +1860,88 @@ to update status flags for your certificates.
 </chapter>
 
 <chapter id="configuration">
-<title>Configuration</title>
+<title>設定</title>
 
 <sect1 id="configuration-files">
-<title>Location of Initialization Files</title>
+<title>初期設定ファイルの位置</title>
 
 <para>
-While the default configuration (or <quote>preferences</quote>) make
-Mutt usable right out of the box, it is often desirable to tailor Mutt
-to suit your own tastes. When Mutt is first invoked, it will attempt to
-read the <quote>system</quote> configuration file (defaults set by your
-local system administrator), unless the <quote>-n</quote> <link
-linkend="commandline">command line</link> option is specified.  This
-file is typically <literal>/usr/local/share/mutt/Muttrc</literal> or
-<literal>/etc/Muttrc</literal>. Mutt will next look for a file named
-<literal>.muttrc</literal> in your home directory.  If this file does
-not exist and your home directory has a subdirectory named
-<literal>.mutt</literal>, Mutt tries to load a file named
-<literal>.mutt/muttrc</literal>.  If still not found, Mutt will try
-<literal>$XDG_CONFIG_HOME/mutt/muttrc</literal>.
+既定の設定(又は<quote>preferences</quote>)は、Mutt を箱から出してすぐに
+使えるようにしますが、自分の好みに応じて Mutt を仕立て上げる方が好ましいと
+言えます。Mutt が最初に起動された時は、<quote>-n</quote>
+<link linkend="commandline">command line</link>オプションが指定されていない
+限り、まず<quote>システムの</quote>
+設定ファイル(既定値はローカルの管理者によって設定されています)を読もうとします。
+このファイルは通常
+<literal>/usr/local/share/mutt/Muttrc</literal>か
+<literal>/etc/Muttrc</literal>にあります。Mutt は次にホームディレクトリ中の
+<literal>.muttrc</literal>という名前のファイルを検索します。
+このファイルが存在しなく、ホームディレクトリに<literal>.mutt</literal>という
+サブディレクトリがある場合は、Mutt は<literal>.mutt/muttrc</literal>という
+ファイルをロードしようとします。もしもなければ、Mutt は
+<literal>$XDG_CONFIG_HOME/mutt/muttrc</literal> を読もうと試みます。
 </para>
 
 <para>
-<literal>.muttrc</literal> is the file where you will usually place your
-<link linkend="commands">commands</link> to configure Mutt.
+<literal>.muttrc</literal>は、通常、Mutt を設定するための
+<link linkend="commands">commands</link>を配置するファイルです。
 </para>
 
 <para>
-In addition, Mutt supports version specific configuration files that are
-parsed instead of the default files as explained above.  For instance,
-if your system has a <literal>Muttrc-0.88</literal> file in the system
-configuration directory, and you are running version 0.88 of Mutt, this
-file will be sourced instead of the <literal>Muttrc</literal> file.  The
-same is true of the user configuration file, if you have a file
-<literal>.muttrc-0.88.6</literal> in your home directory, when you run
-Mutt version 0.88.6, it will source this file instead of the default
-<literal>.muttrc</literal> file.  The version number is the same which
-is visible using the <quote>-v</quote> <link
-linkend="commandline">command line</link> switch or using the
-<literal>show-version</literal> key (default: V) from the index menu.
+さらに、Mutt は、上記で説明した、既定のファイルの代わりに実行する、
+特定バージョン用の設定ファイルをサポートしています。たとえば、システムの
+システム設定ディレクトリに Muttrc-0.88 というファイルがあり、
+Mutt のバージョン 0.88 を使っているときには、このファイルは
+<literal>Muttrc</literal>ファイルの代わりに読み込まれます。ユーザの
+設定ファイルでも同様で、ホームディレクトリ中に
+<literal>.muttrc-0.88.6</literal>というファイルがあり、Mutt バージョン 0.88.6
+を実行している場合は、既定の<literal>.muttrc</literal>ファイルの代わりに
+このファイルが読み込まれます。バージョン番号は、
+<quote>-v</quote> <link linkend="commandline">command line</link>
+を使ったり、インデックスメニューから、<literal>show-version</literal>キー
+(既定値では V) を使って表示されるものと 同じです。 
 </para>
 
 </sect1>
 
 <sect1 id="quickconfig">
-<title>Starter Muttrc</title>
+<title>Muttrc 設定の始め方</title>
 
 <para>
-Mutt is highly configurable because it's <emphasis>meant</emphasis> to
-be customized to your needs and preferences.  However, this
-configurability can make it difficult when just getting started.  A
-few sample muttrc files come with mutt, under
-<literal>doc/mutt/samples/</literal>.  Among them, <ulink
-url="https://gitlab.com/muttmua/mutt/tree/master/contrib/sample.muttrc-starter"
->sample.muttrc-starter</ulink> is a basic example config with a few
-suggested settings and pointers to useful programs.
+Mutt は、ニーズと好みにに合わせて高度に設定が変更可能です。
+しかし、高度にカスタマイズが可能ということは、設定を変更し始めるのが
+難しいということでもあります。いくつか <literal>doc/mutt/samples/</literal>
+に、mutt に同梱されているmuttrc のサンプルがあります。その中で、
+<ulink url="https://gitlab.com/muttmua/mutt/tree/master/contrib/sample.muttrc-starter">
+sample.muttrc-starter</ulink>は基本的な config の例で、
+いくつか推奨の設定と便利なプログラムへの情報が含まれています。
 </para>
 </sect1>
 
 <sect1 id="muttrc-syntax" xreflabel="Syntax of Initialization Files">
-<title>Syntax of Initialization Files</title>
+<title>初期化ファイルの構文</title>
 
 <para>
-An initialization file consists of a series of <link
-linkend="commands">commands</link>.  Each line of the file may contain
-one or more commands.  When multiple commands are used, they must be
-separated by a semicolon (<quote>;</quote>).
+初期化ファイルは一連の<link linkend="commands">commands</link>から成っています。
+ファイルの各行には、ひとつでも複数でもコマンドを入れられます。 複数コマンドを
+使うときはセミコロン(<quote>;</quote>)で区切らなければなりません。
 </para>
 
 <example id="ex-rc-multiple-cmds">
-<title>Multiple configuration commands per line</title>
+<title>複数の設定コマンドを1行中に記述する例</title>
 <screen>
 set realname='Mutt user' ; ignore x-
 </screen>
 </example>
 
 <para>
-The hash mark, or pound sign (<quote>#</quote>), is used as a
-<quote>comment</quote> character. You can use it to annotate your
-initialization file. All text after the comment character to the end of
-the line is ignored.
+ハッシュマーク、別名ポンド記号(<quote>#</quote>) は<quote>comment</quote>文字
+として使われます。これは初期化ファイルへの注釈に使えます。 コメント文字以降の
+文章はすべて無視されます。
 </para>
 
 <example id="ex-ec-comment">
-<title>Commenting configuration files</title>
+<title>設定ファイルにおけるコメントの例</title>
 <screen>
 my_hdr X-Disclaimer: Why are you listening to me? <emphasis role="comment"># This is a comment</emphasis>
 </screen>
