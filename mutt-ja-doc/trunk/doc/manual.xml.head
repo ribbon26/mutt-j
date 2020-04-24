@@ -1682,116 +1682,108 @@ Mutt は<literal>f=f</literal>メッセージの編集時には、何ら追加�
 <title>メールの転送と中継</title>
 
 <para>
-Bouncing and forwarding let you send an existing message to recipients
-that you specify. Bouncing a message sends a verbatim copy of a message
-to alternative addresses as if they were the message's original
-recipients specified in the Bcc header.  Forwarding a message, on the
-other hand, allows you to modify the message before it is resent (for
-example, by adding your own comments). Bouncing is done using the
-<literal>&lt;bounce&gt;</literal> function and forwarding using the
-<literal>&lt;forward&gt;</literal> function bound to <quote>b</quote>
-and <quote>f</quote> respectively.
+中継と転送は、既存のメッセージを自分で指定した宛先に送信できる機能です。
+メッセージの中継とは、Bcc ヘッダで指定された、メッセージのオリジナルな
+受信者に送られるように、メッセージの冗長コピーを送信します。一方
+メッセージの転送では、再送する前に、メッセージの修正ができます(たとえば、
+コメントを追加するなど)。中継は、<quote>b</quote>にバインドされている
+<literal>&lt;bounce&gt;</literal>機能を使い、転送は<quote>f</quote>に
+バインドされている<literal>&lt;forward&gt;</literal>機能を使います。
 </para>
 
 <para>
-Forwarding can be done by including the original message in the new
-message's body (surrounded by indicating lines) or including it as a
-MIME attachment, depending on the value of the <link
-linkend="mime-forward">$mime_forward</link> variable.  Decoding of
-attachments, like in the pager, can be controlled by the <link
-linkend="forward-decode">$forward_decode</link> and <link
-linkend="mime-forward-decode">$mime_forward_decode</link> variables,
-respectively.  The desired forwarding format may depend on the content,
-therefore <link linkend="mime-forward">$mime_forward</link> is a
-quadoption which, for example, can be set to <quote>ask-no</quote>.
+転送は(指示線に囲まれた)新しいメッセージの本体中にオリジナルのメッーセージを
+取り込むか、<link linkend="mime-forward">$mime_forward</link>変数の値に
+依存しますが、MIME添付を含むことで行われます。
+ページャがやるような添付のデコードは、
+<link linkend="forward-decode">$forward_decode</link> と
+<link linkend="mime-forward-decode">$mime_forward_decode</link>変数を
+使って行われます。転送の形式は内容に依存するので、quadoption パラメータ
+<link linkend="mime-forward">$mime_forward</link> を、たとえば、
+<quote>ask-no</quote>に設定することができます。
 </para>
 
 <para>
-Mutt's default (<link
-linkend="mime-forward">$mime_forward</link>=<quote>no</quote> and
-<link
-linkend="forward-decode">$forward_decode</link>=<quote>yes</quote>) is
-to use standard inline forwarding.  In that mode all text-decodable
-parts are included in the new message body.  Other attachments from
-the original email can also be attached to the new message, based on the
-quadoption <link
-linkend="forward-attachments">$forward_attachments</link>.
+Mutt の既定値(
+<link linkend="mime-forward">$mime_forward</link>=<quote>no</quote>と
+<link linkend="forward-decode">$forward_decode</link>=<quote>yes</quote>)
+は標準のインライン転送の時に使います。このモードではすべてのテキストに
+デコード可能な部分は新しいメッセージ本体に含まれます。
+quadoption <link linkend="forward-attachments">$forward_attachments</link>
+の状態によって、オリジナルメールのその他の添付は新しいメッセージに添付する
+ことができます。
 </para>
 
 <para>
-The inclusion of headers is controlled by the current setting of the
-<link linkend="weed">$weed</link> variable, unless <link
-linkend="mime-forward">$mime_forward</link> is set.
+ヘッダを含めるかは、
+<link linkend="mime-forward">$mime_forward</link> が設定されていない限り、
+<link linkend="weed">$weed</link>変数の現在の設定によって制御されます。
 </para>
 
 <para>
-Editing the message to forward follows the same procedure as sending or
-replying to a message does, but can be disabled via the quadoption
-<link linkend="forward-edit">$forward_edit</link>.
+転送時におけるメッセージの編集はメッセージの送信または返信と同じ方法ですが、
+<link linkend="forward-edit">$forward_edit</link> quadoption で無効に
+することもできます。
 </para>
 
 </sect1>
 
 <sect1 id="postponing-mail">
-<title>Postponing Mail</title>
+<title>メール送信の延期</title>
 
 <para>
-At times it is desirable to delay sending a message that you have
-already begun to compose.  When the
-<literal>&lt;postpone-message&gt;</literal> function is used in the
-<emphasis>compose</emphasis> menu, the body of your message and
-attachments are stored in the mailbox specified by the <link
-linkend="postponed">$postponed</link> variable.  This means that you can
-recall the message even if you exit Mutt and then restart it at a later
-time.
+たまに、メッセージをすでに書き始めたものの、 送信は後にしたいということがあります。
+<literal>&lt;postpone-message&gt;</literal>機能を<emphasis>compose</emphasis>メニューで
+使うと、メールの本文と添付は
+<link linkend="postponed">$postponed</link>変数で指定されたメールボックス中に
+格納されます。これはつまり、Mutt を終了して次回また起動したとしても、
+そのメッセージを呼び出せるということです。 
+
 </para>
 
 <para>
-Once a message is postponed, there are several ways to resume it.  From
-the command line you can use the <quote>-p</quote> option, or if you
-compose a new message from the <emphasis>index</emphasis> or
-<emphasis>pager</emphasis> you will be prompted if postponed messages
-exist.  If multiple messages are currently postponed, the
-<emphasis>postponed</emphasis> menu will pop up and you can select which
-message you would like to resume.
+メッセージを延期したあとで再開するには、いくつかの方法があります。
+コマンドラインからは<quote>-p</quote>オプションが使えますし、
+<emphasis>インデックス</emphasis>か<emphasis>ページャ</emphasis>から
+新しいメッセージを編集する場合は、延期したメッセージがあるときには
+再開するかどうか聞かれます。 延期メッセージが複数あるときは、
+<emphasis>postponed</emphasis>メニューが出てきて、 どのメッセージを再開
+したいか選択できます。 
 </para>
 
 <note>
 <para>
-If you postpone a reply to a message, the reply setting of the message
-is only updated when you actually finish the message and send it.  Also,
-you must be in the same folder with the message you replied to for the
-status of the message to be updated.
+メッセージに対する返信を延期したならば、返信済みフラグが 更新されるのは
+返信メッセージを実際に完成させて送信したときだけだということに注意してください。
+しかも、その親メッセージと同じフォルダにいなければ状態がきちんと更新されません。
 </para>
 </note>
 
 <para>
-See also the <link linkend="postpone">$postpone</link> quad-option.
+<link linkend="postpone">$postpone</link> quad-option も参照してください。
 </para>
 
 </sect1>
 
 <sect1 id="encryption">
-<title>Encryption and Signing</title>
+<title>暗号化と署名</title>
 
 <para>
-OpenPGP and S/MIME are enabled in one of two ways: <quote>classic
-mode</quote> or GPGME.  The former invokes external programs to
-perform the various operations; it is better tested and more
-flexible, but requires some configuration.  The latter uses the
-GnuPG project's GPGME library.
+OpenPGP と S/MIME は、<quote>クラシックモード</quote>と GPGME という2つの
+方法で有効になります。最初の方は、種々の操作を実行する外部プログラムを
+起動します。この方がテストに便利で、より柔軟性が高いのですが、若干の
+設定が必要です。後者は GnuPG プロジェクトの GPGME ライブラリを使います。
 </para>
 
 <para>
-To enable <quote>classic mode</quote>, ensure GPGME is disabled and
-use the <literal>gpg.rc</literal> or <literal>smime.rc</literal> files
-that come with mutt.  These are typically installed under
-<literal>/usr/local/share/doc/mutt/samples/</literal>.  Source them, either
-directly or by copying them to your .mutt directory and sourcing them.
-Sourcing them directly from
-<literal>/usr/local/share/doc/mutt/samples/</literal> has the benefit of
-automatically using fixes and security improvements to the command
-invocations, and is recommended.
+<quote>クラシックモード</quote>を有効にするには、mutt GPGME を確実に無効にし、
+同梱の<literal>gpg.rc</literal> または <literal>smime.rc</literal> ファイルを
+使います。これらは通常<literal>/usr/local/share/doc/mutt/samples/</literal>
+配下にインストールされています。それらを直接、あるいは、直接かコピーして
+.mutt directory に置き、 souce コマンドを使って内容を反映させてください。
+<literal>/usr/local/share/doc/mutt/samples/</literal> から直接 source コマンドで
+内容を反映させる場合、コマンドに対して自動的に修正の適用と、セキュリティの向上が
+行えますので、これが推奨です。
 </para>
 
 <screen>
@@ -1801,7 +1793,7 @@ source /usr/local/share/doc/mutt/samples/smime.rc
 </screen>
 
 <para>
-To use GPGME instead, simply ensure the option is enabled in your .muttrc:
+代わりに GPGME を使う場合は、単に .muttrc の中で以下を有効にするだけです:
 </para>
 
 <screen>
@@ -1809,15 +1801,15 @@ set crypt_use_gpgme
 </screen>
 
 <sect2 id="enc-pgp">
-<title>OpenPGP Configuration</title>
+<title>OpenPGP の構成</title>
 
 <para>
-The two most important settings are <link
-linkend="pgp-default-key">$pgp_default_key</link> and <link
-linkend="pgp-sign-as">$pgp_sign_as</link>.  To perform encryption, you
-must set the first variable.  If you have a separate signing key, or
-only have a signing key, then set the second.  Most people will only
-need to set <link linkend="pgp-default-key">$pgp_default_key</link>.
+<link linkend="pgp-default-key">$pgp_default_key</link> と
+<link linkend="pgp-sign-as">$pgp_sign_as</link> という2つの重要な
+設定があります。暗号化を実行するためには最初の変数を設定しなければなりません。
+分割した署名鍵を使う場合か、署名鍵のみがある場合は、2番目を設定します。
+ほとんどの場合は、<link linkend="pgp-default-key">$pgp_default_key</link>
+のみ設定すればよいです。
 </para>
 
 <para>
