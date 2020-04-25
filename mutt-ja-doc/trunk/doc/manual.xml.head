@@ -1948,47 +1948,45 @@ my_hdr X-Disclaimer: Why are you listening to me? <emphasis role="comment"># Thi
 </example>
 
 <para>
-Single quotes (<quote>'</quote>) and double quotes (<quote>"</quote>)
-can be used to quote strings which contain spaces or other special
-characters.  The difference between the two types of quotes is similar
-to that of many popular shell programs, namely that a single quote is
-used to specify a literal string (one that is not interpreted for shell
-variables or quoting with a backslash [see next paragraph]), while
-double quotes indicate a string for which should be evaluated.  For
-example, backticks are evaluated inside of double quotes, but
-<emphasis>not</emphasis> for single quotes.
+シングルクォート(<quote>'</quote>) と引用符(<quote>"</quote>)は、
+空白または他の特別文字を含む文字列をくくるのに使います。
+この二種類の引用符の違いは、多くの一般的なシェルプログラムに似ています。
+つまり、シングルクォートはその字面どおりの (シェル変数にも変換されず、
+バックスラッシュでの文字指定 [次の段落を参照] も変換されないままの)
+文字列を指定するために使う一方、ダブルクォートは、中の文字列を解釈すべきだ
+いうことを示します。例えば、バックティック(訳注:バッククォート "`") は
+引用符の中では解釈されますが、シングルクォートの中では解釈されません。 
 </para>
 
 <para>
-<quote>\</quote> quotes the next character, just as in shells such as
-bash and zsh.  For example, if want to put quotes <quote>"</quote>
-inside of a string, you can use <quote>\</quote> to force the next
-character to be a literal instead of interpreted character.
+<quote>\</quote>は、その次の文字をそのまま指定 (原語:quote)します。ちょうど
+bash や zsh のようなシェルと同じです。例えば引用符<quote>"</quote>を文字列の
+中に入れて使いたいときに <quote>\</quote>を使って、解釈しない文字どおりの
+引用符にすることができます。 
 </para>
 
 <example id="ex-rc-quote">
-<title>Escaping quotes in configuration files</title>
+<title>設定ファイル中における quotes の例</title>
 <screen>
 set realname="Michael \"MuttDude\" Elkins"
 </screen>
 </example>
 
 <para>
-<quote>\\</quote> means to insert a literal <quote>\</quote> into the line.
-<quote>\n</quote> and <quote>\r</quote> have their usual C meanings of linefeed and
-carriage-return, respectively.
+<quote>\\</quote>は<quote>\</quote>文字そのものを行に挿入することを意味します。
+<quote>\n</quote>と<quote>\r</quote>は、通常の C での意味合いと同じで、それぞ
+れ改行 (LF = linefeed) と復帰 (CR = carriage-return) を意味します。
 </para>
 
 <para>
-A <quote>\</quote> at the end of a line can be used to split commands
-over multiple lines as it <quote>escapes</quote> the line end, provided
-that the split points don't appear in the middle of command names. Lines
-are first concatenated before interpretation so that a multi-line can be
-commented by commenting out the first line only.
+行末に<quote>\</quote>を使えば、行の終わりを<quote>エスケープ</quote>するよう
+にコマンドを複数の行に分割できます。ただし分割地点がコマンド名の途中であっては
+なりません。文の解釈の前に行は結合されるので、複数行は最初の行のみコメントアウト
+することでコメントになります。
 </para>
 
 <example id="ex-rc-split">
-<title>Splitting long configuration commands over several lines</title>
+<title>複数行に長い設定コマンドを分割</title>
 <screen>
 set status_format="some very \
 long value split \
@@ -1997,83 +1995,79 @@ over several lines"
 </example>
 
 <para>
-It is also possible to substitute the output of a Unix command in an
-initialization file.  This is accomplished by enclosing the command in
-backticks (``). In <xref linkend="ex-rc-backtick"/>, the output of the
-Unix command <quote>uname -a</quote> will be substituted before the line
-is parsed.  Since initialization files are line oriented, only the first
-line of output from the Unix command will be substituted.
+初期化ファイル中で一部を Unix コマンドの出力に 置き換えることも可能です。
+これはコマンドをバッククォート二つ (``) ではさむことによって行なえます。
+<xref linkend="ex-rc-backtick"/>では、Unix コマンド<quote>uname -a</quote>
+の出力を、行が解釈される前に置き換えます。初期化ファイルは行単位に処理され
+ますので、Unix コマンドの出力の最初の行のみしか置換されないということです。
 </para>
 
 <example id="ex-rc-backtick">
-<title>Using external command's output in configuration files</title>
+<title>設定ファイル中において外部コマンド出力を使う</title>
 <screen>
 my_hdr X-Operating-System: `uname -a`
 </screen>
 </example>
 
 <para>
-To avoid the output of backticks being parsed, place them inside
-double quotes.  In <xref linkend="ex-backtick-dblquotes"/>, the output
-of the gpg decryption is assigned directly to $imap_pass, so that
-special characters in the password (e.g.<quote>'</quote>,
-<quote>#</quote>, <quote>$</quote>) are not parsed and interpreted
-specially by mutt.
+バッククォートの出力が走査されないようにするためには、引用符の中に
+入れてください。<xref linkend="ex-backtick-dblquotes"/>で、gpg の
+復号化結果が、直接 $imap_pass に割り当てられています。その結果
+パスワード中の特殊文字(たとえば、<quote>'</quote>、<quote>#</quote>、
+<quote>$</quote>は走査されず、mutt によって特別に解釈されることはありません。
 </para>
 
 <example id="ex-backtick-dblquotes">
-<title>Preventing the output of backticks from being parsed</title>
+<title>バッククォートでくくられた部分の解釈を防ぐ</title>
 <screen>
 set imap_pass="`gpg --batch -q --decrypt ~/.mutt/account.gpg`"
 </screen>
 </example>
 
 <para>
-Both environment variables and Mutt variables can be accessed by
-prepending <quote>$</quote> to the name of the variable. For example,
+環境変数と Mutt の変数は共に、変数名の先頭に<quote>$</quote>をつけることで
+アクセス出来ます。たとえば、
 </para>
 
 <example id="ex-rc-env">
-<title>Using environment variables in configuration files</title>
+<title>設定フィル中での環境変数の利用</title>
 <screen>
 set record=+sent_on_$HOSTNAME
 </screen>
 </example>
 
 <para>
-will cause Mutt to save outgoing messages to a folder named
-<quote>sent_on_kremvax</quote> if the environment variable
-<literal>$HOSTNAME</literal> is set to <quote>kremvax.</quote> (See
-<link linkend="record">$record</link> for details.)
+は、環境変数<literal>$HOSTNAME</literal>が、<quote>kremvax</quote>
+に設定されていた場合、Mutt は<quote>sent_on_kremvax</quote>という
+名前のフォルダに送信メッセージを保存します(詳細は、
+<link linkend="record">$record</link>を参照)。
 </para>
 
 <para>
-Mutt expands the variable when it is assigned, not when it is used. If
-the value of a variable on the right-hand side of an assignment changes
-after the assignment, the variable on the left-hand side will not be
-affected.
+Mutt は変数が使われた時ではなく、割り当てられた時に展開します。
+式の右辺にある変数の値を割り当て後に変更した場合、左辺の変数の内容は
+変化しません。
 </para>
 
 <para>
-The commands understood by Mutt are explained in the next paragraphs.
-For a complete list, see the <link linkend="commands">command
-reference</link>.
+Mutt が解釈できるコマンドについては、次節以降で説明していきます。
+全コマンド一覧は<link linkend="commands">コマンドリファレンス</link>
+を参照してください。
 </para>
 
 <para>
-All configuration files are expected to be in the current locale as
-specified by the <link linkend="charset">$charset</link> variable which
-doesn't have a default value since it's determined by Mutt at startup.
-If a configuration file is not encoded in the same character set the
-<link linkend="config-charset">$config_charset</link> variable should be
-used: all lines starting with the next are recoded from <link
-linkend="config-charset">$config_charset</link> to <link
-linkend="charset">$charset</link>.
+すべての設定ファイルは、<link linkend="charset">$charset</link>変数によって
+決まる現在のロケールであることが想定されています。この変数は、起動時に
+Mutt によって決まるため、変数の既定値はありません。
+設定ファイルが同じ文字セットでエンコードされていない場合、
+<link linkend="config-charset">$config_charset</link>変数を使う必要があります。
+その次の行からすべての行は、
+<link linkend="config-charset">$config_charset</link> から
+<link linkend="charset">$charset</link>まで記録(訳注 recorded)されます。
 </para>
 
 <para>
-This mechanism should be avoided if possible as it has the following
-implications:
+この機構は、以下のような意味を持つため、可能であれば避けるべきです。
 </para>
 
 <itemizedlist>
