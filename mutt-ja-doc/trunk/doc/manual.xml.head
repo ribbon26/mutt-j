@@ -2072,31 +2072,32 @@ Mutt によって決まるため、変数の既定値はありません。
 
 <itemizedlist>
 
-<listitem><para>These variables should be set early in a configuration
-file with <link linkend="charset">$charset</link> preceding <link
-linkend="config-charset">$config_charset</link> so Mutt knows what
-character set to convert to.</para></listitem>
+<listitem><para>これらの変数は設定ファイルの先頭の方で
+<link linkend="config-charset">$config_charset</link>より前に
+<link linkend="charset">$charset</link> を定義すべきです。
+そうすると、Mutt はどの文字セットに変換するかを知ることができます。
+</para></listitem>
 
-<listitem><para>If <link linkend="config-charset">$config_charset</link>
-is set, it should be set in each configuration file because the value is
-global and <emphasis>not</emphasis> per configuration
-file.</para></listitem>
+<listitem><para><link linkend="config-charset">$config_charset</link>
+が設定されている場合、値はグローバルで、設定ファイル毎では
+<emphasis>ないため</emphasis>、各設定ファイル毎に設定する必要があります。
+</para></listitem>
 
-<listitem><para>Because Mutt first recodes a line before it attempts to
-parse it, a conversion introducing question marks or other characters as
-part of errors (unconvertable characters, transliteration) may introduce
-syntax errors or silently change the meaning of certain tokens
-(e.g. inserting question marks into regular
-expressions).</para></listitem>
+<listitem><para>
+Mutt は走査する前に行を最初に記録するので、疑問符やその他の文字をエラーの一部
+として導入する変換(変換不能な文字、音訳)は、構文エラーを引き起こしたり、
+特定のトークン(例えば、正規表現中への疑問符の埋め込み)を勝手に変換する
+可能性があります。
+</para></listitem>
 
 </itemizedlist>
 
 </sect1>
 
 <sect1 id="addrgroup">
-<title>Address Groups</title>
+<title>アドレスグループ</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>group</command>
@@ -2136,39 +2137,41 @@ expressions).</para></listitem>
 </cmdsynopsis>
 
 <para>
-Mutt supports grouping addresses logically into named groups. An address
-or address pattern can appear in several groups at the same time. These
-groups can be used in <link linkend="patterns">patterns</link> (for searching, limiting and tagging) and
-in hooks by using group patterns. This can be useful to classify mail
-and take certain actions depending on in what groups the message is.
-For example, the mutt user's mailing list would fit into the categories
-<quote>mailing list</quote> and <quote>mutt-related</quote>. Using <link
-linkend="send-hook"><literal>send-hook</literal></link>, the sender can
-be set to a dedicated one for writing mailing list messages, and the
-signature could be set to a mutt-related one for writing to a mutt list
-&mdash; for other lists, the list sender setting still applies but a
-different signature can be selected. Or, given a group only containing
-recipients known to accept encrypted mail,
 <quote>auto-encryption</quote> can be achieved easily.
+Mutt は名前をつけたグループ中に、論理的にアドレスをグルーピングする機能をサポート
+しています。アドレスまたはアドレスパターンは同時に複数のグループで
+利用できます。それらのグループは<link linkend="patterns">patterns</link>
+(検索、制限やタグ付け)と、グループパターンを使うフックの中で
+使う事ができます。これは、メールのクラス分けと、メッセージがどのようなグループ
+なのかに依存した特定の動作を行わせる時に便利です。たとえば、mutt の
+ユーザメーリングリストは<quote>mailing list</quote> と <quote>mutt-related</quote>
+というカテゴリに一致します。<link linkend="send-hook"><literal>send-hook</literal></link>
+を使う事で、送信者をメーリングリストあてのメッセージを書くための専用の
+ものとして設定でき、mutt メーリングリストに書くための、mutt-related なものとして
+署名を設定できます。&mdash;
+他のリストに対しては、リストへの送信者の設定は引き続き適用されますが、
+異なった署名が選択されます。あるいは、暗号化メールを受け取れることが分かっている
+受信者のみを含むグループについて、<quote>auto-encryption</quote>
+を簡単に実現できます。
 </para>
 
 <para>
-The <command>group</command> command is used to directly add either
-addresses or regular expressions to the specified group or groups. The
-different categories of arguments to the <command>group</command>
-command can be in any order. The flags <literal>-rx</literal> and
-<literal>-addr</literal> specify what the following strings (that cannot
-begin with a hyphen) should be interpreted as: either a regular
-expression or an email address, respectively.
+<command>group</command>コマンドはグループまたは複数のグループに、
+アドレスまたは正規表現で直接追加するために使用されます。
+<command>group</command>コマンドの異なったカテゴリの引数は、任意の順序で
+指定できます。<literal>-rx</literal>と<literal>-addr</literal>フラグは、
+その後の(ハイフンでは始まらない)文字列がそれぞれ正規表現か、単なるメールアドレス
+として解釈されるべきかを指定します。
 </para>
 
 <para>
-These address groups can also be created implicitly by the <link
-linkend="alias"><command>alias</command></link>, <link
-linkend="lists"><command>lists</command></link>, <link
-linkend="lists"><command>subscribe</command></link> and <link
-linkend="alternates"><command>alternates</command></link> commands by
-specifying the optional <literal>-group</literal> option. For example,
+これらのアドレスグループはオプションの<literal>-group</literal>
+オプションを指定することで、
+<link linkend="alias"><command>alias</command></link>,
+<link linkend="lists"><command>lists</command></link>,
+<link linkend="lists"><command>subscribe</command></link> と
+<link linkend="alternates"><command>alternates</command></link>
+コマンドによって暗黙的に作成することもできます。たとえば、
 </para>
 
 <screen>
@@ -2177,32 +2180,31 @@ alternates -group me -group work address3
 </screen>
 
 <para>
-would create a group named <quote>me</quote> which contains all your
-addresses and a group named <quote>work</quote> which contains only your
-work address <emphasis>address3</emphasis>. Besides many other
-possibilities, this could be used to automatically mark your own
-messages in a mailing list folder as read or use a special signature for
-work-related messages.
+は、すべての自分のアドレスと、作業用アドレス<emphasis>address3</emphasis>のみを
+含む<quote>work</quote>というなまえのグループを含む<quote>me</quote>
+と言う名前のグループを作ります。他にも多くの可能性がありますが、
+これを使って、読むために、メーリングリストフォルダ中の自分のメッセージに
+自動的にマークを付けるのに使ったり、仕事に関連したメッセージに特別な署名を
+使ったりすることができます。
 </para>
 
 <para>
-The <command>ungroup</command> command is used to remove addresses or
-regular expressions from the specified group or groups. The syntax is
-similar to the <command>group</command> command, however the special
-character <literal>*</literal> can be used to empty a group of all of
-its contents. As soon as a group gets empty because all addresses and
-regular expressions have been removed, it'll internally be removed, too
-(i.e. there cannot be an empty group). When removing regular expressions
-from a group, the pattern must be specified exactly as given to the
-<command>group</command> command or <literal>-group</literal> argument.
+<command>ungroup</command>コマンドは、指定されたグループまたは複数のグループ
+から、アドレスまたは正規表現を指定されたものを取り除くのに使います。
+文法は<command>group</command>とよく似ていますが、特別な文字<literal>*</literal>
+をグループのすべての内容を空にするのに使えます。すべてのアドレスと正規表現が
+削除されたため、グループが空になるとすぐに、それは内部的にも削除されます
+(すなわち、空のグループは存在しません)。グループから正規表現を削除するときは、
+<command>group</command> コマンドまたは <literal>-group</literal> 引数で
+正確に指定しなければなりません。
 </para>
 
 </sect1>
 
 <sect1 id="alias">
-<title>Defining/Using Aliases</title>
+<title>エイリアスの定義と使用</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>alias</command>
