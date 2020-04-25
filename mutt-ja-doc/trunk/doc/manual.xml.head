@@ -2181,7 +2181,7 @@ alternates -group me -group work address3
 
 <para>
 は、すべての自分のアドレスと、作業用アドレス<emphasis>address3</emphasis>のみを
-含む<quote>work</quote>というなまえのグループを含む<quote>me</quote>
+含む<quote>work</quote>という名前のグループを含む<quote>me</quote>
 と言う名前のグループを作ります。他にも多くの可能性がありますが、
 これを使って、読むために、メーリングリストフォルダ中の自分のメッセージに
 自動的にマークを付けるのに使ったり、仕事に関連したメッセージに特別な署名を
@@ -2238,27 +2238,25 @@ alternates -group me -group work address3
 </cmdsynopsis>
 
 <para>
-It's usually very cumbersome to remember or type out the address of
-someone you are communicating with.  Mutt allows you to create
-<quote>aliases</quote> which map a short string to a full address.
+通信相手のアドレスを覚たり、入力したりするのは、普段はとても面倒です。
+Mutt は完全なアドレスにマップする短い文字列 <quote>aliases</quote>を
+作成できます。
 </para>
 
 <note>
 <para>
-If you want to create an alias for more than one address, you
-<emphasis>must</emphasis> separate the addresses with a comma
-(<quote>,</quote>).
+一つ以上のアドレスのエイリアスを作成したい場合、アドレスは
+カンマ(<quote>,</quote>)で<emphasis>くくらなければなりません</emphasis>。
 </para>
 </note>
 
 <para>
-The optional <literal>-group</literal> argument to
-<command>alias</command> causes the aliased address(es) to be added to
-the named <emphasis>group</emphasis>.
+<command>alias</command>のオプション<literal>-group</literal>引数は
+別名アドレスを、<emphasis>group</emphasis>という名前に追加します。
 </para>
 
 <para>
-To add an alias:
+別名を追加するには以下のように行います。
 </para>
 
 <screen>
@@ -2267,7 +2265,8 @@ alias theguys manny, moe, jack
 </screen>
 
 <para>
-To remove an alias or aliases (<quote>*</quote> means all aliases):
+別名あるいは複数の別名(<quote>*</quote>はすべてを意味します)を削除するには
+以下のように行います。
 </para>
 
 <screen>
@@ -2276,27 +2275,27 @@ unalias *
 </screen>
 
 <para>
-Unlike other mailers, Mutt doesn't require aliases to be defined in a
-special file.  The <command>alias</command> command can appear anywhere
-in a configuration file, as long as this file is <link
-linkend="source"><command>source</command>d</link>.  Consequently, you
-can have multiple alias files, or you can have all aliases defined in
-your <literal>.muttrc</literal>.
+他のメーラとは違い、Mutt は 別名を特別のファイルに定義する必要がありません。
+<command>alias</command>コマンドは、
+<link linkend="source"><command>source</command>d</link> などで読み込まれるファイル
+と同じように、設定ファイル中であればどこにでも書けます。 したがって、
+複数の別名ファイルを使うこともできますし、<literal>.muttrc</literal>の中にすべて
+定義してしまうこともできます。
 </para>
 
 <para>
-On the other hand, the <link
-linkend="create-alias"><literal>&lt;create-alias&gt;</literal></link>
-function can use only one file, the one pointed to by the <link
-linkend="alias-file">$alias_file</link> variable (which is
-<literal>~/.muttrc</literal> by default). This file is not special
-either, in the sense that Mutt will happily append aliases to any file,
-but in order for the new aliases to take effect you need to explicitly
-<link linkend="source"><command>source</command></link> this file too.
+その一方、<link linkend="create-alias"><literal>&lt;create-alias&gt;</literal></link>
+機能は、
+<link linkend="alias-file">$alias_file</link>変数(<literal>~/.muttrc</literal>が
+既定値)によって指定される一つのファイルしか使えません。
+しかし、このファイルは特別扱いされるわけではありません。 というのも、Mutt はどの
+ファイルにでも別名を追加できますし、 このファイルもきちんと
+<link linkend="source"><command>source</command></link>しなければ
+新規エイリアスが有効にならないのです。 
 </para>
 
 <example id="ex-alias-external">
-<title>Configuring external alias files</title>
+<title>外部別名ファイルの設定例</title>
 <screen>
 source /usr/local/share/Mutt.aliases
 source ~/.mail_aliases
@@ -2305,35 +2304,33 @@ set alias_file=~/.mail_aliases
 </example>
 
 <para>
-To use aliases, you merely use the alias at any place in Mutt where Mutt
-prompts for addresses, such as the <emphasis>To:</emphasis> or
-<emphasis>Cc:</emphasis> prompt.  You can also enter aliases in your
-editor at the appropriate headers if you have the <link
-linkend="edit-headers">$edit_headers</link> variable set.
+別名を使うためには、単に、<emphasis>To:</emphasis> や <emphasis>Cc:</emphasis>の
+プロンプトでアドレスを入力するときに、 エイリアスを入力するだけです。
+また、<link linkend="edit-headers">$edit_headers</link>変数を設定しておけば、
+エディタでも適切なヘッダに別名をを入力できます。
 </para>
 
 <para>
-In addition, at the various address prompts, you can use the tab
-character to expand a partial alias to the full alias.  If there are
-multiple matches, Mutt will bring up a menu with the matching aliases.
-In order to be presented with the full list of aliases, you must hit tab
-without a partial alias, such as at the beginning of the prompt or after
-a comma denoting multiple addresses.
+
+さらに、種々のアドレス入力プロンプトにおいて、Tab 文字を使えば、一部だけ入力
+した別名ら完全な別名に展開させることができます。合致するものが複数あると、
+Mutt は合致した別名のメニューを出します。 別名の完全な一覧を表示させるには、
+書きかけの別名がない状態で Tab を入力しなくてはなりません。例えばプロンプトの
+最初や、アドレスが複数あることを示すカンマの後です。  
 </para>
 
 <para>
-In the alias menu, you can select as many aliases as you want with the
-<literal>select-entry</literal> key (default: &lt;Return&gt;), and use
-the <emphasis>exit</emphasis> key (default: q) to return to the address
-prompt.
+別名メニューでは、<literal>select-entry</literal> キー(既定値では
+default: &lt;Return&gt;)で好きなだけ別名を選択してから、
+<emphasis>exit</emphasis>キー(既定値は q)を使ってアドレスのプロンプトに戻れます。 
 </para>
 
 </sect1>
 
 <sect1 id="bind">
-<title>Changing the Default Key Bindings</title>
+<title>既定のキー割り当ての変更</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>bind</command>
@@ -2349,14 +2346,17 @@ prompt.
 </cmdsynopsis>
 
 <para>
-This command allows you to change the default key bindings (operation
-invoked when pressing a key).
+このコマンドで既定のキー割り当て (キーを押したときに起動する処理)を
+変更することができます。 
 </para>
 
 <para>
 <emphasis>map</emphasis> specifies in which menu the binding belongs.
 Multiple maps may be specified by separating them with commas (no
 additional whitespace is allowed). The currently defined maps are:
+<emphasis>map</emphasis>は、その割り当てがどのメニューのものなのかを指定します。
+複数のマップをカンマで区切って指定することもできます(ただし空白を入れてはいけません)。
+現状で定義されているマップは以下の通りです。
 </para>
 
 <anchor id="maps"/>
