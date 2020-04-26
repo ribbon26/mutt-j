@@ -2533,37 +2533,34 @@ control-A を指定したい場合は、<quote>\Ca</quote>とします)。
 </table>
 
 <para>
-The <literal>&lt;what-key&gt;</literal> function can be used to
-explore keycode and symbolic names for other keys on your keyboard.
-Executing this function will display information about each key
-pressed, until terminated by <literal>^G</literal>.
+<literal>&lt;what-key&gt;</literal>機能はキーボード上の他のキーのキーコードと
+シンボル名を調べるのに使えます。この機能を実行すると、<literal>^G</literal>
+が押されるまで、押されたキーの情報を表示します。
 </para>
 
 <para>
-<emphasis>key</emphasis> does not need to be enclosed in quotes unless
-it contains a space (<quote>&nbsp;</quote>) or semi-colon
-(<quote>;</quote>).
+<emphasis>key</emphasis>は空白(<quote>&nbsp;</quote>)またはセミコロン
+(<quote>;</quote>)がない限り引用符でくくる必要はありません。
 </para>
 
 <para>
-<emphasis>function</emphasis> specifies which action to take when
-<emphasis>key</emphasis> is pressed.  For a complete list of functions,
-see the <link linkend="functions">reference</link>. Note that the
-<command>bind</command> expects <emphasis>function</emphasis> to be
-specified without angle brackets.
+<emphasis>function</emphasis>は、<emphasis>key</emphasis>が押された時の
+動作を指定します。 関数すべての一覧は<link linkend="functions">reference</link>を
+参照してください。<command>bind</command>は<emphasis>function</emphasis>が
+大括弧なしで指定されていることを前提としていることに注意してください。
 </para>
 
 <para>
-The special function <literal>&lt;noop&gt;</literal> unbinds the
-specified key sequence.
+特別な機能<literal>&lt;noop&gt;</literal>は、そのキーシーケンスへの
+割り当てをなくします。
 </para>
 
 </sect1>
 
 <sect1 id="charset-hook">
-<title>Defining Aliases for Character Sets</title>
+<title>文字セットの別名定義</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>charset-hook</command>
@@ -2584,9 +2581,8 @@ specified key sequence.
 </cmdsynopsis>
 
 <para>
-The <command>charset-hook</command> command defines an alias for a
-character set.  This is useful to properly display messages which are
-tagged with a character set name not known to Mutt.
+<command>charset-hook</command>コマンドは文字セット用の別名を定義します。
+これは、Mutt の知らない文字セット名が付いたメッセージを 正しく表示するために使えます。 
 </para>
 
 <para>
@@ -2594,14 +2590,17 @@ The <command>iconv-hook</command> command defines a system-specific name
 for a character set.  This is helpful when your systems character
 conversion library insists on using strange, system-specific names for
 character sets.
+<command>iconv-hook</command>コマンドは文字セットに対してシステム固有の名前を
+定義します。これは、システムの文字変換ライブラリが、文字セットに、システム固有の
+おかしな名前を使うよう主張するときの助けになります。 
 </para>
 
 </sect1>
 
 <sect1 id="folder-hook">
-<title>Setting Variables Based Upon Mailbox</title>
+<title>メールボックスに基づく変数の設定</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>folder-hook</command>
@@ -2614,28 +2613,27 @@ character sets.
 </cmdsynopsis>
 
 <para>
-It is often desirable to change settings based on which mailbox you are
-reading.  The <command>folder-hook</command> command provides a method
-by which you can execute any configuration command.
-<emphasis>regexp</emphasis> is a regular expression specifying in which
-mailboxes to execute <emphasis>command</emphasis> before loading.  If a
-mailbox matches multiple <command>folder-hook</command>s, they are
-executed in the order given in the <literal>.muttrc</literal>.
+多くの場合、どのメールボックスを読んでいるかに合わせて 設定を変更できれば
+便利です。<command>folder-hook</command>コマンドは、どんな設定コマンドでも
+実行できる手法を提供します。<emphasis>regexp</emphasis>は、メールボックス中で、
+読み出す前に<emphasis>command</emphasis>を実行するものを指定する正規表現です。
+メールボックスが複数の<command>folder-hook</command>に一致する場合は、
+<literal>.muttrc</literal>中で出て来る順番に実行されます。 
 </para>
 
 <para>
-The regexp parameter has <link linkend="shortcuts">mailbox
-shortcut</link> expansion performed on the first character.
-See  <xref linkend="mailbox-hook"/> for more details.
+正規表現のパラメータは、
+<link linkend="shortcuts">mailbox shortcut</link>展開が
+最初の文字に対して行われます。
+詳細は<xref linkend="mailbox-hook"/>を参照してください。
 </para>
 
 <note>
 <para>
-If you use the <quote>!</quote> shortcut for <link
-linkend="spoolfile">$spoolfile</link> at the beginning of the pattern,
-you must place it inside of double or single quotes in order to
-distinguish it from the logical <emphasis>not</emphasis> operator for
-the expression.
+パターンの最初に、<link linkend="spoolfile">$spoolfile</link>への
+ショートカットとして<quote>!</quote>を使うならば、 正規表現の否定演算子
+<emphasis>not</emphasis>と区別するために、シングルかダブルの引用符で
+くくらなければなりません。
 </para>
 </note>
 
@@ -2644,6 +2642,9 @@ the expression.
 Settings are <emphasis>not</emphasis> restored when you leave the
 mailbox.  For example, a command action to perform is to change the
 sorting method based upon the mailbox being read:
+設定はメールボックスを出るときに復帰<emphasis>しません</emphasis>。
+たとえば、実行したいコマンド動作が、読み出すメールボックスに合わせて
+整列方法を変更することだとします。 
 </para>
 
 <screen>
