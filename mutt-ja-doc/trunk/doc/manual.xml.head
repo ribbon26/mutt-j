@@ -2366,12 +2366,11 @@ additional whitespace is allowed). The currently defined maps are:
 <term>generic</term>
 <listitem>
 <para>
-This is not a real menu, but is used as a fallback for all of the other
-menus except for the pager and editor modes.  If a key is not defined in
-another menu, Mutt will look for a binding to use in this menu.  This
-allows you to bind a key to a certain function in multiple menus instead
-of having multiple <command>bind</command> statements to accomplish the
-same task.
+これは実際のメニューではなく、ページャとエディタ以外の全メニューにおける
+最終候補となるものです。Mutt は、キーが実際のメニューで定義されていないとき、
+この割り当てを使います。これによって、関数を複数のメニューのキーに 割り当てる
+ことができますので、同じ効果を得るためにいくつも <command>bind</command> を
+書かなくて済みます。
 </para>
 </listitem>
 </varlistentry>
@@ -2379,9 +2378,8 @@ same task.
 <term>alias</term>
 <listitem>
 <para>
-The alias menu is the list of your personal aliases as defined in your
-<literal>.muttrc</literal>.  It is the mapping from a short alias name
-to the full email address(es) of the recipient(s).
+別名メニューは、<literal>.muttrc</literal>に定義されている個人的な別名の一覧で
+す。短い別名から完全なメールアドレスへの割り当て一覧です。 
 </para>
 </listitem>
 </varlistentry>
@@ -2389,8 +2387,8 @@ to the full email address(es) of the recipient(s).
 <term>attach</term>
 <listitem>
 <para>
-The attachment menu is used to access the attachments on received
-messages.
+この添付ファイルメニューは、受信したメッセージの添付ファイルにアクセス
+するのに使います。 
 </para>
 </listitem>
 </varlistentry>
@@ -2398,8 +2396,8 @@ messages.
 <term>browser</term>
 <listitem>
 <para>
-The browser is used for both browsing the local directory structure, and
-for listing all of your incoming mailboxes.
+browserは、ローカルのディレクトリ構造を閲覧するためにも使いますし、 受信メール
+ボックスを一覧表示するためにも使います。
 </para>
 </listitem>
 </varlistentry>
@@ -2407,9 +2405,9 @@ for listing all of your incoming mailboxes.
 <term>editor</term>
 <listitem>
 <para>
-The editor is used to allow the user to enter a single line of text, such as
-the <emphasis>To</emphasis> or <emphasis>Subject</emphasis> prompts in the
-<literal>compose</literal> menu.
+editor はユーザがテキストデータを入力する一行エディタで、<literal>compose</literal>
+メニューでの<emphasis>To</emphasis> 又は <emphasis>Subject</emphasis> プロンプトで
+使います。
 </para>
 </listitem>
 </varlistentry>
@@ -2417,7 +2415,7 @@ the <emphasis>To</emphasis> or <emphasis>Subject</emphasis> prompts in the
 <term>index</term>
 <listitem>
 <para>
-The index is the list of messages contained in a mailbox.
+インデックスとは、メールボックスに含まれているメッセージの一覧です。
 </para>
 </listitem>
 </varlistentry>
@@ -2425,7 +2423,7 @@ The index is the list of messages contained in a mailbox.
 <term>compose</term>
 <listitem>
 <para>
-The compose menu is the screen used when sending a new message.
+compose メニューは、新規メッセージを送信するときに使われる画面のことです。 
 </para>
 </listitem>
 </varlistentry>
@@ -2433,8 +2431,8 @@ The compose menu is the screen used when sending a new message.
 <term>pager</term>
 <listitem>
 <para>
-The pager is the mode used to display message/attachment data, and help
-listings.
+pager は、メッセージおよび添付ファイルのデータや ヘルプ一覧を表示するために
+使われるモードのことです。 
 </para>
 </listitem>
 </varlistentry>
@@ -2442,8 +2440,7 @@ listings.
 <term>pgp</term>
 <listitem>
 <para>
-The pgp menu is used to select the OpenPGP keys used to encrypt outgoing
-messages.
+PGP メニューは、送信メッセージの暗号化に使う OpenPGP 鍵を選択します。 
 </para>
 </listitem>
 </varlistentry>
@@ -2451,8 +2448,8 @@ messages.
 <term>smime</term>
 <listitem>
 <para>
-The smime menu is used to select the OpenSSL certificates used to
-encrypt outgoing messages.
+smime メニューは、送信メッセージの暗号化に使う OpenSSL の証明書を
+選択します。
 </para>
 </listitem>
 </varlistentry>
@@ -2460,8 +2457,8 @@ encrypt outgoing messages.
 <term>postpone</term>
 <listitem>
 <para>
-The postpone menu is similar to the index menu, except is used when
-recalling a message the user was composing, but saved until later.
+延期メニューはインデックスメニューに似ていますが、作成して送信せず
+次回まで保存しておいたようなメッセージを復元するときに使うものです。 
 </para>
 </listitem>
 </varlistentry>
@@ -2469,8 +2466,8 @@ recalling a message the user was composing, but saved until later.
 <term>query</term>
 <listitem>
 <para>
-The query menu is the browser for results returned by <link
-linkend="query-command">$query_command</link>.
+query メニューは<link linkend="query-command">$query_command</link>
+から返された結果を表示するための browser です。
 </para>
 </listitem>
 </varlistentry>
@@ -2478,34 +2475,34 @@ linkend="query-command">$query_command</link>.
 <term>mix</term>
 <listitem>
 <para>
-The mixmaster screen is used to select remailer options for outgoing
-messages (if Mutt is compiled with Mixmaster support).
+mixmaster 画面は、送信メッセージの再送信オプションを選択するのに使います
+(Mutt が Mixmaster をサポートするようにコンパイルされている場合)。
 </para>
 </listitem>
 </varlistentry>
 </variablelist>
 
 <para>
-<emphasis>key</emphasis> is the key (or key sequence) you wish to bind.
-To specify a control character, use the sequence
-<emphasis>\Cx</emphasis>, where <emphasis>x</emphasis> is the letter of
-the control character (for example, to specify control-A use
-<quote>\Ca</quote>).  Note that the case of <emphasis>x</emphasis> as
-well as <emphasis>\C</emphasis> is ignored, so that
+<emphasis>key</emphasis>は割り当てたいキー(またはキーシーケンス)です。
+制御文字を指定したい際は、<emphasis>\Cx</emphasis>と記述します。ここで、
+<emphasis>x</emphasis>は制御文字に対応する英字です(たとえば、
+control-A を指定したい場合は、<quote>\Ca</quote>とします)。
+<emphasis>x</emphasis>の大文字小文字状態は<emphasis>\C</emphasis>と
+同じように無視されるため、
 <emphasis>\CA</emphasis>, <emphasis>\Ca</emphasis>,
-<emphasis>\cA</emphasis> and <emphasis>\ca</emphasis> are all
-equivalent.  An alternative form is to specify the key as a three digit
-octal number prefixed with a <quote>\</quote> (for example
-<emphasis>\177</emphasis> is equivalent to <emphasis>\c?</emphasis>). In
-addition, <emphasis>key</emphasis> may be a symbolic name as shown in
-<xref linkend="tab-key-names"/>.
+<emphasis>\cA</emphasis> と<emphasis>\ca</emphasis>は皆同じです。
+別の書き方としては、キーに割り当てるのに、<quote>\</quote>を先頭につけた
+3桁の8進数字を指定する方法があります(たとえば、
+<emphasis>\177</emphasis>は<emphasis>\c?</emphasis>と同じです)。
+さらに、<emphasis>key</emphasis>は<xref linkend="tab-key-names"/>で
+示されているシンボル名でもかまいません。
 </para>
 
 <table id="tab-key-names">
-<title>Symbolic key names</title>
+<title>キーのシンボル名</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Symbolic name</entry><entry>Meaning</entry></row>
+<row><entry>シンボル名</entry><entry>意味</entry></row>
 </thead>
 <tbody>
 <row><entry>\t</entry><entry>tab</entry></row>
@@ -2515,10 +2512,10 @@ addition, <emphasis>key</emphasis> may be a symbolic name as shown in
 <row><entry>\n</entry><entry>newline</entry></row>
 <row><entry>\e</entry><entry>escape</entry></row>
 <row><entry>&lt;esc&gt;</entry><entry>escape</entry></row>
-<row><entry>&lt;up&gt;</entry><entry>up arrow</entry></row>
-<row><entry>&lt;down&gt;</entry><entry>down arrow</entry></row>
-<row><entry>&lt;left&gt;</entry><entry>left arrow</entry></row>
-<row><entry>&lt;right&gt;</entry><entry>right arrow</entry></row>
+<row><entry>&lt;up&gt;</entry><entry>上矢印</entry></row>
+<row><entry>&lt;down&gt;</entry><entry>下矢印</entry></row>
+<row><entry>&lt;left&gt;</entry><entry>左矢印</entry></row>
+<row><entry>&lt;right&gt;</entry><entry>右矢印</entry></row>
 <row><entry>&lt;pageup&gt;</entry><entry>Page Up</entry></row>
 <row><entry>&lt;pagedown&gt;</entry><entry>Page Down</entry></row>
 <row><entry>&lt;backspace&gt;</entry><entry>Backspace</entry></row>
@@ -2528,9 +2525,9 @@ addition, <emphasis>key</emphasis> may be a symbolic name as shown in
 <row><entry>&lt;return&gt;</entry><entry>Return</entry></row>
 <row><entry>&lt;home&gt;</entry><entry>Home</entry></row>
 <row><entry>&lt;end&gt;</entry><entry>End</entry></row>
-<row><entry>&lt;space&gt;</entry><entry>Space bar</entry></row>
-<row><entry>&lt;f1&gt;</entry><entry>function key 1</entry></row>
-<row><entry>&lt;f10&gt;</entry><entry>function key 10</entry></row>
+<row><entry>&lt;space&gt;</entry><entry>スペース</entry></row>
+<row><entry>&lt;f1&gt;</entry><entry>ファンクションキー 1</entry></row>
+<row><entry>&lt;f10&gt;</entry><entry>ファンクションキー 10</entry></row>
 </tbody>
 </tgroup>
 </table>
