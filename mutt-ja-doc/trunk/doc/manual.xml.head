@@ -2651,33 +2651,30 @@ sorting method based upon the mailbox being read:
 folder-hook mutt "set sort=threads"</screen>
 
 <para>
-However, the sorting method is not restored to its previous value when
-reading a different mailbox.  To specify a <emphasis>default</emphasis>
-command, use the pattern <quote>.</quote> before other
-<command>folder-hook</command>s adjusting a value on a per-folder basis
-because <command>folder-hook</command>s are evaluated in the order given
-in the configuration file.
+しかし、異なったメールボックスを読み出す時に、整列方法が以前の値に復帰する
+わけではありません。<emphasis>既定の</emphasis>コマンドを指定するには、
+<command>folder-hook</command>が設定ファイル中での順に評価されるので、
+フォルダ毎に値を調節する前に、パターン<quote>.</quote>を使います。
 </para>
 </note>
 
 <note>
 <para>
-The keyboard buffer will not be processed until after all hooks
-are run; multiple <link linkend="push">push</link> or <link
-linkend="exec">exec</link> commands will end up being processed in
-reverse order.
+キーボードバッファはすべてのホックが実行されたあとまで処理されません。
+複数の<link linkend="push">push</link> 又は
+<link linkend="exec">exec</link>コマンドは逆順で実行されることになります。
 </para>
 </note>
 
 <para>
-The following example will set the <link linkend="sort">sort</link>
-variable to <literal>date-sent</literal> for all folders but to
-<literal>threads</literal> for all folders containing
-<quote>mutt</quote> in their name.
+以下の例は、すべてのフォルダに対して<literal>date-sent</literal>
+を行うように<link linkend="sort">sort</link>変数を設定しますが、
+名前に <quote>mutt</quote> を含むすべてのフォルダの
+<literal>threads</literal>を設定します。
 </para>
 
 <example id="ex-folder-sorting">
-<title>Setting sort method based on mailbox name</title>
+<title>メールボックス名ベースでの整列方式の設定</title>
 <screen>
 folder-hook . "set sort=date-sent"
 folder-hook mutt "set sort=threads"
@@ -2687,9 +2684,9 @@ folder-hook mutt "set sort=threads"
 </sect1>
 
 <sect1 id="macro">
-<title>Keyboard Macros</title>
+<title>キーボードマクロ</title>
 
-<para>Usage:</para>
+<para>使用例:</para>
 
 <cmdsynopsis>
 <command>macro</command>
@@ -2708,53 +2705,49 @@ folder-hook mutt "set sort=threads"
 </cmdsynopsis>
 
 <para>
-Macros are useful when you would like a single key to perform a series
-of actions.  When you press <emphasis>key</emphasis> in menu
-<emphasis>menu</emphasis>, Mutt will behave as if you had typed
-<emphasis>sequence</emphasis>.  So if you have a common sequence of
-commands you type, you can create a macro to execute those commands with
-a single key or fewer keys.
+マクロは、キーひとつで連続作業を実行したいときに便利です。<emphasis>menu</emphasis>で
+<emphasis>key</emphasis>を押すと、Mutt はキーを<emphasis>順番に</emphasis>
+押したのと同じ動作をします。ですから、よく連続して入力するコマンドがあれば、
+マクロを作成してキーひとつ又はごく少ないキー入力で、そのコマンドを実行する
+ようにできます。
 </para>
 
 <para>
-<emphasis>menu</emphasis> is the <link linkend="maps">map</link> which
-the macro will be bound in.  Multiple maps may be specified by
-separating multiple menu arguments by commas. Whitespace may not be used
-in between the menu arguments and the commas separating them.
+<emphasis>menu</emphasis>はマクロを割り当てる<link linkend="maps">map</link>です。
+複数のマップは、カンマによって複数のメニューマップに分割して指定できます。
+ただし、メニューとカンマの間に空白を使うことはできません。 
 </para>
 
 <para>
-<emphasis>key</emphasis> and <emphasis>sequence</emphasis> are expanded
-by the same rules as the <link linkend="bind">key bindings</link> with
-some additions.  The first is that control characters in
-<emphasis>sequence</emphasis> can also be specified as
-<emphasis>^x</emphasis>.  In order to get a caret (<quote>^</quote>) you
-need to use <emphasis>^^</emphasis>.  Secondly, to specify a certain key
-such as <emphasis>up</emphasis> or to invoke a function directly, you
-can use the format <emphasis>&lt;key name&gt;</emphasis> and
-<emphasis>&lt;function name&gt;</emphasis>.  For a listing of key names
-see the section on <link linkend="bind">key bindings</link>.  Functions
-are listed in the <link linkend="functions">reference</link>.
+<emphasis>key</emphasis>と<emphasis>sequence</emphasis>は、いくつか追加が
+ありますが、<link linkend="bind">key bindings</link>と同じルールで展開されます。
+第一点は、<emphasis>sequence</emphasis>における制御文字を<emphasis>^x</emphasis>
+とも指定できることです。サーカムフレックス(<quote>^</quote>)を使うためには
+<emphasis>^^</emphasis>とする必要があります。 第二に、<emphasis>up</emphasis>や
+機能を直接呼び出すような特定のキーを指定するためには、
+<emphasis>&lt;key name&gt;</emphasis>と<emphasis>&lt;function name&gt;</emphasis>
+というフォーマットを使います。キー名の一覧は、
+<link linkend="bind">key bindings</link>を参照してください。
+機能の一覧は<link linkend="functions">reference</link>にあります。
 </para>
 
 <para>
-The advantage with using function names directly is that the macros will
-work regardless of the current key bindings, so they are not dependent
-on the user having particular key definitions.  This makes them more
-robust and portable, and also facilitates defining of macros in files
-used by more than one user (e.g., the system Muttrc).
+マクロに関数名を直接使う利点は、それによって 動作時のキー割り当てと関係なく
+マクロが動くので、特定のキー定義をしてあるユーザでなくとも使えるということです。
+これでマクロは堅固かつ(ポータブルになり、何人かで使うファイル (例えばシステムの
+Muttrc) の中でマクロを定義するのも容易になります。
 </para>
 
 <para>
-Optionally you can specify a descriptive text after
-<emphasis>sequence</emphasis>, which is shown in the help screens if
-they contain a description.
+必須ではありませんが、説明文を<emphasis>sequence</emphasis>の後ろに指定できます。
+これはヘルプ画面に表示されます。 
 </para>
 
 <note>
 <para>
-Macro definitions (if any) listed in the help screen(s), are
-silently truncated at the screen width, and are not wrapped.
+ヘルプ画面に表示されるマクロ定義 (定義されていればですが) は
+自動的に画面の幅に切り取られてしまい、折り返し表示はされないことに
+注意してください。
 </para>
 </note>
 
