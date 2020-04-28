@@ -2943,23 +2943,20 @@ IMAP サーバサイドの検索(=b, =B, =h)はカラーインデックスパタ
 </itemizedlist>
 
 <para>
-The color name can optionally be prefixed with the keyword
-<literal>bright</literal> or <literal>light</literal> to make the color
-boldfaced or light (e.g., <literal>brightred</literal>). The precise
-behavior depends on the terminal and its configuration. In particular,
-the boldfaced/light difference and such background colors may be
-available only for terminals configured with at least 16&nbsp;colors,
-as specified by the <literal>$TERM</literal> environment variable.
+色を太字又は細字(ライト)にするため、色の名前にオプションで
+<literal>bright</literal>または<literal>light</literal>
+(たとえば<literal>brightred</literal>)を付けることができます。
+正確な動作は端末とその設定によって異なります。特に、太字/細字の違いと
+そのような背景色は、環境変数<literal>$TERM</literal>で指定された、
+少なくとも、16&nbsp;色に設定された端末でのみ有効です。
 </para>
 
 <para>
-If your terminal supports it, the special keyword
-<emphasis>default</emphasis> can be used as a transparent color.  The
-value <emphasis>brightdefault</emphasis> is also valid.  If Mutt is
-linked against the <emphasis>S-Lang</emphasis> library, you also need to
-set the <literal>$COLORFGBG</literal> environment variable to the
-default colors of your terminal for this to work; for example (for
-Bourne-like shells):
+端末がそれらをサポートする場合、特別なキーワード<emphasis>default</emphasis>を、
+透明色として使えます。また、<emphasis>brightdefault</emphasis>と言う値も有効です。
+Mutt が<emphasis>S-Lang</emphasis>ライブラリにリンクされていれば、透明色が
+正しく動作するように<literal>$COLORFGBG</literal>環境変数を端末の既定色として
+設定しておく必要もあります。たとえば、(Bourne 系シェルの場合)以下のようになります。
 </para>
 
 <screen>
@@ -2969,40 +2966,36 @@ export COLORFGBG
 
 <note>
 <para>
-The <emphasis>S-Lang</emphasis> library requires you to use the
-<emphasis>lightgray</emphasis> and <emphasis>brown</emphasis> keywords
-instead of <emphasis>white</emphasis> and <emphasis>yellow</emphasis>
-when setting this variable.
+<emphasis>S-Lang</emphasis>では、この値を設定する時に、
+<emphasis>white</emphasis> と <emphasis>yellow</emphasis> の代わりに
+<emphasis>lightgray</emphasis> と <emphasis>brown</emphasis>という
+キーワードを使う必要があります。 
 </para>
 </note>
 
 <note>
 <para>
-The <command>uncolor</command> command can be applied to the index,
-header and body objects only.  It removes entries from the list. You
-<emphasis>must</emphasis> specify the same pattern specified in the
-<command>color</command> command for it to be removed.  The pattern
-<quote>*</quote> is a special token which means to clear the color list
-of all entries.
+<command>uncolor</command>コマンドは、index、ヘッダと本文のみに適用できます。
+これは項目をリストから消去します。消去するには<emphasis>必ず</emphasis>
+<command>color</command>コマンドで指定したのと同じパターンを指定しなければ
+なりません。<quote>*</quote>特別な印で、 color index のリストを全項目消去
+することを意味します。 
 </para>
 </note>
 
 <para>
-Mutt also recognizes the keywords <emphasis>color0</emphasis>,
-<emphasis>color1</emphasis>, ...,
+Mutt は<emphasis>color0</emphasis>,<emphasis>color1</emphasis>, ...,
 <emphasis>color</emphasis><emphasis>N-1</emphasis>
-(<emphasis>N</emphasis> being the number of colors supported by your
-terminal).  This is useful when you remap the colors for your display
-(for example by changing the color associated with
-<emphasis>color2</emphasis> for your xterm), since color names may then
-lose their normal meaning.
+(<emphasis>N</emphasis>は端末でサポートされている色の数) といったキーワードも
+認識できます。これは、画面の色を (例えばxterm の<emphasis>color2</emphasis>に
+関連付けてある色を変更したりして) 割り当て直したときに有用です。
+色名が通常の意味を失ってしまうからです。
 </para>
 
 <anchor id="mono"/>
 <para>
-If your terminal does not support color, it is still possible change the
-video attributes through the use of the <quote>mono</quote>
-command. Usage:
+端末がカラー表示をサポートしていなくとも、画面属性を<quote>mono</quote>コマンドを
+使う事で変更することが可能です。使用法は以下の通りです:
 </para>
 
 <cmdsynopsis>
@@ -3075,13 +3068,13 @@ command. Usage:
 </cmdsynopsis>
 
 <para>
-For <emphasis>object</emphasis>, <emphasis>composeobject</emphasis>, and
-<emphasis>attribute</emphasis>, see the <command>color</command> command.
+<emphasis>object</emphasis>, <emphasis>composeobject</emphasis>と
+<emphasis>attribute</emphasis>, see the <command>color</command>コマンド用です。
 </para>
 </sect1>
 
 <sect1 id="msg-hdr-display">
-<title>Message Header Display</title>
+<title>メッセージヘッダの表示</title>
 
 <sect2 id="hdr-folding">
 <title>Header Display</title>
