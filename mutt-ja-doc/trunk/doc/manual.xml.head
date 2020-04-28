@@ -2754,9 +2754,9 @@ Muttrc) の中でマクロを定義するのも容易になります。
 </sect1>
 
 <sect1 id="color">
-<title>Using Color and Mono Video Attributes</title>
+<title>色と白黒の画面属性の使用</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>color</command>
@@ -2852,56 +2852,55 @@ Muttrc) の中でマクロを定義するのも容易になります。
 </cmdsynopsis>
 
 <para>
-If your terminal supports color, you can spice up Mutt by creating your
-own color scheme.  To define the color of an object (type of
-information), you must specify both a foreground color
-<emphasis>and</emphasis> a background color (it is not possible to only
-specify one or the other).
+端末がカラー表示をサポートしていれば、独自の色構成を創作して 一味ちがう
+Mutt にすることができます。ある対象 (情報の型) の色を定義するには 前景色と
+背景色の<emphasis>両方を</emphasis>指定しなければなりません (前景だけや
+背景だけを指定することは不可能です)。 
 </para>
 
 <para>
-<emphasis>header</emphasis> and <emphasis>body</emphasis> match
-<emphasis><link linkend="regexp">regexp</link></emphasis> in the
-header/body of a message, <emphasis>index</emphasis> matches
-<emphasis><link linkend="patterns">pattern</link></emphasis> in the
-message index.  Note that IMAP server-side searches (=b, =B, =h) are
-not supported for color index patterns.
+<emphasis>header</emphasis>と<emphasis>body</emphasis>は
+メッセージのヘッダ/本文で<emphasis><link linkend="regexp">regexp</link></emphasis>
+に一致し、<emphasis>index</emphasis>は、メッセージインデックス中の
+<emphasis><link linkend="patterns">pattern</link></emphasis>と一致します。
+IMAP サーバサイドの検索(=b, =B, =h)はカラーインデックスパターン用には
+サポートされていないことに注意してください。
 </para>
 
 <para>
-When <link linkend="header-color-partial">$header_color_partial</link>
-is unset (the default), a <emphasis>header</emphasis> matched by
-<emphasis>regexp</emphasis> will have color applied to the entire header.
-When set, color is applied only to the exact text matched by
-<emphasis>regexp</emphasis>.
+<link linkend="header-color-partial">$header_color_partial</link>が未設定の
+場合(既定値)、<emphasis>regexp</emphasis>に一致する<emphasis>header</emphasis>は、
+すべてのヘッダに適用される色となります。設定されている場合は、
+<emphasis>regexp</emphasis>に正確に一致するテキストのみに、色が適用されます。
 </para>
 
 <para>
-<emphasis>object</emphasis> can be one of:
+<emphasis>object</emphasis> は以下のうちのどれかです:
 </para>
 
 <itemizedlist>
 <listitem><para>attachment</para></listitem>
-<listitem><para>bold (highlighting bold patterns in the body of messages)</para></listitem>
-<listitem><para>error (error messages printed by Mutt)</para></listitem>
-<listitem><para>hdrdefault (default color of the message header in the pager)</para></listitem>
-<listitem><para>indicator (arrow or bar used to indicate the current item in a menu)</para></listitem>
-<listitem><para>markers (the <quote>+</quote> markers at the beginning of wrapped lines in the pager)</para></listitem>
+<listitem><para>bold (メッセージの本文の太字強調部分)</para></listitem>
+<listitem><para>error (Mutt が出力するエラーメッセージ)</para></listitem>
+<listitem><para>hdrdefault (ペイジャにおけるメッセージヘッダの既定の色)</para></listitem>
+<listitem><para>indicator (メニューで現在の項目を指し示す矢印もしくはバー)</para></listitem>
+<listitem><para>markers (ページャで折り返された行の行頭にある <quote>+</quote> マーカ)</para></listitem>
 <listitem><para>message (informational messages)</para></listitem>
 <listitem><para>normal</para></listitem>
 <listitem><para>prompt</para></listitem>
-<listitem><para>quoted (text matching <link linkend="quote-regexp">$quote_regexp</link> in the body of a message)</para></listitem>
-<listitem><para>quoted1, quoted2, ..., quoted<emphasis>N</emphasis> (higher levels of quoting)</para></listitem>
-<listitem><para>search (highlighting of words in the pager)</para></listitem>
+<listitem><para>quoted (メッセージの本文で<link linkend="quote-regexp">$quote_regexp</link>に一致す
+る文)</para></listitem>
+<listitem><para>quoted1, quoted2, ..., quoted<emphasis>N</emphasis> (引用の階層レベル)</para></listitem>
+<listitem><para>search (ページャでの検索語句の強調)</para></listitem>
 <listitem><para>signature</para></listitem>
-<listitem><para>status (mode lines used to display info about the mailbox or message)</para></listitem>
-<listitem><para>tilde (the <quote>~</quote> used to pad blank lines in the pager)</para></listitem>
-<listitem><para>tree (thread tree drawn in the message index and attachment menu)</para></listitem>
-<listitem><para>underline (highlighting underlined patterns in the body of messages)</para></listitem>
+<listitem><para>status (メールボックスやメッセージに関する情報を表示するモード行)</para></listitem>
+<listitem><para>tilde (ページャの空行を埋める <quote>~</quote>の部分)</para></listitem>
+<listitem><para>tree (メッセージインデックスと添付ファイルメニューで描かれるスレッドツリー)</para></listitem>
+<listitem><para>下線(メッセージ本文の下線つきパターンを強調)</para></listitem>
 </itemizedlist>
 
 <para>
-<emphasis>composeobject</emphasis> can be one of:
+<emphasis>composeobject</emphasis> は以下のうちのどれかです:
 </para>
 
 <itemizedlist>
@@ -2913,7 +2912,7 @@ When set, color is applied only to the exact text matched by
 </itemizedlist>
 
 <para>
-<emphasis>attribute</emphasis> can be one of the following:
+<emphasis>attribute</emphasis> には以下のうちどれかが後に付きます:
 </para>
 
 <itemizedlist>
@@ -2925,8 +2924,8 @@ When set, color is applied only to the exact text matched by
 </itemizedlist>
 
 <para>
-<emphasis>foreground</emphasis> and <emphasis>background</emphasis> can
-be one of the following:
+<emphasis>foreground</emphasis> and <emphasis>background</emphasis> には
+以下のうちどれかが後に付きます:
 </para>
 
 <itemizedlist>
