@@ -3077,22 +3077,22 @@ Mutt は<emphasis>color0</emphasis>,<emphasis>color1</emphasis>, ...,
 <title>メッセージヘッダの表示</title>
 
 <sect2 id="hdr-folding">
-<title>Header Display</title>
+<title>ヘッダ表示</title>
 
 <para>
-When displaying a message in the pager, Mutt folds long header lines at
-<link linkend="wrap">$wrap</link> columns. Though there're precise rules
-about where to break and how, Mutt always folds headers using a tab for
-readability. (Note that the sending side is not affected by this, Mutt
-tries to implement standards compliant folding.)
+ページャ中でメッセージを表示する時、Mutt は<link linkend="wrap">$wrap</link>カラムで、
+長いヘッダを折り返します。どこでどのように折りたたむかについての厳密な
+ルールはありますが、Mutt は常時可読性をよくするために、タブを使って
+ヘッダを折りたたみます(送信時にはこれは適用されず、Mutt は標準に準拠した
+折りたたみを実装しようとします)。
 </para>
 
 </sect2>
 
 <sect2 id="ignore">
-<title>Selecting Headers</title>
+<title>ヘッダの選択</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>ignore</command>
@@ -3115,33 +3115,29 @@ tries to implement standards compliant folding.)
 </cmdsynopsis>
 
 <para>
-Messages often have many header fields added by automatic processing
-systems, or which may not seem useful to display on the screen.  This
-command allows you to specify header fields which you don't normally
-want to see in the pager.
+多くのメッセイジには、自動処理システムによって付加された、すなわち、
+画面に表示させても役に立つとは思えないようなヘッダフィールドがたくさん付いています。
+このコマンドで、普段は見ないでいたいヘッダフィールドを指定することができます。 
 </para>
 
 <para>
-You do not need to specify the full header field name.  For example,
-<quote>ignore content-</quote> will ignore all header fields that begin
-with the pattern <quote>content-</quote>. <quote>ignore *</quote> will
-ignore all headers.
+ヘッダフィールド名全体を指定する必要はありません。 例えば
+<quote>ignore content-</quote>は、<quote>content-</quote>で始まるすべてのヘッダを
+無視します。
 </para>
 
 <para>
-To remove a previously added token from the list, use the
-<quote>unignore</quote> command.  The <quote>unignore</quote> command
-will make Mutt display headers with the given pattern.  For example, if
-you do <quote>ignore x-</quote> it is possible to <quote>unignore
-x-mailer</quote>.
+以前に追加した項目をリストから外すには、<quote>unignore</quote>コマンドを使用します。
+Mutt は指定されたパターンでヘッダを表示します。たとえば、<quote>ignore x-</quote>を
+指定すると、 <quote>unignore x-mailer</quote>とすることができます。
 </para>
 
 <para>
-<quote>unignore *</quote> will remove all tokens from the ignore list.
+<quote>unignore *</quote>は、無視リストから全項目を消去します。
 </para>
 
 <example id="ex-header-weeding">
-<title>Header weeding</title>
+<title>ヘッダの間引き</title>
 <screen>
 <emphasis role="comment"># Sven's draconian header weeding</emphasis>
 ignore *
@@ -3154,9 +3150,9 @@ unignore posted-to:
 </sect2>
 
 <sect2 id="hdr-order">
-<title>Ordering Displayed Headers</title>
+<title>表示されるヘッダの順番</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>hdr_order</command>
@@ -3179,9 +3175,8 @@ unignore posted-to:
 </cmdsynopsis>
 
 <para>
-With the <command>hdr_order</command> command you can specify an order
-in which Mutt will attempt to present these headers to you when viewing
-messages.
+<command>hdr_order</command>コマンドを使うと、メッセージを表示する時、
+Mutt がヘッダを表示する時の順番を指定することができます。
 </para>
 
 <para>
