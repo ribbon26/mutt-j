@@ -3180,13 +3180,13 @@ Mutt がヘッダを表示する時の順番を指定することができます
 </para>
 
 <para>
-<quote><command>unhdr_order</command> *</quote> will clear all previous
-headers from the order list, thus removing the header order effects set
-by the system-wide startup file.
+<quote><command>unhdr_order</command> *</quote>は、順番リストから以前に定義した
+すべてのヘッダを削除しますので、システム全体のスタートアップファイルで
+設定したヘッダ順序効果がなくなります。
 </para>
 
 <example id="ex-hdr-order">
-<title>Configuring header display order</title>
+<title>ヘッダ表示順の設定</title>
 <screen>
 hdr_order From Date: From: To: Cc: Subject:
 </screen>
@@ -3196,9 +3196,9 @@ hdr_order From Date: From: To: Cc: Subject:
 </sect1>
 
 <sect1 id="alternates">
-<title>Alternative Addresses</title>
+<title>代替アドレス</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>alternates</command>
@@ -3229,28 +3229,24 @@ hdr_order From Date: From: To: Cc: Subject:
 </cmdsynopsis>
 
 <para>
-With various functions, Mutt will treat messages differently, depending
-on whether you sent them or whether you received them from someone else.
-For instance, when replying to a message that you sent to a different
-party, Mutt will automatically suggest to send the response to the
-original message's recipients &mdash; responding to yourself won't make
-much sense in many cases.  (See <link
-linkend="reply-to">$reply_to</link>.)
+種々の機能において、Mutt は自分で送信したメッセイジか、他人から受信した
+メッセイジかに応じて違う扱い方をします。たとえば、自分が別の相手へ送信した
+メッセイジに返信を書くとき、 Mutt は自動的にその元メッセイジの宛先へ返事を
+送るよう提案します。 多くの場合、自分に返事を書くなどということは意味をなさ
+ないからです(<link linkend="reply-to">$reply_to</link>を参照)。
 </para>
 
 <para>
-Many users receive e-mail under a number of different addresses. To
-fully use Mutt's features here, the program must be able to recognize
-what e-mail addresses you receive mail under. That's the purpose of the
-<command>alternates</command> command: It takes a list of regular
-expressions, each of which can identify an address under which you
-receive e-mail.
+多くのユーザは複数の異なるアドレスでメールを受信します。Mutt の機能をフル
+活用するには、どのアドレスで自分がメールを 受信するのかを Mutt が理解できる
+ようにしなくてはなりません。このことが、<command>alternates</command>コマンドを
+使う目的です。このコマンドは正規表現のリストを受け取り、それらを使って、 自分が
+メールを受信するアドレスを識別します。 
 </para>
 
 <para>
-As addresses are matched using regular expressions and not exact strict
-comparisons, you should make sure you specify your addresses as precise
-as possible to avoid mismatches. For example, if you specify:
+厳密な比較ではなく、アドレスは正規表現を使って照合されるので、ミスマッチを
+防ぐため、アドレスはできるだけ正確に指定する必要があります。
 </para>
 
 <screen>
@@ -3258,9 +3254,9 @@ alternates user@example
 </screen>
 
 <para>
-Mutt will consider <quote><literal>some-user@example</literal></quote>
-as being your address, too which may not be desired. As a solution, in
-such cases addresses should be specified as:
+Mutt は<quote><literal>some-user@example</literal></quote>が使うアドレスと
+想定しますが、これは望ましくないかもしれません。解決方法として、そのような
+場合には、以下のように指定します:
 </para>
 
 <screen>
@@ -3268,37 +3264,36 @@ alternates '^user@example$'
 </screen>
 
 <para>
-The <literal>-group</literal> flag causes all of the subsequent regular
-expressions to be added to the named group.
+<literal>-group</literal>フラグは、名前付きのグループに、すべての後続の正規表現を
+追加します。
 </para>
 
 <para>
-The <command>unalternates</command> command can be used to write
-exceptions to <command>alternates</command> patterns. If an address
-matches something in an <command>alternates</command> command, but you
-nonetheless do not think it is from you, you can list a more precise
-pattern under an <command>unalternates</command> command.
+<command>unalternates</command>コマンドを使うと、<command>alternates</command>の
+パターンに例外を作ることができます。あるアドレスが<command>alternates</command>
+に一致していて、それを自分からのではないことにしたい場合には、
+<command>unalternates</command>コマンド配下で、より正確なパターンをリストアップ
+できます。
 </para>
 
 <para>
-To remove a regular expression from the <command>alternates</command>
-list, use the <command>unalternates</command> command with exactly the
-same <emphasis>regexp</emphasis>.  Likewise, if the
-<emphasis>regexp</emphasis> for an <command>alternates</command> command
-matches an entry on the <command>unalternates</command> list, that
-<command>unalternates</command> entry will be removed. If the
-<emphasis>regexp</emphasis> for <command>unalternates</command> is
-<quote>*</quote>, <emphasis>all entries</emphasis> on
-<command>alternates</command> will be removed.
+<command>alternates</command>リストから正規表現を削除するには、完全に同一の
+<emphasis>regexp</emphasis>を<command>unalternates</command>で指定します。
+同様に、ある<command>alternates</command>コマンドの<emphasis>regexp</emphasis>が
+<command>unalternates</command>リストのエントリに一致したならば、
+<command>unalternates</command>エントリは削除されます。
+<command>unalternates</command>の<emphasis>regexp</emphasis>が<quote>*</quote>で
+あれば、<command>alternates</command>の<emphasis>すべてのエントリ</emphasis>が
+削除されます。
 </para>
 
 </sect1>
 
 <sect1 id="lists">
-<title>Mailing Lists</title>
+<title>メーリングリスト</title>
 
 <anchor id="subscribe"/>
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>lists</command>
