@@ -3115,7 +3115,7 @@ Mutt は<emphasis>color0</emphasis>,<emphasis>color1</emphasis>, ...,
 </cmdsynopsis>
 
 <para>
-多くのメッセイジには、自動処理システムによって付加された、すなわち、
+多くのメッセージには、自動処理システムによって付加された、すなわち、
 画面に表示させても役に立つとは思えないようなヘッダフィールドがたくさん付いています。
 このコマンドで、普段は見ないでいたいヘッダフィールドを指定することができます。 
 </para>
@@ -3229,9 +3229,9 @@ hdr_order From Date: From: To: Cc: Subject:
 </cmdsynopsis>
 
 <para>
-種々の機能において、Mutt は自分で送信したメッセイジか、他人から受信した
-メッセイジかに応じて違う扱い方をします。たとえば、自分が別の相手へ送信した
-メッセイジに返信を書くとき、 Mutt は自動的にその元メッセイジの宛先へ返事を
+種々の機能において、Mutt は自分で送信したメッセージか、他人から受信した
+メッセージかに応じて違う扱い方をします。たとえば、自分が別の相手へ送信した
+メッセージに返信を書くとき、 Mutt は自動的にその元メッセージの宛先へ返事を
 送るよう提案します。 多くの場合、自分に返事を書くなどということは意味をなさ
 ないからです(<link linkend="reply-to">$reply_to</link>を参照)。
 </para>
@@ -3342,97 +3342,97 @@ alternates '^user@example$'
 </cmdsynopsis>
 
 <para>
-Mutt has a few nice features for <link linkend="using-lists">handling
-mailing lists</link>.  In order to take advantage of them, you must
-specify which addresses belong to mailing lists, and which mailing lists
-you are subscribed to. Mutt also has limited support for auto-detecting
-mailing lists: it supports parsing <literal>mailto:</literal> links in
-the common <literal>List-Post:</literal> header which has the same
-effect as specifying the list address via the <command>lists</command>
-command (except the group feature). Once you have done this, the <link
-linkend="list-reply"><literal>&lt;list-reply&gt;</literal></link>
-function will work for all known lists.  Additionally, when you send a
-message to a known list and <link
-linkend="followup-to">$followup_to</link> is set, Mutt will add a
-Mail-Followup-To header.  For unsubscribed lists, this will include
-your personal address, ensuring you receive a copy of replies.  For
-subscribed mailing lists, the header will not, telling other users'
-mail user agents not to send copies of replies to your personal
-address.
+Mutt は <link linkend="using-lists">メーリングリストを扱う</link>
+ための、便利な機能がいくつかあります。その益にあずかるには、 どのアドレス
+がメーリングリストに属するのか、 そして自分がどのメーリングリストを講読
+しているのかを指定しなければなりません。Mutt はまた、自動的に検出した
+への限定的なサポートもしています。これは、<command>lists</command>
+コマンド(グループ機能を除く)で、メーリングリストのアドレスを指定するのと
+同じ効果がある、共通の<literal>List-Post:</literal>ヘッダ中の
+<literal>mailto:</literal>リンクを走査することで、サポートします。
+一度これを行うと、
+<link linkend="list-reply"><literal>&lt;list-reply&gt;</literal></link>
+機能はすべての既知メーリングリストに対して動作するようになります。
+そのうえ、購読しているメーリングリストにメッセージを送るときで、
+<link linkend="followup-to">$followup_to</link>が設定されている場合は、
+Mutt は Mail-Followup-To ヘッダを付与します。メーリングリストの購読を
+中止する場合、これには自分のアドレスが含まれるので、返信のコピーを確実に受け取れる
+ことができます。購読済みのメーリングリストでは、返信を自分のアドレスにも送ること
+のないよう、他の人のメールユーザエージェントに伝えます。 
 </para>
 
 <note>
 <para>
-The Mail-Followup-To header is a non-standard extension which is not
-supported by all mail user agents.  Adding it is not bullet-proof
-against receiving personal CCs of list messages.  Also note that the
-generation of the Mail-Followup-To header is controlled by the <link
-linkend="followup-to">$followup_to</link> configuration variable since
-it's common practice on some mailing lists to send Cc upon replies
-(which is more a group- than a list-reply).
+Mail-Followup-To header は、すべてのメールユーザエージェントでサポートされて
+いない、非標準の拡張です。これを追加しても、メーリングリストのメッセージが
+自分宛てに Cc: で来るのを防ぐ 防弾チョッキにはなりません。Mail-Followup-To の
+生成は、設定ファイル中の<link linkend="followup-to">$followup_to</link> 変数に
+よって制御されるのですが、一部のメーリングリストでは、返信時にCcを送るのが
+一般的だからです(これは、メーリングリストへの返信と言うよりは、グループ
+へ、だからです)。
 </para>
 </note>
 
 <para>
-More precisely, Mutt maintains lists of patterns for the addresses of
-known and subscribed mailing lists.  Every subscribed mailing list is
-known. To mark a mailing list as known, use the <command>list</command>
-command.  To mark it as subscribed, use <command>subscribe</command>.
+さらに正確に言うと、Mutt が管理しているのは、 既知および購読中のメーリングリストの
+アドレスを表すパターンのリストです。購読しているメーリングリストはすべて
+既知になります。あるメーリングリストを既知にするには、<command>list</command>
+コマンドを使います。購読中にするには、<command>subscribe</command>
+コマンドを使います。
 </para>
 
 <para>
-You can use regular expressions with both commands. To mark all messages
-sent to a specific bug report's address on Debian's bug tracking system
-as list mail, for instance, you could say
+どちらのコマンドにも正規表現を使えます。例えば、Debian のバグトラッキング
+システムにおけるバグレポートのアドレスに送信されたすべてのメッセージを、
+メーリングリストのメールであるということにするには、たとえば、
 </para>
 
 <screen>
 subscribe [0-9]+.*@bugs.debian.org</screen>
 
 <para>
-as it's often sufficient to just give a portion of the list's e-mail
-address.
+とします。くの場合は、単にリストのメールアドレスの一部分を指定するだけで十分です。
 </para>
 
 <para>
-Specify as much of the address as you need to to remove ambiguity.  For
-example, if you've subscribed to the Mutt mailing list, you will receive
-mail addressed to <literal>mutt-users@mutt.org</literal>.  So, to tell
-Mutt that this is a mailing list, you could add <literal>lists
-mutt-users@</literal> to your initialization file.  To tell Mutt that
-you are subscribed to it, add <literal><command>subscribe</command>
-mutt-users</literal> to your initialization file instead.  If you also
-happen to get mail from someone whose address is
-<literal>mutt-users@example.com</literal>, you could use
-<literal><command>lists</command> ^mutt-users@mutt\\.org$</literal> or
+十分な長さでアドレスを指定して、あいまいさをなくしてください。 たとえば、
+Mutt のメーリングリストを購読していれば、<literal>mutt-users@mutt.org</literal>
+へのメールを受信することになります。 それで、このアドレスがメーリングリスト
+だということを Mutt に教えるには、 初期化ファイルに
+<literal>lists mutt-users@</literal>を追加します。これを購読していることを
+Mutt に教えるには、代わりに
+<literal><command>subscribe</command>mutt-users</literal>を追加します。
+もし、<literal>mutt-users@example.com</literal>というアドレスの人からメールを
+受診することがあるならば、
+<literal><command>lists</command> ^mutt-users@mutt\\.org$</literal> か
 <literal><command>subscribe</command> ^mutt-users@mutt\\.org$</literal>
-to match only mail from the actual list.
+を使って、実際にリストから来たメールにだけ一致させることができます。 
 </para>
 
 <para>
-The <literal>-group</literal> flag adds all of the subsequent regular
-expressions to the named <link linkend="addrgroup">address group</link>
-in addition to adding to the specified address list.
+<literal>-group</literal>フラグは、指定されたアドレスリストに追加する
+のに加えて、後続のすべての正規表現を
+名前付き<link linkend="addrgroup">address group</link>に追加します。
 </para>
 
 <para>
-The <quote>unlists</quote> command is used to remove a token from the
-list of known and subscribed mailing-lists. Use <quote>unlists *</quote>
-to remove all tokens.
+<quote>unlists</quote>コマンドは、既知と購読中のメーリングリストのリストから
+項目を消去するために使います。項目をすべて消去するには
+<quote>unlists *</quote>を使ってください。
 </para>
 
 <para>
-To remove a mailing list from the list of subscribed mailing lists, but
-keep it on the list of known mailing lists, use
-<command>unsubscribe</command>.
+メーリングリストを、購読中のメーリングリストのリストからは消去しつつ、既知の
+メーリングリストのリストに残しておくためには、<command>unsubscribe</command>
+を使ってください。
 </para>
 
 </sect1>
 
 <sect1 id="mbox-hook">
-<title>Using Multiple Spool Mailboxes</title>
+<title>複数のスプールメールボックスの使用</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>mbox-hook</command>
