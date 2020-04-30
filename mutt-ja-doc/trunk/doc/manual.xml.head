@@ -3445,38 +3445,36 @@ Mutt に教えるには、代わりに
 </cmdsynopsis>
 
 <para>
-This command is used to move read messages from a specified mailbox to a
-different mailbox automatically when you quit or change folders.
-<emphasis>regexp</emphasis> is a regular expression specifying the
-mailbox to treat as a <quote>spool</quote> mailbox and
-<emphasis>mailbox</emphasis> specifies where mail should be saved when
-read.
+このコマンドは、終了時やフォルダ変更時に、既読メッセージを、特定のメールボックス
+から違うメールボックスへと、自動で移動させるのに使います。<emphasis>regexp</emphasis>は
+<quote>spool</quote>メールボックスとして扱うメールボックスを指定する正規表現で、
+<emphasis>mailbox</emphasis>は、既読時にメールをどこにセーブすべきかを指定します。 
 </para>
 
 <para>
-The regexp parameter has <link linkend="shortcuts">mailbox
-shortcut</link> expansion performed on the first character.
-See  <xref linkend="mailbox-hook"/> for more details.
+regexp パラメータは、最初の文字上で展開が実行される
+<link linkend="shortcuts">mailbox shortcut</link>機能があります。
+詳しくは、<xref linkend="mailbox-hook"/>を参照してください。
 </para>
 
 <para>
-Note that execution of mbox-hooks is dependent on the <link
-linkend="move">$move</link> configuration variable.  If set to
-<quote>no</quote> (the default), mbox-hooks will not be executed.
+mbox-hooks の実行は、<link linkend="move">$move</link> 変数に依存する
+ことに注意してください。<quote>no</quote>(既定値)に設定すると、
+mbox-hooks は実行されません。
 </para>
 
 <para>
-Unlike some of the other <emphasis>hook</emphasis> commands, only the
-<emphasis>first</emphasis> matching regexp is used (it is not possible
-to save read mail in more than a single mailbox).
+一部の<emphasis>hook</emphasis>コマンドと異なり、<emphasis>最初に</emphasis>
+パターンだけが 使われます (既読メールを一度に複数のメールボックスへセーブすることは
+できません)。 
 </para>
 
 </sect1>
 
 <sect1 id="mailboxes">
-<title>Monitoring Incoming Mail</title>
+<title>受信メールのモニタ</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>mailboxes</command>
@@ -3499,55 +3497,51 @@ to save read mail in more than a single mailbox).
 </cmdsynopsis>
 
 <para>
-This command specifies folders which can receive mail and which will be
-checked for new messages periodically.
+このコマンドは、メールを受信し、定期的に新しいメールが来ているかをチェックする
+フォルダを指定します。
 </para>
 
 <para>
-<emphasis>folder</emphasis> can either be a local file or directory
-(Mbox/Mmdf or Maildir/Mh). If Mutt was built with POP and/or IMAP
-support, <emphasis>folder</emphasis> can also be a POP/IMAP folder
-URL. The URL syntax is described in <xref linkend="url-syntax"/>, POP
-and IMAP are described in <xref linkend="pop"/> and <xref
-linkend="imap"/> respectively.
+<emphasis>folder</emphasis>はローカルファイルかディレクトリのどちらかです
+(Mbox/Mmdf 又は Maildir/Mh)。Mutt が POP 又は IMAP をサポートするように
+コンパイルされている場合、<emphasis>folder</emphasis>には POP/IMAP フォルダ URLも
+使えます。URL の文法は、<xref linkend="url-syntax"/> にあり、POP と
+IMAP はそれぞれ <xref linkend="pop"/>と<xref linkend="imap"/> に説明があります。
 </para>
 
 <para>
-Mutt provides a number of advanced features for handling (possibly many)
-folders and new mail within them, please refer to <xref
-linkend="new-mail"/> for details (including in what situations and how
-often Mutt checks for new mail).
-Additionally, <link linkend="new-mail-command">$new_mail_command</link>
-can be used to run a command when new mail is detected.
+Mutt は(おそらく多くの)フォルダとその中の新しいメールを扱うための、多くの
+高度な機能を提供しています。詳細は<xref linkend="new-mail"/>を参照してください
+(どのような状況でどのくらいの頻度で Mutt が新しいメールをチェックするかを
+含みます)。
 </para>
 
 <para>
-The <quote>unmailboxes</quote> command is used to remove a token from
-the list of folders which receive mail. Use <quote>unmailboxes *</quote>
-to remove all tokens.
+<quote>unmailboxes</quote>はメールを受信したフォルダリストからトークンを
+削除するのに使います。<quote>unmailboxes *</quote>を使うと、すべてのトークンを
+削除します。
 </para>
 
 <note>
 <para>
-The folders in the <command>mailboxes</command> command are resolved
-when the command is executed, so if these names contain <link
-linkend="shortcuts">shortcut characters</link> (such as <quote>=</quote>
-and <quote>!</quote>), any variable definition that affects these
-characters (like <link linkend="folder">$folder</link> and <link
-linkend="spoolfile">$spoolfile</link>) should be set before the
-<command>mailboxes</command> command. If none of these shortcuts are
-used, a local path should be absolute as otherwise Mutt tries to find it
-relative to the directory from where Mutt was started which may not
-always be desired.
+<command>mailboxes</command>コマンド中のフォルダは、コマンドが実行される時に
+解決されるので、<link linkend="shortcuts">shortcut characters</link>
+(例えば<quote>=</quote>文字と<quote>!</quote>のようなもの)が名前に含まれている
+場合、それらの文字(like <link linkend="folder">$folder</link>と
+<link linkend="spoolfile">$spoolfile</link> のようなもの)に影響する
+変数定義は、<command>mailboxes</command>コマンドの前で定義する必要があります。
+それらのショートカットが使われていない場合、そうしないと Mutt は Mutt が起動した
+ディレクトリからの相対パスを探そうとするので、ローカルパスは絶対パスにする
+必要があります。
 </para>
 </note>
 
 </sect1>
 
 <sect1 id="my-hdr">
-<title>User-Defined Headers</title>
+<title>ユーザ定義のヘッダ</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>my_hdr</command>
@@ -3567,21 +3561,20 @@ always be desired.
 </cmdsynopsis>
 
 <para>
-The <command>my_hdr</command> command allows you to create your own
-header fields which will be added to every message you send and appear
-in the editor if <link linkend="edit-headers">$edit_headers</link> is
-set.
+<command>my_hdr</command>コマンドで、すべてのメールに付加され、
+<link linkend="edit-headers">$edit_headers</link> が設定されている場合、
+エディタ中に表示される自分独自のヘッダフィールドを定義できます。
+
 </para>
 
 <para>
-For example, if you would like to add an <quote>Organization:</quote>
-header field to all of your outgoing messages, you can put the command
-something like shown in <xref linkend="ex-my-hdr"/> in your
-<literal>.muttrc</literal>.
+たとえば、<quote>Organization:</quote>ヘッダを送信メッセージすべてに付与したい
+場合は、<literal>.muttrc</literal>に、<xref linkend="ex-my-hdr"/> で
+示されるようなコマンドを記述できます。
 </para>
 
 <example id="ex-my-hdr">
-<title>Defining custom headers</title>
+<title>カスタムヘッダの定義</title>
 <screen>
 my_hdr Organization: A Really Big Company, Anytown, USA
 </screen>
@@ -3589,19 +3582,17 @@ my_hdr Organization: A Really Big Company, Anytown, USA
 
 <note>
 <para>
-Space characters are <emphasis>not</emphasis> allowed between the
-keyword and the colon (<quote>:</quote>). The standard for electronic
-mail (RFC2822) says that space is illegal there, so Mutt enforces the
-rule.
+空白文字は、キーワードとコロン(<quote>:</quote>)の間には
+<emphasis>置けません</emphasis>。電子メールの標準(RFC2822)では
+空白をそこに置くのは不正であり、Mutt もこのルールを強制します。
 </para>
 </note>
 
 <para>
-If you would like to add a header field to a single message, you should
-either set the <link linkend="edit-headers">$edit_headers</link>
-variable, or use the <literal>&lt;edit-headers&gt;</literal> function
-(default: <quote>E</quote>) in the compose menu so that you can edit the
-header of your message along with the body.
+もしも単一のメッセージにヘッダフィールドを追加したいならば、
+<link linkend="edit-headers">$edit_headers</link>変数を定義するか、
+<literal>&lt;edit-headers&gt;</literal>機能(既定値: <quote>E</quote>)
+を編集メニューで使う事のどちらかで、メッセージの本文と一緒にヘッダを編集できます。
 </para>
 
 <para>
