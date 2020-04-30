@@ -3596,11 +3596,11 @@ my_hdr Organization: A Really Big Company, Anytown, USA
 </para>
 
 <para>
-To remove user defined header fields, use the
-<command>unmy_hdr</command> command. You may specify an asterisk
-(<quote>*</quote>) to remove all header fields, or the fields to
-remove. For example, to remove all <quote>To</quote> and
-<quote>Cc</quote> header fields, you could use:
+ユーザ定義のヘッダフィールドを消去するには、<command>unmy_hdr</command>を
+使ってください。アスタリスク(<quote>*</quote>)を指定してすべてのヘッダ
+フィールドを消去することもできますし、 消去するフィールドを指定することも
+できます。例えば、<quote>To</quote> と <quote>Cc</quote> ヘッダフィールドを
+すべて削除するには、以下のようにします。
 </para>
 
 <screen>
@@ -3610,9 +3610,9 @@ unmy_hdr to cc
 </sect1>
 
 <sect1 id="save-hook">
-<title>Specify Default Save Mailbox</title>
+<title>既定のセーブ用メールボックスの指定</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>save-hook</command>
@@ -3625,20 +3625,21 @@ unmy_hdr to cc
 </cmdsynopsis>
 
 <para>
-This command is used to override the default mailbox used when saving
-messages. <emphasis>mailbox</emphasis> will be used as the default if
-the message matches <emphasis>pattern</emphasis>, see <xref
-linkend="pattern-hook"/> for information on the exact format.
+このコマンドは、メッセージをセーブするときに使うファイル名の既定値を上書き
+するのに使います。<emphasis>mailbox</emphasis>は<emphasis>pattern</emphasis>に
+メッセージが一致する時に使われます。正確なフォーマットの情報については、
+<xref linkend="pattern-hook"/> を参照してください。
 </para>
 
 <para>
-To provide more flexibility and good defaults, Mutt applies the expandos
-of <link linkend="index-format">$index_format</link> to
 <emphasis>mailbox</emphasis> after it was expanded.
+より柔軟性が高くて、よい既定値を提供するため、Mutt は、
+<link linkend="index-format">$index_format</link>の展開結果を
+展開したあとの<emphasis>mailbox</emphasis> に適用します。
 </para>
 
 <example id="ex-save-hook-exando">
-<title>Using %-expandos in <command>save-hook</command></title>
+<title><command>save-hook</command>中で %-expandos を使う</title>
 <screen>
 <emphasis role="comment"># default: save all to ~/Mail/&lt;author name&gt;</emphasis>
 save-hook . ~/Mail/%F
@@ -3652,16 +3653,16 @@ save-hook aol\\.com$ +spam
 </example>
 
 <para>
-Also see the <link
-linkend="fcc-save-hook"><command>fcc-save-hook</command></link> command.
+<link linkend="fcc-save-hook"><command>fcc-save-hook</command></link>
+コマンドも参照してください。
 </para>
 
 </sect1>
 
 <sect1 id="fcc-hook">
-<title>Specify Default Fcc: Mailbox When Composing</title>
+<title>編集時に既定の Fcc: Mailbox を指定</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>fcc-hook</command>
@@ -3674,37 +3675,38 @@ linkend="fcc-save-hook"><command>fcc-save-hook</command></link> command.
 </cmdsynopsis>
 
 <para>
-This command is used to save outgoing mail in a mailbox other than <link
-linkend="record">$record</link>.  Mutt searches the initial list of
-message recipients for the first matching <emphasis>pattern</emphasis>
-and uses <emphasis>mailbox</emphasis> as the default Fcc: mailbox.  If
-no match is found the message will be saved to <link
-linkend="record">$record</link> mailbox.
+このコマンドは送信メッセージを<link linkend="record">$record</link>以外の
+メールボックスに保存するために使います。Mutt はまず、メッセージ宛先リストの中で
+<emphasis>pattern</emphasis>を検索して、最初に合致したものの
+<emphasis>mailbox</emphasis>を 既定の Fcc: メールボックスとして使います。
+一致するものが見付からなければ、メッセージは<link linkend="record">$record</link> 
+メールボックスにセーブされます。
 </para>
 
 <para>
-To provide more flexibility and good defaults, Mutt applies the
-expandos of <link linkend="index-format">$index_format</link> to
-<emphasis>mailbox</emphasis> after it was expanded.
+より柔軟性が高くて、よい既定値を提供するため、Mutt は、
+<link linkend="index-format">$index_format</link>の展開結果を
+展開したあとの<emphasis>mailbox</emphasis> に適用します。
 </para>
 
 <para>
-See <xref linkend="pattern-hook"/> for information on the exact format
-of <emphasis>pattern</emphasis>.
+正確なフォーマットの情報については、
+<xref linkend="pattern-hook"/> を参照してください。
 </para>
 
 <screen>fcc-hook [@.]aol\\.com$ +spammers</screen>
 
 <para>
-...will save a copy of all messages going to the aol.com domain to the
-`+spammers' mailbox by default.  Also see the <link
-linkend="fcc-save-hook"><command>fcc-save-hook</command></link> command.
+これは、既定で aol.com ドメインに送られるすべてのメッセージのコピーを
+`+spammers' メールボックスにセーブします。
+<link linkend="fcc-save-hook"><command>fcc-save-hook</command></link>
+コマンドも参照してください。
 </para>
 
 </sect1>
 
 <sect1 id="fcc-save-hook">
-<title>Specify Default Save Filename and Default Fcc: Mailbox at Once</title>
+<title>既定のセーブファイル名と既定の Fcc: メールボックスを同時に指定</title>
 
 <para>Usage:</para>
 
