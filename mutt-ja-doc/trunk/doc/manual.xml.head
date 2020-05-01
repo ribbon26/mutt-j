@@ -3888,34 +3888,31 @@ message-hook '~f freshmeat-news' 'set pager="less \"+/^  subject: .*\""'
 </cmdsynopsis>
 
 <para>
-When encrypting messages with PGP/GnuPG or OpenSSL, you may want to
-associate a certain key with a given e-mail address automatically,
-either because the recipient's public key can't be deduced from the
-destination address, or because, for some reasons, you need to override
-the key Mutt would normally use.  The <command>crypt-hook</command>
-command provides a method by which you can specify the ID of the public
-key to be used when encrypting messages to a certain recipient.
-You may use multiple crypt-hooks with the same regexp; multiple
-matching crypt-hooks result in the use of multiple keyids for
-a recipient.  During key selection, Mutt will confirm whether each
-crypt-hook is to be used (unless the <link
-linkend="crypt-confirmhook">$crypt_confirmhook</link> option is unset).
-If all crypt-hooks for a recipient are declined, Mutt will use the
-original recipient address for key selection instead.
+PGP/GnuPG 又は OpenSSL でメッセージを暗号化する時、
+送信先のアドレスから受信者の公開鍵が推測できない場合や、何らかの理由で、
+Mutt が通常使う鍵をオーバライドする必要がある場合には、指定された電子メール
+アドレスに特定のキーを結び付けたいでしょう。<command>crypt-hook</command>
+コマンドは、特定の宛先へのメッセージを暗号化するときに使う公開鍵の ID を指定する
+手段を提供するものです。同じ regexp を 複数の crypt-hooks で使う事ができます。
+複数の crypt-hooks に一致する場合は、受信者に対して複数の keyid を使用することに
+なります。キーの選択中、Mutt は、どの crypt-hook で使うかを確認してきます
+(<link linkend="crypt-confirmhook">$crypt_confirmhook</link> が設定されていない限り)。
+受信者に対するすべての crypt-hooks が指定されない場合、Mutt は鍵選択の代わりに、
+もとの受信者アドレスを使います。
 </para>
 
 <para>
-The meaning of <emphasis>keyid</emphasis> is to be taken broadly in this
-context: You can either put a numerical key ID or fingerprint here, an
-e-mail address, or even just a real name.
+ここでは、広い意味で<emphasis>keyid</emphasis>と言っています。数字の鍵 ID や
+フィンガープリントを入れることもできますし、メールアドレスも使えます。本名でも
+構いません。
 </para>
 
 </sect1>
 
 <sect1 id="index-format-hook">
-<title>Dynamically Changing $index_format using Patterns</title>
+<title>パターンを使った $index_format の動的変更</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>index-format-hook</command>
@@ -3931,26 +3928,25 @@ e-mail address, or even just a real name.
 </cmdsynopsis>
 
 <para>
-This command is used to inject format strings dynamically into <link
-linkend="index-format">$index_format</link> based on pattern matching
-against the current message.
+このコマンドは、現在のメッセージに対するパターンマッチングを基にして、
+動的に、<link  linkend="index-format">$index_format</link>にフォーマット
+文字列を挟み込むのに使います。
 </para>
 
 <para>
-The <link linkend="index-format">$index_format</link> expando
-<emphasis>%@name@</emphasis> specifies a placeholder for the
-injection.  Index-format-hooks with the same <emphasis>name</emphasis>
-are matched using <link
-linkend="patterns"><emphasis>pattern</emphasis></link> against the
-current message.  Matching is done in the order specified in the
-.muttrc, with the first match being used.  The hook's
-<emphasis>format-string</emphasis> is then substituted and evaluated.
+<link linkend="index-format">$index_format</link>は、
+プレースフォルダとして指定した<emphasis>%@name@</emphasis>に
+展開されます。同じ<emphasis>name</emphasis>を持つ Index-format-hooks は、
+現在のメッセージに対して
+<link linkend="patterns"><emphasis>pattern</emphasis></link>を使う事で、
+一致します。比較は .muttrc 中で指定された順に一致し、最初に一致したものが
+使われます。hook の<emphasis>format-string</emphasis>が次に置換されて評価されます。
 </para>
 
 <para>
-Because the first match is used, best practice is to put a catch-all
-<emphasis>~A</emphasis> pattern as the last hook.  Here is an example
-showing how to implement dynamic date formatting:
+最初に一致したものが使われるので、最後の hook として、すべてに一致する
+<emphasis>~A</emphasis>というパターンを配置するのはよい方法です。
+以下は、どのようにして動的な日付フォーマットを実装するかの例です。
 </para>
 
 <screen>
@@ -3963,9 +3959,9 @@ index-format-hook  date  "~A"       "%[%m/%y]"
 </screen>
 
 <para>
-Another example, showing a way to prepend to the subject.  Note that
-without a catch-all ~A pattern, no match results in the expando
-being replaced with an empty string.
+もう一つの例としては、題名に付加する例を示します。すべてに一致する ~A
+パターンがない場合、何も一致しないと、展開処理では空白文字列で置き換わ
+る事に注意してください。
 </para>
 
 <screen>
