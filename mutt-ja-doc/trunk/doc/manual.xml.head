@@ -3721,22 +3721,23 @@ save-hook aol\\.com$ +spam
 </cmdsynopsis>
 
 <para>
-This command is a shortcut, equivalent to doing both a <link
-linkend="fcc-hook"><command>fcc-hook</command></link> and a <link
-linkend="save-hook"><command>save-hook</command></link> with its
-arguments, including %-expansion on <emphasis>mailbox</emphasis>
-according to <link linkend="index-format">$index_format</link>.
+このコマンドはショートカットであり、同じ引数で
+<link linkend="fcc-hook"><command>fcc-hook</command></link> と
+<link linkend="save-hook"><command>save-hook</command></link>
+を両方とも実行するのと等価です。また、
+<link linkend="index-format">$index_format</link>による
+<emphasis>mailbox</emphasis>の %-expansion を含みます。
 </para>
 
 </sect1>
 
 <sect1 id="send-hook">
-<title>Change Settings Based Upon Message Recipients</title>
+<title>メッセージの宛先による設定の変更</title>
 
 <anchor id="reply-hook"/>
 <anchor id="send2-hook"/>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>reply-hook</command>
@@ -3765,83 +3766,77 @@ according to <link linkend="index-format">$index_format</link>.
 </cmdsynopsis>
 
 <para>
-These commands can be used to execute arbitrary configuration commands
-based upon recipients of the message.  <emphasis>pattern</emphasis> is
-used to match the message, see <xref linkend="pattern-hook"/> for
-details. <emphasis>command</emphasis> is executed when
-<emphasis>pattern</emphasis> matches.
+これらのコマンドは、メッセージの宛先に基づいて任意のコマンドを実行するのに
+使います。<emphasis>pattern</emphasis>はメッセージに一致するのに使われます。
+<emphasis>pattern</emphasis>が一致した時のコマンドの実行についての詳細は
+<xref linkend="pattern-hook"/> を参照してください。
 </para>
 
 <para>
-<command>reply-hook</command> is matched against the message you are
-<emphasis>replying to</emphasis>, instead of the message you are
-<emphasis>sending</emphasis>.  <command>send-hook</command> is matched
-against all messages, both <emphasis>new</emphasis> and
-<emphasis>replies</emphasis>.
+<command>reply-hook</command>は<emphasis>送信する</emphasis>メッセージの
+代わりに、<emphasis>返信する</emphasis>メッセージに対して一致します。
+<command>send-hook</command>は<emphasis>新規</emphasis>と<emphasis>返信</emphasis>
+両方のすべてのメッセージに対して一致します。
 </para>
 
 <note>
 <para>
-<command>reply-hook</command>s are matched <emphasis>before</emphasis> the
-<command>send-hook</command>, <emphasis>regardless</emphasis> of the order
-specified in the user's configuration file.  However, you can inhibit
-<command>send-hook</command> in the reply case by using the pattern
-<literal>'! ~Q'</literal> (<emphasis>not replied</emphasis>, see
-<xref linkend="pattern-hook"/>) in the <command>send-hook</command> to tell
-when <command>reply-hook</command> have been executed.
+<command>reply-hook</command>は、ユーザの設定ファイル中の順番には
+<emphasis>関係なく</emphasis>、<command>send-hook</command>の<emphasis>前に</emphasis>
+一致します。しかし、返信時に、<command>reply-hook</command>がいつ実行されたを
+<command>send-hook</command>中でパターン <literal>'! ~Q'</literal>
+(<emphasis>返信しない</emphasis>、<xref linkend="pattern-hook"/>を参照)を
+使う事によって<command>send-hook</command>を抑制することができます。
 </para>
 </note>
 
 <para>
-<command>send2-hook</command> is matched every time a message is
-changed, either by editing it, or by using the compose menu to change
-its recipients or subject.  <command>send2-hook</command> is executed
-after <command>send-hook</command>, and can, e.g., be used to set
-parameters such as the <link linkend="sendmail">$sendmail</link>
-variable depending on the message's sender address.
+<command>send2-hook</command>はメッセージが変更されるたびに実行されます。
+すなわち、編集したか、編集メニューで宛先や題名を変更したときです。
+<command>send2-hook</command>は<command>send-hook</command>のあとに実行されるので、
+たとえば、<link linkend="sendmail">$sendmail</link>変数のようなパラメータを、
+メッセージの送信アドレスに応じたものとするように設定するのに使えます。
 </para>
 
 <para>
-For each type of <command>send-hook</command> or
-<command>reply-hook</command>, when multiple matches occur, commands are
-executed in the order they are specified in the
-<literal>.muttrc</literal> (for that type of hook).
+<command>send-hook</command>または<command>reply-hook</command> の各タイプとも、
+複数の一致が発生した場合、コマンドは<literal>.muttrc</literal>(のそのタイプの
+hook)に記載されている順で実行されます。
 </para>
 
 <para>
-Example: <literal><command>send-hook</command> mutt
+例: <literal><command>send-hook</command> mutt
 "<command>set</command> mime_forward signature=''"</literal>
 </para>
 
 <para>
-Another typical use for this command is to change the values of the
-<link linkend="attribution">$attribution</link>, <link
-linkend="attribution-locale">$attribution_locale</link>, and <link
-linkend="signature">$signature</link> variables in order to change the
-language of the attributions and signatures based upon the recipients.
+このコマンドの別の典型的な使い方は、<link linkend="attribution">$attribution</link>、
+<link linkend="attribution-locale">$attribution_locale</link>と
+<link linkend="signature">$signature</link>変数を、
+宛先に応じて属性と署名の言語を変更するために使うということがあります。
+
 </para>
 
 <note>
 <para>
-<command>send-hook</command>'s are only executed once after getting the
-initial list of recipients.  They are not executed when resuming a postponed
-draft.  Adding a recipient after replying or
-editing the message will not cause any <command>send-hook</command> to
-be executed, similarly if <link linkend="autoedit">$autoedit</link> is
-set (as then the initial list of recipients is empty). Also note that
-<link linkend="my-hdr"><command>my_hdr</command></link> commands which
-modify recipient headers, or the message's subject, don't have any
-effect on the current message when executed from a
-<command>send-hook</command>.
+<command>send-hook</command>は初期受信者リストを取得したあとに1回だけ実行されます。
+これは、保存された(訳注:postponed)ドラフトを復帰した時には実行されません。
+返信またはメッセージの編集後に追加された受信者は、
+<command>send-hook</command>では何も実行されません。これは、
+<link linkend="autoedit">$autoedit</link>が設定された時と似ています
+(受信者リストが空のように)。さらに、受信者ヘッダやメッセージの題名を修正する
+<link linkend="my-hdr"><command>my_hdr</command></link>コマンドは、
+<command>send-hook</command>から実行された時には、現在のメッセージには何の影響も
+与えないことに注意してください。
 </para>
 </note>
 
 </sect1>
 
 <sect1 id="message-hook">
-<title>Change Settings Before Formatting a Message</title>
+<title>メッセージ整形前に設定を変更する</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>message-hook</command>
@@ -3854,21 +3849,20 @@ effect on the current message when executed from a
 </cmdsynopsis>
 
 <para>
-This command can be used to execute arbitrary configuration commands
-before viewing or formatting a message based upon information about the
-message.  <emphasis>command</emphasis> is executed if the
-<emphasis>pattern</emphasis> matches the message to be displayed. When
-multiple matches occur, commands are executed in the order they are
-specified in the <literal>.muttrc</literal>.
+このコマンドを使って、メッセージの閲覧や整形の前に、そのメッセージに関する情報に
+基づいて任意の設定コマンドを実行できます。 表示しようとしているメッセージに
+<emphasis>pattern</emphasis>が一致していれば<emphasis>command</emphasis>が実行されます。
+複数一致した場合は、<literal>.muttrc</literal>に記載されている順に
+コマンドが実行されます。
 </para>
 
 <para>
-See <xref linkend="pattern-hook"/> for information on the exact format
-of <emphasis>pattern</emphasis>.
+<emphasis>pattern</emphasis>の正確なフォーマットについては<xref linkend="pattern-hook"/>
+を参照してください。
 </para>
 
 <para>
-Example:
+例:
 </para>
 
 <screen>
@@ -3879,7 +3873,7 @@ message-hook '~f freshmeat-news' 'set pager="less \"+/^  subject: .*\""'
 </sect1>
 
 <sect1 id="crypt-hook">
-<title>Choosing the Cryptographic Key of the Recipient</title>
+<title>受信者の暗号鍵の選択</title>
 
 <para>Usage:</para>
 
