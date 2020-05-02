@@ -3973,9 +3973,9 @@ index-format-hook  subj_flags  "~f spouse@example.com"  ":-) "
 </sect1>
 
 <sect1 id="push">
-<title>Adding Key Sequences to the Keyboard Buffer</title>
+<title>キーボードバッファへのキーシーケンスの追加</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>push</command>
@@ -3985,37 +3985,34 @@ index-format-hook  subj_flags  "~f spouse@example.com"  ":-) "
 </cmdsynopsis>
 
 <para>
-This command adds the named string to the beginning of the keyboard buffer. The string
-may contain control characters, key names and function names like the
-sequence string in the <link linkend="macro">macro</link> command. You
-may use it to automatically run a sequence of commands at startup, or
-when entering certain folders. For example, <xref
-linkend="ex-folder-hook-push"/> shows how to automatically collapse all
-threads when entering a folder.
+このコマンドは、指名した文字列をキーボードバッファに入れます。この文字列には、
+<link linkend="macro">macro</link>コマンドのシーケンスのように、制御文字、
+キーの名前、関数名を含められます。これを使って、起動時や特定のフォルダへの
+移動時に、 複数のコマンドを連続実行することもできます。たとえば、
+<xref linkend="ex-folder-hook-push"/>では、フォルダに入った時に、自動的に
+すべてのスレッドをたたむかを示しています。
 </para>
 
 <example id="ex-folder-hook-push">
-<title>Embedding <command>push</command> in <command>folder-hook</command></title>
+<title><command>folder-hook</command> 中での<command>push</command>の組み込み</title>
 <screen>
 folder-hook . 'push &lt;collapse-all&gt;'
 </screen>
 </example>
 
 <para>
-For using functions like shown in the example, it's important to use
-angle brackets (<quote>&lt;</quote> and <quote>&gt;</quote>) to make
-Mutt recognize the input as a function name. Otherwise it will simulate
-individual just keystrokes, i.e. <quote><literal>push
-collapse-all</literal></quote> would be interpreted as if you had typed
-<quote>c</quote>, followed by <quote>o</quote>, followed by
-<quote>l</quote>, ..., which is not desired and may lead to very
-unexpected behavior.
+例で示したような機能の利用では、機能名としてMutt が入力を理解するために、
+波括弧(<quote>&lt;</quote> and <quote>&gt;</quote>)を使う事が重要です。
+それ以外は、独立したキーストロークをシミュレートします。すなわち、
+<quote><literal>push collapse-all</literal></quote> は、
+<quote>c</quote>、<quote>o</quote>、<quote>l</quote> .... とタイプしたように
+解釈されるので、望ましくない、非常に予想外の動作に繋がる可能性があります。
 </para>
 
 <para>
-Keystrokes can be used, too, but are less portable because of
-potentially changed key bindings. With default bindings, this is
-equivalent to the above example:
+キーストロークも使う事ができますが、キーバインディングが変更になる可能性があるため、
+ポータビリティがあまりありません。既定のバインディングでは、これは上記の例と
+同じです。
 </para>
 
 <screen>
@@ -4023,16 +4020,16 @@ folder-hook . 'push \eV'
 </screen>
 
 <para>
-because it simulates that Esc+V was pressed (which is the default
-binding of <literal>&lt;collapse-all&gt;</literal>).
+これは、Esc+V が押されたのをシミュレートします(これは
+<literal>&lt;collapse-all&gt;</literal> の既定のバインディングです)。
 </para>
 
 </sect1>
 
 <sect1 id="exec">
-<title>Executing Functions</title>
+<title>機能の実行</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>exec</command>
@@ -4045,18 +4042,18 @@ binding of <literal>&lt;collapse-all&gt;</literal>).
 </cmdsynopsis>
 
 <para>
-This command can be used to execute any function. Functions are listed
-in the <link linkend="functions">function reference</link>.
-<quote><command>exec</command> <literal>function</literal></quote> is
-equivalent to <quote><literal>push &lt;function&gt;</literal></quote>.
+このコマンドは、あらゆる機能の実行に使えます。 機能の一覧は
+<link linkend="functions">function reference</link>にあります。
+<quote><command>exec</command> <literal>function</literal></quote>は
+<quote><literal>push &lt;function&gt;</literal></quote>と等価です。
 </para>
 
 </sect1>
 
 <sect1 id="score-command">
-<title>Message Scoring</title>
+<title>メッセージのスコア付け</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>score</command>
@@ -4079,37 +4076,33 @@ equivalent to <quote><literal>push &lt;function&gt;</literal></quote>.
 </cmdsynopsis>
 
 <para>
-The <command>score</command> commands adds <emphasis>value</emphasis>
-to a message's score if <emphasis>pattern</emphasis> matches it.
-<emphasis>pattern</emphasis> is a string in the format described in
-the <link linkend="patterns">patterns</link> section (note: For
-efficiency reasons, patterns which scan information not available in
-the index, such as <literal>~b</literal>, <literal>~B</literal>,
-<literal>~h</literal>, <literal>~M</literal>, or <literal>~X</literal>
-may not be used).  <emphasis>value</emphasis> is a positive or
-negative integer.  A message's final score is the sum total of all
-matching <command>score</command> entries.  However, you may
-optionally prefix <emphasis>value</emphasis> with an equal sign
-(<quote>=</quote>) to cause evaluation to stop at a particular entry
-if there is a match.  Negative final scores are rounded up to 0.
+<command>score</command>コマンドは、<emphasis>pattern</emphasis>に
+一致したならば、<emphasis>value</emphasis>をメッセージに追加します。
+<emphasis>pattern</emphasis>は、<link linkend="patterns">patterns</link>節で
+説明したようなフォーマットの文字列です(効率上の理由から、インデックスで扱えない
+情報を走査するパターン、 例えば<literal>~b</literal>, <literal>~B</literal>,
+<literal>~h</literal>, <literal>~M</literal>, 又は <literal>~X</literal>
+などは使えません)。<emphasis>value</emphasis>は正又は負の整数です。
+メッセージの最終的なスコアは、<command>score</command>エントリに一致した
+すべての合計値です。しかしながら、<emphasis>value</emphasis>の前に等号
+(<quote>=</quote>)を付けることで、特定のエントリに一致した時点で評価を終了
+させることができます。負の最終スコアは 0 に丸められます。
 </para>
 
 <para>
-The <command>unscore</command> command removes score entries from the
-list.  You <emphasis>must</emphasis> specify the same pattern specified
-in the <command>score</command> command for it to be removed.  The
-pattern <quote>*</quote> is a special token which means to clear the
-list of all score entries.
+<command>unscore</command>コマンドは、リストからスコアエントリを削除します。
+削除するには、<command>score</command>コマンドで指定したのと同じパターンを
+指定<emphasis>しなければなりません</emphasis>。パターン<quote>*</quote>は、
+特別なトークンで、リスト中のすべてのスコアエントリを削除します。
 </para>
 
 <para>
-Scoring occurs as the messages are read in, before the mailbox is
-sorted.  Because of this, patterns which depend on threading, such as
-<emphasis>~=</emphasis>, <emphasis>~$</emphasis>, and
-<emphasis>~()</emphasis>, will not work by default.  A workaround is
-to push the scoring command in a folder hook.  This will cause the
-mailbox to be rescored after it is opened and input starts being
-processed:
+スコアリングは、メールボックスが整列される前、メールが読み出される前に行われます。
+この理由により、
+<emphasis>~=</emphasis>, <emphasis>~$</emphasis>,と <emphasis>~()</emphasis>のような、
+スレッドに依存したパターン、は既定値では動きません。回避策は、 folder hook で
+スコアリングコマンドを push することです。これで、メールボックスが開かれ、入力が
+処理されたあとに、メールボックスが再スコアリングされます。
 </para>
 
 <screen>
@@ -4119,9 +4112,9 @@ folder-hook . 'push "&lt;enter-command&gt;score ~= 10&lt;enter&gt;"'
 </sect1>
 
 <sect1 id="spam">
-<title>Spam Detection</title>
+<title>スパムの検出</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>spam</command>
