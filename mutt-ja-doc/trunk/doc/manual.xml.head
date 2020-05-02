@@ -4137,70 +4137,69 @@ folder-hook . 'push "&lt;enter-command&gt;score ~= 10&lt;enter&gt;"'
 </cmdsynopsis>
 
 <para>
-Mutt has generalized support for external spam-scoring filters.  By
-defining your spam patterns with the <command>spam</command> and
-<literal>nospam</literal> commands, you can <emphasis>limit</emphasis>,
-<emphasis>search</emphasis>, and <emphasis>sort</emphasis> your mail
-based on its spam attributes, as determined by the external filter. You
-also can display the spam attributes in your index display using the
-<literal>%H</literal> selector in the <link
-linkend="index-format">$index_format</link> variable. (Tip: try
-<literal>%?H?[%H] ?</literal> to display spam tags only when they are
-defined for a given message.)
+Mutt には、外部のスパム得点フィルタに対する一般化されたサポートがあります。
+<command>spam</command>と<literal>nospam</literal>を使って、固有の
+スパムパターンを定義でき、外部フィルタによって定義されたスパム属性に基づいて
+メールを<emphasis>制限</emphasis>,<emphasis>検索</emphasis>,
+<emphasis>整列</emphasis>できます。さらに、
+<link linkend="index-format">$index_format</link>変数中で、
+<literal>%H</literal>セレクタを使う事により、
+スパム属性をインデックス画面に 表示することもできます
+(便利ワザ:<literal>%?H?[%H] ?</literal>としてみると、スパムタグが、メッセージに
+定義されている場合のみ表示されます)。
 </para>
 
 <para>
-Note: the value displayed by <literal>%H</literal> and searched by
-<literal>~H</literal> is stored in the <link linkend="caching">header
-cache</link>.  Mutt isn't smart enough to invalidate a header cache
-entry based on changing <literal>spam</literal> rules, so if you
-aren't seeing correct <literal>%H</literal> values, try temporarily
-turning off the header cache.  If that fixes the problem, then once
-your spam rules are set to your liking, remove your stale header cache
-files and turn the header cache back on.
+<literal>%H</literal>によって表示され、<literal>~H</literal>によって
+注意: 検索された値は<link linkend="caching">header cache</link>に格納されます。
+Mutt は<literal>spam</literal>ルールの変更に基づいてヘッダキャッシュエントリを
+無効にするほど賢くはないので、正しい<literal>%H</literal>の値が表示されない
+場合は、ヘッダキャッシュを一時的に OFF にしてみてください。これで問題が解決
+すれば、スパムルールを好みに設定後、古いヘッダキャッシュファイルを削除して、
+再度キャッシュを ON に戻してください。
 </para>
 
 <para>
-Your first step is to define your external filter's spam patterns using
-the <command>spam</command> command. <emphasis>pattern</emphasis> should
-be a regular expression that matches a header in a mail message. If any
-message in the mailbox matches this regular expression, it will receive
-a <quote>spam tag</quote> or <quote>spam attribute</quote> (unless it
-also matches a <command>nospam</command> pattern &mdash; see below.) The
-appearance of this attribute is entirely up to you, and is governed by
-the <emphasis>format</emphasis> parameter. <emphasis>format</emphasis>
-can be any static text, but it also can include back-references from the
-<emphasis>pattern</emphasis> expression. (A regular expression
-<quote>back-reference</quote> refers to a sub-expression contained
-within parentheses.) <literal>%1</literal> is replaced with the first
-back-reference in the regex, <literal>%2</literal> with the second, etc.
+最初のステップとして、<command>spam</command>コマンドを使い、外部フィルタの
+スパムパターンを定義することです。<emphasis>pattern</emphasis>は正規表現で、
+メールメッセージのヘッダに 一致させます。メールボックス中のメッセージは、この
+正規表現に一致すると、<quote>spam tag</quote> 又は <quote>spam attribute</quote>
+を受け取ります(<command>nospam</command>パターンに一致しない限り&mdash;
+以下を参照)。この属性の表示方法は、自分で完全に制御することができ、
+その制御を行うのは<emphasis>format</emphasis>パラメータです。
+<emphasis>format</emphasis>パラメータは任意の静的なテキストが使えますが、
+<emphasis>pattern</emphasis>正規表現からの後方参照を含めることもできます
+(正規表現<quote>back-reference</quote>は、括弧の中に含まれた部分式(訳注:
+sub-expression)を参照します)。<literal>%1</literal>は正規表現中の
+後方参照に置換され、<literal>%2</literal>は、二番目の後方参照に置換され
+ます。あとは同様です。
 </para>
 
 <para>
-To match spam tags, mutt needs the corresponding header information
-which is always the case for local and POP folders but not for IMAP in
-the default configuration. Depending on the spam header to be analyzed,
-<link linkend="imap-headers">$imap_headers</link> may need to be
-adjusted.
+スパムタグに一致するため、 mutt は、ローカルと POP フォルダの場合は常時
+対応するヘッダ情報を必要としますが、既定の設定では IMAP では必要としません。
+解析されるスパムヘッダに依存しますが、
+<link linkend="imap-headers">$imap_headers</link> を調整する必要が
+あるかもしれません。
 </para>
 
 <para>
-If you're using multiple spam filters, a message can have more than one
-spam-related header. You can define <command>spam</command> patterns for
-each filter you use. If a message matches two or more of these patterns,
-and the <link linkend="spam-separator">$spam_separator</link> variable
-is set to a string, then the message's spam tag will consist of all the
-<emphasis>format</emphasis> strings joined together, with the value of
-<link linkend="spam-separator">$spam_separator</link> separating them.
+複数のスパムフィルタを利用していると、メッセージに複数のスパム関連ヘッダが付く
+ことがあります。そこで、<command>spam</command>パターンを、おのおのに対して
+設定することができます。メッセージが二つ以上のパターンに一致した場合で、
+<link linkend="spam-separator">$spam_separator</link>変数が文字列に
+設定されていれば、メッセージのスパムタグは、
+<link linkend="spam-separator">$spam_separator</link>変数の値で項目を分割した、
+すべての<emphasis>format</emphasis>文字列を連結したものとなります。
 </para>
 
 <para>
-For example, suppose one uses DCC, SpamAssassin, and PureMessage, then
-the configuration might look like in <xref linkend="ex-spam"/>.
+例えば、DCC, SpamAssassin と PureMessage を使っている場合は、
+設定は<xref linkend="ex-spam"/>のようになるかもしれません。
 </para>
 
 <example id="ex-spam">
-<title>Configuring spam detection</title>
+<title>スパム検出のための設定</title>
 <screen>
 spam "X-DCC-.*-Metrics:.*(....)=many"         "90+/DCC-%1"
 spam "X-Spam-Status: Yes"                     "90+/SA"
@@ -4210,20 +4209,19 @@ set spam_separator=", "
 </example>
 
 <para>
-If then a message is received that DCC registered with
-<quote>many</quote> hits under the <quote>Fuz2</quote> checksum, and
-that PureMessage registered with a 97% probability of being spam, that
-message's spam tag would read <literal>90+/DCC-Fuz2,
-97/PM</literal>. (The four characters before <quote>=many</quote> in a
-DCC report indicate the checksum used &mdash; in this case,
-<quote>Fuz2</quote>.)
+この場合、<quote>Fuz2</quote>チェックサムで<quote>たくさん</quote>
+一致した事をDCCに登録したことと、PureMessage が 97% スパムであるという
+事を登録したことと、メッセージのスパムタグが
+<literal>90+/DCC-Fuz2,97/PM</literal>であるメッセージを受信します。
+(DCC レポートの<quote>=many</quote>の4文字は、&mdash; を使ってチェックサムを
+表示しています。この場合は<quote>Fuz2</quote>です。)
 </para>
 
 <para>
-If the <link linkend="spam-separator">$spam_separator</link> variable is
-unset, then each spam pattern match supersedes the previous one. Instead
-of getting joined <emphasis>format</emphasis> strings, you'll get only
-the last one to match.
+<link linkend="spam-separator">$spam_separator</link>変数が設定されていない場合、
+各スパムパターンは前のパターンに優先します。結局、結合された
+<emphasis>format</emphasis>文字列の代わりに、最後のものに一致した結果が
+得られます。
 </para>
 
 <para>
