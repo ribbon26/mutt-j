@@ -4225,66 +4225,59 @@ set spam_separator=", "
 </para>
 
 <para>
-The spam tag is what will be displayed in the index when you use
-<literal>%H</literal> in the <link
-linkend="index-format">$index_format</link> variable. It's also the
-string that the <literal>~H</literal> pattern-matching expression
-matches against for <literal>&lt;search&gt;</literal> and
-<literal>&lt;limit&gt;</literal> functions. And it's what sorting by
-spam attribute will use as a sort key.
+<link linkend="index-format">$index_format</link>変数で、<literal>%H</literal>
+を使用した時に、インデックスへ表示される文字列です。また、
+<literal>&lt;search&gt;</literal>と<literal>&lt;limit&gt;</literal>機能に対して、
+<literal>~H</literal>パターンマッチング式が一致した文字列でもあります。さらに、
+整列キーとしてスパム属性を整列させるものでもあります。
 </para>
 
 <para>
-That's a pretty complicated example, and most people's actual
-environments will have only one spam filter. The simpler your
-configuration, the more effective Mutt can be, especially when it comes
-to sorting.
+これは非常に混み入った例で、ほとんどの人が実際に利用している環境では、
+スパムフィルタはひとつだけでしょう。設定が単純であればあるほど、 Mutt の
+動作を効果的にすることができます。特に整列に関してそう言えます。
 </para>
 
 <para>
-Generally, when you sort by spam tag, Mutt will sort
-<emphasis>lexically</emphasis> &mdash; that is, by ordering strings
-alphanumerically. However, if a spam tag begins with a number, Mutt will
-sort numerically first, and lexically only when two numbers are equal in
-value. (This is like UNIX's <literal>sort -n</literal>.) A message with
-no spam attributes at all &mdash; that is, one that didn't match
-<emphasis>any</emphasis> of your <command>spam</command> patterns
-&mdash; is sorted at lowest priority. Numbers are sorted next, beginning
-with 0 and ranging upward. Finally, non-numeric strings are sorted, with
-<quote>a</quote> taking lower priority than <quote>z</quote>. Clearly,
-in general, sorting by spam tags is most effective when you can coerce
-your filter to give you a raw number. But in case you can't, Mutt can
-still do something useful.
+一般的に言って、スパムタグで整列する際に Mutt は<emphasis>辞書的に</emphasis>&mdash;
+すなわち、文字列を一文字ずつ英数字順に評価して整列します。しかし、もしも
+パムタグが数字で始まっているならば、Mutt はまず数値順に整列して、2つの数値が同じ
+場合にのみ辞書的に整列します(これは UNIX の<literal>sort -n</literal>と
+似ています)。スパム属性が何もないメッセージ、すなわち、<emphasis>どの</emphasis>
+<command>spam</command>パターンにも一致しない場合は、最低の順位で整列されます。
+数値がそれに続いて、0 から順に高い順位で整列されます。 最後に数字以外の文字列が、
+<quote>a</quote>が<quote>z</quote>より低い順位で整列されます。明らかに一般的には
+スパムタグの整列は、フィルタで強制的に数値を返させることができれば、概して最も
+効果的になると言えます。しかし それができない場合でも、Mutt はまずまず有用な動作
+をするわけです。 
 </para>
 
 <para>
-The <command>nospam</command> command can be used to write exceptions to
-<command>spam</command> patterns. If a header pattern matches something
-in a <command>spam</command> command, but you nonetheless do not want it
-to receive a spam tag, you can list a more precise pattern under a
-<command>nospam</command> command.
+<command>nospam</command>は<command>spam</command>パターンの例外を書くのに
+使います。<command>spam</command>コマンドの何かにヘッダパターンが一致しても、
+スパムタグを付けたくない 条件があるなら、そうしたより詳細なパターンを
+<command>nospam</command>コマンド配下で、より正確なパターンを列挙することが
+できます。
 </para>
 
 <para>
-If the <emphasis>pattern</emphasis> given to <command>nospam</command>
-is exactly the same as the <emphasis>pattern</emphasis> on an existing
-<command>spam</command> list entry, the effect will be to remove the
-entry from the spam list, instead of adding an exception.  Likewise, if
-the <emphasis>pattern</emphasis> for a <command>spam</command> command
-matches an entry on the <command>nospam</command> list, that nospam
-entry will be removed. If the <emphasis>pattern</emphasis> for
-<command>nospam</command> is <quote>*</quote>, <emphasis>all entries on
-both lists</emphasis> will be removed. This might be the default action
-if you use <command>spam</command> and <command>nospam</command> in
-conjunction with a <command>folder-hook</command>.
+<command>nospam</command>に与えられた<emphasis>pattern</emphasis>が、
+既存の<command>spam</command>リストエントリ中にある<emphasis>pattern</emphasis>と
+正確に同じ場合、例外を追加する代わりに、スパムリストからエントリを削除する
+効果があります。同様に、<command>spam</command>コマンドでの
+<emphasis>pattern</emphasis>が<command>nospam</command>リスト中のエントリに
+一致するならば、nospam エントリが削除されます。<command>nospam</command>の
+<emphasis>pattern</emphasis>が<quote>*</quote>ならば、
+<emphasis>両方のリストのすべてのパターン</emphasis>が削除されます。これは、
+<command>folder-hook</command>といっしょに、<command>spam</command>と
+<command>nospam</command>を使う場合は、これを既定動作にすることでしょう。
 </para>
 
 <para>
-You can have as many <command>spam</command> or
-<command>nospam</command> commands as you like.  You can even do your
-own primitive <command>spam</command> detection within Mutt &mdash; for
-example, if you consider all mail from <literal>MAILER-DAEMON</literal>
-to be spam, you can use a <command>spam</command> command like this:
+たくさんの<command>spam</command>または<command>nospam</command>コマンドを、
+お好みに応じて使う事ができます。Mutt だけで初歩的な<command>spam</command>
+検出をすることも可能です。たとえば、<command>spam</command>コマンドを
+以下のように使います。
 </para>
 
 <screen>
@@ -4294,13 +4287,13 @@ spam "^From: .*MAILER-DAEMON"       "999"
 </sect1>
 
 <sect1 id="set">
-<title>Setting and Querying Variables</title>
+<title>変数の設定と問合せ</title>
 
 <sect2 id="var-types">
-<title>Variable Types</title>
+<title>変数のタイプ</title>
 
 <para>
-Mutt supports these types of configuration variables:
+Mutt は設定変数で以下のタイプをサポートします:
 </para>
 
 <variablelist>
@@ -4308,7 +4301,7 @@ Mutt supports these types of configuration variables:
 <term>boolean</term>
 <listitem>
 <para>
-A boolean expression, either <quote>yes</quote> or <quote>no</quote>.
+論理式で <quote>yes</quote> または <quote>no</quote> のどちらか。
 </para>
 </listitem>
 </varlistentry>
@@ -4316,7 +4309,7 @@ A boolean expression, either <quote>yes</quote> or <quote>no</quote>.
 <term>number</term>
 <listitem>
 <para>
-A signed integer number in the range -32768 to 32767.
+範囲が  -32768 から 32767 までの符号付き整数。
 </para>
 </listitem>
 </varlistentry>
@@ -4324,7 +4317,7 @@ A signed integer number in the range -32768 to 32767.
 <term>number (long)</term>
 <listitem>
 <para>
-A signed integer number in the range -2147483648 to 2147483647.
+範囲が -2147483648 から 2147483647 までの符号付き整数。
 </para>
 </listitem>
 </varlistentry>
@@ -4332,7 +4325,7 @@ A signed integer number in the range -2147483648 to 2147483647.
 <term>string</term>
 <listitem>
 <para>
-Arbitrary text.
+任意のテキスト。
 </para>
 </listitem>
 </varlistentry>
@@ -4340,9 +4333,9 @@ Arbitrary text.
 <term>path</term>
 <listitem>
 <para>
-A specialized string for representing paths including support for
-mailbox shortcuts (see <xref linkend="shortcuts"/>) as well as tilde
-(<quote>~</quote>) for a user's home directory and more.
+利用者のホームディレクトリなどのためのチルダ(<quote>~</quote>)と同じように、
+メールボックスショートカットサポートを含む、パスを表現するための特別な
+文字列(<xref linkend="shortcuts"/>を参照)。
 </para>
 </listitem>
 </varlistentry>
