@@ -4343,9 +4343,9 @@ Mutt は設定変数で以下のタイプをサポートします:
 <term>quadoption</term>
 <listitem>
 <para>
-Like a boolean but triggers a prompt when set to <quote>ask-yes</quote>
-or <quote>ask-no</quote> with <quote>yes</quote> and <quote>no</quote>
-preselected respectively.
+論理値と似ていますが、<quote>ask-yes</quote>や<quote>ask-no</quote>が
+<quote>yes</quote> と <quote>no</quote> に事前に選択されている時に
+プロンプトをON/OFFします。
 </para>
 </listitem>
 </varlistentry>
@@ -4353,8 +4353,7 @@ preselected respectively.
 <term>sort order</term>
 <listitem>
 <para>
-A specialized string allowing only particular words as values depending
-on the variable.
+変数に依存して、特定の単語だけを値として指定できる特別な文字列。
 </para>
 </listitem>
 </varlistentry>
@@ -4362,7 +4361,7 @@ on the variable.
 <term>regular expression</term>
 <listitem>
 <para>
-A regular expression, see <xref linkend="regexp"/> for an introduction.
+正規表現。詳しくは<xref linkend="regexp"/>を参照してください。
 </para>
 </listitem>
 </varlistentry>
@@ -4370,10 +4369,9 @@ A regular expression, see <xref linkend="regexp"/> for an introduction.
 <term>folder magic</term>
 <listitem>
 <para>
-Specifies the type of folder to use: <emphasis>mbox</emphasis>,
-<emphasis>mmdf</emphasis>, <emphasis>mh</emphasis> or
-<emphasis>maildir</emphasis>.  Currently only used to determine the type
-for newly created folders.
+<emphasis>mbox</emphasis>,<emphasis>mmdf</emphasis>, <emphasis>mh</emphasis>又は
+<emphasis>maildir</emphasis>として使うためのフォルダタイプを指定します。
+現在は、新しく作成したフォルダのタイプを決定するためにのみ使われます。
 </para>
 </listitem>
 </varlistentry>
@@ -4381,9 +4379,9 @@ for newly created folders.
 <term>e-mail address</term>
 <listitem>
 <para>
-An e-mail address either with or without realname. The older
-<quote><literal>user@example.org (Joe User)</literal></quote> form is
-supported but strongly deprecated.
+電子メールアドレスで、実際に使う名前の付与は問いません。昔の
+<quote><literal>user@example.org (Joe User)</literal></quote>形式はサポートされていますが
+非推奨ですので可能な限り使わないでください。
 </para>
 </listitem>
 </varlistentry>
@@ -4391,7 +4389,7 @@ supported but strongly deprecated.
 <term>user-defined</term>
 <listitem>
 <para>
-Arbitrary text, see <xref linkend="set-myvar"/> for details.
+任意のテキストです。詳細は<xref linkend="set-myvar"/>を参照してください。
 </para>
 </listitem>
 </varlistentry>
@@ -4400,13 +4398,13 @@ Arbitrary text, see <xref linkend="set-myvar"/> for details.
 </sect2>
 
 <sect2 id="set-commands">
-<title>Commands</title>
+<title>コマンド</title>
 
 <para>
-The following commands are available to manipulate and query variables:
+以下のコマンドは変数の操作と問合せに使えます:
 </para>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>set</command>
@@ -4450,53 +4448,47 @@ The following commands are available to manipulate and query variables:
 </cmdsynopsis>
 
 <para>
-This command is used to set (and unset) <link
-linkend="variables">configuration variables</link>.  There are four
-basic types of variables: boolean, number, string and quadoption.
-<emphasis>boolean</emphasis> variables can be <emphasis>set</emphasis>
-(true) or <emphasis>unset</emphasis> (false).
-<emphasis>number</emphasis> variables can be assigned a positive integer
-value.  <emphasis>string</emphasis> variables consist of any number of
-printable characters and must be enclosed in quotes if they contain
-spaces or tabs.  You may also use the escape sequences <quote>\n</quote>
-and <quote>\t</quote> for newline and tab, respectively.
-<emphasis>quadoption</emphasis> variables are used to control whether or
-not to be prompted for certain actions, or to specify a default action.
-A value of <emphasis>yes</emphasis> will cause the action to be carried
-out automatically as if you had answered yes to the question.
-Similarly, a value of <emphasis>no</emphasis> will cause the action to
-be carried out as if you had answered <quote>no.</quote> A value of
-<emphasis>ask-yes</emphasis> will cause a prompt with a default answer
-of <quote>yes</quote> and <emphasis>ask-no</emphasis> will provide a
-default answer of <quote>no.</quote>
+このコマンドは<link linkend="variables">設定変数</link>を設定(または設定解除)するのに
+使います。これらは4つの基本的な変数のタイプ、論理値、数値、文字列とquadoption
+というがあります。<emphasis>boolean</emphasis>タイプは<emphasis>設定</emphasis>
+(true) または <emphasis>非設定</emphasis> (false)にできます。
+<emphasis>number</emphasis>変数は正の数値に設定できます。
+<emphasis>string</emphasis>変数は表示可能な任意長の文字列で、スペース又は
+タブが含まれる場合には引用符でくくる必要があります。また、エスケープシーケンス
+<quote>\n</quote>と<quote>\t</quote>を、それぞれ改行とタブとして使えます。
+<emphasis>quadoption</emphasis>変数は特定の動作時に、プロンプトの表示をするか
+しないかを制御するのに使うか、既定の動作を指定するのに使います。
+<emphasis>yes</emphasis>は、質問に対して yes と答えたように、自動的にアクションが
+実行されます。同じように、<emphasis>no</emphasis>は、<quote>no</quote>と答えたのと
+同じように、自動的にアクションが実行されます。<emphasis>ask-yes</emphasis>は、
+既定の答が<quote>yes</quote>で、<emphasis>ask-no</emphasis>は既定の答が
+<quote>no</quote>というプロンプトを表示します。
 </para>
 
 <para>
-Prefixing a variable with <quote>no</quote> will unset it.  Example:
-<literal><command>set</command> noaskbcc</literal>.
+先頭に<quote>no</quote>を付けた変数は設定を解除します。たとえば、
+<literal><command>set</command> noaskbcc</literal> です。
 </para>
 
 <para>
-For <emphasis>boolean</emphasis> variables, you may optionally prefix
-the variable name with <literal>inv</literal> to toggle the value (on or
-off).  This is useful when writing macros.  Example:
-<literal><command>set</command> invsmart_wrap</literal>.
+<emphasis>boolean</emphasis>では、先頭に<literal>inv</literal>を付けることができます。
+そうすると、変数の値を反転します(ONまたはOFF)。これはマクロを書く時に便利です。
+例えば<literal><command>set</command> invsmart_wrap</literal> です。
 </para>
 
 <para>
-The <command>toggle</command> command automatically prepends the
-<literal>inv</literal> prefix to all specified variables.
+<command>toggle</command>は、自動的にすべての指定した変数に<literal>inv</literal>
+プレフィックスを前置します。
 </para>
 
 <para>
-The <command>unset</command> command automatically prepends the
-<literal>no</literal> prefix to all specified variables.
+<command>unset</command>コマンドは、指定した変数すべての先頭に自動的に
+<literal>no</literal>を付けます。
 </para>
 
 <para>
-Using the <literal>&lt;enter-command&gt;</literal> function in the
-<emphasis>index</emphasis> menu, you can query the value of a variable
-by prefixing the name of the variable with a question mark:
+<literal>&lt;enter-command&gt;</literal>機能を<emphasis>index</emphasis>メニューで
+使うと、変数の名前の前に疑問符を付けることによって、変数の値を問い合わせられます。
 </para>
 
 <screen>
@@ -4504,16 +4496,14 @@ set ?allow_8bit
 </screen>
 
 <para>
-The question mark is actually only required for boolean and quadoption
-variables.
+疑問符は実際には boolean 変数と quadoption 変数にしか必要ありません。
 </para>
 
 <para>
-The <command>reset</command> command resets all given variables to the
-compile time defaults (hopefully mentioned in this manual). If you use
-the command <command>set</command> and prefix the variable with
-<quote>&amp;</quote> this has the same behavior as the
-<command>reset</command> command.
+<command>reset</command>コマンドは、与えられた変数すべてをコンパイル時の既定値
+(おそらく、このマニュアルに書いてある値) に戻します。 <command>set</command>
+コマンドで変数の前に<quote>&amp;</quote>を付けると <command>reset</command>コマンドと
+同じ挙動となります。
 </para>
 
 <para>
