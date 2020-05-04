@@ -4507,54 +4507,50 @@ set ?allow_8bit
 </para>
 
 <para>
-With the <command>reset</command> command there exists the special
-variable <quote>all</quote>, which allows you to reset all variables to
-their system defaults.
+<command>reset</command>コマンドには特別な変数<quote>all</quote>が存在し、
+これですべての変数をシステムの既定値に戻すことができます。
 </para>
 
 </sect2>
 
 <sect2 id="set-myvar">
-<title>User-Defined Variables</title>
+<title>ユーザ定義の変数</title>
 
 <sect3 id="set-myvar-intro">
-<title>Introduction</title>
+<title>概要</title>
 
 <para>
-Along with the variables listed in the <link
-linkend="variables">Configuration variables</link> section, Mutt
-supports user-defined variables with names starting with
 <literal>my_</literal> as in, for example, <literal>my_cfgdir</literal>.
+<link linkend="variables">設定変数</link>セクション中にリストされている変数と共に、
+Mutt は名前が<literal>my_</literal>で始まるユーザ定義の変数をサポートします。
+例えば、<literal>my_cfgdir</literal>です。
 </para>
 
 <para>
-The <command>set</command> command either creates a custom
-<literal>my_</literal> variable or changes its value if it does exist
-already. The <command>unset</command> and <command>reset</command>
-commands remove the variable entirely.
+<command>set</command>コマンドは固有の<literal>my_</literal>変数を作成するか、
+すでに存在していれば、その値を変更します。<command>unset</command>と
+<command>reset</command>コマンドは、完全に変数を削除します。
 </para>
 
 <para>
-Since user-defined variables are expanded in the same way that
-environment variables are (except for the <link
-linkend="shell-escape">shell-escape</link> command and backtick
-expansion), this feature can be used to make configuration files more
-readable.
+ユーザ定義の変数は環境変数と同じように展開されますので(
+<link linkend="shell-escape">shell-escape</link>コマンドとバッククォートを
+使った展開を除く)、この機能は設定ファイルをより読みやすくするのに使えます。
 </para>
 
 </sect3>
 
 <sect3 id="set-myvar-examples">
-<title>Examples</title>
+<title>例</title>
 
 <para>
-The following example defines and uses the variable
-<literal>my_cfgdir</literal> to abbreviate the calls of the <link
-linkend="source"><command>source</command></link> command:
+以下の例は変数<literal>my_cfgdir</literal>に、
+<link linkend="source"><command>source</command></link> コマンドの
+呼び出しを短くすることを定義し、使用します:
 </para>
 
 <example id="ex-myvar1">
-<title>Using user-defined variables for config file readability</title>
+<title>設定ファイルの可読性向上のための、ユーザ定義変数の使用</title>
 <screen>
 set my_cfgdir = $HOME/mutt/config
 
@@ -4565,16 +4561,15 @@ source $my_cfgdir/macros
 </example>
 
 <para>
-A custom variable can also be used in macros to backup the current value
-of another variable. In the following example, the value of the <link
-linkend="delete">$delete</link> is changed temporarily while its
-original value is saved as <literal>my_delete</literal>.  After the
-macro has executed all commands, the original value of <link
-linkend="delete">$delete</link> is restored.
+カスタム変数は現在の変数を他の変数にバックアップするため、マクロ中で使う事もできます。
+以下の例では、変数<link linkend="delete">$delete</link> の値を
+<literal>my_delete</literal>として、もとの値をセーブしておいて、一時的に変更します。
+マクロがすべてのコマンドを実行したあと、<link linkend="delete">$delete</link>の
+もとの値をリストアします。
 </para>
 
 <example id="ex-myvar2">
-<title>Using user-defined variables for backing up other config option values</title>
+<title>他の設定オプション値のバックアップ用にユーザ定義変数を使用</title>
 <screen>
 macro pager ,x '\
 &lt;enter-command&gt;set my_delete=$delete&lt;enter&gt;\
@@ -4585,19 +4580,16 @@ macro pager ,x '\
 </example>
 
 <para>
-Since Mutt expands such values already when parsing the configuration
-file(s), the value of <literal>$my_delete</literal> in the
-last example would be the value of <link linkend="delete">$delete</link> exactly
-as it was at that point during parsing the configuration file. If
-another statement would change the value for <link linkend="delete">$delete</link>
-later in the same or another file, it would have no effect on
-<literal>$my_delete</literal>. However, the expansion can
-be deferred to runtime, as shown in the next example, when escaping the
-dollar sign.
+Mutt は設定ファイルを走査している時には、その値をすでに展開しているので、
+最後の例での<literal>$my_delete</literal>の値は、設定ファイルを走査中の時点では、
+正確に<link linkend="delete">$delete</link>の値になります。
+同じ、又は他のファイルで、他の文が<link linkend="delete">$delete</link>の値を
+変更した場合でも、<literal>$my_delete</literal>の値に影響はありません。しかし、
+以下で示す例では、ドル記号をエスケープする時、展開は実行時まで遅延します。
 </para>
 
 <example id="ex-myvar3">
-<title>Deferring user-defined variable expansion to runtime</title>
+<title>実行時まで、ユーザ定義の変数の展開は遅延する</title>
 <screen>
 macro pager &lt;PageDown&gt; "\
 &lt;enter-command&gt; set my_old_pager_stop=\$pager_stop pager_stop&lt;Enter&gt;\
@@ -4608,10 +4600,9 @@ macro pager &lt;PageDown&gt; "\
 </example>
 
 <para>
-Note that there is a space between
-<literal>&lt;enter-command&gt;</literal> and the <command>set</command>
-configuration command, preventing Mutt from recording the
-<command>macro</command>'s commands into its history.
+<literal>&lt;enter-command&gt;</literal>と<command>set</command>設定コマンドの間に
+スペースがあることに注意してください。これは、Mutt が<command>macro</command>のコマンドが
+その履歴に記録されることを防ぎます。
 </para>
 
 </sect3>
@@ -4619,7 +4610,7 @@ configuration command, preventing Mutt from recording the
 </sect2>
 
 <sect2 id="set-conversions">
-<title>Type Conversions</title>
+<title>タイプの変換</title>
 
 <para>
 Variables are always assigned string values which Mutt parses into its
