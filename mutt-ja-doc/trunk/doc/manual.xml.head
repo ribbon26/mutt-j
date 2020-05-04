@@ -4613,15 +4613,13 @@ macro pager &lt;PageDown&gt; "\
 <title>タイプの変換</title>
 
 <para>
-Variables are always assigned string values which Mutt parses into its
-internal representation according to the type of the variable, for
-example an integer number for numeric types. For all queries (including
-$-expansion) the value is converted from its internal type back into
-string. As a result, any variable can be assigned any value given that
-its content is valid for the target. This also counts for custom
-variables which are of type string. In case of parsing errors, Mutt will
-print error messages. <xref linkend="ex-myvar4"/> demonstrates type
-conversions.
+変数は常時、Mutt が値のタイプに対応する内部表現に解析する文字列の値が割り当てられて
+います。たとえば、数値タイプには整数値です。すべての問い合わせ($-拡張を含みます)
+において、値は内部タイプから文字列に変換されます。その結果、どの変数も、
+ターゲットに対してその内容が有効であれば、任意の値を割り当てることができます。
+これは、文字列型のカスタム変数にもカウントされます。解析が失敗した場合、
+Mutt はエラーメッセージを表示します。<xref linkend="ex-myvar4"/>には変換の例を
+示しています。
 </para>
 
 <example id="ex-myvar4">
@@ -4639,18 +4637,15 @@ set my_foo = $my_inc              <emphasis role="comment"># value is string "10
 </example>
 
 <para>
-These assignments are all valid. If, however, the value of
-<literal>$my_lines</literal> would have been
-<quote>five</quote> (or something else that cannot be parsed into a
-number), the assignment to
-<literal>$pager_index_lines</literal> would have
-produced an error message.
+これらの割り当てはすべて有効です。しかし、<literal>$my_lines</literal>の値は
+<quote>5</quote>(または数字と認識できない何か)で、
+<literal>$pager_index_lines</literal>への割り当てはエラーメッセージを生成します。
 </para>
 
 <para>
-Type conversion applies to all configuration commands which take
-arguments. But please note that every expanded value of a variable is
-considered just a single token. A working example is:
+型の変換は、引数を伴うすべての設定コマンドに適用されます。しかし、展開されたすべての
+変数の値は単一のトークンとして見なされる事に注意してください。動作する例は
+以下の通りです。
 </para>
 
 <screen>
@@ -4661,7 +4656,7 @@ set my_number = "10"
 score $my_pattern +$my_number</screen>
 
 <para>
-What does <emphasis>not</emphasis> work is:
+<emphasis>動かない</emphasis>例は以下の通りです。
 </para>
 
 <screen>
@@ -4669,9 +4664,8 @@ set my_mx = "+mailbox1 +mailbox2"
 mailboxes $my_mx +mailbox3</screen>
 
 <para>
-because the value of <literal>$my_mx</literal> is interpreted as a
-single mailbox named <quote>+mailbox1 +mailbox2</quote> and not two
-distinct mailboxes.
+<literal>$my_mx</literal>の値が<quote>+mailbox1 +mailbox2</quote>と言う名前の、単一の
+メールボックスとして解釈され、2つの異なったメールボックスではありません。
 </para>
 
 </sect2>
@@ -4679,9 +4673,9 @@ distinct mailboxes.
 </sect1>
 
 <sect1 id="source">
-<title>Reading Initialization Commands From Another File</title>
+<title>他のファイルからの初期かコマンドの読み込み</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>source</command>
@@ -4691,30 +4685,28 @@ distinct mailboxes.
 </cmdsynopsis>
 
 <para>
-This command allows the inclusion of initialization commands from other
-files.  For example, I place all of my aliases in
-<literal>~/.mail_aliases</literal> so that I can make my
-<literal>~/.muttrc</literal> readable and keep my aliases private.
+このコマンドで、初期化コマンドを他のファイルから取り込めます。 例えばエイリアスファイルを
+<literal>~/.mail_aliases</literal>に配置すれば、<literal>~/.muttrc</literal>を
+読めるようにしても、 エイリアスは秘密にしておけます。
 </para>
 
 <para>
-If the filename begins with a tilde (<quote>~</quote>), it will be
-expanded to the path of your home directory.
+ファイル名がチルダ(<quote>~</quote>)で始まっている場合は、
+自分のホームディレクトリのパスに展開されます。 
 </para>
 
 <para>
-If the filename ends with a vertical bar (<quote>|</quote>), then
-<emphasis>filename</emphasis> is considered to be an executable program
-from which to read input (e.g.  <literal><command>source</command>
-~/bin/myscript|</literal>).
+ファイル名が縦線(<quote>|</quote>)で終わっていれば、<emphasis>ファイル名</emphasis>は
+実行プログラムとみなされ、そこから入力を読み出します(たとえば、
+<literal><command>source</command> ~/bin/myscript|</literal>)。
 </para>
 
 </sect1>
 
 <sect1 id="unhook">
-<title>Removing Hooks</title>
+<title>フックの削除</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>unhook</command>
