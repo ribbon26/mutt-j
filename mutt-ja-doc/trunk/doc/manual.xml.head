@@ -4721,125 +4721,113 @@ mailboxes $my_mx +mailbox3</screen>
 </cmdsynopsis>
 
 <para>
-This command permits you to flush hooks you have previously defined.
-You can either remove all hooks by giving the <quote>*</quote> character
-as an argument, or you can remove all hooks of a specific type by saying
-something like <literal><command>unhook</command> send-hook</literal>.
+このコマンドで、それまでに設定してきたフックを流し去ることができます。
+あらゆるフックを消すのも<quote>*</quote>を引数として与えることによってできますし、
+<literal><command>unhook</command> send-hook</literal>のようにして特定のタイプの
+フックを すべて消すということもできます。
 </para>
 
 </sect1>
 
 <sect1 id="formatstrings">
-<title>Format Strings</title>
+<title>文字列のフォーマット</title>
 
 <sect2 id="formatstrings-basics">
-<title>Basic usage</title>
+<title>基本的な使い方</title>
 
 <para>
-Format strings are a general concept you'll find in several locations
-through the Mutt configuration, especially in the <link
-linkend="index-format">$index_format</link>, <link
-linkend="pager-format">$pager_format</link>, <link
-linkend="status-format">$status_format</link>, and other related
-variables. These can be very straightforward, and it's quite possible
-you already know how to use them.
+文字列のフォーマットとは一般的な概念で、特に、
+<link linkend="index-format">$index_format</link>,
+<link linkend="pager-format">$pager_format</link>,
+<link linkend="status-format">$status_format</link> やその他関連する
+変数において、Mutt の設定中で存在しています。これらは、とてもわかりやすいので、
+すでにどのように使うかを知っている可能性も十分にあります。
 </para>
 
 <para>
-The most basic format string element is a percent symbol followed by
-another character. For example, <literal>%s</literal> represents a
-message's Subject: header in the <link
-linkend="index-format">$index_format</link> variable. The
-<quote>expandos</quote> available are documented with each format
-variable, but there are general modifiers available with all formatting
-expandos, too. Those are our concern here.
+もっとも基本的なフォーマット文字列の要素は、他の文字が後ろに付くパーセント文字です。
+たとえば、<literal>%s</literal>は、<link linkend="index-format">$index_format</link>
+変数中でメッセージの Subject: ヘッダを意味します。各フォーマット変数において
+<quote>expandos</quote>が有効であることはドキュメントにありますが、
+すべてのフォーマットされたexpandosは一般的なモディファイアとしても有効です。
+これは懸念事項です。
 </para>
 
 <para>
-Some of the modifiers are borrowed right out of C (though you might know
-them from Perl, Python, shell, or another language). These are the
-<literal>[-]m.n</literal> modifiers, as in
-<literal>%-12.12s</literal>. As with such programming languages, these
-modifiers allow you to specify the minimum and maximum size of the
-resulting string, as well as its justification. If the <quote>-</quote>
-sign follows the percent, the string will be left-justified instead of
-right-justified. If there's a number immediately following that, it's
-the minimum amount of space the formatted string will occupy &mdash; if
-it's naturally smaller than that, it will be padded out with spaces.  If
-a decimal point and another number follow, that's the maximum space
-allowable &mdash; the string will not be permitted to exceed that width,
-no matter its natural size. Each of these three elements is optional, so
-that all these are legal format strings: <literal>%-12s</literal>,
-<literal>%4c</literal>, <literal>%.15F</literal> and
-<literal>%-12.15L</literal>.
+いくつかのモディファイアはC言語のものを持ってきています(あるいは、Perl,Python,
+shellやその他の言語で知っているかもしれませんが)。<literal>%-12.12s</literal>
+と言う形になる<literal>[-]m.n</literal>というモディファイアもあります。
+そのようなプログラム言語では、これらのモディファイアは、位置揃えのために、
+結果文字列の最小と最大長を指定するのに使えます。パーセント文字のあとに、
+<quote>-</quote>記号がある場合、文字列は右揃えではなく左揃えとなります。
+直後に数字がある場合、それはフォーマット文字列が占める最小のスペースです。
+それよりも自然に小さい場合は、スペースが埋め込まれます。
+小数点と他の数字が後に付く場合は、最大の範囲となります。本来のサイズに関係なく、
+文字列はその幅よりも長くできません。各3要素はオプションなので、
+<literal>%-12s</literal>,<literal>%4c</literal>, <literal>%.15F</literal> と
+<literal>%-12.15L</literal> はすべて正しいフォーマットです。
 </para>
 
 <para>
-Mutt adds some other modifiers to format strings. If you use an equals
-symbol (<literal>=</literal>) as a numeric prefix (like the minus
-above), it will force the string to be centered within its minimum space
-range. For example, <literal>%=14y</literal> will reserve 14 characters
-for the %y expansion &mdash; that's the X-Label: header, in <link
-linkend="index-format">$index_format</link>. If the expansion results in
-a string less than 14 characters, it will be centered in a 14-character
-space.  If the X-Label for a message were <quote>test</quote>, that
-expansion would look like
-<quote>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</quote>.
+Mutt はフォーマット文字列にいくつかのモディファイアを追加しています。等号
+(<literal>=</literal>)を数字の前に使った場合(前述のマイナスのように)、
+その最小幅いないで文字列を中央揃えにします。たとえば、<literal>%=14y</literal>は、
+%y 拡張用に14文字を反転します。これは、
+<link linkend="index-format">$index_format</link>中のX-Label: ヘッダです。
+展開の結果の文字列が14文字よりも少ない場合、14文字の中で中央揃えになります。
+メッセージのX-Label が<quote>test</quote>だった場合、展開後は以下のようになります。
+<quote>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;test&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</quote>
 </para>
 
 <para>
-There are two very little-known modifiers that affect the way that an
-expando is replaced. If there is an underline (<quote>_</quote>)
-character between any format modifiers (as above) and the expando
-letter, it will expands in all lower case. And if you use a colon
-(<quote>:</quote>), it will replace all decimal points with underlines.
+expando が置き換わる場合に影響のあるあまり知られていないモディファイアが
+2つあります。下線(<quote>_</quote>)文字が任意のフォーマットモディファイアの
+と expando 文字の間に位置する場合(上記のように)、すべて小文字に置き換わります。
+コロン(<quote>:</quote>)を使った場合、すべての小数点は下線付きになります。
 </para>
 
 </sect2>
 
 <sect2 id="formatstrings-conditionals">
-<title>Conditionals</title>
+<title>条件式</title>
 
 <para>
-Depending on the format string variable, some of its sequences can be
-used to optionally print a string if their value is nonzero. For
-example, you may only want to see the number of flagged messages if such
-messages exist, since zero is not particularly meaningful. To optionally
-print a string based upon one of the above sequences, the following
-construct is used:
+フォーマット文字列変数に依存しますが、いくつかのシーケンスは、値が0以外の場合に
+文字列を表示するために使用できます。たとえば、フラグ付きのメッセージが
+存在するような場合にのみ、その数を表示したい場合です。この場合 0 は特に意味が
+ありません。オプションで、上記のシーケンスのいずれかに基づいて、文字列を表示
+するには、以下の構文を使用します。
 </para>
 
 <screen>
 %?&lt;sequence_char&gt;?&lt;optional_string&gt;?</screen>
 
 <para>
-where <emphasis>sequence_char</emphasis> is an expando, and
-<emphasis>optional_string</emphasis> is the string you would like
-printed if <emphasis>sequence_char</emphasis> is nonzero.
-<emphasis>optional_string</emphasis> may contain other sequences as well
-as normal text, but you may not nest optional strings.
+ここで、<emphasis>sequence_char</emphasis> はexpando で、
+<emphasis>optional_string</emphasis>は、<emphasis>sequence_char</emphasis>が
+ゼロ以外の時に表示したい文字列です。<emphasis>optional_string</emphasis>は
+通常のテキストと同じように、その他のシーケンスを含んでいてもかまいません。
+しかし、オプションの文字列をネストしてはいけません。
 </para>
 
 <para>
-Here is an example illustrating how to optionally print the number of
-new messages in a mailbox in <link
-linkend="status-format">$status_format</link>:
+<link linkend="status-format">$status_format</link>中のメールボックス中の
+新規メッセージの数をオプションで表示するための例は下記の通りです。
 </para>
 
 <screen>
 %?n?%n new messages.?</screen>
 
 <para>
-You can also switch between two strings using the following construct:
+以下の構文を使って、二つの文字列を切り換えることもできます。
 </para>
 
 <screen>
 %?&lt;sequence_char&gt;?&lt;if_string&gt;&amp;&lt;else_string&gt;?</screen>
 
 <para>
-If the value of <emphasis>sequence_char</emphasis> is non-zero,
-<emphasis>if_string</emphasis> will be expanded, otherwise
-<emphasis>else_string</emphasis> will be expanded.
+<emphasis>sequence_char</emphasis>がゼロでない場合、<emphasis>if_string</emphasis>は
+展開され、その他の場合は、<emphasis>else_string</emphasis>が展開されます。
 </para>
 
 </sect2>
