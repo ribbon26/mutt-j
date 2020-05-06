@@ -5059,137 +5059,130 @@ Mutt はシェルから動かすコマンドラインツールで、特外部ツ
 </para>
 
 <para>
-A Unicode locale makes all conversions superfluous which eliminates the
-risk of conversion errors. It also eliminates potentially wrong
-expectations about the character set between Mutt and external programs.
+Unicode ロケールはすべての変換を不要にし、変換エラーのリスクをなくします。
+また、Mutt と外部プログラムとの間での、文字セットに関する間違った期待を
+なくします。
 </para>
 
 <para>
-The terminal emulator used also must be properly configured for the
-current locale. Terminal emulators usually do <emphasis>not</emphasis>
-derive the locale from environment variables, they need to be configured
-separately. If the terminal is incorrectly configured, Mutt may display
-random and unexpected characters (question marks, octal codes, or just
-random glyphs), format strings may not work as expected, you may not be
-abled to enter non-ascii characters, and possible more.  Data is always
-represented using bytes and so a correct setup is very important as to
-the machine, all character sets <quote>look</quote> the same.
+ターミナルエミュレータも現在のロケールに対して適切に設定されねばなりません。
+ターミナルエミュレータは通常、環境変数のロケールを<emphasis>使いません</emphasis>
+ので、個別に設定する必要があります。ターミナルが正しく設定されていないと、
+Mutt はランダムで期待されない文字(疑問符、8進コード、あるいはランダムなグリフ)
+を表示するかもしれず、期待したとおりにフォーマット文字列が動かないかもしれず、
+非ASCII文字を入力できないかもしれず、さらにそのほかの不具合があるかもしれません。
+データは常時バイトで表示されるので、正しい設定はマシンにとってとても重要で、
+すべての文字セットは同じに<quote>見えるようにします</quote>。
 </para>
 
 <para>
-Warning: A mismatch between what system and library functions think the
-locale is and what Mutt was told what the locale is may make it behave
-badly with non-ascii input: it will fail at seemingly random places.
-This warning is to be taken seriously since not only local mail handling
-may suffer: sent messages may carry wrong character set information the
-<emphasis>receiver</emphasis> has too deal with. The need to set
-<literal>$charset</literal> directly in most cases points at terminal
-and environment variable setup problems, not Mutt problems.
+注意: システムとライブラリ機能のロケールに期待しているものと、
+Mutt に指定されたロケールとの間に何らかのミスマッチがあると、
+非ASCIIでの入力動作に不具合が生じる可能性があります。この場合、一見すると
+ランダムな場所で失敗します。ローカルのメール処理だけが影響を受けるわけでは
+ないので、この警告は真摯に受け止める必要があります。送信メッセージは不正な文字
+セット情報を伝搬するかもしれないので、<emphasis>受信者</emphasis>も同じように
+扱うことになってしまいます。多くの場合、<literal>$charset</literal>を直接設定
+する必要性は、Mutt の問題ではなく、ターミナルと環境変数の設定の問題です。
 </para>
 
 <para>
-A list of officially assigned and known character sets can be found at
-<ulink url="http://www.iana.org/assignments/character-sets">IANA</ulink>,
-a list of locally supported locales can be obtained by running
-<literal>locale -a</literal>.
+公式に割り当てられ、知られている文字セットの一覧は、
+<ulink url="http://www.iana.org/assignments/character-sets">IANA</ulink>にあり、
+ローカルでサポートされているロケールは
+<literal>locale -a</literal>を実行することで分かります。
 </para>
 
 </sect1>
 
 <sect1 id="regexp">
-<title>Regular Expressions</title>
+<title>正規表現</title>
 
 <para>
-All string patterns in Mutt including those in more complex <link
-linkend="patterns">patterns</link> must be specified using regular
-expressions (regexp) in the <quote>POSIX extended</quote> syntax (which
-is more or less the syntax used by egrep and GNU awk).  For your
-convenience, we have included below a brief description of this syntax.
+Mutt におけるすべての文字列パターンは、より複雑な<link linkend="patterns">patterns</link>
+における文字列パターンも含めて、すべて<quote>POSIX 拡張の</quote>正規表現(regexp)
+(egrep や GNU awk で使われている文法とほぼ同じ)を使って指定しなくてはなりません。
+便宜のため、以下にこの文法の簡単な説明を含めました。 
 </para>
 
 <para>
-The search is case sensitive if the pattern contains at least one upper
-case letter, and case insensitive otherwise.
-</para>
-
-<note>
-<para>
-<quote>\</quote> must be quoted if used for a regular expression in an
-initialization command: <quote>\\</quote>.
-</para>
-</note>
-
-<para>
-A regular expression is a pattern that describes a set of strings.
-Regular expressions are constructed analogously to arithmetic
-expressions, by using various operators to combine smaller expressions.
+検索は、パターンに一つでも大文字があれば文字の大小を意識し、それ以外は大小
+を意識しません。
 </para>
 
 <note>
 <para>
-The regular expression can be enclosed/delimited by either " or ' which
-is useful if the regular expression includes a white-space character.
-See <xref linkend="muttrc-syntax"/> for more information on " and '
-delimiter processing.  To match a literal " or ' you must preface it
-with \ (backslash).
+<quote>\</quote>は、初期化コマンドの中で使う場合には、<quote>\\</quote>のように
+くくらなければなりません。
 </para>
 </note>
 
 <para>
-The fundamental building blocks are the regular expressions that match a
-single character.  Most characters, including all letters and digits,
-are regular expressions that match themselves.  Any metacharacter with
-special meaning may be quoted by preceding it with a backslash.
+正規表現は一つのパターンで何種類かの文字列を表します。 正規表現は代数表現と
+同じように、より小さな式を色々な演算子で組み合わせて構築されます。
+</para>
+
+<note>
+<para>
+正規表現は、「"」や「'」で囲んだり区切ったりできます。これは正規表現が
+空白文字を含む場合に便利です。区切り記号「"」と「'」の 処理に関するさらに
+詳細な情報は、<xref linkend="muttrc-syntax"/>を参照してください。
+そのままの記号として「"」や「'」に合致させるには、 記号の前に「\」(バックスラッシュ)
+をつけてください。
+</para>
+</note>
+
+<para>
+文字ひとつに一致する正規表現が、基本となる単位です。すべての英字と数字を含む
+ほとんどの文字は、自分自身に一致する正規表現です。特殊な意味を持つメタ文字記号は、
+前にバックスラッシュを付けることによって 本来の記号に一致します。
 </para>
 
 <para>
-The period <quote>.</quote> matches any single character.  The caret
-<quote>^</quote> and the dollar sign <quote>$</quote> are metacharacters
-that respectively match the empty string at the beginning and end of a
-line.
+ピリオド <quote>.</quote> は任意の文字に一致します。サーカムフレックス
+<quote>^</quote>とドル記号<quote>$</quote>はそれぞれ、行の最初と最後という、
+文字ではない部分に合致するメタ文字です。 
 </para>
 
 <para>
-A list of characters enclosed by <quote>[</quote> and <quote>]</quote>
-matches any single character in that list; if the first character of the
-list is a caret <quote>^</quote> then it matches any character
-<emphasis>not</emphasis> in the list.  For example, the regular
-expression <emphasis>[0123456789]</emphasis> matches any single digit.
-A range of ASCII characters may be specified by giving the first and
-last characters, separated by a hyphen <quote>-</quote>.  Most
-metacharacters lose their special meaning inside lists.  To include a
-literal <quote>]</quote> place it first in the list.  Similarly, to
-include a literal <quote>^</quote> place it anywhere but first.
-Finally, to include a literal hyphen <quote>-</quote> place it last.
+<quote>[</quote> と <quote>]</quote> で囲われた文字のリストは、その中のどの
+1文字にも一致します。そのリストの先頭の文字がサーカムフレックス<quote>^</quote>
+の場合は、そのリストに<emphasis>ない</emphasis>文字に一致します。たとえば、
+正規表現 <emphasis>[0123456789]</emphasis> は任意の十進数の1文字に一致します。
+ハイフン <quote>-</quote>を、ある範囲内における最初と最後の文字の間に置けば、
+その範囲の ASCII 文字全体を指定できます。リストの中ではほとんどのメタ文字から
+特別な意味がなくなります。文字<quote>]</quote>そのものをリストに含めるには、
+リストの最初に置きます。 同様に、文字<quote>^</quote>そのものを含めたい場合には、
+最初以外のどこかに置きます。そして、ハイフン <quote>-</quote> そのものを含めたい
+場合にはリストの最後に置きます。
 </para>
 
 <para>
-Certain named classes of characters are predefined.  Character classes
-consist of <quote>[:</quote>, a keyword denoting the class, and
-<quote>:]</quote>.  The following classes are defined by the POSIX
-standard in
-<xref linkend="posix-regex-char-classes"/>
+特定の名前付き文字クラスがあらかじめ定義されています。文字クラスは、
+<quote>[:</quote>、クラスを表すキーワード、<quote>:]</quote> という形になっています。
+以下 <xref linkend="posix-regex-char-classes"/> のクラスは POSIX 標準で
+定義されているものです。
 </para>
 
 <table id="posix-regex-char-classes">
-<title>POSIX regular expression character classes</title>
+<title>POSIX 正規表現文字クラス</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Character class</entry><entry>Description</entry></row>
+<row><entry>文字クラス</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>[:alnum:]</entry><entry>Alphanumeric characters</entry></row>
-<row><entry>[:alpha:]</entry><entry>Alphabetic characters</entry></row>
-<row><entry>[:blank:]</entry><entry>Space or tab characters</entry></row>
-<row><entry>[:cntrl:]</entry><entry>Control characters</entry></row>
-<row><entry>[:digit:]</entry><entry>Numeric characters</entry></row>
-<row><entry>[:graph:]</entry><entry>Characters that are both printable and visible. (A space is printable, but not visible, while an <quote>a</quote> is both)</entry></row>
-<row><entry>[:lower:]</entry><entry>Lower-case alphabetic characters</entry></row>
-<row><entry>[:print:]</entry><entry>Printable characters (characters that are not control characters)</entry></row>
-<row><entry>[:punct:]</entry><entry>Punctuation characters (characters that are not letter, digits, control characters, or space characters)</entry></row>
-<row><entry>[:space:]</entry><entry>Space characters (such as space, tab and formfeed, to name a few)</entry></row>
-<row><entry>[:upper:]</entry><entry>Upper-case alphabetic characters</entry></row>
-<row><entry>[:xdigit:]</entry><entry>Characters that are hexadecimal digits</entry></row>
+<row><entry>[:alnum:]</entry><entry>アルファベットと数字</entry></row>
+<row><entry>[:alpha:]</entry><entry>アルファベット</entry></row>
+<row><entry>[:blank:]</entry><entry>空白も他はタブ文字</entry></row>
+<row><entry>[:cntrl:]</entry><entry>制御文字</entry></row>
+<row><entry>[:digit:]</entry><entry>数字</entry></row>
+<row><entry>[:graph:]</entry><entry>印刷かつ表示可能な文字(空白は印刷可能だが不可視、<quote>a</quote>は両方とも可)</entry></row>
+<row><entry>[:lower:]</entry><entry>アルファベット小文字</entry></row>
+<row><entry>[:print:]</entry><entry>印刷可能文字(制御文字以外)</entry></row>
+<row><entry>[:punct:]</entry><entry>記号(英字、数字、制御文字、空白以外の文字)</entry></row>
+<row><entry>[:space:]</entry><entry>スペース(空白文字、タブと改ページなど)</entry></row>
+<row><entry>[:upper:]</entry><entry>アルファベット大文字</entry></row>
+<row><entry>[:xdigit:]</entry><entry>16進数</entry></row>
 </tbody>
 </tgroup>
 </table>
