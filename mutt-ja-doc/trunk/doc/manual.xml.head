@@ -4948,36 +4948,35 @@ set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&amp;%4c?)%*  %s"</screen>
 </para>
 
 <para>
-  <link linkend="size-show-mb">$size_show_mb</link> will display the
-  number of megabytes when the size is &gt;= 1 megabyte.  When
-  unset, kilobytes will be displayed instead (which could be a large
-  number).
+  <link linkend="size-show-mb">$size_show_mb</link>はサイズが1メガバイト
+  以上の時にメガバイト単位で表示します。設定されていない場合、代わりに
+  キロバイト単位で表示されます(おそらくかなり大きな値になります)。
 </para>
 
 <para>
-  <link linkend="size-show-fractions">$size_show_fractions</link>,
-  will display numbers with a single decimal place for values from
-  0 to 10 kilobytes, and 1 to 10 megabytes.
+  <link linkend="size-show-fractions">$size_show_fractions</link>は、
+  0 から 10 キロバイトと、 1 から 10 メガバイトで、単一の10進領域に
+  数字を表示します。
 </para>
 
 <para>
-  <link linkend="size-units-on-left">$size_units_on_left</link> will
-  display the unit (<quote>K</quote> or <quote>M</quote>) to the left
-  of the number, instead of the right if unset.
+  <link linkend="size-units-on-left">$size_units_on_left</link>は、
+  単位(<quote>K</quote> 又は <quote>M</quote>)を、  設定されていない場合、
+  右側に表示される代わりに、左側に表示します。
 </para>
 
 <para>
-  These variables also affect size display in a few other places, such
-  as progress indicators and attachment delimeters in the pager.
+  これらの変数は、いくつか他の場所でのサイズ表示にも影響します。たとえば、
+  ページャ内での添付デリミタや処理の進行表示などです。
 </para>
 </sect2>
 
 </sect1>
 
 <sect1 id="mailto-allow">
-<title>Control allowed header fields in a mailto: URL</title>
+<title>mailto: URL 中でのヘッダフィールドの許可制御</title>
 
-<para>Usage:</para>
+<para>使用法:</para>
 
 <cmdsynopsis>
 <command>mailto_allow</command>
@@ -5002,66 +5001,61 @@ set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&amp;%4c?)%*  %s"</screen>
 </cmdsynopsis>
 
 <para>
-As a security measure, Mutt will only add user-approved header fields from a
-<literal>mailto:</literal> URL.  This is necessary since Mutt will handle
-certain header fields, such as <literal>Attach:</literal>, in a special way.
-The <literal>mailto_allow</literal> and <literal>unmailto_allow</literal>
-commands allow the user to modify the list of approved headers.
+セキュリティ対策として、Mutt はユーザが承認したヘッダフィールドのみを
+<literal>mailto:</literal> URLから追加します。これは、Mutt が特定のヘッダ、
+たとえば、<literal>Attach:</literal>のようなものを特別な方法で扱うので必要です。
+<literal>mailto_allow</literal> と <literal>unmailto_allow</literal>コマンドは、
+承認されたヘッダのリストを修正するのに使います。
 </para>
 <para>
-Mutt initializes the default list to contain only the <literal>Subject</literal>
-and <literal>Body</literal> header fields, which are the only requirement specified
-by the <literal>mailto:</literal> specification in RFC2368.
+Mutt は、RFC2368 中の<literal>mailto:</literal>定義によって、規定されている唯一の
+条件である、<literal>Subject</literal>と<literal>Body</literal>ヘッダフィールドのみを
+含むように既定のリストを初期化します。
 </para>
 </sect1>
 
 </chapter>
 
 <chapter id="advancedusage">
-<title>Advanced Usage</title>
+<title>高度な使用方法</title>
 
 <sect1 id="charset-handling">
-<title>Character Set Handling</title>
+<title>文字セットのハンドリング</title>
 
 <para>
-A <quote>character set</quote> is basically a mapping between bytes and
-glyphs and implies a certain character encoding scheme. For example, for
-the ISO 8859 family of character sets, an encoding of 8bit per character
-is used. For the Unicode character set, different character encodings
-may be used, UTF-8 being the most popular. In UTF-8, a character is
-represented using a variable number of bytes ranging from 1 to 4.
+<quote>文字セット</quote>は、基本的な、バイトとグリフのマッピングで、特定の
+文字エンコーディングスキームを意味します。たとえば、ISO 8859 文字セットファミリ
+では、8ビット単位のエンコーディングが使用されます。Unicode 文字セットでは、
+異なった文字エンコーディングが使われます。UTF-8 がもっとも一般的です。
+UTF-8 では1 バイトから 4 バイトまでの間の可変長で文字が表現されます。
 </para>
 
 <para>
-Since Mutt is a command-line tool run from a shell, and delegates
-certain tasks to external tools (such as an editor for composing/editing
-messages), all of these tools need to agree on a character set and
-encoding. There exists no way to reliably deduce the character set a
-plain text file has. Interoperability is gained by the use of
-well-defined environment variables. The full set can be printed by
-issuing <literal>locale</literal> on the command line.
+Mutt はシェルから動かすコマンドラインツールで、特外部ツールへ特定のタスクを
+委任するので(たとえばメッセージの作成/編集に使うエディタなど)、
+それらのツールはすべて文字セットとエンコーディングを認識できる必要があります。
+平文ファイルの文字セットを確実に認識できる方法はありません。相互運用性は
+明確に定義された環境変数を使用することで得られます。完全なセットは
+コマンドライン上で、<literal>locale</literal> を実行することにより表示
+できます。
 </para>
 
 <para>
-Upon startup, Mutt determines the character set on its own using
-routines that inspect locale-specific environment variables. Therefore,
-it is generally not necessary to set the <literal>$charset</literal>
-variable in Mutt. It may even be counter-productive as Mutt uses system
-and library functions that derive the character set themselves and on
-which Mutt has no influence. It's safest to let Mutt work out the locale
-setup itself.
+開始時点で、Mutt はローカルで定義された環境変数を調べる固有の処理で、
+文字セットを決定します。そのため、一般的には、Mutt 中で<literal>$charset</literal>
+変数を設定する必要はありません。Mutt はシステムやライブラリの機能を使って、
+文字セットを決め、Mutt に影響を及ぼさないようにしているので、逆効果になる
+場合もあります。Muttにロケールの設定自体を実行させるのがもっとも安全です。
 </para>
 
 <para>
-If you happen to work with several character sets on a regular basis,
-it's highly advisable to use Unicode and an UTF-8 locale. Unicode can
-represent nearly all characters in a message at the same time.  When not
-using a Unicode locale, it may happen that you receive messages with
-characters not representable in your locale. When displaying such a
-message, or replying to or forwarding it, information may get lost
-possibly rendering the message unusable (not only for you but also for
-the recipient, this breakage is not reversible as lost information
-cannot be guessed).
+定期的に複数の文字セットで仕事をしている場合は、Unicode とUTF-8 ロケールを
+使う事を強く推奨します。Unicode は同じ時にメッセージ中でほぼすべての文字を
+表現できます。Unicode ロケールを使わない場合、使用しているロケールでは
+表現できない文字を含むめっーセージを受け取ることがあるかもしれません。
+そのようなメッセージを表示、返信、転送する場合、情報が失われ、メッセージが
+使用できなくなる可能性があります(あなただけではなく、受信者にも、おかしく
+なった部分は、情報を推測することができないため元に戻すことができません)。
 </para>
 
 <para>
