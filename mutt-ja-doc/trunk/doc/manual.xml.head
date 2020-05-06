@@ -4833,52 +4833,49 @@ expando が置き換わる場合に影響のあるあまり知られていない
 </sect2>
 
 <sect2 id="formatstrings-filters">
-<title>Filters</title>
+<title>フィルタ</title>
 
 <para>
-Any format string ending in a vertical bar (<quote>|</quote>) will be
-expanded and piped through the first word in the string, using spaces as
-separator. The string returned will be used for display.  If the
-returned string ends in %, it will be passed through the formatter a
-second time. This allows the filter to generate a replacement format
-string including % expandos.
+縦棒(<quote>|</quote>)で終わっているフォーマット文字列は、空白文字をセパレータ
+として使って、文字列中の最初の単語を展開してパイプします。返される文字列は
+表示のために使われます。返された文字列が % で終わっている場合、次の時に
+フォーマッタを通ります。これで、フィルタが、% expandos を含む置換フォーマット文字列を
+生成できるようになります。
 </para>
 
 <para>
-All % expandos in a format string are expanded before the script is
-called so that:
+フォーマット文字列中の、すべての % expandos は、スクリプトが呼ばれる前に展開されるので、
 </para>
 
 <example id="ex-fmtpipe">
-<title>Using external filters in format strings</title>
+<title>フォーマット文字列中の外部フィルタの使用</title>
 <screen>
 set status_format="script.sh '%r %f (%L)'|"
 </screen>
 </example>
 
 <para>
-will make Mutt expand <literal>%r</literal>, <literal>%f</literal> and
-<literal>%L</literal> before calling the script. The example also shows
-that arguments can be quoted: the script will receive the expanded
-string between the single quotes as the only argument.
+は、Mutt が<literal>%r</literal>, <literal>%f</literal>と<literal>%L</literal>を、
+スクリプトが呼ばれる前に展開するようにさせます。例では、さらに、
+引数が引用符で囲まれています。スクリプトは単一引用符の間の文字列を唯一の引数として
+展開された文字列を受け取ります。
 </para>
 
 <para>
-A practical example is the <literal>mutt_xtitle</literal> script
-installed in the <literal>samples</literal> subdirectory of the Mutt
-documentation: it can be used as filter for <link
-linkend="status-format">$status_format</link> to set the current
-terminal's title, if supported.
+実際の例は、Mutt のドキュメントの<literal>samples</literal>サブディレクトリ
+中にインストールされている<literal>mutt_xtitle</literal>スクリプトです。
+これは、もしもサポートされていれば、現在のターミナルのタイトルを設定するための、
+<link linkend="status-format">$status_format</link>に対するフィルタとして使われます。
 </para>
 
 </sect2>
 
 <sect2 id="formatstrings-padding">
-<title>Padding</title>
+<title>パディング</title>
 
 <para>
-In most format strings, Mutt supports different types of padding using
-special %-expandos:
+多くのフォーマット文字列中では、Mutt は特別な %-expandos を使う事で、異なったタイプの
+パディングをサポートします。
 </para>
 
 <variablelist>
@@ -4886,9 +4883,8 @@ special %-expandos:
 <term><literal>%|X</literal></term>
 <listitem>
 <para>
-When this occurs, Mutt will fill the rest of the line with the character
-<literal>X</literal>. For example, filling the rest of the line with
-dashes is done by setting:
+これが発生した時、Mutt は文字<literal>X</literal>で、行の残りを埋めます。
+たとえば、以下のようにすると、行の残りをダッシュで埋めます。
 </para>
 <screen>
 set status_format = "%v on %h: %B: %?n?%n&amp;no? new messages %|-"</screen>
@@ -4900,13 +4896,11 @@ set status_format = "%v on %h: %B: %?n?%n&amp;no? new messages %|-"</screen>
 </term>
 <listitem>
 <para>
-Since the previous expando stops at the end of line, there must be a way
-to fill the gap between two items via the <literal>%&gt;X</literal>
-expando: it puts as many characters <literal>X</literal> in between two
-items so that the rest of the line will be right-justified. For example,
-to not put the version string and hostname the above example on the left
-but on the right and fill the gap with spaces, one might use (note the
-space after <literal>%&gt;</literal>):
+以前の expando が行の終わりで停止するため、<literal>%&gt;X</literal> expando 経由で
+二つの項目の間のギャップを埋める方法が存在する必要があります。二つのアイテムの間で
+たくさんの文字<literal>X</literal>を埋めるので、行の残りは右詰になります。例えば
+バージョン文字列を置かず、上記の例でのホスト名を左に配置しますが、その右は空白で
+埋める場合は(<literal>%&gt;</literal>のあとの空白に注意)以下のようにします。
 </para>
 <screen>
 set status_format = "%B: %?n?%n&amp;no? new messages %&gt; (%v on %h)"</screen>
@@ -4917,16 +4911,13 @@ set status_format = "%B: %?n?%n&amp;no? new messages %&gt; (%v on %h)"</screen>
 </term>
 <listitem>
 <para>
-Normal right-justification will print everything to the left of the
-<literal>%&gt;</literal>, displaying padding and whatever lies to the
-right only if there's room. By contrast, <quote>soft-fill</quote> gives
-priority to the right-hand side, guaranteeing space to display it and
-showing padding only if there's still room. If necessary, soft-fill will
-eat text leftwards to make room for rightward text. For example, to
-right-justify the subject making sure as much as possible of it fits on
-screen, one might use (note two spaces after <literal>%* </literal>: the
-second ensures there's a space between the truncated right-hand side and
-the subject):
+通常の右揃えは<literal>%&gt;</literal>の左側にすべて表示し、余裕がある場合にのみ、
+埋め込み文字や右にあるものを表示します。それと対照的に、<quote>soft-fill</quote>は
+右側を優先し、表示するスペースを保障し、まだスペースが余っている場合にのみ
+埋め込み文字を表示します。必要であれば、soft-fill は右側のテキストために場所を
+空けるため、左側のテキストをカットします。たとえば、可能な限り画面に収まるように、
+題名を右揃えするためには、以下のようにします(<literal>%* </literal>のあとの二つの
+空白に注意:2つ目は題名と切り取られた右側との間にスペースがある事を確認します)。
 </para>
 <screen>
 set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&amp;%4c?)%*  %s"</screen>
@@ -4937,24 +4928,23 @@ set index_format="%4C %Z %{%b %d} %-15.15L (%?l?%4l&amp;%4c?)%*  %s"</screen>
 </sect2>
 
 <sect2 id="formatstrings-size">
-<title>Bytes size display</title>
+<title>バイト長の表示</title>
 
 <para>
-Various format strings contain expandos that display the size of
-messages in bytes.  This includes
+メッセージのサイズをバイト単位で表示する expandos を含む種々のフォーマット文字列があります。
+これには、
 <literal>%s</literal> in <link linkend="attach-format">$attach_format</link>,
 <literal>%l</literal> in <link linkend="compose-format">$compose_format</link>,
 <literal>%s</literal> in <link linkend="folder-format">$folder_format</link>,
-<literal>%c</literal> in <link linkend="index-format">$index_format</link>,
-and %l and %L in <link linkend="status-format">$status_format</link>.
-There are four configuration variables that can be used to customize
-how the numbers are displayed.
+<literal>%c</literal> in <link linkend="index-format">$index_format</link>と
+<link linkend="status-format">$status_format</link>中の%l と %Lがあります。
+どのように数字が表示されるかをカスタマイズするために使う四つの設定変数があります。
 </para>
 
 <para>
-  <link linkend="size-show-bytes">$size_show_bytes</link>
-  will display the number of bytes when the size is &lt; 1
-  kilobyte.  When unset, kilobytes will be displayed instead.
+  <link linkend="size-show-bytes">$size_show_bytes</link>はサイズが
+  1キロバイトよりも小さい場合にバイト長を表示するのに使います。
+  設定されていない場合、代わりにキロバイト単位で表示されます。
 </para>
 
 <para>
