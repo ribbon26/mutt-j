@@ -5242,127 +5242,124 @@ acute (<quote>&eacute;</quote>)付きの<quote>e</quote>と
 </para>
 
 <table id="regex-repeat">
-<title>Regular expression repetition operators</title>
+<title>正規表現の繰り返し演算子</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Operator</entry><entry>Description</entry></row>
+<row><entry>オペレータ</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>?</entry><entry>The preceding item is optional and matched at most once</entry></row>
-<row><entry>*</entry><entry>The preceding item will be matched zero or more times</entry></row>
-<row><entry>+</entry><entry>The preceding item will be matched one or more times</entry></row>
-<row><entry>{n}</entry><entry>The preceding item is matched exactly <emphasis>n</emphasis> times</entry></row>
-<row><entry>{n,}</entry><entry>The preceding item is matched <emphasis>n</emphasis> or more times</entry></row>
-<row><entry>{,m}</entry><entry>The preceding item is matched at most <emphasis>m</emphasis> times</entry></row>
-<row><entry>{n,m}</entry><entry>The preceding item is matched at least <emphasis>n</emphasis> times, but no more than <emphasis>m</emphasis> times</entry></row>
+<row><entry>?</entry><entry>この記号の前にあるアイテムは、あってもなくても良く、あっても一回しか一致しない</entry></row>
+<row><entry>*</entry><entry>この記号の前のアイテムは 0 回でもそれ以上でも一致する</entry></row>
+<row><entry>+</entry><entry>この記号の前のアイテムは一回以上あれば一致する</entry></row>
+<row><entry>{n}</entry><entry>この前のアイテムは、きっちり<emphasis>n</emphasis>回なら一致する</entry></row>
+<row><entry>{n,}</entry><entry>この前のアイテムは<emphasis>n</emphasis>回以上で一致する</entry></row>
+<row><entry>{,m}</entry><entry>この前のアイテムは<emphasis>m</emphasis>回まで一致する</entry></row>
+<row><entry>{n,m}</entry><entry>この前のアイテムは<emphasis>n</emphasis>回以上<emphasis>m</emphasis> 回までなら一致する</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-Two regular expressions may be concatenated; the resulting regular
-expression matches any string formed by concatenating two substrings
-that respectively match the concatenated subexpressions.
+二つの正規表現を連結することができます。その結果できた正規表現が一致するのは、それぞれに一致する
+文字列をその順番に並べたものです。
 </para>
 
 <para>
-Two regular expressions may be joined by the infix operator
-<quote>|</quote>; the resulting regular expression matches any string
-matching either subexpression.
+二つの正規表現は中間演算子<quote>|</quote>で連結することもでき、二つをこのように
+連結してできる正規表現は、いずれかの部分式に一致する文字列に一致します。
 </para>
 
 <para>
-Repetition takes precedence over concatenation, which in turn takes
-precedence over alternation.  A whole subexpression may be enclosed in
-parentheses to override these precedence rules.
+繰り返し演算子は連結演算子より優先します。連結演算子は、代替表現より優先します。
 </para>
 
 <note>
 <para>
-If you compile Mutt with the included regular expression engine, the
-following operators may also be used in regular expressions as described
 in <xref linkend="regex-gnu-ext"/>.
+Mutt を内蔵された正規表現エンジンを含む形でコンパイルしていれば、
+<xref linkend="regex-gnu-ext"/>で示されている演算子を正規表現の中で使うことができます。
 </para>
 </note>
 
 <table id="regex-gnu-ext">
-<title>GNU regular expression extensions</title>
+<title>GNU 拡張正規表現</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Expression</entry><entry>Description</entry></row>
+<row><entry>正規表現</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>\\y</entry><entry>Matches the empty string at either the beginning or the end of a word</entry></row>
-<row><entry>\\B</entry><entry>Matches the empty string within a word</entry></row>
-<row><entry>\\&lt;</entry><entry>Matches the empty string at the beginning of a word</entry></row>
-<row><entry>\\&gt;</entry><entry>Matches the empty string at the end of a word</entry></row>
-<row><entry>\\w</entry><entry>Matches any word-constituent character (letter, digit, or underscore)</entry></row>
-<row><entry>\\W</entry><entry>Matches any character that is not word-constituent</entry></row>
-<row><entry>\\`</entry><entry>Matches the empty string at the beginning of a buffer (string)</entry></row>
-<row><entry>\\'</entry><entry>Matches the empty string at the end of a buffer</entry></row>
+<row><entry>\\y</entry><entry>単語が開始または終了する部分に一致</entry></row>
+<row><entry>\\B</entry><entry>単語の中にある空文字列に一致</entry></row>
+<row><entry>\\&lt;</entry><entry>単語の開始部分に一致</entry></row>
+<row><entry>\\&gt;</entry><entry>単語の終了部分に一致</entry></row>
+<row><entry>\\w</entry><entry>単語を構成する文字(英文字、数字あるいは下線)に一致</entry></row>
+<row><entry>\\W</entry><entry>単語を構成する文字以外に一致</entry></row>
+<row><entry>\\`</entry><entry>バッファ(文字列)の先頭に一致</entry></row>
+<row><entry>\\'</entry><entry>バッファの最後の空の文字列に一致</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-Please note however that these operators are not defined by POSIX, so
-they may or may not be available in stock libraries on various systems.
+これらの演算子は POSIX で定められていないため、これらを標準のライブラリとして
+使えたり、使えなかったりするシステムがあることに注意してください。
 </para>
 
 </sect1>
 
 <sect1 id="patterns">
-<title>Patterns: Searching, Limiting and Tagging</title>
+<title>パターン: 検索、制限とタグ付け</title>
 
 <sect2 id="patterns-modifier">
-<title>Pattern Modifier</title>
+<title>パターンモディファイア</title>
 
 <para>
-Many of Mutt's commands allow you to specify a pattern to match
-(<literal>limit</literal>, <literal>tag-pattern</literal>,
-<literal>delete-pattern</literal>, etc.). <xref linkend="tab-patterns"/>
-shows several ways to select messages.
+Mutt の多くのコマンドでは、パターンマッチング機能使用できます
+(<literal>limit</literal>, <literal>tag-pattern</literal>,<literal>delete-pattern</literal>
+など)。<xref linkend="tab-patterns"/>で、メッセージを選択するためのいくつかの方法を
+示します。
 </para>
 
 <table id="tab-patterns">
-<title>Pattern modifiers</title>
+<title>パターンモディファイア</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Pattern modifier</entry><entry>Description</entry></row>
+<row><entry>パターンモディファイア</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>~A</entry><entry>all messages</entry></row>
-<row><entry>~b <emphasis>EXPR</emphasis></entry><entry>messages which contain <emphasis>EXPR</emphasis> in the message body ***)</entry></row>
-<row><entry>=b <emphasis>STRING</emphasis></entry><entry>If IMAP is enabled, like ~b but searches for <emphasis>STRING</emphasis> on the server, rather than downloading each message and searching it locally.</entry></row>
-<row><entry>~B <emphasis>EXPR</emphasis></entry><entry>messages which contain <emphasis>EXPR</emphasis> in the whole message ***)</entry></row>
-<row><entry>=B <emphasis>STRING</emphasis></entry><entry>If IMAP is enabled, like ~B but searches for <emphasis>STRING</emphasis> on the server, rather than downloading each message and searching it locally.</entry></row>
-<row><entry>~c <emphasis>EXPR</emphasis></entry><entry>messages carbon-copied to <emphasis>EXPR</emphasis></entry></row>
-<row><entry>%c <emphasis>GROUP</emphasis></entry><entry>messages carbon-copied to any member of <emphasis>GROUP</emphasis></entry></row>
-<row><entry>~C <emphasis>EXPR</emphasis></entry><entry>messages either to: or cc: <emphasis>EXPR</emphasis></entry></row>
-<row><entry>%C <emphasis>GROUP</emphasis></entry><entry>messages either to: or cc: to any member of <emphasis>GROUP</emphasis></entry></row>
-<row><entry>~d [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>messages with <quote>date-sent</quote> in a Date range</entry></row>
-<row><entry>~D</entry><entry>deleted messages</entry></row>
-<row><entry>~e <emphasis>EXPR</emphasis></entry><entry>messages which contains <emphasis>EXPR</emphasis> in the <quote>Sender</quote> field</entry></row>
-<row><entry>%e <emphasis>GROUP</emphasis></entry><entry>messages which contain a member of <emphasis>GROUP</emphasis> in the <quote>Sender</quote> field</entry></row>
-<row><entry>~E</entry><entry>expired messages</entry></row>
-<row><entry>~F</entry><entry>flagged messages</entry></row>
-<row><entry>~f <emphasis>EXPR</emphasis></entry><entry>messages originating from <emphasis>EXPR</emphasis></entry></row>
-<row><entry>%f <emphasis>GROUP</emphasis></entry><entry>messages originating from any member of <emphasis>GROUP</emphasis></entry></row>
-<row><entry>~g</entry><entry>cryptographically signed messages</entry></row>
-<row><entry>~G</entry><entry>cryptographically encrypted messages</entry></row>
-<row><entry>~h <emphasis>EXPR</emphasis></entry><entry>messages which contain <emphasis>EXPR</emphasis> in the message header ***)</entry></row>
-<row><entry>=h <emphasis>STRING</emphasis></entry><entry>If IMAP is enabled, like ~h but searches for <emphasis>STRING</emphasis> on the server, rather than downloading each message and searching it locally; <emphasis>STRING</emphasis> must be of the form <quote>header: substring</quote> (see below).</entry></row>
-<row><entry>~H <emphasis>EXPR</emphasis></entry><entry>messages with a spam attribute matching <emphasis>EXPR</emphasis></entry></row>
-<row><entry>~i <emphasis>EXPR</emphasis></entry><entry>messages which match <emphasis>EXPR</emphasis> in the <quote>Message-ID</quote> field</entry></row>
-<row><entry>~k</entry><entry>messages which contain PGP key material</entry></row>
-<row><entry>~L <emphasis>EXPR</emphasis></entry><entry>messages either originated or received by <emphasis>EXPR</emphasis></entry></row>
-<row><entry>%L <emphasis>GROUP</emphasis></entry><entry>message either originated or received by any member of <emphasis>GROUP</emphasis></entry></row>
-<row><entry>~l</entry><entry>messages addressed to a known mailing list</entry></row>
-<row><entry>~m [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>messages in the range <emphasis>MIN</emphasis> to <emphasis>MAX</emphasis> *)</entry></row>
-<row><entry>~M <emphasis>EXPR</emphasis></entry><entry>messages which contain a mime Content-Type matching <emphasis>EXPR</emphasis> ***)</entry></row>
-<row><entry>~n [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>messages with a score in the range <emphasis>MIN</emphasis> to <emphasis>MAX</emphasis> *)</entry></row>
-<row><entry>~N</entry><entry>new messages</entry></row>
-<row><entry>~O</entry><entry>old messages</entry></row>
+<row><entry>~A</entry><entry>すべてのメッセージ</entry></row>
+<row><entry>~b <emphasis>EXPR</emphasis></entry><entry>メッセージ本文に<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>=b <emphasis>STRING</emphasis></entry><entry>IMAPが有効な場合、~b と似ているが、各メッセージをダウンロードしてローカルに検索する代わりに、サーバ上で<emphasis>STRING</emphasis>を検索</entry></row>
+<row><entry>~B <emphasis>EXPR</emphasis></entry><entry>メッセージ本文のどこかに<emphasis>EXPR</emphasis>を含むメッセージ)</entry></row>
+<row><entry>=B <emphasis>STRING</emphasis></entry><entry>IMAPが有効な場合、~B と似ているが、各メッセージをダウンロードしてローカルに検索する代わりに、サーバ上で<emphasis>STRING</emphasis>を検索</entry></row>
+<row><entry>~c <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>に Cc: で送られているメッセージ</entry></row>
+<row><entry>%c <emphasis>GROUP</emphasis></entry><entry><emphasis>GROUP</emphasis>メンバの誰かに Cc: で送られているメッセージ</entry></row>
+<row><entry>~C <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis> が to: か cc: のメッセージ</entry></row>
+<row><entry>%C <emphasis>GROUP</emphasis></entry><entry><emphasis>GROUP</emphasis>の誰かに to: か cc: で送られているメッセージ</entry></row>
+<row><entry>~d [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>日付の範囲内で <quote>date-sent</quote> になっているメッセージ</entry></row>
+<row><entry>~D</entry><entry>削除されるメッセージ</entry></row>
+<row><entry>~e <emphasis>EXPR</emphasis></entry><entry><quote>Sender</quote>フィールドに<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>%e <emphasis>GROUP</emphasis></entry><entry><quote>Sender</quote>フィールドに<emphasis>GROUP</emphasis>のメンバを含むメッセージ</entry></row>
+<row><entry>~E</entry><entry>期限切れのメッセージ</entry></row>
+<row><entry>~F</entry><entry>フラグ付きのメッセージ</entry></row>
+<row><entry>~f <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>から送られたメッセージ</entry></row>
+<row><entry>%f <emphasis>GROUP</emphasis></entry><entry><emphasis>GROUP</emphasis>の誰かから送られたメッセージ</entry></row>
+<row><entry>~g</entry><entry>暗号で署名されているメッセージ</entry></row>
+<row><entry>~G</entry><entry>暗号化されているメッセージ</entry></row>
+<row><entry>~h <emphasis>EXPR</emphasis></entry><entry>メッセージヘッダに<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>=h <emphasis>STRING</emphasis></entry><entry>IMAPが有効な場合、 ~h と似ているが、各メッセージをダウンロードしてローカルに検索する代わりに、サーバ上で<emphasis>STRING</emphasis>を検索;
+<emphasis>STRING</emphasis> は<quote>header: substring</quote>の形でなければならない(以下参照)。</entry></row>
+<row><entry>~H <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>に一致するスパム属性を持つメッセージ</entry></row>
+<row><entry>~i <emphasis>EXPR</emphasis></entry><entry><quote>Message-ID</quote>フィールドが<emphasis>EXPR</emphasis>に一致するメッセージ</entry></row>
+<row><entry>~k</entry><entry>PGPの鍵を持つメッセージ</entry></row>
+<row><entry>~L <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>が出したか受け取ったか、いずれかのメッセージ</entry></row>
+<row><entry>%L <emphasis>GROUP</emphasis></entry><entry><emphasis>GROUP</emphasis>のメンバの誰かが出したか受け取ったか、いずれかのメッセージ</entry></row>
+<row><entry>~l</entry><entry>既知のメーリングリストへ宛てたメッセージ</entry></row>
+<row><entry>~m [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry><emphasis>MIN</emphasis> to <emphasis>MAX</emphasis>範囲内のメッセージ *)</entry></row>
+<row><entry>~M <emphasis>EXPR</emphasis></entry><entry>mime Content-Type が <emphasis>EXPR</emphasis>に一致するメッセージ ***)</entry></row>
+<row><entry>~n [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry><emphasis>MIN</emphasis> to <emphasis>MAX</emphasis>の範囲のスコアを持つメッセージ *)</entry></row>
+<row><entry>~N</entry><entry>新しいメッセージ</entry></row>
+<row><entry>~O</entry><entry>古いメッセージ</entry></row>
 <row>
 <entry>~p</entry>
 <entry>messages addressed to you (consults <link linkend="from">$from</link>, <command>alternates</command>, and local account/hostname information)</entry>
