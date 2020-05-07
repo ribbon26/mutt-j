@@ -5188,64 +5188,57 @@ Mutt におけるすべての文字列パターンは、より複雑な<link lin
 </table>
 
 <para>
-A character class is only valid in a regular expression inside the
-brackets of a character list.
+文字クラスは、文字リストの括弧内の正規表現でのみ有効です。
 </para>
 
 <note>
 <para>
-Note that the brackets in these class names are part of the symbolic
-names, and must be included in addition to the brackets delimiting the
-bracket list. For example, <emphasis>[[:digit:]]</emphasis> is
-equivalent to <emphasis>[0-9]</emphasis>.
+このクラス名に付いている角括弧はシンボル名の一部であり、リストを囲む角括弧に
+加えて、さらに必要になるということに注意してください。たとえば、
+<emphasis>[[:digit:]]</emphasis>は<emphasis>[0-9]</emphasis>と同じです。
 </para>
 </note>
 
 <para>
-Two additional special sequences can appear in character lists.  These
-apply to non-ASCII character sets, which can have single symbols (called
-collating elements) that are represented with more than one character,
-as well as several characters that are equivalent for collating or
-sorting purposes:
+さらに二つの特殊シーケンスが文字リスト中で使えます。それらは非ASCII文字セットに
+適用されるもので、以下のように、複数の文字で表現される単一の記号(照合要素と
+呼びます)、および照合や整列の目的で、同等のいくつかの文字を含めることができます。
 </para>
 
 <variablelist>
 
 <varlistentry>
-<term>Collating Symbols</term>
+<term>照合記号</term>
 <listitem>
 <para>
-A collating symbol is a multi-character collating element enclosed in
-<quote>[.</quote> and <quote>.]</quote>.  For example, if
-<quote>ch</quote> is a collating element, then
-<emphasis>[[.ch.]]</emphasis> is a regexp that matches this collating
-element, while <emphasis>[ch]</emphasis> is a regexp that matches either
-<quote>c</quote> or <quote>h</quote>.
+照合記号は複数文字の照合要素を <quote>[.</quote> と <quote>.]</quote>で括ったものです。
+たとえば、<quote>ch</quote> が照合要素だとすると、<emphasis>[[.ch.]]</emphasis>が
+の照合要素に一致する正規表現となります。しかし、<emphasis>[ch]</emphasis>というように
+記述すると、<quote>c</quote> 又は <quote>h</quote> のどちらかに一致する正規表現に
+なってしまいます。
 </para>
 </listitem>
 </varlistentry>
 <varlistentry>
-<term>Equivalence Classes</term>
+<term>等価クラス</term>
 <listitem>
 <para>
-An equivalence class is a locale-specific name for a list of characters
-that are equivalent. The name is enclosed in <quote>[=</quote> and
-<quote>=]</quote>.  For example, the name <quote>e</quote> might be used
-to represent all of <quote>e</quote> with grave
-(<quote>&egrave;</quote>), <quote>e</quote> with acute
-(<quote>&eacute;</quote>) and <quote>e</quote>.  In this case,
-<emphasis>[[=e=]]</emphasis> is a regexp that matches any of:
-<quote>e</quote> with grave (<quote>&egrave;</quote>), <quote>e</quote>
-with acute (<quote>&eacute;</quote>) and <quote>e</quote>.
+等価クラスは、ロケール個別にに定義した、文字リストと等価なものの名前です。
+名前は<quote>[=</quote>と<quote>=]</quote>で囲みます。たとえば、名前<quote>e</quote>は
+grave (<quote>&egrave;</quote>)付きの<quote>e</quote>,
+acute (<quote>&eacute;</quote>)付きの<quote>e</quote>と
+ただの<quote>e</quote>すべてを表すのに使えます。この場合、
+<emphasis>[[=e=]]</emphasis>は、任意の、grave 付きの<quote>e</quote>
+(<quote>&egrave;</quote>)、acute 付きの<quote>e</quote>
+(<quote>&eacute;</quote>)と<quote>e</quote>に一致する正規表現になります。
 </para>
 </listitem>
 </varlistentry>
 </variablelist>
 
 <para>
-A regular expression matching a single character may be followed by one
-of several repetition operators described in <xref
-linkend="regex-repeat"/>.
+一文字に一致する正規表現は、<xref linkend="regex-repeat"/>で説明されている、
+いくつかある繰り返し演算子のうちのいずれかを後置することができます。
 </para>
 
 <table id="regex-repeat">
