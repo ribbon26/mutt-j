@@ -5362,38 +5362,35 @@ Mutt の多くのコマンドでは、パターンマッチング機能使用で
 <row><entry>~O</entry><entry>古いメッセージ</entry></row>
 <row>
 <entry>~p</entry>
-<entry>messages addressed to you (consults <link linkend="from">$from</link>, <command>alternates</command>, and local account/hostname information)</entry>
+<entry>自分宛のメッセージ(<link linkend="from">$from</link>, <command>alternates</command>, とローカルの account/hostname 情報を参照する)</entry>
 </row>
 <row>
 <entry>~P</entry>
-<entry>messages from you (consults <link linkend="from">$from</link>, <command>alternates</command>, and local account/hostname information)</entry>
+<entry>自分が送信したメッセージ(<link linkend="from">$from</link>, <command>alternates</command>, とローカルの account/hostname 情報を参照する)</entry>
 </row>
-<row><entry>~Q</entry><entry>messages which have been replied to</entry></row>
-<row><entry>~r [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>messages with <quote>date-received</quote> in a Date range</entry></row>
-<row><entry>~R</entry><entry>read messages</entry></row>
-<row><entry>~s <emphasis>EXPR</emphasis></entry><entry>messages having <emphasis>EXPR</emphasis> in the <quote>Subject</quote> field.</entry></row>
-<row><entry>~S</entry><entry>superseded messages</entry></row>
-<row><entry>~t <emphasis>EXPR</emphasis></entry><entry>messages addressed to <emphasis>EXPR</emphasis></entry></row>
-<row><entry>~T</entry><entry>tagged messages</entry></row>
-<row><entry>~u</entry><entry>messages addressed to a subscribed mailing list</entry></row>
-<row><entry>~U</entry><entry>unread messages</entry></row>
-<row><entry>~v</entry><entry>messages part of a collapsed thread.</entry></row>
-<row><entry>~V</entry><entry>cryptographically verified messages</entry></row>
-<row><entry>~x <emphasis>EXPR</emphasis></entry><entry>messages which contain <emphasis>EXPR</emphasis> in the <quote>References</quote> or <quote>In-Reply-To</quote> field</entry></row>
-<row><entry>~X [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>messages with <emphasis>MIN</emphasis> to <emphasis>MAX</emphasis> attachments *) ***)</entry></row>
-<row><entry>~y <emphasis>EXPR</emphasis></entry><entry>messages which contain <emphasis>EXPR</emphasis> in the <quote>X-Label</quote> field</entry></row>
-<row><entry>~z [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>messages with a size in the range <emphasis>MIN</emphasis> to <emphasis>MAX</emphasis> *) **)</entry></row>
-<row><entry>~=</entry><entry>duplicated messages (see <link linkend="duplicate-threads">$duplicate_threads</link>)</entry></row>
-<row><entry>~$</entry><entry>unreferenced messages (requires threaded view)</entry></row>
-<row><entry>~(<emphasis>PATTERN</emphasis>)</entry><entry>messages in threads
-containing messages matching <emphasis>PATTERN</emphasis>, e.g. all
-threads containing messages from you: ~(~P)</entry></row>
-<row><entry>~&lt;(<emphasis>PATTERN</emphasis>)</entry><entry>messages
-whose immediate parent matches <emphasis>PATTERN</emphasis>,
-e.g. replies to your messages: ~&lt;(~P)</entry></row>
-<row><entry>~&gt;(<emphasis>PATTERN</emphasis>)</entry><entry>messages
-having an immediate child matching <emphasis>PATTERN</emphasis>,
-e.g. messages you replied to: ~&gt;(~P)</entry></row>
+<row><entry>~Q</entry><entry>返信済みのメッセージ</entry></row>
+<row><entry>~r [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry><quote>受信日付</quote>が日付の範囲内にあるメッセージ</entry></row>
+<row><entry>~R</entry><entry>既読メッセージ</entry></row>
+<row><entry>~s <emphasis>EXPR</emphasis></entry><entry><quote>Subject</quote>フィールド内に<emphasis>EXPR</emphasis>があるメッセージ</entry></row>
+<row><entry>~S</entry><entry>置き換えられたメッセージ</entry></row>
+<row><entry>~t <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>に宛てたメッセージ</entry></row>
+<row><entry>~T</entry><entry>タグ付きのメッセージ</entry></row>
+<row><entry>~u</entry><entry>購読しているメーリングリスト宛てのメッセージ</entry></row>
+<row><entry>~U</entry><entry>未読のメッセージ</entry></row>
+<row><entry>~v</entry><entry>折りたたんだスレッドにあるメッセージ</entry></row>
+<row><entry>~V</entry><entry>暗号検証済みメッセージ</entry></row>
+<row><entry>~x <emphasis>EXPR</emphasis></entry><entry><quote>References</quote> 又は <quote>In-Reply-To</quote>フィールド中に<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>~X [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry><emphasis>MIN</emphasis> から <emphasis>MAX</emphasis> の添付があるメッセージ *) ***)</entry></row>
+<row><entry>~y <emphasis>EXPR</emphasis></entry><entry><quote>X-Label</quote>中に<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>~z [<emphasis>MIN</emphasis>]-[<emphasis>MAX</emphasis>]</entry><entry>サイズが<emphasis>MIN</emphasis> から <emphasis>MAX</emphasis>の範囲内のメッセージ *) **)</entry></row>
+<row><entry>~=</entry><entry>重複しているメッセージ(<link linkend="duplicate-threads">$duplicate_threads</link>)を参照</entry></row>
+<row><entry>~$</entry><entry>参照されていないメッセージ(スレッド表示が必要)</entry></row>
+<row><entry>~(<emphasis>PATTERN</emphasis>)</entry><entry><emphasis>PATTERN</emphasis>に一致するメッセージを含むスレッド中のメッセージ
+、例えば、~(~P) は、自分からのメッセージを含むすべてのスレッド</entry></row>
+<row><entry>~&lt;(<emphasis>PATTERN</emphasis>)</entry><entry>直近の親が<emphasis>PATTERN</emphasis>に一致するメッセージ、
+たとえば、~&lt;(~P) は、自分のメッセージに対する返信</entry></row>
+<row><entry>~&gt;(<emphasis>PATTERN</emphasis>)</entry><entry>直近の子が<emphasis>PATTERN</emphasis>に一致するメッセージ、
+たとえば、~&gt;(~P) は、自分が返信したメッセージ</entry></row>
 </tbody>
 </tgroup>
 </table>
