@@ -5328,9 +5328,9 @@ Mutt の多くのコマンドでは、パターンマッチング機能使用で
 </thead>
 <tbody>
 <row><entry>~A</entry><entry>すべてのメッセージ</entry></row>
-<row><entry>~b <emphasis>EXPR</emphasis></entry><entry>メッセージ本文に<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>~b <emphasis>EXPR</emphasis></entry><entry>メッセージ本文に<emphasis>EXPR</emphasis>を含むメッセージ ***)</entry></row>
 <row><entry>=b <emphasis>STRING</emphasis></entry><entry>IMAPが有効な場合、~b と似ているが、各メッセージをダウンロードしてローカルに検索する代わりに、サーバ上で<emphasis>STRING</emphasis>を検索</entry></row>
-<row><entry>~B <emphasis>EXPR</emphasis></entry><entry>メッセージ本文のどこかに<emphasis>EXPR</emphasis>を含むメッセージ)</entry></row>
+<row><entry>~B <emphasis>EXPR</emphasis></entry><entry>メッセージ本文のどこかに<emphasis>EXPR</emphasis>を含むメッセージ ***)</entry></row>
 <row><entry>=B <emphasis>STRING</emphasis></entry><entry>IMAPが有効な場合、~B と似ているが、各メッセージをダウンロードしてローカルに検索する代わりに、サーバ上で<emphasis>STRING</emphasis>を検索</entry></row>
 <row><entry>~c <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>に Cc: で送られているメッセージ</entry></row>
 <row><entry>%c <emphasis>GROUP</emphasis></entry><entry><emphasis>GROUP</emphasis>メンバの誰かに Cc: で送られているメッセージ</entry></row>
@@ -5346,7 +5346,7 @@ Mutt の多くのコマンドでは、パターンマッチング機能使用で
 <row><entry>%f <emphasis>GROUP</emphasis></entry><entry><emphasis>GROUP</emphasis>の誰かから送られたメッセージ</entry></row>
 <row><entry>~g</entry><entry>暗号で署名されているメッセージ</entry></row>
 <row><entry>~G</entry><entry>暗号化されているメッセージ</entry></row>
-<row><entry>~h <emphasis>EXPR</emphasis></entry><entry>メッセージヘッダに<emphasis>EXPR</emphasis>を含むメッセージ</entry></row>
+<row><entry>~h <emphasis>EXPR</emphasis></entry><entry>メッセージヘッダに<emphasis>EXPR</emphasis>を含むメッセージ ***)</entry></row>
 <row><entry>=h <emphasis>STRING</emphasis></entry><entry>IMAPが有効な場合、 ~h と似ているが、各メッセージをダウンロードしてローカルに検索する代わりに、サーバ上で<emphasis>STRING</emphasis>を検索;
 <emphasis>STRING</emphasis> は<quote>header: substring</quote>の形でなければならない(以下参照)。</entry></row>
 <row><entry>~H <emphasis>EXPR</emphasis></entry><entry><emphasis>EXPR</emphasis>に一致するスパム属性を持つメッセージ</entry></row>
@@ -5396,46 +5396,42 @@ Mutt の多くのコマンドでは、パターンマッチング機能使用で
 </table>
 
 <para>
-Where <emphasis>EXPR</emphasis> is a <link linkend="regexp">regular expression</link>, and <emphasis>GROUP</emphasis> is an
-<link linkend="addrgroup">address group</link>.
+ここで、<emphasis>EXPR</emphasis> は <link linkend="regexp">正規表現</link>で、
+<emphasis>GROUP</emphasis>は<link linkend="addrgroup">アドレスグループ</link>です。
 </para>
 
 <para>
-*) The forms <quote>&lt;[<emphasis>MAX</emphasis>]</quote>,
+*) <quote>&lt;[<emphasis>MAX</emphasis>]</quote>,
 <quote>&gt;[<emphasis>MIN</emphasis>]</quote>,
-<quote>[<emphasis>MIN</emphasis>]-</quote> and
-<quote>-[<emphasis>MAX</emphasis>]</quote> are allowed, too.
+<quote>[<emphasis>MIN</emphasis>]-</quote> と
+<quote>-[<emphasis>MAX</emphasis>]</quote> という形式も使えます。
 </para>
 
 <para>
-**) The suffixes <quote>K</quote> and <quote>M</quote> are allowed to
-specify kilobyte and megabyte respectively.
+**) キロバイトとメガバイトを表すための
+接尾辞 <quote>K</quote> と <quote>M</quote>も使えます。
 </para>
 
 <para>
-***) These patterns read each message in, and can therefore be much
-slower.  Over IMAP this will entail downloading each message.  They
-can not be used for <link linkend="score-command">message
-scoring</link>, and it is recommended to avoid using them for index
-coloring.
+***) これらのパターンは、各メッセージを読み込んでいるため、より遅くなることがあります。
+IMAP を使う場合は、各メッセージをダウンロードする必要があります。
+これらは<link linkend="score-command">message scoring</link>には使えず、
+インデックスの色づけには使わないことを推奨します。
 </para>
 
 <para>
-Special attention has to be paid when using regular expressions inside
-of patterns.  Specifically, Mutt's parser for these patterns will strip
-one level of backslash (<quote>\</quote>), which is normally used for
-quoting.  If it is your intention to use a backslash in the regular
-expression, you will need to use two backslashes instead
-(<quote>\\</quote>).
+パターン中で正規表現を使う場合は、特別な注意が必要です。具体的には、これらの
+パターンを Mutt が処理する場合、通常引用に使われるバックスラッシュ
+(<quote>\</quote>)を1段階だけ取り除きます。正規表現でバックスラッシュを使う場合は、
+代わりに二つのバックスラッシュ(<quote>\\</quote>)を使う必要があります。
 </para>
 
 <para>
-You can force Mutt to treat
-<emphasis>EXPR</emphasis> as a simple string instead of a regular
-expression by using = instead of ~ in the pattern name. For example,
-<literal>=b *.*</literal> will find all messages that contain the
-literal string <quote>*.*</quote>. Simple string matches are less
-powerful than regular expressions but can be considerably faster.
+パターン名中で、 ~ の代わりに = を使う事で、Mutt  に、<emphasis>EXPR</emphasis> を、
+正規表現の代わりに単純な文字列として扱わせることができます。たとえば、
+<literal>=b *.*</literal> は リテラル文字 <quote>*.*</quote> を含むすべての
+メッセージを見つけます。単純な文字列の一致は、正規表現よりも強力ではありませんが、
+より高速になる可能性があります。
 </para>
 
 <para>
