@@ -5549,11 +5549,10 @@ but don't want to match flagged messages, simply search for
 </sect2>
 
 <sect2 id="complex-patterns">
-<title>Nesting and Boolean Operators</title>
+<title>ネスティングおよび論理演算子</title>
 
 <para>
-Logical AND is performed by specifying more than one criterion.  For
-example:
+論理積は一つ以上の基準を指定することで実行されます。例えば
 </para>
 
 <screen>
@@ -5561,58 +5560,56 @@ example:
 </screen>
 
 <para>
-would select messages which contain the word <quote>mutt</quote> in the
-list of recipients <emphasis>and</emphasis> that have the word
-<quote>elkins</quote> in the <quote>From</quote> header field.
+は、受信リスト中に<quote>mutt</quote>という単語を含むもの<emphasis>と</emphasis>
+ヘッダフィールド中に<quote>From</quote>がある、<quote>elkins</quote>
+という単語を含むメッセージを選択します。
 </para>
 
 <para>
-Mutt also recognizes the following operators to create more complex
-search patterns:
+Mutt は、より複雑なパターンを作成するために、以下の演算子も認識します:
 </para>
 
 <itemizedlist>
 <listitem>
 
 <para>
-! &mdash; logical NOT operator
+! &mdash; 論理否定演算子
 </para>
 </listitem>
 <listitem>
 
 <para>
-| &mdash; logical OR operator
+| &mdash; 論理和演算子
 </para>
 </listitem>
 <listitem>
 
 <para>
-() &mdash; logical grouping operator
+() &mdash; 論理グルーピング演算子
 </para>
 </listitem>
 
 </itemizedlist>
 
 <para>
-Here is an example illustrating a complex search pattern.  This pattern
-will select all messages which do not contain <quote>mutt</quote> in the
-<quote>To</quote> or <quote>Cc</quote> field and which are from
-<quote>elkins</quote>.
+以下は、複雑な検索パターンの図示例です。このパターンは、
+<quote>To</quote> 又は <quote>Cc</quote>フィールドに<quote>mutt</quote>を含まず、
+かつ、<quote>elkins</quote>から来たすべてのメッセージを選択します。
 </para>
 
 <example id="ex-pattern-bool">
-<title>Using boolean operators in patterns</title>
+<title>パターン中での論理演算子の使用</title>
 <screen>
 !(~t mutt|~c mutt) ~f elkins
 </screen>
 </example>
 
 <para>
-Here is an example using white space in the regular expression (note the
-<quote>'</quote> and <quote>"</quote> delimiters).  For this to match,
-the mail's subject must match the <quote>^Junk +From +Me$</quote> and it
-must be from either <quote>Jim +Somebody</quote> or <quote>Ed
-+SomeoneElse</quote>:
+以下は、正規表現中で空白を使う例です(<quote>'</quote> と <quote>"</quote>
+はデリミタであることに注意してください)。これに合わせて、メールの題名は
+<quote>^Junk +From +Me$</quote>に一致せねばならず、かつ、
+<quote>Jim +Somebody</quote> か<quote>Ed +SomeoneElse</quote>のどちらかから
+来たものでなければなりません。
 </para>
 
 <screen>
@@ -5621,34 +5618,33 @@ must be from either <quote>Jim +Somebody</quote> or <quote>Ed
 
 <note>
 <para>
-If a regular expression contains parenthesis, or a vertical bar ("|"),
-you <emphasis>must</emphasis> enclose the expression in double or single
-quotes since those characters are also used to separate different parts
-of Mutt's pattern language.  For example: <literal>~f
-"me@(mutt\.org|cs\.hmc\.edu)"</literal> Without the quotes, the
-parenthesis wouldn't end.  This would be separated to two OR'd patterns:
-<emphasis>~f me@(mutt\.org</emphasis> and
-<emphasis>cs\.hmc\.edu)</emphasis>. They are never what you want.
+正規表現が括弧か、縦線("|")を含む場合、Mutt のパターン言語の異なった部分を
+分離するためにも使う文字なので、単一か二重の引用符で式をくくる
+<emphasis>必要があります</emphasis>。たとえば、引用符でくくっていない
+<literal>~f "me@(mutt\.org|cs\.hmc\.edu)"</literal>は、括弧の組み合わせが
+完結していません。これは、
+<emphasis>~f me@(mutt\.org</emphasis> と <emphasis>cs\.hmc\.edu)</emphasis>
+のように、2つの OR パターンに分割されてしまいます。これらは期待通りにはなりません。
 </para>
 </note>
 
 </sect2>
 
 <sect2 id="date-patterns">
-<title>Searching by Date</title>
+<title>日付による検索</title>
 
 <para>
-Mutt supports two types of dates, <emphasis>absolute</emphasis> and
-<emphasis>relative</emphasis>.
+Mutt は二種類の日付、すなわち<emphasis>絶対</emphasis>日付と
+<emphasis>相対</emphasis>日付に対応しています。
 </para>
 
 <sect3 id="date-absolute">
-<title>Absolute Dates</title>
+<title>絶対日付</title>
 
 <para>
-Dates <emphasis>must</emphasis> be in DD/MM/YY format (month and year
-are optional, defaulting to the current month and year).  An example of
-a valid range of dates is:
+日付は必ず DD/MM/YY という形式で指定<emphasis>しなければなりません</emphasis>
+(ただし、月と年は現在の月と年が既定になっているので省略できます)。
+正しい日付範囲の例は以下のようになります。
 </para>
 
 <screen>
@@ -5656,41 +5652,39 @@ Limit to messages matching: ~d 20/1/95-31/10
 </screen>
 
 <para>
-If you omit the minimum (first) date, and just specify
-<quote>-DD/MM/YY</quote>, all messages <emphasis>before</emphasis> the
-given date will be selected.  If you omit the maximum (second) date, and
-specify <quote>DD/MM/YY-</quote>, all messages
-<emphasis>after</emphasis> the given date will be selected.  If you
-specify a single date with no dash (<quote>-</quote>), only messages
-sent on the given date will be selected.
+最小値 (一番目) の日付を省略して<quote>-DD/MM/YY</quote>だけ指定すると、
+<emphasis>それ以前の</emphasis>すべてのメッセージが選択されます。 最大値
+(二番目) の日付を省略して<quote>DD/MM/YY-</quote>を指定すると、
+その日<emphasis>以降の</emphasis>すべてのメッセージが選択されます。
+ダッシュ(<quote>-</quote>)なしで一つだけ日付を指定すると、
+その日付に送信されたメッセージだけが選択されます。
 </para>
 
 <para>
-You can add error margins to absolute dates.  An error margin is a sign
-(+ or -), followed by a digit, followed by one of the units in <xref
-linkend="tab-date-units"/>. As a special case, you can replace the sign
-by a <quote>*</quote> character, which is equivalent to giving identical
-plus and minus error margins.
+絶対日付には、誤差範囲を追加できます。誤差範囲とは、
+符号 (+ or -)の後に数字と、<xref linkend="tab-date-units"/>にある単位を付加した
+ものです。特例として、符号を、同じプラスとマイナスの誤差範囲を付加することと
+同じ事になる<quote>*</quote>に置き換えることができます。
 </para>
 
 <table id="tab-date-units">
-<title>Date units</title>
+<title>日付の単位</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Unit</entry><entry>Description</entry></row>
+<row><entry>単位</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>y</entry><entry>Years</entry></row>
-<row><entry>m</entry><entry>Months</entry></row>
-<row><entry>w</entry><entry>Weeks</entry></row>
-<row><entry>d</entry><entry>Days</entry></row>
+<row><entry>y</entry><entry>年</entry></row>
+<row><entry>m</entry><entry>月</entry></row>
+<row><entry>w</entry><entry>週</entry></row>
+<row><entry>d</entry><entry>日</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-Example: To select any messages two weeks around January 15, 2001, you'd
-use the following pattern:
+例: 2001 年 1 月 15 日の前後二週間ずつのメッセージを選択するには
+以下のパターンを使用します。
 </para>
 
 <screen>
