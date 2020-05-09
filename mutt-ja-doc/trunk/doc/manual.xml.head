@@ -5435,50 +5435,48 @@ IMAP を使う場合は、各メッセージをダウンロードする必要が
 </para>
 
 <para>
-For IMAP folders, string matches <literal>=b</literal>,
-<literal>=B</literal>, and <literal>=h</literal> will be performed on
-the server instead of by fetching every message. IMAP treats
-<literal>=h</literal> specially: it must be of the form <quote>header:
-substring</quote> and will not partially match header names. The
-substring part may be omitted if you simply wish to find messages
-containing a particular header without regard to its value.
+IMAP フォルダでは、文字列の一致 <literal>=b</literal>,<literal>=B</literal>と
+<literal>=h</literal> は、すべてのメッセージをフェッチするのではなく、
+サーバ上で実行されます。IMAP は <literal>=h</literal> を特別扱いします。
+これは、<quote>header: substring</quote>の形である必要があり、ヘッダ名と部分的に
+一致はしません。substring 部分は、単に特定のヘッダを含むメッセージを、値に
+関係なく検索する場合には、省略することができます。
 </para>
 
 <para>
-Patterns matching lists of addresses (notably c, C, p, P and t) match if
-there is at least one match in the whole list. If you want to make sure
-that all elements of that list match, you need to prefix your pattern
-with <quote>^</quote>.  This example matches all mails which only has
-recipients from Germany.
+アドレスリストに一致するパターン(特に c, C, p, P と t)は、リスト全体の中で、
+少なくとも1つ一致するのであれば、一致します。そのリストのすべての要素が一致している
+事を確認したい場合は、パターンの前に、<quote>^</quote>を付ける必要があります。
+以下の例では、受信者がドイツからのもののみを持つメールすべてに一致します。
 </para>
 
 <example id="ex-recips">
-<title>Matching all addresses in address lists</title>
+<title>アドレスリスト中のすべてのアドレス一致の例</title>
 <screen>
 ^~C \.de$
 </screen>
 </example>
 
 <para>
-You can restrict address pattern matching to aliases that you have
-defined with the "@" modifier.  This example matches messages whose
-recipients are all from Germany, and who are known to your alias list.
+"@" モディファイアを使って定義した別名へのアドレスパターンマッチングを制限する
+ことができます。以下の例では、受信者がすべてドイツからで、別名リストに
+あるメッセージに一致する例です。
 </para>
 
 <example id="ex-restrict-to-aliases">
-<title>Matching restricted to aliases</title>
+<title>別名に限定されたマッチング</title>
 <screen>
 ^@~C \.de$
 </screen>
 </example>
 
 <para>
-To match any defined alias, use a regular expression that matches any
-string.  This example matches messages whose senders are known aliases.
+定義済みの任意の別名に一致するためには、任意の文字列に一致する正規表現を使います。
+以下の例では、メッセージの送信者が別名として定義済みのものに一致する例です。
 </para>
 
 <example id="ex-match-alias">
-<title>Matching any defined alias</title>
+<title>任意の定義済み別名に一致</title>
 <screen>
 @~f .
 </screen>
@@ -5487,16 +5485,15 @@ string.  This example matches messages whose senders are known aliases.
 </sect2>
 
 <sect2 id="simple-searches">
-<title>Simple Searches</title>
+<title>簡単な検索</title>
 
 <para>
-Mutt supports two versions of so called <quote>simple
-searches</quote>. These are issued if the query entered for searching,
-limiting and similar operations does not seem to contain a valid pattern
-modifier (i.e. it does not contain one of these characters:
-<quote>~</quote>, <quote>=</quote> or <quote>%</quote>). If the query is
-supposed to contain one of these special characters, they must be
-escaped by prepending a backslash (<quote>\</quote>).
+Mutt は<quote>simple searches</quote>と呼ばれるものの二つのバージョンをサポートします。
+これらは検索、制限および同等の操作ののために入力された問合せが、有効な
+パターンモディファイアを含んでいないように見えた場合に発行されます
+(すなわち、<quote>~</quote>, <quote>=</quote> 又は <quote>%</quote>のどれも含んでいない)。
+問い合わせに前述の特別文字を含んでいる場合、バックスラッシュ(<quote>\</quote>)を
+前置してエスケープしなければなりません。
 </para>
 
 <para>
@@ -5509,13 +5506,22 @@ example, if you want to find all messages matching <quote>flag</quote>
 (using <link linkend="simple-search">$simple_search</link>)
 but don't want to match flagged messages, simply search for
 <quote><literal>[f]lag</literal></quote>.
+最初のタイプは、<xref linkend="tab-simplesearch-keywords"/>から、
+問い合わせ文字列が、キーワードの大文字小文字を区別しないで等しいかどうかを
+チェックするものです。もしそうならば、Mutt は示されたパターン修飾子を代わりに使います。
+検索キーワードと競合するキーワードがある場合は、キーワードテーブルに一致するのを
+防ぐために、正規表現にそれを変換する必要があります。
+例えば、<quote>flag</quote>に一致するすべてのメッセージを検出したいが
+(<link linkend="simple-search">$simple_search</link>を使って)、
+フラグ付きのメッセージには一致したくない場合、<quote><literal>[f]lag</literal></quote>で
+単純に検索します。
 </para>
 
 <table id="tab-simplesearch-keywords">
-<title>Simple search keywords</title>
+<title>単純なキーワード検索</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Keyword</entry><entry>Pattern modifier</entry></row>
+<row><entry>キーワード</entry><entry>パターンモディファイア</entry></row>
 </thead>
 <tbody>
 <row><entry>all</entry><entry>~A</entry></row>
@@ -5534,10 +5540,10 @@ but don't want to match flagged messages, simply search for
 </table>
 
 <para>
-The second type of simple search is to build a complex search pattern
-using <link linkend="simple-search">$simple_search</link> as a
-template. Mutt will insert your query properly quoted and search for the
-composed complex query.
+単純検索の2番目のタイプは、テンプレートとして、
+<link linkend="simple-search">$simple_search</link>を使う複雑な検索パターンを
+構築するというものです。Mutt は適切に問合せを引用符でくくって挿入し、複雑に
+構成された問合せを検索します。
 </para>
 
 </sect2>
