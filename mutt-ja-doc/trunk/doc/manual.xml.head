@@ -5825,17 +5825,16 @@ Mutt のパターンマッチングについては
 </sect1>
 
 <sect1 id="hooks">
-<title>Using Hooks</title>
+<title>フックの使用</title>
 
 <para>
-A <emphasis>hook</emphasis> is a concept found in many other programs
-which allows you to execute arbitrary commands before performing some
-operation.  For example, you may wish to tailor your configuration based
-upon which mailbox you are reading, or to whom you are sending mail.  In
-the Mutt world, a <emphasis>hook</emphasis> consists of a <link
-linkend="regexp">regular expression</link> or <link
-linkend="patterns">pattern</link> along with a configuration
-option/command.  See:
+<emphasis>hook</emphasis>とは、 他の、種々のプログラムにあるような、ある操作の
+実行前に任意のコマンドを実行できるようにするものです。 例えば、読もうとしている
+メールボックスや送ろうとしているメールのあて先に基づいて設定を調整したい場合が
+あるとします。Mutt では、<emphasis>hook</emphasis>は設定オプションやコマンドに
+合った<link linkend="regexp">regular expression</link> 又は
+<link linkend="patterns">pattern</link> です。各タイプの<emphasis>hook</emphasis>
+についての詳細は以下を参照してください。
 
 <itemizedlist>
 
@@ -5925,22 +5924,21 @@ option/command.  See:
 
 </itemizedlist>
 
-for specific details on each type of <emphasis>hook</emphasis> available.
-Also see <link linkend="compose-flow">Message Composition Flow</link> for
-an overview of the composition process.
+編集プロセスにおける概要については
+<link linkend="compose-flow">Message Composition Flow</link>
+も参照してください。
 </para>
 
 <note>
 <para>
-If a hook changes configuration settings, these changes remain effective
-until the end of the current Mutt session. As this is generally not
-desired, a <quote>default</quote> hook needs to be added before all
-other hooks of that type to restore configuration defaults.
+フックが設定を変更した場合、変更の効果は その mutt セッションの終わりまで続きます。
+これは一般的に望み通りの動作ではありませんので、<quote>既定の</quote>フックを他の
+フックの前に追加して設定の既定値に復帰する必要があります。
 </para>
 </note>
 
 <example id="ex-default-hook">
-<title>Specifying a <quote>default</quote> hook</title>
+<title><quote>既定の</quote> hook の指定</title>
 <screen>
 send-hook . 'unmy_hdr From:'
 send-hook ~C'^b@b\.b$' my_hdr from: c@c.c
@@ -5948,15 +5946,14 @@ send-hook ~C'^b@b\.b$' my_hdr from: c@c.c
 </example>
 
 <para>
-In <xref linkend="ex-default-hook"/>, by default the value of <link
-linkend="from">$from</link> and <link
-linkend="realname">$realname</link> is not overridden. When sending
-messages either To: or Cc: to <literal>&lt;b@b.b&gt;</literal>, the
-From: header is changed to <literal>&lt;c@c.c&gt;</literal>.
+<xref linkend="ex-default-hook"/>においては、既定では、
+<link linkend="from">$from</link> と <link linkend="realname">$realname</link>
+は上書きされません。メッセージをTo: または Cc: で <literal>&lt;b@b.b&gt;</literal>
+に送る場合、From: ヘッダは<literal>&lt;c@c.c&gt;</literal>に書き換えられます。
 </para>
 
 <sect2 id="pattern-hook" xreflabel="Message Matching in Hooks">
-<title>Message Matching in Hooks</title>
+<title>フックにおけるメッセージ一致条件</title>
 
 <para>
 Hooks that act upon messages (<command>message-hook</command>,
