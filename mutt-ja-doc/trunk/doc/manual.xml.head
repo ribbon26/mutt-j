@@ -5694,63 +5694,58 @@ Limit to messages matching: ~d 15/1/2001*2w
 </sect3>
 
 <sect3 id="dates-relative">
-<title>Relative Dates</title>
+<title>相対日付</title>
 
 <para>
-This type of date is relative to the current date, and may be specified
-as:
+このタイプの日付は、現在の日付からの相対的な日付で、以下のように指定します。
 </para>
-
 <itemizedlist>
 <listitem>
 
 <para>
-&gt;<emphasis>offset</emphasis> for messages older than
-<emphasis>offset</emphasis> units
+&gt;<emphasis>offset</emphasis>  は<emphasis>offset</emphasis>よりも古いメッセージ
 </para>
 </listitem>
 <listitem>
 
 <para>
-&lt;<emphasis>offset</emphasis> for messages newer than
-<emphasis>offset</emphasis> units
+&lt;<emphasis>offset</emphasis>  は、<emphasis>offset</emphasis>よりも新しいメッセージ
 </para>
 </listitem>
 <listitem>
 
 <para>
-=<emphasis>offset</emphasis> for messages exactly
-<emphasis>offset</emphasis> units old
+=<emphasis>offset</emphasis> は、ちょうど<emphasis>offset</emphasis>だけ経過したメッセージ
 </para>
 </listitem>
 
 </itemizedlist>
 
 <para>
-<emphasis>offset</emphasis> is specified as a positive number with one
-of the units from <xref linkend="tab-rel-date-units"/>.
+<emphasis>offset</emphasis>は、<xref linkend="tab-rel-date-units"/>にある単位のどれかを
+付けた正の値で指定されます。
 </para>
 
 <table id="tab-rel-date-units">
-<title>Relative date units</title>
+<title>相対日付の単位</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Unit</entry><entry>Description</entry></row>
+<row><entry>単位</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>y</entry><entry>Years</entry></row>
-<row><entry>m</entry><entry>Months</entry></row>
-<row><entry>w</entry><entry>Weeks</entry></row>
-<row><entry>d</entry><entry>Days</entry></row>
-<row><entry>H</entry><entry>Hours</entry></row>
-<row><entry>M</entry><entry>Minutes</entry></row>
-<row><entry>S</entry><entry>Seconds</entry></row>
+<row><entry>y</entry><entry>年</entry></row>
+<row><entry>m</entry><entry>月</entry></row>
+<row><entry>w</entry><entry>週</entry></row>
+<row><entry>d</entry><entry>日</entry></row>
+<row><entry>H</entry><entry>時</entry></row>
+<row><entry>M</entry><entry>分</entry></row>
+<row><entry>S</entry><entry>秒</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-Example: to select messages less than 1 month old, you would use
+例: 1ヶ月より古いメッセージを選択するには以下のようにします
 </para>
 
 <screen>
@@ -5759,11 +5754,10 @@ Limit to messages matching: ~d &lt;1m
 
 <note>
 <para>
-All dates used when searching are relative to the
-<emphasis>local</emphasis> time zone, so unless you change the setting
-of your <link linkend="index-format">$index_format</link> to include a
-<literal>%[...]</literal> format, these are <emphasis>not</emphasis> the
-dates shown in the main index.
+検索時に使うすべての日付は<emphasis>ローカル</emphasis>のタイムゾーンに対する
+相対なので、<link linkend="index-format">$index_format</link>の設定に
+<literal>%[...]</literal>フォーマットを含むように変更しないと、
+メインインデックス中に表示される日付とは<emphasis>異なります</emphasis>。
 </para>
 </note>
 
@@ -5774,60 +5768,58 @@ dates shown in the main index.
 </sect1>
 
 <sect1 id="markmsg">
-<title>Marking Messages</title>
+<title>メッセージへのマーク付け</title>
 
 <para>
-There are times that it's useful to ask Mutt to "remember" which message
-you're currently looking at, while you move elsewhere in your mailbox.
-You can do this with the <quote>mark-message</quote> operator, which
-is bound to the <quote>~</quote> key by default.  Press this key to
-enter an identifier for the marked message. When you want to return to
-this message, press <quote>'</quote> and the name that you previously
-entered.
+メールボックス中で他の場所に移動する時に、現在見ているメッセージを Mutt が
+「覚えている」ようにさせると便利な場合があります。これには、既定で<quote>~</quote>に
+バインドされている、<quote>mark-message</quote>機能を使うことができます。
+このキーを押すと、マークされたメッセージに識別子を入力します。このメッセージに
+戻りたい場合、<quote>'</quote>を押し、以前に入力した名前を入力します。
 </para>
 
 <para>
-(Message marking is really just a shortcut for defining a macro
-that returns you to the current message by searching for its
-Message-ID.  You can choose a different prefix by setting the <link
-linkend="mark-macro-prefix">$mark_macro_prefix</link> variable.)
+(メッセージのマーキングは、Message-IDを検索して現在のメッセージに戻るマクロを
+定義するためのショートカットそのものです。
+<link linkend="mark-macro-prefix">$mark_macro_prefix</link> 変数を定義することにより、
+別の接頭辞を選ぶことができます。)
 </para>
 </sect1>
 
 <sect1 id="tags">
-<title>Using Tags</title>
+<title>タグの使用</title>
 
 <para>
-Sometimes it is desirable to perform an operation on a group of messages
-all at once rather than one at a time.  An example might be to save
-messages to a mailing list to a separate folder, or to delete all
-messages with a given subject.  To tag all messages matching a pattern,
-use the <literal>&lt;tag-pattern&gt;</literal> function, which is bound
-to <quote>shift-T</quote> by default.  Or you can select individual
-messages by hand using the <literal>&lt;tag-message&gt;</literal>
-function, which is bound to <quote>t</quote> by default.  See <link
-linkend="patterns">patterns</link> for Mutt's pattern matching syntax.
+操作を実行するときに、一通ずつ扱うよりも、ひとまとめにしたメッセージを一度に
+扱った方が良いことがあります。例えば、あるメーリングリスト宛てのメッセージを
+別のフォルダにセーブするとか、指定した題名のメッセージをすべて削除すると
+いったものがあるでしょう。パターンに一致したメッセージすべてにタグを付けるには、
+既定で<quote>shift-T</quote>に割り当てられている
+<literal>&lt;tag-pattern&gt;</literal>機能を使います。あるいは、既定で
+<quote>t</quote>に割り当てられている<literal>&lt;tag-message&gt;</literal>
+機能を手動で使う事で、個別のメッセージを選択できます。
+Mutt のパターンマッチングについては
+<link linkend="patterns">patterns</link> を参照してください。
 </para>
 
 <para>
-Once you have tagged the desired messages, you can use the
-<quote>tag-prefix</quote> operator, which is the <quote>;</quote>
-(semicolon) key by default.  When the <quote>tag-prefix</quote> operator
-is used, the <emphasis>next</emphasis> operation will be applied to all
-tagged messages if that operation can be used in that manner.  If the
-<link linkend="auto-tag">$auto_tag</link> variable is set, the next
-operation applies to the tagged messages automatically, without
-requiring the <quote>tag-prefix</quote>.
+お望みのメッセージにタグをつけたら、既定で<quote>;</quote>(セミコロン)に
+割り当てられている、<quote>tag-prefix</quote>機能を使うことができます。
+<quote>tag-prefix</quote>機能を使う場合、<emphasis>次の</emphasis>操作は、
+そのような使い方の できる操作であれば、タグの付いたメッセージすべてに適用されます。
+もし、<link linkend="auto-tag">$auto_tag</link>変数が設定されている場合は、
+次の操作は<quote>tag-prefix</quote>なしに、タグ付きメッセージに自動的に適用
+されます。
 </para>
 
 <para>
-In <link linkend="macro"><command>macro</command>s</link> or <link
-linkend="push"><command>push</command></link> commands, you can use the
-<literal>&lt;tag-prefix-cond&gt;</literal> operator.  If there are no
-tagged messages, Mutt will <quote>eat</quote> the rest of the macro to
-abort it's execution.  Mutt will stop <quote>eating</quote> the macro
-when it encounters the <literal>&lt;end-cond&gt;</literal> operator;
-after this operator the rest of the macro will be executed as normal.
+<link linkend="macro"><command>macro</command></link>か
+<link linkend="push"><command>push</command></link> コマンド中では、
+<literal>&lt;tag-prefix-cond&gt;</literal>機能が使えます。
+タグ付きメッセージがない場合、Mutt は残りのマクロを<quote>食べて</quote>、
+実行しないようにします。マクロに<literal>&lt;end-cond&gt;</literal>演算子が
+出てきた所で、マクロを<quote>喰うのを</quote>やめます。そして、この演算子の
+あとのマクロを通常通り実行します。
 </para>
 
 </sect1>
