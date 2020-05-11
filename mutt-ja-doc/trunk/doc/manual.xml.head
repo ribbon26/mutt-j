@@ -6160,74 +6160,70 @@ mboxに発生する同じ問題があります(メッセージ本文に4つのCt
 </para>
 
 <para>
-<emphasis>MH</emphasis>. A radical departure from
-<emphasis>mbox</emphasis> and <emphasis>MMDF</emphasis>, a mailbox
-consists of a directory and each message is stored in a separate file.
-The filename indicates the message number (however, this is may not
-correspond to the message number Mutt displays). Deleted messages are
-renamed with a comma (<quote>,</quote>) prepended to the filename. Mutt
-detects this type of mailbox by looking for either
-<literal>.mh_sequences</literal> or <literal>.xmhcache</literal> files
-(needed to distinguish normal directories from MH mailboxes). MH is more
-robust with concurrent clients writing the mailbox, but still may suffer
-from lost flags; message corruption is less likely to occur than with
-mbox/mmdf. It's usually slower to open compared to mbox/mmdf since many
-small files have to be read (Mutt provides <xref
-linkend="header-caching"/> to greatly speed this process up).  Depending
-on the environment, MH is not very disk-space efficient.
+<emphasis>MH</emphasis>。<emphasis>mbox</emphasis> と <emphasis>MMDF</emphasis>
+新的な変形であり、 メールボックスはディレクトリで構成され、各メッセージが別々の
+ファイルに格納されています。ファイル名はメッセージ番号を示します(しかし、この
+番号は Mutt が表示するメッセージ番号とは関係ありません)。削除されたメッセージは
+ファイル名が変更されて、 先頭にカンマ(<quote>,</quote>)が付くだけです。Mutt は
+(MH のメールボックスと通常のディレクトリを区別するのに必要な)
+<literal>.mh_sequences</literal> か <literal>.xmhcache</literal> ファイル
+のどちらかを探すことにより、このタイプのメールボックスを検出します。MH はより
+クライアントからの同時書き込みに対してより頑強ですが、それでもフラグの消失に
+悩まされるかもしれません。メッセージの破損は mbox/mmdf よりは起こりにくくなります。
+これは、通常、たくさんの小さなファイルを読まねばならないため、mbox/mmdf と
+比較すると開くのに時間がかかります(Mutt は
+<xref linkend="header-caching"/> to greatly speed this process up)を提供します。
+環境に依存しますが、MH はディスクスペースの効率が悪いです。
 </para>
 
 <para>
-<emphasis>Maildir</emphasis>.  The newest of the mailbox formats, used
-by the Qmail MTA (a replacement for sendmail).  Similar to
-<emphasis>MH</emphasis>, except that it adds three subdirectories of the
-mailbox: <emphasis>tmp</emphasis>, <emphasis>new</emphasis> and
-<emphasis>cur</emphasis>.  Filenames for the messages are chosen in such
-a way they are unique, even when two programs are writing the mailbox
-over NFS, which means that no file locking is needed and corruption is
-very unlikely. Maildir maybe slower to open without caching in Mutt, it
-too is not very disk-space efficient depending on the environment. Since
-no additional files are used for metadata (which is embedded in the
-message filenames) and Maildir is locking-free, it's easy to sync across
-different machines using file-level synchronization tools.
+<emphasis>Maildir</emphasis>。メールボックス形式の最新版で、Qmail MTA
+(sendmail の置き換え) で使われています。<emphasis>MH</emphasis>と似ていますが、
+異なるのは、メールボックスに三つのサブディレクトリ、 <emphasis>tmp</emphasis>,
+<emphasis>new</emphasis> と <emphasis>cur</emphasis>が追加されるある点です。
+メッセージのファイル名は、二つのプログラムが同じメールボックスを NFS 越しに
+書き込んでいるときでさえも重ならないような方法で選ばれています。これは、
+ファイルのロックが必要なく、破損が非常にまれ、ということを意味します。
+Maildir は、Mutt ではキャッシュなしだとオープンするのがかなり遅く、環境にも依存
+しますが、ディスクスペースの効率がとても悪いです。metadeta に対する追加のファイルは
+不要なので(メッセージファイル名中に埋め込まれます)、Maildir はロックが不要で、
+ファイルレベルの同期ツールを使うことで異なったマシンへ同期するのが容易です。
 </para>
 
 </sect1>
 
 <sect1 id="shortcuts">
-<title>Mailbox Shortcuts</title>
+<title>メールボックスのショートカット</title>
 
 <para>
-There are a number of built in shortcuts which refer to specific
-mailboxes.  These shortcuts can be used anywhere you are prompted for a
-file or mailbox path or in path-related configuration variables. Note
-that these only work at the beginning of a string.
+特定のメールボックスを指す組み込みショートカット (省略形) が 幾つか用意されています。
+ショートカットは、ファイルやメールボックスの場所やパスに関連した設定変数を入力する
+場面ならどこででも使えます。これらは文字列のはじめでのみ動作することに注意してください。
 </para>
 
 <table id="tab-mailbox-shortcuts">
-<title>Mailbox shortcuts</title>
+<title>メールボックスショートカット</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Shortcut</entry><entry>Refers to...</entry></row>
+<row><entry>ショートカット</entry><entry>参照するもの</entry></row>
 </thead>
 <tbody>
-<row><entry><literal>!</literal></entry><entry>your <link linkend="spoolfile">$spoolfile</link> (incoming) mailbox</entry></row>
-<row><entry><literal>&gt;</literal></entry><entry>your <link linkend="mbox">$mbox</link> file</entry></row>
-<row><entry><literal>&lt;</literal></entry><entry>your <link linkend="record">$record</link> file</entry></row>
-<row><entry><literal>^</literal></entry><entry>the current mailbox</entry></row>
-<row><entry><literal>-</literal> or <literal>!!</literal></entry><entry>the file you've last visited</entry></row>
-<row><entry><literal>~</literal></entry><entry>your home directory</entry></row>
-<row><entry><literal>=</literal> or <literal>+</literal></entry><entry>your <link linkend="folder">$folder</link> directory</entry></row>
-<row><entry><emphasis>@alias</emphasis></entry><entry>to the <link linkend="save-hook">default save folder</link> as determined by the address of the alias</entry></row>
+<row><entry><literal>!</literal></entry><entry><link linkend="spoolfile">$spoolfile</link> (受信用) メールボックスを指す</entry></row>
+<row><entry><literal>&gt;</literal></entry><entry><link linkend="mbox">$mbox</link> ファイルを指す</entry></row>
+<row><entry><literal>&lt;</literal></entry><entry><link linkend="record">$record</link>ファイルを指す</entry></row>
+<row><entry><literal>^</literal></entry><entry>現在のメールボックス</entry></row>
+<row><entry><literal>-</literal> 又は <literal>!!</literal></entry><entry>最後に閲覧したファイル</entry></row>
+<row><entry><literal>~</literal></entry><entry>ホームディレクトリ</entry></row>
+<row><entry><literal>=</literal> 又は <literal>+</literal></entry><entry>your <link linkend="folder">$folder</link>ディレクトリ</entry></row>
+<row><entry><emphasis>@alias</emphasis></entry><entry>このエイリアスのアドレスで識別される<link linkend="save-hook">default save folder</link>を指す</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-For example, to store a copy of outgoing messages in the folder they
-were composed in, a <link
-linkend="folder-hook"><command>folder-hook</command></link> can be used
-to set <link linkend="record">$record</link>:
+たとえば、送信メッセージのコピーをそれが作成されたフォルダ格納するには、
+<link linkend="record">$record</link>設定するために、
+<link linkend="folder-hook"><command>folder-hook</command></link>が使えます。
 </para>
 
 <screen>
@@ -6236,7 +6232,7 @@ folder-hook . 'set record=^'</screen>
 </sect1>
 
 <sect1 id="using-lists">
-<title>Handling Mailing Lists</title>
+<title>メーリングリストの取り扱い</title>
 
 <para>
 Mutt has a few configuration options that make dealing with large
