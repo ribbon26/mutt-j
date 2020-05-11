@@ -5956,30 +5956,27 @@ send-hook ~C'^b@b\.b$' my_hdr from: c@c.c
 <title>フックにおけるメッセージ一致条件</title>
 
 <para>
-Hooks that act upon messages (<command>message-hook</command>,
+メッセージに対して働くフック(<command>message-hook</command>,
 <command>reply-hook</command>, <command>send-hook</command>,
 <command>send2-hook</command>, <command>save-hook</command>,
 <command>fcc-hook</command>, <command>index-format-hook</command>)
-are evaluated in a slightly different
-manner. For the other types of hooks, a <link linkend="regexp">regular
-expression</link> is sufficient.  But in dealing with messages a finer
-grain of control is needed for matching since for different purposes you
-want to match different criteria.
+は、若干異なった方法で評価されます。他のタイプのフックは
+<link linkend="regexp">regular expression</link>で十分です。しかし、
+メッセージを扱う際には、異なった目的のために、異なった基準でマッチング
+する必要があるため、より細かい制御が必要です。
 </para>
 
 <para>
-Mutt allows the use of the <link linkend="patterns">search
-pattern</link> language for matching messages in hook commands.  This
-works in exactly the same way as it would when
-<emphasis>limiting</emphasis> or <emphasis>searching</emphasis> the
-mailbox, except that you are restricted to those operators which match
-information Mutt extracts from the header of the message (i.e., from,
-to, cc, date, subject, etc.).
+Mutt では、フックコマンドにおけるメッセージ一致条件に、
+<link linkend="patterns">search pattern</link>言語を使えます。これは、
+メッセージのヘッダ(たとえば、from, to, cc, date, subject など)からMutt が抽出した
+情報に一致する演算子に限定されることを除いて、メールボックスを
+<emphasis>制限</emphasis>か<emphasis>検索</emphasis>する時と全く同じように動作します。
 </para>
 
 <para>
-For example, if you wanted to set your return address based upon sending
-mail to a specific address, you could do something like:
+たとえば、送信メッセージに基づいて返信先を特定のアドレスに設定したい場合、
+次のようにすることができます。 
 </para>
 
 <screen>
@@ -5987,38 +5984,35 @@ send-hook '~t ^me@cs\.hmc\.edu$' 'my_hdr From: Mutt User &lt;user@host&gt;'
 </screen>
 
 <para>
-which would execute the given command when sending mail to
-<emphasis>me@cs.hmc.edu</emphasis>.
+これは、<emphasis>me@cs.hmc.edu</emphasis>に宛ててメールを送る時に、
+設定されたコマンドを実行する例です。
 </para>
 
 <para>
-However, it is not required that you write the pattern to match using
-the full searching language.  You can still specify a simple
-<emphasis>regular expression</emphasis> like the other hooks, in which
-case Mutt will translate your pattern into the full language, using the
-translation specified by the <link
-linkend="default-hook">$default_hook</link> variable.  The pattern is
-translated at the time the hook is declared, so the value of <link
-linkend="default-hook">$default_hook</link> that is in effect at that
-time will be used.
+しかし、一致するパターンを完全な形の検索言語で書かなければならないというわけでは
+ありません。 他のフック同様、簡単な<emphasis>regular expression</emphasis>で
+書くこともでき、この場合、Mutt は、
+<link linkend="default-hook">$default_hook</link>変数によって指定された
+翻訳機能を使って、指定したパターンを完全な言語にします。パターンは、フックが
+定義された時点で翻訳されるので、 その時有効だった
+<link linkend="default-hook">$default_hook</link> の値が使われます。
 </para>
 
 </sect2>
 
 <sect2 id="mailbox-hook" xreflabel="Mailbox Matching in Hooks">
-<title>Mailbox Matching in Hooks</title>
+<title>フックにおけるメールボックスのマッチング</title>
 
 <para>
-Hooks that match against mailboxes (<command>folder-hook</command>,
-<command>mbox-hook</command>) apply both <link linkend="regexp">regular
-expression</link> syntax as well as <link linkend="shortcuts">mailbox
-shortcut</link> expansion on the regexp parameter.  There is some
-overlap between these, so special attention should be paid to the first
-character of the regexp.
+メールボックスに対して一致するフック(<command>folder-hook</command>,
+<command>mbox-hook</command>)は、<link linkend="regexp">regular expression</link>
+構文と、regexpパラメータ上の<link linkend="shortcuts">mailbox shortcut</link>
+の両方に適用されます。これらには若干重複がありますので、正規表現の最初の文字には
+特別な注意をはらう必要があります。
 </para>
 
 <screen>
-# Here, ^ will expand to "the current mailbox" not "beginning of string":
+# ^ は"the current mailbox" に展開されますが "beginning of string" ではありません:
 folder-hook ^/home/user/Mail/bar "set sort=threads"
 
 # If you want ^ to be interpreted as "beginning of string", one workaround
@@ -6029,19 +6023,19 @@ folder-hook (^/home/user/Mail/bar) "set sort=threads"
 # is probably not what you want:
 folder-hook @imap.example.com "set sort=threads"
 
-# A workaround is to use parenthesis or a backslash:
+# 解決策は括弧かバックスラッシュを使う事です:
 folder-hook (@imap.example.com) "set sort=threads"
 folder-hook '\@imap.example.com' "set sort=threads"
 </screen>
 
 <para>
-Keep in mind that mailbox shortcut expansion on the regexp parameter
-takes place when the hook is initially parsed, not when the hook is
-matching against a mailbox.  When Mutt starts up and is reading the
-.muttrc, some mailbox shortcuts may not be usable.  For example, the
-"current mailbox" shortcut, ^, will expand to an empty string because no
-mailbox has been opened yet.  Mutt will issue an error for this case or
-if the mailbox shortcut results in an empty regexp.
+regex パラメータ上のメールボックスショートカット展開は、フックがメールボックスに
+一致する時ではなく、フックが最初に解析される時に行われることに注意してください。
+Mutt の起動時と .muttrc を読み出す時には、いくつかのメールボックスショートカットは
+使えないかもしれません。たとえば、"current mailbox" shortcut, ^, は
+まだメールボックスが何もオープンされていないために、空の文字列に展開されます。
+Mutt はこの場合か、メールボックスショートカットの結果が空の regexpになった場合、
+エラーを発行します。
 </para>
 
 </sect2>
@@ -6049,13 +6043,14 @@ if the mailbox shortcut results in an empty regexp.
 </sect1>
 
 <sect1 id="setenv">
-<title>Managing the Environment</title>
+<title>環境の操作(Managing the Environment)</title>
 
 <para>
-You can alter the environment that Mutt passes on to its child processes
-using the <quote>setenv</quote> and <quote>unsetenv</quote> operators.
-(N.B. These follow Mutt-style syntax, not shell-style!)  You can also
-query current environment values by prefixing a <quote>?</quote> character.
+<quote>setenv</quote> と <quote>unsetenv</quote> オペレータを使って、
+子プロセスに、Mutt が走査する環境を変更することができます
+(備考: これはMutt形式の文法に従い、シェル形式のものではありません!)。
+また、<quote>?</quote>文字を前置することによって、環境変数の現在の値を
+問合せすることもできます。
 </para>
 
 <screen>
