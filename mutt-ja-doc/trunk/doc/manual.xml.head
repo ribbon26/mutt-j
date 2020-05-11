@@ -6062,14 +6062,15 @@ setenv ?LESS
 </sect1>
 
 <sect1 id="query">
-<title>External Address Queries</title>
+<title>外部アドレスの問い合わせ</title>
 
 <para>
-Mutt supports connecting to external directory databases such as LDAP,
-ph/qi, bbdb, or NIS through a wrapper script which connects to Mutt
-using a simple interface.  Using the <link
-linkend="query-command">$query_command</link> variable, you specify the
-wrapper command to use.  For example:
+Mutt は、LDAP, ph/qi, bbdb, NIS といった 外部ディレクトリデータベースへの接続を
+サポートしており、これは 簡単なインタフェイスで Mutt に接続するラッパ
+スクリプトを通して実現します。
+<link     linkend="query-command">$query_command</link> 変数を使って、 利用するラッパー
+コマンドを指定します。例は以下のようになります。
+
 </para>
 
 <screen>
@@ -6077,15 +6078,15 @@ set query_command = "mutt_ldap_query.pl %s"
 </screen>
 
 <para>
-The wrapper script should accept the query on the command-line.  It
-should return a one line message, then each matching response on a
-single line, each line containing a tab separated address then name then
-some other optional information.  On error, or if there are no matching
-addresses, return a non-zero exit code and a one line error message.
+ラッパースクリプトはコマンドライン上で問い合わせを受け付けます。これは、1行の
+メッセージを返し、次に一致結果がそれぞれ一行ずつ並び、その各行にはタブで
+分割された、「アドレス、名前、その他付加情報」がこの順で含まれます。
+エラーが発生した場合か、一致するアドレスがない場合は、0以外の終了コードと
+1行のエラーメッセージが返ります。
 </para>
 
 <para>
-An example multiple response output:
+複数の結果が返る時の例は以下です:
 </para>
 
 <screen>
@@ -6096,46 +6097,46 @@ roessler@does-not-exist.org        Thomas Roessler mutt pgp
 </screen>
 
 <para>
-There are two mechanisms for accessing the query function of Mutt.  One
-is to do a query from the index menu using the
-<literal>&lt;query&gt;</literal> function (default: Q).  This will
-prompt for a query, then bring up the query menu which will list the
-matching responses.  From the query menu, you can select addresses to
-create aliases, or to mail.  You can tag multiple addresses to mail,
-start a new query, or have a new query appended to the current
-responses.
+Mutt の問い合わせ機能にアクセスする仕組みは二つあります。一つは問い合わせを
+インデックスメニューから <literal>&lt;query&gt;</literal>機能 (既定値: Q) を
+使って行なう仕組みです。これは、問い合わせ内容の入力要求を表示し、次に、
+一致したレスポンスの一覧である問い合わせメニューを表示します。問い合わせ
+メニューからは、選んだアドレスにエイリアスを作成したり メールしたりすることが
+できます。タグを付けて複数アドレスにメールすることや、新しく問い合わせを始めたり、
+新規問い合わせを現在の結果内容に追加する こともできます。
 </para>
 
 <para>
-The other mechanism for accessing the query function is for address
-completion, similar to the alias completion.  In any prompt for address
-entry, you can use the <literal>&lt;complete-query&gt;</literal>
-function (default: ^T) to run a query based on the current address you
-have typed.  Like aliases, Mutt will look for what you have typed back
-to the last space or comma.  If there is a single response for that
-query, Mutt will expand the address in place.  If there are multiple
-responses, Mutt will activate the query menu.  At the query menu, you
-can select one or more addresses to be added to the prompt.
+問い合わせ機能にアクセスするもう一つの仕組みは、アドレス補完という、エイリアス
+補完と同じような仕組みです。アドレス入力のプロンプトならどれででも
+<literal>&lt;complete-query&gt;</literal>機能 (既定値: ^T) を使って、アドレスの
+うちの、 その時点までに入力済みの部分に基づいた問い合わせを実行できます。
+エイリアス のように、どこまで入力済みかについて Mutt は 最後のスペースかカンマまで
+戻って調べます。その問い合わせに結果が一つだけであれば、Mutt はその場で
+アドレスを展開します。結果が複数ならば Mutt は問い合わせメニューに移ります。
+問い合わせメニューでは、プロンプトに追加するアドレスを一つでも複数でも選択する
+ことができます。  
 </para>
 
 </sect1>
 
 <sect1 id="mailbox-formats">
-<title>Mailbox Formats</title>
+<title>メールボックスの形式</title>
 
 <para>
-Mutt supports reading and writing of four different local mailbox
-formats: mbox, MMDF, MH and Maildir.  The mailbox type is auto detected,
-so there is no need to use a flag for different mailbox types.  When
-creating new mailboxes, Mutt uses the default specified with the <link
-linkend="mbox-type">$mbox_type</link> variable. A short description of
-the formats follows.
+Mutt は mbox, MMDF, MH と Maildir という四つのメールボックスについて、読み書きを
+サポートしています。メールボックスのタイプは自動判断されるので、タイプの違いを指示
+する必要はありません。新規メールボックス作成時には
+<link linkend="mbox-type">$mbox_type</link>変数で指定される既定値を使います。
+簡単なフォーマットの説明は以下の通りです。
 </para>
 
 <para>
 <emphasis>mbox</emphasis>.  This is a widely used mailbox format for
 UNIX.  All messages are stored in a single file.  Each message has a
 line of the form:
+<emphasis>mbox</emphasis>。これは UNIX でもっとも広く使われている形式です。
+メッセージは一つのファイルにすべて格納されます。各メッセージには、 
 </para>
 
 <screen>
@@ -6143,20 +6144,19 @@ From me@cs.hmc.edu Fri, 11 Apr 1997 11:44:56 PST
 </screen>
 
 <para>
-to denote the start of a new message (this is often referred to as the
-<quote>From_</quote> line). The mbox format requires mailbox locking, is
-prone to mailbox corruption with concurrently writing clients or
-misinterpreted From_ lines. Depending on the environment, new mail
-detection can be unreliable. Mbox folders are fast to open and easy to
-archive.
+という、メッセージの始まりを表す形式の行が一行あります(これは しばしば
+<quote>From_</quote>行として言及されます)。mbox フォーマットはメールボックスの
+ロックを必要とし、また、クライアントが同時に書き込みを行ったり、From_ 行を
+誤って解釈したりして、メールボックスの破損が起こりやすくなっています。
+環境に依存しますが、新しいメールの検出は信頼性に欠ける場合があります。Mbox
+フォルダは開くのが早く、アーカイブが簡単です。
 </para>
 
 <para>
-<emphasis>MMDF</emphasis>.  This is a variant of the
-<emphasis>mbox</emphasis> format.  Each message is surrounded by lines
-containing <quote>^A^A^A^A</quote> (four times control-A's). The same
-problems as for mbox apply (also with finding the right message
-separator as four control-A's may appear in message bodies).
+<emphasis>MMDF</emphasis>。これは<emphasis>mbox</emphasis>フォーマットの変形です。
+各メッセージは<quote>^A^A^A^A</quote>(4つのCtrl-A)と言う行で囲まれています。
+mboxに発生する同じ問題があります(メッセージ本文に4つのCtrl-Aが含まれることも
+あるので、正しいメッセージ区切り文字を見つけることもです)。
 </para>
 
 <para>
