@@ -6235,92 +6235,86 @@ folder-hook . 'set record=^'</screen>
 <title>メーリングリストの取り扱い</title>
 
 <para>
-Mutt has a few configuration options that make dealing with large
-amounts of mail easier.  The first thing you must do is to let Mutt know
-what addresses you consider to be mailing lists (technically this does
-not have to be a mailing list, but that is what it is most often used
-for), and what lists you are subscribed to.  This is accomplished
-through the use of the <link linkend="lists"><command>lists</command>
-and <command>subscribe</command></link> commands in your
-<literal>.muttrc</literal>.  Alternatively or additionally, you can set
-<link linkend="auto-subscribe">$auto_subscribe</link> to automatically
-subscribe addresses found in a <literal>List-Post</literal> header.
+Mutt には、大量のメールの取り扱いを容易にする設定オプションがいくつかあります。
+まず最初にしなければならないのは、どのアドレスを メーリングリストだとみなすか
+(仕組みとしてはメーリングリストでなくても構いませんが、これがもっともよく使われる
+用途です)、および、 どのリストを講読しているかを Mutt に知らせることです。
+これは<literal>.muttrc</literal> で <link linkend="lists"><command>lists</command>と
+<command>subscribe</command></link> コマンドを使って行ないます。代替又は追加で、
+<literal>List-Post</literal>ヘッダ中にアドレスが見つかった時に、自動的に購読する、
+<link linkend="auto-subscribe">$auto_subscribe</link>を設定することもできます。
 </para>
 
 <para>
-Now that Mutt knows what your mailing lists are, it can do several
-things, the first of which is the ability to show the name of a list
-through which you received a message (i.e., of a subscribed list) in the
-<emphasis>index</emphasis> menu display.  This is useful to distinguish
-between personal and list mail in the same mailbox.  In the <link
-linkend="index-format">$index_format</link> variable, the expando
-<quote>%L</quote> will print the string <quote>To &lt;list&gt;</quote>
-when <quote>list</quote> appears in the <quote>To</quote> field, and
-<quote>Cc &lt;list&gt;</quote> when it appears in the <quote>Cc</quote>
-field (otherwise it prints the name of the author).
+これで Mutt は何がメイリングリストかを知っているので、できることが幾つか増えました。
+その一つ目は、 どのリストを経由してメッセージを受信したか (すなわち、講読中の
+リスト名) を<emphasis>index</emphasis>メニューの画面に表示できることです。
+これは同じメールボックス内にある個人用メールとリストメールを区別するのに役立ちます。
+<link linkend="index-format">$index_format</link>変数中で、
+expando <quote>%L</quote> は、<quote>list</quote>が<quote>To</quote>フィールドに
+あった場合、<quote>To &lt;list&gt;</quote>を表示し、それが<quote>Cc</quote>
+フィールドにあった場合は<quote>Cc &lt;list&gt;</quote>を返します
+(それ以外は、メールの作成者を返します)。
 </para>
 
 <para>
-Often times the <quote>To</quote> and <quote>Cc</quote> fields in
-mailing list messages tend to get quite large. Most people do not bother
-to remove the author of the message they reply to from the list,
-resulting in two or more copies being sent to that person.  The
-<literal>&lt;list-reply&gt;</literal> function, which by default is
-bound to <quote>L</quote> in the <emphasis>index</emphasis> menu and
-<emphasis>pager</emphasis>, helps reduce the clutter by only replying to
-the known mailing list addresses instead of all recipients (except as
-specified by <literal>Mail-Followup-To</literal>, see below).
+メーリングリストのメッセージ中の<quote>To</quote> と <quote>Cc</quote>
+フィールドは、どんどん 膨れ上がっていってしまうということがしばしばあります。
+多くの人は、返信しようとするメッセージの差出人をわざわざそうしたフィールドから
+削除したりしないので、結果として同じものが複数その人に送られてしまうことに
+なります。<literal>&lt;list-reply&gt;</literal>機能は、既定では
+<emphasis>index</emphasis>メニューと<emphasis>pager</emphasis>メニューでは
+<quote>L</quote>に割り当てられていますが、すべての宛先ではなく、既知の
+メーリングリストアドレスにのみ返信するので、このようなゴミを減らす助けになります
+(<literal>Mail-Followup-To</literal>で指定された場合を除きます。以下参照)。
 </para>
 
 <para>
-Mutt also supports the <literal>Mail-Followup-To</literal> header.  When
-you send a message to a list of recipients which includes one or several
-known mailing lists, and if the <link
-linkend="followup-to">$followup_to</link> option is set, Mutt will
-generate a Mail-Followup-To header.  If any of the recipients are
-subscribed mailing lists, this header will contain all the recipients
-to whom you send this message, but not your address. This indicates that
-group-replies or list-replies (also known as <quote>followups</quote>)
-to this message should only be sent to the original recipients of the
-message, and not separately to you - you'll receive your copy through
-one of the mailing lists you are subscribed to.  If none of the
-recipients are subscribed mailing lists, the header will also contain
-your address, ensuring you receive a copy of replies.
+Mutt は<literal>Mail-Followup-To</literal>ヘッダもサポートします。
+一つまたはそれ以上の既知メーリングリストを含む受信先一覧にメールを送る時で、
+<link linkend="followup-to">$followup_to</link>オプションが設定されている場合、
+Mutt は Mail-Followup-To ヘッダを生成します。受信先のどれかが購読している
+メーリングリストの場合、このヘッダは、自分自身のアドレスを含まない、この
+メッセージを送るすべての受信先を含みます。これは、このメッセージへの
+group-replies 又は list-replies (<quote>followups</quote>としても知られています)
+メッセージのオリジナルの受信者にのみ送信され、それとは別に自分には送る必要は
+ありません。すなわち、購読しているメーリングリストのどれかを通じて、
+自分自身のメールを受け取ることになります。受信先が、購読しているメーリングリスト
+に一つもない場合、ヘッダには、返信のコピーを自分が確実に受け取るように、
+自分自身のアドレスも含みます。
 </para>
 
 <para>
-Conversely, when group-replying or list-replying to a message which has
-a <literal>Mail-Followup-To</literal> header, Mutt will respect this
-header if the <link
-linkend="honor-followup-to">$honor_followup_to</link> configuration
-variable is set.  Using <link linkend="list-reply">list-reply</link>
-will in this case also make sure that the reply goes to the mailing
-list, even if it's not specified in the list of recipients in the
-<literal>Mail-Followup-To</literal>.
+逆に、<literal>Mail-Followup-To</literal>があるメッセージに、
+group-replying 又は list-replying を行う場合、Mutt は
+<link linkend="honor-followup-to">$honor_followup_to</link>設定変数が
+設定されている場合、このヘッダを考慮します。この場合に
+<link linkend="list-reply">list-reply</link>を使うと、
+<literal>Mail-Followup-To</literal>中の、受信先の一覧中に指定されていなくても、
+メーリングリストに返信が送られるようになります。
 </para>
 
 <note>
 <para>
-When header editing is enabled, you can create a
-<literal>Mail-Followup-To</literal> header manually.  Mutt will only
-auto-generate this header if it doesn't exist when you send the message.
+ヘッダ編集が有効な場合、<literal>Mail-Followup-To</literal>ヘッダを手動で作成
+できます。Mutt は送信時にこのへッダが存在しない場合にだけ、 このへッダを自動
+生成します。
 </para>
 </note>
 
 <para>
-The other method some mailing list admins use is to generate a
-<quote>Reply-To</quote> field which points back to the mailing list
-address rather than the author of the message.  This can create problems
-when trying to reply directly to the author in private, since most mail
-clients will automatically reply to the address given in the
-<quote>Reply-To</quote> field.  Mutt uses the <link
-linkend="reply-to">$reply_to</link> variable to help decide which
-address to use.  If set to <emphasis>ask-yes</emphasis> or
-<emphasis>ask-no</emphasis>, you will be prompted as to whether or not
-you would like to use the address given in the <quote>Reply-To</quote>
-field, or reply directly to the address given in the <quote>From</quote>
-field.  When set to <emphasis>yes</emphasis>, the
-<quote>Reply-To</quote> field will be used when present.
+一部のメーリングリスト管理者が使っている別の手法は、メッセージの差出人
+ではなく、メーリングリストのアドレスを指す<quote>Reply-To</quote>
+フィールドを生成するというものです。 これは、送信者に私的に直接返信
+しようとするときに 問題を引き起こすかもしれません。なぜなら大半のメール
+クライアントは、自動的に <quote>Reply-To</quote>フィールドのアドレスへ
+返信するからです。Mutt は<link linkend="reply-to">$reply_to</link>変数を
+使って、どちらのアドレスに返信するかを決める手助けをします。
+<emphasis>ask-yes</emphasis>又は<emphasis>ask-no</emphasis>に設定する場合、
+<quote>Reply-To</quote>フィールド中のアドレスを使うかどうかを聞いてきますが、
+そうでない場合、<quote>From</quote>フィールドのアドレスに直接返信します。
+<emphasis>yes</emphasis>に設定されている場合、存在していれば、
+<quote>Reply-To</quote>フィールドが使われます。
 </para>
 
 <para>
