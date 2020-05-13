@@ -6425,48 +6425,48 @@ subjectrx '\[[^]]*\]:? *' '%L%R'
 <title>新しいメールの検出</title>
 
 <para>
-Mutt supports setups with multiple folders, allowing all of them to be
-monitored for new mail (see <xref linkend="mailboxes"/> for details).
+Mutt は複数のフォルダを設定でき、それらはすべて、新規メールの検出ができます
+(詳細は<xref linkend="mailboxes"/>を参照してください)。
 </para>
 
 <sect2 id="new-mail-formats">
-<title>How New Mail Detection Works</title>
+<title>新規メール検出の方式</title>
 
 <para>
-For Mbox and Mmdf folders, new mail is detected by comparing access
-and/or modification times of files: Mutt assumes a folder has new mail
-if it wasn't accessed after it was last modified. Utilities like
-<literal>biff</literal> or <literal>frm</literal> or any other program
-which accesses the mailbox might cause Mutt to never detect new mail for
-that mailbox if they do not properly reset the access time. Other
-possible causes of Mutt not detecting new mail in these folders are
-backup tools (updating access times) or filesystems mounted without
-access time update support (for Linux systems, see the
-<literal>relatime</literal> option).
+Mboxと Mmdf フォルダでは、新規メールは、ファイルのアクセス時間と変更時間を
+比較することで検出します。Mutt は、最後の変更後にアクセスがなかった場合、
+フォルダに新規メールがあると推測します。<literal>biff</literal> や
+<literal>frm</literal>やその他の、メールボックスにアクセスするユーティリティは、
+Mutt に、そのメールボックスの新規メール検出が全くできなくなるようにしてしまう
+かもしれません。Mutt がフォルダへの新規メールを検出出来なくなる可能性がある
+その他の例としては、バックアップツール(アクセス時間を更新するもの)やアクセス時間の
+更新をサポートしないようにマウントしたファイルシステム(Linuxでは、
+<literal>relatime</literal>オプション)があります。
 </para>
 
 <note>
 <para>
-Contrary to older Mutt releases, it now maintains the new mail status of
-a folder by properly resetting the access time if the folder contains at
-least one message which is neither read, nor deleted, nor marked as old.
+以前の Mutt リリースとは対照的に、フォルダが、現在のものは、一度も読み取りされず、
+削除もされず、旧メールとして、マークもされない、少なくとも一つのメッセージを
+含んでいる場合、アクセス時刻を適切にリセットすることにより、フォルダの新規
+メールステータスを維持するようになっています。
 </para>
 </note>
 
 <para>
-In cases where new mail detection for Mbox or Mmdf folders appears to be
-unreliable, the <link linkend="check-mbox-size">$check_mbox_size</link>
-option can be used to make Mutt track and consult file sizes for new
-mail detection instead which won't work for size-neutral changes.
+Mbox または Mmdf フォルダでの新規メール検出が信頼できないように見える場合、
+<link linkend="check-mbox-size">$check_mbox_size</link>オプションを使って、
+Mutt が新規メールの検出のために、ファイルサイズの追跡と参照できるように
+します。ただし、サイズが変わらない変更の場合には動作しません。
 </para>
 
 <para>
-New mail for Maildir is assumed if there is one message in the
-<literal>new/</literal> subdirectory which is not marked deleted (see
-<link linkend="maildir-trash">$maildir_trash</link>). For MH folders, a
-mailbox is considered having new mail if there's at least one message in
-the <quote>unseen</quote> sequence as specified by <link
-linkend="mh-seq-unseen">$mh_seq_unseen</link>.
+Maildir での新規メールは、削除マークがついていない
+(<link linkend="maildir-trash">$maildir_trash</link>を参照)
+<literal>new/</literal>サブディレクトリ中に1つのメッセージがあることを
+仮定しています。MH フォルダでは、少なくとも、一つのメッセージが
+<link linkend="mh-seq-unseen">$mh_seq_unseen</link> によって指定された、
+<quote>unseen</quote>なシーケンス中にある場合、新規メールがあると判断されます。
 </para>
 
 <para>
@@ -6482,17 +6482,17 @@ IDLE extension if advertised by the server.
 </para>
 
 <para>
-The <link linkend="mail-check-recent">$mail_check_recent</link>
-option changes whether Mutt will notify you of new mail in an
-already visited mailbox.  When set (the default) it will only notify
-you of new mail received since the last time you opened the mailbox.
-When unset, Mutt will notify you of any new mail in the mailbox.
+<link linkend="mail-check-recent">$mail_check_recent</link>オプションは、Mutt が
+すでに閲覧したメールボックスで新規メールがあるかどうかを通知するかどうかを
+変更します。設定した場合(既定値)、最後にメールボックスをオープンした時間から、
+新規メールが来た時のみ通知します。設定しない場合、メールボックス中に
+なんらかの新規メールが来た場合に通知します。
 </para>
 
 </sect2>
 
 <sect2 id="new-mail-polling">
-<title>Polling For New Mail</title>
+<title>新規メールのポーリング</title>
 
 <para>
 When in the index menu and being idle (also see <link
