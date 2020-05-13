@@ -6318,49 +6318,48 @@ group-replying 又は list-replying を行う場合、Mutt は
 </para>
 
 <para>
-The <quote>X-Label:</quote> header field can be used to further identify
-mailing lists or list subject matter (or just to annotate messages
-individually).  The <link linkend="index-format">$index_format</link>
-variable's <quote>%y</quote> and <quote>%Y</quote> expandos can be used
-to expand <quote>X-Label:</quote> fields in the index, and Mutt's
-pattern-matcher can match regular expressions to <quote>X-Label:</quote>
-fields with the <quote>~y</quote> selector.  <quote>X-Label:</quote> is
-not a standard message header field, but it can easily be inserted by
-procmail and other mail filtering agents.
+<quote>X-Label:</quote>ラベルフィールドは、メーリングリストまたは
+リストされた題名をさらに識別することができます。(あるいは、単に、
+メッセージへ個別に註釈を付けることも)。
+<link linkend="index-format">$index_format</link>変数の
+<quote>%y</quote> と <quote>%Y</quote> expandos は<quote>X-Label:</quote>
+フィールドをインデックス中に展開するのに使え、Mutt のパターン一致では、
+<quote>~y</quote> 選択肢を使う事で、正規表現で<quote>X-Label:</quote>
+を検索できます。<quote>X-Label:</quote>は標準的なへッダフィールドでは
+ありませんが、 procmail その他のメールフィルタリングエージェントで簡単に
+挿入できます。 
 </para>
 
 <para>
-You can change or delete the <quote>X-Label:</quote> field within
-Mutt using the <quote>edit-label</quote> command, bound to the
-<quote>y</quote> key by default.  This works for tagged messages, too.
-While in the edit-label function, pressing the &lt;complete&gt;
-binding (TAB, by default) will perform completion against all labels
-currently in use.
+既定で、<quote>y</quote>に割り当てられている<quote>edit-label</quote>
+コマンドを使って、Mutt 内で、<quote>X-Label:</quote>フィールドを変更/削除
+できます。これは、タグ付きメッセージについても同じように動作します。
+edit-label機能中で、&lt;complete&gt; バインディング(通常は TAB)を押すと、
+現在使っているすべてのラベルに対して補完を実行します。
 </para>
 
 <para>
-Lastly, Mutt has the ability to <link linkend="sort">sort</link> the
-mailbox into <link linkend="threads">threads</link>.  A thread is a
-group of messages which all relate to the same subject.  This is usually
-organized into a tree-like structure where a message and all of its
-replies are represented graphically.  If you've ever used a threaded
-news client, this is the same concept.  It makes dealing with large
-volume mailing lists easier because you can easily delete uninteresting
-threads and quickly find topics of value.
+最後に、Mutt はメールボックスを<link linkend="threads">threads</link>で
+<link linkend="sort">sort</link>する機能があります。スレッドとは、
+同じ話題でつながっているメッセージの集まりです。これは通常、木のような
+構造へとまとめられ、 あるメッセージとそれに対する返信すべてが画像的に
+表現されます。スレッド化されたニュースクライアントを使ったことがあれば、
+それと同じ概念だと思ってください。これによって流量の大きなメーリングリストの
+扱いが容易になります。なぜなら、興味がなければ簡単にスレッドごと削除する
+ことができ、価値ある話題を素早く見つけられるからです。
 </para>
 
 </sect1>
 
 <sect1 id="display-munging">
-<title>Display Munging</title>
+<title>表示の難読化(Munging)</title>
 
 <para>
-Working within the confines of a console or terminal window, it is
-often useful to be able to modify certain information elements in a
-non-destructive way -- to change how they display, without changing
-the stored value of the information itself.  This is especially so of
-message subjects, which may often be polluted with extraneous metadata
-that either is reproduced elsewhere, or is of secondary interest.
+コンソールやターミナル・ウィンドウ中で作業をする場合、特定の情報要素を
+非破壊的な方法で変更できること、すなわち、情報自体が格納されている値を
+変更せず、表示方法を変更できると便利なことがよくあります。
+これは、特に、どこかで再生産されていたり、二次的な興味のどちらかである
+余計なメタデータで汚染されている、メッセージの題名の場合に顕著です。
 </para>
 
 <cmdsynopsis>
@@ -6384,30 +6383,29 @@ that either is reproduced elsewhere, or is of secondary interest.
 </cmdsynopsis>
 
 <para>
-<literal>subjectrx</literal> specifies a regular expression
-<quote>pattern</quote> which, if detected in a message subject, causes
-the subject to be replaced with the <quote>replacement</quote> value.
-The replacement is subject to substitutions in the same way as for the
-<link linkend="spam">spam</link> command: <literal>%L</literal> for the text
-to the left of the match, <literal>%R</literal> for text to the right of the
-match, and <literal>%1</literal> for the first subgroup in the match (etc).
-If you simply want to erase the match, set it to <quote>%L%R</quote>.
-Any number of <literal>subjectrx</literal> commands may coexist.
+<literal>subjectrx</literal>は正規表現の<quote>pattern</quote>で、
+メッセージの題名中で見つかった場合、題名を<quote>replacement</quote>の値に
+置き換えます。replacement は<link linkend="spam">spam</link>コマンドと
+同じように置き換える題名です。<literal>%L</literal>は一致したものの左側に
+対するテキスト、<literal>%R</literal>は一致したものの右側に対するテキスト、
+<literal>%1</literal>は一致したものの最初のサブグループです(以下同様)。
+単に一致を簡単に消したいのであれば、それを<quote>%L%R</quote>に設定します。
+subjectrxコマンドはいくつでも共存できます。
 </para>
 
 <para>
-Note this well: the <quote>replacement</quote> value replaces the
-entire subject, not just the match!
+<quote>replacement</quote>の値は題名全体を置き換え、一致したもののみでは
+ないことに十分注意してください。
 </para>
 
 <para>
-<literal>unsubjectrx</literal> removes a given subjectrx from the
-substitution list.  If <literal>*</literal> is used as the pattern,
-all substitutions will be removed.
+<literal>unsubjectrx</literal>は置き換えリストから与えられたsubjectrx を
+取り除きます。パターンとして<literal>*</literal>が指定された場合、
+すべての置換定義が削除されます。
 </para>
 
 <example id="ex-subjectrx">
-<title>Subject Munging</title>
+<title>題名の難読化</title>
 <screen>
 # Erase [rt #12345] tags from Request Tracker (RT) e-mails
 subjectrx '\[rt #[0-9]+\] *' '%L%R'
@@ -6424,7 +6422,7 @@ subjectrx '\[[^]]*\]:? *' '%L%R'
 </sect1>
 
 <sect1 id="new-mail">
-<title>New Mail Detection</title>
+<title>新しいメールの検出</title>
 
 <para>
 Mutt supports setups with multiple folders, allowing all of them to be
