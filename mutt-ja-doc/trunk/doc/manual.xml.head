@@ -6724,31 +6724,30 @@ macro index ,a "&lt;save-message&gt;=archive&lt;enter&gt;&lt;enter-command&gt;ec
   <itemizedlist>
     <listitem>
       <para>
-        Reply envelope settings.  <link
-        linkend="reverse-name">$reverse_name</link> processing.  To,
-        Cc, Subject, References header defaults.
+        Reply エンベロープの設定。  <link
+        linkend="reverse-name">$reverse_name</link> の処理。  To,
+        Cc, Subject, References ヘッダの既定値。
       </para>
     </listitem>
     <listitem>
       <para>
-        <link linkend="my-hdr">my_hdr</link> processing for To, Cc,
-        Bcc, Subject headers.
+        To, Cc,
+        Bcc, Subject ヘッダに対する <link linkend="my-hdr">my_hdr</link>の処理。
       </para>
     </listitem>
     <listitem>
       <para>
-        Prompts for To, Cc, Bcc, Subject headers.
-        See <link linkend="askcc">$askcc</link>,
+        To, Cc, Bcc, Subject ヘッダの表示。
+        <link linkend="askcc">$askcc</link>,
         <link linkend="askbcc">$askbcc</link>,
-        <link linkend="fast-reply">$fast_reply</link>.
+        <link linkend="fast-reply">$fast_reply</link> を参照。
       </para>
     </listitem>
     <listitem>
       <para>
-        From header setting.  Note: this is so <link
-        linkend="send-hook">send-hook</link>s below can match ~P, but
-        From is re-set further below in case a send-hook changes the
-        value.
+	From ヘッダの設定。注意:これは以下の<link         linkend="send-hook">send-hook</link>が
+	~P に一致する可能性があるためだが、From は send-hook が値を変更した場合には
+	さらに以下で再設定される。
       </para>
     </listitem>
     <listitem>
@@ -6763,36 +6762,19 @@ macro index ,a "&lt;save-message&gt;=archive&lt;enter&gt;&lt;enter-command&gt;ec
     </listitem>
     <listitem>
       <para>
-        From header setting.
+        From ヘッダの設定。
       </para>
     </listitem>
     <listitem>
       <para>
-        <link linkend="my-hdr">my_hdr</link> processing for From,
-        Reply-To, Message-ID and user-defined headers.  The To, Cc,
-        Bcc, Subject, and Return-Path headers are ignored at this
-        stage.
+        <link linkend="my-hdr">my_hdr</link> を From,
+        Reply-To, Message-ID とユーザ定義のヘッダに対して処理。To, Cc,
+        Bcc, Subject, とReturn-Path ヘッダはこのステージでは無視される。
       </para>
     </listitem>
     <listitem>
       <para>
-        Message body and signature generation.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        <link linkend="send2-hook">send2-hook</link>
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        <link linkend="realname">$realname</link> part of From header setting.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        <link linkend="editor">$editor</link> invocation for the
-        message.
+        メッセージ本文と署名の生成。
       </para>
     </listitem>
     <listitem>
@@ -6802,52 +6784,66 @@ macro index ,a "&lt;save-message&gt;=archive&lt;enter&gt;&lt;enter-command&gt;ec
     </listitem>
     <listitem>
       <para>
-        Cryptographic settings.
+        From ヘッダの <link linkend="realname">$realname</link> 部分の設定。
       </para>
     </listitem>
     <listitem>
       <para>
-        <link linkend="fcc-hook">fcc-hook</link>.  Fcc setting.
+        メッセージの編集のため、<link linkend="editor">$editor</link> の起動。
       </para>
     </listitem>
     <listitem>
       <para>
-        <link linkend="compose-menu">Compose menu</link>.  Note: <link
-        linkend="send2-hook">send2-hook</link> is evaluated each time
-        the headers are changed.
+        <link linkend="send2-hook">send2-hook</link>
       </para>
     </listitem>
     <listitem>
       <para>
-        Message encryption and signing.  Key selection.
+        暗号化の設定。
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        <link linkend="fcc-hook">fcc-hook</link>.  Fcc の設定。
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+	<link linkend="compose-menu">Compose メニュー</link>。注意:
+	<link linkend="send2-hook">send2-hook</link>はヘッダが変更された時には毎回
+	評価される。
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        メッセージの暗号化と署名。鍵の選択。
       </para>
     </listitem>
     <listitem>
       <para>
         Fcc saving if <link
-        linkend="fcc-before-send">$fcc_before_send</link> is set.  (Note the
-        variable documentation for caveats of Fcc'ing before sending.)
+        linkend="fcc-before-send">$fcc_before_send</link> が設定されていた場合、Fcc へのセーブ。
+	(送信前に Fcc を実行する際の注意事項については変数のドキュメントに注意。)
       </para>
     </listitem>
     <listitem>
       <para>
-        Message sending.
+        メッセージの送信。
       </para>
     </listitem>
     <listitem>
       <para>
-        Fcc saving if <link
-        linkend="fcc-before-send">$fcc_before_send</link> is unset
-        (the default).  Note: prior to version 1.12, the Fcc was saved
-        before sending the message.  It is now by default saved
-        afterwards, but if the saving fails, the user is prompted.
+        <link linkend="fcc-before-send">$fcc_before_send</link>が設定されていない場合
+	(既定値)に、Fcc へのセーブ。注意:バージョン1.12より以前では、Fcc へは
+	メッセージの送信前にセーブされます。現在では、既定で、後でセーブされますが、
+	セーブが失敗した場合、ユーザに表示が出ます。
       </para>
     </listitem>
   </itemizedlist>
 </sect1>
 
 <sect1 id="misc-topics">
-<title>Miscellany</title>
+<title>その他</title>
 
 <para>
 This section documents various features that fit nowhere else.
