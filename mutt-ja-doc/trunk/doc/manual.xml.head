@@ -6470,15 +6470,14 @@ Maildir での新規メールは、削除マークがついていない
 </para>
 
 <para>
-Mutt does not poll POP3 folders for new mail, it only periodically
-checks the currently opened folder (if it's a POP3 folder).
+Mutt は POP3 フォルダに対しては新規メールの確認をしません。現在開いているフォルダに
+対して定期的にチェックをするだけです(それがPOP3フォルダの場合)。
 </para>
 
 <para>
-For IMAP, by default Mutt uses recent message counts provided by the
-server to detect new mail. If the <link
-linkend="imap-idle">$imap_idle</link> option is set, it'll use the IMAP
-IDLE extension if advertised by the server.
+IMAP では、既定で、Mutt は新規メールを検出するために、サーバによって提供される、
+最新のメッセージ数を使います。<link linkend="imap-idle">$imap_idle</link>オプションが
+設定されていれば、サーバによって情報が通知されれば、 IMAP IDLE 拡張を使います。
 </para>
 
 <para>
@@ -6613,23 +6612,22 @@ Mutt には、壊れたスレッドを動的に作り直す機能があります
 </para>
 
 <para>
-You can also connect multiple children at once, tagging them and using
-the <literal>&lt;tag-prefix&gt;</literal> command (<quote>;</quote>) or
-the <link linkend="auto-tag">$auto_tag</link> option.
+また、複数の子に対して、<literal>&lt;tag-prefix&gt;</literal>コマンド
+(<quote>;</quote>)か、<link linkend="auto-tag">$auto_tag</link>オプションを使い、
+それらにタグをつけることで接続できます。
+
 </para>
 
 </sect2>
 
 <sect2 id="break-threads">
-<title>Breaking Threads</title>
+<title>スレッドの分割</title>
 
 <para>
-On mailing lists, some people are in the bad habit of starting a new
-discussion by hitting <quote>reply</quote> to any message from the list
-and changing the subject to a totally unrelated one.  You can fix such
-threads by using the <literal>&lt;break-thread&gt;</literal> function
-(bound by default to #), which will turn the subthread starting from the
-current message into a whole different thread.
+メーリングリストで新しい話題を始めるとき、適当なメッセージに<quote>reply</quote>を押して、
+題名だけまったく無関係なものに変えるという 悪い癖を持つ人がいます。これは
+<literal>&lt;break-thread&gt;</literal>機能(既定で # に割り当て)を使うことで修正できます。
+この機能で、そのメッセージ以降のスレッドを まったく別のスレッドにしてしまいます。
 </para>
 
 </sect2>
@@ -6637,49 +6635,46 @@ current message into a whole different thread.
 </sect1>
 
 <sect1 id="dsn">
-<title>Delivery Status Notification (DSN) Support</title>
+<title>配送状態通知(Delivery Status Notification:DSN)のサポート</title>
 
 <para>
-RFC1894 defines a set of MIME content types for relaying information
-about the status of electronic mail messages.  These can be thought of
-as <quote>return receipts.</quote>
+RFC1894 は、電子メイルメッセイジの状態に関する情報を伝達するための、一連の
+MIME コンテントタイプを定義しています。これは<quote>return receipts</quote>と
+考えることができます。
 </para>
 
 <para>
-To support DSN, there are two variables. <link
-linkend="dsn-notify">$dsn_notify</link> is used to request receipts for
-different results (such as failed message, message delivered, etc.).
-<link linkend="dsn-return">$dsn_return</link> requests how much of your
-message should be returned with the receipt (headers or full message).
+DSN をサポートするための2つの変数があります。
+<link linkend="dsn-notify">$dsn_notify</link> は異なった結果
+(たとえば、失敗したメッセージや配送済みメッセージなど)に対して証書を要求するのに
+使います。<link linkend="dsn-return">$dsn_return</link>は、証書に付随して返信される
+メッセージがどのくらいか(ヘッダあるいはメッセージ全体)を要求します。
 </para>
 
 <para>
-When using <link linkend="sendmail">$sendmail</link> for mail delivery,
-you need to use either Berkeley sendmail 8.8.x (or greater) a MTA
-supporting DSN command line options compatible to Sendmail: The -N and
--R options can be used by the mail client to make requests as to what
-type of status messages should be returned. Please consider your MTA
-documentation whether DSN is supported.
+メール配信時に<link linkend="sendmail">$sendmail</link>を使うと、
+Berkeley sendmail 8.8.x (またはそれ以上)か、Sendmail互換の、DSN コマンド行オプションを
+サポートする MTA のどちらかを使う必要があります。 -N と -R オプションは、
+どの種類のステータスメッセージが戻ってこなければならないかの要求を作成するために、
+メールクライアントによって使われます。DSN がサポートされているかどうか、MTA の
+ドキュメントを見てください。
 </para>
 
 <para>
-For SMTP delivery using <link linkend="smtp-url">$smtp_url</link>, it
-depends on the capabilities announced by the server whether Mutt will
-attempt to request DSN or not.
+<link linkend="smtp-url">$smtp_url</link> を使う SMTP 配送では、Mutt がDSN を要求するか
+否かを試みるかどうかは、サーバから通知された情報に依存します。
 </para>
 
 </sect1>
 
 <sect1 id="urlview">
-<title>Start a WWW Browser on URLs</title>
+<title>URL 上での WWW ブラウザの起動</title>
 
 <para>
-If a message contains URLs, it is efficient to get a menu with all the
-URLs and start a WWW browser on one of them.  This functionality is
-provided by the external urlview program which can be retrieved at
-<ulink
-url="https://github.com/sigpipe/urlview">https://github.com/sigpipe/urlview</ulink>
-and the configuration commands:
+メッセージに URL が含まれている場合、URL すべてをを含むメニューを取得し、そのうちの1つで
+WWW ブラウザを起動すると効率的です。この機能は、
+<ulink url="https://github.com/sigpipe/urlview">https://github.com/sigpipe/urlview</ulink>
+にある 外部の urlview プログラムと以下の設定コマンドで提供されます。
 </para>
 
 <screen>
@@ -6690,10 +6685,10 @@ macro pager \cb |urlview\n
 </sect1>
 
 <sect1 id="echo">
-<title>Echoing Text</title>
+<title>テキストの表示(echo)</title>
 
 <para>
-Usage:
+使用法:
 </para>
 
 <cmdsynopsis>
@@ -6704,10 +6699,9 @@ Usage:
 </cmdsynopsis>
 
 <para>
-You can print messages to the message window using the "echo" command.
-This might be useful after a macro finishes executing.  After printing
-the message, echo will pause for the number of seconds specified by
-<link linkend="sleep-time">$sleep_time</link>.
+"echo" コマンドを使って、メッセージウィンドウにメッセージを表示することができます。
+これは、マクロの実行終了時に便利です。メッセージ表示後、echo は
+<link linkend="sleep-time">$sleep_time</link>によって指定された秒数だけ停止します。
 </para>
 
 <screen>
@@ -6720,11 +6714,11 @@ macro index ,a "&lt;save-message&gt;=archive&lt;enter&gt;&lt;enter-command&gt;ec
 </sect1>
 
 <sect1 id="compose-flow">
-  <title>Message Composition Flow</title>
+  <title>メッセージ作成フロー</title>
 
   <para>
-    This is a brief overview of the steps Mutt takes during message
-    composition.  It also shows the order and timing of hook execution.
+    これは、Mutt でメッセージ作成を行うステップの簡単な説明です。
+    これはまた、hook 実行の順番とタイミングも示します。
   </para>
 
   <itemizedlist>
