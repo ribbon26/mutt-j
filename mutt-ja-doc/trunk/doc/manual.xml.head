@@ -6495,98 +6495,96 @@ IDLE extension if advertised by the server.
 <title>新規メールのポーリング</title>
 
 <para>
-When in the index menu and being idle (also see <link
-linkend="timeout">$timeout</link>), Mutt periodically checks for new
-mail in all folders which have been configured via the
-<command>mailboxes</command> command. The interval depends on the folder
-type: for local/IMAP folders it consults <link
-linkend="mail-check">$mail_check</link> and <link
-linkend="pop-checkinterval">$pop_checkinterval</link> for POP folders.
+インデックスメニューで、アイドル状態(<link linkend="timeout">$timeout</link>も
+参照)のとき、Mutt は定期的に<command>mailboxes</command>コマンドで
+設定されたすべてのフォルダの新規メールをチェックします。間隔は、フォルダタイプに
+よって異なります。ローカル/IMAP フォルダは
+<link linkend="mail-check">$mail_check</link>で、POPフォルダは、
+<link linkend="pop-checkinterval">$pop_checkinterval</link>で決まります。
 </para>
 
 <para>
-Outside the index menu the directory browser supports checking for new
-mail using the <literal>&lt;check-new&gt;</literal> function which is
-unbound by default. Pressing TAB will bring up a menu showing the files
-specified by the <command>mailboxes</command> command, and indicate
-which contain new messages. Mutt will automatically enter this mode when
-invoked from the command line with the <literal>-y</literal> option.
+インデックスメニュー外では、既定ではどのキーにも割り当てられていませんが、
+<literal>&lt;check-new&gt;</literal>機能をディレクトリブラウザが使う事で、
+新規メールのチェックをサポートします。タブキーを押すと、
+<command>mailboxes</command>コマンドで指定された、ファイルを表示するメニューが
+ポップアップし、どこが新規メールを含むかを表示します。<literal>-y</literal>
+オプションを付けてコマンドラインから起動すると、Mutt は自動的にこのモードに
+入ります。
 </para>
 
 <para>
-For the pager, index and directory browser menus, Mutt contains the
-<literal>&lt;buffy-list&gt;</literal> function (bound to
-<quote>.</quote> by default) which will print a list of folders with new
-mail in the command line at the bottom of the screen.
+ページャ、インデックスとディレクトリブラウザメニューでは、
+画面の最下部にあるコマンド行中に、新規メールがあるフォルダの一覧を表示する、
+<literal>&lt;buffy-list&gt;</literal>機能(既定では<quote>.</quote>に割り当て
+られています)が含まれています。
 </para>
 
 <para>
-For the index, by default Mutt displays the number of mailboxes with new
-mail in the status bar, please refer to the <link
-linkend="status-format">$status_format</link> variable for details.
+インデックスでは、既定で、Mutt はステータスバーに、新規メールが含まれている
+メールボックスの数を表示します。詳細は、
+<link linkend="status-format">$status_format</link>変数を参照してください。
 </para>
 
 <para>
-When changing folders, Mutt fills the prompt with the first folder from
-the mailboxes list containing new mail (if any), pressing
-<literal>&lt;Space&gt;</literal> will cycle through folders with new
-mail.  The (by default unbound) function
-<literal>&lt;next-unread-mailbox&gt;</literal> in the index can be used
-to immediately open the next folder with unread mail (if any).
+フォルダを変更した時、Mutt は(もしもあれば)新規メールを含むメールボックスの一覧
+から最初のフォルダをプロンプトに埋め込みます。<literal>&lt;Space&gt;</literal>を
+押すと、新規メールがあるフォルダを順番に表示します。(既定ではどのキーにも
+割り当てられていませんが)インデックス中で<literal>&lt;next-unread-mailbox&gt;</literal>
+機能を使うと、(もしもあれば)未読のメールがある次のフォルダをすぐにオープンできます。
 </para>
 
 </sect2>
 
 <sect2 id="new-mail-monitoring">
-<title>Monitoring New Mail</title>
+<title>新規メールのモニタ</title>
 
 <para>
-When the <emphasis>Inotify</emphasis> mechanism for monitoring of
-files is supported (Linux only) and not disabled at compilation time,
-Mutt immediately notifies about new mail for all folders configured via
-the <link linkend="mailboxes"><command>mailboxes</command></link>
-command.  Dependent on
-<link linkend="mailbox-formats">mailbox format</link> also added
-<emphasis>old</emphasis> mails are tracked (not for Maildir).
+ファイルをモニタする<emphasis>Inotify</emphasis>がサポートされている場合
+(Linux のみ)で、コンパイル時に無効になっていない場合、Mutt は
+<link linkend="mailboxes"><command>mailboxes</command></link>コマンドで
+設定されたすべてのフォルダへの新規メールについてすぐに通知します。
+<link linkend="mailbox-formats">mailbox format</link>にも依存しますが、
+(Maildirを除いて)追加された<emphasis>古い</emphasis>メールも追跡されます。
 </para>
 
 <para>
-No configuration variables are available.  Trace output is given when
-debugging is enabled via <link linkend="tab-commandline-options">command
-line option</link> <literal>-d3</literal>.  The lower level 2 only shows
-errors, the higher level 5 all including raw Inotify events.
+使用可能な設定変数はありません。トレース出力は、
+<link linkend="tab-commandline-options">コマンド行オプション</link>が
+<literal>-d3</literal>で、デバッグが有効な時に行われます。より小さい
+レベル 2 ではエラーのみを表示し、五より大きいレベルでは生のInotifyイベントを
+表示します。
 </para>
 
 <note>
 <para>
-Getting events about new mail is limited to the capabilities of the
-underlying mechanism.  <emphasis>Inotify</emphasis> only reports local
-changes, i. e. new mail notification works for mails delivered by an
-agent on the same machine as Mutt, but not when delivered remotely on
-a network file system as NFS.  Also the monitoring handles might fail
-in rare conditions, so you better don't completely rely on this
-feature.
+新規メールについてのイベント取得は、基礎となるメカニズムの能力によって制限
+されます。<emphasis>Inotify</emphasis>は、ローカルな変更のみ通知します。すなわち、
+メールに対する新規メールの通知は、Mutt と同じマシン上でのエージェントによって
+配送されたメールについては動作しますが、NFS によるネットワークファイルシステム
+上でリモートで配信されたものについては動作しません。同様に、モニタリングハンドルは
+ごく希な条件で失敗するかもしれないので、この機能に完全な信頼をおかない方がよいです。
 </para>
 </note>
 
 </sect2>
 
 <sect2 id="calc-mailbox-counts">
-<title>Calculating Mailbox Message Counts</title>
+<title>メールボックスメッセージ数の計算</title>
 
 <para>
-If <link linkend="mail-check-stats">$mail_check_stats</link> is set,
-Mutt will periodically calculate the unread, flagged, and total
-message counts for each mailbox watched by the
-<command>mailboxes</command> command.  This calculation takes place at
-the same time as new mail polling, but is controlled by a separate
-timer: <link
-linkend="mail-check-stats-interval">$mail_check_stats_interval</link>.
+<link linkend="mail-check-stats">$mail_check_stats</link>が設定されている場合、
+Mutt は定期的に未読、フラグ付き、および全体のメッセージ数を、
+<command>mailboxes</command>コマンドで監視されている各メールボックス毎に
+計算します。この計算は、新規メールのポーリングと同じ時に行われますが、
+別のタイマー
+<link linkend="mail-check-stats-interval">$mail_check_stats_interval</link>
+によって制御されます。
 </para>
 
 <para>
-The sidebar can display these message counts.  See <link
-linkend="sidebar-format">$sidebar_format</link>.
+サイドバーではこれらのメッセージ数を表示できます。
+<link linkend="sidebar-format">$sidebar_format</link>を参照してください。
 </para>
 
 </sect2>
@@ -6594,26 +6592,24 @@ linkend="sidebar-format">$sidebar_format</link>.
 </sect1>
 
 <sect1 id="editing-threads">
-<title>Editing Threads</title>
+<title>スレッドの編集</title>
 
 <para>
-Mutt has the ability to dynamically restructure threads that are broken
-either by misconfigured software or bad behavior from some
-correspondents. This allows to clean your mailboxes from these
-annoyances which make it hard to follow a discussion.
+Mutt には、壊れたスレッドを動的に作り直す機能があります。スレッドが壊れる理由は
+相手の設定ミスや癖などです。これにより、話を追いにくくする迷惑行為からメールボックスを
+きれいにできます。
 </para>
 
 <sect2 id="link-threads">
-<title>Linking Threads</title>
+<title>スレッドの接続</title>
 
 <para>
-Some mailers tend to <quote>forget</quote> to correctly set the
-<quote>In-Reply-To:</quote> and <quote>References:</quote> headers when
-replying to a message. This results in broken discussions because Mutt
-has not enough information to guess the correct threading.  You can fix
-this by tagging the reply, then moving to the parent message and using
-the <literal>&lt;link-threads&gt;</literal> function (bound to &amp; by
-default). The reply will then be connected to this parent message.
+返信時に<quote>In-Reply-To:</quote> と <quote>References:</quote>ヘッダを正しく
+設定することを<quote>忘れる</quote>傾向があります。この結果、Mutt は、正しいスレッドを
+推測する十分な情報がないので、議論が途切れてしまいます。これを修正するには、
+返信にタグをつけ、次に、親メッセージに移動し、<literal>&lt;link-threads&gt;</literal>
+機能を使います(既定では &amp; に割り当てられています)。そうすると返信は
+親メッセージに接続されます。
 </para>
 
 <para>
