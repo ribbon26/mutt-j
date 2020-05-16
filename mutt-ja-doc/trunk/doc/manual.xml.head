@@ -7030,7 +7030,7 @@ Mutt が扱うことのできない MIME タイプであれば 次のような�
 </para>
 
 <para>
-Attachments appear as follows by default:
+添付は以下のように表示されます。
 </para>
 
 <screen>
@@ -7039,21 +7039,19 @@ Attachments appear as follows by default:
 </screen>
 
 <para>
-The <quote>-</quote> denotes that Mutt will delete the file after
-sending (or postponing, or canceling) the message.  It can be toggled
-with the <literal>&lt;toggle-unlink&gt;</literal> command (default: u).
-The next field is the MIME content-type, and can be changed with the
-<literal>&lt;edit-type&gt;</literal> command (default: ^T).  The next
-field is the encoding for the attachment, which allows a binary message
-to be encoded for transmission on 7bit links.  It can be changed with
-the <literal>&lt;edit-encoding&gt;</literal> command (default: ^E).  The
-next field is the size of the attachment, rounded to kilobytes or
-megabytes.  The next field is the filename, which can be changed with
-the <literal>&lt;rename-file&gt;</literal> command (default: R).  The
-final field is the description of the attachment, and can be changed
-with the <literal>&lt;edit-description&gt;</literal> command (default:
-d). See <link linkend="attach-format">$attach_format</link> for a full
-list of available expandos to format this display to your needs.
+<quote>-</quote>は、そのファイルがメッセージの送信 (または延期や中止) の後に
+削除されるということを示しています。これは、<literal>&lt;toggle-unlink&gt;</literal>
+コマンド (既定値: u) でON/OFFできます。次の欄 は MIME content-type を示しており、
+<literal>&lt;edit-type&gt;</literal> コマンド (既定値: ^T) で変更できます。
+その次の欄はファイルのエンコード方式を示していて、7ビットで転送できるように
+バイナリメッセージをエンコードします。これは、<literal>&lt;edit-encoding&gt;</literal>
+コマンド(既定値: ^E)で変更できます。次の欄は添付のファイルサイズで、キロバイトか
+メガバイト単位に丸めています。次の欄はファイル名で、
+<literal>&lt;rename-file&gt;</literal>コマンド (既定値: R) で変更できます。
+最後の欄は添付ファイルの内容説明で、<literal>&lt;edit-description&gt;</literal>
+コマンド (既定値: d) で変更できます。必要に応じてこの表示形式を変更するために
+使える expando の完全な一覧は
+<link linkend="attach-format">$attach_format</link>にあります。
 </para>
 
 </sect2>
@@ -7061,30 +7059,30 @@ list of available expandos to format this display to your needs.
 </sect1>
 
 <sect1 id="mime-types">
-<title>MIME Type Configuration with <literal>mime.types</literal></title>
+<title><literal>mime.types</literal>によるMIME タイプの設定</title>
 
 <para>
-To get most out of MIME, it's important that a MIME part's content type
-matches the content as closely as possible so that the recipient's
-client can automatically select the right viewer for the
-content. However, there's no reliable for Mutt to know how to detect
-every possible file type. Instead, it uses a simple plain text mapping
-file that specifies what file extension corresponds to what MIME
-type. This file is called <literal>mime.types</literal>.
+MIME を最大限に利用するには、MIME パートの content type が可能な限り
+コンテンツに一致することが重要で、そうすることにより、受信者のクライアントが
+自動的にコンテンツに適したビューワを自動的に選択できるようになります。
+しかし、Mutt が、すべての取り得るファイルタイプを検出する方法を
+知っていても、それが信頼できるわけではありません。そのかわり、
+どのファイル拡張子がどのMIME タイプに対応しているかを指定する、簡単な平文の
+マッピングファイルを使います。このファイルは<literal>mime.types</literal>と
+呼ばれています。
 </para>
 
 <para>
-When you add an attachment to your mail message, Mutt searches your
-personal <literal>mime.types</literal> file at
-<literal>$HOME/.mime.types</literal>, and then the system
-<literal>mime.types</literal> file at
-<literal>/usr/local/share/mutt/mime.types</literal> or
-<literal>/etc/mime.types</literal>
+メールメッセージに添付を追加すると、Mutt は、<literal>$HOME/.mime.types</literal>から
+個人用の<literal>mime.types</literal>を探しに行き、次に、
+<literal>/usr/local/share/mutt/mime.types</literal>又は
+<literal>/etc/mime.types</literal>にあるシステムの<literal>mime.types</literal>
+を見に行きます。
 </para>
 
 <para>
-Each line starts with the full MIME type, followed by a space and
-space-separated list of file extensions. For example you could use:
+各行は完全なMIME タイプで始まり、空白と、空白で分離されたファイルの拡張子の
+一覧が並びます。たとえば以下のようになります。
 </para>
 
 <example id="ex-mime-types">
@@ -7097,45 +7095,42 @@ audio/x-aiff                    aif aifc aiff
 </example>
 
 <para>
-A sample <literal>mime.types</literal> file comes with the Mutt
-distribution, and should contain most of the MIME types you are likely
-to use.
+サンプルの<literal>mime.types</literal>ファイルは Mutt の配布物に付いています。
+使いたい MIME タイプはその中にほとんど含まれているはずです。
 </para>
 
 <para>
-If Mutt can not determine the MIME type by the extension of the file you
-attach, it will run the command specified in
-<link linkend="mime-type-query-command">$mime_type_query_command</link>.
-If that command is not specified, Mutt will look at the file.  If the file
-is free of binary information, Mutt will assume that the file is plain text,
-and mark it as <literal>text/plain</literal>.  If the file contains binary
-information, then Mutt will mark it as
-<literal>application/octet-stream</literal>.  You can change the MIME
-type that Mutt assigns to an attachment by using the
-<literal>&lt;edit-type&gt;</literal> command from the compose menu
-(default: ^T), see <xref linkend="supported-mime-types"/> for supported
-major types. Mutt recognizes all of these if the appropriate entry is
-found in the <literal>mime.types</literal> file. Non-recognized mime
-types should only be used if the recipient of the message is likely to
-be expecting such attachments.
+Mutt が、添付されたファイルの拡張子から、MIME タイプが決められない場合、
+<link linkend="mime-type-query-command">$mime_type_query_command</link>で
+指定されたコマンドを実行します。そのコマンドが指定されていなかった場合、
+Mutt はファイルの中身を見に行きます。ファイルにバイナリ情報がなければ プレーン
+テキストだとみなして<literal>text/plain</literal>と設定します。ファイルに
+バイナリ情報が含まれていれば、<literal>application/octet-stream</literal>と
+設定します。編集メニューから<literal>&lt;edit-type&gt;</literal>コマンド
+(既定値: ^T)を使って、Mutt が添付に割り当てたMIME タイプを変更できます。
+サポートされる major type については<xref linkend="supported-mime-types"/>
+を参照してください。Mutt は<literal>mime.types</literal>ファイル中に適切な
+エントリがあった場合、それらすべてを認識します。認識できない mime タイプは、
+メッセージ受信者がそのような添付が来ることが分かっている場合にのみ使用すべき
+です。
 </para>
 
 <table id="supported-mime-types">
-<title>Supported MIME types</title>
+<title>サポートされている MIME タイプ</title>
 <tgroup cols="3">
 <thead>
-<row><entry>MIME major type</entry><entry>Standard</entry><entry>Description</entry></row>
+<row><entry>MIME major type</entry><entry>標準かどうか</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry><literal>application</literal></entry><entry>yes</entry><entry>General application data</entry></row>
-<row><entry><literal>audio</literal></entry><entry>yes</entry><entry>Audio data</entry></row>
-<row><entry><literal>image</literal></entry><entry>yes</entry><entry>Image data</entry></row>
-<row><entry><literal>message</literal></entry><entry>yes</entry><entry>Mail messages, message status information</entry></row>
-<row><entry><literal>model</literal></entry><entry>yes</entry><entry>VRML and other modeling data</entry></row>
-<row><entry><literal>multipart</literal></entry><entry>yes</entry><entry>Container for other MIME parts</entry></row>
-<row><entry><literal>text</literal></entry><entry>yes</entry><entry>Text data</entry></row>
-<row><entry><literal>video</literal></entry><entry>yes</entry><entry>Video data</entry></row>
-<row><entry><literal>chemical</literal></entry><entry>no</entry><entry>Mostly molecular data</entry></row>
+<row><entry><literal>application</literal></entry><entry>yes</entry><entry>一般的なアプリケーションデータ</entry></row>
+<row><entry><literal>audio</literal></entry><entry>yes</entry><entry>音声データ</entry></row>
+<row><entry><literal>image</literal></entry><entry>yes</entry><entry>画像データ</entry></row>
+<row><entry><literal>message</literal></entry><entry>yes</entry><entry>メールメッセージ、メッセージステータス情報</entry></row>
+<row><entry><literal>model</literal></entry><entry>yes</entry><entry>VRML とその他のモデリングデータ</entry></row>
+<row><entry><literal>multipart</literal></entry><entry>yes</entry><entry>他のMIME パートのコンテナ</entry></row>
+<row><entry><literal>text</literal></entry><entry>yes</entry><entry>テキストデータ</entry></row>
+<row><entry><literal>video</literal></entry><entry>yes</entry><entry>動画データ</entry></row>
+<row><entry><literal>chemical</literal></entry><entry>no</entry><entry>ほとんどの場合、分子データ</entry></row>
 </tbody>
 </tgroup>
 </table>
