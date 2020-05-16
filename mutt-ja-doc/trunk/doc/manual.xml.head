@@ -6942,33 +6942,30 @@ MIME はネットワーク越しにMIME コンテンツを転送するための�
 </para>
 
 <para>
-Mutt does most of MIME encoding/decoding behind the scenes to form
-messages conforming to MIME on the sending side. On reception, it can be
-flexibly configured as to how what MIME structure is displayed (and if
-it's displayed): these decisions are based on the content's MIME type.
-There are three areas/menus in dealing with MIME: the pager (while
-viewing a message), the attachment menu and the compose menu.
+Mutt は 送信側で、MIME に準拠したメッセージ形式にするため、バックグラウンドで
+ほとんどの MIMEエンコード/デコードを行います。受信時に、(表示可能ならば)どのMIME
+構造が、どのように表示されるかについては、柔軟に設定できます。これらは、MIME
+タイプの内容によって決められます。それらは、ページャ(メッセージを表示している時)、
+添付メニューと編集メニューです。
 </para>
 
 </sect2>
 
 <sect2 id="mime-pager">
-<title>Viewing MIME Messages in the Pager</title>
+<title>ページャ中でのMIME メッセージの表示</title>
 
 <para>
-When you select a message from the index and view it in the pager, Mutt
-decodes as much of a message as possible to a text representation.  Mutt
-internally supports a number of MIME types, including the
-<literal>text</literal> major type (with all minor types), the
-<literal>message/rfc822</literal> (mail messages) type and some
-<literal>multipart</literal> types. In addition, it recognizes a variety
-of PGP MIME types, including PGP/MIME and
-<literal>application/pgp</literal>.
+インデックス画面でメールを選択し、ページャ中で表示する場合、Mutt は
+可能な限り多くのメッセージをテキスト表現へと復号化します。Mutt には、
+<literal>text</literal> major タイプ(すべての mitor タイプを含む)、
+<literal>message/rfc822</literal>(メールメッセージ)タイプと
+いくつかの <literal>multipart</literal>タイプを含む、いくつかの MIME タイプを
+内部的にサポートしています。さらに、PGP/MIME と <literal>application/pgp</literal>
+を含む、種々の PGP MIME タイプを認識します。
 </para>
 
 <para>
-Mutt will denote attachments with a couple lines describing them.
-These lines are of the form:
+Mutt は2行を使って添付ファイルを記述します。その行は以下の通りです。
 </para>
 
 <screen>
@@ -6977,13 +6974,13 @@ These lines are of the form:
 </screen>
 
 <para>
-Where the <emphasis>Description</emphasis> is the description or
-filename given for the attachment, and the <emphasis>Encoding</emphasis>
-is one of the already mentioned content encodings.
+ここで、<emphasis>Description</emphasis>は添付ファイルに関する説明やファイル名で、
+<emphasis>Encoding</emphasis>はすでに言及されているコンテンツエンコーディング
+の1つです。
 </para>
 
 <para>
-If Mutt cannot deal with a MIME type, it will display a message like:
+Mutt が扱うことのできない MIME タイプであれば 次のようなメッセージを表示します。
 </para>
 
 <screen>
@@ -6993,48 +6990,43 @@ If Mutt cannot deal with a MIME type, it will display a message like:
 </sect2>
 
 <sect2 id="attach-menu">
-<title>The Attachment Menu</title>
+<title>添付メニュー</title>
 
 <para>
-The default binding for <literal>&lt;view-attachments&gt;</literal> is
-<quote>v</quote>, which displays the attachment menu for a message.  The
-attachment menu displays a list of the attachments in a message.  From
-the attachment menu, you can save, print, pipe, delete, and view
-attachments.  You can apply these operations to a group of attachments
-at once, by tagging the attachments and by using the
-<literal>&lt;tag-prefix&gt;</literal> operator.  You can also reply to
-the current message from this menu, and only the current attachment (or
-the attachments tagged) will be quoted in your reply.  You can view
-attachments as text, or view them using the mailcap viewer definition
-(the mailcap mechanism is explained later in detail).
+既定で<quote>v</quote>に割り当てられている<literal>&lt;view-attachments&gt;</literal>は、
+メッセージの添付メニューを表示します。添付ファイルメニューはメッセージの添付ファイル
+一覧を表示します。添付メニューから、添付ファイルを保存、印刷、パイプ、削除、閲覧する
+ことができます。添付にタグがつけてあり、<literal>&lt;tag-prefix&gt;</literal>
+オペレータを使うことで、複数の添付ファイルを一度に処理することも可能です。 また、
+このメニューからメッセージに返信することもでき、添付のみ(またはタグが付いた添付)を
+返信に引用することができます。テキストとして添付を表示したり、mailcap ビューワの
+定義を使って表示したりできます(mailcap メカニズムの詳細は後で説明します)。
 </para>
 
 <para>
-Finally, you can apply the usual message-related functions (like <link
-linkend="resend-message"><literal>&lt;resend-message&gt;</literal></link>,
-and the <literal>&lt;reply&gt;</literal> and
-<literal>&lt;forward&gt;</literal> functions) to attachments of type
-<literal>message/rfc822</literal>.
+最後に、通常のメッセージに関連する機能(たとえば、
+<link linkend="resend-message"><literal>&lt;resend-message&gt;</literal></link>,
+と<literal>&lt;reply&gt;</literal> と <literal>&lt;forward&gt;</literal>
+機能)を、<literal>message/rfc822</literal>タイプの添付に適用できます。
 </para>
 
 <para>
-See table <xref linkend="tab-attachment-bindings"/> for all available
-functions.
+すべての有効な機能については、
+<xref linkend="tab-attachment-bindings"/>テーブルを参照してください。
 </para>
 
 </sect2>
 
 <sect2 id="compose-menu">
-<title>The Compose Menu</title>
+<title>編集メニュー</title>
 
 <para>
-The compose menu is the menu you see before you send a message.  It
-allows you to edit the recipient list, the subject, and other aspects of
-your message.  It also contains a list of the attachments of your
-message, including the main body.  From this menu, you can print, copy,
-filter, pipe, edit, compose, review, and rename an attachment or a list
-of tagged attachments.  You can also modifying the attachment
-information, notably the type, encoding and description.
+編集メニューはメッセージを送信する前に現れるメニューのことです。このメニュー
+では宛先のリスト、題名やメッセージのその他の部分を編集することができます。
+このメニューには、メッセージの添付ファイル(本文も含む)の一覧も表示されます。
+このメニューから、一つの添付ファイル、もしくはタグ付けされた複数の添付ファイルを、
+印刷、コピー、フィルタ、パイプ、編集、作成、表示、および改名することが
+できます。また、添付の情報、特にタイプやエンコーディングや説明を編集できます。
 </para>
 
 <para>
