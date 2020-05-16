@@ -6846,42 +6846,41 @@ macro index ,a "&lt;save-message&gt;=archive&lt;enter&gt;&lt;enter-command&gt;ec
 <title>その他</title>
 
 <para>
-This section documents various features that fit nowhere else.
+この節では他にない種々の機能について説明します。
 </para>
 
 <variablelist>
 <varlistentry>
 <term>
-Address normalization
+アドレスの正規化
 </term>
 <listitem>
 <para>
-Mutt normalizes all e-mail addresses to the simplest form possible. If
-an address contains a realname, the form <emphasis>Joe User
-&lt;joe@example.com&gt;</emphasis> is used and the pure e-mail address
-without angle brackets otherwise, i.e. just
-<emphasis>joe@example.com</emphasis>.
+Mutt では、すべてのメールアドレスを簡単な形式に正規化することができます。
+アドレスに実名が含まれている場合、
+<emphasis>Joe User &lt;joe@example.com&gt;</emphasis>という形式が使われ、
+括弧その他がない真の電子メールアドレス、すなわち<emphasis>joe@example.com</emphasis>
+となります。
 </para>
 <para>
-This normalization affects all headers Mutt generates including aliases.
+この正規化は別名を含む、Mutt が生成するすべてのヘッダに影響します。
 </para>
 </listitem>
 </varlistentry>
 <varlistentry>
 <term>
-Initial folder selection
+最初のフォルダの選択
 </term>
 <listitem>
 <para>
-The folder Mutt opens at startup is determined as follows: the folder
-specified in the <literal>$MAIL</literal> environment variable if
-present. Otherwise, the value of <literal>$MAILDIR</literal> is taken
-into account. If that isn't present either, Mutt takes the user's
-mailbox in the mailspool as determined at compile-time (which may also
-reside in the home directory). The <link
-linkend="spoolfile">$spoolfile</link> setting overrides this
-selection. Highest priority has the mailbox given with the
-<literal>-f</literal> command line option.
+起動時に Mutt が開くフォルダは以下のようにして決まります。
+<literal>$MAIL</literal>環境変数が存在していれば、そこで指定されているフォルダ
+となります。それ以外では、<literal>$MAILDIR</literal>の値が考慮されます。
+共にない場合、Mutt はコンパイル時に決まった(通常はホームディレクトリの
+内側に有る場合もあります)メールスプール中の、ユーザのメールボックスを使います。
+<link linkend="spoolfile">$spoolfile</link>の設定はこの選択を上書きします。
+最も高い優先度のメールボックスは、コマンド行オプションの<literal>-f</literal> で
+与えられたものです。
 </para>
 </listitem>
 </varlistentry>
@@ -6892,60 +6891,54 @@ selection. Highest priority has the mailbox given with the
 </chapter>
 
 <chapter id="mimesupport">
-<title>Mutt's MIME Support</title>
+<title>Mutt における MIME のサポート</title>
 
 <para>
-Quite a bit of effort has been made to make Mutt the premier text-mode
-MIME MUA.  Every effort has been made to provide the functionality that
-the discerning MIME user requires, and the conformance to the standards
-wherever possible.  When configuring Mutt for MIME, there are two extra
-types of configuration files which Mutt uses.  One is the
-<literal>mime.types</literal> file, which contains the mapping of file
-extensions to IANA MIME types.  The other is the
-<literal>mailcap</literal> file, which specifies the external commands
-to use for handling specific MIME types.
+Mutt を最高のテキストモード MIME MUA にするために、たくさんの努力が払われました。
+目の肥えた MIME ユーザが必要とする機能を提供し、可能な限り標準に準拠するため、
+あらゆる努力が図られています。Mutt でMIME を設定するとき、Mutt が使う2つの
+特別なタイプの設定ファイルが存在します。一つは<literal>mime.types</literal>ファイルで、
+これは、IANA MIME タイプへの拡張子のマッピングを含んでいます。もう一つは、
+<literal>mailcap</literal>で、これは、特定の MIME タイプを扱うために使う
+外部コマンドを指定しています。
 </para>
 
 <sect1 id="using-mime">
-<title>Using MIME in Mutt</title>
+<title>Mutt 中で MIME を使う</title>
 
 <sect2 id="mime-overview">
-<title>MIME Overview</title>
+<title>MIME の概要</title>
 
 <para>
-MIME is short for <quote>Multipurpose Internet Mail Extension</quote>
-and describes mechanisms to internationalize and structure mail
-messages. Before the introduction of MIME, messages had a single text
-part and were limited to us-ascii header and content. With MIME,
-messages can have attachments (and even attachments which itself have
-attachments and thus form a tree structure), nearly arbitrary characters
-can be used for sender names, recipients and subjects.
+MIME は<quote>Multipurpose Internet Mail Extension</quote>の略で、
+国際化と構造化されたメールメッセージを記述するメカニズムです。MIME 以前は、
+メッセージは一つの部分で構成されていて、ヘッダと本文は US-ASCII に限定されていました。
+MIME を使うと、メッセージに添付をつけることができるようになり(添付自身に
+添付がつけられるので、結局の所木構造になります)、送信者名、受信者と題名に
+ほぼ任意の文字を使えるようになります。
 </para>
 
 <para>
-Besides the handling of non-ascii characters in message headers, to Mutt
-the most important aspect of MIME are so-called MIME types. These are
-constructed using a <emphasis>major</emphasis> and
-<emphasis>minor</emphasis> type separated by a forward slash.  These
-specify details about the content that follows. Based upon these, Mutt
-decides how to handle this part. The most popular major type is
-<quote><literal>text</literal></quote> with minor types for plain text,
-HTML and various other formats. Major types also exist for images,
-audio, video and of course general application data (e.g. to separate
-cryptographically signed data with a signature, send office documents,
-and in general arbitrary binary data). There's also the
-<literal>multipart</literal> major type which represents the root of a
-subtree of MIME parts. A list of supported MIME types can be found in
-<xref linkend="supported-mime-types"/>.
+メッセージヘッダ内で非ASCII文字を扱うことに加えて、Mutt にとって、もっとも重要な
+MIME の観点は、MIME タイプと呼ばれているものです。これは、斜め線(スラッシュ)
+によって分離されている、<emphasis>major</emphasis>と<emphasis>minor</emphasis>
+タイプから構成されています。これは、後続のコンテンツに関する詳細を指定します。
+これらに基づき、Mutt はこのパートをどのように扱うかを決めます。もっとも一般的な
+major タイプは<quote><literal>text</literal></quote>で、minor タイプは
+平文、HTMLと種々のその他のフォーマットというものです。Major タイプにはそのほかにも
+イメージ、音声、ビデオともちろん一般的なアプリケーションデータ(たとえば、
+署名を伴う暗号化された署名されたデータを分離するためや、オフィス形式の文書を
+送信するとか、一般的なバイナリデータなど)があります。また、MIME パートの
+サブツリーの基幹を表す<literal>multipart</literal> major タイプもあります。
+サポートされている MIME タイプの一覧は、
+<xref linkend="supported-mime-types"/> にあります。
 </para>
 
 <para>
-MIME also defines a set of encoding schemes for transporting MIME
-content over the network: <literal>7bit</literal>,
+MIME はネットワーク越しにMIME コンテンツを転送するための、一連のエンコーディング
+スキームを定義します。それには、<literal>7bit</literal>,
 <literal>8bit</literal>, <literal>quoted-printable</literal>,
-<literal>base64</literal> and <literal>binary</literal>. There're some
-rules when to choose what for encoding headers and/or body (if needed),
-and Mutt will in general make a good choice.
+<literal>base64</literal> と <literal>binary</literal>があります。
 </para>
 
 <para>
