@@ -7136,29 +7136,30 @@ Mutt はファイルの中身を見に行きます。ファイルにバイナリ
 </table>
 
 <para>
-MIME types are not arbitrary, they need to be assigned by <ulink
-url="http://www.iana.org/assignments/media-types/">IANA</ulink>.
+MIME タイプは、
+<ulink url="http://www.iana.org/assignments/media-types/">IANA</ulink>
+によって割り当てられている必要があり、自由には指定できません。
 </para>
 
 </sect1>
 
 <sect1 id="mailcap">
-<title>MIME Viewer Configuration with Mailcap</title>
+<title>mailcap による MIME ビューワの設定</title>
 
 <para>
-Mutt supports RFC 1524 MIME Configuration, in particular the Unix
-specific format specified in Appendix A of RFC 1524.  This file format
-is commonly referred to as the <quote>mailcap</quote> format.  Many MIME
-compliant programs utilize the mailcap format, allowing you to specify
-handling for all MIME types in one place for all programs.  Programs
-known to use this format include Firefox, lynx and metamail.
+Mutt は RFC 1524 の MIME 設定をサポートしています。特に RFC 1524 の Appendix A で
+規定されている Unix 用フォーマットをサポートしています。このファイル
+フォーマットは一般的に <quote>mailcap</quote> フォーマットと呼ばれます。
+多くの MIME 対応プログラムがこの mailcap フォーマットを利用しているので、
+すべてのプログラムでのすべての MIME タイプの扱いを一か所で指定することができます。
+このフォーマットを利用しているプログラムには、Firefox, lynx, metamail
+などがあります。 
 </para>
 
 <para>
-In order to handle various MIME types that Mutt doesn't have built-in
-support for, it parses a series of external configuration files to find
-an external handler. The default search string for these files is a
-colon delimited list containing the following files:
+Mutt 単体では扱えない様々な MIME タイプを扱うために、 Mutt は外部の設定
+ファイルを解析して、外部ハンドラを探します。設定ファイルを検索する既定の
+文字列はコロン区切りのリストで、以下のようなものです。
 </para>
 
 <orderedlist>
@@ -7171,15 +7172,14 @@ colon delimited list containing the following files:
 </orderedlist>
 
 <para>
-where <literal>$HOME</literal> is your home directory. The
-<literal>$PKGDATADIR</literal> and the <literal>$SYSCONFDIR</literal>
-directories depend on where Mutt is installed: the former is the default
-for shared data, the latter for system configuration files.
+ここで、<literal>$HOME</literal>はホームディレクトリです。
+<literal>$PKGDATADIR</literal> と <literal>$SYSCONFDIR</literal>ディレクトリは、
+インストールされた Mutt に依存します。全社は共有データの既定値で、後者は
+システム設定ファイルの既定値です。
 </para>
 
 <para>
-The default search path can be obtained by running the following
-command:
+既定の検索パターンは以下のコマンドを実行して得られます。
 </para>
 
 <screen>
@@ -7187,31 +7187,29 @@ mutt -nF /dev/null -Q mailcap_path
 </screen>
 
 <para>
-In particular, the metamail distribution will install a mailcap file,
-usually as <literal>/usr/local/etc/mailcap</literal>, which contains
-some baseline entries.
+特に、metamail ディストリビューションは mailcap ファイルを、通常
+<literal>/usr/local/etc/mailcap</literal> にインストールします。これには
+いくつかのベースラインエントリが含まれています。
 </para>
 
 <sect2 id="mailcap-basics">
-<title>The Basics of the Mailcap File</title>
+<title>Mailcap ファイルの基本</title>
 
 <para>
-A mailcap file consists of a series of lines which are comments, blank,
-or definitions.
+mailcap ファイルの各行はコメント、空行、定義のいずれかです。
 </para>
 
 <para>
-A comment line consists of a # character followed by anything you want.
+コメント行は # 文字とそれに続く任意の文字で構成されます。
 </para>
 
 <para>
-A blank line is blank.
+空行は空の行です。
 </para>
 
 <para>
-A definition line consists of a content type, a view command, and any
-number of optional fields.  Each field of a definition line is divided
-by a semicolon <quote>;</quote> character.
+定義行は、content type 、閲覧コマンド、、そして任意の数の付加的なフィールドで
+構成されています。 定義行の各フィールドはセミコロン <quote>;</quote> で分けられています。
 </para>
 
 <para>
