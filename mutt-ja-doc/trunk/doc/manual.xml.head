@@ -7315,21 +7315,21 @@ Mutt が mailcap からプログラムを呼び出す手順はおそらく安全
 </para>
 
 <para>
-<emphasis>Keep the %-expandos away from shell quoting.</emphasis> Don't
-quote them with single or double quotes.  Mutt does this for you, the
-right way, as should any other program which interprets mailcap.  Don't
-put them into backtick expansions.  Be highly careful with evil
-statements, and avoid them if possible at all.  Trying to fix broken
-behavior with quotes introduces new leaks &mdash; there is no
-alternative to correct quoting in the first place.
+<emphasis>シェルクウォートに %展開を入れない。</emphasis>シングルクウォート
+(') やダブルクウォート (") で囲まない。その辺りのことは Mutt がきちんと
+やってくれますし、 mailcap を使う他のプログラムも同じはずです。
+バッククウォートを使った展開の中にも入れない。eval 文には特別な注意が必要です。
+できればまったく使わないでください。おかしな挙動をクウォートで直そうとしても、
+新しい問題が発生するだけです &mdash; 正しくウォートを使うための代替方法は
+最初から有りません。
 </para>
 
 <para>
-If you have to use the %-expandos' values in context where you need
-quoting or backtick expansions, put that value into a shell variable and
-reference the shell variable where necessary, as in the following
-example (using <literal>$charset</literal> inside the backtick expansion
-is safe, since it is not itself subject to any further expansion):
+どうしても '%展開"の値がクウォートやバッククウォートの中に入っていなければ
+ならない場合には、まずその値をシェル変数に代入して、必要に応じてその変数を
+使うようにしてください。次の例のようにです (バッククウォート展開の中で
+<literal>$charset</literal> を使っていますが、これは安全です。そこからさらに
+展開されるわけではないからです)。 
 </para>
 
 <screen>
@@ -7340,15 +7340,15 @@ text/test-mailcap-bug; cat %s; copiousoutput; test=charset=%{charset} \
 </sect2>
 
 <sect2 id="advanced-mailcap">
-<title>Advanced Mailcap Usage</title>
+<title>高度な Mailcap の使用法</title>
 
 <sect3 id="optional-mailcap-fields">
-<title>Optional Fields</title>
+<title>オプションフィールド</title>
 
 <para>
-In addition to the required content-type and view command fields, you
-can add semi-colon <quote>;</quote> separated fields to set flags and
-other options.  Mutt recognizes the following optional fields:
+必須となる content-type と view コマンドフィールドに加え、フラグや他の
+オプションを設定するために、セミコロン<quote>;</quote>で分離したフィールドを
+追加することが出来ます。Mutt は以下のオプションフィールドを認識します。
 </para>
 
 <variablelist>
@@ -7357,13 +7357,13 @@ other options.  Mutt recognizes the following optional fields:
 <term>copiousoutput</term>
 <listitem>
 <para>
-This flag tells Mutt that the command passes possibly large amounts of
-text on standard output.  This causes Mutt to invoke a pager (either
-the internal pager or the external pager defined by the pager variable)
-on the output of the view command.  Without this flag, Mutt assumes that
-the command is interactive.  One could use this to replace the pipe to
-<literal>more</literal> in the <literal>lynx -dump</literal> example in
-the Basic section:
+このフラグは、標準出力上で、大量のテキストがコマンドに渡されることを Mutt に
+伝えます。これは、Mutt に、 view コマンド(内部ページャまたは pager 変数で
+指定された外部ページャ)の出力でページャを呼び出すようにします。このフラグが
+ない場合、Mutt はコマンドが対話的であると仮定します。これを利用して、
+Basic 節中の<literal>lynx -dump</literal>の例にあるパイプを
+<literal>more</literal>に置き換えることが出来ます。
+
 </para>
 
 <screen>
@@ -7371,16 +7371,14 @@ text/html; lynx -dump %s ; copiousoutput
 </screen>
 
 <para>
-This will cause lynx to format the <literal>text/html</literal> output
-as <literal>text/plain</literal> and Mutt will use your standard pager
-to display the results.
+上記では、lynx は、<literal>text/html</literal>出力を<literal>text/plain</literal>
+として整形し、Mutt は結果を表示するために標準のページャを使います。
 </para>
 
 <para>
-Mutt will set the <literal>COLUMNS</literal> environment variable to
-the width of the pager.  Some programs make use of this environment
-variable automatically.  Others provide a command line argument that
-can use this to set the output width:
+Mutt はページャが幅を決めるために、<literal>COLUMNS</literal>環境変数を
+設定します。いくつかのプログラムでは、自動的にこの環境変数を使用します。
+その他では、出力幅を設定するために使う、コマンド行引数を使います。
 </para>
 
 <screen>
@@ -7388,9 +7386,9 @@ text/html; lynx -dump -width ${COLUMNS:-80} %s; copiousoutput
 </screen>
 
 <para>
-Note that when using the built-in pager, <emphasis>only</emphasis>
-entries with this flag will be considered a handler for a MIME type
-&mdash; all other entries will be ignored.
+内蔵ページャを使う場合、このフラグを保つエントリのみ <emphasis>MIME</emphasis>
+タイプのハンドラとして見なされることに注意してください &mdash; 他のエントリは
+すべて無視されます。
 </para>
 </listitem>
 </varlistentry>
@@ -7398,15 +7396,14 @@ entries with this flag will be considered a handler for a MIME type
 <term>needsterminal</term>
 <listitem>
 <para>
-Mutt uses this flag when viewing attachments with <link
-linkend="auto-view"><command>auto_view</command></link>, in order to
-decide whether it should honor the setting of the <link
-linkend="wait-key">$wait_key</link> variable or not.  When an attachment
-is viewed using an interactive program, and the corresponding mailcap
-entry has a <emphasis>needsterminal</emphasis> flag, Mutt will use <link
-linkend="wait-key">$wait_key</link> and the exit status of the program
-to decide if it will ask you to press a key after the external program
-has exited.  In all other situations it will not prompt you for a key.
+<link linkend="auto-view"><command>auto_view</command></link>を使って、
+添付を閲覧する時、<link linkend="wait-key">$wait_key</link>変数の設定を
+信頼するかどうかを決めるのに、Mutt はこのフラグを使います。
+添付ファイルが内部ページャで表示される時、あるいは、適切な mailcap
+エントリが<emphasis>needsterminal</emphasis>フラグが存在している場合、
+Mutt は<link linkend="wait-key">$wait_key</link>と、外部プログラムが
+終了した時の終了ステータスを使って、外部プログラムが終了した後に、キー入力を
+必要とするかを決めます。その他の場合はすべて、キー入力は要求されません。
 </para>
 </listitem>
 </varlistentry>
@@ -7414,8 +7411,8 @@ has exited.  In all other situations it will not prompt you for a key.
 <term>compose=&lt;command&gt;</term>
 <listitem>
 <para>
-This flag specifies the command to use to create a new attachment of a
-specific MIME type.  Mutt supports this from the compose menu.
+このフラグは、特定のMIME タイプの新しい添付を作るためのコマンドを指定します。
+Mutt は編集メニューでこれをサポートします。
 </para>
 </listitem>
 </varlistentry>
