@@ -7420,11 +7420,11 @@ Mutt は編集メニューでこれをサポートします。
 <term>composetyped=&lt;command&gt;</term>
 <listitem>
 <para>
-This flag specifies the command to use to create a new attachment of a
-specific MIME type.  This command differs from the compose command in
-that Mutt will expect standard MIME headers on the data.  This can be
-used to specify parameters, filename, description, etc. for a new
-attachment.  Mutt supports this from the compose menu.
+このフラグは、特定の MIME タイプの添付ファイルを新規作成するコマンドを指定
+します。compose コマンドとの違いは、データ内に標準的な MIME ヘッダが含まれて
+いることをMutt が期待しているという点です。これを使って、パラメータ、
+ファイル名、説明などを指定できます。 Mutt はこれをコンポウズメニューでサポート
+しています。 
 </para>
 </listitem>
 </varlistentry>
@@ -7434,6 +7434,8 @@ attachment.  Mutt supports this from the compose menu.
 <para>
 This flag specifies the command to use to print a specific MIME type.
 Mutt supports this from the attachment and compose menus.
+特定の MIME タイプの印刷に使うコマンドを指定します。 Mutt では、ファイル
+添付メニューと編集メニューでサポートしています。
 </para>
 </listitem>
 </varlistentry>
@@ -7441,10 +7443,10 @@ Mutt supports this from the attachment and compose menus.
 <term>edit=&lt;command&gt;</term>
 <listitem>
 <para>
-This flag specifies the command to use to edit a specific MIME type.
-Mutt supports this from the compose menu, and also uses it to compose
-new attachments.  Mutt will default to the defined <link
-linkend="editor">$editor</link> for text attachments.
+このフラグは、特定の MIME タイプの編集に使うコマンドを指定します。 Mutt は
+このコマンドを編集メニューでサポートし、 新しい添付ファイルを作成するとき
+にも使います。Mutt は既定では <link linkend="editor">$editor</link> 変数に
+定義されたエディタを テキスト形式の添付ファイルに使用します。 
 </para>
 </listitem>
 </varlistentry>
@@ -7452,14 +7454,13 @@ linkend="editor">$editor</link> for text attachments.
 <term>nametemplate=&lt;template&gt;</term>
 <listitem>
 <para>
-This field specifies the format for the file denoted by
-<literal>%s</literal> in the command fields.  Certain programs will
-require a certain file extension, for instance, to correctly view a
-file.  For instance, lynx will only interpret a file as
-<literal>text/html</literal> if the file ends in
-<literal>.html</literal>.  So, you would specify lynx as a
-<literal>text/html</literal> viewer with a line in the mailcap file
-like:
+このフィールドは、コマンドフィールドに <literal>%s</literal> で示される
+ファイルのフォーマットを指定します。ある種のプログラムは、ファイルを正しく
+表示するために、ファイル名に特定の拡張子を要求しします。例えば lynx は、
+ファイル名が<literal>.html</literal> で終わっている場合にのみ
+そのファイルが<literal>text/html</literal>text/html であると解釈します。
+そのため、lynx を <literal>text/html</literal> ビューワに指定するには
+次のように mailcap を記述します。
 </para>
 
 <screen>
@@ -7472,13 +7473,12 @@ text/html; lynx %s; nametemplate=%s.html
 <term>test=&lt;command&gt;</term>
 <listitem>
 <para>
-This field specifies a command to run to test whether this mailcap entry
-should be used.  The command is defined with the command expansion rules
-defined in the next section.  If the command returns 0, then the test
-passed, and Mutt uses this entry.  If the command returns non-zero, then
-the test failed, and Mutt continues searching for the right entry.  Note
-that the content-type must match before Mutt performs the test.  For
-example:
+このフィールドは、この mailcap エントリを使うべきなのかどうかをテストするための
+コマンドを指定します。コマンドは、次の節にあるコマンド展開ルールに沿って定義
+します。コマンドが 0 を返した場合はテストにパスしたことになり、Mutt はその
+エントリを使います。0 以外の値を返した場合にはテスト失敗で、Mutt はさらに
+他の正しいエントリを探し続けます。content-type はテストを実行する前に一致
+しなければならないことに注意してください。例は下記の通りです。
 </para>
 
 <screen>
@@ -7487,12 +7487,12 @@ text/html; lynx %s
 </screen>
 
 <para>
-In this example, Mutt will run the program <literal>RunningX</literal>
-which will return 0 if the X Window manager is running, and non-zero if
-it isn't.  If <literal>RunningX</literal> returns 0, then Mutt will run
-firefox to display the <literal>text/html</literal> object.  If RunningX
-doesn't return 0, then Mutt will go on to the next entry and use lynx to
-display the <literal>text/html</literal> object.
+上記の例では、Mutt は、X Window マネージャが動作中の時に 0 を返し、
+そうでない場合は 0 以外を返す、<literal>RunningX</literal> プログラムを
+実行します。<literal>RunningX</literal> が 0を返した場合、 Mutt は
+<literal>text/html</literal> オブジェクトを表示するために、 firefox を
+起動します。RunningX が 0 を返さない場合、Mutt は次のエントリに移動し、
+<literal>text/html</literal> オブジェクトを表示するために、 lynx を使います。
 </para>
 </listitem>
 </varlistentry>
@@ -7501,14 +7501,13 @@ display the <literal>text/html</literal> object.
 </sect3>
 
 <sect3 id="mailcap-search-order">
-<title>Search Order</title>
+<title>検索順序</title>
 
 <para>
-When searching for an entry in the mailcap file, Mutt will search for
-the most useful entry for its purpose.  For instance, if you are
-attempting to print an <literal>image/gif</literal>, and you have the
-following entries in your mailcap file, Mutt will search for an entry
-with the print command:
+mailcap ファイルの中からあるエントリを検索する場合、Mutt はその目的に最も
+合う項目を見付けようとします。例えば <literal>image/gif</literal> を印刷
+しようとするとき、次のようなエントリが mailcap ファイルにあれば、
+Mutt は print コマンドがあるエントリを探します。
 </para>
 
 <screen>
@@ -7518,8 +7517,8 @@ image/gif;      ; print= anytopnm %s | pnmtops | lpr; \
 </screen>
 
 <para>
-Mutt will skip the <literal>image/*</literal> entry and use the
-<literal>image/gif</literal> entry with the print command.
+Mutt は<literal>image/*</literal>エントリをスキップし、print コマンドがある
+<literal>image/gif</literal>エントリを使用します。
 </para>
 
 <para>
