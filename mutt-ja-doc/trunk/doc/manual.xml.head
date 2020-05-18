@@ -7213,37 +7213,32 @@ mailcap ファイルの各行はコメント、空行、定義のいずれかで
 </para>
 
 <para>
-The content type is specified in the MIME standard
-<quote>type/subtype</quote> notation.  For example,
+content type は MIME 標準の<quote>type/subtype</quote>方式で指定します。例えば、
 <literal>text/plain</literal>, <literal>text/html</literal>,
-<literal>image/gif</literal>, etc.  In addition, the mailcap format
-includes two formats for wildcards, one using the special
-<quote>*</quote> subtype, the other is the implicit wild, where you only
-include the major type.  For example, <literal>image/*</literal>, or
-<literal>video</literal> will match all image types and video types,
-respectively.
+<literal>image/gif</literal>などです。さらに、mailcap フォーマットには二種類の
+ワイルドカードもあります。 一つは特殊な<quote>*</quote>サブタイプを使う方法で、
+もう一つはメジャータイプしか書かないという、暗黙のワイルドカードという方法です。
+例えば、<literal>image/*</literal> 又は<literal>video</literal>は、それぞれ
+すべての image タイプと video タイプに相当します。
 </para>
 
 <para>
-The view command is a Unix command for viewing the type specified. There
-are two different types of commands supported. The default is to send
-the body of the MIME message to the command on stdin. You can change
-this behavior by using <literal>%s</literal> as a parameter to your view
-command.  This will cause Mutt to save the body of the MIME message to a
-temporary file, and then call the view command with the
-<literal>%s</literal> replaced by the name of the temporary file. In
-both cases, Mutt will turn over the terminal to the view program until
-the program quits, at which time Mutt will remove the temporary file if
-it exists. This means that mailcap does <emphasis>not</emphasis> work
-out of the box with programs which detach themselves from the terminal
-right after starting, like <literal>open</literal> on Mac OS X. In order
-to nevertheless use these programs with mailcap, you probably need
-custom shell scripts.
+view コマンドは特定のタイプを閲覧するための Unix コマンドです。二種類の
+異なったコマンドがサポートされています。既定では、その MIME メッセージの
+内容を標準入力でコマンドに渡します。この動作を変更するには、view コマンドの
+引数に  <literal>%s</literal> を使います。こうすると Mutt は MIME メッセージの
+内容を一時ファイルに保存し、<literal>%s</literal> を一時ファイルの名前に
+置き換えて view コマンドを呼び出します。どちらの場合も Mutt は端末を view
+プログラムに明け渡し、終了するまで待ちます。終了時、一時ファイルは (あれば)
+削除されます。これは、mailcap が、Mac OS X 上での<literal>open</literal>のように、
+開始直後に端末から自分自身を切り離すプログラムでは、そのままでは動かない
+ことを意味します。それにもかかわらずそのようなプログラムを mailcap で使う
+ためには、おそらくカスタム shell スクリプトが必要です。
 </para>
 
 <para>
-So, in the simplest form, you can send a <literal>text/plain</literal>
-message to the external pager more on standard input:
+最も単純な形として、<literal>text/plain</literal> のメッセージを外部
+ページャ more に標準入力で渡すには以下のようにします。
 </para>
 
 <screen>
@@ -7251,7 +7246,7 @@ text/plain; more
 </screen>
 
 <para>
-Or, you could send the message as a file:
+あるいは、メッセージをファイルとして渡すことも出来ます。
 </para>
 
 <screen>
@@ -7259,8 +7254,8 @@ text/plain; more %s
 </screen>
 
 <para>
-Perhaps you would like to use lynx to interactively view a
-<literal>text/html</literal> message:
+おそらく、lynx を使って対話的に <literal>text/html</literal> のメッセージを
+閲覧したいと思うかもしれません。
 </para>
 
 <screen>
@@ -7268,23 +7263,22 @@ text/html; lynx %s
 </screen>
 
 <para>
-In this case, lynx does not support viewing a file from standard input,
-so you must use the <literal>%s</literal> syntax.
+この場合、lynx は標準入力からのファイル閲覧をサポートしていないので
+<literal>%s</literal> 構文を使わなければなりません。
 </para>
 
 <note>
 <para>
-<emphasis>Some older versions of lynx contain a bug where they will
-check the mailcap file for a viewer for <literal>text/html</literal>.
-They will find the line which calls lynx, and run it.  This causes lynx
-to continuously spawn itself to view the object.</emphasis>
+<emphasis>古いバージョンの lynx には、一部、<literal>text/html</literal>の
+ビューワの mailcap ファイルをチェックするバグを含むものがあります。その場合、
+lynx を呼ぶように書いてあっても そのまま実行してしまいます。この場合、
+いつまでも 自分が自分を呼び出し続けることになってしまいます。</emphasis>
 </para>
 </note>
 
 <para>
-On the other hand, maybe you don't want to use lynx interactively, you
-just want to have it convert the <literal>text/html</literal> to
-<literal>text/plain</literal>, then you can use:
+一方、lynx を対話的に使いたいのではなく、単に <literal>text/html</literal> を
+<literal>text/plain</literal> に変換したい場合は以下のようにします。
 </para>
 
 <screen>
@@ -7292,8 +7286,8 @@ text/html; lynx -dump %s | more
 </screen>
 
 <para>
-Perhaps you wish to use lynx to view <literal>text/html</literal> files,
-and a pager on all other text formats, then you would use the following:
+おそらく<literal>text/html</literal> ファイルの閲覧には lynx を使いたいものの、
+ほかの text タイプにはすべてページャを使いたい場合はこういう書き方ができます。
 </para>
 
 <screen>
@@ -7304,20 +7298,20 @@ text/*; more
 </sect2>
 
 <sect2 id="secure-mailcap">
-<title>Secure Use of Mailcap</title>
+<title>Mailcapの安全な使用方法</title>
 
 <para>
-The interpretation of shell meta-characters embedded in MIME parameters
-can lead to security problems in general.  Mutt tries to quote
-parameters in expansion of <literal>%s</literal> syntaxes properly, and
-avoids risky characters by substituting them, see the <link
-linkend="mailcap-sanitize">$mailcap_sanitize</link> variable.
+一般的に言って、MIME パラメータに埋め込まれたシェルメタ文字を解釈することには、
+セキュリティ上の問題を引き起こす危険性があります。Mutt は <literal>%s</literal>
+構文の展開の際に正しくパラメータをくくろうとしますし、危険な文字を別のものに
+置き換えようとします。 <link linkend="mailcap-sanitize">$mailcap_sanitize</link>
+変数を参照してください。
 </para>
 
 <para>
-Although Mutt's procedures to invoke programs with mailcap seem to be
-safe, there are other applications parsing mailcap, maybe taking less
-care of it.  Therefore you should pay attention to the following rules:
+Mutt が mailcap からプログラムを呼び出す手順はおそらく安全ですが、他の
+アプリケーションも mailcap を読みますし、中にはそれほど注意を払わないものも
+あるかも知れません。 そこで、次のようなルールに注意を払うべきです。
 </para>
 
 <para>
