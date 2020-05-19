@@ -7522,14 +7522,13 @@ Mutt は<literal>image/*</literal>エントリをスキップし、print コマ�
 </para>
 
 <para>
-In addition, you can use this with <link
-linkend="auto-view"><command>auto_view</command></link> to denote two
-commands for viewing an attachment, one to be viewed automatically, the
-other to be viewed interactively from the attachment menu using the
-<literal>&lt;view-mailcap&gt;</literal> function (bound to
-<quote>m</quote> by default). In addition, you can then use the test
-feature to determine which viewer to use interactively depending on your
-environment.
+さらに、<link linkend="auto-view"><command>auto_view</command></link>
+と組み合わせて、添付ファイル閲覧のコマンドを二つ指定することもできます。
+1つ目は自動的に閲覧するためのコマンド、もう一つは、
+<literal>&lt;view-mailcap&gt;</literal>機能(既定で<quote>m</quote>に割り当て)
+を使って、添付ファイルメニューから対話的に閲覧するコマンドです。
+さらに、test 機能を使えば、どのビューワを使うかを自分の環境に合わせて対話的に
+決定できます。 
 </para>
 
 <screen>
@@ -7539,39 +7538,37 @@ text/html;      lynx -dump %s; nametemplate=%s.html; copiousoutput
 </screen>
 
 <para>
-For <link linkend="auto-view"><command>auto_view</command></link>, Mutt
-will choose the third entry because of the
-<literal>copiousoutput</literal> tag.  For interactive viewing, Mutt
-will run the program <literal>RunningX</literal> to determine if it
-should use the first entry.  If the program returns non-zero, Mutt will
-use the second entry for interactive viewing. The last entry is for
-inline display in the pager and the
-<literal>&lt;view-attach&gt;</literal> function in the attachment menu.
+Mutt は<link linkend="auto-view"><command>auto_view</command></link>に対して、
+<literal>copiousoutput</literal>タグがあるので3番目のエントリを使います。
+対話的な閲覧には、まずプログラム <literal>RunningX</literal> を走らせ、
+一番目のエントリを使うかどうか調べます。プログラムが 0 以外を返せば、二番目の
+エントリを使って対話的な閲覧を行います。最後のエントリはページャ中の
+インライン表示と、添付メニュー中での<literal>&lt;view-attach&gt;</literal>機能です。
 </para>
 
 <para>
-Entries with the <literal>copiousoutput</literal> tag should always be
-specified as the last one per type. For non-interactive use, the last
-entry will then actually be the first matching one with the tag set.
-For non-interactive use, only <literal>copiousoutput</literal>-tagged
-entries are considered. For interactive use, Mutt ignores this tag and
-treats all entries equally. Therefore, if not specified last, all
-following entries without this tag would never be considered for
-<literal>&lt;view-attach&gt;</literal> because the
-<literal>copiousoutput</literal> before them matched already.
+<literal>copiousoutput</literal>タグがあるエントリは、常時各タイプ毎に
+最後に指定しなければなりません。非対話的な使用時には、最後のエントリは、
+実際にはタグが設定されているものに最初に一致するものになります。
+非対話的な使用時には、<literal>copiousoutput</literal>タグが付いたエントリ
+のみが考慮されます。対話的に使う場合には、Mutt はこのタグを無視し、すべてのエントリを
+同じように扱います。そのため、最後に指定しなかった場合、このタグを保たない
+その後のエントリは、<literal>copiousoutput</literal>があるものの前で
+常時一致してしまうため、<literal>&lt;view-attach&gt;</literal>は決して
+考慮されません。
 </para>
 
 </sect3>
 
 <sect3 id="mailcap-command-expansion">
-<title>Command Expansion</title>
+<title>コマンド展開</title>
 
 <para>
-The various commands defined in the mailcap files are passed to the
-<literal>/bin/sh</literal> shell using the <literal>system(3)</literal>
-function.  Before the command is passed to <literal>/bin/sh
--c</literal>, it is parsed to expand various special parameters with
-information from Mutt.  The keywords Mutt expands are:
+mailcap ファイルに定義されている各種のコマンドは、<literal>system(3)</literal>
+機能を使って、<literal>/bin/sh</literal>シェルに渡されます。
+<literal>/bin/sh -c</literal>にコマンドが渡される前に、コマンドは Mutt からの
+情報を元に、操作されて種々の特別なパラメータが展開されます。Mutt が展開する
+キーワードは以下の通りです。
 </para>
 
 <variablelist>
@@ -7580,12 +7577,11 @@ information from Mutt.  The keywords Mutt expands are:
 <term>%s</term>
 <listitem>
 <para>
-As seen in the basic mailcap section, this variable is expanded to a
-filename specified by the calling program.  This file contains the body
-of the message to view/print/edit or where the composing program should
-place the results of composition.  In addition, the use of this keyword
-causes Mutt to not pass the body of the message to the view/print/edit
-program on stdin.
+基本のmailcap 節で見たように、この変数は、呼び出したプログラムによって指定された
+ファイル名に展開されます。この ファイルは、閲覧/印刷/編集するメッセージ本体か、
+編集プログラムが編集した結果が含まれています。さらに、このキーワードを
+使うと、Mutt は、閲覧/印刷/編集するプログラムに対して、標準入力には
+メッセージ本体を渡しません。
 </para>
 </listitem>
 </varlistentry>
@@ -7593,10 +7589,10 @@ program on stdin.
 <term>%t</term>
 <listitem>
 <para>
-Mutt will expand <literal>%t</literal> to the text representation of the
-content type of the message in the same form as the first parameter of
-the mailcap definition line, i.e. <literal>text/html</literal> or
-<literal>image/gif</literal>.
+Mutt は<literal>%t</literal>をテキスト表現へ展開します。これは、メッセージの
+content type を、mailcap 定義行における最初のパラメータと同じ形式で表現した
+ものです。すなわち、<literal>text/html</literal> 又は
+<literal>image/gif</literal> です。
 </para>
 </listitem>
 </varlistentry>
@@ -7604,9 +7600,8 @@ the mailcap definition line, i.e. <literal>text/html</literal> or
 <term>%{&lt;parameter&gt;}</term>
 <listitem>
 <para>
-Mutt will expand this to the value of the specified parameter from the
-Content-Type: line of the mail message.  For instance, if your mail
-message contains:
+Mutt はこれを、メールの Content-Type: 行における特定のパラメータの値に展開
+します。例えば、メールに次のような行があるとします。
 </para>
 
 <screen>
@@ -7618,6 +7613,9 @@ then Mutt will expand <literal>%{charset}</literal> to
 <quote>iso-8859-1</quote>.  The default metamail mailcap file uses this
 feature to test the charset to spawn an xterm using the right charset to
 view the message.
+この場合、Mutt は<literal>%{charset}</literal> を <quote>iso-8859-1</quote>に
+展開します。既定の metamail malcap ファイルは、この機能を使って文字セットを調べ、
+xterm を正しい文字セットで起動してメールを閲覧できるようにします。
 </para>
 </listitem>
 </varlistentry>
@@ -7625,7 +7623,7 @@ view the message.
 <term>\%</term>
 <listitem>
 <para>
-This will be replaced by a literal <literal>%</literal>.
+これは<literal>%</literal>に置き換えられます.
 </para>
 </listitem>
 </varlistentry>
