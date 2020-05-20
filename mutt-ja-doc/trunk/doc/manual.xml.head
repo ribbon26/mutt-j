@@ -7634,6 +7634,8 @@ Mutt does not currently support the <literal>%F</literal> and
 <literal>%n</literal> keywords specified in RFC 1524.  The main purpose
 of these parameters is for multipart messages, which is handled
 internally by Mutt.
+Mutt はRFC 1524 で定義されているキーワード <literal>%F</literal>と<literal>%n</literal> を現在の
+所サポートしていません。これらのパラメータは主にマルチパートメッセージのためのものですが、それらは Mutt 内部で扱われるからです。 
 </para>
 
 </sect3>
@@ -7641,60 +7643,60 @@ internally by Mutt.
 </sect2>
 
 <sect2 id="mailcap-example">
-<title>Example Mailcap Files</title>
+<title>Mailcap ファイルの例</title>
 
 <para>
-This mailcap file is fairly simple and standard:
+以下の mailcap ファイルはとても単純かつ標準的なものです。
 </para>
 
 <screen>
-<emphasis role="comment"># I'm always running X :)</emphasis>
+<emphasis role="comment"># 常に X を実行していることにします:)</emphasis>
 video/*;        xanim %s &gt; /dev/null
 image/*;        xv %s &gt; /dev/null
 
-<emphasis role="comment"># I'm always running firefox (if my computer had more memory, maybe)</emphasis>
+<emphasis role="comment"># firefox を実行していることにします(今よりメモリがあればそうするでしょう。たぶん。)</emphasis>
 text/html;      firefox -remote 'openURL(%s)'
 </screen>
 
 <para>
-This mailcap file shows quite a number of examples:
+以下の mailcap ファイルでは、たくさんの例を示しています。
 </para>
 
 <screen>
-<emphasis role="comment"># Use xanim to view all videos   Xanim produces a header on startup,
-# send that to /dev/null so I don't see it</emphasis>
+<emphasis role="comment"># 動画には、すべて xanim を使います   xanim は起動時にヘッダを出力しますが
+# 見なくて済むように /dev/null へ送ってしまいます</emphasis>
 video/*;        xanim %s &gt; /dev/null
 
-<emphasis role="comment"># Send html to a running firefox by remote</emphasis>
+<emphasis role="comment"># HTML は、実行中の firefox に remote オプションで送ります</emphasis>
 text/html;      firefox -remote 'openURL(%s)'; test=RunningFirefox
 
-<emphasis role="comment"># If I'm not running firefox but I am running X, start firefox on the
-# object</emphasis>
+<emphasis role="comment"># firefox を実行していなくて X を実行しているときは、その
+# オブジェクトに対してfirefox を起動します</emphasis>
 text/html;      firefox %s; test=RunningX
 
-<emphasis role="comment"># Else use lynx to view it as text</emphasis>
+<emphasis role="comment"># それ以外のときは lynx を使ってテキストで閲覧します</emphasis>
 text/html;      lynx %s
 
-<emphasis role="comment"># This version would convert the text/html to text/plain</emphasis>
+<emphasis role="comment"># こちらは text/html を text/plain に変換するものです</emphasis>
 text/html;      lynx -dump %s; copiousoutput
 
-<emphasis role="comment"># I use enscript to print text in two columns to a page</emphasis>
+<emphasis role="comment"># enscript を使ってテキストを二段組みで印刷します</emphasis>
 text/*;         more %s; print=enscript -2Gr %s
 
-<emphasis role="comment"># Firefox adds a flag to tell itself to view jpegs internally</emphasis>
+<emphasis role="comment"># Firefox jpeg を自分で表示するためにフラグを付けます</emphasis>
 image/jpeg;xv %s; x-mozilla-flags=internal
 
-<emphasis role="comment"># Use xv to view images if I'm running X</emphasis>
-<emphasis role="comment"># In addition, this uses the \ to extend the line and set my editor</emphasis>
+<emphasis role="comment"># X 実行中の画像閲覧には xv を使います</emphasis>
+<emphasis role="comment"># なお、ここでは \ を使って行をのばし、画像のエディタも設定します</emphasis>
 <emphasis role="comment"># for images</emphasis>
 image/*;xv %s; test=RunningX; \
         edit=xpaint %s
 
-<emphasis role="comment"># Convert images to text using the netpbm tools</emphasis>
+<emphasis role="comment"># ツールを使って画像をテキストに変換します</emphasis>
 image/*;  (anytopnm %s | pnmscale -xysize 80 46 | ppmtopgm | pgmtopbm |
 pbmtoascii -1x2 ) 2&gt;&amp;1 ; copiousoutput
 
-<emphasis role="comment"># Send excel spreadsheets to my NT box</emphasis>
+<emphasis role="comment"># excel の表計算ファイルは NT マシンに送ります</emphasis>
 application/ms-excel; open.pl %s
 </screen>
 
@@ -7703,7 +7705,7 @@ application/ms-excel; open.pl %s
 </sect1>
 
 <sect1 id="auto-view">
-<title>MIME Autoview</title>
+<title>MIME 自動閲覧</title>
 
 <para>
 Usage:
@@ -7730,17 +7732,16 @@ Usage:
 </cmdsynopsis>
 
 <para>
-In addition to explicitly telling Mutt to view an attachment with the
-MIME viewer defined in the mailcap file from the attachments menu, Mutt
-has support for automatically viewing MIME attachments while in the
-pager.
+添付メニューから、mailcap ファイルで指定されている MIME のビューワで添付ファイルを閲覧する
+よう Mutt に明示的に指示する以外に、 ページャの中で MIME 添付ファイルを自動的に閲覧する
+機能もあります。Mutt はページャ中でMIME 添付を自動的に閲覧する機能をサポートしています。
 </para>
 
 <para>
-For this to work, you must define a viewer in the mailcap file which
-uses the <literal>copiousoutput</literal> option to denote that it is
-non-interactive.  Usually, you also use the entry to convert the
-attachment to a text representation which you can view in the pager.
+機能させるには、mailcap ファイルで <literal>copiousoutput</literal> オプションを使って
+ビューワを指定しなくてはなりません。そのビューワが対話的コマンドではないということを指示
+するためです。 普通は、ページャで閲覧できるようなテキスト表現へ添付ファイルを変換する
+ためにもこのエントリを使います。 
 </para>
 
 <para>
