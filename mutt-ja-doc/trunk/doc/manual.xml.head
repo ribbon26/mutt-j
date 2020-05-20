@@ -7609,10 +7609,6 @@ Content-Type: text/plain; charset=iso-8859-1
 </screen>
 
 <para>
-then Mutt will expand <literal>%{charset}</literal> to
-<quote>iso-8859-1</quote>.  The default metamail mailcap file uses this
-feature to test the charset to spawn an xterm using the right charset to
-view the message.
 この場合、Mutt は<literal>%{charset}</literal> を <quote>iso-8859-1</quote>に
 展開します。既定の metamail malcap ファイルは、この機能を使って文字セットを調べ、
 xterm を正しい文字セットで起動してメールを閲覧できるようにします。
@@ -7630,10 +7626,6 @@ xterm を正しい文字セットで起動してメールを閲覧できるよ�
 </variablelist>
 
 <para>
-Mutt does not currently support the <literal>%F</literal> and
-<literal>%n</literal> keywords specified in RFC 1524.  The main purpose
-of these parameters is for multipart messages, which is handled
-internally by Mutt.
 Mutt はRFC 1524 で定義されているキーワード <literal>%F</literal>と<literal>%n</literal> を現在の
 所サポートしていません。これらのパラメータは主にマルチパートメッセージのためのものですが、それらは Mutt 内部で扱われるからです。 
 </para>
@@ -7745,9 +7737,8 @@ Usage:
 </para>
 
 <para>
-You then use the <command>auto_view</command> configuration command to
-list the content-types that you wish to view automatically.  For
-instance, if you set it to:
+次に <command>auto_view</command> という 設定コマンドを使い、自動的に閲覧したい
+ content-type を列挙します。例えば以下のように列挙します。 
 </para>
 
 <screen>
@@ -7756,9 +7747,8 @@ auto_view text/html application/x-gunzip \
 </screen>
 
 <para>
-...Mutt would try to find corresponding entries for rendering
-attachments of these types as text. A corresponding mailcap could look
-like:
+こうすると、Mutt はそれらのタイプをテキストとして、添付を描画するための対応するエントリを
+探します。対応する mailcap エントリは以下のようになります。
 </para>
 
 <screen>
@@ -7771,12 +7761,10 @@ application/postscript; ps2ascii %s; copiousoutput
 </screen>
 
 <para>
-<command>unauto_view</command> can be used to remove previous entries
-from the <command>auto_view</command> list.  This can be used with <link
-linkend="message-hook"><command>message-hook</command></link> to
-autoview messages based on size, etc.
-<quote><command>unauto_view</command> *</quote> will remove all previous
-entries.
+<command>unauto_view</command>は以前のエントリを<command>auto_view</command>リストから
+削除するのに使います。
+<link linkend="message-hook"><command>message-hook</command></link> と一緒に使うなら、サイズ等に基づいた自動閲覧もできます。
+<quote><command>unauto_view</command> *</quote> は、指定した項目をすべて削除します。
 </para>
 
 </sect1>
@@ -7785,24 +7773,22 @@ entries.
 <title>MIME Multipart/Alternative</title>
 
 <para>
-The <literal>multipart/alternative</literal> container type only has
-child MIME parts which represent the same content in an alternative
-way. This is often used to send HTML messages which contain an
-alternative plain text representation.
+<literal>multipart/alternative</literal> コンテナタイプは、同じコンテンツを別の方法で
+表す子MIME パートのみがあります。これはしばしば、代替 plain text 表現を含む HTML メール
+を送信するのに使われます。
 </para>
 
 <para>
-Mutt has some heuristics for determining which attachment of a
-<literal>multipart/alternative</literal> type to display:
+Mutt には、<literal>multipart/alternative</literal>  のうち、どのタイプの添付ファイルを
+表示するか決定するための発見的手法があります。
 </para>
 
 <orderedlist>
 <listitem>
 <para>
-First, Mutt will check the <command>alternative_order</command> list to
-determine if one of the available types is preferred.  It consists of a
-number of MIME types in order, including support for implicit and
-explicit wildcards. For example:
+まず最初に <command>alternative_order</command> リストを調べて、有効なタイプがあればそれに
+決めます。そこには、明示的あるいは暗黙的なワイルドカードのサポートを含む、順番に並んだ 
+MIME タイプがいくつか記載されています。以下が例です。
 </para>
 
 <screen>
@@ -7812,37 +7798,36 @@ alternative_order text/enriched text/plain text \
 </listitem>
 <listitem>
 <para>
-Next, Mutt will check if any of the types have a defined <link
-linkend="auto-view"><command>auto_view</command></link>, and use that.
+次に Mutt は、いずれかのタイプが<link linkend="auto-view"><command>auto_view</command></link>
+で定義されていないかどうかを調べ、それを使います。
 </para>
 </listitem>
 <listitem>
 <para>
-Failing that, Mutt will look for any text type.
+それに失敗した場合、Mutt は text type を調べます。
 </para>
 </listitem>
 <listitem>
 <para>
-As a last attempt, Mutt will look for any type it knows how to handle.
+Mutt は最後に、処理可能なタイプが一つでもないかどうか探します。 
 </para>
 </listitem>
 </orderedlist>
 
 <para>
-To remove a MIME type from the <command>alternative_order</command>
-list, use the <command>unalternative_order</command> command.
+MIME タイプを <command>alternative_order</command> リストから削除するには、
+<command>unalternative_order</command> コマンドを使います。
 </para>
 
 <para>
-Generating <literal>multipart/alternative</literal> content is supported
-via the
+<literal>multipart/alternative</literal>コンテンツの生成は、
 <link linkend="send-multipart-alternative">$send_multipart_alternative</link>
-quadoption and
+quadoption と
 <link linkend="send-multipart-alternative-filter">$send_multipart_alternative_filter</link>
-filter script.  The composed <literal>text/plain</literal> content
-will be piped to the filter script's stdin.  The output from the
-filter script should be the generated mime type of the content, a
-blank line, and the content.  For example:
+フィルタスクリプトによってサポートされます。編集された、
+<literal>text/plain</literal>コンテンツは、フィルタスクリプトの標準入力に
+パイプされます。フィルタスクリプトの出力は、生成されたコンテンツの MIME タイプ
+、空白行とコンテンツ である必要があります。以下は例です。
 </para>
 <screen>
 text/html
@@ -7855,17 +7840,17 @@ Content in html format
 </screen>
 
 <para>
-A preview of the alternative can be viewed in the compose menu using the functions
-<literal>&lt;view-alt&gt;</literal>,
-<literal>&lt;view-alt-text&gt;</literal> and
-<literal>&lt;view-alt-mailcap&gt;</literal>, bound to
-&quot;v&quot;, &quot;Esc v&quot; and &quot;V&quot; by default.
+alternativeのプレビューは、
+<literal>&lt;view-alt&gt;</literal>,<literal>&lt;view-alt-text&gt;</literal>と
+既定で&quot;v&quot;, &quot;Esc v&quot; と &quot;V&quot; に割り当てられている
+<literal>&lt;view-alt-mailcap&gt;</literal>機能を使って編集メニュー中で
+閲覧できます。
 </para>
 
 </sect1>
 
 <sect1 id="attachments">
-<title>Attachment Searching and Counting</title>
+<title>添付の検索とカウント</title>
 
 <para>
 If you ever lose track of attachments in your mailboxes, Mutt's
