@@ -7853,34 +7853,30 @@ alternativeのプレビューは、
 <title>添付の検索とカウント</title>
 
 <para>
-If you ever lose track of attachments in your mailboxes, Mutt's
-attachment-counting and -searching support might be for you.  You can
-make your message index display the number of qualifying attachments in
-each message, or search for messages by attachment count.  You also can
-configure what kinds of attachments qualify for this feature with the
-<command>attachments</command> and <command>unattachments</command>
-commands.
+メールボックス中の添付ファイルを見失った場合、Mutt が持つ添付ファイルのカウントと
+検索機能のサポートが役立つかもしれません。メッセージインデックスに、各メッセージが
+条件を満たす添付ファイルの数を表示させたり、添付ファイルの数でメッセージを検索
+したりできます。また、<command>attachments</command>と<command>unattachments</command>
+コマンドを使って、この機能の対象となる添付ファルの種類を設定することも出来ます。
 </para>
 
 <para>
-In order to provide this information, Mutt needs to fully MIME-parse all
-messages affected first. This can slow down operation especially for
-remote mail folders such as IMAP because all messages have to be
-downloaded first regardless whether the user really wants to view them
-or not though using <xref linkend="body-caching"/> usually means to
-download the message just once.
+この情報を提供するため、Mutt は最初に、影響を受けるメッセージすべてに完全な
+MIME 解析を行う必要があります。これは、利用者が本当にそれらを表示したいか
+否かにかかわらず、すべてのメッセージを最初にダウンロードする必要があるため、
+IMAP のようなリモートメールフォルダに対しては特に操作が遅くなります。ただし、
+<xref linkend="body-caching"/> を使うと、通常は、メッセージを1回だけダウンロード
+することになります。
 </para>
 
 <para>
-By default, Mutt will not search inside
-<literal>multipart/alternative</literal> containers.  This can be
-changed via the <link
-linkend="count-alternatives">$count_alternatives</link> configuration
-variable.
+既定では、Mutt は<literal>multipart/alternative</literal>コンテナ内を検索しません。
+これは、<link linkend="count-alternatives">$count_alternatives</link>設定変数を
+使って変更できます。
 </para>
 
 <para>
-The syntax is:
+文法は以下の通りです。
 </para>
 
 <cmdsynopsis>
@@ -7912,46 +7908,42 @@ The syntax is:
 </cmdsynopsis>
 
 <para>
-<emphasis>disposition</emphasis> is the attachment's Content-Disposition
-type &mdash; either <literal>inline</literal> or
-<literal>attachment</literal>.  You can abbreviate this to
-<literal>I</literal> or <literal>A</literal>.
+<emphasis>disposition</emphasis>は添付のContent-Disposition タイプで &mdash;
+<literal>inline</literal>又は<literal>attachment</literal> のどちらかです。
+<literal>I</literal>又は<literal>A</literal>という省略形も使えます。
 </para>
 
 <para>
-Disposition is prefixed by either a <quote>+</quote> symbol or a
-<quote>-</quote> symbol.  If it's a <quote>+</quote>, you're saying that
-you want to allow this disposition and MIME type to qualify.  If it's a
-<quote>-</quote>, you're saying that this disposition and MIME type is
-an exception to previous <quote>+</quote> rules.  There are examples
-below of how this is useful.
+Disposition には<quote>+</quote>か<quote>-</quote>記号が前に付きます。
+<quote>+</quote>だった場合、この disposition と MIME タイプを対象にしたい
+と言う事を意味します。<quote>-</quote>だった場合、この disposition と
+MIME タイプは以前の<quote>+</quote>ルールの例外としたいという事を意味します。
+これをどのように使うと便利かについては、以下に例があります。
 </para>
 
 <para>
-<emphasis>mime-type</emphasis> is the MIME type of the attachment you
-want the command to affect.  A MIME type is always of the format
-<literal>major/minor</literal>, where <literal>major</literal> describes
-the broad category of document you're looking at, and
-<literal>minor</literal> describes the specific type within that
-category.  The major part of mime-type must be literal text (or the
-special token <quote><literal>*</literal></quote>), but the minor part
-may be a regular expression.  (Therefore,
-<quote><literal>*/.*</literal></quote> matches any MIME type.)
+<emphasis>mime-type</emphasis>はコマンドに影響を与えたい添付ファイルの MIME タイプ
+です。MIME タイプは常時<literal>major/minor</literal>と言う形式で、
+<literal>major</literal>は検索したいドキュメントに対する広いカテゴリを
+記述したもので、<literal>minor</literal>は、そのカテゴリ中の特定のタイプを記述
+したものです。MIME タイプの major 部分は文字テキスト(又は特別なトークン
+<quote><literal>*</literal></quote>)でなければなりません。しかし、minor パートは
+正規表現でもかまいません(そのため、<quote><literal>*/.*</literal></quote>は
+すべての MIME タイプに一致します)。
 </para>
 
 <para>
-The MIME types you give to the <command>attachments</command> directive
-are a kind of pattern.  When you use the <command>attachments</command>
-directive, the patterns you specify are added to a list.  When you use
-<command>unattachments</command>, the pattern is removed from the list.
-The patterns are not expanded and matched to specific MIME types at this
-time &mdash; they're just text in a list.  They're only matched when
-actually evaluating a message.
+<command>attachments</command>ディレクテイブに渡したMIME タイプはパターンの
+一種です。<command>attachments</command>ディレクティブを使う場合、指定したパターンは
+リストに追加されます。<command>unattachments</command> を使うと、リストから
+パターンが削除されます。パターンはこの時点では展開されず、特定の MIME タイプには
+一致しません&mdash; リスト中に存在するだけです。実際にメッセージを評価した時点で
+のみ一致します。
 </para>
 
 <para>
-Some examples might help to illustrate.  The examples that are not
-commented out define the default configuration of the lists.
+いくつかの例は説明するのに役立つかもしれません。例中の、コメントアウトされていない
+ものは、リストの既定の設定を記述しています。
 </para>
 
 <example id="ex-attach-count">
