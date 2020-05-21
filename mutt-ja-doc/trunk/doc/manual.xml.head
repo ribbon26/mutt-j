@@ -7947,7 +7947,7 @@ MIME タイプは以前の<quote>+</quote>ルールの例外としたいとい�
 </para>
 
 <example id="ex-attach-count">
-<title>Attachment counting</title>
+<title>添付のカウント</title>
 <screen>
 <emphasis role="comment">
 # Removing a pattern from a list removes that pattern literally. It
@@ -8003,14 +8003,13 @@ attachments   -I message/external-body
 </example>
 
 <para>
-Entering the command <quote><command>attachments</command> ?</quote> as
-a command will list your current settings in Muttrc format, so that it
-can be pasted elsewhere.
+コマンド <quote><command>attachments</command> ?</quote>をコマンドとして入力すると、
+現在の設定一覧を表示するので、他の場所に貼り付けることが出来ます。
 </para>
 
 <para>
-Entering the command <quote><command>unattachments</command> *</quote> as
-a command will Clear all attachment settings.
+コマンド <quote><command>unattachments</command> *</quote> をコマンドとして入力すると、
+すべての添付設定を消去します。
 </para>
 </sect1>
 
@@ -8042,17 +8041,14 @@ Usage:
 </cmdsynopsis>
 
 <para>
-Mutt's <command>mime_lookup</command> list specifies a list of MIME
-types that should <emphasis>not</emphasis> be treated according to their
-mailcap entry.  This option is designed to deal with binary types such
-as <literal>application/octet-stream</literal>.  When an attachment's
-MIME type is listed in <command>mime_lookup</command>, then the
-extension of the filename will be compared to the list of extensions in
-the <literal>mime.types</literal> file.  The MIME type associated with
-this extension will then be used to process the attachment according to
-the rules in the mailcap file and according to any other configuration
-options (such as <command>auto_view</command>) specified.  Common usage
-would be:
+Mutt の <command>mime_lookup</command> リストは、mailcap エントリに従って
+扱う<emphasis>べきでない</emphasis> MIME タイプのリストを指定します。このオプションは、
+<literal>application/octet-stream</literal>のような、バイナリタイプを取り扱う
+ように設計されています。添付の MIME タイプが <command>mime_lookup</command> 中に
+ある場合、ファイル名の拡張子は<literal>mime.types</literal>ファイル中の
+拡張子の一覧と比較されます。この拡張子に対応する MIME タイプは、mailcap ファイル中の
+ルールや、その他の設定オプション(例えば<command>auto_view</command>のようなもの)で
+指定されたルールに従って処理されます。一般的な使い方は以下のようになります。
 </para>
 
 <screen>
@@ -8060,9 +8056,9 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 </screen>
 
 <para>
-In addition, the <literal>unmime_lookup</literal> command may be used to
-disable this feature for any particular MIME type if it had been set,
-for example, in a global <literal>.muttrc</literal>.
+さらに、<literal>unmime_lookup</literal>コマンドを使えば、すでに設定されてい
+る特定の MIME タイプに対してこの機能を適用しないようにすることもできます。
+たとえば、グローバルの<literal>.muttrc</literal>です。
 </para>
 
 </sect1>
@@ -8070,7 +8066,7 @@ for example, in a global <literal>.muttrc</literal>.
 </chapter>
 
 <chapter id="optionalfeatures">
-<title>Optional Features</title>
+<title>オプション機能</title>
 
 <sect1 id="optionalfeatures-notes">
 <title>General Notes</title>
