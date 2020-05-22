@@ -8128,17 +8128,17 @@ login の認証情報は URL で指定できます。これは、複数の IMAP,
 </para>
 
 <para>
-A password can be given, too but is not recommended if the URL is
-specified in a configuration file on disk.
+パスワードも与えることが出来ますが、ディスク上の設定ファイル中に URL が
+指定できるので、推奨されません。
 </para>
 
 <para>
-If no port number is given, Mutt will use the system's default for the
-given protocol (usually consulting <literal>/etc/services</literal>).
+<literal>/etc/services</literal>を参照します)に対してシステム既定のものを
+使います。
 </para>
 
 <para>
-The optional path is only relevant for IMAP and ignored elsewhere.
+オプションのパスは通常 IMAP のみに関係し、その他では無視されます。
 </para>
 
 <example id="ex-url">
@@ -8155,73 +8155,67 @@ smtp://user@host:587/
 </sect1>
 
 <sect1 id="ssl">
-<title>SSL/TLS Support</title>
+<title>SSL/TLS サポート</title>
 
 <para>
-If Mutt is compiled with IMAP, POP3 and/or SMTP support, it can also be
-compiled with support for SSL or TLS using either OpenSSL or GnuTLS ( by
-running the <emphasis>configure</emphasis> script with the
-<emphasis>--enable-ssl=...</emphasis> option for OpenSSL or
-<emphasis>--enable-gnutls=...</emphasis> for GnuTLS). Mutt can then
-attempt to encrypt communication with remote servers if these protocols
-are suffixed with <quote>s</quote> for <quote>secure
-communication</quote>.
+Mutt が IMAP, POP3 と SMTP をサポートするようにコンパイルされてる場合、
+OpenSSL 又は GnuTLS (OpenSSL では<emphasis>--enable-ssl=...</emphasis>オプション、
+GnuTLS では<emphasis>--enable-gnutls=...</emphasis>オプションを、
+<emphasis>configure</emphasis>スクリプトを実行する時に使って)のどちらかを
+使う、 SSL 又は TLS のサポートもするようにコンパイルも出来ます。Mutt は
+プロトコルに<quote>暗号化通信</quote>を意味する<quote>s</quote>接尾辞がある時、
+リモートサーバに対して暗号化通信を試みます。
 </para>
 
 </sect1>
 
 <sect1 id="pop">
-<title>POP3 Support</title>
+<title>POP3 サポート</title>
 
 <para>
-If Mutt is compiled with POP3 support (by running the
-<emphasis>configure</emphasis> script with the
-<emphasis>--enable-pop</emphasis> flag), it has the ability to work with
-mailboxes located on a remote POP3 server and fetch mail for local
-browsing.
+Mutt がPOP3 をサポートするようにコンパイルされている場合(
+<emphasis>--enable-pop</emphasis>フラグをつけて <emphasis>configure</emphasis>
+を実行した場合)、リーウトの POP3 サーバ上にあるメールボックスを扱ったり、
+ローカルでの閲覧用にメールを取りに行ったりすることができます。 
 </para>
 
 <para>
-Remote POP3 servers can be accessed using URLs with the
-<literal>pop</literal> protocol for unencrypted and
-<literal>pops</literal> for encrypted communication, see <xref
-linkend="url-syntax"/> for details.
+リモートのPOP3 サーバへは、暗号化なしの場合は<literal>pop</literal>プロトコルで、
+暗号化通信での場合は<literal>pops</literal>を使った URL でアクセス出来ます。
+詳細は<xref linkend="url-syntax"/>を参照してください。
 </para>
 
 <para>
-Polling for new mail is more expensive over POP3 than locally. For this
-reason the frequency at which Mutt will check for mail remotely can be
-controlled by the <link
-linkend="pop-checkinterval">$pop_checkinterval</link> variable, which
-defaults to every 60 seconds.
+POP3 経由だと、新着メール情報の取得にローカルより負担がかかります。このため、
+Mutt がリモートでメールチェックする頻度を
+<link linkend="pop-checkinterval">$pop_checkinterval</link>変数により
+制御できます。既定値は 60 秒ごとです。 
 </para>
 
 <para>
-POP is read-only which doesn't allow for some features like editing
-messages or changing flags. However, using <xref
-linkend="header-caching"/> and <xref linkend="body-caching"/> Mutt
-simulates the new/old/read flags as well as flagged and replied.  Mutt
-applies some logic on top of remote messages but cannot change them so
-that modifications of flags are lost when messages are downloaded from
-the POP server (either by Mutt or other tools).
+POP はリードオンリであり、メッセージの編集やフラグの変更と言ったいくつかの機能を
+許可していません。しかし、<xref linkend="header-caching"/> と
+<xref linkend="body-caching"/>を使う事により、Mutt は、フラグを付けたり
+返信をしたことを付けたりするような、new/old/read フラグをシミュレートします。
+Mutt はリモートメッセージの最上位にいくつかのロジックを適用しますが、変更が
+出来ないので、POP サーバからメッセージがダウンロードされた時(Mutt または他のツール
+によって)にはフラグの変更はなくなります。
 </para>
 
 <anchor id="fetch-mail"/>
 <para>
-Another way to access your POP3 mail is the
-<literal>&lt;fetch-mail&gt;</literal> function (default: G).  It allows
-to connect to <link linkend="pop-host">$pop_host</link>, fetch all your
-new mail and place it in the local <link
-linkend="spoolfile">$spoolfile</link>.  After this point, Mutt runs
-exactly as if the mail had always been local.
+POP3 のメールにアクセスする別の方法は <literal>&lt;fetch-mail&gt;</literal>機能
+(既定値: G)です。これは、<link linkend="pop-host">$pop_host</link>に接続し、
+新着メールをすべて取ってきて、ローカルの
+<link linkend="spoolfile">$spoolfile</link>におきます。これ以降、Mutt は
+そのメールがまるでずっとローカルにあったかのように 動作します。
 </para>
 
 <note>
 <para>
-If you only need to fetch all messages to a local mailbox you should
-consider using a specialized program, such as
-<literal>fetchmail(1)</literal>, <literal>getmail(1)</literal> or
-similar.
+すべてのメッセージをローカルのメールボックスにフェッチするだけでよい場合は、
+<literal>fetchmail(1)</literal>, <literal>getmail(1)</literal>や同等の、
+専用のプログラムの使用を検討する必要があります。
 </para>
 </note>
 
