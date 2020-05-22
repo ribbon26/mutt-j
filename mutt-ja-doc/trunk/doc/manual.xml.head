@@ -8069,26 +8069,24 @@ mime_lookup application/octet-stream application/X-Lotus-Manuscript
 <title>オプション機能</title>
 
 <sect1 id="optionalfeatures-notes">
-<title>General Notes</title>
+<title>一般的な注意事項</title>
 
 <sect2 id="compile-time-features">
-<title>Enabling/Disabling Features</title>
+<title>機能の有効化/無効化</title>
 
 <para>
-Mutt supports several of optional features which can be enabled or
-disabled at compile-time by giving the <emphasis>configure</emphasis>
-script certain arguments. These are listed in the <quote>Optional
-features</quote> section of the <emphasis>configure --help</emphasis>
-output.
+Mutt は<emphasis>configure</emphasis>スクリプトに特定の引数を与えることにより、
+コンパイル時に有効または無効にできるいくつかのオプション機能があります。
+それらは<emphasis>configure --help</emphasis>出力の
+<quote>Optional features</quote>セクション中に一覧があります。
 </para>
 
 <para>
-Which features are enabled or disabled can later be determined from the
-output of <literal>mutt -v</literal>. If a compile option starts with
-<quote>+</quote> it is enabled and disabled if prefixed with
-<quote>-</quote>. For example, if Mutt was compiled using GnuTLS for
-encrypted communication instead of OpenSSL, <literal>mutt -v</literal>
-would contain:
+どの機能が有効か無効かについては、後で<literal>mutt -v</literal>の出力から
+判断できます。コンパイル時オプションが<quote>+</quote>から始まっている場合は
+有効で、<quote>-</quote>で始まっている場合は無効を意味します。例えば、
+OpenSSL の代わりに暗号化通信をするためにGnuTLSを使うようにコンパイルされて
+いると、<literal>mutt -v</literal>の出力は以下のようになります。
 </para>
 
 <screen>
@@ -8097,13 +8095,13 @@ would contain:
 </sect2>
 
 <sect2 id="url-syntax">
-<title>URL Syntax</title>
+<title>URL の文法</title>
 
 <para>
-Mutt optionally supports the IMAP, POP3 and SMTP protocols which require
-to access servers using URLs. The canonical syntax for specifying URLs
-in Mutt is (an item enclosed in <literal>[]</literal> means it is
-optional and may be omitted):
+Mutt は URL を使ってサーバにアクセスすることを必要とする IMAP,POP3 と SMTP
+プロトコルをオプションでサポートしています。URL を指定するための、Mutt 中での
+正しい構文(<literal>[]</literal>で囲まれた項目はオプションを意味し、省略
+可能です)は以下のようになります。
 </para>
 
 <screen>
@@ -8111,24 +8109,22 @@ proto[s]://[username[:password]@]server[:port][/path]
 </screen>
 
 <para>
-<emphasis>proto</emphasis> is the communication protocol:
-<literal>imap</literal> for IMAP, <literal>pop</literal> for POP3 and
-<literal>smtp</literal> for SMTP. If <quote>s</quote> for <quote>secure
-communication</quote> is appended, Mutt will attempt to establish an
-encrypted communication using SSL or TLS.
+ここで、<emphasis>proto</emphasis>は通信用のプロトコルで、IMAP 用は
+<literal>imap</literal>、POP3 用は<literal>pop</literal>、そしてSMTP用は
+<literal>smtp</literal>です。<quote>暗号化通信</quote>のために、
+<quote>s</quote>が末尾に付くと、Mutt は SSL かTLS を使って、暗号化通信を
+確立しようと試みます。
 </para>
 
 <para>
-Since all protocols supported by Mutt support/require authentication,
-login credentials may be specified in the URL. This has the advantage
-that multiple IMAP, POP3 or SMTP servers may be specified (which isn't
-possible using, for example, <link
-linkend="imap-user">$imap_user</link>). The username may contain the
-<quote>@</quote> symbol being used by many mail systems as part of the
-login name. The special characters <quote>/</quote>
-(<literal>%2F</literal>), <quote>:</quote> (<literal>%3A</literal>) and
-<quote>%</quote> (<literal>%25</literal>) have to be URL-encoded in
-usernames using the <literal>%</literal>-notation.
+Mutt の support/require 認証によってすべてのプロトコルがサポートされるので、
+login の認証情報は URL で指定できます。これは、複数の IMAP,POP3 または SMTP
+サーバが指定できるというメリットがあります(たとえば、
+<link linkend="imap-user">$imap_user</link>は使えません)。ユーザ名は
+ログイン名の一部として多くのシステムで使われている、<quote>@</quote>記号を
+含むことも可能です。特別な文字 <quote>/</quote>(<literal>%2F</literal>),
+<quote>:</quote> (<literal>%3A</literal>)と<quote>%</quote>(<literal>%25</literal>)
+は、<literal>%</literal>記法を使って、ユーザ名中に URL エンコードする必要があります。
 </para>
 
 <para>
