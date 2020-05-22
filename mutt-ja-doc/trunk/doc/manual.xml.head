@@ -8222,41 +8222,42 @@ POP3 のメールにアクセスする別の方法は <literal>&lt;fetch-mail&gt
 </sect1>
 
 <sect1 id="imap">
-<title>IMAP Support</title>
+<title>IMAP サポート</title>
 
 <para>
-If Mutt was compiled with IMAP support (by running the
-<emphasis>configure</emphasis> script with the
-<emphasis>--enable-imap</emphasis> flag), it has the ability to work
-with folders located on a remote IMAP server.
+Mutt が IMAP をサポートするようにコンパイルされていた場合
+(<emphasis>--enable-imap</emphasis>フラグを指定して<emphasis>configure</emphasis>
+スクリプトを実行した場合)、リモートの IMAP サーバにあるフォルダを扱うことが
+できます。
 </para>
 
 <para>
-You can access the remote inbox by selecting the folder by its URL (see
-<xref linkend="url-syntax"/> for details) using the
-<literal>imap</literal> or <literal>imaps</literal> protocol.
-Alternatively, a pine-compatible notation is also supported, i.e.
-<literal>{[username@]imapserver[:port][/ssl]}path/to/folder</literal>
+<literal>imap</literal> 又は <literal>imaps</literal>プロトコルを使って
+URLを指定し(詳細は<xref linkend="url-syntax"/>を参照してください)、
+フォルダを選択することで、リモートの inbox にアクセス出来ます。また、
+pine 互換な表記もサポートしています。すなわち、
+<literal>{[username@]imapserver[:port][/ssl]}path/to/folder</literal>です。
 </para>
 
 <para>
-Note that not all servers use <quote>/</quote> as the hierarchy
-separator.  Mutt should correctly notice which separator is being used
-by the server and convert paths accordingly.
+すべてのサーバが階層を示すセパレータとして<quote>/</quote>を使うとは限らない
+ことに注意してください。Mutt はどのセパレータがサーバで使われているかを正しく
+認識し、それに応じてパスを変換します。
 </para>
 
 <para>
-When browsing folders on an IMAP server, you can toggle whether to look
-at only the folders you are subscribed to, or all folders with the
-<emphasis>toggle-subscribed</emphasis> command.  See also the <link
-linkend="imap-list-subscribed">$imap_list_subscribed</link> variable.
+IMAP サーバ上のフォルダを閲覧しているときに、 自分が購読しているフォルダだけを
+見るか、それともあらゆるフォルダを見るかを、<emphasis>toggle-subscribed</emphasis>
+コマンドで切り換えられます。
+<link linkend="imap-list-subscribed">$imap_list_subscribed</link>変数も参照して
+ください。
 </para>
 
 <para>
-Polling for new mail on an IMAP server can cause noticeable delays. So,
-you'll want to carefully tune the <link
-linkend="mail-check">$mail_check</link> and <link
-linkend="timeout">$timeout</link> variables. Reasonable values are:
+IMAP サーバ上の新着メールを確認すると、動作が遅くなって気になることがあります。
+そのため、<link linkend="mail-check">$mail_check</link> と
+<link linkend="timeout">$timeout</link> 変数は慎重に調整したいと思うことでしょう。
+適切な値は以下の通りです。
 </para>
 
 <screen>
@@ -8265,59 +8266,57 @@ set timeout=15
 </screen>
 
 <para>
-with relatively good results even over slow modem lines.
+上記は遅いモデム回線にしては、結果は比較的良好です。 
 </para>
 
 <note>
 <para>
-Note that if you are using mbox as the mail store on UW servers prior to
-v12.250, the server has been reported to disconnect a client if another
-client selects the same folder.
+v12.250 以前の UW サーバでメールの格納に mbox を使っている場合は注意してください。
+別のクライアントが同じフォルダを選ぶと接続が切断されてしまうと報告されています。
 </para>
 </note>
 
 <sect2 id="imap-browser">
-<title>The IMAP Folder Browser</title>
+<title>IMAP フォルダブラウザ</title>
 
 <para>
-As of version 1.2, Mutt supports browsing mailboxes on an IMAP
-server. This is mostly the same as the local file browser, with the
-following differences:
+バージョン 1.2 から Mutt は IMAP サーバ上のメールボックス閲覧 (browsing) をサポート
+しています。これはローカルファイルブラウザとほとんど同じですが、以下のような
+違いがあります。
 </para>
 
 <itemizedlist>
 <listitem>
 
 <para>
-In lieu of file permissions, Mutt displays the string
-<quote>IMAP</quote>, possibly followed by the symbol <quote>+</quote>,
-indicating that the entry contains both messages and subfolders. On
-Cyrus-like servers folders will often contain both messages and
-subfolders.  A mailbox name with a trailing delimiter (usually
-<quote>/</quote> or <quote>.</quote>) indicates subfolders.
+ファイルの属性の代わりに "IMAP" という文字列を表示し、その後ろに <quote>+</quote>
+記号がつく場合がありますが、これはその中にメッセージとサブフォルダの両方が含まれて
+いることを意味します。Cyrus 系サーバの場合には、しばしばフォルダの中にメッセージと
+サブフォルダが入っています。メールボックス名の後にデリミタ(通常<quote>/</quote>か
+<quote>.</quote>)がある場合はサブフォルダを意味します。
 </para>
 </listitem>
 <listitem>
 
 <para>
-For the case where an entry can contain both messages and subfolders,
-the selection key (bound to <literal>enter</literal> by default) will
-choose to descend into the subfolder view. If you wish to view the
-messages in that folder, you must use <literal>view-file</literal>
-instead (bound to <literal>space</literal> by default).
+メッセージとサブフォルダの両方が含まれている場合、(既定で<literal>enter</literal>に
+割り当てられている)選択キーを押すと そのサブフォルダの中に下りて行きます。
+そのフォルダ自体のメッセージを見たい場合には、(既定で<literal>space</literal>に
+割り当てられている<literal>view-file</literal>を代わりに使わなければなりません。
 </para>
 </listitem>
 <listitem>
 
 <para>
-You can create, delete and rename mailboxes with the
+メールボックスの作成、削除、改名は、
 <literal>&lt;create-mailbox&gt;</literal>,
-<literal>&lt;delete-mailbox&gt;</literal>, and
-<literal>&lt;rename-mailbox&gt;</literal> commands (default bindings:
-<literal>C</literal>, <literal>d</literal> and <literal>r</literal>,
-respectively). You may also <literal>&lt;subscribe&gt;</literal> and
-<literal>&lt;unsubscribe&gt;</literal> to mailboxes (normally these are
-bound to <literal>s</literal> and <literal>u</literal>, respectively).
+<literal>&lt;delete-mailbox&gt;</literal>, と
+<literal>&lt;rename-mailbox&gt;</literal> コマンド(既定でそれぞれ
+<literal>C</literal>, <literal>d</literal> と <literal>r</literal>に
+割り当てられています)を使います。また、メールボックスに対して、
+<literal>&lt;購読(subscribe)&gt;</literal> と <literal>&lt;購読解除(unsubscribe)&gt;</literal>
+(それぞれ通常は<literal>s</literal> と <literal>u</literal>に割り当てられています)
+もできます。
 </para>
 </listitem>
 
@@ -8326,7 +8325,7 @@ bound to <literal>s</literal> and <literal>u</literal>, respectively).
 </sect2>
 
 <sect2 id="imap-authentication">
-<title>Authentication</title>
+<title>認証</title>
 
 <para>
 Mutt supports four authentication methods with IMAP servers: SASL,
