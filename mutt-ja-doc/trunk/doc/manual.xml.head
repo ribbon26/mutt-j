@@ -8328,61 +8328,57 @@ v12.250 以前の UW サーバでメールの格納に mbox を使っている�
 <title>認証</title>
 
 <para>
-Mutt supports four authentication methods with IMAP servers: SASL,
-GSSAPI, CRAM-MD5, and LOGIN (there is a patch by Grant Edwards to add
-NTLM authentication for you poor exchange users out there, but it has
-yet to be integrated into the main tree). There is also support for the
-pseudo-protocol ANONYMOUS, which allows you to log in to a public IMAP
-server without having an account. To use ANONYMOUS, simply make your
-username blank or <quote>anonymous</quote>.
+Mutt は IMAP サーバに関して四つの認証方法をサポートしています。それらは
+SASL, GSSAPI, CRAM-MD5, LOGIN です(かわいそうな exchange ユーザのために
+NTLM 認証を追加する、Grant Edwards によるパッチがありますが、まだメイン
+ツリーには統合されていません)。また疑似プロトコル ANONYMOUS のサポートも
+あります。これは公開 IMAP サーバにアカウントなしでログインするためのもの
+です。ANONYMOUS を使うには、単にユーザ名を入れないでおくか、 または
+<quote>anonymous</quote> にします。 
 </para>
 
 <para>
-SASL is a special super-authenticator, which selects among several
-protocols (including GSSAPI, CRAM-MD5, ANONYMOUS, and DIGEST-MD5) the
-most secure method available on your host and the server. Using some of
-these methods (including DIGEST-MD5 and possibly GSSAPI), your entire
-session will be encrypted and invisible to those teeming network
-snoops. It is the best option if you have it. To use it, you must have
-the Cyrus SASL library installed on your system and compile Mutt with
-the <emphasis>--with-sasl</emphasis> flag.
+SASL は特殊な、包括的認証方法で、自分のホストとサーバ両方で利用可能かつ最も
+堅牢な方法を、いくつかのプロトコル (GSSAPI, CRAM-MD5, ANONYMOUS, DIGEST-MD5 を
+含む) の中から選びます。 これらのうちのいくつかの方法 (DIGEST-MD5 や、多分
+GSSAPI も) を使うと、セッション全体が暗号化され、そこかしこにいるネットワーク
+覗きの目から見えなくなります。利用可能なら、これが最善の選択肢です。SASL を
+使うには、システムに Cyrus SASL ライブラリがインストールされていて、 かつ、
+<emphasis>--with-sasl</emphasis>フラグ付きで mutt をコンパイルする必要があります。
 </para>
 
 <para>
-Mutt will try whichever methods are compiled in and available on the
-server, in the following order: SASL, ANONYMOUS, GSSAPI, CRAM-MD5,
-LOGIN.
+Mutt は、コンパイル時に組み込まれ、かつサーバ側の利用可能な方法をすべて
+試していきます。順番は SASL, ANONYMOUS, GSSAPI, CRAM-MD5, LOGIN です。
 </para>
 
 <para>
-There are a few variables which control authentication:
+認証を制御する変数がいくつかあります
 </para>
 
 <itemizedlist>
 <listitem>
 
 <para>
-<link linkend="imap-user">$imap_user</link> - controls the username
-under which you request authentication on the IMAP server, for all
-authenticators. This is overridden by an explicit username in the
-mailbox path (i.e. by using a mailbox name of the form
-<literal>{user@host}</literal>).
+<link linkend="imap-user">$imap_user</link> - IMAP サーバへ認証を要求す
+るユーザ名を制御し、すべての認証方法で使われます。れはメールボックスのパスに
+明示的に含まれるユーザ名 (つまり <literal>{user@host}</literal> 形式のメール
+ボックスを使うこと)によって上書きされます。
 </para>
 </listitem>
 <listitem>
 
 <para>
-<link linkend="imap-pass">$imap_pass</link> - a password which you may
-preset, used by all authentication methods where a password is needed.
+<link linkend="imap-pass">$imap_pass</link> - あらかじめ設定しておくパスワードで、
+パスワードを必要とするすべての認証方法に使います。
 </para>
 </listitem>
 <listitem>
 
 <para>
-<link linkend="imap-authenticators">$imap_authenticators</link> - a
-colon-delimited list of IMAP authentication methods to try, in the order
-you wish to try them. If specified, this overrides Mutt's default
-(attempt everything, in the order listed above).
+<link linkend="imap-authenticators">$imap_authenticators</link> - コロンで
+区切られた 試行したい順で並んでいる IMAP 認証方法リストです。指定されると、
+Mutt の既定値(上記の順ですべてを試みる)を上書きします。
 </para>
 </listitem>
 
@@ -8393,43 +8389,42 @@ you wish to try them. If specified, this overrides Mutt's default
 </sect1>
 
 <sect1 id="smtp">
-<title>SMTP Support</title>
+<title>SMTP サポート</title>
 
 <para>
-Besides supporting traditional mail delivery through a
-sendmail-compatible program, Mutt supports delivery through SMTP if it
-was configured and built with <literal>--enable-smtp</literal>.
+sendmail 互換のプログラムを使った従来型のメール配信のサポートに加え、
+Mutt は<literal>--enable-smtp</literal>を指定して構成、ビルドされていれば、
+SMTP 配信をサポートします。
 </para>
 
 <para>
-If the configuration variable <link linkend="smtp-url">$smtp_url</link>
-is set, Mutt will contact the given SMTP server to deliver messages; if
-it is unset, Mutt will use the program specified by <link
-linkend="sendmail">$sendmail</link>.
+設定変数 <link linkend="smtp-url">$smtp_url</link> が設定されている場合、Mutt は
+メッセージを配送するために、指定された SMTP サーバに接続を試みます。
+設定されていない場合は、<link linkend="sendmail">$sendmail</link> で指定された
+プログラムを使います。
 </para>
 
 <para>
-For details on the URL syntax, please see <xref linkend="url-syntax"/>.
+URL文法の詳細については、<xref linkend="url-syntax"/>を参照してください。
 </para>
 
 <para>
-The built-in SMTP support supports encryption (the
-<literal>smtps</literal> protocol using SSL or TLS) as well as SMTP
-authentication using SASL. The authentication mechanisms for SASL are
-specified in <link
-linkend="smtp-authenticators">$smtp_authenticators</link> defaulting to
-an empty list which makes Mutt try all available methods from
-most-secure to least-secure.
+内蔵の SMTPサポートは SASL を使った SMTP 認証と同じように、暗号化
+(SSL 又は TLS を使った<literal>smtps</literal>プロトコル)をサポートします。
+SASL に対する認証のメカニズムは
+<link linkend="smtp-authenticators">$smtp_authenticators</link>で指定され、
+既定値は空のリストで、この場合、Mutt は、もっともセキュアな方法からもっとも
+セキュアでない方法まで、利用できるすべての方法を試します。
 </para>
 
 </sect1>
 
 <sect1 id="oauth">
-<title>OAUTHBEARER Support</title>
+<title>OAUTHBEARER サポート</title>
 
 <para>
-Preliminary OAUTH support for IMAP, POP, and SMTP is provided via
-external scripts.
+外部スクリプト経由で、 IMAP, POP,と SMTP に対する OAUTHのサポートも
+準備段階ですが、提供しています。
 </para>
 
 <para>
