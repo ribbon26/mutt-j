@@ -8428,14 +8428,15 @@ SASL に対する認証のメカニズムは
 </para>
 
 <para>
-At least for Gmail, you can use the <literal>oauth2.py</literal>
-script from Google's gmail-oauth2-tools: <ulink
+少なくとも Gmail については、Google の gmail-oauth2-tools
+<ulink
 url="https://github.com/google/gmail-oauth2-tools/blob/master/python/oauth2.py"
 >https://github.com/google/gmail-oauth2-tools/blob/master/python/oauth2.py</ulink>
+の<literal>oauth2.py</literal>スクリプトを使う事が出来ます。
 </para>
 
 <para>
-You'll need to get your own oauth client credentials for Gmail here:
+ここから Gmail に対するクライアント認証情報を取得する必要があります:
 <ulink url="https://console.developers.google.com/apis/credentials"
 >https://console.developers.google.com/apis/credentials</ulink>
 </para>
@@ -8444,6 +8445,8 @@ You'll need to get your own oauth client credentials for Gmail here:
 Then, you'd use <literal>oauth2.py</literal> with
 <literal>--generate_oauth2_token</literal> to get a refresh token, and
 configure mutt with:
+次に、<literal>--generate_oauth2_token</literal>をつけた<literal>oauth2.py</literal>
+を使い、リフレッシュしたトークンを取得し、以下のように mutt を設定します。
 </para>
 
 <screen>
@@ -8454,12 +8457,12 @@ set imap_oauth_refresh_command="/path/to/oauth2.py --quiet --user=[email_address
 </screen>
 
 <para>
-Substitute pop or smtp for imap in the above example to configure for those.
+上記の例にある、imap を pop または smtp に置き換えて設定します。
 </para>
 </sect1>
 
 <sect1 id="account-hook">
-<title>Managing Multiple Accounts</title>
+<title>複数アカウントの管理</title>
 
 <para>
 Usage:
@@ -8476,26 +8479,25 @@ Usage:
 </cmdsynopsis>
 
 <para>
-If you happen to have accounts on multiple IMAP, POP and/or SMTP
-servers, you may find managing all the authentication settings
-inconvenient and error-prone. The <link
-linkend="account-hook"><command>account-hook</command></link> command
-may help. This hook works like <link
-linkend="folder-hook"><command>folder-hook</command></link> but is
-invoked whenever Mutt needs to access a remote mailbox (including inside
-the folder browser), not just when you open the mailbox. This includes
-(for example) polling for new mail, storing Fcc messages and saving
-messages to a folder. As a consequence, <link
-linkend="account-hook"><command>account-hook</command></link> should
-only be used to set connection-related settings such as passwords or
-tunnel commands but not settings such as sender address or name (because
-in general it should be considered unpredictable which <link
-linkend="account-hook"><command>account-hook</command></link> was last
-used).
+複数の IMAP, POP と SMTP サーバ用アカウントを持っている場合、すべての認証設定を
+管理するのは不便で間違いやすくなります。そうなることがないよう、
+<link linkend="account-hook"><command>account-hook</command></link>コマンド
+が手助けをします。この hook は
+<link linkend="folder-hook"><command>folder-hook</command></link>と同じように
+動作しますが、Mutt がリモートのメールボックスにアクセスする必要があるときに
+(フォルダブラウザの中を含みます)起動されますが、メールボックスオープン時では
+ありません。これは、(例えば)新規メールの取得、Fcc メッセージの格納とフォルダへの
+メッセージの格納を含みます。結果として、
+<link linkend="account-hook"><command>account-hook</command></link>は
+パスワードやトンネルコマンドのような、接続に関する設定にのみ使い、送信者のアドレスや
+名前の設定には使うべきではありません(一般的に、どの
+<link linkend="account-hook"><command>account-hook</command></link>が最後に使われたか
+予測不可能と考えられるからです)。
+
 </para>
 
 <para>
-Some examples:
+以下はいくつかの例です:
 </para>
 
 <screen>
@@ -8506,15 +8508,15 @@ account-hook smtp://user@host3/ 'set tunnel="ssh host3 /usr/libexec/smtpd"'
 </screen>
 
 <para>
-To manage multiple accounts with, for example, different values of <link
-linkend="record">$record</link> or sender addresses, <link
-linkend="folder-hook"><command>folder-hook</command></link> has to be be
-used together with the <link
-linkend="mailboxes"><command>mailboxes</command></link> command.
+複数のアカウントを管理するには、たとえば、
+<link linkend="record">$record</link>または送信者アドレスの異なった値、
+<link linkend="folder-hook"><command>folder-hook</command></link>を、
+<link linkend="mailboxes"><command>mailboxes</command></link> コマンドと
+いっしょに使う必要があります。
 </para>
 
 <example id="ex-multiaccount">
-<title>Managing multiple accounts</title>
+<title>複数アカウントの管理</title>
 <screen>
 mailboxes imap://user@host1/INBOX
 folder-hook imap://user@host1/ 'set folder=imap://host1/ ; set record=+INBOX/Sent'
@@ -8525,21 +8527,19 @@ folder-hook imap://user@host2/ 'set folder=imap://host2/ ; set record=+INBOX/Sen
 </example>
 
 <para>
-In example <xref linkend="ex-multiaccount"/> the folders are defined
-using <link linkend="mailboxes"><command>mailboxes</command></link> so
-Mutt polls them for new mail. Each <link
-linkend="folder-hook"><command>folder-hook</command></link> triggers
-when one mailbox below each IMAP account is opened and sets <link
-linkend="folder">$folder</link> to the account's root folder. Next, it
-sets <link linkend="record">$record</link> to the
-<emphasis>INBOX/Sent</emphasis> folder below the newly set <link
-linkend="folder">$folder</link>. Please notice that the value the
-<quote>+</quote> <link linkend="shortcuts">mailbox shortcut</link>
-refers to depends on the <emphasis>current</emphasis> value of <link
-linkend="folder">$folder</link> and therefore has to be set separately
-per account. Setting other values like <link linkend="from">$from</link>
-or <link linkend="signature">$signature</link> is analogous to setting
-<link linkend="record">$record</link>.
+<xref linkend="ex-multiaccount"/>の例では、フォルダは
+<link linkend="mailboxes"><command>mailboxes</command></link>で定義されるので、
+Mutt はそれらから新規メールを取得します。各 IMAP アカウント配下のあるメール
+ボックスがオープンされ、アカウントのルートフォルダとして、
+<link linkend="folder">$folder</link>が設定したときに
+各<link linkend="folder-hook"><command>folder-hook</command></link>トリガは、
+起動されます。次に、<link linkend="record">$record</link>を、新しく設定された
+<link linkend="folder">$folder</link>の下の<emphasis>INBOX/Sent</emphasis>フォルダに
+設定します。<quote>+</quote> <link linkend="shortcuts">mailbox shortcut</link>
+が参照する値は<emphasis>現在</emphasis>の<link linkend="folder">$folder</link>の
+値に依存するので、アカウント毎に分けて設定する必要があります。
+<link linkend="from">$from</link>や<link linkend="signature">$signature</link>のような
+他の値は、<link linkend="record">$record</link>の設定に似ています。
 </para>
 
 </sect1>
