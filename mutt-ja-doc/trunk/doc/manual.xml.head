@@ -8545,58 +8545,57 @@ Mutt はそれらから新規メールを取得します。各 IMAP アカウン
 </sect1>
 
 <sect1 id="caching">
-<title>Local Caching</title>
+<title>ローカルでのキャッシング</title>
 
 <para>
-Mutt contains two types of local caching: <emphasis>(1)</emphasis> the
-so-called <quote>header caching</quote> and <emphasis>(2)</emphasis> the
-so-called <quote>body caching</quote> which are both described in this
-section.
+Mutt には2種類のローカルキャッシュ機能があります。
+<emphasis>(1)</emphasis> <quote>header caching</quote>と呼ばれているものと、
+<emphasis>(2)</emphasis> <quote>body caching</quote> と呼ばれているものです。
+それぞれこの節で説明します。
 </para>
 
 <para>
-Header caching is optional as it depends on external libraries, body
-caching is always enabled if Mutt is compiled with POP and/or IMAP
-support as these use it (body caching requires no external library).
+ヘッダキャッシングは、オプションで、外部ライブラリに依存し、body キャッシングは、
+Mutt が POP または IMAP サポートが使えるようにコンパイルされている場合は
+常時有効になっています(body キャッシングは外部ライブラリを必要としません)。
 </para>
 
 <sect2 id="header-caching">
-<title>Header Caching</title>
+<title>ヘッダキャッシング</title>
 
 <para>
-Mutt provides optional support for caching message headers for the
-following types of folders: IMAP, POP, Maildir and MH. Header caching
-greatly speeds up opening large folders because for remote folders,
-headers usually only need to be downloaded once. For Maildir and MH,
-reading the headers from a single file is much faster than looking at
-possibly thousands of single files (since Maildir and MH use one file
-per message.)
+Mutt は、IMAP, POP, Maildir と MH タイプのフォルダに対してメッセージヘッダの
+キャッシングのサポートをオプションとして提供しています。ヘッダキャッシングは、
+リモートフォルダの場合、通常ヘッダを1回だけダウンローードする必要があるため、
+大きなフォルダを開くスピードを劇的に向上させます。Maildir と MH では、
+単一のファイルからヘッダを読むことは、おそらく数千のファイルを見るよりも
+はるかに高速です(Maildir と MH はメッセージ1つに付き1つのファイルのため)。
 </para>
 
 <para>
-Header caching can be enabled via the configure script and the
-<emphasis>--enable-hcache</emphasis> option. It's not turned on by
-default because external database libraries are required: one of
-tokyocabinet, kyotocabinet, lmdb, qdbm, gdbm or bdb must be present.
+ヘッダキャッシュは設定スクリプトに<emphasis>--enable-hcache</emphasis>オプションを
+指定して有効に出来ます。これは、外部データベースライブラリが必要なため、
+既定では有効になっていません。tokyocabinet, kyotocabinet, lmdb, qdbm, gdbm 又は bdb
+のどれかが存在している必要があります。
 </para>
 
 <para>
-If enabled, <link linkend="header-cache">$header_cache</link> can be
-used to either point to a file or a directory. If set to point to a
-file, one database file for all folders will be used (which may result
-in lower performance), but one file per folder if it points to a
-directory.
+有効にした場合、ファイルまたはディレクトリを指定するのに
+<link linkend="header-cache">$header_cache</link>が使えます。ファイルを指定するように
+設定した場合、すべてのフォルダに対して1つのデータベースが使われます
+(スピードは遅くなります)が、ディレクトリを指定した場合は、1つのファイルが
+フォルダ単位になります。
 </para>
 
 </sect2>
 
 <sect2 id="body-caching">
-<title>Body Caching</title>
+<title>Body キャッシング</title>
 
 <para>
-Both cache methods can be combined using the same directory for storage
-(and for IMAP/POP even provide meaningful file names) which simplifies
-manual maintenance tasks.
+両方のキャッシュ方法は、ストレージの同じディレクトリを使うよう組み合わせ出来ます
+(IMAP/POPでは意味のあるファイル名を提供することも出来ます)。こうすることで、
+手動のメンテナンス処理を簡略化できます。
 </para>
 
 <para>
