@@ -8599,68 +8599,66 @@ Mutt は、IMAP, POP, Maildir と MH タイプのフォルダに対してメッ�
 </para>
 
 <para>
-In addition to caching message headers only, Mutt can also cache whole
-message bodies. This results in faster display of messages for POP and
-IMAP folders because messages usually have to be downloaded only once.
+さらに、メッセージヘッダのみをキャッシングするため、Mutt はメッセージ本体全体を
+キャッシュすることも出来ます。メッセージは通常1回だけダウンロードしなければならない
+という理由のため、POP と IMAP でメッセージの表示が結果として速くなります。
 </para>
 
 <para>
-For configuration, the variable <link linkend="message-cachedir"
->$message_cachedir</link> must point to a directory. There, Mutt will
-create a hierarchy of subdirectories named like the account and mailbox
-path the cache is for.
+設定時、変数<link linkend="message-cachedir" >$message_cachedir</link>
+はディレクトリを指さなければなりません。そして、Mutt はキャッシュの対象となる
+アカウントおよびメールボックスのような名前のサブディレクトリの階層を作成します。
 </para>
 
 </sect2>
 
 <sect2 id="cache-dirs">
-<title>Cache Directories</title>
+<title>キャッシュディレクトリ</title>
 
 <para>
-For using both, header and body caching, <link
-linkend="header-cache">$header_cache</link> and <link
-linkend="message-cachedir" >$message_cachedir</link> can be safely set
-to the same value.
+ヘッダとbody両方のキャッシングのために、
+<link linkend="header-cache">$header_cache</link>と
+<link linkend="message-cachedir" >$message_cachedir</link> は
+同じ値に安全に設定できます。
 </para>
 
 <para>
-In a header or body cache directory, Mutt creates a directory hierarchy
-named like: <literal>proto:user@hostname</literal> where
-<literal>proto</literal> is either <quote>pop</quote> or
-<quote>imap.</quote> Within there, for each folder, Mutt stores messages
-in single files and header caches in files with the
-<quote>.hcache</quote> extension.  All files can be removed as needed if
-the consumed disk space becomes an issue as Mutt will silently fetch
-missing items again. Pathnames are always stored in UTF-8 encoding.
+ヘッダ又は body キャッシュディレクトリ中で、Mutt は
+<literal>proto</literal>が<quote>pop</quote>か<quote>imap</quote>の
+ような名前のディレクトリ階層を作成します。そして、各フォルダに対して、
+Mutt はメッセージを単一のファイルに格納し、<quote>.hcache</quote>拡張子を
+持つファイル中にヘッダをキャッシュします。Mutt が足らない項目を再度静かに
+取得するため、消費されたディスク容量が問題になったときに、すべてのファイルは
+必要に応じて削除されます。パス名は常時 UTF-8 エンコードされて格納します。
 </para>
 
 <para>
-For Maildir and MH, the header cache files are named after the MD5
-checksum of the path.
+Maildir と MH では、ヘッダキャッシュファイル名は、パスの MD5 チェックサムに
+基づいて命名されます。
 </para>
 
 </sect2>
 
 <sect2 id="maint-cache">
-<title>Maintenance</title>
+<title>メンテナンス</title>
 
 <para>
-Mutt does not (yet) support maintenance features for header cache
-database files so that files have to be removed in case they grow too
-big. It depends on the database library used for header caching whether
-disk space freed by removing messages is re-used.
+Mutt には、ヘッダキャッシュファイルをメンテナンスする機能のサポートが(まだ)
+ないので、ファイルが大きくなりすぎた場合には、削除しなければなりません。
+メッセージを削除することによって解放されたディスクスペースが再度使われるか
+どうかは、ヘッダキャッシュを行う時に使うデータベースライブラリに依存します。
 </para>
 
 <para>
-For body caches, Mutt can keep the local cache in sync with the remote
-mailbox if the <link
-linkend="message-cache-clean">$message_cache_clean</link> variable is
-set. Cleaning means to remove messages from the cache which are no
-longer present in the mailbox which only happens when other mail clients
-or instances of Mutt using a different body cache location delete
-messages (Mutt itself removes deleted messages from the cache when
-syncing a mailbox). As cleaning can take a noticeable amount of time, it
-should not be set in general but only occasionally.
+body キャッシュについては、
+<link linkend="message-cache-clean">$message_cache_clean</link>変数が設定されて
+いる場合、Mutt はローカルキャッシュをリモートメールボックスと同期させることが
+出来ます。クリーンにするということは、すでにメールボックスにないメッセージを
+キャッシュから削除することという意味です。これは、他の、メールクライアントか
+Mutt のインスタンスが、異なった位置の body キャッシュを使って、メッセージを
+削除したときにのみ発生します(Mutt 自身はメールボックスの同期を行ったときに
+キャッシュから削除されたメッセージを消去します)。クリーンには気がつくくらいの
+時間がかかる場合があるので、一般的に設定すべきではなく、設定するのはレアケースです。
 </para>
 
 </sect2>
@@ -8668,41 +8666,39 @@ should not be set in general but only occasionally.
 </sect1>
 
 <sect1 id="exact-address">
-<title>Exact Address Generation</title>
+<title>正確なアドレスの生成</title>
 
 <para>
-Mutt supports the <quote>Name &lt;user@host&gt;</quote> address syntax
-for reading and writing messages, the older <quote>user@host
-(Name)</quote> syntax is only supported when reading messages. The
-<emphasis>--enable-exact-address</emphasis> switch can be given to
-configure to build it with write-support for the latter
-syntax. <literal>EXACT_ADDRESS</literal> in the output of <literal>mutt
--v</literal> indicates whether it's supported.
+Mutt はメッセージの読み書きに、<quote>Name &lt;user@host&gt;</quote>という
+アドレス形式をサポートします。古い<quote>user@host (Name)</quote>形式は
+メールを読むときにのみサポートします。<emphasis>--enable-exact-address</emphasis>
+スイッチを build 時に configure に渡すと、後者の形式を書き込み時にもサポート
+するようになります。<literal>mutt -v</literal>の出力中における
+<literal>EXACT_ADDRESS</literal>は、それがサポートされているかを表示します。
 </para>
 
 </sect1>
 
 <sect1 id="sending-mixmaster">
-<title>Sending Anonymous Messages via Mixmaster</title>
+<title>Mixmaster 経由での匿名メッセージ送信</title>
 
 <para>
-You may also have compiled Mutt to co-operate with Mixmaster, an
-anonymous remailer.  Mixmaster permits you to send your messages
-anonymously using a chain of remailers. Mixmaster support in Mutt is for
-mixmaster version 2.04 or later.
+Mutt を Mixmaster 匿名リメーラ (remailer) と共働するよう 設定してあるかもしれません。
+Mixmaster はリメーラのチェーンを使って匿名でメッセージを送信できます。
+Mutt の Mixmaster サポートは Mixmaster version 2.04 以降が対象です。
 </para>
 
 <para>
-To use it, you'll have to obey certain restrictions.  Most important,
-you cannot use the <literal>Cc</literal> and <literal>Bcc</literal>
-headers.  To tell Mutt to use mixmaster, you have to select a remailer
-chain, using the mix function on the compose menu.
+Mixmaster を使うにはいくつかの制限に従わなくてはなりません。 最も重要なのは
+<literal>Cc</literal> と <literal>Bcc</literal> へッダを使えないということです。
+Mutt から Mixmaster を使うには、まず編集メニューで mix 機能を使ってリメーラ
+チェーンを選ばなくてはなりません。 
 </para>
 
 <para>
-The chain selection screen is divided into two parts.  In the (larger)
-upper part, you get a list of remailers you may use.  In the lower part,
-you see the currently selected chain of remailers.
+チェーン選択画面は2つの部分に分かれています。上の (広い方の) 部分では使える
+リメーラの一覧を見ることができます。下の部分では現在選択されている
+リメーラチェーンを参照できます。
 </para>
 
 <para>
