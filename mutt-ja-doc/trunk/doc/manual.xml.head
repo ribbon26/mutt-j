@@ -8816,60 +8816,60 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
     <title>機能</title>
 
     <para>
-      Sidebar adds the following functions to Mutt.
-      By default, none of them are bound to keys.
+      サイドバーはMutt に以下の機能を追加します。
+      既定では、どの機能もキーに割り当てられていません。
     </para>
 
     <table id="table-sidebar-functions">
-      <title>Sidebar Functions</title>
+      <title>サイドバーの機能</title>
       <tgroup cols="3">
 	<thead>
 	  <row>
-	    <entry>Menus</entry>
-	    <entry>Function</entry>
-	    <entry>Description</entry>
+	    <entry>メニュー</entry>
+	    <entry>機能</entry>
+	    <entry>説明</entry>
 	  </row>
 	</thead>
 	<tbody>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-next&gt;</literal></entry>
-	    <entry>Move the highlight to next mailbox</entry>
+	    <entry>ハイライトを次のメールボックスに移動</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-next-new&gt;</literal></entry>
-	    <entry>Move the highlight to next mailbox with new mail</entry>
+	    <entry>ハイライトを、新しいメールがある次のメールボックスに移動</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-open&gt;</literal></entry>
-	    <entry>Open highlighted mailbox</entry>
+	    <entry>ハイライトされたメールボックスをオープン</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-page-down&gt;</literal></entry>
-	    <entry>Scroll the Sidebar down 1 page</entry>
+	    <entry>サイドバーを1ページ下にスクロール</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-page-up&gt;</literal></entry>
-	    <entry>Scroll the Sidebar up 1 page</entry>
+	    <entry>サイドバーを1ページ上にスクロール</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-prev&gt;</literal></entry>
-	    <entry>Move the highlight to previous mailbox</entry>
+	    <entry>ハイライトを1つ前のメールボックスに移動</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-prev-new&gt;</literal></entry>
-	    <entry>Move the highlight to previous mailbox with new mail</entry>
+	    <entry>ハイライトを、新しいメールがある1つ前のメールボックスに移動</entry>
 	  </row>
 	  <row>
 	    <entry>index,pager</entry>
 	    <entry><literal>&lt;sidebar-toggle-visible&gt;</literal></entry>
-	    <entry>Make the Sidebar (in)visible</entry>
+	    <entry>サイドバーを表示(非表示)</entry>
 	  </row>
 	</tbody>
       </tgroup>
@@ -8877,7 +8877,7 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
   </sect2>
 
   <sect2 id="sidebar-whitelist">
-    <title>Commands</title>
+    <title>コマンド</title>
     <cmdsynopsis>
       <command>sidebar_whitelist</command>
       <arg choice="plain">
@@ -8899,24 +8899,24 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
     </cmdsynopsis>
 
     <para>
-      This command specifies mailboxes that will always be displayed
-      in the sidebar, even if <link
-      linkend="sidebar-new-mail-only">$sidebar_new_mail_only</link>
-      is set and the mailbox does not contain new mail.
+      このコマンドは、
+      <link linkend="sidebar-new-mail-only">$sidebar_new_mail_only</link>
+      が設定されていて、メールボックスに新規メールがなかったとしても、
+      サイドバーに常時表示されるメールボックスを指定します。
     </para>
 
     <para>
-      The <quote>unsidebar_whitelist</quote> command is used to remove a mailbox from
-      the list of whitelisted mailboxes. Use <quote>unsidebar_whitelist *</quote>
-      to remove all mailboxes.
+      <quote>unsidebar_whitelist</quote>はホワイトリストにあるメールボックス一覧から
+      メールボックスを削除するのに使います。<quote>unsidebar_whitelist *</quote> は
+      すべてのメールボックスを削除します。
     </para>
   </sect2>
 
   <sect2 id="sidebar-colors">
-    <title>Colors</title>
+    <title>色</title>
 
     <table id="table-sidebar-colors">
-      <title>Sidebar Colors</title>
+      <title>サイドバーの色</title>
       <tgroup cols="3">
 	<thead>
 	  <row>
