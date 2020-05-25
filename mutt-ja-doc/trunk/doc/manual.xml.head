@@ -8920,41 +8920,41 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       <tgroup cols="3">
 	<thead>
 	  <row>
-	    <entry>Name</entry>
-	    <entry>Default Color</entry>
-	    <entry>Description</entry>
+	    <entry>名前</entry>
+	    <entry>既定の色</entry>
+	    <entry>説明</entry>
 	  </row>
 	</thead>
 	<tbody>
 	  <row>
 	    <entry><literal>sidebar_divider</literal></entry>
 	    <entry>default</entry>
-	    <entry>The dividing line between the Sidebar and the Index/Pager panels</entry>
+	    <entry>インデックス/ページャパネルとサイドバーの間の分離行</entry>
 	  </row>
 	  <row>
 	    <entry><literal>sidebar_flagged</literal></entry>
 	    <entry>default</entry>
-	    <entry>Mailboxes containing flagged mail</entry>
+	    <entry>フラグが付いているメールがあるメールボックス</entry>
 	  </row>
 	  <row>
 	    <entry><literal>sidebar_highlight</literal></entry>
 	    <entry>underline</entry>
-	    <entry>Cursor to select a mailbox</entry>
+	    <entry>メールボックスを選択するカーソル</entry>
 	  </row>
 	  <row>
 	    <entry><literal>sidebar_indicator</literal></entry>
 	    <entry>mutt <literal>indicator</literal></entry>
-	    <entry>The mailbox open in the Index panel</entry>
+	    <entry>インデックスパネル中でオープンしているメールボックス</entry>
 	  </row>
 	  <row>
 	    <entry><literal>sidebar_new</literal></entry>
 	    <entry>default</entry>
-	    <entry>Mailboxes containing new mail</entry>
+	    <entry>新規メールを含むメールボックス</entry>
 	  </row>
 	  <row>
 	    <entry><literal>sidebar_spoolfile</literal></entry>
 	    <entry>default</entry>
-	    <entry>Mailbox that receives incoming mail</entry>
+	    <entry>着信メールを受信するメールボックス</entry>
 	  </row>
 	</tbody>
       </tgroup>
@@ -8963,53 +8963,55 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
     <para>
     If the <literal>sidebar_indicator</literal> color isn't set, then the default Mutt
     indicator color will be used (the color used in the index panel).
+    <literal>sidebar_indicator</literal>に色が設定されていない場合、既定の Mutt の
+    インジケータの色が使われます((インデックスパネルで使われている色)。
     </para>
   </sect2>
 
   <sect2 id="sidebar-sort">
-    <title>Sort</title>
+    <title>整列</title>
 
     <table id="table-sidebar-sort">
-      <title>Sidebar Sort</title>
+      <title>サイドバーの整列</title>
       <tgroup cols="2">
 	<thead>
 	  <row>
-	    <entry>Sort</entry>
-	    <entry>Description</entry>
+	    <entry>整列方法</entry>
+	    <entry>説明</entry>
 	  </row>
 	</thead>
 	<tbody>
 	  <row>
 	    <entry><literal>alpha</literal></entry>
-	    <entry>Alphabetically by path</entry>
+	    <entry>パス又はラベルのアルファベット順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>count</literal></entry>
-	    <entry>Total number of messages</entry>
+	    <entry>メッセージの総数順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>flagged</literal></entry>
-	    <entry>Number of flagged messages</entry>
+	    <entry>メッセージのフラグ数順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>name</literal></entry>
-	    <entry>Alphabetically by path</entry>
+	    <entry>パスまたはラベルのアルファベット順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>new</literal></entry>
-	    <entry>Number of unread messages</entry>
+	    <entry>未読メール数順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>path</literal></entry>
-	    <entry>Alphabetically by path</entry>
+	    <entry>パスのアルファベット順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>unread</literal></entry>
-	    <entry>Number of unread messages</entry>
+	    <entry>未読メール数順</entry>
 	  </row>
 	  <row>
 	    <entry><literal>unsorted</literal></entry>
-	    <entry>Do not resort the paths</entry>
+	    <entry>パスによる整列をしない</entry>
 	  </row>
 	</tbody>
       </tgroup>
@@ -9018,22 +9020,22 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
 
 
   <sect2 id="sidebar-see-also">
-    <title>See Also</title>
+    <title>参照</title>
 
     <itemizedlist>
-      <listitem><para><link linkend="regexp">Regular Expressions</link></para></listitem>
-      <listitem><para><link linkend="patterns">Patterns</link></para></listitem>
-      <listitem><para><link linkend="color">Color command</link></para></listitem>
+      <listitem><para><link linkend="regexp">正規表現</link></para></listitem>
+      <listitem><para><link linkend="patterns">パターン</link></para></listitem>
+      <listitem><para><link linkend="color">Color コマンド</link></para></listitem>
     </itemizedlist>
   </sect2>
 </sect1>
 
 <sect1 id="compress">
-  <title>Compressed Folders Feature</title>
-  <subtitle>Read from/write to compressed mailboxes</subtitle>
+  <title>圧縮されたフォルダ機能</title>
+  <subtitle>圧縮されたメールボックスへの読み書き</subtitle>
 
   <sect2 id="compress-intro">
-    <title>Introduction</title>
+    <title>概要</title>
 
     <para>
       The Compressed Folder patch allows Mutt to read mailbox files that are
