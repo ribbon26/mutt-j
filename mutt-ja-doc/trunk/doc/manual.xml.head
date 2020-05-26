@@ -9038,29 +9038,29 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
     <title>概要</title>
 
     <para>
-      The Compressed Folder patch allows Mutt to read mailbox files that are
-      compressed.  But it isn't limited to compressed files.  It works well
-      with encrypted files, too.  In fact, if you can create a program/script
-      to convert to and from your format, then Mutt can read it.
+      圧縮フォルダパッチは、Mutt が圧縮されたメールボックスファイルを読めるようにします。
+      しかし、圧縮ファイルだけに限ったものではありません。暗号化されたファイル
+      にも同じように動作します。実際、特定のフォーマットに対して変換したり戻したり
+      するプログラム/スクリプトを作れば、それを使って Mutt は読むことが出来ます。
     </para>
 
     <para>
-      The patch adds three hooks to Mutt: <literal>open-hook</literal>,
-      <literal>close-hook</literal> and <literal>append-hook</literal>.  They
-      define commands to: uncompress a file; compress a file; append
-      messages to an already compressed file.
+      パッチは
+      <literal>open-hook</literal>, <literal>close-hook</literal> と
+      <literal>append-hook</literal> と言う3つのフックをMutt に追加します。
+      これらは、ファイルの解凍、圧縮、すでに圧縮されたファイルへのメッセージの
+      追加というコマンドを定義します。
     </para>
 
     <para>
-      There are some examples of both compressed and encrypted files,
-      later.  For now, the documentation will just concentrate on
-      compressed files.
+      以下は、圧縮または暗号化されたファイルに対するいくつかの例です。
+      現時点では、ドキュメントは圧縮ファイルを中心にして記載しています。
     </para>
 
   </sect2>
 
   <sect2 id="compress-commands">
-    <title>Commands</title>
+    <title>コマンド</title>
     <cmdsynopsis>
       <command>open-hook</command>
       <arg choice="plain">
@@ -9086,28 +9086,28 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
     </cmdsynopsis>
 
     <para>
-      The shell-command must contain two placeholders for filenames:
-      <literal>%f</literal> and <literal>%t</literal>.  These represent
-      <quote>from</quote> and <quote>to</quote> filenames.  These placeholders
-      should be placed inside single-quotes to prevent unintended shell
-      expansions.
+      シェルコマンドにはファイル名に対する2つのプレースフォルダ
+      <literal>%f</literal> と <literal>%t</literal>が含まれていなければ
+      なりません。これらは<quote>入力</quote>と<quote>出力</quote>ファイル名に
+      置き換えられます。これらは、予期しないシェルでの展開を防ぐために、
+      シングルクォートの内側におかねばなりません。
     </para>
 
     <para>
-      If you need the exact string <quote>%f</quote> or <quote>%t</quote> in your
-      command, simply double up the <quote>%</quote> character, e.g.
-      <quote>%%f</quote> or <quote>%%t</quote>.
+      コマンド中で正確な文字列<quote>%f</quote> か <quote>%t</quote>が必要ならば、
+      単に、<quote>%</quote>文字を2つ並べます。すなわち、
+      <quote>%%f</quote> 又は <quote>%%t</quote>です。
     </para>
 
     <table id="table-compress-optional">
-      <title>Not all Hooks are Required</title>
+      <title>すべてのフックが必要ではない</title>
       <tgroup cols="5">
         <thead>
           <row>
             <entry>Open</entry>
             <entry>Close</entry>
             <entry>Append</entry>
-            <entry>Effect</entry>
+            <entry>影響</entry>
             <entry>Useful if</entry>
           </row>
         </thead>
@@ -9116,31 +9116,31 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
             <entry>Open</entry>
             <entry>-</entry>
             <entry>-</entry>
-            <entry>Folder is readonly</entry>
-            <entry>The folder is just a backup</entry>
+            <entry>フォルダがリードオンリ</entry>
+            <entry>フォルダはバックアップ用</entry>
           </row>
           <row>
             <entry>Open</entry>
             <entry>Close</entry>
             <entry>-</entry>
-            <entry>Folder is read/write, but the entire folder must be
-              written if anything is changed</entry>
-            <entry>Your compression format doesn't support appending</entry>
+            <entry>フォルダは読み書き可だが何らかの変更があった場合、
+	      フォルダ全体を書き込む必要あり</entry>
+            <entry>使用する圧縮フォーマットは追加を未サポート</entry>
           </row>
           <row>
             <entry>Open</entry>
             <entry>Close</entry>
             <entry>Append</entry>
-            <entry>Folder is read/write and emails can be efficiently added
-              to the end</entry>
-            <entry>Your compression format supports appending</entry>
+            <entry>フォルダは読み書き可で、メールを最後に効率よく追加
+	    可能</entry>
+            <entry>使用する圧縮フォーマットは追加をサポート</entry>
           </row>
           <row>
             <entry>Open</entry>
             <entry>-</entry>
             <entry>Append</entry>
-            <entry>Folder is readonly, but can be appended to</entry>
-            <entry>You want to store emails, but never change them</entry>
+            <entry>フォルダはリードオンリだが追加は可能</entry>
+            <entry>メールを格納可能だが、それを決して変更できない</entry>
           </row>
         </tbody>
       </tgroup>
