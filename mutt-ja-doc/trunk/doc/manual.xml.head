@@ -9147,83 +9147,82 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
     </table>
 
     <note>
-      <para>The command:</para>
+      <para>コマンドは</para>
       <itemizedlist>
-        <listitem><para>should return a non-zero exit status on failure</para></listitem>
-        <listitem><para>should not delete any files</para></listitem>
+        <listitem><para>失敗時には非ゼロのステータスを返さねばなりません。</para></listitem>
+        <listitem><para>ファイルを削除してはいけません。</para></listitem>
       </itemizedlist>
     </note>
 
     <sect3 id="open-hook">
-      <title>Read from compressed mailbox</title>
+      <title>圧縮されたメールボックスからの読み込み</title>
 
       <screen>open-hook regexp shell-command</screen>
 
       <para>
-        If Mutt is unable to open a file, it then looks for
-        <literal>open-hook</literal> that matches the filename.
+	Mutt がファイルをオープンできない場合、ファイル名に一致する
+	<literal>open-hook</literal>を探します。
       </para>
 
       <para>
-        If your compression program doesn't have a well-defined extension,
-        then you can use <literal>.</literal> as the regexp.
+	圧縮プログラムが明確に定義した拡張子を使わない場合、正規表現として
+	<literal>.</literal>を使う事が出来ます。
       </para>
 
       <example id="compress-open-hook-example">
-        <title>Example of open-hook</title>
+        <title>open-hookの例</title>
 
         <screen>open-hook '\.gz$' &quot;gzip -cd '%f' &gt; '%t'&quot;</screen>
 
         <itemizedlist>
-          <listitem><para>Mutt finds a file, <quote>example.gz</quote>,
-              that it can't read</para></listitem>
-          <listitem><para>Mutt has an <literal>open-hook</literal>
-              whose regexp matches the filename:
-              <literal>\.gz$</literal></para></listitem>
-          <listitem><para>Mutt uses the command <literal>gzip -cd</literal>
-              to create a temporary file that it <emphasis>can</emphasis>
-              read</para></listitem>
+          <listitem><para>Mutt は<quote>example.gz</quote>というファイルを見つけますが、
+              そのファイルは読めません</para></listitem>
+          <listitem><para>Mutt には正規表現がファイル名:<literal>\.gz$</literal>に一致する
+	  <literal>open-hook</literal>があります</para></listitem>
+          <listitem><para>Mutt は、読み込みが<emphasis>可能な</emphasis>
+	  テンポラリファイルを作成する<literal>gzip -cd</literal>コマンドを使います。
+          </para></listitem>
         </itemizedlist>
       </example>
     </sect3>
 
     <sect3 id="close-hook">
-      <title>Write to a compressed mailbox</title>
+      <title>圧縮されたメールボックスへの書き込み</title>
 
       <screen>close-hook regexp shell-command</screen>
 
       <para>
-        When Mutt has finished with a compressed mail folder, it will look
-        for a matching <literal>close-hook</literal> to recompress the file.
-        This hook is <link linkend="table-compress-optional">optional</link>.
+	Mutt が圧縮ファイルを使いつつ終了するときには、ファイルを圧縮するために
+	一致する<literal>close-hook</literal>を探します。このフックは
+	<link linkend="table-compress-optional">オプション</link>です。
       </para>
 
       <note>
         <para>
-          If the folder has not been modified, the
-          <literal>close-hook</literal> will not be called.
+	  フォルダが変更されていない場合は、<literal>close-hook</literal>は
+	  呼び出されません。
         </para>
       </note>
 
       <example id="compress-close-hook-example">
-        <title>Example of close-hook</title>
+        <title>close-hookの例</title>
 
         <screen>close-hook '\.gz$' &quot;gzip -c '%t' &gt; '%f'&quot;</screen>
 
         <itemizedlist>
-          <listitem><para>Mutt has finished with a folder, <quote>example.gz</quote>,
-              that it opened with <literal>open-hook</literal></para></listitem>
-          <listitem><para>The folder has been modified</para></listitem>
-          <listitem><para>Mutt has a <literal>close-hook</literal> whose regexp
-              matches the filename: <literal>\.gz$</literal></para></listitem>
-          <listitem><para>Mutt uses the command <literal>gzip -c</literal>
-              to create a new compressed file</para></listitem>
+	  <listitem><para> <literal>open-hook</literal>でオープンした
+	  <quote>example.gz</quote>を使いつつ Mutt が終了します</para></listitem>
+	  <listitem><para>フォルダは変更されました</para></listitem>
+	  <listitem><para>Mutt にはその正規表現がファイル名: <literal>\.gz$</literal>に
+	       一致する<literal>close-hook</literal>があります。</para></listitem>
+          <listitem><para>Mutt は新しい圧縮ファイルを作成するため、<literal>gzip -c</literal>
+              コマンドを使います</para></listitem>
         </itemizedlist>
       </example>
     </sect3>
 
     <sect3 id="append-hook">
-      <title>Append to a compressed mailbox</title>
+      <title>圧縮されたメールボックスへの追加</title>
 
       <screen>append-hook regexp shell-command</screen>
 
