@@ -9227,73 +9227,70 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       <screen>append-hook regexp shell-command</screen>
 
       <para>
-        When Mutt wants to append an email to a compressed mail folder, it
-        will look for a matching <literal>append-hook</literal>.
-        This hook is <link linkend="table-compress-optional">optional</link>.
+	Mutt が圧縮されたメールフォルダに電子メールを追加しようとするとき、
+	<literal>append-hook</literal>に一致するものを探します。このフックは
+	<link linkend="table-compress-optional">オプション</link>です。
       </para>
 
       <para>
-        Using the <literal>append-hook</literal> will save time, but
-        Mutt won't be able to determine the type of the mail folder
-        inside the compressed file.
+	<literal>append-hook</literal>を使うと時間を節約できますが、Mutt は
+	圧縮したファイルの内側のメールフォルダのタイプを決定できません。
       </para>
 
       <para>
-        Mutt will <emphasis>assume</emphasis> the type to be that of
-        the <literal>$mbox_type</literal> variable.  Mutt also uses
-        this type for temporary files.
+	Mutt は<literal>$mbox_type</literal>変数の方と仮定します。Mutt は
+	このタイプをテンポラリファイルにも使います。
       </para>
 
       <para>
-        Mutt will only use the <literal>append-hook</literal> for existing files.
-        The <literal>close-hook</literal> will be used for empty, or missing files.
+	Mutt は存在するファイルに対しては<literal>append-hook</literal>のみを使います。
+	<literal>close-hook</literal>は、空または存在しないファイルに使います。
       </para>
 
       <note>
         <para>
-          If your command writes to stdout, it is vital that you use
-          <literal>&gt;&gt;</literal> in the <quote>append-hook</quote>.
-          If not, data will be lost.
+	  コマンドが標準出力に書き込む場合、<quote>append-hook</quote>中で
+	  <literal>&gt;&gt;</literal>を使う事が重要です。そうしないと、
+	  データがなくなります。
         </para>
       </note>
 
       <example id="compress-append-hook-example">
-        <title>Example of append-hook</title>
+        <title>append-hook の例</title>
 
         <screen>append-hook '\.gz$' &quot;gzip -c '%t' &gt;&gt; '%f'&quot;</screen>
 
         <itemizedlist>
-          <listitem><para>Mutt wants to append an email to a folder, <quote>example.gz</quote>,
-              that it opened with <literal>open-hook</literal></para></listitem>
-          <listitem><para>Mutt has an <literal>append-hook</literal> whose regexp matches
-              the filename: <literal>\.gz$</literal></para></listitem>
-          <listitem><para>Mutt knows the mailbox type from the <literal>$mbox</literal>
-              variable</para></listitem>
-          <listitem><para>Mutt uses the command <literal>gzip -c</literal>
-              to append to an existing compressed file</para></listitem>
+	  <listitem><para>Mutt が<literal>open-hook</literal>で開いた
+	      <quote>example.gz</quote> フォルダにメールを追記しようとする</para></listitem>
+          <listitem><para>Mutt には 正規表現がファイル名 <literal>\.gz$</literal>に
+	      一致する <literal>append-hook</literal> がある</para></listitem>
+          <listitem><para>Mutt は <literal>$mbox</literal>変数から、メールボックスの
+	      タイプを取得する</para></listitem>
+          <listitem><para>Mutt は既存の圧縮ファイルに追加するため、
+	      <literal>gzip -c</literal>コマンドを使用する</para></listitem>
         </itemizedlist>
       </example>
 
     </sect3>
 
     <sect3 id="compress-empty">
-      <title>Empty Files</title>
+      <title>空のファイル</title>
 
       <para>
-        Mutt assumes that an empty file is not compressed.  In this
-        situation, unset <link linkend="save-empty">$save_empty</link>, so
-        that the compressed file will be removed if you delete all of the
-        messages.
+	Mutt は空のファイルは圧縮されていないものと仮定します。この場合、
+	<link linkend="save-empty">$save_empty</link>を設定しないと、
+	すべてのメッセージを削除する場合、圧縮ファイルも削除されます。
       </para>
     </sect3>
 
     <sect3 id="compress-security">
-      <title>Security</title>
+      <title>セキュリティ</title>
 
       <para>
-        Encrypted files are decrypted into temporary files which are
-        stored in the <link linkend="tmpdir">$tmpdir</link> directory.
-        This could be a security risk.
+	暗号化されたファイルは、<link linkend="tmpdir">$tmpdir</link>ディレクトリ
+	中に格納されるテンポラリファイルに解凍されます。これはセキュリティリスクと
+	なり得ます。
       </para>
     </sect3>
   </sect2>
