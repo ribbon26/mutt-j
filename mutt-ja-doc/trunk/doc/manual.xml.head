@@ -9300,80 +9300,69 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
   <title>Autocrypt</title>
 
   <para>
-    Mutt can be compiled with Autocrypt support by running
-    <literal>configure</literal> with the
-    <literal>--enable-autocrypt</literal> flag.  Autocrypt provides
-    easy to use, passive protection against data collection.  Keys are
-    distributed via an <literal>Autocrypt:</literal> header added to
-    emails.  It does <emphasis>not</emphasis> protect against active
-    adversaries, and so should not be considered a substitute for
-    normal encryption via your keyring, using key signing and the web
-    of trust to verify identities.  With an understanding of these
-    limitations, Autocrypt still provides an easy way to minimize
-    cleartext emails sent between common correspondants, without
-    having to explicitly exchange keys.  More information can be found
-    at <ulink
-    url="https://autocrypt.org/">https://autocrypt.org/</ulink>.
+    Mutt は<literal>--enable-autocrypt</literal>フラグを設定して
+    <literal>configure</literal>を実行することにより、Autocrypt をサポートします。
+    Autocrypt はデータ収集における、簡単で受動的な保護を提供します。
+    キーは、メールに追加される<literal>Autocrypt:</literal> ヘッダ経由で
+    配布されます。これは、アクティブな攻撃者から保護は<emphasis>しない</emphasis>ので、
+    キーリングを経由した、キーの署名とアイデンティティを検証するための信頼のWebを使った、
+    通常の暗号化のかわりとして考えるべきではありません。これらの制限を理解した
+    上で、Autocrypt は共通の通信先間で送信される平文のメールを、
+    明示的なキーの交換なしに、最小限にする機能を提供します。詳細については
+    <ulink url="https://autocrypt.org/">https://autocrypt.org/</ulink>
+    を参照してください。
   </para>
 
   <sect2 id="autocryptdoc-requirements">
-    <title>Requirements</title>
+    <title>必要条件</title>
     <para>
-      Autocrypt requires support for ECC cryptography, and Mutt by
-      default will generate ECC keys.  Therefore GnuPG 2.1 or greater
-      is required.  Additionally, Mutt's Autocrypt implementation uses
-      GPGME and requires at least version 1.8.0.
+      Autocrypt は ECC 暗号化のサポートを必要とし、既定では、Mutt は ECC のキーを
+      生成します。そのため、GnuPC 2.1 以降が必要です。さらに、Mutt の Autocrypt
+      実装には、GPGME の少なくともバージョン 1.8.0が必要です。
     </para>
     <para>
-      Account and peer information is stored in a sqlite3 database, and
-      so Mutt must be configured with the <literal>--with-sqlite3</literal>
-      flag when autocrypt is enabled.
+      アカウントとピアの情報は sqlite3 データベースに格納されるので、autocrypt が
+      有効なときには、<literal>--with-sqlite3</literal> フラグも付けて Mutt を
+      構成する必要があります。
     </para>
     <para>
-      It is highly recommended Mutt be configured
-      <literal>--with-idn</literal> or
-      <literal>--with-idn2</literal> so that Autocrypt can properly
-      deal with international domain names.
+      <literal>--with-idn</literal>又は<literal>--with-idn2</literal>付きで
+      Mutt を構成することを強く推奨します。こうすることにより。Autocrypt は
+      国際化ドメイン名を適切に扱えるようになります。
     </para>
     <para>
-      While Mutt uses GPGME for Autocrypt, normal keyring operations
-      can still be performed via classic mode (i.e. with <link
-      linkend="crypt-use-gpgme">$crypt_use_gpgme</link> unset).
-      However, to avoid unnecessary prompts, it is recommended gpg not
-      be configured in <literal>loopback pinentry</literal> mode, and
-      that <link linkend="pgp-use-gpg-agent">$pgp_use_gpg_agent</link>
-      remain set (the default).
+      Mutt が Autocrypt 用に GPGME を使いますが、通常のキーリング操作はクラシック
+      モード経由で実行できます(すなわち、
+      <link linkend="crypt-use-gpgme">$crypt_use_gpgme</link>を設定しません)。
+      しかし、不用意なプロンプトを表示させないために、gpg を
+      <literal>loopback pinentry</literal>モード中で構成しないことを推奨します。
+      また、<link linkend="pgp-use-gpg-agent">$pgp_use_gpg_agent</link>を設定
+      したままにします(既定値)。
     </para>
   </sect2>
 
   <sect2 id="autocryptdoc-init">
-    <title>First Run</title>
+    <title>最初の実行</title>
     <para>
-      To enable Autocrypt, set <link
-      linkend="autocrypt">$autocrypt</link>, and if desired change the
-      value of <link linkend="autocrypt-dir">$autocrypt_dir</link> in
-      your muttrc.  The first time Mutt is run after that, you will be
-      prompted to create <link
-      linkend="autocrypt-dir">$autocrypt_dir</link>.  Mutt will then
-      automatically create an sqlite3 database and gpg keyring in that
-      directory.  Note since these files should be considered private,
-      Mutt will create this directory with mode
-      <literal>700</literal>.  If you create the directory manually,
-      you should do the same.
+      Autocrypt を有効にするために、<link linkend="autocrypt">$autocrypt</link>を
+      設定し、必要に応じて muttrc 中の<link linkend="autocrypt-dir">$autocrypt_dir</link>
+      の値を変更します。その後 Mutt を初めて実行すると、
+      <link linkend="autocrypt-dir">$autocrypt_dir</link>を作成するための
+      プロンプトが表示されます。Mutt はそのディレクトリ中に、自動的に sqlite3 データベースと
+      gpg キーリングを作成します。これらのファイルはプライベートな物と見なすべきなので、
+      Mutt はモードを <literal>700</literal> にしてこのディレクトリを作成します。
+      手動でディレクトリを作成する場合は、同じように行う必要があります。
     </para>
     <para>
-      Mutt recommends keeping the <link
-      linkend="autocrypt-dir">$autocrypt_dir</link> directory set
-      differently from your GnuPG keyring directory
-      (e.g. <literal>~/.gnupg</literal>).  Keys are automatically
-      imported into the keyring from <literal>Autocrypt:</literal>
-      headers.  Compared to standard <quote>web of trust</quote> keys,
-      Autocrypt keys are somewhat ephemeral, and the autocrypt
-      database is used to track when keys change or fall out of use.
-      Having these keys mixed in with your normal keyring will make it
-      more difficult to use features such as <link
-      linkend="crypt-opportunistic-encrypt">$crypt_opportunistic_encrypt</link>
-      and Autocrypt at the same time.
+      Mutt は<link linkend="autocrypt-dir">$autocrypt_dir</link>ディレクトリ
+      セットをGnuPG キーリングディレクトリ(すなわち<literal>~/.gnupg</literal>)
+      とは別にすることを推奨します。キーは <literal>Autocrypt:</literal> ヘッダから
+      自動的にキーリングにインポートされます。標準の<quote>web of trust</quote>
+      キーと比較すると、Autocrypt キーは一時的なもので、autocrypt データベースは
+      キーが変更されたり使えなくなったときの追跡用に使われます。これらのキーを
+      通常のキーリングに混ぜると、
+      <link linkend="crypt-opportunistic-encrypt">$crypt_opportunistic_encrypt</link>
+      や Autocrypt のような機能を同時に使うのが難しくなります。
     </para>
     <para>
       The <link linkend="autocrypt-dir">$autocrypt_dir</link> variable
