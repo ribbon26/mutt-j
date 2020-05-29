@@ -9410,78 +9410,70 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
   </sect2>
 
   <sect2 id="autocryptdoc-compose">
-    <title>Compose Menu</title>
+    <title>編集メニュー</title>
     <para>
-      When enabled, Autocrypt will add a line to the compose menu with
-      two fields: <literal>Autocrypt:</literal> and
-      <literal>Recommendation:</literal>.
+      有効にした場合、Autocrypt は <literal>Autocrypt:</literal> と
+      <literal>Recommendation:</literal>という2つのフィールドを持つ2行を、編集メニューに
+      追加します。
     </para>
     <para>
-      The <literal>Autocrypt:</literal> field shows whether the
-      message will be encrypted by Autocrypt when sent.  It has two
-      values: <literal>Encrypt</literal> and <literal>Off</literal>.
-      <literal>Encrypt</literal> can be enabled using the
-      <literal>&lt;autocrypt-menu&gt;</literal> function, by default
-      bound to <literal>o</literal>.
+      <literal>Autocrypt:</literal>フィールドは、送信時にAutocrypt によって
+      メッセージが暗号化されるか否かを示します。これには
+      <literal>Encrypt</literal>と<literal>Off</literal>という2つの値が持てます。
+      <literal>Encrypt</literal>は、既定で<literal>o</literal>に割り当てられている
+      <literal>&lt;autocrypt-menu&gt;</literal>機能を使うことで有効に出来ます。
     </para>
     <para>
-      The <literal>Recommendation:</literal> field shows the output of
-      the Autocrypt recommendation engine.  This can have one of five
-      values:
+      <literal>Recommendation:</literal>フィールドは、Autocrypt レコメンデーション
+      エンジンの出力を表示します。これは以下の5つの値のうちのどれかになります。
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          <literal>Off</literal> means the engine is disabled.  This
-          can happen if the From address doesn't have an autocrypt
-          account, or if the account has been manually disabled.
+	  <literal>Off</literal>はエンジンが無効であることを意味します。
+	  これは、From アドレスがautocryut アカウントを持っていないか、
+	  アカウントが手動で無効化されている場合に発生します。
         </para>
       </listitem>
       <listitem>
         <para>
-          <literal>No</literal> means one or more recipients are
-          missing an autocrypt key, or the key found is unusable
-          (i.e. expired, revoked, disabled, invalid, or not usable for
-          encryption.)
+	  <literal>No</literal>は、1つ以上の受信者がautocrypt キーを
+	  持っていないか、見つかったキーが使用できない場合を意味します
+	  (すなわち、満了、廃止、無効、不正、あるいは暗号化には使えない)。
         </para>
       </listitem>
       <listitem>
         <para>
-          <literal>Discouraged</literal> means a key was found for
-          every recipient, but the engine is not confident the message
-          will be decryptable by the recipient.  This can happen if
-          the key hasn't been used recently (compared to their last
-          seen email).
+	  <literal>Discouraged</literal>は、各受信者に対するキーは見つかったけれど、
+	  エンジンが、受信者がメッセージを復号化できるとは思っていないという
+	  ことを意味します。これは、キーが最近使われていない場合(
+	  最後のメールと比較して)に発生します。
         </para>
         <para>
-          It can also happen if the key wasn't seen first-hand from
-          the sender.  Autocrypt has a feature where recipient keys
-          can be included in group-encrypted emails.  This allows you
-          to reply to a conversation where you don't have a key
-          first-hand from one of the other recipients.  However, those
-          keys are not trusted as much as from first-hand emails, so
-          the engine warns you with a <literal>Discouraged</literal>
-          status.
+	  これは、キーが送信者から直接見られなかった場合にも発生します。
+	  Autocrypt はグループで暗号化されたメール中に受信者のキーを含めることが
+	  出来る機能を持っています。これにより、他の受信者の1人から直接キーを
+	  もらっていない会話に返信できるようになります。しかし、これらのキーは
+	  メールから直接と同じくらいには信用されていないので、エンジンは、
+	  <literal>Discouraged</literal>ステータスを出すことで警告を行います。
         </para>
       </listitem>
       <listitem>
         <para>
-          <literal>Available</literal> means a key was found for every
-          recipient, and the engine believes all keys are recent and
-          seen from the recipient first hand.  However, either you or
-          one of the recipients chose not to specify <quote>prefer
-          encryption</quote>.
+	  <literal>Available</literal>は、各受信者に対してキーが見つかり、
+	  すべてのキーが最新で、受信者から直接見られていると、
+	  エンジンが信じていることを意味します。しかし、自分自身あるいは
+	  受信者の1人が、<quote>暗号化優先(prefer encryption)</quote>を
+	  指定していないことを選択している状態です。
         </para>
       </listitem>
       <listitem>
         <para>
-          <literal>Yes</literal> is the same as
-          <literal>Available</literal>, with the addition that you and
-          all recipients have specified <quote>prefer
-          encryption</quote>.  This value will automatically enable
-          encryption, unless you have manually switched it off or
-          enabled regular encryption or signing via the
-          <literal>&lt;pgp-menu&gt;</literal>.
+	  <literal>Yes</literal> は<literal>Available</literal>と同じですが、
+	  受信者全員が<quote>暗号化優先(prefer encryption)</quote>を指定して
+	  いる所が違います。この値は<literal>&lt;pgp-menu&gt;</literal>を使用して
+	  手動でOFFにするか、通常の暗号化か署名を有効にするまで、自動的に
+	  暗号化を有効にします。
         </para>
       </listitem>
     </itemizedlist>
