@@ -9365,52 +9365,47 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       や Autocrypt のような機能を同時に使うのが難しくなります。
     </para>
     <para>
-      The <link linkend="autocrypt-dir">$autocrypt_dir</link> variable
-      is not designed to be changed while Mutt is running.  The
-      database is created (if necessary) and connected to during
-      startup.  Changing the variable can result in a situation where
-      Mutt is looking in one place for the database and a different
-      place for the GPG keyring, resulting in strange behavior.
+      <link linkend="autocrypt-dir">$autocrypt_dir</link>変数は、Mutt が実行
+      している間に変更されることを考えては設計されていません。(必要に応じて)
+      データベースが作成され、起動時に接続されます。変数の変更は、
+      Mutt がデータベースをある1箇所で、異なった場所でGPG キーリングを探すという
+      状況が発生し、奇妙な動作が起きる可能性があります。
     </para>
     <para>
-      Once the directory, keyring, and database are created, Mutt will
-      ask whether you would like to create an account.  In order to
-      use Autocrypt, each sending address needs an account.  As a
-      convenience you can create an account during the first run.  If
-      you would like to add additional accounts later, this can be
-      done via the <literal>&lt;autocrypt-acct-menu&gt;</literal>
-      function in the index, by default bound to <literal>A</literal>.
+      ディレクトリ、キーリングとデータベースが作成されると、Mutt はアカウントを
+      作成するかどうか聞いてきます。Autocrypt を使うためには、各送信アドレスに
+      アカウントが必要です。便利なように、最初の実行時にアカウントを作成できます。
+      後で追加のアカウントを追加したい場合は、既定値では <literal>A</literal>に
+      割り当てられている<literal>&lt;autocrypt-acct-menu&gt;</literal> 機能を
+      インデックス中で使う事で出来ます。
     </para>
     <para>
-      Account creation will first ask you for an email address.  Next,
-      it will ask whether you want to create a new key or select an
-      existing key.  (Note key selection takes place from the <link
-      linkend="autocrypt-dir">$autocrypt_dir</link> keyring, which
-      will normally be empty during first run).  Finally, it will ask
-      whether this address should prefer encryption or not.  Autocrypt
-      1.1 allows automatically enabling encryption if
-      <emphasis>both</emphasis> sender and receiver have set
-      <quote>prefer encryption</quote>.  Otherwise, you will need to
-      manually enable autocrypt encryption in the compose menu.  For
-      more details, see the compose menu section below.
+      アカウントの作成時には、最初にメールアドレスを聞いてきます。次に、新しい
+      キーを作るか、既存のキーを使うかを聞いてきます(キーの選択は、通常最初の
+      実行時には空白である
+      <link linkend="autocrypt-dir">$autocrypt_dir</link>キーリングから行われ
+      ることに注意してください)。最後に、このアドレスで暗号化を優先するかどうかを
+      聞いてきます。Autocrypt 1.1 では送信者と受信者が<emphasis>共に</emphasis>
+      <quote>暗号化優先(prefer encryption)</quote>としている場合、自動的に暗号化を
+      有効にします。それ以外では、編集メニューで、autocrypt 暗号化を手動で有効に
+      する必要があります。詳細については、以下の、編集メニュー選択項目を参照して
+      ください。
     </para>
     <para>
-      After optionally creating an account, Mutt will prompt you to
-      scan mailboxes for Autocrypt headers.  This step occurs because
-      header cached messages are not re-scanned for Autocrypt headers.
-      Scanning during this step will temporarily disable the header
-      cache while opening each mailbox.  If you wish to do this
-      manually later, you can simulate the same thing by unsetting
-      <link linkend="header-cache">$header_cache</link> and opening a
-      mailbox.
+      オプションでアカウントを作成した後、Mutt はメールボックス中から Autocrypt
+      ヘッダを探すように問い合わせてきます。この手順は、ヘッダがキャッシュされた
+      メッセージはAutocryptヘッダを再スキャンしないと言う理由で発生します。
+      このステップ中でのスキャンは各メールボックスのオープン時に、一時的に
+      ヘッダキャッシュを無効にします。これを後で手動で行う場合は、
+      <link linkend="header-cache">$header_cache</link>の設定を解除し、メール
+      ボックスをオープンすることで、同じことをシミュレートできます。
     </para>
     <para>
-      A final technical note: the first run process takes place
-      between reading the muttrc and opening the initial mailbox.
-      Some muttrc files will <link linkend="push">push</link> macros
-      to be run after opening the mailbox.  To prevent this from
-      interfering with the first run prompts, Mutt disables all macros
-      during the first run.
+      最後の技術的な注意事項: 最初の実行プロセスは、muttrc の読み出しと、
+      最初のメールボックスのオープンの間に起こります。一部の muttrc ファイルは、
+      メールボックスのオープン後に実行されるマクロを<link linkend="push">push</link>
+      します。これを最初の実行時のプロンプトと干渉することを防ぐため、
+      Mutt は最初の実行時の間、すべてのマクロを無効にします。
     </para>
   </sect2>
 
