@@ -9478,51 +9478,48 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       </listitem>
     </itemizedlist>
     <para>
-      As mentioned above the <literal>&lt;autocrypt-menu&gt;</literal>
-      function, by default bound to <literal>o</literal>, can be used
-      to change the <literal>Encrypt:</literal> field value.
-      <literal>(e)ncrypt</literal> will toggle encryption on.
-      <literal>(c)lear</literal> will toggle encryption off.  If
-      either of these are chosen, the field will remain in that state
-      despite what the <literal>Recommendation:</literal> field shows.
-      Lastly, <literal>(a)utomatic</literal> will set the value based
-      on the recommendation engine's output.
+      上記のように、既定で<literal>o</literal>に割り当てられている
+      <literal>&lt;autocrypt-menu&gt;</literal>機能は、<literal>Encrypt:</literal>
+      フィールドの値を変更するのに使う事が出来ます。<literal>(e)ncrypt</literal>は
+      暗号化をONにします。<literal>(c)lear</literal>は暗号化をOFFにします。
+      両者のどちらかを選択した場合、<literal>Recommendation:</literal>フィールドに
+      何が表示されていたとしても、フィールドはそのままの状態になります。最後に、
+      <literal>(a)utomatic</literal>はレコメンデーションエンジンの出力をベースに
+      した値に設定します。
     </para>
     <para>
-      Autocrypt encryption defers to normal encryption or signing.
-      <emphasis>Anything</emphasis> that enables normal encryption or
-      signing will cause autocrypt encryption to turn off.  The only
-      exception is when replying to an autocrypt-encrypted email
-      (i.e. an email decrypted from the <link
-      linkend="autocrypt-dir">$autocrypt_dir</link> keyring).  Then,
-      if <link linkend="autocrypt-reply">$autocrypt_reply</link> is
-      <emphasis>set</emphasis>, autocrypt mode will be forced on,
-      overriding the settings
+      Autocrypt暗号化は通常の暗号化や署名を引き継ぎます。通常の暗号化または署名
+      を有効にする場合は<emphasis>いつでも</emphasis>autcrypt による暗号化を
+      OFF にします。唯一の例外は、autocrypt で暗号化したメールに返信する場合です
+      (すなわち、<link linkend="autocrypt-dir">$autocrypt_dir</link>キーリングで
+      復号化したメール)。次に、<link linkend="autocrypt-reply">$autocrypt_reply</link>が
+      <emphasis>設定されている</emphasis>場合、autocrypt モードが強制的にONになり、
       <link linkend="crypt-autosign">$crypt_autosign</link>,
       <link linkend="crypt-autoencrypt">$crypt_autoencrypt</link>,
       <link linkend="crypt-replyencrypt">$crypt_replyencrypt</link>,
       <link linkend="crypt-replysign">$crypt_replysign</link>,
-      <link linkend="crypt-replysignencrypted">$crypt_replysignencrypted</link>, and
-      <link linkend="crypt-opportunistic-encrypt">$crypt_opportunistic_encrypt</link>.
+      <link linkend="crypt-replysignencrypted">$crypt_replysignencrypted</link> と
+      <link linkend="crypt-opportunistic-encrypt">$crypt_opportunistic_encrypt</link>
+      の設定を上書きします。
     </para>
     <para>
-      When postponing a message, autocrypt will respect <link
-      linkend="postpone-encrypt">$postpone_encrypt</link>, but will
-      use the autocrypt account key to encrypt the message.  Be sure
-      to set <link linkend="postpone-encrypt">$postpone_encrypt</link>
-      to ensure postponed messages marked for autocrypt encryption are
-      encrypted.
+      メッセージ送信を延期する場合、autocrypt は
+      <link linkend="postpone-encrypt">$postpone_encrypt</link>の設定を優先しますが、
+      メッセージの暗号化に  autocrypt アカウントキーを使います。
+      autocrypt 暗号化をするようにマークした延期メッセージをちゃんと暗号化するように、
+      <link linkend="postpone-encrypt">$postpone_encrypt</link>を確実に設定して
+      ください。
     </para>
   </sect2>
 
   <sect2 id="autocryptdoc-acctmgmt">
-    <title>Account Management</title>
+    <title>アカウントの管理</title>
     <para>
-      The Autocrypt Account Menu is available from the index via
-      <literal>&lt;autocrypt-acct-menu&gt;</literal>, by default bound
-      to <literal>A</literal>.  See <link
-      linkend="autocrypt-account-map">Autocrypt Account Menu</link> for the
-      list of functions and their default keybindings.
+      Autocrypt アカウントメニューは、既定で<literal>A</literal>に割り当てられている
+      <literal>&lt;autocrypt-acct-menu&gt;</literal>を使ってインデックスから利用できます。
+      機能の一覧とその既定のバインディングについては
+      <link linkend="autocrypt-account-map">Autocrypt Account Menu</link>を参照して
+      下さい。
     </para>
     <para>
       In this menu, you can create new accounts, delete accounts,
