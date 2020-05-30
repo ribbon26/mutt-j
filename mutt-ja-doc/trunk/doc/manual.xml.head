@@ -9522,81 +9522,74 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       下さい。
     </para>
     <para>
-      In this menu, you can create new accounts, delete accounts,
-      toggle an account active/inactive, and toggle the <quote>prefer
-      encryption</quote> flag for an account.
+      このメニューでは、新しいアカウントの作成、アカウントの削除、アカウントの
+      有効/無効切り換え とアカウントの<quote>prefer encryption</quote>フラグの
+      ON/OFFができます。
     </para>
     <para>
-      Deleting an account only removes the account from the database.
-      The GPG key is kept, to ensure you still have the ability to
-      read past encrypted emails.
+      アカウントの削除は、データベースからアカウント削除のみ行います。
+      GPG キーはそのままなので、過去に暗号化したメールを読むことが引き続き出来ます。
     </para>
     <para>
-      The Autocrypt 1.1 <quote>Setup Message</quote> feature is not
-      available yet, but will be added in the future.
+      Autocrypt 1.1の<quote>Setup Message</quote>機能はまだ有効にはなって
+      いませんが、将来追加される予定です。
     </para>
   </sect2>
 
   <sect2 id="autocryptdoc-keyrings">
-    <title>Alternative Key and Keyring Strategies</title>
+    <title>代替キーとキーリングの戦略</title>
     <para>
-      Mutt by default partitions Autocrypt from normal keyring
-      encryption/signing.  It does this by using a separate GPG
-      keyring (in <link linkend="autocrypt-dir">$autocrypt_dir</link>)
-      and creating a new ECC key in that keyring for accounts.  There
-      are good reasons for doing this by default.  It keeps random
-      keys found inside email headers out of your normal keyring.  ECC
-      keys are compact and better suited for email headers.  Autocrypt
-      key selection is completely different from <quote>web of
-      trust</quote> key selection, based on last-seen rules as opposed
-      to trust and validity.  It also allows Mutt to distinguish
-      Autocrypt encrypted emails from regular encrypted emails, and
-      set the mode appropriately when replying to each type of email.
+      Mutt は既定で通常のキーリング暗号化/署名からAutocryptを分離します。
+      これは、(<link linkend="autocrypt-dir">$autocrypt_dir</link>中の)分離された
+      GPGキーと、アカウント用のキーリング中に新しい ECC キーを作成することで
+      行われます。既定でこれを行うことはよい理由があります。メールヘッダ中に
+      あるランダムなキーを、通常のキーリングの外に置くからです。ECC キーは
+      コンパクトで、メールのヘッダに適しています。Autocrypt キー選択機能は、
+      信頼と有効性とは異なる、最後に見たルールがベースの<quote>web of trust</quote>
+      キー選択とは全く異なります。また、Mutt は Autocrypt 暗号化メールを通常の
+      暗号化メール特別視、各タイプのメールに返信する時に、モードを適切に
+      設定することもします。
     </para>
     <para>
-      Still, some users may want to use an existing key from their
-      normal keyring for Autocrypt too.  There are two ways this can
-      be accomplished.  The <emphasis>recommended</emphasis> way is to
-      set <link linkend="autocrypt-dir">$autocrypt_dir</link> to your
-      normal keyring directory (e.g. <literal>~/.gnupg</literal>).
-      During account creation, choosing <quote>(s)elect existing GPG
-      key</quote> will then list and allow selecting your existing key
-      for the new account.
+      なお、一部のユーザでは通常のキーリングにある既存のキーを Autocryptにも
+      使用したい場合があります。これを成し遂げるには2つの方法があります。
+      <emphasis>推奨される</emphasis>方法は、通常のキーリングディレクトリ
+      (すなわち<literal>~/.gnupg</literal>)を
+      <link linkend="autocrypt-dir">$autocrypt_dir</link>に設定することです。
+      アカウント作成中に、<quote>(s)elect existing GPG key</quote>を作成すると、
+      新しいアカウント用の既存キーが一覧表示され、選択できるようになります。
     </para>
     <para>
-     An alternative is to copy your key over to the Autocrypt keyring,
-     but there is a severe downside.  Mutt <emphasis>first</emphasis>
-     tries to decrypt messages using the Autocrypt keyring, and if
-     that fails tries the normal keyring second.  This means all
-     encrypted emails to that key will be decrypted, and have
-     signatures verified from, the Autocrypt keyring.  Keys signatures
-     and web of trust from your normal keyring will no longer show up
-     in signatures when decrypting.
+     代替の方法は、キーをAutocryptキーリングにコピーすることですが、いくつか
+     重大な弱点があります。Mutt は<emphasis>最初に</emphasis>Autocrypt キーリングを
+     使ってメッセージの復号化を試み、それが失敗した場合、2番目に通常のキーリング
+     の使用を試みます。これは、そのキーに対応するすべての暗号化メールが復号化され、
+     Autocryptキーリングからの署名が検証されることを意味します。
+     キーの署名と通常のキーリングからの web of trust はもはや復号化時に
+     署名中に表示されなくなります。
     </para>
     <para>
-      For that reason, if you want to use an existing key from your
-      normal keyring, it is recommended to just set <link
-      linkend="autocrypt-dir">$autocrypt_dir</link> to
-      <literal>~/.gnupg</literal>.  This allows <quote>web of
-      trust</quote> to show an appropriate signature message for
-      verified messages.  Autocrypt header keys will be imported into
-      your keyring, but if you don't want them mixed you should
-      strongly consider using a separate autocrypt key and keyring
-      instead.
+      上記の理由により、既存キーを通常のキーリングから使おうとした場合、
+      <link linkend="autocrypt-dir">$autocrypt_dir</link>を
+      <literal>~/.gnupg</literal>に設定することを推奨します。これにより、
+      <quote>web of trust</quote>が検証されたメッセージに適切な署名メッセージを
+      表示できるようになります。Autocrypt ヘッダキーは暗黙でキーリングに
+      インポートされますが、それらを混ぜたくない場合は、そのかわりに分離された
+      autocrypt キーとキーリングを使う事を強くお勧めします。
     </para>
     <para>
-      Both methods have a couple additional caveats:
+      両方の方式にはいくつかの注意事項があります。
     </para>
     <itemizedlist>
       <listitem>
         <para>
-          Replying to an Autocrypt decrypted message by default forces
-          Autocrypt mode on.  By sharing the same key, all replies
-          will then start in Autocrypt mode, even if a message wasn't
-          sent by one of your Autocrypt peers.  <link
-          linkend="autocrypt-reply">$autocrypt_reply</link> can be
-          <emphasis>unset</emphasis> to allow manual control of the
-          mode when replying.
+	  Autocrypt で復号化されたメッセージに既定で返信すると、Autocrypt モードを
+	  強制的にONにします。同じキーを共有することで、すべての返信は、
+	  たとえメッセージがAutocryptの相手の1つから送られてこなかった場合でも
+	  Autocrypt モードで開始されます。
+	  <link linkend="autocrypt-reply">$autocrypt_reply</link>は、返信時に
+	  モードのマニュアル制御を可能にするため、<emphasis>設定解除</emphasis>
+	  できます。
         </para>
       </listitem>
       <listitem>
