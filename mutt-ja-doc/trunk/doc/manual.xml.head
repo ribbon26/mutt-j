@@ -9594,16 +9594,14 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       </listitem>
       <listitem>
         <para>
-          When Mutt creates an account from a gpg key, it exports the
-          public key, base64 encodes it, and stores that value in the
-          sqlite3 database.  The value is then used in the Autocrypt
-          header added to outgoing emails.  The ECC keys Mutt creates
-          don't change, but if you use external keys that expire, when
-          you resign to extend the expiration you will need to
-          recreate the Autocrypt account using the <link
-          linkend="autocryptdoc-acctmgmt">account menu</link>.
-          Otherwise the Autocrypt header will contain the old expired
-          exported keydata.
+	  Mutt が gpg キーからアカウントを作成するときは、公開鍵をエクスポートし、
+	  base64でエンコードし、sqlite3 データベースにその値を格納します。
+	  値は、発信するメールに追加されるAutocrypt ヘッダ中で使われます。Mutt が
+	  生成する ECC キーは変更されませんが、満了した外部キーを使う場合、
+	  満了期間を再延長するときは、
+	  <link linkend="autocryptdoc-acctmgmt">account menu</link>を使って、
+	  Autocrypt アカウントを再生成する必要があります。それ以外は、Autocrypt
+	  ヘッダには、エクスポートされた、古い満了したキーデータが含まれます。
         </para>
       </listitem>
     </itemizedlist>
@@ -9612,66 +9610,63 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
 </chapter>
 
 <chapter id="security">
-<title>Security Considerations</title>
+<title>セキュリティについての考慮</title>
 
 <para>
-First of all, Mutt contains no security holes included by intention but
-may contain unknown security holes. As a consequence, please run Mutt
-only with as few permissions as possible. Especially, do not run Mutt as
-the super user.
+まず最初に、Mutt は作為的なセキュリティホールは含まれていませんが、未知の
+セキュリティホールが有るかもしれません。結果として、可能な限りパーミッションを
+絞ってMutt を実行してください。特に、root では実行しないでください。
 </para>
 
 <para>
-When configuring Mutt, there're some points to note about secure setups
-so please read this chapter carefully.
+Mutt を構成するとき、セキュアに設定するためのいくつかの注意事項がありますので、
+この章を注意深く読んでください。
 </para>
 
 <sect1 id="security-passwords">
-<title>Passwords</title>
+<title>パスワード</title>
 
 <para>
-Although Mutt can be told the various passwords for accounts, please
-never store passwords in configuration files. Besides the fact that the
-system's operator can always read them, you could forget to mask it out
-when reporting a bug or asking for help via a mailing list. Even worse,
-your mail including your password could be archived by internet search
-engines, mail-to-news gateways etc. It may already be too late before
-you notice your mistake.
+Mutt はアカウント用の種々のパスワードを受け取りますが、決して設定ファイルにパスワードを
+格納しないでください。さらに、システムのオペレータが常時それを見ることが出来、
+バグを報告したり、メーリングリスト経由でヘルプを求めたりするときに、マスクする
+ことを忘れてしまうということもあります。もっと悪いことに、インターネット検索
+エンジンや、メールからnetnews のゲートウェイなどによって、パスワードを含むメールが
+アーカイブされてしまったりすることもありえます。失敗に気づいても遅すぎるかも
+しれません。
 </para>
 
 </sect1>
 
 <sect1 id="security-tempfiles">
-<title>Temporary Files</title>
+<title>一時ファイル</title>
 
 <para>
-Mutt uses many temporary files for viewing messages, verifying digital
-signatures, etc. As long as being used, these files are visible by other
-users and maybe even readable in case of misconfiguration.  Also, a
-different location for these files may be desired which can be changed
-via the <link linkend="tmpdir">$tmpdir</link> variable.
+Mutt はメールの表示、電子署名の懸賞などに多くの一時ファイルを使います。これらが
+使われている間は、他のユーザから見えていて、設定間違いがあった場合には、
+読めてしまうかもしれません。同様に、<link linkend="tmpdir">$tmpdir</link>変数を
+使って変更できる、別の位置が必要になることもあります。
 </para>
 
 </sect1>
 
 <sect1 id="security-leaks">
-<title>Information Leaks</title>
+<title>情報漏洩</title>
 
 <sect2 id="security-leaks-mid">
 <title>Message-Id: headers</title>
 
 <para>
-Message-Id: headers contain a local part that is to be created in a
-unique fashion. In order to do so, Mutt will <quote>leak</quote> some
-information to the outside world when sending messages: the generation
-of this header includes a step counter which is increased (and rotated)
-with every message sent. Other parts include the date, time, PID of mutt,
-and <link linkend="hostname">$hostname</link>.
-In a longer running mutt session, others can
-make assumptions about your mailing habits depending on the number of
-messages sent. If this is not desired, the header can be manually
-provided using <link linkend="edit-headers">$edit_headers</link> (though
-not recommended).
+Message-Id: ヘッダにはユニークな方法で作成されたローカルパートが含まれています。
+そのため、Mutt はメッセージを送信するときに、外部に対していくつかの情報を
+<quote>漏洩</quote>します。このヘッダの生成には、各メッセージが送信されるときに
+増加(そしてローテートされる)するステップカウンタ値が含まれています。その他の
+部分には、日付、時間、mutt の PIDと<link linkend="hostname">$hostname</link>が
+含まれます。
+muttセッションを長時間動かすと、送信されたメッセージの数に依存して他の人がメール
+操作の動向を推測できます。これを望ましくないと思うのであれば、(推奨しませんが)
+<link linkend="edit-headers">$edit_headers</link>を使って手動でヘッダを提供する
+ことができます。
 </para>
 
 </sect2>
