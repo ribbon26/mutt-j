@@ -9654,7 +9654,7 @@ Mutt はメールの表示、電子署名の懸賞などに多くの一時ファ
 <title>情報漏洩</title>
 
 <sect2 id="security-leaks-mid">
-<title>Message-Id: headers</title>
+<title>Message-Id: ヘッダ</title>
 
 <para>
 Message-Id: ヘッダにはユニークな方法で作成されたローカルパートが含まれています。
@@ -9672,40 +9672,39 @@ muttセッションを長時間動かすと、送信されたメッセージの�
 </sect2>
 
 <sect2 id="security-leaks-mailto">
-<title><literal>mailto:</literal>-style Links</title>
+<title><literal>mailto:</literal>形式のリンク</title>
 
 <para>
-As Mutt be can be set up to be the mail client to handle
-<literal>mailto:</literal> style links in websites, there're security
-considerations, too. Arbitrary header fields can be embedded in these
-links which could override existing header fields or attach arbitrary
-files using <link linkend="attach-header">the Attach:
-pseudoheader</link>. This may be problematic if the <link
-linkend="edit-headers">$edit-headers</link> variable is
-<emphasis>unset</emphasis>, i.e. the user doesn't want to see header
-fields while editing the message and doesn't pay enough attention to the
-compose menu's listing of attachments.
+Mutt は Webサイト中にある<literal>mailto:</literal>形式のリンクを処理できる
+メールクライアントとして設定できるので、この点もセキュリティに関する考慮事項
+となります。そのリンクに、既存ヘッダフィールドを上書きしたり、　
+<link linkend="attach-header">the Attach: pseudoheader</link>を使った任意の
+添付ファイルをつけたヘッダフィールドを埋め込むことが出来ます。これは、
+<link linkend="edit-headers">$edit-headers</link>変数が<emphasis>unset</emphasis>、
+すなわち、編集時にヘッダ表示をせず、編集メニューの添付一覧に十分気を払わない
+場合に、問題となり得ます。
 </para>
 
 <para>
-For example, following a link like
+例えば以下のリンク
 </para>
 
 <screen>
 mailto:joe@host?Attach=~/.gnupg/secring.gpg</screen>
 
 <para>
-will send out the user's private gnupg keyring to
-<literal>joe@host</literal> if the user doesn't follow the information
-on screen carefully enough.
+は、画面上の情報に十分気をつけないと、<literal>joe@host</literal>に
+プライベート gnupg キーを送信してしまいます。
+
 </para>
 
-<para>
-To prevent these issues, Mutt by default only accepts the
-<literal>Subject</literal> and <literal>Body</literal> headers.
-Allowed headers can be adjusted with the
-<link linkend="mailto-allow"><command>mailto_allow</command></link> and
-<link linkend="mailto-allow"><command>unmailto_allow</command></link> commands.
+<para>To 
+この問題を防ぐために、Mutt は既定で <literal>Subject</literal> と
+<literal>Body</literal> ヘッダのみを受け付けます。
+許可するヘッダは
+<link linkend="mailto-allow"><command>mailto_allow</command></link> と
+<link linkend="mailto-allow"><command>unmailto_allow</command></link> コマンドで
+調整できます。
 </para>
 
 </sect2>
@@ -9713,25 +9712,24 @@ Allowed headers can be adjusted with the
 </sect1>
 
 <sect1 id="security-external">
-<title>External Applications</title>
+<title>外部アプリケーション</title>
 
 <para>
-Mutt in many places has to rely on external applications or for
-convenience supports mechanisms involving external applications.
+種々の場所にある Mutt は 外部アプリケーションに依存するか、利便性のため、
+外部アプリケーションを起動する機能をサポートしています。
 </para>
 
 <para>
-One of these is the <literal>mailcap</literal> mechanism as defined by
-RfC1524. Details about a secure use of the mailcap mechanisms is given
-in <xref linkend="secure-mailcap"/>.
+それらの1つは RFC 1524で定義された<literal>mailcap</literal>機構です。
+mailcap 機構のセキュアな使い方の詳細は、<xref linkend="secure-mailcap"/>を
+参照してください。
 </para>
 
 <para>
-Besides the mailcap mechanism, Mutt uses a number of other external
-utilities for operation, for example to provide crypto support, in
-backtick expansion in configuration files or format string filters.  The
-same security considerations apply for these as for tools involved via
-mailcap.
+mailcap機構のほかに、Mutt は、たとえば、暗号化サポートの提供、設定ファイル中や
+フォーマット文字列中でのバッククォート拡張などの操作のために、数多くの
+外部ユーティリティを使います。これらにもmailcap 経由で起動されるツールと同じ
+ようないくつかのセキュリティについての考慮事項が適用されます。
 </para>
 
 </sect1>
@@ -9740,33 +9738,33 @@ mailcap.
 
 
 <chapter id="tuning">
-<title>Performance Tuning</title>
+<title>パフォーマンスチューニング</title>
 
 <sect1 id="tuning-mailboxes">
-<title>Reading and Writing Mailboxes</title>
+<title>メールボックスの描画と書き込み</title>
 
 <para>
-Mutt's performance when reading mailboxes can be improved in two ways:
+メールボックスを読むときのMutt のパフォーマンスは以下の2つの方法で向上できます:
 </para>
 
 <orderedlist>
 
 <listitem>
 <para>
-For remote folders (IMAP and POP) as well as folders using one-file-per
-message storage (Maildir and MH), Mutt's performance can be greatly
-improved using <link linkend="header-caching">header caching</link>.
-using a single database per folder.
+リモートフォルダ(IMAP とPOP) については、メッセージ1つに1つのファイルを使う
+ストレージ(Maildir とMH)と同じように、Mutt のパフォーマンスは
+<link linkend="header-caching">header caching</link>を使う事で劇的に向上できます。
+1つのフォルダ毎に1つのデータベースを使います。
 </para>
 </listitem>
 
 <listitem>
 <para>
-Mutt provides the <link linkend="read-inc">$read_inc</link> and <link
-linkend="write-inc">$write_inc</link> variables to specify at which rate
-to update progress counters. If these values are too low, Mutt may spend
-more time on updating the progress counter than it spends on actually
-reading/writing folders.
+Mutt は、進捗カウンタを更新する間隔を指定するのに使用する
+<link linkend="read-inc">$read_inc</link>と
+<link linkend="write-inc">$write_inc</link>変数を提供します。これらの値を
+小さくしすぎると、Mutt は実際にフォルダを読み書きするのに費やすよりも進捗カウンタの
+更新により多くの時間を費やす可能性があります。
 </para>
 
 <para>
