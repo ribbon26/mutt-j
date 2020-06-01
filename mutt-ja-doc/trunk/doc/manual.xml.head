@@ -9772,6 +9772,10 @@ For example, when opening a maildir folder with a few thousand messages,
 the default value for <link linkend="read-inc">$read_inc</link> may be
 too low. It can be tuned on on a folder-basis using <link
 linkend="folder-hook"><command>folder-hook</command>s</link>:
+たとえば、数千メッセージがある maildir フォルダを開く時には、
+<link linkend="read-inc">$read_inc</link>の既定値は小さすぎます。
+<link linkend="folder-hook"><command>folder-hook</command>s</link>を使って
+以下のように、フォルダ単位でチューニング出来ます。
 </para>
 
 <screen>
@@ -9786,66 +9790,59 @@ folder-hook ^pop 'set read_inc=1'</screen>
 </orderedlist>
 
 <para>
-These settings work on a per-message basis. However, as messages may
-greatly differ in size and certain operations are much faster than
-others, even per-folder settings of the increment variables may not be
-desirable as they produce either too few or too much progress updates.
-Thus, Mutt allows to limit the number of progress updates per second
-it'll actually send to the terminal using the <link
-linkend="time-inc">$time_inc</link> variable.
+上記の設定はメッセージ単位で動作します。しかし、メッセージのサイズが大きく異なり、
+他のものより特定の操作がより高速な場合、進行状況の更新を少なすぎるか多すぎるか
+どちらかで生成してしまうので、インクリメント変数をフォルダ単位で設定しても
+望ましくない場合があります。そのため、Mutt は実際に端末に送られる、秒単位での
+進行状況の表示数を、<link linkend="time-inc">$time_inc</link>変数を使って
+制限できます。、
 </para>
 
 </sect1>
 
 <sect1 id="tuning-messages">
-<title>Reading Messages from Remote Folders</title>
+<title>リモートフォルダからのメッセージの読み込み</title>
 
 <para>
-Reading messages from remote folders such as IMAP an POP can be slow
-especially for large mailboxes since Mutt only caches a very limited
-number of recently viewed messages (usually 10) per session (so that it
-will be gone for the next session.)
+IMAP や POP のような、リモートフォルダからのメッセージの読み込みは、
+Mutt が非常にごくわずかの、最近見たメッセージ(通常は10)のみをキャッシュするため、
+特に大きなメールボックスの場合、遅くなることがあります(そのため、次の
+セッションでは失われます)。
 </para>
 
 <para>
-To improve performance and permanently cache whole messages, please
-refer to Mutt's so-called <link linkend="body-caching">body
-caching</link> for details.
+パフォーマンスの向上と全部のメッセージをキャッシュするための詳細については、
+Mutt の<link linkend="body-caching">body caching</link>を参照してください。
 </para>
 
 </sect1>
 
 <sect1 id="tuning-search">
-<title>Searching and Limiting</title>
+<title>検索と制限</title>
 
 <para>
-When searching mailboxes either via a search or a limit action, for some
-patterns Mutt distinguishes between regular expression and string
-searches. For regular expressions, patterns are prefixed with
-<quote>~</quote> and with <quote>=</quote> for string searches.
+検索または制限操作のどちらかを使ってメールボックスを検索する場合、いくつかの
+パターンでは、Mutt は正規表現と文字列検索を区別します。正規表現では、
+パターンの前には<quote>~</quote>が付き、文字列検索の場合には前に
+<quote>=</quote>が付きます。
 </para>
 
 <para>
-Even though a regular expression search is fast, it's several times
-slower than a pure string search which is noticeable especially on large
-folders. As a consequence, a string search should be used instead of a
-regular expression search if the user already knows enough about the
-search pattern.
+正規表現の検索が早いにもかかわらず、特に大きなフォルダで顕著ですが、
+単純な文字列検索よりも数倍遅くなります。結果として、検索パターンをよく分かって
+いる場合、正規表現の代わりに文字列検索を使う必要があります。
 </para>
 
 <para>
-For example, when limiting a large folder to all messages sent to or by
-an author, it's much faster to search for the initial part of an e-mail
-address via <literal>=Luser@</literal> instead of
-<literal>~Luser@</literal>. This is especially true for searching
-message bodies since a larger amount of input has to be searched.
+たとえば、作成者へ、またはからのすべてのメッセージに、大きなフォルダを制限する
+時は、メールのアドレスの最初の部分に、<literal>~Luser@</literal>の代わりに
+<literal>=Luser@</literal>を使う方が非常に高速です。これは特に、大量の入力が
+検索されるため、メッセージ本体の検索に当てはまります。
 </para>
 
 <para>
-As for regular expressions, a lower case string search pattern makes
-Mutt perform a case-insensitive search except for IMAP (because for IMAP
-Mutt performs server-side searches which don't support
-case-insensitivity).
+正規表現では、小文字の文字列検索パターンは、IMAP を除いて大小文字を意識しないで
+Mutt は検索を実行します(IMAP は大小文字を意識するので)。
 </para>
 
 </sect1>
@@ -9853,10 +9850,10 @@ case-insensitivity).
 </chapter>
 
 <chapter id="reference">
-<title>Reference</title>
+<title>リファレンス</title>
 
 <sect1 id="commandline">
-<title>Command-Line Options</title>
+<title>コマンド行操作</title>
 
 <para>
 Running <literal>mutt</literal> with no arguments will make Mutt attempt
