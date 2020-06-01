@@ -9856,48 +9856,48 @@ Mutt は検索を実行します(IMAP は大小文字を意識するので)。
 <title>コマンド行操作</title>
 
 <para>
-Running <literal>mutt</literal> with no arguments will make Mutt attempt
-to read your spool mailbox.  However, it is possible to read other
-mailboxes and to send messages from the command line as well.
+引数なしで<literal>mutt</literal>を実行すると、Mutt はスプールにあるメールボックスを
+読もうとします。しかし、他のメールボックスを読んだり、コマンド行からメールを送ることも
+同様に出来ます。
 </para>
 
 <table id="tab-commandline-options">
-<title>Command line options</title>
+<title>コマンド行オプション</title>
 <tgroup cols="2">
 <thead>
-<row><entry>Option</entry><entry>Description</entry></row>
+<row><entry>オプション</entry><entry>説明</entry></row>
 </thead>
 <tbody>
-<row><entry>-A</entry><entry>expand an alias</entry></row>
-<row><entry>-a</entry><entry>attach a file to a message</entry></row>
-<row><entry>-b</entry><entry>specify a blind carbon-copy (BCC) address</entry></row>
-<row><entry>-c</entry><entry>specify a carbon-copy (Cc) address</entry></row>
-<row><entry>-d</entry><entry>log debugging output to ~/.muttdebug0 if mutt was compiled with +DEBUG; it can range from 1-5 and affects verbosity (a value of 2 is recommended)</entry></row>
-<row><entry>-D</entry><entry>print the value of all Mutt variables to stdout</entry></row>
-<row><entry>-E</entry><entry>edit the draft (-H) or include (-i) file</entry></row>
-<row><entry>-e</entry><entry>specify a config command to be run after initialization files are read</entry></row>
-<row><entry>-f</entry><entry>specify a mailbox to load</entry></row>
-<row><entry>-F</entry><entry>specify an alternate file to read initialization commands</entry></row>
-<row><entry>-h</entry><entry>print help on command line options</entry></row>
-<row><entry>-H</entry><entry>specify a draft file from which to read a header and body</entry></row>
-<row><entry>-i</entry><entry>specify a file to include in a message composition</entry></row>
-<row><entry>-m</entry><entry>specify a default mailbox type</entry></row>
-<row><entry>-n</entry><entry>do not read the system Muttrc</entry></row>
-<row><entry>-p</entry><entry>recall a postponed message</entry></row>
-<row><entry>-Q</entry><entry>query a configuration variable</entry></row>
-<row><entry>-R</entry><entry>open mailbox in read-only mode</entry></row>
-<row><entry>-s</entry><entry>specify a subject (enclose in quotes if it contains spaces)</entry></row>
-<row><entry>-v</entry><entry>show version number and compile-time definitions</entry></row>
-<row><entry>-x</entry><entry>simulate the mailx(1) compose mode</entry></row>
-<row><entry>-y</entry><entry>show a menu containing the files specified by the <command>mailboxes</command> command</entry></row>
-<row><entry>-z</entry><entry>exit immediately if there are no messages in the mailbox</entry></row>
-<row><entry>-Z</entry><entry>open the first folder with new message, exit immediately if none</entry></row>
+<row><entry>-A</entry><entry>指定した別名の展開</entry></row>
+<row><entry>-a</entry><entry>メッセージにファイルを添付</entry></row>
+<row><entry>-b</entry><entry>blind carbon-copy (BCC) アドレスの指定</entry></row>
+<row><entry>-c</entry><entry>carbon-copy (Cc) アドレスの指定</entry></row>
+<row><entry>-d</entry><entry>DEBUGオプションが構成されている場合、デバッグ出力を ~/.muttdebug0 に書き込み。冗長度を表す1-5 の値が指定可能(2 を推奨)</entry></row>
+<row><entry>-D</entry><entry>変数をすべて標準出力へ表示</entry></row>
+<row><entry>-E</entry><entry>下書 (-H) や挿入 (-i) ファイルを編集することの指定</entry></row>
+<row><entry>-e</entry><entry>初期化後に実行するコマンドの指定</entry></row>
+<row><entry>-f</entry><entry>読み出しメールボックスの指定</entry></row>
+<row><entry>-F</entry><entry>代替 muttrc ファイルの指定</entry></row>
+<row><entry>-h</entry><entry>このヘルプメッセージの表示</entry></row>
+<row><entry>-H</entry><entry>へッダとメール本体を読むために下書ファイルを指定</entry></row>
+<row><entry>-i</entry><entry>メール作成時に Mutt が挿入するファイルの指定</entry></row>
+<row><entry>-m</entry><entry>既定のメールボックス形式の指定</entry></row>
+<row><entry>-n</entry><entry>システム既定の Muttrc を読まないことの指定</entry></row>
+<row><entry>-p</entry><entry>保留メッセージの再読み出しの指定</entry></row>
+<row><entry>-Q</entry><entry>設定変数の問い合わせ</entry></row>
+<row><entry>-R</entry><entry>メールボックスを読み出し専用モードでオープンすることの指定</entry></row>
+<row><entry>-s</entry><entry>題名の指定 (空白がある場合には引用符でくくること)</entry></row>
+<row><entry>-v</entry><entry>バージョンとコンパイル時指定の表示</entry></row>
+<row><entry>-x</entry><entry>mailx(1) 送信モードのシミュレート</entry></row>
+<row><entry>-y</entry><entry><command>mailboxes</command>コマンドで指定されたメニュー中のファイルを表示</entry></row>
+<row><entry>-z</entry><entry>メールボックス中にメッセージが無ければすぐに終了</entry></row>
+<row><entry>-Z</entry><entry>新着メッセージが無ければすぐに終了</entry></row>
 </tbody>
 </tgroup>
 </table>
 
 <para>
-To read messages in a mailbox
+メールボックス中のメッセージを読むには以下のようにします。
 </para>
 
 <cmdsynopsis>
@@ -9915,7 +9915,7 @@ To read messages in a mailbox
 </cmdsynopsis>
 
 <para>
-To compose a new message
+新規メッセージを作成するには以下のようにします。
 </para>
 
 <cmdsynopsis>
@@ -9950,9 +9950,9 @@ To compose a new message
 </cmdsynopsis>
 
 <para>
-Mutt also supports a <quote>batch</quote> mode to send prepared
-messages.  Simply redirect input from the file you wish to send.  For
-example,
+Mutt はあらかじめ用意されたメッセージを送信するための、<quote>バッチ</quote>モードも
+サポートしています。これは、送りたいファイルを入力にリダイレクトするだけです。
+例は以下のようになります。
 </para>
 
 <screen>
