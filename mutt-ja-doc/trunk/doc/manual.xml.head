@@ -9959,42 +9959,39 @@ Mutt はあらかじめ用意されたメッセージを送信するための、
 mutt -s "data set for run #2" professor@bigschool.edu &lt; ~/run2.dat</screen>
 
 <para>
-will send a message to
-<literal>&lt;professor@bigschool.edu&gt;</literal> with a subject of
-<quote>data set for run #2</quote>.  In the body of the message will be
-the contents of the file <quote>~/run2.dat</quote>.
+これはメッセージを、<quote>data set for run #2</quote>という題名で、
+<literal>&lt;professor@bigschool.edu&gt;</literal>に送ります。メッセージの本体は
+<quote>~/run2.dat</quote>ファイルの内容になります。
 </para>
 
 <para>
-An include file passed with <literal>-i</literal> will be used as the
-body of the message.  When combined with <literal>-E</literal>, the
-include file will be directly edited during message composition.  The
-file will be modified regardless of whether the message is sent or
-aborted.
+<literal>-i</literal>で渡される、挿入されるファイルはメッセージの本体に使われます。
+<literal>-E</literal>と組み合わせると、挿入するファイルはメッセージの編集中に直接
+編集できます。メッセージが送信されるか中断されるかによらず、ファイルは変更され
+ます。
 </para>
 
 <para>
-A draft file passed with <literal>-H</literal> will be used as the
-initial header and body for the message.  Multipart messages can be
-used as a draft file.  When combined with <literal>-E</literal>, the
-draft file will be updated to the final state of the message after
-composition, regardless of whether the message is sent, aborted, or
-even postponed.  Note that if the message is sent encrypted or signed,
-the draft file will be saved that way too.
+<literal>-H</literal>で渡されるドラフトファイルはメッセージの初期ヘッダと
+本体に使われます。ドラフトファイルとしてマルチパートのメッセージも使えます。
+<literal>-E</literal>と組み合わせると、メッセージが送信、中断あるいは保留
+さの状態如何に関わらず、ドラフトファイルは編集後の、メッセージの
+最後の状態に更新されます。メッセージが暗号化あるいは署名をつけて送信されると
+ドラフトファイルはその方法でセーブされることに注意してください。
 </para>
 
 <para>
-All files passed with <literal>-a</literal> <emphasis>file</emphasis>
-will be attached as a MIME part to the message. To attach a single or
-several files, use <quote>--</quote> to separate files and recipient
-addresses:
+<literal>-a</literal> <emphasis>file</emphasis> で渡されたすべてのファイルは
+メッセージのMIME パートとして添付されます。単一あるいは複数のファイルを添付
+するには、<quote>--</quote>を使ってファイルを分離し、そのあとに受信アドレスを
+以下のように記述します。
 </para>
 
 <screen>
 mutt -a image.png -- some@one.org</screen>
 
 <para>
-or
+又は
 </para>
 
 <screen>
@@ -10002,14 +9999,14 @@ mutt -a *.png -- some@one.org</screen>
 
 <note>
 <para>
-The <literal>-a</literal> option must be last in the option list.
+<literal>-a</literal>オプションはオプションリストの最後に配置しなければなりません。  
 </para>
 </note>
 
 <para>
-In addition to accepting a list of email addresses, Mutt also accepts a URL with
-the <literal>mailto:</literal> schema as specified in RFC2368.  This is useful
-when configuring a web browser to launch Mutt when clicking on mailto links.
+さらに、メールアドレスの一覧にアクセスするため、Mutt は RFC2368 で定義されている
+<literal>mailto:</literal>書式をつかうURL を受け付けます。これは、 mailto リンクを
+クリックしたときに Mutt が起動するようにWeb ブラウザを設定した時に便利です。
 </para>
 
 <screen>
@@ -10018,10 +10015,10 @@ mutt mailto:some@one.org?subject=test&amp;cc=other@one.org</screen>
 </sect1>
 
 <sect1 id="commands">
-<title>Configuration Commands</title>
+<title>設定コマンド</title>
 
 <para>
-The following are the commands understood by Mutt:
+以下はMutt  が処理できるコマンドです。
 </para>
 
 <itemizedlist>
@@ -10177,10 +10174,10 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">map</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">key</replaceable>
+<replaceable class="parameter">キー</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">function</replaceable>
+<replaceable class="parameter">機能</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10192,7 +10189,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">alias</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">charset</replaceable>
+<replaceable class="parameter">文字セット</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10201,10 +10198,10 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="charset-hook">iconv-hook</link></command>
 <arg choice="plain">
-<replaceable class="parameter">charset</replaceable>
+<replaceable class="parameter">文字セット</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">local-charset</replaceable>
+<replaceable class="parameter">ローカル文字セット</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10213,7 +10210,7 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="color">color</link></command>
 <arg choice="plain">
-<replaceable class="parameter">object</replaceable>
+<replaceable class="parameter">対象</replaceable>
 </arg>
 <arg choice="opt" rep="repeat">
 <replaceable class="parameter">attribute</replaceable>
@@ -10329,10 +10326,10 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="exec">exec</link></command>
 <arg choice="plain">
-<replaceable class="parameter">function</replaceable>
+<replaceable class="parameter">機能</replaceable>
 </arg>
 <arg choice="opt" rep="repeat">
-<replaceable class="parameter">function</replaceable>
+<replaceable class="parameter">機能</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10368,7 +10365,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">[!]regexp</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">command</replaceable>
+<replaceable class="parameter">コマンド</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10505,16 +10502,16 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="macro">macro</link></command>
 <arg choice="plain">
-<replaceable class="parameter">menu</replaceable>
+<replaceable class="parameter">メニュー</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">key</replaceable>
+<replaceable class="parameter">キー</replaceable>
 </arg>
 <arg choice="plain">
 <replaceable class="parameter">sequence</replaceable>
 </arg>
 <arg choice="opt">
-<replaceable class="parameter">description</replaceable>
+<replaceable class="parameter">説明</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10584,7 +10581,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">[!]pattern</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">command</replaceable>
+<replaceable class="parameter">コマンド</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10686,7 +10683,7 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="my-hdr">my_hdr</link></command>
 <arg choice="plain">
-<replaceable class="parameter">string</replaceable>
+<replaceable class="parameter">文字列</replaceable>
 </arg>
 
 <command><link linkend="my-hdr">unmy_hdr</link></command>
@@ -10705,7 +10702,7 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="push">push</link></command>
 <arg choice="plain">
-<replaceable class="parameter">string</replaceable>
+<replaceable class="parameter">文字列</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10726,10 +10723,10 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="score-command">score</link></command>
 <arg choice="plain">
-<replaceable class="parameter">pattern</replaceable>
+<replaceable class="parameter">パターン</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">value</replaceable>
+<replaceable class="parameter">値</replaceable>
 </arg>
 
 <command><link linkend="score-command">unscore</link></command>
@@ -10738,7 +10735,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">*</replaceable>
 </arg>
 <arg choice="plain" rep="repeat">
-<replaceable class="parameter">pattern</replaceable>
+<replaceable class="parameter">パターン</replaceable>
 </arg>
 </group>
 </cmdsynopsis>
@@ -10751,7 +10748,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">[!]pattern</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">command</replaceable>
+<replaceable class="parameter">コマンド</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10763,7 +10760,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">[!]pattern</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">command</replaceable>
+<replaceable class="parameter">コマンド</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10775,7 +10772,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">[!]pattern</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">command</replaceable>
+<replaceable class="parameter">コマンド</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10789,36 +10786,36 @@ The following are the commands understood by Mutt:
 <arg choice="plain"><option>no</option></arg>
 <arg choice="plain"><option>inv</option></arg>
 </group>
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">variable=value</replaceable>
+<replaceable class="parameter">変数=値</replaceable>
 </arg>
 </group>
 <arg choice="opt" rep="repeat"></arg>
 
 <command><link linkend="set">toggle</link></command>
 <arg choice="plain">
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 <arg choice="opt" rep="repeat">
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 
 <command><link linkend="set">unset</link></command>
 <arg choice="plain">
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 <arg choice="opt" rep="repeat">
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 
 <command><link linkend="set">reset</link></command>
 <arg choice="plain">
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 <arg choice="opt" rep="repeat">
-<replaceable class="parameter">variable</replaceable>
+<replaceable class="parameter">変数</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10827,15 +10824,15 @@ The following are the commands understood by Mutt:
   <cmdsynopsis>
     <command><link linkend="setenv">setenv</link></command>
     <arg choice="plain">
-      <replaceable class="parameter">[?]variable</replaceable>
+      <replaceable class="parameter">[?]変数</replaceable>
     </arg>
     <arg choice="opt">
-      <replaceable class="parameter">value</replaceable>
+      <replaceable class="parameter">変数</replaceable>
     </arg>
 
     <command><link linkend="setenv">unsetenv</link></command>
     <arg choice="plain">
-      <replaceable class="parameter">variable</replaceable>
+      <replaceable class="parameter">変数</replaceable>
     </arg>
   </cmdsynopsis>
 </listitem>
@@ -10866,7 +10863,7 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="source">source</link></command>
 <arg choice="plain">
-<replaceable class="parameter">filename</replaceable>
+<replaceable class="parameter">ファイル名</replaceable>
 </arg>
 </cmdsynopsis>
 </listitem>
@@ -10875,7 +10872,7 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="spam">spam</link></command>
 <arg choice="plain">
-<replaceable class="parameter">pattern</replaceable>
+<replaceable class="parameter">パターン</replaceable>
 </arg>
 <arg choice="plain">
 <replaceable class="parameter">format</replaceable>
@@ -10887,7 +10884,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">*</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">pattern</replaceable>
+<replaceable class="parameter">パターン</replaceable>
 </arg>
 </group>
 </cmdsynopsis>
@@ -10897,7 +10894,7 @@ The following are the commands understood by Mutt:
 <cmdsynopsis>
 <command><link linkend="display-munging">subjectrx</link></command>
 <arg choice="plain">
-<replaceable class="parameter">pattern</replaceable>
+<replaceable class="parameter">パターン</replaceable>
 </arg>
 <arg choice="plain">
 <replaceable class="parameter">replacement</replaceable>
@@ -10909,7 +10906,7 @@ The following are the commands understood by Mutt:
 <replaceable class="parameter">*</replaceable>
 </arg>
 <arg choice="plain">
-<replaceable class="parameter">pattern</replaceable>
+<replaceable class="parameter">パターン</replaceable>
 </arg>
 </group>
 </cmdsynopsis>
