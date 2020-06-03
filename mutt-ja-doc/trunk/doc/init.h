@@ -97,57 +97,53 @@ struct option_t MuttVars[] = {
   { "abort_noattach_regexp",  DT_RX,  R_NONE, {.p=&AbortNoattachRegexp}, {.p="attach"} },
   /*
   ** .pp
-  ** Specifies a regular expression to match against the body of the
-  ** message, to determine if an attachment was mentioned but
-  ** mistakenly forgotten.  If it matches, $$abort_noattach will be
-  ** consulted to determine if message sending will be aborted.
+  ** メッセージの本体に対して一致する正規表現を指定し、添付ファイルが言及されたが
+  ** 間違って忘れられたかを決定します。一致した場合、 $$abort_noattach は、
+  ** メッセージ送信を中止するかを決めるために考慮します。
   ** .pp
-  ** Like other regular expressions in Mutt, the search is case
-  ** sensitive if the pattern contains at least one upper case letter,
-  ** and case insensitive otherwise.
+  ** Mutt 中の他の正規表現と同じように、パターンの中に少なくとも1つの大文字が
+  ** ある場合は大文字小文字を区別し、それ以外は大文字小文字を区別しません。
   */
   { "abort_nosubject",	DT_QUAD, R_NONE, {.l=OPT_SUBJECT}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** If set to \fIyes\fP, when composing messages and no subject is given
-  ** at the subject prompt, composition will be aborted.  If set to
-  ** \fIno\fP, composing messages with no subject given at the subject
-  ** prompt will never be aborted.
+  ** \fIyes\fP に設定した場合、メッセージを編集中の、題名プロンプトに
+  ** 題名を指定しない場合、編集が中止されます。\fIno\fP に設定した場合は、
+  ** 題名プロンプトに題名が指定されなくても中止しません。
   */
   { "abort_unmodified",	DT_QUAD, R_NONE, {.l=OPT_ABORT}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** If set to \fIyes\fP, composition will automatically abort after
-  ** editing the message body if no changes are made to the file (this
-  ** check only happens after the \fIfirst\fP edit of the file).  When set
-  ** to \fIno\fP, composition will never be aborted.
+  ** \fIyes\fP に設定すると、メッセージ本体の編集後に、ファイルへの変更がなければ
+  ** 自動的に編集を中止します(これは、そのファイルの\fI最初の\fP編集後にのみ
+  ** 発生します)。\fIno\fP に設定すると、編集は決して中止しません。
   */
   { "alias_file",	DT_PATH, R_NONE, {.p=&AliasFile}, {.p="~/.muttrc"} },
   /*
   ** .pp
-  ** The default file in which to save aliases created by the
-  ** \fC$<create-alias>\fP function. Entries added to this file are
-  ** encoded in the character set specified by $$config_charset if it
-  ** is \fIset\fP or the current character set otherwise.
+  ** \fC$<create-alias>\fP 機能で作成された別名を保存するための既定のファイル。
+  ** このファイルに追加されるエントリは \fIset\fP が設定されている場合、
+  ** $$config_charset によって指定された文字セットで、そうでない
+  ** 場合は現在の文字セットでエンコードされます。
   ** .pp
-  ** \fBNote:\fP Mutt will not automatically source this file; you must
-  ** explicitly use the ``$source'' command for it to be executed in case
-  ** this option points to a dedicated alias file.
+  ** \fBNote:\fP Mutt は自動的にこのファイルを読み込ません。このオプションが
+  ** 専用の別名ファイルを指定している場合、``$source'' コマンドを明示的に
+  ** 実行する必要があります。
   ** .pp
-  ** The default for this option is the currently used muttrc file, or
-  ** ``~/.muttrc'' if no user muttrc was found.
+  ** このオプションの既定値は、現在使っている muttrc ファイルか、ユーザの
+  ** muttrc ファイルがない場合は ``~/.muttrc'' となります。
   */
   { "alias_format",	DT_STR,  R_NONE, {.p=&AliasFmt}, {.p="%4n %2f %t %-10a   %r"} },
   /*
   ** .pp
-  ** Specifies the format of the data displayed for the ``$alias'' menu.  The
-  ** following \fCprintf(3)\fP-style sequences are available:
+  ** ``$alias'' メニューで表示されるデータの書式を指定します。以下の、
+  ** \fCprintf(3)\fP 形式のものが有効です。
   ** .dl
-  ** .dt %a .dd alias name
-  ** .dt %f .dd flags - currently, a ``d'' for an alias marked for deletion
-  ** .dt %n .dd index number
-  ** .dt %r .dd address which alias expands to
-  ** .dt %t .dd character which indicates if the alias is tagged for inclusion
+  ** .dt %a .dd 別名
+  ** .dt %f .dd フラグ - 現時点では削除予定の別名に ``d'' が付くだけ
+  ** .dt %n .dd インデックス番号
+  ** .dt %r .dd 別名展開後のアドレス
+  ** .dt %t .dd 別名にタグが付いている場合を示す文字
   ** .de
   */
   { "allow_8bit",	DT_BOOL, R_NONE, {.l=OPTALLOW8BIT}, {.l=1} },
