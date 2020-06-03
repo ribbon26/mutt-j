@@ -10961,4 +10961,4 @@ mutt mailto:some@one.org?subject=test&amp;cc=other@one.org</screen>
 </sect1>
 
 <sect1 id="variables">
-<title>Configuration Variables</title>
+<title>設定変数</title>
