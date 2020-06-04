@@ -149,51 +149,48 @@ struct option_t MuttVars[] = {
   { "allow_8bit",	DT_BOOL, R_NONE, {.l=OPTALLOW8BIT}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether 8-bit data is converted to 7-bit using either Quoted-
-  ** Printable or Base64 encoding when sending mail.
+  ** メール送信時に Quoted-Printable か Base64 を使って 8 ビットデータを
+  **  7 ビットに変換するかどうかを制御します。
   */
   { "allow_ansi",      DT_BOOL, R_NONE, {.l=OPTALLOWANSI}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether ANSI color codes in messages (and color tags in
-  ** rich text messages) are to be interpreted.
-  ** Messages containing these codes are rare, but if this option is \fIset\fP,
-  ** their text will be colored accordingly. Note that this may override
-  ** your color choices, and even present a security problem, since a
-  ** message could include a line like
+  ** メッセージ中の ANSI 色コード (と、リッチテキストメッセージの色タグ) を解釈するか
+  ** どうかを制御します。こうしたコードを含むメッセージは稀ですが、 このオプションが
+  ** \fIset\fP されていれば、相応に着色されます。これは、自分の色選択を上書きしかねない
+  ** という点や、セキュリティ上の問題さえ引き起こしかねないという点に注意する必要が
+  ** あります。たとえば、以下のような行がメッセージに含まれているとします。
   ** .ts
   ** [-- PGP output follows ...
   ** .te
   ** .pp
-  ** and give it the same color as your attachment color (see also
-  ** $$crypt_timestamp).
+  ** そして、添付の色と同じ色になっている場合です($$crypt_timestampを参照してください)。
   */
   { "arrow_cursor",	DT_BOOL, R_MENU, {.l=OPTARROWCURSOR}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, an arrow (``->'') will be used to indicate the current entry
-  ** in menus instead of highlighting the whole line.  On slow network or modem
-  ** links this will make response faster because there is less that has to
-  ** be redrawn on the screen when moving to the next or previous entries
-  ** in the menu.
+  ** \fIset\fPされている場合、行全体をハイライトする代わりに、矢印(``->'') で、
+  ** メニュー中での現在のエントリ位置を表示します。これを使うことで、遅いネットワークや
+  ** モデム回線で、メニュー中で、前後のエントリに移動するとき、画面の再描画量が
+  ** 少なくて済むという理由で、反応を早くすることが出来ます。
   */
   { "ascii_chars",	DT_BOOL, R_BOTH, {.l=OPTASCIICHARS}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will use plain ASCII characters when displaying thread
-  ** and attachment trees, instead of the default \fIACS\fP characters.
+  ** fIset\fPした場合、Mutt はスレッドや添付ファイルの木構造を表示する際に、既定の
+  ** fIACS\fP 文字ではなくプレーン ASCII 文字を使います。
   */
   { "askbcc",		DT_BOOL, R_NONE, {.l=OPTASKBCC}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will prompt you for blind-carbon-copy (Bcc) recipients
-  ** before editing an outgoing message.
+  ** \fIset\fPされていると、送信メッセージ編集前にブラインドカーボンコピー (Bcc) の
+  ** 宛先を入力するよう Mutt が問合せしてきます。
   */
   { "askcc",		DT_BOOL, R_NONE, {.l=OPTASKCC}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will prompt you for carbon-copy (Cc) recipients before
-  ** editing the body of an outgoing message.
+  ** \fIset\fPされていると、Mutt は送信メッセージの編集前にカーボンコピー (Cc) の
+  ** 宛先を問合せしてきます。
   */
   { "assumed_charset", DT_STR, R_NONE, {.p=&AssumedCharset}, {.p=0} },
   /*
