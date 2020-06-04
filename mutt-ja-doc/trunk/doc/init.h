@@ -195,68 +195,66 @@ struct option_t MuttVars[] = {
   { "assumed_charset", DT_STR, R_NONE, {.p=&AssumedCharset}, {.p=0} },
   /*
   ** .pp
-  ** This variable is a colon-separated list of character encoding
-  ** schemes for messages without character encoding indication.
-  ** Header field values and message body content without character encoding
-  ** indication would be assumed that they are written in one of this list.
-  ** By default, all the header fields and message body without any charset
-  ** indication are assumed to be in ``us-ascii''.
+  ** この変数は、文字エンコーディングの指定がないメッセージに対するエンコーディング
+  ** 方式の一覧をコロンで区切ったものです。文字エンコーディングの指定がない、ヘッダ
+  ** フィールドの値とメッセージ本体の内容は、このリストのどれかで記述されていると
+  ** 仮定されます。既定では、文字セットの指定がない、すべてのヘッダフィールドと
+  ** メッセージ本体は ``us-ascii'' であると見なされます。
   ** .pp
-  ** For example, Japanese users might prefer this:
+  ** たとえば、日本のユーザは以下のようにするのがよいかもしれません:
   ** .ts
   ** set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
   ** .te
   ** .pp
-  ** However, only the first content is valid for the message body.
+  ** しかし、メッセージ本体に対しては、最初のもののみが有効です。
   */
   { "attach_charset",    DT_STR,  R_NONE, {.p=&AttachCharset}, {.p=0} },
   /*
   ** .pp
-  ** This variable is a colon-separated list of character encoding
-  ** schemes for text file attachments. Mutt uses this setting to guess
-  ** which encoding files being attached are encoded in to convert them to
-  ** a proper character set given in $$send_charset.
+  ** この変数は、テキストファイルの添付に対する、コロンで区切られた、文字
+  ** エンコーディング方式の一覧です。Mutt は $$send_charset で指定された適切な
+  ** 文字セットに変換するため、添付されているエンコードされたファイルのエンコード
+  ** 状態を推測するために、これを使います。
   ** .pp
-  ** If \fIunset\fP, the value of $$charset will be used instead.
-  ** For example, the following configuration would work for Japanese
-  ** text handling:
+  ** もし、 \fIunset\fPであれば、 $$charset の値がそのかわりに使われます。
+  ** たとえば、以下の設定で、日本語のテキスト処理が動きます。
   ** .ts
   ** set attach_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
   ** .te
   ** .pp
-  ** Note: for Japanese users, ``iso-2022-*'' must be put at the head
-  ** of the value as shown above if included.
+  ** 日本のユーザ向けには、``iso-2022-*'' を含める場合には、上記のように値の
+  ** 先頭に配置する必要があります。
   */
   { "attach_format",	DT_STR,  R_NONE, {.p=&AttachFormat}, {.p="%u%D%I %t%4n %T%.40d%> [%.7m/%.10M, %.6e%?C?, %C?, %s] "} },
   /*
   ** .pp
-  ** This variable describes the format of the ``attachment'' menu.  The
-  ** following \fCprintf(3)\fP-style sequences are understood:
+  ** この値は  ``添付'' メニューでのフォーマットを記述します。以下の
+  ** \fCprintf(3)\fP 形式が指定できます。
   ** .dl
-  ** .dt %C  .dd charset
-  ** .dt %c  .dd requires charset conversion (``n'' or ``c'')
-  ** .dt %D  .dd deleted flag
-  ** .dt %d  .dd description (if none, falls back to %F)
+  ** .dt %C  .dd 文字セット
+  ** .dt %c  .dd 文字セット変換が必要 (``n'' 又は ``c'')
+  ** .dt %D  .dd 削除予定フラグ
+  ** .dt %d  .dd 説明 (ない場合には%F が使われます)
   ** .dt %e  .dd MIME content-transfer-encoding
-  ** .dt %F  .dd filename in content-disposition header (if none, falls back to %f)
-  ** .dt %f  .dd filename
-  ** .dt %I  .dd disposition (``I'' for inline, ``A'' for attachment)
-  ** .dt %m  .dd major MIME type
-  ** .dt %M  .dd MIME subtype
-  ** .dt %n  .dd attachment number
-  ** .dt %Q  .dd ``Q'', if MIME part qualifies for attachment counting
-  ** .dt %s  .dd size (see $formatstrings-size)
-  ** .dt %t  .dd tagged flag
-  ** .dt %T  .dd graphic tree characters
-  ** .dt %u  .dd unlink (=to delete) flag
-  ** .dt %X  .dd number of qualifying MIME parts in this part and its children
-  **             (please see the ``$attachments'' section for possible speed effects)
-  ** .dt %>X .dd right justify the rest of the string and pad with character ``X''
-  ** .dt %|X .dd pad to the end of the line with character ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %F  .dd content-disposition ヘッダ中のファイル名r (ない場合は %f が使われます)
+  ** .dt %f  .dd ファイル名
+  ** .dt %I  .dd disposition (インラインなら ``I'' 、 添付なら ``A'')
+  ** .dt %m  .dd メジャー MIME タイプ
+  ** .dt %M  .dd MIME サブタイプ
+  ** .dt %n  .dd 添付ファイル番号
+  ** .dt %Q  .dd MIME パートが添付ファイルカウントの対象になる場合  ``Q''
+  ** .dt %s  .dd サイズ ($formatstrings-size を参照)
+  ** .dt %t  .dd タグフラグ
+  ** .dt %T  .dd 木構造を表示するグラフィカルな文字
+  ** .dt %u  .dd unlink (=削除対象) フラグ
+  ** .dt %X  .dd このパート中の、修飾 MIME パートの数とその子
+  **             (取り得るスピード効果については ``$attachments'' 節を参照してください)
+  ** .dt %>X .dd 文字列の残りを右寄せし、文字 ``X'' で埋めます
+  ** .dt %|X .dd 文字列の最後まで文字 ``X'' で埋めます
+  ** .dt %*X .dd 文字 ``X'' を埋め草として soft-fill します
   ** .de
   ** .pp
-  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
+  ** ``soft-fill'' の説明については $$index_format のドキュメントを参照してください。
   */
   { "attach_sep",	DT_STR,	 R_NONE, {.p=&AttachSep}, {.p="\n"} },
   /*
