@@ -388,49 +388,44 @@ struct option_t MuttVars[] = {
   { "braille_friendly", DT_BOOL, R_NONE, {.l=OPTBRAILLEFRIENDLY}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, mutt will place the cursor at the beginning
-  ** of the current line in menus, even when the $$arrow_cursor variable
-  ** is \fIunset\fP, making it easier for blind persons using Braille displays to
-  ** follow these menus.  The option is \fIunset\fP by default because many
-  ** visual terminals don't permit making the cursor invisible.
+  ** この変数が、\fIset\fPの時、mutt は$$arrow_cursor 変数が\fIunset\fPであっても、
+  ** 目の不自由な人が点字ディスプレイを使ってメニューを追えるように、カーソルを
+  ** メニューの先頭に置きます。このオプションは、多くの画面端末がカーソルを非表示に
+  ** 出来ないため、既定で\fIunset\fP になっています。
   */
   { "browser_abbreviate_mailboxes", DT_BOOL, R_NONE, {.l=OPTBROWSERABBRMAILBOXES}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, mutt will abbreviate mailbox
-  ** names in the browser mailbox list, using '~' and '='
-  ** shortcuts.
+  ** この変数が\fIset\fPの場合、mutt は  '~' と '=' ショートカットを使って、
+  ** ブラウザメールボックスリスト中で、メールボックス名を省略形で表示します。
   ** .pp
-  ** The default \fC"alpha"\fP setting of $$sort_browser uses
-  ** locale-based sorting (using \fCstrcoll(3)\fP), which ignores some
-  ** punctuation.  This can lead to some situations where the order
-  ** doesn't make intuitive sense.  In those cases, it may be
-  ** desirable to \fIunset\fP this variable.
+  ** $$sort_browser での既定の\fC"alpha"\fP 設定は、いくつかの区切り文字を
+  ** 無視する(\fCstrcoll(3)\fPを使う)ロケールベースの整列を使います。これにより
+  ** 整列順が直感的でない場合が発生する可能性があります。そのような場合、
+  ** この変数を\fIunset\fPにした方がよいでしょう。
   */
   { "browser_sticky_cursor", DT_BOOL, R_NONE, {.l=OPTBROWSERSTICKYCURSOR}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, the browser will attempt to keep
-  ** the cursor on the same mailbox when performing various functions.
-  ** These include moving up a directory, toggling between mailboxes
-  ** and directory listing, creating/renaming a mailbox, toggling
-  ** subscribed mailboxes, and entering a new mask.
+  ** この変数を \fIset\fPにした場合、ブラウザは、種々の機能を実行するときに
+  ** 同じメールボックス上でカーソルを保持するように試みます。これには、
+  ** ディレクトリ上位への移動、メールボックスとディレクトリ一覧の切り替え、
+  ** メールボックスの作成/削除、見ているメールボックスの切り換えと
+  ** 新しいマスクの入力が含まれます。
   */
 #if defined(USE_SSL)
   { "certificate_file",	DT_PATH, R_NONE, {.p=&SslCertFile}, {.p="~/.mutt_certificates"} },
   /*
   ** .pp
-  ** This variable specifies the file where the certificates you trust
-  ** are saved. When an unknown certificate is encountered, you are asked
-  ** if you accept it or not. If you accept it, the certificate can also
-  ** be saved in this file and further connections are automatically
-  ** accepted.
+  ** この変数は、信頼している証明書が保存されているファイルを指定します。
+  ** 不明な証明書が見つかった場合、それを受け入れるか否かが聞かれます。
+  ** 受け入れる場合、証明者はこのファイルに格納され、その後の接続は自動的に
+  ** 許可されます。
   ** .pp
-  ** You can also manually add CA certificates in this file. Any server
-  ** certificate that is signed with one of these CA certificates is
-  ** also automatically accepted.
+  ** このファイルに CA 証明書を手動で追加することも出来ます。CA 証明書の1つを
+  ** 持っている署名された任意のサーバ証明書も自動的に許可されます。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set certificate_file=~/.mutt/certificates
   ** .te
@@ -440,21 +435,21 @@ struct option_t MuttVars[] = {
   { "change_folder_next", DT_BOOL, R_NONE, {.l=OPTCHANGEFOLDERNEXT}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, the \fC<change-folder>\fP function
-  ** mailbox suggestion will start at the next folder in your ``$mailboxes''
-  ** list, instead of starting at the first folder in the list.
+  ** この変数を\fIset\fPにした場合、\fC<change-folder>\fP機能のメールボックス候補は
+  ** リスト中の最初のフォルダから始まるのではなく、``$mailboxes'' リスト中の
+  ** 次のフォルダから始まります。
   */
   { "charset",		DT_STR,	 R_NONE, {.p=&Charset}, {.p=0} },
   /*
   ** .pp
-  ** Character set your terminal uses to display and enter textual data.
-  ** It is also the fallback for $$send_charset.
+  ** テキストデータを端末で表示したり入力したりするのに使う文字セットです。
+  ** $$send_charset でも使います。
   ** .pp
-  ** Upon startup Mutt tries to derive this value from environment variables
-  ** such as \fC$$$LC_CTYPE\fP or \fC$$$LANG\fP.
+  ** 起動時に、Mutt は、\fC$$$LC_CTYPE\fP や \fC$$$LANG\fP のような環境変数から
+  ** この値を利用しようとします。
   ** .pp
-  ** \fBNote:\fP It should only be set in case Mutt isn't able to determine the
-  ** character set used correctly.
+  ** \fBNote:\fP Mutt が使用する文字セットを正しく決められない可能性がある場合にのみ
+  ** これを設定すべきです。
   */
   { "check_mbox_size",	DT_BOOL, R_NONE, {.l=OPTCHECKMBOXSIZE}, {.l=0} },
   /*
