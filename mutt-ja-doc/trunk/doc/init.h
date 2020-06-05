@@ -259,36 +259,34 @@ struct option_t MuttVars[] = {
   { "attach_sep",	DT_STR,	 R_NONE, {.p=&AttachSep}, {.p="\n"} },
   /*
   ** .pp
-  ** The separator to add between attachments when operating (saving,
-  ** printing, piping, etc) on a list of tagged attachments.
+  ** タグが付いた添付の一覧を操作するとき(セーブ、印刷、パイプなど)
+  ** 添付間に追加するためのセパレータ。
   */
   { "attach_split",	DT_BOOL, R_NONE, {.l=OPTATTACHSPLIT}, {.l=1} },
   /*
   ** .pp
-  ** If this variable is \fIunset\fP, when operating (saving, printing, piping,
-  ** etc) on a list of tagged attachments, Mutt will concatenate the
-  ** attachments and will operate on them as a single attachment. The
-  ** $$attach_sep separator is added after each attachment. When \fIset\fP,
-  ** Mutt will operate on the attachments one by one.
+  ** この変数が\fIunset\fPで、タグが付いた添付の一覧を操作するとき(セーブ、印刷、
+  ** パイプなど)、Mutt は添付を結合し、1つの添付として処理します。$$attach_sep
+  ** セパレータが各添付の後に追加されます。\fIset\fPの場合には、Mutt は
+  ** 添付を1つ1つ処理します。
   */
   { "attribution",	DT_STR,	 R_NONE, {.p=&Attribution}, {.p="On %d, %n wrote:"} },
   /*
   ** .pp
-  ** This is the string that will precede a message which has been included
-  ** in a reply.  For a full listing of defined \fCprintf(3)\fP-like sequences see
-  ** the section on $$index_format.
+  ** これは、返信で引用されるメッセージの前に付く文字列です。定義されている\fCprintf(3)\fP
+  ** 風シーケンスの完全な一覧は $$index_format の節にあります。
   */
   { "attribution_locale", DT_STR, R_NONE, {.p=&AttributionLocale}, {.p=0} },
   /*
   ** .pp
-  ** The locale used by \fCstrftime(3)\fP to format dates in the
-  ** $attribution string.  Legal values are the strings your system
-  ** accepts for the locale environment variable \fC$$$LC_TIME\fP.
+  ** $attribution 文字列中で、日付をフォーマットするために\fCstrftime(3)\fP
+  ** で使われるロケール。正しい値は、システムが使うロケール環境変数
+  **  \fC$$$LC_TIME\fP のものになります。
   ** .pp
-  ** This variable is to allow the attribution date format to be
-  ** customized by recipient or folder using hooks.  By default, Mutt
-  ** will use your locale environment, so there is no need to set
-  ** this except to override that default.
+  ** この値は、フックで使う、受信者又フォルダでカスタマイズされる
+  ** 日付フォーマット属性を許可するためのものです。既定では、Mutt は
+  ** 使っているロケール環境をを使うので、既定値を上書きする場合以外では、
+  ** これを設定する必要はありません。
   */
   { "auto_subscribe",	DT_BOOL, R_NONE, {.l=OPTAUTOSUBSCRIBE}, {.l=0} },
   /*
@@ -302,34 +300,34 @@ struct option_t MuttVars[] = {
   { "auto_tag",		DT_BOOL, R_NONE, {.l=OPTAUTOTAG}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, functions in the \fIindex\fP menu which affect a message
-  ** will be applied to all tagged messages (if there are any).  When
-  ** unset, you must first use the \fC<tag-prefix>\fP function (bound to ``;''
-  ** by default) to make the next function apply to all tagged messages.
+  ** \fIset\fPの場合、メッセージに影響する\fIindex\fPメニュー中の機能は
+  ** (もしもあれば)すべてのタグ付きメッセージに適用されます。設定しない場合、
+  ** 最初に \fC<tag-prefix>\fP機能(既定で``;''に割り当てられています)を使い、
+  ** すべてのタグ付きメッセージに次の機能を実行させるようにしなければなりません。
   */
 #ifdef USE_AUTOCRYPT
   { "autocrypt",	DT_BOOL, R_NONE, {.l=OPTAUTOCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, enables autocrypt, which provides
-  ** passive encryption protection with keys exchanged via headers.
-  ** See ``$autocryptdoc'' for more details.
-  ** (Autocrypt only)
+  ** \fIset\fPの場合で、autocrypt を有効にし、ヘッダ経由で交換されるキーを
+  ** 使って受動的な暗号化による保護を提供します。
+  ** 詳細は``$autocryptdoc''を参照してください。
+  ** (これは Autocrypt のみです)
   */
   { "autocrypt_acct_format", DT_STR, R_MENU, {.p=&AutocryptAcctFormat}, {.p="%4n %-30a %20p %10s"} },
   /*
   ** .pp
-  ** This variable describes the format of the ``autocrypt account'' menu.
-  ** The following \fCprintf(3)\fP-style sequences are understood
+  ** この変数は、``autocrypt account''メニューのフォーマットを決めます。
+  ** 以下の、\fCprintf(3)\fP風のものが使えます。
   ** .dl
-  ** .dt %a  .dd email address
+  ** .dt %a  .dd メールアドレス
   ** .dt %k  .dd gpg keyid
-  ** .dt %n  .dd current entry number
-  ** .dt %p  .dd prefer-encrypt flag
-  ** .dt %s  .dd status flag (active/inactive)
+  ** .dt %n  .dd 現在のエントリ番号
+  ** .dt %p  .dd prefer-encrypt フラグ
+  ** .dt %s  .dd ステータスフラグ (active/inactive)
   ** .de
   ** .pp
-  ** (Autocrypt only)
+  ** (Autocrypt のみです)
   */
   { "autocrypt_dir",	DT_PATH, R_NONE, {.p=&AutocryptDir}, {.p="~/.mutt/autocrypt"} },
   /*
