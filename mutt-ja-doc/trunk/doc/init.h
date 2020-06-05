@@ -291,11 +291,11 @@ struct option_t MuttVars[] = {
   { "auto_subscribe",	DT_BOOL, R_NONE, {.l=OPTAUTOSUBSCRIBE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt assumes the presence of a List-Post header
-  ** means the recipient is subscribed to the list.  Unless the mailing list
-  ** is in the ``unsubscribe'' or ``unlist'' lists, it will be added
-  ** to the ``$subscribe'' list.  Parsing and checking these things slows
-  ** header reading down, so this option is disabled by default.
+  **  \fIset\fPの場合、Mutt は List-Post ヘッダの存在が、受信者がメーリングリストに
+  ** 登録されていることを意味すると仮定します。メーリングリストが
+  ** ``unsubscribe'' 又は ``unlist'' リスト中にいない限り、``$subscribe''
+  ** リストに追加されます。これらを操作し、解釈するとヘッダを読み込む時間が遅くなるので、
+  ** 既定ではこのオプションは無効になっています。
   */
   { "auto_tag",		DT_BOOL, R_NONE, {.l=OPTAUTOTAG}, {.l=0} },
   /*
@@ -332,61 +332,58 @@ struct option_t MuttVars[] = {
   { "autocrypt_dir",	DT_PATH, R_NONE, {.p=&AutocryptDir}, {.p="~/.mutt/autocrypt"} },
   /*
   ** .pp
-  ** This variable sets where autocrypt files are stored, including the GPG
-  ** keyring and sqlite database.  See ``$autocryptdoc'' for more details.
-  ** (Autocrypt only)
+  ** この変数は、GPG キーリングと sqlite データベースを含む、autocrypt ファイルが
+  ** どこに格納されるかを設定します。詳細は``$autocryptdoc''を参照してください。
+  ** (Autocrypt のみです)
   */
   { "autocrypt_reply",	DT_BOOL, R_NONE, {.l=OPTAUTOCRYPTREPLY}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, replying to an autocrypt email automatically
-  ** enables autocrypt in the reply.  You may want to unset this if you're using
-  ** the same key for autocrypt as normal web-of-trust, so that autocrypt
-  ** isn't forced on for all encrypted replies.
-  ** (Autocrypt only)
+  ** fIset\fPの場合、autocrypt メールに対して返信すると、自動的に返信中で
+  ** autocrypt を有効にします。通常の web-ofstrust で autocrypt に同じキーを使いたい
+  ** 場合、これを無効にしたいかもしれません。このため、autocrypt はすべての暗号化した
+  ** 返信に対して強制的に有効にはなりません。
+  ** (Autocrypt のみです)
   */
 #endif
   { "autoedit",		DT_BOOL, R_NONE, {.l=OPTAUTOEDIT}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP along with $$edit_headers, Mutt will skip the initial
-  ** send-menu (prompting for subject and recipients) and allow you to
-  ** immediately begin editing the body of your
-  ** message.  The send-menu may still be accessed once you have finished
-  ** editing the body of your message.
+  ** $$edit_headers といっしょに \fIset\fPとした場合、Mutt は最初の送信メニュー
+  ** (題名と受信者の要求)を飛ばして、すぐにメッセージ本文を編集し始めるようになります。
+  ** 送信メニューは、メッセージの本文を編集した後に、引き続きアクセス出来ます。
   ** .pp
   ** .pp
-  ** \fBNote:\fP when this option is \fIset\fP, you cannot use send-hooks that depend
-  ** on the recipients when composing a new (non-reply) message, as the initial
-  ** list of recipients is empty.
+  ** \fBNote:\fP このオプションを\fIset\fPにした場合、初期受信者リストが空なので
+  ** 新しい(返信でない)メッセージを編集するとき、受信者に依存する send-hooks を使う事が
+  ** 出来ないことに注意してください。
   ** .pp
-  ** Also see $$fast_reply.
+  ** $$fast_reply も参照してください。
   */
   { "beep",		DT_BOOL, R_NONE, {.l=OPTBEEP}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, mutt will beep when an error occurs.
+  ** この変数が\fIset\fPの時、エラー発生時に Mutt が音を鳴らします。
   */
   { "beep_new",		DT_BOOL, R_NONE, {.l=OPTBEEPNEW}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, mutt will beep whenever it prints a message
-  ** notifying you of new mail.  This is independent of the setting of the
-  ** $$beep variable.
+  ** この変数が \fIset\fP の時、mutt は新着メールを知らせるメッセージを表示するたびに
+  ** 音を鳴らします。これは$$beep 変数の設定とは独立しています。
   */
   { "bounce",	DT_QUAD, R_NONE, {.l=OPT_BOUNCE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether you will be asked to confirm bouncing messages.
-  ** If set to \fIyes\fP you don't get asked if you want to bounce a
-  ** message. Setting this variable to \fIno\fP is not generally useful,
-  ** and thus not recommended, because you are unable to bounce messages.
+  ** メッセージ中継時に、確認のための質問をするかどうかを制御します。これを
+  ** \fIyes\fPにした場合、本当に中継するかどうかを聞いてきません。\fIno\fPに
+  ** することは一般的に無益であり、メッセージの中継が出来なくなるため推奨しません。
   */
   { "bounce_delivered", DT_BOOL, R_NONE, {.l=OPTBOUNCEDELIVERED}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, mutt will include Delivered-To headers when
-  ** bouncing messages.  Postfix users may wish to \fIunset\fP this variable.
+  ** この変数を\fIset\fPにした場合、mutt はメッセージ中継を行うときに、
+  ** Delivered-To ヘッダを付与します。Postfix の利用者は、この変数が\fIunset\fP
+  ** にしたいでしょう。
   */
   { "braille_friendly", DT_BOOL, R_NONE, {.l=OPTBRAILLEFRIENDLY}, {.l=0} },
   /*
