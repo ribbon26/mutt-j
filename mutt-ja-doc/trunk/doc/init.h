@@ -506,81 +506,75 @@ struct option_t MuttVars[] = {
   { "config_charset",	DT_STR,  R_NONE, {.p=&ConfigCharset}, {.p=0} },
   /*
   ** .pp
-  ** When defined, Mutt will recode commands in rc files from this
-  ** encoding to the current character set as specified by $$charset
-  ** and aliases written to $$alias_file from the current character set.
+  ** 定義した場合、Mutt は このエンコーディングから$$charsetによって指定された
+  ** 現在の文字セットに、rc ファイル中のコマンドを再コーディングし、
+  ** 現在の文字セットから $$alias_file に、別名を書き込みます。
   ** .pp
-  ** Please note that if setting $$charset it must be done before
-  ** setting $$config_charset.
+  ** $$charset が設定されている場合、$$config_charset の前に置かなければ
+  ** ならないことに注意してください。
   ** .pp
-  ** Recoding should be avoided as it may render unconvertable
-  ** characters as question marks which can lead to undesired
-  ** side effects (for example in regular expressions).
+  ** 再エンコーディングは、変換できない文字を疑問符にしてしまう場合があり、
+  ** 予期せぬ副作用(たとえば正規表現で)が発生しうるので、避けるべきです。
+  ** 
   */
   { "confirmappend",	DT_BOOL, R_NONE, {.l=OPTCONFIRMAPPEND}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will prompt for confirmation when appending messages to
-  ** an existing mailbox.
+  ** \fIset\fPの場合、Mutt がメッセージを既存メールボックスに追加するときに確認をしてきます。
   */
   { "confirmcreate",	DT_BOOL, R_NONE, {.l=OPTCONFIRMCREATE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will prompt for confirmation when saving messages to a
-  ** mailbox which does not yet exist before creating it.
+  ** \fIset\fPの場合、Mutt は存在しないメールボックスにメッセージを保存する際、
+  ** メールボックスを作成する前に確認をしてきます。
   */
   { "connect_timeout",	DT_NUM,	R_NONE, {.p=&ConnectTimeout}, {.l=30} },
   /*
   ** .pp
-  ** Causes Mutt to timeout a network connection (for IMAP, POP or SMTP) after this
-  ** many seconds if the connection is not able to be established.  A negative
-  ** value causes Mutt to wait indefinitely for the connection attempt to succeed.
+  ** この秒数でネットワーク接続 (IMAP、POPとSMP) が確立できなければ Mutt はタイムアウトと
+  ** します。負の数の場合、接続が成功するまで永遠に待ち続けます。
   */
   { "content_type",	DT_STR, R_NONE, {.p=&ContentType}, {.p="text/plain"} },
   /*
   ** .pp
-  ** Sets the default Content-Type for the body of newly composed messages.
+  ** 新規作成メッセージ本文における既定の Content-Type を設定します。
   */
   { "copy",		DT_QUAD, R_NONE, {.l=OPT_COPY}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This variable controls whether or not copies of your outgoing messages
-  ** will be saved for later references.  Also see $$record,
   ** $$save_name, $$force_name and ``$fcc-hook''.
+  ** この変数は、送信メッセージのコピーを 後で参照するために保存しておくかどうかを制御します。
+  ** $$record,$$save_name, $$force_name と ``$fcc-hook'' も参照してください。
   */
   { "count_alternatives", DT_BOOL, R_NONE, {.l=OPTCOUNTALTERNATIVES}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will recurse inside multipart/alternatives while
-  ** performing attachment searching and counting (see $attachments).
+  ** \fIset\fP の場合、Mutt は添付の検索とカウント($attachmentsを参照)を実行するときに、
+  ** multipart/alternatives内を再帰処理します。
   ** .pp
-  ** Traditionally, multipart/alternative parts have simply represented
-  ** different encodings of the main content of the email.  Unfortunately,
-  ** some mail clients have started to place email attachments inside
-  ** one of alternatives.  Setting this will allow Mutt to find
-  ** and count matching attachments hidden there, and include them
-  ** in the index via %X or through ~X pattern matching.
+  ** 従来、 multipart/alternative パートは、メールの主な部分とは異なったエンコーディング
+  ** を単に表現するものでした。残念ながらいくつかのメールクライアントはalternative の
+  ** 1つの中にメールの添付を置くようになってきています。これを設定すると、Mutt は
+  ** そこに隠された、一致する添付を見つけ、カウントし、%X 経由か ~X によるパターン
+  ** マッチングを使ってインデックス中に含めます。
   */
   { "pgp_autoencrypt",		DT_SYN,  R_NONE, {.p="crypt_autoencrypt"}, {.p=0} },
   { "crypt_autoencrypt",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOENCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable will cause Mutt to always attempt to PGP
-  ** encrypt outgoing messages.  This is probably only useful in
-  ** connection to the ``$send-hook'' command.  It can be overridden
-  ** by use of the pgp menu, when encryption is not required or
-  ** signing is requested as well.  If $$smime_is_default is \fIset\fP,
-  ** then OpenSSL is used instead to create S/MIME messages and
-  ** settings can be overridden by use of the smime menu instead.
-  ** (Crypto only)
+  ** この変数を設定すると、Mutt は送信メッセージを常時 PGP で暗号化しようとします。
+  ** これは``$send-hook'' コマンドでの接続中にのみ便利です。これは、暗号化が
+  ** 不要な場合や同様に署名が要求されている場合は PGPメニューを使う事で上書きできます。
+  ** $$smime_is_default が\fIset\fP の時は、 S/MIME メッセージを作成するのに
+  ** OpenSSL が代わりに使われ、smime メニューを使うことで代わりに設定を上書きできます。
+  ** (Crypto のみです)
   */
   { "crypt_autopgp",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOPGP}, {.l=1} },
   /*
   ** .pp
-  ** This variable controls whether or not mutt may automatically enable
-  ** PGP encryption/signing for messages.  See also $$crypt_autoencrypt,
-  ** $$crypt_replyencrypt,
-  ** $$crypt_autosign, $$crypt_replysign and $$smime_is_default.
+  ** この変数は、Mutt がメッセージに自動で PGP 暗号化/署名を有効にしても 良いかどうかを制御
+  ** します。$$crypt_autoencrypt,$$crypt_replyencrypt,$$crypt_autosign, $$crypt_replysign と
+  ** $$smime_is_default も参照してください。
   */
   { "pgp_autosign", 	DT_SYN,  R_NONE, {.p="crypt_autosign"}, {.p=0} },
   { "crypt_autosign",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOSIGN}, {.l=0} },
