@@ -454,36 +454,35 @@ struct option_t MuttVars[] = {
   { "check_mbox_size",	DT_BOOL, R_NONE, {.l=OPTCHECKMBOXSIZE}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, mutt will use file size attribute instead of
-  ** access time when checking for new mail in mbox and mmdf folders.
+  ** 変数を\fIset\fPにした場合、mutt は mbox と mmdf フォルダの新規メールチェック時に
+  ** アクセスタイムの代わりにファイルサイズ属性を使います。
   ** .pp
-  ** This variable is \fIunset\fP by default and should only be enabled when
-  ** new mail detection for these folder types is unreliable or doesn't work.
+  ** この変数は既定値で\fIunset\fPで、これは、新規メールの検出が、前述のフォルダ
+  ** タイプで信頼できないか動かない場合にのみ有効にすべきです。
   ** .pp
-  ** Note that enabling this variable should happen before any ``$mailboxes''
-  ** directives occur in configuration files regarding mbox or mmdf folders
-  ** because mutt needs to determine the initial new mail status of such a
-  ** mailbox by performing a fast mailbox scan when it is defined.
-  ** Afterwards the new mail status is tracked by file size changes.
+  ** muttは、定義されている場合、高速メールボックススキャンを実行することにより、
+  ** そのようなメールボックスの初期新規メールステータスを決定するために必要とするため、
+  ** mbox 又は mmdfフォルダに対して、設定ファイル中で``$mailboxes'' ディレクティブが
+  ** 出てくる前に、この変数を有効にする必要があることに注意が必要です。
+  ** その後、新規メールステータスはファイルサイズ変更で検出されます。
   */
   { "check_new",	DT_BOOL, R_NONE, {.l=OPTCHECKNEW}, {.l=1} },
   /*
   ** .pp
-  ** \fBNote:\fP this option only affects \fImaildir\fP and \fIMH\fP style
-  ** mailboxes.
+  ** \fBNote:\fP このオプションは\fImaildir\fP と \fIMH\fP 形式のメールボックス
+  ** のみ有効です。
   ** .pp
-  ** When \fIset\fP, Mutt will check for new mail delivered while the
-  ** mailbox is open.  Especially with MH mailboxes, this operation can
-  ** take quite some time since it involves scanning the directory and
-  ** checking each file to see if it has already been looked at.  If
-  ** this variable is \fIunset\fP, no check for new mail is performed
-  ** while the mailbox is open.
+  ** \fIset\fP の場合、Mutt は開いている最中のメールボックスに着信する新着メールを
+  ** 調べます。特に、MH メールボックスにおいては、この操作は、ディレクトリをスキャンし、
+  ** 各ファイルについてすでに見たかどうかをチェックするため、かなりの時間がかかる
+  ** 可能性があります。この変数を\fIunset\fPにすると、メールボックスが開いている間は
+  ** 新規メールのチェックを行いません。
+  ** 
   */
   { "collapse_unread",	DT_BOOL, R_NONE, {.l=OPTCOLLAPSEUNREAD}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, Mutt will not collapse a thread if it contains any
-  ** unread messages.
+  ** \fIunset\fP の場合、Mutt は未読メッセージがあるスレッドを折りたたみません。
   */
   { "compose_format",	DT_STR,	 R_MENU, {.p=&ComposeFormat}, {.p="-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"} },
   /*
@@ -491,15 +490,18 @@ struct option_t MuttVars[] = {
   ** Controls the format of the status line displayed in the ``compose''
   ** menu.  This string is similar to $$status_format, but has its own
   ** set of \fCprintf(3)\fP-like sequences:
+  ** ``編集'' メニューで表示されているステータス行のフォーマットを制御します。
+  ** この文字列は$$status_formatと似ていますが、\fCprintf(3)\fP風の、固有の
+  ** パラメータを使います:
   ** .dl
-  ** .dt %a .dd total number of attachments
-  ** .dt %h .dd local hostname
-  ** .dt %l .dd approximate size (in bytes) of the current message (see $formatstrings-size)
-  ** .dt %v .dd Mutt version string
+  ** .dt %a .dd 添付の総数
+  ** .dt %h .dd ローカルホスト名
+  ** .dt %l .dd 現在のメッセージの(バイト単位での)おおよそのサイズ($formatstrings-sizeを参照)
+  ** .dt %v .dd Mutt バージョン文字列
   ** .de
   ** .pp
-  ** See the text describing the $$status_format option for more
-  ** information on how to set $$compose_format.
+  ** どのように$$compose_format. を設定したらいいかについての情報は、
+  ** $$status_formatオプションの記述を参照してください。
   */
   { "config_charset",	DT_STR,  R_NONE, {.p=&ConfigCharset}, {.p=0} },
   /*
