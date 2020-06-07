@@ -623,56 +623,50 @@ struct option_t MuttVars[] = {
   { "crypt_protected_headers_read", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSREAD}, {.l=1} },
   /*
   ** .pp
-  ** When set, Mutt will display protected headers ("Memory Hole") in the pager,
-  ** and will update the index and header cache with revised headers.
+  ** 設定した場合、Mutt はページャ中に保護されたヘッダ("メモリホール")を表示し、
+  ** インデックスとヘッダキャッシュを変更されたヘッダで更新します。
   **
-  ** Protected headers are stored inside the encrypted or signed part of an
-  ** an email, to prevent disclosure or tampering.
-  ** For more information see https://github.com/autocrypt/memoryhole.
-  ** Currently Mutt only supports the Subject header.
+  ** 保護されたヘッダはメール中の暗号化または署名されたパート中に格納され、
+  ** 漏洩や改ざんを防ぎます。
+  ** 詳細については https://github.com/autocrypt/memoryhole を参照してください。
+  ** 現時点で、Mutt は題名ヘッダのみをサポートします。
   ** .pp
-  ** Encrypted messages using protected headers often substitute the exposed
-  ** Subject header with a dummy value (see $$crypt_protected_headers_subject).
-  ** Mutt will update its concept of the correct subject \fBafter\fP the
-  ** message is opened, i.e. via the \fC<display-message>\fP function.
-  ** If you reply to a message before opening it, Mutt will end up using
-  ** the dummy Subject header, so be sure to open such a message first.
-  ** (Crypto only)
+  ** 保護されたヘッダを使う暗号化メッセージは、しばしば、表示されている題名
+  ** ヘッダをダミー値を含むものに差し替えます($crypt_protected_headers_subjectを
+  ** 参照)。Mutt はメッセージを開いた\fB後\fP、すなわち、\fC<display-message>\fP 機能を
+  ** 使って、正しい題名の内容に差し替えます。開く前にメッセージに返信する場合は、
+  ** Mutt は結局ダミーの題名ヘッダを使うため、そのようなメッセージは最初に
+  ** オープンするようにしてください。
+  ** (Cryptoのみです)
    */
   { "crypt_protected_headers_save", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSSAVE}, {.l=0} },
   /*
   ** .pp
-  ** When $$crypt_protected_headers_read is set, and a message with a
-  ** protected Subject is opened, Mutt will save the updated Subject
-  ** into the header cache by default.  This allows searching/limiting
-  ** based on the protected Subject header if the mailbox is
-  ** re-opened, without having to re-open the message each time.
-  ** However, for mbox/mh mailbox types, or if header caching is not
-  ** set up, you would need to re-open the message each time the
-  ** mailbox was reopened before you could see or search/limit on the
-  ** protected subject again.
+  ** $$crypt_protected_headers_read を設定した場合で、保護された題名があるメッセージを
+  ** 開いている場合、Mutt は既定でヘッダキャッシュに更新された題名を保存します。
+  ** これにより、メッセージを毎回再オープンすることなしに、メールボックスが
+  ** 再オープンされた場合に保護された題名ヘッダをベースにした検索/制限が
+  ** 出来るようになります。しかし、mbox/mh メールボックスか、ヘッダキャッシュが
+  ** 設定されていない場合、再度保護された題名を表示あるいは検索/制限する前に
+  ** メールボックスが再度開かれる時はメッセージを毎回再オープンする必要があります。
   ** .pp
-  ** When this variable is set, Mutt additionally saves the protected
-  ** Subject back \fBin the clear-text message headers\fP.  This
-  ** provides better usability, but with the tradeoff of reduced
-  ** security.  The protected Subject header, which may have
-  ** previously been encrypted, is now stored in clear-text in the
-  ** message headers.  Copying the message elsewhere, via Mutt or
-  ** external tools, could expose this previously encrypted data.
-  ** Please make sure you understand the consequences of this before
-  ** you enable this variable.
-  ** (Crypto only)
+  ** この変数が設定されている場合、Mutt は保護された題名を、
+  ** \fB平文テキストメッセージヘッダ中に\fP追加で保存します。これにより
+  ** 使い勝手が向上しますが、セキュリティが低下することとのトレードオフになります。
+  ** 以前に暗号化された可能性のある保護された題名ヘッダは現在メッセージヘッダに
+  ** 平文で格納されるようになりました。Mutt や外部ツールでメッセージをどこかにコピー
+  ** する場合、以前に暗号化されたデータが見えてしまう可能性があります。
+  ** この変数を有効にする前に、これがどういう結果になるかを十分に理解してください。
+  ** (Crypto のみです)
    */
   { "crypt_protected_headers_subject", DT_STR, R_NONE, {.p=&ProtHdrSubject}, {.p="Encrypted subject"} },
   /*
   ** .pp
-  ** When $$crypt_protected_headers_write is set, and the message is marked
-  ** for encryption, this will be substituted into the Subject field in the
-  ** message headers.
+  ** When $$crypt_protected_headers_write を設定した場合で、メッセージに暗号化がマークされて
+  ** いる場合、これがメッセージヘッダの題名フィールドに置き換わります。
   **
-  ** To prevent a subject from being substituted, unset this variable, or set it
-  ** to the empty string.
-  ** (Crypto only)
+  ** 題名が置換されないようにするには、この値を設定しないか、空の文字列を設定します。
+  ** (Crypto のみです)
    */
   { "crypt_protected_headers_write", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSWRITE}, {.l=0} },
   /*
