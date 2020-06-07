@@ -580,50 +580,45 @@ struct option_t MuttVars[] = {
   { "crypt_autosign",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOSIGN}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable will cause Mutt to always attempt to
-  ** cryptographically sign outgoing messages.  This can be overridden
-  ** by use of the pgp menu, when signing is not required or
-  ** encryption is requested as well. If $$smime_is_default is \fIset\fP,
-  ** then OpenSSL is used instead to create S/MIME messages and settings can
-  ** be overridden by use of the smime menu instead of the pgp menu.
-  ** (Crypto only)
+  ** この変数を設定すると、Mutt は送信メッセージを常時暗号で署名しようとします。
+  ** これは、署名が不要な場合や、同様に暗号化が必要な場合に pgp メニューを使うことで
+  ** 上書きできます。$$smime_is_default が \fIset\fP の場合は、S/MIME メッセージを
+  ** 作成するのにOpenSSL が代わりに使われ、pgp メニューの代わりに smime メニューを
+  ** 代わりに使う事で上書きできます。
+  ** (Cryptoのみです)
   */
   { "crypt_autosmime",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOSMIME}, {.l=1} },
   /*
   ** .pp
-  ** This variable controls whether or not mutt may automatically enable
-  ** S/MIME encryption/signing for messages. See also $$crypt_autoencrypt,
-  ** $$crypt_replyencrypt,
-  ** $$crypt_autosign, $$crypt_replysign and $$smime_is_default.
+  ** この変数は、Mutt がメッセージに対して自動的に S/MiME 暗号化/署名を有効にするかを
+  ** 指定します。$$crypt_autoencrypt,$$crypt_replyencrypt,$$crypt_autosign,
+  ** $$crypt_replysign と $$smime_is_default も参照してください。 
   */
   { "crypt_confirmhook",	DT_BOOL, R_NONE, {.l=OPTCRYPTCONFIRMHOOK}, {.l=1} },
   /*
   ** .pp
-  ** If set, then you will be prompted for confirmation of keys when using
-  ** the \fIcrypt-hook\fP command.  If unset, no such confirmation prompt will
-  ** be presented.  This is generally considered unsafe, especially where
-  ** typos are concerned.
+  ** 設定した場合、\fIcrypt-hook\fP コマンドを使うときにキーの確認を求めるように
+  ** なります。設定しない場合、確認は求められません。これは、タイプミスが考えられる
+  ** 場合には、一般的に安全ではないと考えられます。
   */
   { "crypt_opportunistic_encrypt", DT_BOOL, R_NONE, {.l=OPTCRYPTOPPORTUNISTICENCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable will cause Mutt to automatically enable and
-  ** disable encryption, based on whether all message recipient keys
-  ** can be located by Mutt.
+  ** この変数を設定すると、Mutt によってすべてのメッセージ受信者のキーが
+  ** 見つけられるかによって、Mutt は暗号化を自動的に有効または無効にします。
   ** .pp
-  ** When this option is enabled, Mutt will enable/disable encryption
-  ** each time the TO, CC, and BCC lists are edited.  If
-  ** $$edit_headers is set, Mutt will also do so each time the message
-  ** is edited.
+  ** このオプションが有効な場合、Mutt は TO, CC, と BCC の一覧が編集されるごとに
+  ** 暗号化を有効/無効にします。$$edit_headers が設定されている場合、Mutt は
+  ** メッセージが編集される毎にも行います。
   ** .pp
-  ** While this is set, encryption can't be manually enabled/disabled.
-  ** The pgp or smime menus provide a selection to temporarily disable
-  ** this option for the current message.
+  ** これが設定されている場合は、暗号化は手動で有効/無効に出来ません。pgp 又は smime
+  ** メニューは、現在のメッセージに対してこのオプションを一時的に無効にするための
+  ** 選択を提供します。
   ** .pp
-  ** If $$crypt_autoencrypt or $$crypt_replyencrypt enable encryption for
-  ** a message, this option will be disabled for that message.  It can
-  ** be manually re-enabled in the pgp or smime menus.
-  ** (Crypto only)
+  ** $$crypt_autoencrypt 又は $$crypt_replyencrypt がメッセージに対して暗号化を
+  ** 有効にしている場合、このオプションはメッセージに対しては無効となります。
+  ** pgp 又は smime メニューで手動で再度有効に出来ます。
+  ** (Cryptoのみです)
    */
   { "crypt_protected_headers_read", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSREAD}, {.l=1} },
   /*
