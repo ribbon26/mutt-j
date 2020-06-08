@@ -671,55 +671,55 @@ struct option_t MuttVars[] = {
   { "crypt_protected_headers_write", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSWRITE}, {.l=0} },
   /*
   ** .pp
-  ** When set, Mutt will generate protected headers ("Memory Hole") for
-  ** signed and encrypted emails.
+  ** 設定する場合、Mutt は署名および暗号化したメールに対して、保護されたヘッダ
+  ** ("メモリホール")を生成します。
   **
-  ** Protected headers are stored inside the encrypted or signed part of an
-  ** an email, to prevent disclosure or tampering.
-  ** For more information see https://github.com/autocrypt/memoryhole.
+  ** 保護されたヘッダはメール中の暗号化または署名されたパート中に格納され、
+  ** 漏洩や改ざんを防ぎます。詳細については
+  ** https://github.com/autocrypt/memoryhole を参照してください。
   **
-  ** Currently Mutt only supports the Subject header.
-  ** (Crypto only)
+  ** 現時点でMutt は題名ヘッダのみサポートします。
+  ** (Cryptoのみです)
    */
   { "pgp_replyencrypt",		DT_SYN,  R_NONE, {.p="crypt_replyencrypt"}, {.p=0} },
   { "crypt_replyencrypt",	DT_BOOL, R_NONE, {.l=OPTCRYPTREPLYENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, automatically PGP or OpenSSL encrypt replies to messages which are
-  ** encrypted.
-  ** (Crypto only)
+  ** \fIset\fP の場合、暗号化されたメッセージに対して、自動的に PGP または OpenSSL で
+  ** 暗号化した返信を行います。
+  ** (Crypto のみです)
   */
   { "pgp_replysign",	DT_SYN, R_NONE, {.p="crypt_replysign"}, {.p=0} },
   { "crypt_replysign",	DT_BOOL, R_NONE, {.l=OPTCRYPTREPLYSIGN}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, automatically PGP or OpenSSL sign replies to messages which are
-  ** signed.
+  ** \fIset\fP の場合、署名されたメッセージに対して、自動的に PGP または OpenSSL で
+  ** 署名した返信を行います。
   ** .pp
-  ** \fBNote:\fP this does not work on messages that are encrypted
-  ** \fIand\fP signed!
-  ** (Crypto only)
+  ** \fBNote:\fP これは、暗号化され、\fIかつ\fP 署名されているメッセージに
+  ** 対しては動作しません。
+  ** (Crypto のみです)
   */
   { "pgp_replysignencrypted",   DT_SYN,  R_NONE, {.p="crypt_replysignencrypted"}, {.p=0} },
   { "crypt_replysignencrypted", DT_BOOL, R_NONE, {.l=OPTCRYPTREPLYSIGNENCRYPTED}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, automatically PGP or OpenSSL sign replies to messages
-  ** which are encrypted. This makes sense in combination with
-  ** $$crypt_replyencrypt, because it allows you to sign all
-  ** messages which are automatically encrypted.  This works around
-  ** the problem noted in $$crypt_replysign, that mutt is not able
-  ** to find out whether an encrypted message is also signed.
-  ** (Crypto only)
+  ** \fIset\fP の場合、暗号化れたメッセージに対して、自動的に PGP または OpenSSL で
+  ** 署名した返信を行います。これは、自動的に暗号化されるすべてのメッセージに署名
+  ** 出来るという理由で、$$crypt_replyencrypt と組み合わせると意味があります。
+  ** これは、Mutt が暗号化されたメッセージが署名されているかどうかを見つけられない
+  ** という、$$crypt_replysign の所で触れた問題を回避します。
+  ** (Cryptoのみです)
   */
   { "crypt_timestamp", DT_BOOL, R_NONE, {.l=OPTCRYPTTIMESTAMP}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will include a time stamp in the lines surrounding
-  ** PGP or S/MIME output, so spoofing such lines is more difficult.
-  ** If you are using colors to mark these lines, and rely on these,
-  ** you may \fIunset\fP this setting.
   ** (Crypto only)
+  ** \fIset\fP の場合、Mutt は PGP 又は S/MIME 出力を囲む行中にタイムスタンプを
+  ** 含めるので、そのような行のスプーフィングはより困難になります。
+  ** それらの行にマークを付けるために色設定を使い、それらに依存している場合、
+  ** この設定を \fIunset\fP できます。
+  ** (Cryptoのみです)
   */
   { "crypt_use_gpgme",  DT_BOOL, R_NONE, {.l=OPTCRYPTUSEGPGME}, {.l=0} },
   /*
