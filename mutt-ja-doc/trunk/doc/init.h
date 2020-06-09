@@ -724,60 +724,55 @@ struct option_t MuttVars[] = {
   { "crypt_use_gpgme",  DT_BOOL, R_NONE, {.l=OPTCRYPTUSEGPGME}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the use of the GPGME-enabled crypto backends.
-  ** If it is \fIset\fP and Mutt was built with gpgme support, the gpgme code for
-  ** S/MIME and PGP will be used instead of the classic code.  Note that
-  ** you need to set this option in .muttrc; it won't have any effect when
-  ** used interactively.
+  ** この変数は GPGMEが有効の crypto バックエンドの使用を制御します。\fIset\fPで、
+  ** Mutt が gpgme サポートを有効にしてビルドされている場合、 S/MIME と PGP 用の
+  ** gpgme コードが、旧来のコードの代わりに使われます。このオプションを .muttrc
+  ** 中で設定しなければならないことに注意してください。対話的に使用しても効果は
+  ** ありません。
   ** .pp
-  ** Note that the GPGME backend does not support creating old-style inline
-  ** (traditional) PGP encrypted or signed messages (see $$pgp_autoinline).
-  */
+  ** GPGME バックエンドは古い形のインライン(従来型の) PGP で暗号化された、あるいは
+  ** 署名されたメッセージ作成のサポートがないことに注意してください($$pgp_autoinlineを
+  ** 参照してください)。
+   */
   { "crypt_use_pka", DT_BOOL, R_NONE, {.l=OPTCRYPTUSEPKA}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether mutt uses PKA
-  ** (see http://www.g10code.de/docs/pka-intro.de.pdf) during signature
-  ** verification (only supported by the GPGME backend).
+  ** Mutt が署名の検証中(GPGME バックエンドでのみサポート)に PKA
+  ** (http://www.g10code.de/docs/pka-intro.de.pdf を参照) を使うかどうかを制御
+  ** します。
   */
   { "pgp_verify_sig",   DT_SYN,  R_NONE, {.p="crypt_verify_sig"}, {.p=0} },
   { "crypt_verify_sig",	DT_QUAD, R_NONE, {.l=OPT_VERIFYSIG}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** If \fI``yes''\fP, always attempt to verify PGP or S/MIME signatures.
-  ** If \fI``ask-*''\fP, ask whether or not to verify the signature.
-  ** If \fI``no''\fP, never attempt to verify cryptographic signatures.
-  ** (Crypto only)
+  ** \fI``yes''\fPならば、常時 PGPまたは S/MIME 署名の検証を試みます。
+  ** \fI``ask-*''\fPならば、署名を検証するか否かを聞いてきます。
+  ** \fI``no''\fPならば、暗号署名の検証を行いません。
+  ** (Cryptoのみです)
   */
   { "date_format",	DT_STR,	 R_MENU, {.p=&DateFmt}, {.p="!%a, %b %d, %Y at %I:%M:%S%p %Z"} },
   /*
   ** .pp
-  ** This variable controls the format of the date printed by the ``%d''
-  ** sequence in $$index_format.  This is passed to the \fCstrftime(3)\fP
-  ** function to process the date, see the man page for the proper syntax.
+  ** この変数は、$$index_format 中の ``%d'' シーケンスによって表示される日付の書式を
+  ** 制御します。これは日付を処理するために\fCstrftime(3)\fP 機能に渡されます。
+  ** 正しい構文についてはマニュアルページを参照してください。
   ** .pp
-  ** Unless the first character in the string is a bang (``!''), the month
-  ** and week day names are expanded according to the locale.
-  ** If the first character in the string is a
-  ** bang, the bang is discarded, and the month and week day names in the
-  ** rest of the string are expanded in the \fIC\fP locale (that is in US
-  ** English).
+  ** 文字列の最初の文字が感嘆符 (``!'')でない限り、月と曜日の名前はロケールに合わせて
+  ** 展開されます。文字列の最初の文字が感嘆符だった場合、感嘆符は無視され、
+  ** 残りの文字列中の月と曜日の名前は \fIC\fP ロケール(すなわち US英語)に展開されます。
   */
   { "default_hook",	DT_STR,	 R_NONE, {.p=&DefaultHook}, {.p="~f %s !~P | (~P ~C %s)"} },
   /*
   ** .pp
-  ** This variable controls how ``$message-hook'', ``$reply-hook'', ``$send-hook'',
-  ** ``$send2-hook'', ``$save-hook'', and ``$fcc-hook'' will
-  ** be interpreted if they are specified with only a simple regexp,
-  ** instead of a matching pattern.  The hooks are expanded when they are
-  ** declared, so a hook will be interpreted according to the value of this
-  ** variable at the time the hook is declared.
+  ** この変数は、一致用のパターンの代わりに単純な正規表現のみが指定された場合に、
+  ** ``$message-hook'', ``$reply-hook'', ``$send-hook'',
+  ** ``$send2-hook'', ``$save-hook'', と ``$fcc-hook'' をどのように解釈するかを制御します。
+  ** フックは、それが定義されたときに展開され、そのため、フックが定義された時にこの変数の
+  ** 値が解釈されます。
   ** .pp
-  ** The default value matches
-  ** if the message is either from a user matching the regular expression
-  ** given, or if it is from you (if the from address matches
-  ** ``$alternates'') and is to or cc'ed to a user matching the given
-  ** regular expression.
+  ** 既定値は、メッセージが与えられた正規表現に一致するユーザから来たものか、
+  ** 自分自身から来たもの(fromアドレスが ``$alternates''に一致する場合)で、
+  ** 指定された正規表現が To または Cc のユーザに一致する場合に一致します。
   */
   { "delete",		DT_QUAD, R_NONE, {.l=OPT_DELETE}, {.l=MUTT_ASKYES} },
   /*
