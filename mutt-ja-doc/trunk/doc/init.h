@@ -833,44 +833,43 @@ struct option_t MuttVars[] = {
   { "dsn_return",	DT_STR,	 R_NONE, {.p=&DsnReturn}, {.p=0} },
   /*
   ** .pp
-  ** This variable controls how much of your message is returned in DSN
-  ** messages.  It may be set to either \fIhdrs\fP to return just the
-  ** message header, or \fIfull\fP to return the full message.
+  ** この変数は、メッセージがどれだけDSN メッセージで帰ってくるかを制御します。
+  ** \fIhdrs\fP に設定して、メッセージヘッダのみ返ってくるようにするか、
+  ** \fIfull\fP に設定して、メッセージ全体が返ってくるかのどちらかにできます。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set dsn_return=hdrs
   ** .te
   ** .pp
-  ** \fBNote:\fP when using $$sendmail for delivery, you should not enable
-  ** this unless you are either using Sendmail 8.8.x or greater or a MTA
-  ** providing a \fCsendmail(1)\fP-compatible interface supporting the \fC-R\fP option
-  ** for DSN. For SMTP delivery, DSN support is auto-detected so that it
-  ** depends on the server whether DSN will be used or not.
+  ** \fB注意:\fP 配送に$$sendmail を使う場合、Sendmail 8.8.x 以降又は
+  ** DSN に対して\fC-R\fP オプションをサポートする\fCsendmail(1)\fP 互換のインタフェースを
+  ** サポートするMTA のどちらかを使わない限り、有効にしてはなりません。
+  ** SMTP 配送においては、DSN サポートは自動的に検出されるので、DSN を使うか否かは
+  ** サーバに依存します。
   */
   { "duplicate_threads",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTDUPTHREADS}, {.l=1} },
   /*
   ** .pp
-  ** This variable controls whether mutt, when $$sort is set to \fIthreads\fP, threads
-  ** messages with the same Message-Id together.  If it is \fIset\fP, it will indicate
-  ** that it thinks they are duplicates of each other with an equals sign
-  ** in the thread tree.
+  ** この変数は、$$sort が \fIthreads\fP に設定されているときに、Mutt が同じ Message-Id を
+  ** をスレッドにするかどうかを制御します。\fIset\fP の場合、スレッドツリー中で、
+  ** 等号 を使って他と重複していると考えていることを表示します。
   */
   { "edit_headers",	DT_BOOL, R_NONE, {.l=OPTEDITHDRS}, {.l=0} },
   /*
   ** .pp
-  ** This option allows you to edit the header of your outgoing messages
-  ** along with the body of your message.
+  ** このオプションは、メッセージ本体といっしょに送信するメッセージのヘッダを編集
+  ** 出来るようにします。
   ** .pp
-  ** Although the compose menu may have localized header labels, the
-  ** labels passed to your editor will be standard RFC 2822 headers,
-  ** (e.g. To:, Cc:, Subject:).  Headers added in your editor must
-  ** also be RFC 2822 headers, or one of the pseudo headers listed in
-  ** ``$edit-header''.  Mutt will not understand localized header
-  ** labels, just as it would not when parsing an actual email.
+  ** 編集メニューにはローカライズしたヘッダラベルを使う事が出来るにもかかわらず、
+  ** エディタに渡されるラベルは標準の RFC 2822 ヘッダになります
+  ** (たとえば To:, Cc:, Subject:)。エディタ中で追加されたヘッダは
+  ** RFC 2822 ヘッダでなければならないか、``$edit-header'' 中にある
+  ** 疑似ヘッダでなければなりません。Mutt はローカライズしたヘッダラベルを理解出来ず、
+  ** 実際のメールを走査する場合とは異なります。
   ** .pp
-  ** \fBNote\fP that changes made to the References: and Date: headers are
-  ** ignored for interoperability reasons.
+  ** 相互運用性のために、References: と Date: ヘッダの変更は無視されることに
+  ** \fB注意\fP してください。
   */
   { "edit_hdrs",	DT_SYN,  R_NONE, {.p="edit_headers"}, {.p=0} },
   /*
@@ -878,20 +877,20 @@ struct option_t MuttVars[] = {
   { "editor",		DT_PATH, R_NONE, {.p=&Editor}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies which editor is used by mutt.
-  ** It defaults to the value of the \fC$$$VISUAL\fP, or \fC$$$EDITOR\fP, environment
-  ** variable, or to the string ``vi'' if neither of those are set.
+  ** この変数は Mutt で使うエディタを指定します。この既定値は環境変数
+  ** \fC$$$VISUAL\fP, 又は \fC$$$EDITOR\fP の値か、それらが設定されていない場合は
+  ** ``vi'' と言う文字列になります。
   ** .pp
-  ** The \fC$$editor\fP string may contain a \fI%s\fP escape, which will be replaced by the name
-  ** of the file to be edited.  If the \fI%s\fP escape does not appear in \fC$$editor\fP, a
-  ** space and the name to be edited are appended.
+  ** \fC$$editor\fP 文字列は、編集されるファイルの名前に置き換えられる \fI%s\fP エスケープ文字
+  ** を含むことができます。\fC$$editor\fP中に \fI%s\fP がない場合は、空白と編集されるファイル
+  ** 名が追加されます。
   ** .pp
-  ** The resulting string is then executed by running
+  ** 結果の文字列は以下のように実行されます。
   ** .ts
   ** sh -c 'string'
   ** .te
   ** .pp
-  ** where \fIstring\fP is the expansion of \fC$$editor\fP described above.
+  ** ここで、\fIstring\fP は上記で説明したように、\fC$$editor\fP を展開したものです。
   */
   { "encode_from",	DT_BOOL, R_NONE, {.l=OPTENCODEFROM}, {.l=0} },
   /*
