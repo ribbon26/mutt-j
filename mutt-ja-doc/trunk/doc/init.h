@@ -777,59 +777,58 @@ struct option_t MuttVars[] = {
   { "delete",		DT_QUAD, R_NONE, {.l=OPT_DELETE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not messages are really deleted when closing or
-  ** synchronizing a mailbox.  If set to \fIyes\fP, messages marked for
-  ** deleting will automatically be purged without prompting.  If set to
-  ** \fIno\fP, messages marked for deletion will be kept in the mailbox.
+  ** メールボックスを同期するかクローズしたときに、実際に削除するかどうかを制御します。
+  ** \fIyes\fPに設定した場合、削除マークが付けられたメッセージは、問い合わせなく
+  ** 自動的に削除されます。\fIno\fPに設定された場合、削除マーク付きのメッセージは
+  ** メールボックスに残ったままになります。
   */
   { "delete_untag",	DT_BOOL, R_NONE, {.l=OPTDELETEUNTAG}, {.l=1} },
   /*
   ** .pp
-  ** If this option is \fIset\fP, mutt will untag messages when marking them
-  ** for deletion.  This applies when you either explicitly delete a message,
-  ** or when you save it to another folder.
+  ** このオプションが\fIset\fPの場合、mutt はメッセージに削除マークを付けるときに
+  ** タグを外します。これは、明示的にメッセージを削除するか、他のフォルダに
+  ** セーブする際に適用されます。
   */
   { "digest_collapse",	DT_BOOL, R_NONE, {.l=OPTDIGESTCOLLAPSE}, {.l=1} },
   /*
   ** .pp
-  ** If this option is \fIset\fP, mutt's received-attachments menu will not show the subparts of
-  ** individual messages in a multipart/digest.  To see these subparts, press ``v'' on that menu.
+  ** このオプションが\fIset\fPの場合、mutt の受信添付メニューは、multipart/digest中の
+  ** 個々のメッセージの副パートを表示しません。それらサブパートを見るためには、メニュー中で
+  ** ``v'' を押します。
   */
   { "display_filter",	DT_PATH, R_PAGER, {.p=&DisplayFilter}, {.p=0} },
   /*
   ** .pp
-  ** When set, specifies a command used to filter messages.  When a message
-  ** is viewed it is passed as standard input to $$display_filter, and the
-  ** filtered message is read from the standard output.
+  ** 設定されている場合、指定されたコマンドが、メッセージのフィルタに使われます。
+  ** メッセージが表示されている場合、それが$$display_filter の標準入力に渡され、
+  ** フィルタされたメッセージは標準出力から読み出されます。
   */
 #if defined(DL_STANDALONE) && defined(USE_DOTLOCK)
   { "dotlock_program",  DT_PATH, R_NONE, {.p=&MuttDotlock}, {.p=BINDIR "/mutt_dotlock"} },
   /*
   ** .pp
-  ** Contains the path of the \fCmutt_dotlock(8)\fP binary to be used by
-  ** mutt.
+  ** Mutt によって使われる  \fCmutt_dotlock(8)\fP の実行形式へのパスが含まれています。
   */
 #endif
   { "dsn_notify",	DT_STR,	 R_NONE, {.p=&DsnNotify}, {.p=0} },
   /*
   ** .pp
-  ** This variable sets the request for when notification is returned.  The
-  ** string consists of a comma separated list (no spaces!) of one or more
-  ** of the following: \fInever\fP, to never request notification,
-  ** \fIfailure\fP, to request notification on transmission failure,
-  ** \fIdelay\fP, to be notified of message delays, \fIsuccess\fP, to be
-  ** notified of successful transmission.
+  ** この変数は、通知が戻ってくる際の要求を設定します。文字列はカンマで分離された
+  ** 一覧(スペースがあってはなりません)で構成されています:
+  ** \fInever\fP は、通知要求を行いません、\fIfailure\fP は、転送が失敗した
+  ** 場合に通知を要求します、\fIdelay\fP は、メッセージが遅延したときに通知します、
+  ** \fIsuccess\fP は、転送が成功したときに通知します。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set dsn_notify="failure,delay"
   ** .te
   ** .pp
-  ** \fBNote:\fP when using $$sendmail for delivery, you should not enable
-  ** this unless you are either using Sendmail 8.8.x or greater or a MTA
-  ** providing a \fCsendmail(1)\fP-compatible interface supporting the \fC-N\fP option
-  ** for DSN. For SMTP delivery, DSN support is auto-detected so that it
-  ** depends on the server whether DSN will be used or not.
+  ** \fB注意:\fP 配送に$$sendmail を使う場合、Sendmail 8.8.x かそれ以降 又は
+  ** DSN に対して\fC-N\fP オプションをサポートする\fCsendmail(1)\fP 互換のインタフェースを
+  ** サポートするMTA のどちらかを使わない限り、有効にしてはなりません。
+  ** SMTP 配送においては、DSN サポートは自動的に検出されるので、DSN を使うか否かは
+  ** サーバに依存します。
   */
   { "dsn_return",	DT_STR,	 R_NONE, {.p=&DsnReturn}, {.p=0} },
   /*
