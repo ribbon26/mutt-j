@@ -955,25 +955,23 @@ struct option_t MuttVars[] = {
   { "fcc_clear",	DT_BOOL, R_NONE, {.l=OPTFCCCLEAR}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, FCCs will be stored unencrypted and
-  ** unsigned, even when the actual message is encrypted and/or
-  ** signed.
-  ** (PGP only)
+  ** この変数が \fIset\fP の場合、FCC は実際のメッセージが暗号化されているか又は
+  ** 署名されているかにかかわらず、復号化し、かつ署名を外して保存されます。
+  ** (PGP のみです)
   */
   { "flag_safe", DT_BOOL, R_NONE, {.l=OPTFLAGSAFE}, {.l=0} },
   /*
   ** .pp
-  ** If set, flagged messages cannot be deleted.
+  ** 設定されている場合、フラグ付きのメッセージは削除できません。
   */
   { "folder",		DT_PATH, R_NONE, {.p=&Maildir}, {.p="~/Mail"} },
   /*
   ** .pp
-  ** Specifies the default location of your mailboxes.  A ``+'' or ``='' at the
-  ** beginning of a pathname will be expanded to the value of this
-  ** variable.  Note that if you change this variable (from the default)
-  ** value you need to make sure that the assignment occurs \fIbefore\fP
-  ** you use ``+'' or ``='' for any other variables since expansion takes place
-  ** when handling the ``$mailboxes'' command.
+  ** メールボックスの既定の位置を指定します。パス名の先頭に付けた ``+'' 又は ``='' は
+  ** この変数の値に展開されます。この変数の値を(既定値から)変更した場合、
+  ** ``$mailboxes''コマンドを使うときに展開が起こるので、
+  ** 割り当てが発生する\fI前に\fP何かの変数に対して``+'' 又は ``='' を使うようにしなければ
+  ** ならないことに注意しなければなりません。
   */
   { "folder_format",	DT_STR,	 R_MENU, {.p=&FolderFormat}, {.p="%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"} },
   /*
@@ -981,34 +979,36 @@ struct option_t MuttVars[] = {
   ** This variable allows you to customize the file browser display to your
   ** personal taste.  This string is similar to $$index_format, but has
   ** its own set of \fCprintf(3)\fP-like sequences:
+  ** この変数で、好みに応じてファイルブラウザ表示をカスタマイズできます。
+  ** この文字列は $$index_format と似ていますが、固有の\fCprintf(3)\fP風の書式があります。
   ** .dl
-  ** .dt %C  .dd current file number
-  ** .dt %d  .dd date/time folder was last modified
-  ** .dt %D  .dd date/time folder was last modified using $$date_format.
-  ** .dt %f  .dd filename (``/'' is appended to directory names,
-  **             ``@'' to symbolic links and ``*'' to executable
-  **             files)
-  ** .dt %F  .dd file permissions
-  ** .dt %g  .dd group name (or numeric gid, if missing)
-  ** .dt %l  .dd number of hard links
-  ** .dt %m  .dd number of messages in the mailbox *
-  ** .dt %n  .dd number of unread messages in the mailbox *
-  ** .dt %N  .dd N if mailbox has new mail, blank otherwise
-  ** .dt %s  .dd size in bytes (see $formatstrings-size)
-  ** .dt %t  .dd ``*'' if the file is tagged, blank otherwise
-  ** .dt %u  .dd owner name (or numeric uid, if missing)
-  ** .dt %>X .dd right justify the rest of the string and pad with character ``X''
-  ** .dt %|X .dd pad to the end of the line with character ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %C  .dd 現在のファイル番号
+  ** .dt %d  .dd 最後に変更されたフォルダの日時/時間
+  ** .dt %D  .dd $date_format を使って最後に変更されたフォルダの日時/時間
+  ** .dt %f  .dd ファイル名 (ディレクトリ名には ``/'' が付与、
+  **             シンボリックリンクには ``@'' が付与、
+  **             実行ファイルには``*'' が付与)
+  ** .dt %F  .dd ファイルのパーミッション
+  ** .dt %g  .dd グループ名(あるいは存在しない場合は gid の値)
+  ** .dt %l  .dd ハードリンク数
+  ** .dt %m  .dd mailbox * 中のメッセージ数
+  ** .dt %n  .dd mailbox * 中の未読メッセージ数
+  ** .dt %N  .dd 新着メールがあれば N で、なければ空白
+  ** .dt %s  .dd バイト単位のサイズ($formatstrings-size を参照)
+  ** .dt %t  .dd タグが付いていれば ``*'' で、そうでなければ空白
+  ** .dt %u  .dd owner の名前 (あるいは存在しない場合は uid)
+  ** .dt %>X .dd 残りの文字列を右寄せにして、``X'' で埋める
+  ** .dt %|X .dd 行末まで ``X'' で埋める
+  ** .dt %*X .dd 文字 ``X'' を埋め草として soft-fill
   ** .de
   ** .pp
-  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
+  ** ``soft-fill'' の説明については$$index_format のドキュメントを参照してください。
   ** .pp
-  ** * = can be optionally printed if nonzero
+  ** * = は、ゼロ以外の場合にオプションで表示されます
   ** .pp
-  ** %m, %n, and %N only work for monitored mailboxes.
-  ** %m requires $$mail_check_stats to be set.
-  ** %n requires $$mail_check_stats to be set (except for IMAP mailboxes).
+  ** %m, %n, と %N は、モニタされたメールボックスでのみ動作します。
+  ** %m は $$mail_check_stats が設定されていることが必要です。
+  ** %n は $$mail_check_stats が設定されていることが必要です(IMAP メールボックスを除く)。
   */
   { "followup_to",	DT_BOOL, R_NONE, {.l=OPTFOLLOWUPTO}, {.l=1} },
   /*
