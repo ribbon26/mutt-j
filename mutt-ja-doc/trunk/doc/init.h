@@ -895,68 +895,62 @@ struct option_t MuttVars[] = {
   { "encode_from",	DT_BOOL, R_NONE, {.l=OPTENCODEFROM}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will quoted-printable encode messages when
-  ** they contain the string ``From '' (note the trailing space) in the beginning of a line.
-  ** This is useful to avoid the tampering certain mail delivery and transport
-  ** agents tend to do with messages (in order to prevent tools from
-  ** misinterpreting the line as a mbox message separator).
+  ** \fIset\fP の場合、Mutt は行の先頭に文字列 ``From '' (末尾の空白に注意)を含む場合に
+  ** メッセージを quoted-printable でエンコードします。これは、特定のメール配信および
+  ** 転送エージェントがメッセージを処理する傾向を改ざんすることを防ぐのに有効です
+  ** (ツールが、mbox セパレータとして行を間違って解釈することから防ぐため)。
   */
 #if defined(USE_SSL_OPENSSL)
   { "entropy_file",	DT_PATH, R_NONE, {.p=&SslEntropyFile}, {.p=0} },
   /*
   ** .pp
-  ** The file which includes random data that is used to initialize SSL
-  ** library functions.
+  ** SSL ライブラリ機能を初期化するのに使う、ランダムデータを含むファイルです。
   */
 #endif
   { "envelope_from_address", DT_ADDR, R_NONE, {.p=&EnvFrom}, {.p=0} },
   /*
   ** .pp
-  ** Manually sets the \fIenvelope\fP sender for outgoing messages.
-  ** This value is ignored if $$use_envelope_from is \fIunset\fP.
+  ** 送信メッセージに対して\fIenvelope\fP の送信者を手動で設定します。
+  ** この値は$$use_envelopeが\fIunset\fPの場合には無視されます。
   */
   { "error_history",	DT_NUM,	 R_NONE, {.p=&ErrorHistSize}, {.l=30} },
   /*
   ** .pp
-  ** This variable controls the size (in number of strings remembered)
-  ** of the error messages displayed by mutt.  These can be shown with
-  ** the \fC<error-history>\fP function.  The history is cleared each
   ** time this variable is set.
+  ** この値はMutt によって表示されるエラーメッセージの大きさ(記憶されている
+  ** 文字列の数)を制御します。これは\fC<error-history>\fP 機能で表示できます。
+  ** 履歴はこの値が設定されている場合、毎回初期化されます。
   */
   { "escape",		DT_STR,	 R_NONE, {.p=&EscChar}, {.p="~"} },
   /*
   ** .pp
-  ** Escape character to use for functions in the built-in editor.
+  ** 内蔵エディタ中での機能に使うエスケープ文字。
   */
   { "fast_reply",	DT_BOOL, R_NONE, {.l=OPTFASTREPLY}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the initial prompt for recipients and subject are skipped
-  ** when replying to messages, and the initial prompt for subject is
-  ** skipped when forwarding messages.
+  ** \fIset\fP の場合、メッセージへ返信する際、最初に宛先と題名を入力するのを
+  ** 省略します。メッセージを転送する場合は、題名の入力を省略します。
   ** .pp
-  ** \fBNote:\fP this variable has no effect when the $$autoedit
-  ** variable is \fIset\fP.
+  ** \fB注意:\fP この変数は $$autoedit 変数が \fIset\fP の場合は意味がありません。
   */
   { "fcc_attach",	DT_QUAD, R_NONE, {.l=OPT_FCCATTACH}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This variable controls whether or not attachments on outgoing messages
-  ** are saved along with the main body of your message.
+  ** この変数は送信メッセージの添付がメッセージ本体と共に保存されるかどうかを
+  ** 制御します。
   */
   { "fcc_before_send",	DT_BOOL, R_NONE, {.l=OPTFCCBEFORESEND}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, FCCs will occur before sending
-  ** the message.  Before sending, the message cannot be manipulated,
-  ** so it will be stored the exact same as sent:
-  ** $$fcc_attach and $$fcc_clear will be ignored (using their default
-  ** values).
+  ** この値が \fIset\fP の場合、FCC はメッセージ送信前にが起こります。
+  ** 送信前に、メッセージは操作できませんので、送信されたものと全く同じものが
+  ** 保存されます。$$fcc_attach と $$fcc_clear は無視されます(それらの
+  ** 既定値を使います)。
   ** .pp
-  ** When \fIunset\fP, the default, FCCs will occur after sending.
-  ** Variables $$fcc_attach and $$fcc_clear will be respected, allowing
-  ** it to be stored without attachments or encryption/signing if
-  ** desired.
+  ** \fIunset\fPの場合は既定値で、FCC は送信後に起こります。変数
+  ** $$fcc_attach と $$fcc_clear が使われ、必要に応じて添付あるいは暗号化/署名
+  ** なしで保存することができます。
   */
   { "fcc_clear",	DT_BOOL, R_NONE, {.l=OPTFCCCLEAR}, {.l=0} },
   /*
