@@ -1013,41 +1013,38 @@ struct option_t MuttVars[] = {
   { "followup_to",	DT_BOOL, R_NONE, {.l=OPTFOLLOWUPTO}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether or not the ``Mail-Followup-To:'' header field is
-  ** generated when sending mail.  When \fIset\fP, Mutt will generate this
-  ** field when you are replying to a known mailing list, specified with
-  ** the ``$subscribe'' or ``$lists'' commands.
+  ** メール送信時に``Mail-Followup-To:''ヘッダフィールドを生成するかどうかを
+  ** 制御します。\fIset\fPならば、Mutt は``$subscribe'' 又は ``$lists'' コマンドで
+  ** 指定した既存メーリングリストに返信する時にこのフィールドを生成します。
   ** .pp
-  ** This field has two purposes.  First, preventing you from
-  ** receiving duplicate copies of replies to messages which you send
-  ** to mailing lists, and second, ensuring that you do get a reply
-  ** separately for any messages sent to known lists to which you are
-  ** not subscribed.
+  ** このフィールドには2つの目的があります。最初のものは、メーリングリストに
+  ** 送ったメッセージへの返信の重複したコピーを受信しないことで、2番目は、
+  ** 購読していない既存メーリングリストに送ったメッセージに対する返信を個別に
+  ** 受け取ることです。
   ** .pp
-  ** The header will contain only the list's address
-  ** for subscribed lists, and both the list address and your own
-  ** email address for unsubscribed lists.  Without this header, a
-  ** group reply to your message sent to a subscribed list will be
-  ** sent to both the list and your address, resulting in two copies
-  ** of the same email for you.
+  ** ヘッダは 購読したリストのアドレスと、購読していないメーリングリストに
+  ** 対しては、リストのアドレスと自分のメールアドレスを含みます。このヘッダがない場合、
+  ** 購読したメーリングリストの、自分のメッセージに対してグループ返信した場合、
+  ** メーリングリストと自分のアドレス両方にメールが送信され、結果として
+  ** 同じメールのコピーが2つ送られてくることになります。
+  ** 
   */
   { "force_name",	DT_BOOL, R_NONE, {.l=OPTFORCENAME}, {.l=0} },
   /*
   ** .pp
-  ** This variable is similar to $$save_name, except that Mutt will
-  ** store a copy of your outgoing message by the username of the address
-  ** you are sending to even if that mailbox does not exist.
+  ** この変数は$$save_name と似ていますが、そのメールボックスが存在していなくても、
+  ** アドレス中のユーザ名によって送信するメッセージのコピーを
+  ** 保存するところが異なります。
   ** .pp
-  ** Also see the $$record variable.
+  ** $$record 変数も参照してください。
   */
   { "forward_attachments", DT_QUAD, R_NONE, {.l=OPT_FORWATTS}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** When forwarding inline (i.e. $$mime_forward \fIunset\fP or
-  ** answered with ``no'' and $$forward_decode \fIset\fP), attachments
-  ** which cannot be decoded in a reasonable manner will be attached
-  ** to the newly composed message if this quadoption is \fIset\fP or
-  ** answered with ``yes''.
+  ** インラインで転送する時(すなわち、$$mime_forward \fIunset\fP 又は
+  ** ``no'' と答えて、かつ、$$forward_decode が\fIset\fP)、
+  ** 通常の方法でデコードできない添付は、この4択が\fIset\fP か
+  ** ``yes'' と答えた場合、新しく編集するメッセージに添付されます。
   */
   { "forward_attribution_intro", DT_STR, R_NONE, {.p=&ForwardAttrIntro}, {.p="----- Forwarded message from %f -----"} },
   /*
