@@ -1049,26 +1049,26 @@ struct option_t MuttVars[] = {
   { "forward_attribution_intro", DT_STR, R_NONE, {.p=&ForwardAttrIntro}, {.p="----- Forwarded message from %f -----"} },
   /*
   ** .pp
-  ** This is the string that will precede a message which has been forwarded
-  ** in the main body of a message (when $$mime_forward is unset).
-  ** For a full listing of defined \fCprintf(3)\fP-like sequences see
-  ** the section on $$index_format.  See also $$attribution_locale.
+  ** これは、メッセージの主要な本体($$mime_forward が未設定の場合)で転送された
+  ** メッセージの前にある文字列です。\fCprintf(3)\fP風の書式で定義されているものの
+  ** 完全な一覧は、$$index_format 節を参照してください。$$attribution_locale も
+  ** 参照してください。
   */
   { "forward_attribution_trailer", DT_STR, R_NONE, {.p=&ForwardAttrTrailer}, {.p="----- End forwarded message -----"} },
   /*
   ** .pp
-  ** This is the string that will follow a message which has been forwarded
-  ** in the main body of a message (when $$mime_forward is unset).
-  ** For a full listing of defined \fCprintf(3)\fP-like sequences see
-  ** the section on $$index_format.  See also $$attribution_locale.
+  ** これは、メッセージの主要な本体($$mime_forward が未設定の場合)で転送された
+  ** メッセージの後にある文字列です。\fCprintf(3)\fP風の書式で定義されているものの
+  ** 完全な一覧は、$$index_format 節を参照してください。$$attribution_locale も
+  ** 参照してください。
   */
   { "forward_decode",	DT_BOOL, R_NONE, {.l=OPTFORWDECODE}, {.l=1} },
   /*
   ** .pp
-  ** Controls the decoding of complex MIME messages into \fCtext/plain\fP when
-  ** forwarding a message.  The message header is also RFC2047 decoded.
-  ** This variable is only used, if $$mime_forward is \fIunset\fP,
-  ** otherwise $$mime_forward_decode is used instead.
+  ** メッセージの転送時に、複雑な MIME メッセージを \fCtext/plain\fP に復号化するかを
+  ** 制御します。メッセージヘッダもRFC2047で復号化されます。
+  ** この変数は、$$mime_forward が\fIunset\fPの時にのみ使われ、
+  ** その他の場合は$$mime_forward_decode が代わりに使われます。 
   */
   { "forw_decode",	DT_SYN,  R_NONE, {.p="forward_decode"}, {.p=0} },
   /*
@@ -1076,11 +1076,11 @@ struct option_t MuttVars[] = {
   { "forward_decrypt",	DT_BOOL, R_NONE, {.l=OPTFORWDECRYPT}, {.l=1} },
   /*
   ** .pp
-  ** Controls the handling of encrypted messages when forwarding a message.
-  ** When \fIset\fP, the outer layer of encryption is stripped off.  This
-  ** variable is only used if $$mime_forward is \fIset\fP and
-  ** $$mime_forward_decode is \fIunset\fP.
-  ** (PGP only)
+  ** メッセージを転送する時の暗号化メッセージの取り扱いを制御します。
+  ** \fIset\fP の時、暗号化の外側のレイヤは削除されます。この変数は、
+  ** $$mime_forward が\fIset\fP で、$$mime_forward_decode が\fIunset\fP
+  ** の時にのみ使われます。
+  ** (PGP のみです)
   */
   { "forw_decrypt",	DT_SYN,  R_NONE, {.p="forward_decrypt"}, {.p=0} },
   /*
@@ -1088,15 +1088,14 @@ struct option_t MuttVars[] = {
   { "forward_edit",	DT_QUAD, R_NONE, {.l=OPT_FORWEDIT}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This quadoption controls whether or not the user is automatically
-  ** placed in the editor when forwarding messages.  For those who always want
-  ** to forward with no modification, use a setting of ``no''.
+  ** この4択は、メッセージを転送する時に、エディタに自動的に移行するかどうかを
+  ** 制御します。常時変更なしに転送したい場合は、この設定を ``no'' にします。
   */
   { "forward_format",	DT_STR,	 R_NONE, {.p=&ForwFmt}, {.p="[%a: %s]"} },
   /*
   ** .pp
-  ** This variable controls the default subject when forwarding a message.
-  ** It uses the same format sequences as the $$index_format variable.
+  ** この変数はメッセージを転送する時の既定の題名を制御します。
+  ** これは、$$index_format 変数と同じ書式を使います。
   */
   { "forw_format",	DT_SYN,  R_NONE, {.p="forward_format"}, {.p=0} },
   /*
@@ -1104,9 +1103,8 @@ struct option_t MuttVars[] = {
   { "forward_quote",	DT_BOOL, R_NONE, {.l=OPTFORWQUOTE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, forwarded messages included in the main body of the
-  ** message (when $$mime_forward is \fIunset\fP) will be quoted using
-  ** $$indent_string.
+  ** \fIset\fP の場合、メッセージの主要な本体($$mime_forward が\fIunset\fPの時)に
+  ** 含まれる転送メッセージは$$indent_string を使って引用されます。
   */
   { "forw_quote",	DT_SYN,  R_NONE, {.p="forward_quote"}, {.p=0} },
   /*
@@ -1114,11 +1112,11 @@ struct option_t MuttVars[] = {
   { "from",		DT_ADDR, R_NONE, {.p=&From}, {.p=0} },
   /*
   ** .pp
-  ** When \fIset\fP, this variable contains a default from address.  It
-  ** can be overridden using ``$my_hdr'' (including from a ``$send-hook'') and
-  ** $$reverse_name.  This variable is ignored if $$use_from is \fIunset\fP.
+  ** \fIset\fP の時、この変数は既定の発信アドレスを含みます。これは、
+  ** ``$my_hdr'' (``$send-hook''からを含みます)や$$reverse_nameを使って上書き
+  ** することができます。この変数は $$use_from が\fIunset\fPの時に無視されます。
   ** .pp
-  ** This setting defaults to the contents of the environment variable \fC$$$EMAIL\fP.
+  ** この設定の既定値は環境変数 \fC$$$EMAIL\fPの値です。
   */
   { "gecos_mask",	DT_RX,	 R_NONE, {.p=&GecosMask}, {.p="^[^,]*"} },
   /*
