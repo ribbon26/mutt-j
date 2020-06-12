@@ -1152,60 +1152,57 @@ struct option_t MuttVars[] = {
   { "header_cache", DT_PATH, R_NONE, {.p=&HeaderCache}, {.p=0} },
   /*
   ** .pp
-  ** This variable points to the header cache database.
-  ** If pointing to a directory Mutt will contain a header cache
-  ** database file per folder, if pointing to a file that file will
-  ** be a single global header cache. By default it is \fIunset\fP so no header
-  ** caching will be used.
+  ** この変数はヘッダキャッシュデータベースの場所を指定します。ディレクトリを示して
+  ** いれば、Mutt はフォルダ単位のヘッダキャッシュデータベースがあり、ファイルを示して
+  ** いれば、全体の単一ヘッダキャッシュとなります。既定では\fIunset\fPなので、
+  ** ヘッダキャッシュは使われません。
   ** .pp
-  ** Header caching can greatly improve speed when opening POP, IMAP
-  ** MH or Maildir folders, see ``$caching'' for details.
+  ** ヘッダキャッシュは、POP, IMAP, MH および Maildir フォルダを開くときに
+  ** 大幅なスピードの改善が出来ます。詳細については ``$caching'' を参照してください。
   */
 #if defined(HAVE_QDBM) || defined(HAVE_TC) || defined(HAVE_KC)
   { "header_cache_compress", DT_BOOL, R_NONE, {.l=OPTHCACHECOMPRESS}, {.l=1} },
   /*
   ** .pp
-  ** When mutt is compiled with qdbm, tokyocabinet, or kyotocabinet as header
-  ** cache backend, this option determines whether the database will be compressed.
-  ** Compression results in database files roughly being one fifth
-  ** of the usual diskspace, but the decompression can result in a
-  ** slower opening of cached folder(s) which in general is still
-  ** much faster than opening non header cached folders.
+  ** Mutt が qdbm,tokyocabinet, 又は kyotocabinet を、ヘッダキャッシュのバックエンドとして
+  ** 使うようにコンパイルされている場合、このオプションは、データベースを圧縮するか否かを
+  ** 指定します。データベース中のファイルを圧縮すると、大きさがおおよそ通常の1/5に
+  ** なりますが、展開を行うと、キャッシュされたフォルダを開くのが遅くなりますが、
+  ** ヘッダキャッシュがないフォルダを開くよりは、まだ高速に開けます。
   */
 #endif /* HAVE_QDBM */
 #if defined(HAVE_GDBM) || defined(HAVE_DB4)
   { "header_cache_pagesize", DT_LNUM, R_NONE, {.p=&HeaderCachePageSize}, {.l=16384} },
   /*
   ** .pp
-  ** When mutt is compiled with either gdbm or bdb4 as the header cache backend,
-  ** this option changes the database page size.  Too large or too small
-  ** values can waste space, memory, or CPU time. The default should be more
-  ** or less optimal for most use cases.
+  ** ヘッダキャッシュのバックエンドとして、 gdbm 又は bdb4 のどちらかを使うように
+  ** Mutt がコンパイルされている場合、このオプションはデータベースのページサイズを変更します。
+  ** 値が大きすぎたり小さすぎたりすると、余分なスペース、メモリ、CPU 時間を消費します。
+  ** 既定値はほとんどの場合において大きすぎず、小さすぎずに最適化されているはずです。
   */
 #endif /* HAVE_GDBM || HAVE_DB4 */
 #endif /* USE_HCACHE */
   { "header_color_partial", DT_BOOL, R_PAGER_FLOW, {.l=OPTHEADERCOLORPARTIAL}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, color header regexps behave like color body regexps:
-  ** color is applied to the exact text matched by the regexp.  When
-  ** \fIunset\fP, color is applied to the entire header.
+  ** \fIset\fP の場合、カラーヘッダの正規表現はカラーボディの正規表現と同じように
+  ** 振る舞います。色は正規表現によって一致した正確なテキストに適用されます。
+  ** \fIunset\fP の場合は、色はヘッダ全体に適用されます。
   ** .pp
-  ** One use of this option might be to apply color to just the header labels.
+  ** このオプションの1つの使い方は、ヘッダラベルにのみ色を適用することです。
   ** .pp
-  ** See ``$color'' for more details.
+  ** 詳細は ``$color'' を参照してください。
   */
   { "help",		DT_BOOL, R_REFLOW, {.l=OPTHELP}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, help lines describing the bindings for the major functions
-  ** provided by each menu are displayed on the first line of the screen.
+  ** \fIset\fP の場合、各メニューで提供される、主要な機能に対するバインディングの説明を
+  ** するヘルプ行は画面の最初の行に表示されます。
   ** .pp
-  ** \fBNote:\fP The binding will not be displayed correctly if the
-  ** function is bound to a sequence rather than a single keystroke.  Also,
-  ** the help line may not be updated if a binding is changed while Mutt is
-  ** running.  Since this variable is primarily aimed at new users, neither
-  ** of these should present a major problem.
+  ** \fB注意:\fP 単一のキーストロークではなく、一連のキーストロークに機能がバインド
+  ** されていると、バインディングは正確には表示されません。同様に、Mutt が動作中に
+  ** バインディングが変更されてもヘルプ行は更新されません。この変数は主に新規
+  ** ユーザを対象としているので、上記のどちらも大きな問題ではありません。
   */
   { "hidden_host",	DT_BOOL, R_NONE, {.l=OPTHIDDENHOST}, {.l=0} },
   /*
