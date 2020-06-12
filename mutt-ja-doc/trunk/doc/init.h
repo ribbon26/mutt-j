@@ -1121,17 +1121,15 @@ struct option_t MuttVars[] = {
   { "gecos_mask",	DT_RX,	 R_NONE, {.p=&GecosMask}, {.p="^[^,]*"} },
   /*
   ** .pp
-  ** A regular expression used by mutt to parse the GECOS field of a password
-  ** entry when expanding the alias.  The default value
-  ** will return the string up to the first ``,'' encountered.
-  ** If the GECOS field contains a string like ``lastname, firstname'' then you
-  ** should set it to ``\fC.*\fP''.
+  ** 別名を展開するときにパスワードエントリのGECOS フィールドをMutt が操作するときに使われる
+  ** 正規表現です。既定値は最初に``,'' が見つかるまでの文字列を返します。
+  ** GECOS フィールドが``lastname, firstname''のような文字列を含む場合、
+  ** これを``\fC.*\fP'' とすべきです。
   ** .pp
-  ** This can be useful if you see the following behavior: you address an e-mail
-  ** to user ID ``stevef'' whose full name is ``Steve Franklin''.  If mutt expands
-  ** ``stevef'' to ``"Franklin" stevef@foo.bar'' then you should set the $$gecos_mask to
-  ** a regular expression that will match the whole name so mutt will expand
-  ** ``Franklin'' to ``Franklin, Steve''.
+  ** これは、以下のような動作の時に便利です: ある人の完全な名前が ``Steve Franklin''である
+  ** ユーザID ``stevef'' にメールを送るとします。Mutt が``stevef'' を
+  ** ``Franklin" stevef@foo.bar'' に展開する場合、完全な名前に一致する正規表現に、
+  ** $$gecos_mask を設定すれば、Mutt は``Franklin'' を``Franklin, Steve'' に展開します。
   */
   { "hdr_format",	DT_SYN,  R_NONE, {.p="index_format"}, {.p=0} },
   /*
@@ -1139,17 +1137,16 @@ struct option_t MuttVars[] = {
   { "hdrs",		DT_BOOL, R_NONE, {.l=OPTHDRS}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, the header fields normally added by the ``$my_hdr''
-  ** command are not created.  This variable \fImust\fP be unset before
-  ** composing a new message or replying in order to take effect.  If \fIset\fP,
-  ** the user defined header fields are added to every new message.
+  ** \fIunset\fP の場合、通常``$my_hdr''コマンドによって追加されるヘッダフィールドが
+  ** 作成されません。この変数の効果を発揮するためには、新規メッセージの編集か、返信時
+  ** より前に設定解除\fIしなければなりません\fP。\fIset\fPの場合、
+  ** ユーザ定義のヘッダフィールドはすべての新規メッセージに追加されます。
   */
   { "header",		DT_BOOL, R_NONE, {.l=OPTHEADER}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, this variable causes Mutt to include the header
-  ** of the message you are replying to into the edit buffer.
-  ** The $$weed setting applies.
+  ** fIset\fPの場合、この変数は編集バッファ中に返信するメッセージのヘッダを
+  ** 含めるようにします。$$weed の設定が適当されます。
   */
 #ifdef USE_HCACHE
   { "header_cache", DT_PATH, R_NONE, {.p=&HeaderCache}, {.p=0} },
