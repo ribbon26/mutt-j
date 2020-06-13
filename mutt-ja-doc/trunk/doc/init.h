@@ -1259,52 +1259,49 @@ struct option_t MuttVars[] = {
   { "history_remove_dups", DT_BOOL, R_NONE, {.l=OPTHISTREMOVEDUPS}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, all of the string history will be scanned for duplicates
-  ** when a new entry is added.  Duplicate entries in the $$history_file will
-  ** also be removed when it is periodically compacted.
+  ** \fIset\fP の場合、新しいエントリが追加されるときに、重複するかどうかを、すべての
+  ** 文字列ヒストリでスキャンします。$$history_file 中の重複するエントリは
+  ** 定期的に圧縮される時にも削除されます。
   */
   { "honor_disposition", DT_BOOL, R_NONE, {.l=OPTHONORDISP}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will not display attachments with a
-  ** disposition of ``attachment'' inline even if it could
-  ** render the part to plain text. These MIME parts can only
-  ** be viewed from the attachment menu.
+  ** \fIset\fP の場合、Mutt はそのパートが平文で描画可能だったとしても、インラインで
+  ** ``attachment''という配置の添付を表示しません。MIME パートは添付メニュー
+  ** でのみ表示できます。
   ** .pp
-  ** If \fIunset\fP, Mutt will render all MIME parts it can
-  ** properly transform to plain text.
+  ** \fIunset\fP の場合、Mutt は適切に平文に変換できる場合、すべての MIME パートを
+  ** 描画します。
   */
   { "honor_followup_to", DT_QUAD, R_NONE, {.l=OPT_MFUPTO}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This variable controls whether or not a Mail-Followup-To header is
-  ** honored when group-replying to a message.
+  ** この変数は Mail-Followup-To ヘッダが、メッセージに対してグループ返信するときに
+  ** 信頼できるか否かを制御します。
   */
   { "hostname",		DT_STR,	 R_NONE, {.p=&Fqdn}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the fully-qualified hostname of the system mutt is running on
-  ** containing the host's name and the DNS domain it belongs to. It is used
-  ** as the domain part (after ``@'') for local email addresses as well as
-  ** Message-Id headers.
+  ** Mutt が動いているシステムでホスト名とDNS ドメイン名が存在している場合、
+  ** 完全修飾ホスト名(FQDN)を指定します。これは、ローカルメールアドレスのドメイン部分
+  ** (``@'' の後)と、Message-Id ヘッダとして使われます。
   ** .pp
-  ** Its value is determined at startup as follows: the node's
-  ** hostname is first determined by the \fCuname(3)\fP function.  The
-  ** domain is then looked up using the \fCgethostname(2)\fP and
-  ** \fCgetaddrinfo(3)\fP functions.  If those calls are unable to
-  ** determine the domain, the full value returned by uname is used.
-  ** Optionally, Mutt can be compiled with a fixed domain name in
-  ** which case a detected one is not used.
+  ** この値は以下のようにして起動時に決まります。ノードのホスト名は \fCuname(3)\fP
+  ** 機能によって最初に決まります。ドメインは次に\fCgethostname(2)\fP と
+  ** \fCgetaddrinfo(3)\fP 機能によって検索されます。もしそれらの呼び出しで
+  ** ドメインを決定できない場合、uname の結果の完全な値が使われます。オプションで、
+  ** Mutt が固定したドメインでコンパイルできますが、この場合、検出された値は
+  ** 使われません。
   ** .pp
-  ** Also see $$use_domain and $$hidden_host.
+  **  $$use_domain と $$hidden_host も参照してください。
   */
 #if defined(HAVE_LIBIDN) || defined(HAVE_LIBIDN2)
   { "idn_decode",	DT_BOOL, R_MENU, {.l=OPTIDNDECODE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will show you international domain names decoded.
-  ** Note: You can use IDNs for addresses even if this is \fIunset\fP.
-  ** This variable only affects decoding. (IDN only)
+  ** \fIset\fP の場合、Mutt は国際化ドメイン名をデコードして表示します。
+  ** 注意: これが\fIunset\fP だったとしても、アドレスに対して IDN を使う事が出来ます。
+  ** この値はデコードのみに影響します(IDN のみです)。
   */
   { "idn_encode",	DT_BOOL, R_MENU, {.l=OPTIDNENCODE}, {.l=1} },
   /*
