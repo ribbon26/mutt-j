@@ -1207,57 +1207,54 @@ struct option_t MuttVars[] = {
   { "hidden_host",	DT_BOOL, R_NONE, {.l=OPTHIDDENHOST}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will skip the host name part of $$hostname variable
-  ** when adding the domain part to addresses.  This variable does not
-  ** affect the generation of Message-IDs, and it will not lead to the
-  ** cut-off of first-level domains.
+  ** \fIset\fP の場合、Mutt は、アドレスにドメイン部分を付加するときに、$$hostname
+  ** 変数のホスト名部分をスキップします。この変数は Message-ID の生成には影響を
+  ** 与えず、ドメインの最初の部分を切り取ることはありません。
   */
   { "hide_limited",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDELIMITED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of messages that are hidden
-  ** by limiting, in the thread tree.
+  **  \fIset\fP の場合、Mutt は、スレッドツリー中で limit 機能により隠されている
+  ** メッセージの存在を表示しません。
   */
   { "hide_missing",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDEMISSING}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of missing messages in the
-  ** thread tree.
+  ** \fIset\fP の場合、Mutt はスレッドツリー中で存在しないメッセージの存在を
+  ** 表示しません。
   */
   { "hide_thread_subject", DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETHREADSUBJECT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the subject of messages in the thread
-  ** tree that have the same subject as their parent or closest previously
-  ** displayed sibling.
+  ** \fIset\fP の場合、Mutt  はスレッドツリー内で、親と同じか以前に表示された
+  ** もっとも近い sibling と同じ題名を持つメッセージの題名を表示しません。
   */
   { "hide_top_limited",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETOPLIMITED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of messages that are hidden
-  ** by limiting, at the top of threads in the thread tree.  Note that when
-  ** $$hide_limited is \fIset\fP, this option will have no effect.
+  ** \fIset\fP の場合、Mutt は スレッドツリー中の最上位に、limit 機能によって隠されて
+  ** いるメッセージの存在を表示しません。$$hide_limited が \fIset\fP の場合、
+  ** このオプションは何の効果もないことに注意してください。
   */
   { "hide_top_missing",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETOPMISSING}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of missing messages at the
-  ** top of threads in the thread tree.  Note that when $$hide_missing is
-  ** \fIset\fP, this option will have no effect.
+  ** \fIset\fP の場合、Mutt はスレッドツリーのスレッドの上部に、メッセージがないことの
+  ** 表示をしません。$$hide_missing が \fIset\fP の場合、このオプションは何の効果も
+  ** ないことに注意してください。
   */
   { "history",		DT_NUM,	 R_NONE, {.p=&HistSize}, {.l=10} },
   /*
   ** .pp
-  ** This variable controls the size (in number of strings remembered) of
-  ** the string history buffer per category. The buffer is cleared each time the
-  ** variable is set.
+  ** この変数はカテゴリ毎の文字列ヒストリバッファのサイズ(記憶される文字列の数)を
+  ** 制御します。バッファは変数が設定される度毎に消去されます。
   */
   { "history_file",     DT_PATH, R_NONE, {.p=&HistFile}, {.p="~/.mutthistory"} },
   /*
   ** .pp
-  ** The file in which Mutt will save its history.
+  ** Mutt がそのヒストリをセーブするファイルです。
   ** .pp
-  ** Also see $$save_history.
+  ** $$save_history も参照してください。
   */
   { "history_remove_dups", DT_BOOL, R_NONE, {.l=OPTHISTREMOVEDUPS}, {.l=0} },
   /*
