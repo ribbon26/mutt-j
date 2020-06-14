@@ -1306,59 +1306,56 @@ struct option_t MuttVars[] = {
   { "idn_encode",	DT_BOOL, R_MENU, {.l=OPTIDNENCODE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will encode international domain names using
-  ** IDN.  Unset this if your SMTP server can handle newer (RFC 6531)
-  ** UTF-8 encoded domains. (IDN only)
+  ** \fIset\fP の場合、Mutt は IDN を使って国際化ドメイン名をエンコードします。
+  ** 使用する SMP サーバが新しい (RFC6531) UTF-8 エンコードされたドメインを扱える
+  ** 場合は、これを設定しません。(IDN のみです)
   */
 #endif /* defined(HAVE_LIBIDN) || defined(HAVE_LIBIDN2) */
   { "ignore_linear_white_space",    DT_BOOL, R_NONE, {.l=OPTIGNORELWS}, {.l=0} },
   /*
   ** .pp
-  ** This option replaces linear-white-space between encoded-word
-  ** and text to a single space to prevent the display of MIME-encoded
-  ** ``Subject:'' field from being divided into multiple lines.
+  ** このオプションは エンコードされた単語とテキストの間の linear-white-space を
+  ** MIME エンコードされた ``Subject:'' フィールドの表示が複数行に分割されてしまうことを
+  ** 防ぐために単一の空白に置き換えます。
   */
   { "ignore_list_reply_to", DT_BOOL, R_NONE, {.l=OPTIGNORELISTREPLYTO}, {.l=0} },
   /*
   ** .pp
-  ** Affects the behavior of the \fC<reply>\fP function when replying to
-  ** messages from mailing lists (as defined by the ``$subscribe'' or
-  ** ``$lists'' commands).  When \fIset\fP, if the ``Reply-To:'' field is
-  ** set to the same value as the ``To:'' field, Mutt assumes that the
-  ** ``Reply-To:'' field was set by the mailing list to automate responses
-  ** to the list, and will ignore this field.  To direct a response to the
-  ** mailing list when this option is \fIset\fP, use the \fC$<list-reply>\fP
-  ** function; \fC<group-reply>\fP will reply to both the sender and the
-  ** list.
+  ** メーリングリスト(``$subscribe'' 又は ``$lists'' コマンドで定義されたもの)
+  ** からメッセージに返信する時に\fC<reply>\fP 機能の動作に影響します。
+  ** \fIset\fPの場合で、``Reply-To:'' フィールドが ``To:'' フィールドの値と
+  ** 同じに設定されている場合、Mutt は、自動的にメーリングリストへの返信を
+  ** 自動化するために、``Reply-To:'' フィールドが、メーリングリストによって
+  ** 設定されたと仮定し、このフィールドを無視します。このオプションが\fIset\fP
+  ** の場合、メーリングリストに対する直接の返信は \fC$<list-reply>\fP 機能を
+  ** 使います。\fC<group-reply>\fP は送信者とメーリングリスト両方に返信します。
   */
 #ifdef USE_IMAP
   { "imap_authenticators", DT_STR, R_NONE, {.p=&ImapAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** This is a colon-delimited list of authentication methods mutt may
-  ** attempt to use to log in to an IMAP server, in the order mutt should
-  ** try them.  Authentication methods are either ``login'' or the right
-  ** side of an IMAP ``AUTH=xxx'' capability string, e.g. ``digest-md5'', ``gssapi''
-  ** or ``cram-md5''. This option is case-insensitive. If it's
-  ** \fIunset\fP (the default) mutt will try all available methods,
-  ** in order from most-secure to least-secure.
+  ** これはコロンで区切られた、認証方法の一覧で、Mutt はここに並んでいる順で、
+  ** これらの方式を使って、 IMAP サーバにログインしようとします。認証方式は
+  ** ``login'' か、IMAP のケーパビリティ文字列 'AUTH=xxx' の右辺、たとえば
+  ** ``digest-md5'', ``gssapi'' 又は``cram-md5'' を使います。このオプションは
+  ** 大文字小文字を無視します。\fIunset\fPの場合(既定値)、Mutt はすべての有効な
+  ** 方式を、もっともセキュアな方法からセキュアでない方法の順で試みます。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set imap_authenticators="gssapi:cram-md5:login"
   ** .te
   ** .pp
-  ** \fBNote:\fP Mutt will only fall back to other authentication methods if
-  ** the previous methods are unavailable. If a method is available but
-  ** authentication fails, mutt will not connect to the IMAP server.
+  ** \fB注意:\fP Mutt は前のメソッドが無効な場合にのみ、他の認証方式にフォールバック
+  ** します。メソッドが有効だが認証が失敗した場合、Mutt は IMAP サーバには
+  ** 接続しません。
   */
   { "imap_check_subscribed",  DT_BOOL, R_NONE, {.l=OPTIMAPCHECKSUBSCRIBED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will fetch the set of subscribed folders from
-  ** your server on connection, and add them to the set of mailboxes
-  ** it polls for new mail just as if you had issued individual ``$mailboxes''
-  ** commands.
+  ** \fIset\fP の場合、Mutt は接続時に、購読しているフォルダを読み出しして、
+  ** 独立した ``$mailboxes'' コマンドを発行したのと同様に、ポーリングする
+  ** メールボックスのセットにそれらを追加します。
   */
   { "imap_condstore",  DT_BOOL, R_NONE, {.l=OPTIMAPCONDSTORE}, {.l=0} },
   /*
