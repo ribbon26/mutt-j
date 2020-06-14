@@ -1457,57 +1457,52 @@ struct option_t MuttVars[] = {
   { "imap_peek", DT_BOOL, R_NONE, {.l=OPTIMAPPEEK}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will avoid implicitly marking your mail as read whenever
-  ** you fetch a message from the server. This is generally a good thing,
-  ** but can make closing an IMAP folder somewhat slower. This option
-  ** exists to appease speed freaks.
+  ** \fIset\fP の場合、Mutt はサーバからメッセージを読み出すときはいつでも
+  ** メールを読んだというマークを暗黙で付けることを防ぎます。これは一般的に
+  ** よい手法ですが、IMAP フォルダをクローズするときに少し遅くなることが
+  ** あります。このオプションはスピード命の人をなだめるためにあります。
   */
   { "imap_pipeline_depth", DT_NUM,  R_NONE, {.p=&ImapPipelineDepth}, {.l=15} },
   /*
   ** .pp
-  ** Controls the number of IMAP commands that may be queued up before they
-  ** are sent to the server. A deeper pipeline reduces the amount of time
-  ** mutt must wait for the server, and can make IMAP servers feel much
-  ** more responsive. But not all servers correctly handle pipelined commands,
-  ** so if you have problems you might want to try setting this variable to 0.
+  ** サーバに対して送られる前にキューにたまる IMAP コマンドの数を制御します。
+  ** 深いパイプラインは、Mutt がサーバを待たなければならない大量の時間を節約し、
+  ** IMAP サーバの応答性を大幅に向上させるようにできます。しかし、すべてのサーバが
+  ** パイプライン化されたコマンドを正確に扱えるわけではないので、もしも問題が
+  ** 発生した場合は、この変数を 0 にしてみてください。
   ** .pp
-  ** \fBNote:\fP Changes to this variable have no effect on open connections.
+  ** \fB注意:\fP この変数を変更しても接続時には何の影響もありません。
   */
   { "imap_poll_timeout", DT_NUM,  R_NONE, {.p=&ImapPollTimeout}, {.l=15} },
   /*
   ** .pp
-  ** This variable specifies the maximum amount of time in seconds
-  ** that mutt will wait for a response when polling IMAP connections
-  ** for new mail, before timing out and closing the connection.  Set
-  ** to 0 to disable timing out.
+  ** この変数は、新規メールのためにIMAP 接続をポーリングする時、タイムアウトと
+  ** 接続をクローズする前に、Mutt が応答を待つ最大の時間を指定します。
+  ** 0 に設定すると、タイムアウトを無効にします。
   */
   { "imap_qresync",  DT_BOOL, R_NONE, {.l=OPTIMAPQRESYNC}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will use the QRESYNC extension (RFC 7162)
-  ** if advertised by the server.  Mutt's current implementation is basic,
-  ** used only for initial message fetching and flag updates.
+  ** \fIset\fP の場合、Mutt は、サーバから広告があった場合、QRESYNC 拡張(RFC 7162)を
+  ** 使います。Mutt の現在の実装は基本的なものであり、
+  ** 初期メッセージのフェッチとフラグの更新のみを使います。
   ** .pp
-  ** Note: this feature is currently experimental.  If you experience
-  ** strange behavior, such as duplicate or missing messages please
-  ** file a bug report to let us know.
+  ** 注意: この機能は現在実験的なものです。たとえば、メッセージの重複や欠落のような
+  ** おかしな挙動があった場合には、バグとして是非ご連絡ください。
   */
   { "imap_servernoise",		DT_BOOL, R_NONE, {.l=OPTIMAPSERVERNOISE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will display warning messages from the IMAP
-  ** server as error messages. Since these messages are often
-  ** harmless, or generated due to configuration problems on the
-  ** server which are out of the users' hands, you may wish to suppress
-  ** them at some point.
+  ** \fIset\fPの場合、Mutt はエラーメッセージとして IMAP サーバからの警告メッセージを
+  ** 表示します。そのようなメッセージはしばしば無害だったり、ユーザとは関係のない
+  ** サーバ上の設定問題によって生成されたものなので、時には抑制したいかもしれません。
   */
   { "imap_user",	DT_STR,  R_NONE, {.p=&ImapUser}, {.p=0} },
   /*
   ** .pp
-  ** The name of the user whose mail you intend to access on the IMAP
-  ** server.
+  ** IMAP サーバ上で扱うメールの所有ユーザ名。 
   ** .pp
-  ** This variable defaults to your user name on the local machine.
+  ** この変数は既定でローカルマシン上でのユーザ名となります。
   */
 #endif
   { "implicit_autoview", DT_BOOL,R_NONE, {.l=OPTIMPLICITAUTOVIEW}, {.l=0} },
