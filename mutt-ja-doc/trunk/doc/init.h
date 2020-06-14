@@ -1360,53 +1360,49 @@ struct option_t MuttVars[] = {
   { "imap_condstore",  DT_BOOL, R_NONE, {.l=OPTIMAPCONDSTORE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will use the CONDSTORE extension (RFC 7162)
-  ** if advertised by the server.  Mutt's current implementation is basic,
-  ** used only for initial message fetching and flag updates.
+  ** \fIset\fP の場合、Mutt は、サーバにより広告がある場合、CONDSTORE 拡張
+  ** (RFC 7162) を使います。Mutt の現在の実装は基本的なものであり、
+  ** 初期メッセージのフェッチとフラグの更新のみを使います。
   ** .pp
-  ** For some IMAP servers, enabling this will slightly speed up
-  ** downloading initial messages.  Unfortunately, Gmail is not one
-  ** those, and displays worse performance when enabled.  Your
-  ** mileage may vary.
+  ** いくつかの IMAP サーバでは、これを有効にすると、初期メッセージのダウンロードが
+  ** 若干早くなります。残念なことに、Gmail はそのうちの1つには入らず、有効にすると
+  ** 表示が遅くなります。受け取るメリットは変わる場合があります。
   */
   { "imap_delim_chars",		DT_STR, R_NONE, {.p=&ImapDelimChars}, {.p="/."} },
   /*
   ** .pp
-  ** This contains the list of characters which you would like to treat
-  ** as folder separators for displaying IMAP paths. In particular it
-  ** helps in using the ``='' shortcut for your \fIfolder\fP variable.
+  ** これには IMAP パスを表示する際にフォルダの区切りとして扱いたい 文字の一覧が
+  ** 入ります。特にこれが役立つのは、 \fIfolder\fP 変数へのショートカットのために
+  ** ``='' を使うときです。
   */
   { "imap_fetch_chunk_size",	DT_LNUM, R_NONE, {.p=&ImapFetchChunkSize}, {.l=0} },
   /*
   ** .pp
-  ** When set to a value greater than 0, new headers will be downloaded
-  ** in sets of this size.  If you have a very large mailbox, this might
-  ** prevent a timeout and disconnect when opening the mailbox, by sending
-  ** a FETCH per set of this size instead of a single FETCH for all new
-  ** headers.
+  ** この値を 0 より大きくすると、新しいヘッダはこのサイズのセットでダウンロード
+  ** されます。非常に大きなメールボックスを使っている場合、すべての新しいヘッダを
+  ** 単一の取得操作で行う代わりに、このサイズのセット毎に取得コマンドを送ることで、
+  ** メールボックスをオープンするときにタイムアウトと切断を防ぐことが出来ます。
   */
   { "imap_headers",	DT_STR, R_INDEX, {.p=&ImapHeaders}, {.p=0} },
   /*
   ** .pp
-  ** Mutt requests these header fields in addition to the default headers
+  ** Mutt がインデックスメニューを表示する前に、IMAP サーバから既定のヘッダ
   ** (``Date:'', ``From:'', ``Sender:'', ``Subject:'', ``To:'', ``Cc:'', ``Message-Id:'',
   ** ``References:'', ``Content-Type:'', ``Content-Description:'', ``In-Reply-To:'',
-  ** ``Reply-To:'', ``Lines:'', ``List-Post:'', ``X-Label:'') from IMAP
-  ** servers before displaying the index menu. You may want to add more
-  ** headers for spam detection.
+  ** ``Reply-To:'', ``Lines:'', ``List-Post:'', ``X-Label:'') に追加で、ここで指定する
+  ** ヘッダを要求します。スパム検出のためのヘッダを追加したいときに使います。
   ** .pp
-  ** \fBNote:\fP This is a space separated list, items should be uppercase
-  ** and not contain the colon, e.g. ``X-BOGOSITY X-SPAM-STATUS'' for the
-  ** ``X-Bogosity:'' and ``X-Spam-Status:'' header fields.
+  ** \fB注意:\fP これは空白で分離されたリストで、各項目はすべて大文字で
+  ** コロンを含んではいけません。たとえば、``X-Bogosity:'' と ``X-Spam-Status:''
+  ** は ``X-BOGOSITY X-SPAM-STATUS'' となります。
   */
   { "imap_idle",                DT_BOOL, R_NONE, {.l=OPTIMAPIDLE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will attempt to use the IMAP IDLE extension
-  ** to check for new mail in the current mailbox. Some servers
-  ** (dovecot was the inspiration for this option) react badly
-  ** to mutt's implementation. If your connection seems to freeze
-  ** up periodically, try unsetting this.
+  ** \fIset\fP の場合、Mutt  は現在のメールボックスで、新規メールのチェックのために
+  ** IMAP IDLE 拡張を使おうとします。いくつかのサーバ(このオプションに対しては
+  ** dovecot が想起されます)は、Mutt の実装に対して不正確に反応します。
+  ** 接続が定期的にフリーズするように見える場合は、この設定の解除を試してみてください。
   */
   { "imap_keepalive",           DT_NUM,  R_NONE, {.p=&ImapKeepalive}, {.l=300} },
   /*
