@@ -1407,55 +1407,52 @@ struct option_t MuttVars[] = {
   { "imap_keepalive",           DT_NUM,  R_NONE, {.p=&ImapKeepalive}, {.l=300} },
   /*
   ** .pp
-  ** This variable specifies the maximum amount of time in seconds that mutt
-  ** will wait before polling open IMAP connections, to prevent the server
-  ** from closing them before mutt has finished with them. The default is
-  ** well within the RFC-specified minimum amount of time (30 minutes) before
-  ** a server is allowed to do this, but in practice the RFC does get
-  ** violated every now and then. Reduce this number if you find yourself
-  ** getting disconnected from your IMAP server due to inactivity.
+  ** この変数は、Mutt が接続を終了する前に、サーバから接続をクローズするのを
+  ** 防ぐために、オープンしている IMAP 接続をポーリングする前に Mutt が待つ
+  ** 最大時間を秒数で指定します。既定値は、サーバがこれを実行出来るようになるまで、
+  ** RFC の指定による最低限の時間(30分)内ですが、実際にはRFC はそこかしこで
+  ** 破られています。接続していないとみなされて IMAP サーバから切断されるようで
+  ** あれば、この数値を減らしてください。
   */
   { "imap_list_subscribed",	DT_BOOL, R_NONE, {.l=OPTIMAPLSUB}, {.l=0} },
   /*
   ** .pp
-  ** This variable configures whether IMAP folder browsing will look for
-  ** only subscribed folders or all folders.  This can be toggled in the
-  ** IMAP browser with the \fC<toggle-subscribed>\fP function.
+  ** この変数は、IMAP フォルダ一覧表示で検索するのを購読フォルダのみにするか、すべての
+  ** フォルダにするかを制御します。これは、\fC<toggle-subscribed>\fP 機能を使って
+  ** IMAP ブラウザ内でON/OFFできます。
   */
   { "imap_login",	DT_STR,  R_NONE, {.p=&ImapLogin}, {.p=0} },
   /*
   ** .pp
-  ** Your login name on the IMAP server.
+  ** IMAP サーバへのログイン名。
   ** .pp
-  ** This variable defaults to the value of $$imap_user.
+  ** この変数は既定で$$imap_user の値となります。
   */
   { "imap_oauth_refresh_command", DT_STR, R_NONE, {.p=&ImapOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** The command to run to generate an OAUTH refresh token for
-  ** authorizing your connection to your IMAP server.  This command will be
-  ** run on every connection attempt that uses the OAUTHBEARER authentication
-  ** mechanism.  See ``$oauth'' for details.
+  ** IMAP サーバの接続を認証するための OAUTH リフレッシュトークンを生成するために
+  ** 実行するコマンド。このコマンドはOAUTHBEARER 認証メカニズムを使った接続を試みる
+  ** 度毎に実行されます。詳細については``$oauth'' を参照してください。
   */
   { "imap_pass", 	DT_STR,  R_NONE, {.p=&ImapPass}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the password for your IMAP account.  If \fIunset\fP, Mutt will
-  ** prompt you for your password when you invoke the \fC<imap-fetch-mail>\fP function
-  ** or try to open an IMAP folder.
+  ** IMAP アカウントのパスワードを指定します。\fIunset\fP の場合、Mutt は
+  ** \fC<imap-fetch-mail>\fP機能を起動した場合又はIMAP フォルダを開こうとするときに
+  ** パスワードを要求してきます。
   ** .pp
-  ** \fBWarning\fP: you should only use this option when you are on a
-  ** fairly secure machine, because the superuser can read your muttrc even
-  ** if you are the only one who can read the file.
+  ** \fB警告\fP: このオプションは、十分に安全なマシン上でのみ使うべきです。
+  ** なぜなら、muttrc ファイルを自分以外が読めないように したつもりでも、スーパユーザは
+  ** 読めるからです。
   */
   { "imap_passive",		DT_BOOL, R_NONE, {.l=OPTIMAPPASSIVE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not open new IMAP connections to check for new
-  ** mail.  Mutt will only check for new mail over existing IMAP
-  ** connections.  This is useful if you don't want to be prompted for
-  ** user/password pairs on mutt invocation, or if opening the connection
-  ** is slow.
+  ** \fIset\fP の場合、Mutt は新規メールチェックのために新規のIMAP 接続を開くことは
+  ** しません。Mutt は新規メールを既存のIMAP 接続でのみ確認することになります。これが
+  ** 有用となるのは、Mutt 起動時にユーザ名とパスワードの入力を要求されたくない場合や、
+  ** 接続するのに時間がかかる場合などです。
   */
   { "imap_peek", DT_BOOL, R_NONE, {.l=OPTIMAPPEEK}, {.l=1} },
   /*
