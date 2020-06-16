@@ -1565,40 +1565,39 @@ struct option_t MuttVars[] = {
   ** .dt %B .dd 送信された手紙のリストかフォルダ名 (%b).
   ** .dt %c .dd メッセージの(バイト単位の)サイズ ($formatstrings-size 参照)
   ** .dt %C .dd 現在のメッセージ番号
-  ** .dt %d .dd date and time of the message in the format specified by
-  **            $$date_format converted to sender's time zone
-  ** .dt %D .dd date and time of the message in the format specified by
-  **            $$date_format converted to the local time zone
-  ** .dt %e .dd current message number in thread
-  ** .dt %E .dd number of messages in current thread
-  ** .dt %f .dd sender (address + real name), either From: or Return-Path:
-  ** .dt %F .dd author name, or recipient name if the message is from you
-  ** .dt %H .dd spam attribute(s) of this message
-  ** .dt %i .dd message-id of the current message
-  ** .dt %l .dd number of lines in the unprocessed message (may not work with
-  **            maildir, mh, and IMAP folders)
-  ** .dt %L .dd If an address in the ``To:'' or ``Cc:'' header field matches an address
-  **            defined by the users ``$subscribe'' command, this displays
-  **            "To <list-name>", otherwise the same as %F.
-  ** .dt %m .dd total number of message in the mailbox
-  ** .dt %M .dd number of hidden messages if the thread is collapsed.
-  ** .dt %N .dd message score
-  ** .dt %n .dd author's real name (or address if missing)
-  ** .dt %O .dd original save folder where mutt would formerly have
-  **            stashed the message: list name or recipient name
-  **            if not sent to a list
-  ** .dt %P .dd progress indicator for the built-in pager (how much of the file has been displayed)
-  ** .dt %r .dd comma separated list of ``To:'' recipients
-  ** .dt %R .dd comma separated list of ``Cc:'' recipients
-  ** .dt %s .dd subject of the message
-  ** .dt %S .dd single character status of the message (``N''/``O''/``D''/``d''/``!''/``r''/``\(as'')
-  ** .dt %t .dd ``To:'' field (recipients)
-  ** .dt %T .dd the appropriate character from the $$to_chars string
-  ** .dt %u .dd user (login) name of the author
-  ** .dt %v .dd first name of the author, or the recipient if the message is from you
-  ** .dt %X .dd number of attachments
-  **            (please see the ``$attachments'' section for possible speed effects)
-  ** .dt %y .dd ``X-Label:'' field, if present
+  ** .dt %d .dd メッセージの日付と時刻を、送信者の現地時間に変換して
+  **            $$date_format の形式にしたもの
+  ** .dt %D .dd メッセージの日付と時刻を、自分の地域の時間に変換して
+  **            $$date_format の形式にしたもの
+  ** .dt %e .dd スレッド内におけるメッセージ番号 
+  ** .dt %E .dd スレッド内のメッセージ総数
+  ** .dt %f .dd 送信者 (アドレス + 実名)、From: 又は Return-Path: のどちらか
+  ** .dt %F .dd 差出人の名前か自分自身から出されたメールであれば受信者の名前
+  ** .dt %H .dd メッセージの spam 属性
+  ** .dt %i .dd 現在のメッセージの message-id
+  ** .dt %l .dd 未処理のメッセージの行数(maildir, mh, とIMAP フォルダでは
+  **            おそらく動作しない)
+  ** .dt %L .dd ``To:'' 又は ``Cc:'' ヘッダフィールドがユーザの``$subscribe''
+  **            コマンドで定義されたアドレスに一致する場合、これは "To <リスト名>"
+  **            と表示し、その他の場合は %F と同じになります。 
+  ** .dt %m .dd メールボックス中のメッセージ総数
+  ** .dt %M .dd スレッドが折りたたまれている場合の非表示のメッセージ数
+  ** .dt %N .dd メッセージのスコア
+  ** .dt %n .dd 差出人の本名(あるいは存在しなければアドレス)
+  ** .dt %O .dd Mutt がかつてメッセージを隠していたもとの保存ファイル:
+  **            リスト名又はリストに送らない場合は受信者の名前
+  ** .dt %P .dd ビルトインページャにおける処理インジケータ(どのくらいファイルが表示されたか)
+  ** .dt %r .dd コンマで分離された ``To:'' 受信者のリスト
+  ** .dt %R .dd コンマで分離された ``Cc:'' 受信者のリスト
+  ** .dt %s .dd メッセージの題名
+  ** .dt %S .dd 単一文字でのメッセージのステータス(``N''/``O''/``D''/``d''/``!''/``r''/``\(は'')
+  ** .dt %t .dd ``To:'' フィールド(受信者)
+  ** .dt %T .dd $$to_chars 文字列からの適切な文字
+  ** .dt %u .dd 送信者のユーザ(ログイン)名
+  ** .dt %v .dd 送信者のファーストネームか、メッセージが自分からのものであれば受信者
+  ** .dt %X .dd 添付の数
+  **            (可能な速度効果については ``$attachments'' の章を参照してください)
+  ** .dt %y .dd 存在すれば ``X-Label:'' フィールド
   ** .dt %Y .dd ``X-Label:'' field, if present, and \fI(1)\fP not at part of a thread tree,
   **            \fI(2)\fP at the top of a thread, or \fI(3)\fP ``X-Label:'' is different from
   **            preceding message's ``X-Label:''.
