@@ -1508,47 +1508,43 @@ struct option_t MuttVars[] = {
   { "implicit_autoview", DT_BOOL,R_NONE, {.l=OPTIMPLICITAUTOVIEW}, {.l=0} },
   /*
   ** .pp
-  ** If set to ``yes'', mutt will look for a mailcap entry with the
-  ** ``\fCcopiousoutput\fP'' flag set for \fIevery\fP MIME attachment it doesn't have
-  ** an internal viewer defined for.  If such an entry is found, mutt will
-  ** use the viewer defined in that entry to convert the body part to text
-  ** form.
+  ** ``yes'' に設定した場合、Mutt は 内部ビューワが定義されていない \fIすべての\fP
+  **  MIME 添付 に  ``\fCcopiousoutput\fP'' フラグがセットされた mailcap エントリを
+  ** 探します。そのようなエントリが見つかった場合、Mutt は本文部分をテキスト形式に
+  ** 変換するために、そのエントリに対して定義されているビューワを使います。
   */
   { "include",		DT_QUAD, R_NONE, {.l=OPT_INCLUDE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not a copy of the message(s) you are replying to
-  ** is included in your reply.
+  ** 返信しようとしている元のメッセージ内容を返信に含めるかどうかを制御します。
   */
   { "include_encrypted",	DT_BOOL, R_NONE, {.l=OPTINCLUDEENCRYPTED}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether or not Mutt includes separately encrypted attachment
-  ** contents when replying.
+  ** Mutt が、返信時に暗号化された添付内容を分離して含めるかどうかを制御します。
   ** .pp
-  ** This variable was added to prevent accidental exposure of encrypted
-  ** contents when replying to an attacker.  If a previously encrypted message
-  ** were attached by the attacker, they could trick an unwary recipient into
-  ** decrypting and including the message in their reply.
+  ** この変数は、攻撃者に対して返信する時に、暗号化された内容を予期せぬ形で公開される
+  ** ことを防ぐために追加されました。以前に暗号化されたメッセージが攻撃者によって
+  ** 添付された場合、不注意な受信者をだましてメッセージを解読し、返信に含めることが
+  ** できます。
   */
   { "include_onlyfirst",	DT_BOOL, R_NONE, {.l=OPTINCLUDEONLYFIRST}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether or not Mutt includes only the first attachment
-  ** of the message you are replying.
+  ** Mutt が返信時にメッセージの最初の添付のみを含めるかどうかを制御します。
   */
   { "indent_string",	DT_STR,	 R_NONE, {.p=&Prefix}, {.p="> "} },
   /*
   ** .pp
-  ** Specifies the string to prepend to each line of text quoted in a
-  ** message to which you are replying.  You are strongly encouraged not to
-  ** change this value, as it tends to agitate the more fanatical netizens.
+  ** 返信時に、メッセージ中に引用されているテキストの各行の先頭に付加する
+  ** 文字列を指定します。より狂信的なネチズンを煽る傾向があるため、この値を
+  ** 変更しないことを強く推奨します。
   ** .pp
-  ** The value of this option is ignored if $$text_flowed is set, because
-  ** the quoting mechanism is strictly defined for format=flowed.
+  ** このオプションの値は、引用メカニズムが format=flowed に対して厳格に定義
+  ** されているため、$$text_flowed が設定されている場合は無視されます。
   ** .pp
-  ** This option is a format string, please see the description of
-  ** $$index_format for supported \fCprintf(3)\fP-style sequences.
+  ** このオプションは、書式付きの文字列で、サポートされる \fCprintf(3)\fP 形式の
+  ** 書式については$$index_format を参照してください。
   */
   { "indent_str",	DT_SYN,  R_NONE, {.p="indent_string"}, {.p=0} },
   /*
@@ -1556,20 +1552,19 @@ struct option_t MuttVars[] = {
   { "index_format",	DT_STR,	 R_BOTH, {.p=&HdrFmt}, {.p="%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"} },
   /*
   ** .pp
-  ** This variable allows you to customize the message index display to
-  ** your personal taste.
+  ** この変数で、個人の好みによってメッセージインデックス表示をカスタマイズする
+  ** ことができます。
   ** .pp
-  ** ``Format strings'' are similar to the strings used in the C
-  ** function \fCprintf(3)\fP to format output (see the man page for more details).
-  ** For an explanation of the %? construct, see the $$status_format description.
-  ** The following sequences are defined in Mutt:
+  ** ``Format strings'' はフォーマット出力のために使う C の\fCprintf(3)\fP 関数と
+  ** 似ています(詳細はマニュアルページを参照してください)。%? の説明については
+  ** $$status_format の説明を参照してください。以下は Mutt で定義されているものです。
   ** .dl
-  ** .dt %a .dd address of the author
-  ** .dt %A .dd reply-to address (if present; otherwise: address of author)
-  ** .dt %b .dd filename of the original message folder (think mailbox)
-  ** .dt %B .dd the list to which the letter was sent, or else the folder name (%b).
-  ** .dt %c .dd number of characters (bytes) in the message (see $formatstrings-size)
-  ** .dt %C .dd current message number
+  ** .dt %a .dd 差出人のアドレス
+  ** .dt %A .dd (もしあれば) reply-to アドレス (なければ差出人アドレス) 
+  ** .dt %b .dd オリジナルのメッセージフォルダのファイル名(mailbox です)
+  ** .dt %B .dd 送信された手紙のリストかフォルダ名 (%b).
+  ** .dt %c .dd メッセージの(バイト単位の)サイズ ($formatstrings-size 参照)
+  ** .dt %C .dd 現在のメッセージ番号
   ** .dt %d .dd date and time of the message in the format specified by
   **            $$date_format converted to sender's time zone
   ** .dt %D .dd date and time of the message in the format specified by
