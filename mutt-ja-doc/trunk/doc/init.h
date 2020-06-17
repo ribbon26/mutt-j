@@ -1625,53 +1625,50 @@ struct option_t MuttVars[] = {
   ** .dt %*X    .dd 文字 ``X'' を埋め草として、 soft-fillします。
   ** .de
   ** .pp
-  ** Note that for mbox/mmdf, ``%l'' applies to the unprocessed message, and
-  ** for maildir/mh, the value comes from the ``Lines:'' header field when
-  ** present (the meaning is normally the same). Thus the value depends on
-  ** the encodings used in the different parts of the message and has little
-  ** meaning in practice.
+  ** mbox/mmdf では、``%l'' は非圧縮メッセージに対して適用され、maildir/mh では
+  ** ``Lines:'' ヘッダフィールドが存在する場合に、そこから値は取得されることに
+  ** 注意してください(意味は通常同じです)。従って、値は、異なったメッセージの
+  ** パート中で使われるエンコーディングに依存し、実際にはほとんど意味がありません。
   ** .pp
-  ** ``Soft-fill'' deserves some explanation: Normal right-justification
-  ** will print everything to the left of the ``%>'', displaying padding and
-  ** whatever lies to the right only if there's room. By contrast,
-  ** soft-fill gives priority to the right-hand side, guaranteeing space
-  ** to display it and showing padding only if there's still room. If
-  ** necessary, soft-fill will eat text leftwards to make room for
-  ** rightward text.
+  ** ``Soft-fill'' についてはいくつか説明が必要でしょう: 通常の右揃えは、``%>''
+  ** の左側のものすべてをプリントし、余白がある場合にのみ、右側にあるものすべてと
+  ** 埋め草文字を表示します。それと対照的に、soft-fill は右側を優先し、それを
+  ** 表示する場所を保障し、まだ余裕がある場合にのみ、埋め草文字を表示します。
+  ** 必要に応じて、soft-fill は右側のテキストのために空間を作るため、テキストの
+  ** 左側を削除します。
   ** .pp
-  ** Note that these expandos are supported in
-  ** ``$save-hook'', ``$fcc-hook'', ``$fcc-save-hook'', and
-  ** ``$index-format-hook''.
+  ** これらの展開は``$save-hook'', ``$fcc-hook'', ``$fcc-save-hook'' と
+  ** ``$index-format-hook'' でサポートされることに注意してください。
   ** .pp
-  ** They are also supported in the configuration variables $$attribution,
+  ** また、設定変数 $$attribution,
   ** $$forward_attribution_intro, $$forward_attribution_trailer,
   ** $$forward_format, $$indent_string, $$message_format, $$pager_format,
-  ** and $$post_indent_string.
+  ** と $$post_indent_string でもサポートされます。
   */
   { "ispell",		DT_PATH, R_NONE, {.p=&Ispell}, {.p=ISPELL} },
   /*
   ** .pp
-  ** How to invoke ispell (GNU's spell-checking software).
+  ** どのようにして ispell(GNU のスペリングチェックソフトウェア)を起動するかの指定です。
   */
   { "keep_flagged", DT_BOOL, R_NONE, {.l=OPTKEEPFLAGGED}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, read messages marked as flagged will not be moved
-  ** from your spool mailbox to your $$mbox mailbox, or as a result of
-  ** a ``$mbox-hook'' command.
+  ** \fIset\fP の場合、フラグが付けられている既読メッセージはスプール
+  ** メールボックスから $$mbox メールボックス、あるいは ``$mbox-hook'' コマンドの
+  ** 結果に移動しません。
   */
   { "list_reply",	DT_QUAD, R_NONE, {.l=OPT_LISTREPLY}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** When set, address replies to the mailing list the original message came
-  ** from (instead to the author only).  Setting this option to ``ask-yes'' or
-  ** ``ask-no'' will ask if you really intended to reply to the author only.
+  ** 設定した場合、アドレスはもとのメッセージが来たメーリングリストに返信されます
+  ** (代わりに作成者のみ)。この設定を ``ask-yes'' か ``ask-no'' にすると
+  ** 本当に作成者のみに返信するかどうかを聞いてきます。
   */
   { "mail_check",	DT_NUM,  R_NONE, {.p=&BuffyTimeout}, {.l=5} },
   /*
   ** .pp
-  ** This variable configures how often (in seconds) mutt should look for
-  ** new mail. Also see the $$timeout variable.
+  ** この変数は、どのくらいの頻度(秒単位)で、Mutt が新規メールを探しに行くかを
+  ** 設定します。$$timeout 変数も参照してください。
   */
   { "mail_check_recent",DT_BOOL, R_NONE, {.l=OPTMAILCHECKRECENT}, {.l=1} },
   /*
