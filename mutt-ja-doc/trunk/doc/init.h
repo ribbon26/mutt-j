@@ -1598,30 +1598,31 @@ struct option_t MuttVars[] = {
   ** .dt %X .dd 添付の数
   **            (可能な速度効果については ``$attachments'' の章を参照してください)
   ** .dt %y .dd 存在すれば ``X-Label:'' フィールド
-  ** .dt %Y .dd ``X-Label:'' field, if present, and \fI(1)\fP not at part of a thread tree,
-  **            \fI(2)\fP at the top of a thread, or \fI(3)\fP ``X-Label:'' is different from
-  **            preceding message's ``X-Label:''.
-  ** .dt %Z .dd a three character set of message status flags.
-  **            the first character is new/read/replied flags (``n''/``o''/``r''/``O''/``N'').
-  **            the second is deleted or encryption flags (``D''/``d''/``S''/``P''/``s''/``K'').
-  **            the third is either tagged/flagged (``\(as''/``!''), or one of the characters
-  **            listed in $$to_chars.
-  ** .dt %@name@ .dd insert and evaluate format-string from the matching
-  **                 ``$index-format-hook'' command
-  ** .dt %{fmt} .dd the date and time of the message is converted to sender's
-  **                time zone, and ``fmt'' is expanded by the library function
-  **                \fCstrftime(3)\fP; a leading bang disables locales
-  ** .dt %[fmt] .dd the date and time of the message is converted to the local
-  **                time zone, and ``fmt'' is expanded by the library function
-  **                \fCstrftime(3)\fP; a leading bang disables locales
-  ** .dt %(fmt) .dd the local date and time when the message was received.
-  **                ``fmt'' is expanded by the library function \fCstrftime(3)\fP;
-  **                a leading bang disables locales
-  ** .dt %<fmt> .dd the current local time. ``fmt'' is expanded by the library
-  **                function \fCstrftime(3)\fP; a leading bang disables locales.
-  ** .dt %>X    .dd right justify the rest of the string and pad with character ``X''
-  ** .dt %|X    .dd pad to the end of the line with character ``X''
-  ** .dt %*X    .dd soft-fill with character ``X'' as pad
+  ** .dt %Y .dd \fI(1)\fP スレッドツリーの一部ではない、\fI(2)\fP スレッドの頂点である、
+  **            \fI(3)\fP ``X-Label:'' が 前のメッセージの ``X-Label:'' と異なる、の
+  **            いずれかで、存在していれば``X-Label:'' フィールド。
+  ** .dt %Z .dd 3桁のメッセージ状態フラグ。
+  **            最初の文字は new/read/replied フラグ (``n''/``o''/``r''/``O''/``N'')。
+  **            2番目の文字は削除/暗号化フラグ (``D''/``d''/``S''/``P''/``s''/``K'')。
+  **            3番目の文字はタグ/フラグのどちらか(``\(は''/``!'')か、$$to_chars 中にある
+  **            文字のどれか。
+  ** .dt %@name@ .dd ``$index-format-hook'' コマンドに一致する書式文字列を挿入して
+  **                   評価
+  ** .dt %{fmt} .dd メッセージの日付と時間が送信者のタイムゾーンに変換され、
+  **                ``fmt'' がライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます。
+  ** .dt %[fmt] .dd メッセージの日付と時間がローカルタイムゾーンに変換され、
+  **                ``fmt'' がライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます。
+  ** .dt %(fmt) .dd メッセージを受信したときのローカルの日付と時間。
+  **                ``fmt'' はライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます
+  ** .dt %<fmt> .dd 現在のローカルの日付と時刻。
+  **                ``fmt'' はライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます
+  ** .dt %>X    .dd 残りの文字列を右寄せして、間を ``X'' 部分の文字で詰めます。
+  ** .dt %|X    .dd 行末まで ``X'' 部分の文字で詰めます。
+  ** .dt %*X    .dd 文字 ``X'' を埋め草として、 soft-fillします。
   ** .de
   ** .pp
   ** Note that for mbox/mmdf, ``%l'' applies to the unprocessed message, and
