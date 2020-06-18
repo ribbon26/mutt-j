@@ -1810,31 +1810,30 @@ struct option_t MuttVars[] = {
   { "message_cache_clean", DT_BOOL, R_NONE, {.l=OPTMESSAGECACHECLEAN}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will clean out obsolete entries from the message cache when
-  ** the mailbox is synchronized. You probably only want to set it
-  ** every once in a while, since it can be a little slow
-  ** (especially for large folders).
+  **  \fIset\fP の場合、Mutt はメールボックスが同期されたときに、メッセージキャッシュから
+  ** 無効になったエントリを削除します。 (特に大きなフォルダでは)。若干遅くなるため、
+  ** たまに設定したいと思う程度でしょう
+  **
   */
   { "message_cachedir",	DT_PATH,	R_NONE,	{.p=&MessageCachedir}, {.p=0} },
   /*
   ** .pp
-  ** Set this to a directory and mutt will cache copies of messages from
-  ** your IMAP and POP servers here. You are free to remove entries at any
-  ** time.
+  ** これをディレクトリに設定すると、Mutt はIMAP と POP サーバからメッセージのコピーを
+  ** ここにキャッシュします。このエントリはいつでも削除できます。
   ** .pp
-  ** When setting this variable to a directory, mutt needs to fetch every
-  ** remote message only once and can perform regular expression searches
-  ** as fast as for local folders.
+  ** この変数をディレクトリに設定すると、Mutt はすべてのリモートメッセージを1回だけ
+  ** フェッチする必要があり、ローカルフォルダと同じくらいの速さで正規表現による
+  ** 検索を実行できます。
   ** .pp
-  ** Also see the $$message_cache_clean variable.
+  **  $$message_cache_clean 変数も参照してください。
   */
 #endif
   { "message_format",	DT_STR,	 R_NONE, {.p=&MsgFmt}, {.p="%s"} },
   /*
   ** .pp
-  ** This is the string displayed in the ``attachment'' menu for
-  ** attachments of type \fCmessage/rfc822\fP.  For a full listing of defined
-  ** \fCprintf(3)\fP-like sequences see the section on $$index_format.
+  ** これは、\fCmessage/rfc822\fP タイプの添付用 ``attachment'' メニューで
+  ** 表示される文字列です。\fCprintf(3)\fP 風の定義されている完全な書式リストは
+  ** $$index_format 節を参照してください。
   */
   { "msg_format",	DT_SYN,  R_NONE, {.p="message_format"}, {.p=0} },
   /*
@@ -1842,45 +1841,42 @@ struct option_t MuttVars[] = {
   { "meta_key",		DT_BOOL, R_NONE, {.l=OPTMETAKEY}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, forces Mutt to interpret keystrokes with the high bit (bit 8)
-  ** set as if the user had pressed the Esc key and whatever key remains
-  ** after having the high bit removed.  For example, if the key pressed
-  ** has an ASCII value of \fC0xf8\fP, then this is treated as if the user had
-  ** pressed Esc then ``x''.  This is because the result of removing the
-  ** high bit from \fC0xf8\fP is \fC0x78\fP, which is the ASCII character
-  ** ``x''.
+  ** \fIset\fP の場合、最上位ビット(ビット 8) を設定したキーストロークを、ESC キーを
+  ** 押し、残りのものはすべて最上位ビットを落とした形で Mutt に解釈させます。たとえば、
+  ** 押されたキーが ASCII の値で \fC0xf8\fP の場合は、 ESC の次に ``x'' が押された
+  ** ように扱われます。これは、最上位ビットを落とした \fC0xf8\fP が、\fC0x78\fP で、
+  ** それは ASCII 文字 ``x'' だからです。
   */
   { "metoo",		DT_BOOL, R_NONE, {.l=OPTMETOO}, {.l=0} },
   /*
   ** .pp
-  ** If \fIunset\fP, Mutt will remove your address (see the ``$alternates''
-  ** command) from the list of recipients when replying to a message.
+  ** \fIunset\fP の場合、Mutt はメッセージ返信時に受信者リストからアドレスを
+  ** 取り除きます(``$alternates'' コマンドを参照してください)。
   */
   { "mh_purge",		DT_BOOL, R_NONE, {.l=OPTMHPURGE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIunset\fP, mutt will mimic mh's behavior and rename deleted messages
-  ** to \fI,<old file name>\fP in mh folders instead of really deleting
-  ** them. This leaves the message on disk but makes programs reading the folder
-  ** ignore it. If the variable is \fIset\fP, the message files will simply be
-  ** deleted.
+  ** \fIunset\fP の場合、Mutt は mh の挙動を偽装し、実際に削除する代わりに mh フォルダ中で
+  ** 削除されたメッセージを \fI,<old file name>\fP に改名します。これは、メッセージを
+  ** ディスク上に残しますが、プログラムがフォルダを読むときに無視させます。変数が
+  ** \fIset\fP の場合、メッセージファイルは単に削除されます。
   ** .pp
-  ** This option is similar to $$maildir_trash for Maildir folders.
+  ** このオプションは、Maildir フォルダ用の $$maildir_trash と似ています。
   */
   { "mh_seq_flagged",	DT_STR, R_NONE, {.p=&MhFlagged}, {.p="flagged"} },
   /*
   ** .pp
-  ** The name of the MH sequence used for flagged messages.
+  ** フラグ付きメッセージに使われる MH シーケンス名です。
   */
   { "mh_seq_replied",	DT_STR, R_NONE, {.p=&MhReplied}, {.p="replied"} },
   /*
   ** .pp
-  ** The name of the MH sequence used to tag replied messages.
+  ** 返信済みメッセージに使われる MH シーケンス名です。
   */
   { "mh_seq_unseen",	DT_STR, R_NONE, {.p=&MhUnseen}, {.p="unseen"} },
   /*
   ** .pp
-  ** The name of the MH sequence used for unseen messages.
+  ** 未読メッセージに使われる MH シーケンス名です。
   */
   { "mime_forward",	DT_QUAD, R_NONE, {.l=OPT_MIMEFWD}, {.l=MUTT_NO} },
   /*
