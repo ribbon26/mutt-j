@@ -1718,60 +1718,59 @@ struct option_t MuttVars[] = {
   { "maildir_header_cache_verify", DT_BOOL, R_NONE, {.l=OPTHCACHEVERIFY}, {.l=1} },
   /*
   ** .pp
-  ** Check for Maildir unaware programs other than mutt having modified maildir
-  ** files when the header cache is in use.  This incurs one \fCstat(2)\fP per
-  ** message every time the folder is opened (which can be very slow for NFS
-  ** folders).
+  ** ヘッダキャッシュが使われている時に、maildirファイルを変更した Mutt 以外の
+  ** Maildir に対応しないプログラムを確認します。これは、フォルダのオープン毎に
+  ** メッセージ毎に1回の\fCstat(2)\fP が発生します(これは NFS フォルダの場合には
+  ** 非常に遅くなる可能性があります)。
   */
 #endif
   { "maildir_trash", DT_BOOL, R_NONE, {.l=OPTMAILDIRTRASH}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, messages marked as deleted will be saved with the maildir
-  ** trashed flag instead of unlinked.  \fBNote:\fP this only applies
-  ** to maildir-style mailboxes.  Setting it will have no effect on other
-  ** mailbox types.
+  ** \fIset\fP の場合、削除マークが付いたメッセージは、削除される代わりに
+  ** maildir に ゴミ フラグを付けてセーブされます。\fB注意:\fP これは、
+  ** maildir 形式のメールボックスに対してのみ適用されます。設定は他のメールボックス
+  ** 形式には影響しません。
   */
   { "maildir_check_cur", DT_BOOL, R_NONE, {.l=OPTMAILDIRCHECKCUR}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will poll both the new and cur directories of
-  ** a maildir folder for new messages.  This might be useful if other
-  ** programs interacting with the folder (e.g. dovecot) are moving new
-  ** messages to the cur directory.  Note that setting this option may
-  ** slow down polling for new messages in large folders, since mutt has
-  ** to scan all cur messages.
+  ** \fIset\fP の場合、Mutt は新規メッセージについて、maildir フォルダの new と
+  ** cur ディスクの両方をポーリングします。これは、フォルダを操作する他のプログラム
+  ** (例えば dovecot)が新規メッセージを cur ディレクトリに移動する場合に
+  ** 便利です。このオプションを設定すると、大きなフォルダの場合には
+  ** Mutt がすべての cur メッセージをスキャンするために、新規メッセージの
+  ** ポーリングが遅くなる可能性があることに注意してください。
   */
   { "mark_macro_prefix",DT_STR, R_NONE, {.p=&MarkMacroPrefix}, {.p="'"} },
   /*
   ** .pp
-  ** Prefix for macros created using mark-message.  A new macro
-  ** automatically generated with \fI<mark-message>a\fP will be composed
-  ** from this prefix and the letter \fIa\fP.
+  ** メッセージのマークに使う時に作成されるマクロ用のプリフィックス。
+  ** \fI<mark-message>a\fP で、自動的に生成される新規マクロは
+  ** このプレフィックスと文字  \fIa\fP から構成されます。
   */
   { "mark_old",		DT_BOOL, R_BOTH, {.l=OPTMARKOLD}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether or not mutt marks \fInew\fP \fBunread\fP
-  ** messages as \fIold\fP if you exit a mailbox without reading them.
-  ** With this option \fIset\fP, the next time you start mutt, the messages
-  ** will show up with an ``O'' next to them in the index menu,
-  ** indicating that they are old.
+  ** Mutt が \fI新規で\fP \fB未読の\fP メッセージを読まないでメールボックスから出るときに
+  ** \fIold\fP を付けるかどうかを制御します。\fIset\fP の場合、次回 Mutt を起動した
+  ** 時から、インデックスメニュー中で、メッセージの隣に ``O'' を付けて表示され、
+  ** それが古いものであることを示します。 
   */
   { "markers",		DT_BOOL, R_PAGER_FLOW, {.l=OPTMARKERS}, {.l=1} },
   /*
   ** .pp
-  ** Controls the display of wrapped lines in the internal pager. If set, a
-  ** ``+'' marker is displayed at the beginning of wrapped lines.
+  ** 内部ページャで折り返される行の表示を制御します。設定した場合、
+  ** ``+'' と言うマーカーが、折り返された行の先頭に表示されます。
   ** .pp
-  ** Also see the $$smart_wrap variable.
+  **  $$smart_wrap 変数も参照してください。
   */
   { "mask",		DT_RX,	 R_NONE, {.p=&Mask}, {.p="!^\\.[^.]"} },
   /*
   ** .pp
-  ** A regular expression used in the file browser, optionally preceded by
-  ** the \fInot\fP operator ``!''.  Only files whose names match this mask
-  ** will be shown. The match is always case-sensitive.
+  ** ファイルブラウザ中で使う正規表現で、\fInot\fP 演算子 ``!'' を先頭に
+  ** 付けることも出来ます。この条件に名前が一致するファイルのみが表示されます。
+  ** 一致条件は常時大文字小文字を区別します。
   */
   { "mbox",		DT_PATH, R_BOTH, {.p=&Inbox}, {.p="~/mbox"} },
   /*
