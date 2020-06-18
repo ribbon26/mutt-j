@@ -1775,38 +1775,36 @@ struct option_t MuttVars[] = {
   { "mbox",		DT_PATH, R_BOTH, {.p=&Inbox}, {.p="~/mbox"} },
   /*
   ** .pp
-  ** This specifies the folder into which read mail in your $$spoolfile
-  ** folder will be appended.
+  ** これは、$$spoolfile フォルダ中の既読メールを追加するフォルダです。
   ** .pp
-  ** Also see the $$move variable.
+  ** $$move 変数も参照してください。
   */
   { "mbox_type",	DT_MAGIC,R_NONE, {.p=&DefaultMagic}, {.l=MUTT_MBOX} },
   /*
   ** .pp
-  ** The default mailbox type used when creating new folders. May be any of
-  ** ``mbox'', ``MMDF'', ``MH'' and ``Maildir''. This is overridden by the
-  ** \fC-m\fP command-line option.
+  ** 新規フォルダを作る際の既定のメールボックスタイプ。``mbox'', ``MMDF'', ``MH'' と
+  ** ``Maildir'' のどれかです。これは、\fC-m\fP コマンド行オプションで上書きできます。
   */
   { "menu_context",	DT_NUM,  R_NONE, {.p=&MenuContext}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the number of lines of context that are given
-  ** when scrolling through menus. (Similar to $$pager_context.)
+  ** この変数は、メニューをスクロールするときに表示されるコンテキストの行数を制御
+  ** します($$pager_context に似ています)。
   */
   { "menu_move_off",	DT_BOOL, R_NONE, {.l=OPTMENUMOVEOFF}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, the bottom entry of menus will never scroll up past
-  ** the bottom of the screen, unless there are less entries than lines.
-  ** When \fIset\fP, the bottom entry may move off the bottom.
+  ** \fIunset\fP の場合、行数よりもエントリ数が小さい場合を除き、メニュー最下部の
+  ** エントリは、画面の最下部を越えてスクロールアップしません。\fIset\fPの場合、
+  ** 最下部のエントリは最下部から動く可能性があります。
+  ** 
   */
   { "menu_scroll",	DT_BOOL, R_NONE, {.l=OPTMENUSCROLL}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, menus will be scrolled up or down one line when you
-  ** attempt to move across a screen boundary.  If \fIunset\fP, the screen
-  ** is cleared and the next or previous page of the menu is displayed
-  ** (useful for slow links to avoid many redraws).
+  ** \fIset\fP の場合、画面の境界を越えて移動しようとする場合、メニューは1行ずつ
+  ** 上下にスクロールします。\fIunset\fP の場合、画面は消去されて次又は前のメニューページ
+  ** が表示されます(大量の再描画を防ぐために、遅い回線の場合には便利です)。
   */
 #if defined(USE_IMAP) || defined(USE_POP)
   { "message_cache_clean", DT_BOOL, R_NONE, {.l=OPTMESSAGECACHECLEAN}, {.l=0} },
