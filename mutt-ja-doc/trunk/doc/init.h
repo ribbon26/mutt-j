@@ -1673,50 +1673,46 @@ struct option_t MuttVars[] = {
   { "mail_check_recent",DT_BOOL, R_NONE, {.l=OPTMAILCHECKRECENT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will only notify you about new mail that has been received
-  ** since the last time you opened the mailbox.  When \fIunset\fP, Mutt will notify you
-  ** if any new mail exists in the mailbox, regardless of whether you have visited it
-  ** recently.
+  ** \fIset\fP の場合、Mutt は、最後にメールボックスを開いたときから受け取った
+  ** 新規メールについてのみ通知します。\fIunset\fP の場合、Mutt は、最近アクセスしたか否かに
+  ** かかわらず、メールボックス中に新規メールが存在するかどうかを通知します。
   ** .pp
-  ** When \fI$$mark_old\fP is set, Mutt does not consider the mailbox to contain new
-  ** mail if only old messages exist.
+  ** fI$$mark_old\fP が設定されている場合、Mutt は、古いメッセージのみが存在している
+  ** 場合、メールボックス中に新規メールが含まれているとは見なしません。
   */
   { "mail_check_stats", DT_BOOL, R_NONE, {.l=OPTMAILCHECKSTATS}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will periodically calculate message
-  ** statistics of a mailbox while polling for new mail.  It will
-  ** check for unread, flagged, and total message counts.  Because
-  ** this operation is more performance intensive, it defaults to
-  ** \fIunset\fP, and has a separate option, $$mail_check_stats_interval, to
-  ** control how often to update these counts.
+  ** \fIset\fP の場合、Mutt は新規メールのポーリング中に、定期的にメールボックスの
+  ** メッセージ統計を計算します。未読、フラグ付き、および合計メッセージ数をチェック
+  ** します。この操作は多くの能力を集中的に使うため、既定では \fIunset\fP であり、
+  ** これらのカウントを更新する頻度を制御するための、$$mail_check_stats_interval
+  ** という別のオプションがあります。
   ** .pp
-  ** Message statistics can also be explicitly calculated by invoking the
-  ** \fC<check-stats>\fP
-  ** function.
+  ** メッセージの統計情報は \fC<check-stats>\fP 機能を起動することにより、明示的に
+  ** 計算することも出来ます。
   */
   { "mail_check_stats_interval", DT_NUM, R_NONE, {.p=&BuffyCheckStatsInterval}, {.l=60} },
   /*
   ** .pp
-  ** When $$mail_check_stats is \fIset\fP, this variable configures
-  ** how often (in seconds) mutt will update message counts.
+  ** $$mail_check_stats が \fIset\fP の場合、この変数はどのくらいの頻度(秒単位)で
+  ** メッセージ数を Mutt が更新するかを設定します。
   */
   { "mailcap_path",	DT_STR,	 R_NONE, {.p=&MailcapPath}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies which files to consult when attempting to
-  ** display MIME bodies not directly supported by Mutt.  The default value
-  ** is generated during startup: see the ``$mailcap'' section of the manual.
+  ** この変数は、Mutt で直接サポートされない MIME の本文を表示しようとする際に、
+  ** 参照するファイルを指定します。既定値は起動時に生成されます。マニュアルの
+  ** ``$mailcap'' 節を参照してください。
   */
   { "mailcap_sanitize",	DT_BOOL, R_NONE, {.l=OPTMAILCAPSANITIZE}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will restrict possible characters in mailcap % expandos
-  ** to a well-defined set of safe characters.  This is the safe setting,
-  ** but we are not sure it doesn't break some more advanced MIME stuff.
+  ** \fIset\fP の場合、Mutt は、%拡張を、明確に定義した安全な文字セットにすることで、
+  ** メールボックス中で使用できる文字を制限します。これは安全な設定ですが、
+  ** これにより高度な MIME 項目が壊れないとは断言できません。
   ** .pp
-  ** \fBDON'T CHANGE THIS SETTING UNLESS YOU ARE REALLY SURE WHAT YOU ARE
-  ** DOING!\fP
+  ** \fIこの設定は、完全に理解することなく変更してはなりません!\fP
   */
 #ifdef USE_HCACHE
   { "maildir_header_cache_verify", DT_BOOL, R_NONE, {.l=OPTHCACHEVERIFY}, {.l=1} },
