@@ -1926,54 +1926,51 @@ struct option_t MuttVars[] = {
   { "mime_type_query_first", DT_BOOL, R_NONE, {.l=OPTMIMETYPEQUERYFIRST}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the $$mime_type_query_command will be run before the
-  ** mime.types lookup.
+  ** \fIset\fP の場合、$mime_type_query_command は mime.types 検索の前に
+  ** 実行されます。
   */
 #ifdef MIXMASTER
   { "mix_entry_format", DT_STR,  R_NONE, {.p=&MixEntryFormat}, {.p="%4n %c %-16s %a"} },
   /*
   ** .pp
-  ** This variable describes the format of a remailer line on the mixmaster
-  ** chain selection screen.  The following \fCprintf(3)\fP-like sequences are
-  ** supported:
+  ** この変数は、mixmaster チェーン選択画面でのリメーラ行の書式を記述します。
+  ** 以下の、\fCprintf(3)\fP 風の書式がサポートされます。
   ** .dl
-  ** .dt %n .dd The running number on the menu.
-  ** .dt %c .dd Remailer capabilities.
-  ** .dt %s .dd The remailer's short name.
-  ** .dt %a .dd The remailer's e-mail address.
+  ** .dt %n .dd メニュー上での実行番号
+  ** .dt %c .dd リメーラのケーパビリティ
+  ** .dt %s .dd リメーラの短縮名
+  ** .dt %a .dd リメーラのメールアドレス
   ** .de
   */
   { "mixmaster",	DT_PATH, R_NONE, {.p=&Mixmaster}, {.p=MIXMASTER} },
   /*
   ** .pp
-  ** This variable contains the path to the Mixmaster binary on your
-  ** system.  It is used with various sets of parameters to gather the
-  ** list of known remailers, and to finally send a message through the
-  ** mixmaster chain.
+  ** この変数は、システム上の Mixmaster バイナリへのパスを記述します。
+  ** これは、種々のパラメータを付けた、既知のリメーラのリストを集めるためと、
+  ** 最終的には、mixmaster チェーンを使ってメッセージを送信するのに使われます。
   */
 #endif
   { "move",		DT_QUAD, R_NONE, {.l=OPT_MOVE}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** Controls whether or not Mutt will move read messages
-  ** from your spool mailbox to your $$mbox mailbox, or as a result of
-  ** a ``$mbox-hook'' command.
+  ** Mutt が既読メッセージをスプールメールボックスから、$$mbox メールボックス
+  ** か、``$mbox-hook'' コマンドの結果に移動するか否かを制御します。
   */
   { "narrow_tree",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTNARROWTREE}, {.l=0} },
   /*
   ** .pp
-  ** This variable, when \fIset\fP, makes the thread tree narrower, allowing
-  ** deeper threads to fit on the screen.
+  ** この変数は、\fIset\fPの時、深いスレッドを画面上に収まるように、スレッドツリーを
+  ** 狭くします。
   */
 #ifdef USE_SOCKET
   { "net_inc",	DT_NUM,	 R_NONE, {.p=&NetInc}, {.l=10} },
   /*
   ** .pp
-  ** Operations that expect to transfer a large amount of data over the
-  ** network will update their progress every $$net_inc kilobytes.
-  ** If set to 0, no progress messages will be displayed.
+  ** ネットワーク越しに大量のデータを転送することを予定している操作は、
+  ** 処理状況を $$net_inc キロバイト毎に更新します。0 に設定すると、
+  ** 処理状況メッセージは表示されません。
   ** .pp
-  ** See also $$read_inc, $$write_inc and $$net_inc.
+  ** $read_inc, $$write_inc と $$net_inc も参照してください。
   */
 #endif
   { "new_mail_command",	DT_PATH, R_NONE, {.p=&NewMailCmd}, {.p=0} },
