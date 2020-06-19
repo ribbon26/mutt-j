@@ -1881,21 +1881,20 @@ struct option_t MuttVars[] = {
   { "mime_forward",	DT_QUAD, R_NONE, {.l=OPT_MIMEFWD}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** When \fIset\fP, the message you are forwarding will be attached as a
-  ** separate \fCmessage/rfc822\fP MIME part instead of included in the main body of the
-  ** message.  This is useful for forwarding MIME messages so the receiver
-  ** can properly view the message as it was delivered to you. If you like
-  ** to switch between MIME and not MIME from mail to mail, set this
-  ** variable to ``ask-no'' or ``ask-yes''.
+  ** \fIset\fP の場合、転送するメッセージは、メッセージの本体中に含める代わりに、
+  ** 分離された \fCmessage/rfc822\fP MIME パートとして添付されます。これは、
+  ** MIME メッセージの転送に便利で、こうすることにより、受信者は自分に送られてきた
+  ** のと同じように正しくメッセージを閲覧できます。MIME と 非MIME をメール毎に
+  ** 切り換えたいのであれば、この変数を ``ask-no'' 又は ``ask-yes'' にします。
   ** .pp
-  ** Also see $$forward_decode and $$mime_forward_decode.
+  ** $$forward_decode と $$mime_forward_decode も参照してください。
   */
   { "mime_forward_decode", DT_BOOL, R_NONE, {.l=OPTMIMEFORWDECODE}, {.l=0} },
   /*
   ** .pp
-  ** Controls the decoding of complex MIME messages into \fCtext/plain\fP when
-  ** forwarding a message while $$mime_forward is \fIset\fP. Otherwise
-  ** $$forward_decode is used instead.
+  ** $$mime_forward が \fIset\fP の時にメッセージを転送する時、複雑な MIME メッセージを
+  ** \fCtext/plain\fP にデコードするかを制御します。それ以外は、代わりに
+  ** $$forward_decode が使われます。
   */
   { "mime_fwd",		DT_SYN,  R_NONE, {.p="mime_forward"}, {.p=0} },
   /*
@@ -1903,28 +1902,25 @@ struct option_t MuttVars[] = {
   { "mime_forward_rest", DT_QUAD, R_NONE, {.l=OPT_MIMEFWDREST}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** When forwarding multiple attachments of a MIME message from the attachment
-  ** menu, attachments which cannot be decoded in a reasonable manner will
-  ** be attached to the newly composed message if this option is \fIset\fP.
+  ** 添付メニューから、 MIME メッセージの複数の添付を転送する時、このオプションが
+  ** \fIset\fP の時、合理的な方法でデコードできない添付は新しく編集された
+  ** メッセージに添付されます。
   */
   { "mime_type_query_command", DT_STR, R_NONE, {.p=&MimeTypeQueryCmd}, {.p=0} },
   /*
   ** .pp
-  ** This specifies a command to run, to determine the mime type of a
-  ** new attachment when composing a message.  Unless
-  ** $$mime_type_query_first is set, this will only be run if the
-  ** attachment's extension is not found in the mime.types file.
+  ** これは、メッセージを編集するときに新しい添付の MIME タイプを決定するために
+  ** 動かすコマンドを指定します。$$mime_type_query_first が設定されている場合を除き、
+  ** これは mime.types ファイル中に添付の拡張子が見つからない場合にのみ実行されます。
   ** .pp
-  ** The string may contain a ``%s'', which will be substituted with the
-  ** attachment filename.  Mutt will add quotes around the string substituted
-  ** for ``%s'' automatically according to shell quoting rules, so you should
-  ** avoid adding your own.  If no ``%s'' is found in the string, Mutt will
-  ** append the attachment filename to the end of the string.
+  ** 文字列には ``%s'' を含むことが出来、これは、添付ファイル名に置換されます。
+  ** Mutt はシェルの引用ルールに沿って、自動的に ``%s'' を置き換えた文字列の回りに
+  ** 引用符を追加するので、個別に囲むことは必要ありません。文字列中に ``%s'' が
+  ** ない場合は、Mutt は文字列の最後に添付ファイル名を追加します。
   ** .pp
-  ** The command should output a single line containing the
-  ** attachment's mime type.
+  ** コマンドは添付の MIME タイプを含む単一行を出力しなければなりません。
   ** .pp
-  ** Suggested values are ``xdg-mime query filetype'' or
+  ** 推奨される値は、 ``xdg-mime query filetype'' または ``file -bi'' です。
   ** ``file -bi''.
   */
   { "mime_type_query_first", DT_BOOL, R_NONE, {.l=OPTMIMETYPEQUERYFIRST}, {.l=0} },
