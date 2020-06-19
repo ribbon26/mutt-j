@@ -1976,45 +1976,40 @@ struct option_t MuttVars[] = {
   { "new_mail_command",	DT_PATH, R_NONE, {.p=&NewMailCmd}, {.p=0} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will call this command after a new message is received.
-  ** See the $$status_format documentation for the values that can be formatted
-  ** into this command.
+  ** \fIset\fP の場合、Mutt は新規メッセージを受信後にこのコマンドを呼び出します。
+  ** このコマンド中にフォーマットできうる値については、$$status_formatの説明を
+  ** 参照してください。
   */
   { "pager",		DT_PATH, R_NONE, {.p=&Pager}, {.p="builtin"} },
   /*
   ** .pp
-  ** This variable specifies which pager you would like to use to view
-  ** messages. The value ``builtin'' means to use the built-in pager, otherwise this
-  ** variable should specify the pathname of the external pager you would
-  ** like to use.
+  ** この変数は、メッセージを表示するのに使うページャを指定します。``builtin''
+  ** と言う値は、内蔵ページャを使う事を意味し、それ以外は、使用したい外部ページャの
+  ** パスを指定します。
   ** .pp
-  ** Using an external pager may have some disadvantages: Additional
-  ** keystrokes are necessary because you can't call mutt functions
-  ** directly from the pager, and screen resizes cause lines longer than
-  ** the screen width to be badly formatted in the help menu.
+  ** 外部ページャを使う場合には若干弱点があります。ページャから直接 Mutt の
+  ** 機能を呼び出せないために、追加のキー操作が必要で、さらに、画面のリサイズを
+  ** すると、ヘルプメニュー中で、画面の幅より長い行は不正にレイアウトされてしまいます。
   ** .pp
-  ** When using an external pager, also see $$prompt_after which defaults
-  ** \fIset\fP.
+  ** 外部ページャを使う場合は、既定で \fIset\fP になっている $$prompt_after も
+  ** 参照してください。
   */
   { "pager_context",	DT_NUM,	 R_NONE, {.p=&PagerContext}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the number of lines of context that are given
-  ** when displaying the next or previous page in the internal pager.  By
-  ** default, Mutt will display the line after the last one on the screen
-  ** at the top of the next page (0 lines of context).
+  ** この変数は、内部ページャで、次または前のページを表示するときに、コンテキストと
+  ** して残す行数を制御します。既定では、Mutt は画面上の最後の行の次の行を
+  ** 次のページの最上位に表示します(コンテキストが 0行)。
   ** .pp
-  ** This variable also specifies the amount of context given for search
-  ** results. If positive, this many lines will be given before a match,
-  ** if 0, the match will be top-aligned.
+  ** この変数は検索の結果のコンテキスト量も指定します。値が正ならば、一致する前の
+  ** 行数が表示され、0 の場合は、一致は上揃えとなります。
   */
   { "pager_format",	DT_STR,	 R_PAGER, {.p=&PagerFmt}, {.p="-%Z- %C/%m: %-20.20n   %s%*  -- (%P)"} },
   /*
   ** .pp
-  ** This variable controls the format of the one-line message ``status''
-  ** displayed before each message in either the internal or an external
-  ** pager.  The valid sequences are listed in the $$index_format
-  ** section.
+  ** この変数は、内部又は外部ページャ中の各メッセージの前に表示される、
+  ** 1行の ``status'' メッセージの書式を制御します。正しい書式は $$index_format
+  ** 節に記してあります。
   */
   { "pager_index_lines",DT_NUM,	 R_PAGER, {.p=&PagerIndexLines}, {.l=0} },
   /*
