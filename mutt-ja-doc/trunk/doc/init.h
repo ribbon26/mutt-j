@@ -2014,55 +2014,50 @@ struct option_t MuttVars[] = {
   { "pager_index_lines",DT_NUM,	 R_PAGER, {.p=&PagerIndexLines}, {.l=0} },
   /*
   ** .pp
-  ** Determines the number of lines of a mini-index which is shown when in
-  ** the pager.  The current message, unless near the top or bottom of the
-  ** folder, will be roughly one third of the way down this mini-index,
-  ** giving the reader the context of a few messages before and after the
-  ** message.  This is useful, for example, to determine how many messages
-  ** remain to be read in the current thread.  One of the lines is reserved
-  ** for the status bar from the index, so a setting of 6
-  ** will only show 5 lines of the actual index.  A value of 0 results in
-  ** no index being shown.  If the number of messages in the current folder
-  ** is less than $$pager_index_lines, then the index will only use as
-  ** many lines as it needs.
+  ** ページャ中に表示されるミニインデックスの行数を指定します。フォルダの
+  ** 上端や下端にいる場合を除き、現在のメッセージは好みにインデックス画面の中で、
+  ** おおよそ1/3の位置にあり、メッセージの前後に数行がコンテキストとして、
+  ** メッセージを読むときに表示されます。これは、たとえば、現在のスレッドに
+  ** どのくらい未読が残っているかを判断するのに便利です。行のうち1行は、
+  ** インデックスのステータスバーとして予約されているので、6 に設定すると、
+  ** 実際のインデックスでは 5 行のみが表示されます。現在のフォルダ中のメッセージ数が
+  ** $$pager_index_lines より少ない場合は、インデックスは必要な数の行だけを
+  ** 使用します。
   */
   { "pager_stop",	DT_BOOL, R_NONE, {.l=OPTPAGERSTOP}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the internal-pager will \fBnot\fP move to the next message
-  ** when you are at the end of a message and invoke the \fC<next-page>\fP
-  ** function.
+  ** \fIset\fP の場合、内部ページャは、メッセージの最後にいて、\fC<next-page>\fP 
+  ** 機能を呼び出しても、次のメッセージに移動\fBしません\fP。
   */
   { "pgp_auto_decode", DT_BOOL, R_NONE, {.l=OPTPGPAUTODEC}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will automatically attempt to decrypt traditional PGP
-  ** messages whenever the user performs an operation which ordinarily would
-  ** result in the contents of the message being operated on.  For example,
-  ** if the user displays a pgp-traditional message which has not been manually
-  ** checked with the \fC$<check-traditional-pgp>\fP function, mutt will automatically
-  ** check the message for traditional pgp.
+  ** \fIset\fP の場合、Mutt は、ユーザがメッセージの内容を操作するような通常の操作を
+  ** 実行しようとすると、従来の PGP メッセージを自動的に復号化しようとします。たとえば、
+  ** \fC$<check-traditional-pgp>\fP 機能を使って手動でチェックされていない
+  ** 従来の PGP メッセージを表示した場合、Mutt は自動的に、メッセージが従来の PGP かを
+  ** チェックします。
   */
   { "pgp_create_traditional",	DT_SYN, R_NONE, {.p="pgp_autoinline"}, {.p=0} },
   { "pgp_autoinline",		DT_BOOL, R_NONE, {.l=OPTPGPAUTOINLINE}, {.l=0} },
   /*
   ** .pp
-  ** This option controls whether Mutt generates old-style inline
-  ** (traditional) PGP encrypted or signed messages under certain
-  ** circumstances.  This can be overridden by use of the pgp menu,
-  ** when inline is not required.  The GPGME backend does not support
-  ** this option.
+  ** このオプションは、特定の環境で、古いスタイルのインライン(旧来の)PGP 暗号化または
+  ** 署名されたメッセージを生成するかどうかを制御します。これは インラインが不要の場合、
+  ** PGP メニューを使う事で上書きできます。GPGME バックエンドはこのオプションを
+  ** サポートしません。
   ** .pp
-  ** Note that Mutt might automatically use PGP/MIME for messages
-  ** which consist of more than a single MIME part.  Mutt can be
-  ** configured to ask before sending PGP/MIME messages when inline
-  ** (traditional) would not work.
+  ** Mutt は、MIME パートが1つより多く存在している場合、メッセージに対して、
+  ** 自動的に PGP/MIME を使用する場合があることに注意してください。Mutt は
+  ** インライン(従来型) が動作しない場合に、PGP/MIME メッセージを送信する前に
+  ** 問合せをするように設定できます。
   ** .pp
-  ** Also see the $$pgp_mime_auto variable.
+  ** $$pgp_mime_auto 変数も参照してください。
   ** .pp
-  ** Also note that using the old-style PGP message format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
-  ** (PGP only)
+  ** また、古い形式の PGP メッセージ形式を使う事は\fB強く\fP \fB非推奨に\fP
+  ** なっていることにも注意してください。
+  ** (PGP のみです)
   */
   { "pgp_check_exit",	DT_BOOL, R_NONE, {.l=OPTPGPCHECKEXIT}, {.l=1} },
   /*
