@@ -2062,59 +2062,58 @@ struct option_t MuttVars[] = {
   { "pgp_check_exit",	DT_BOOL, R_NONE, {.l=OPTPGPCHECKEXIT}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will check the exit code of the PGP subprocess when
-  ** signing or encrypting.  A non-zero exit code means that the
-  ** subprocess failed.
-  ** (PGP only)
+  ** \fIset\fP の場合、Mutt は署名又は暗号化時に PGP サブプロセスの終了コードを
+  ** チェックします。ゼロでない終了コードはサブプロセスが異常終了したことを
+  ** 意味します。
+  ** (PGP のみです)
   */
   { "pgp_check_gpg_decrypt_status_fd", DT_BOOL, R_NONE, {.l=OPTPGPCHECKGPGDECRYPTSTATUSFD}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will check the status file descriptor output
-  ** of $$pgp_decrypt_command and $$pgp_decode_command for GnuPG status codes
-  ** indicating successful decryption.  This will check for the presence of
-  ** DECRYPTION_OKAY, absence of DECRYPTION_FAILED, and that all
-  ** PLAINTEXT occurs between the BEGIN_DECRYPTION and END_DECRYPTION
-  ** status codes.
+  ** \fIset\fPの場合、Mutt は GnuPG ステータスコードが復号が成功したことを表示する
+  **  $$pgp_decrypt_command と $$pgp_decode_command コマンドののステータスファイル記述子
+  ** 出力をチェックします。これは DECRYPTION_OKAY の存在、DECRYPTION_FAILED の不在および
+  ** BEGIN_DECRYPTION と END_DECRYPTION ステータスコードの間にすべての
+  ** PLAINTEXT が存在することをチェックします。
   ** .pp
-  ** If \fIunset\fP, mutt will instead match the status fd output
-  ** against $$pgp_decryption_okay.
-  ** (PGP only)
+  ** \fIunset\fP の場合、Mutt は $$pgp_decryption_okay と fd 出力のステータスを
+  ** 代わりに照合します。
+  ** (PGP のみです)
   */
   { "pgp_clearsign_command",	DT_STR,	R_NONE, {.p=&PgpClearSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This format is used to create an old-style ``clearsigned'' PGP
-  ** message.  Note that the use of this format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
+  ** このフォーマットは、旧形式の ``clearsigned'' な PGP メッセージを作成するのに
+  ** 使います。このフォーマットの使用は \fB強く\fP \fB非推奨\fP であることに
+  ** 注意してください。
+  ** 
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
+  ** これはフォーマット文字列です。使える\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
   ** (PGP only)
   */
   { "pgp_decode_command",       DT_STR, R_NONE, {.p=&PgpDecodeCommand}, {.p=0} },
   /*
   ** .pp
-  ** This format strings specifies a command which is used to decode
-  ** application/pgp attachments.
+  ** このフォーマット文字列は、application/pgp 添付を復号するために使われる
+  ** コマンドを指定します。
   ** .pp
-  ** The PGP command formats have their own set of \fCprintf(3)\fP-like sequences:
+  ** PGP コマンドフォーマットは \fCprintf(3)\fP 風の固有の書式があります。
   ** .dl
-  ** .dt %p .dd Expands to PGPPASSFD=0 when a pass phrase is needed, to an empty
-  **            string otherwise. Note: This may be used with a %? construct.
-  ** .dt %f .dd Expands to the name of a file containing a message.
-  ** .dt %s .dd Expands to the name of a file containing the signature part
-  ** .          of a \fCmultipart/signed\fP attachment when verifying it.
-  ** .dt %a .dd The value of $$pgp_sign_as if set, otherwise the value
-  **            of $$pgp_default_key.
-  ** .dt %r .dd One or more key IDs (or fingerprints if available).
+  ** .dt %p .dd パスフェーズが必要な場合に 任意の空白文字列などをPGPPASSFD=0 に
+  **            展開します。注意: これは %? も使うことができます。
+  ** .dt %f .dd メッセージを含むファイルの名前を展開します。
+  ** .dt %s .dd 検証するときに \fCmultipart/signed\fP 添付の署名パートを含む
+  **            ファイル名を展開します。
+  ** .dt %a .dd 設定されている場合、$$pgp_sign_as の値で、そのほかは、
+  **            $$pgp_default_key の値。
+  ** .dt %r .dd 1つ以上の キー ID (あるいはもしもあればフィンガープリント)
   ** .de
   ** .pp
-  ** For examples on how to configure these formats for the various versions
-  ** of PGP which are floating around, see the pgp and gpg sample configuration files in
-  ** the \fCsamples/\fP subdirectory which has been installed on your system
-  ** alongside the documentation.
-  ** (PGP only)
+  ** PGP の種々のバージョンに対してこれらのフォーマットをどのように設定するかの例は
+  ** ドキュメントといっしょにシステムにインストールされている the \fCsamples/\fP
+  ** サブディレクトリ にある、pgp と gpg 設定ファイルの例を参照してください。
+  ** (PGP のみです)
   */
   { "pgp_decrypt_command", 	DT_STR, R_NONE, {.p=&PgpDecryptCommand}, {.p=0} },
   /*
