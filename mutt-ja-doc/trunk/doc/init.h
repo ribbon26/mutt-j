@@ -2156,40 +2156,40 @@ struct option_t MuttVars[] = {
   { "pgp_encrypt_only_command", DT_STR, R_NONE, {.p=&PgpEncryptOnlyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to encrypt a body part without signing it.
+  ** このコマンドは、署名なしで本文を暗号化するために使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_encrypt_sign_command",	DT_STR, R_NONE, {.p=&PgpEncryptSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to both sign and encrypt a body part.
+  ** このコマンドは、本文の署名と暗号化両方に使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_entry_format", DT_STR,  R_NONE, {.p=&PgpEntryFormat}, {.p="%4n %t%f %4l/0x%k %-4a %2c %u"} },
   /*
   ** .pp
-  ** This variable allows you to customize the PGP key selection menu to
-  ** your personal taste. This string is similar to $$index_format, but
-  ** has its own set of \fCprintf(3)\fP-like sequences:
+  ** この変数は、好みに応じて PGP キー選択メニューをカスタマイズ出来るようにします。
+  ** この文字列は$$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
+  ** 持っています。
   ** .dl
-  ** .dt %n     .dd number
-  ** .dt %k     .dd key id
+  ** .dt %n     .dd 番号
+  ** .dt %k     .dd キー id
   ** .dt %u     .dd user id
-  ** .dt %a     .dd algorithm
-  ** .dt %l     .dd key length
-  ** .dt %f     .dd flags
-  ** .dt %c     .dd capabilities
-  ** .dt %t     .dd trust/validity of the key-uid association
-  ** .dt %[<s>] .dd date of the key where <s> is an \fCstrftime(3)\fP expression
+  ** .dt %a     .dd アルゴリズム
+  ** .dt %l     .dd キー長
+  ** .dt %f     .dd フラグ
+  ** .dt %c     .dd ケーパビリティ
+  ** .dt %t     .dd key-uid アソシエーションの 信頼性/有効性
+  ** .dt %[<s>] .dd \fCstrftime(3)\fP 形式のキーの日付
   ** .de
   ** .pp
-  ** (PGP only)
+  ** (PGP のみです)
   */
   { "pgp_export_command", 	DT_STR, R_NONE, {.p=&PgpExportCommand}, {.p=0} },
   /*
