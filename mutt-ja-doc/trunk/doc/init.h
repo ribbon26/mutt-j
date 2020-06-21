@@ -2118,38 +2118,40 @@ struct option_t MuttVars[] = {
   { "pgp_decrypt_command", 	DT_STR, R_NONE, {.p=&PgpDecryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to decrypt a PGP encrypted message.
+  ** このコマンドは PGP で暗号化されたメッセージの復号に使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用できる \fCprintf(3)\fP 風の書式は
+  ** $$pgp_decode_command を参照してください。
+  ** (PGP のみです)
   */
   { "pgp_decryption_okay",	DT_RX,  R_NONE, {.p=&PgpDecryptionOkay}, {.p=0} },
   /*
   ** .pp
-  ** If you assign text to this variable, then an encrypted PGP
-  ** message is only considered successfully decrypted if the output
-  ** from $$pgp_decrypt_command contains the text.  This is used to
-  ** protect against a spoofed encrypted message, with multipart/encrypted
-  ** headers but containing a block that is not actually encrypted.
-  ** (e.g. simply signed and ascii armored text).
+  ** この変数にテキストを割り当てた場合、暗号化された PGP メッセージは、
+  ** $$pgp_decrypt_command からの出力がテキストを含んでいるときのみ、
+  ** 復号が成功したとします。これは、multipart/encrypted ヘッダがあるが、
+  ** ブロックが完全には暗号化されていないブロックを含む場合、暗号化された
+  ** メッセージの盗聴を防ぐのに便利です(すなわち、単純に署名されて、ASCII で
+  ** 防御されたテキスト)。
   ** .pp
-  ** Note that if $$pgp_check_gpg_decrypt_status_fd is set, this variable
-  ** is ignored.
-  ** (PGP only)
+  ** $$pgp_check_gpg_decrypt_status_fd が設定されている場合、この変数は
+  ** 無視されることに注意してください。
+  ** (PGP のみです)
   */
   { "pgp_self_encrypt_as",	DT_SYN,  R_NONE, {.p="pgp_default_key"}, {.p=0} },
   { "pgp_default_key",		DT_STR,	 R_NONE, {.p=&PgpDefaultKey}, {.p=0} },
   /*
   ** .pp
-  ** This is the default key-pair to use for PGP operations.  It will be
-  ** used for encryption (see $$postpone_encrypt and $$pgp_self_encrypt).
+  ** これは PGP 操作に使う、既定のキーペアです。これは暗号化の時に使います
+  ** ($$postpone_encrypt と $$pgp_self_encrypt を参照してください)。
   ** .pp
-  ** It will also be used for signing unless $$pgp_sign_as is set.
+  ** $$pgp_sign_as が設定されていない限り、署名にも使われます。
   ** .pp
   ** The (now deprecated) \fIpgp_self_encrypt_as\fP is an alias for this
   ** variable, and should no longer be used.
-  ** (PGP only)
+  ** (現在は非推奨の) fIpgp_self_encrypt_as\fP はこの変数の別名ですが、
+  ** もはや使われていません。
+  ** (PGP のみです)
   */
   { "pgp_encrypt_only_command", DT_STR, R_NONE, {.p=&PgpEncryptOnlyCommand}, {.p=0} },
   /*
