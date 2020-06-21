@@ -2194,22 +2194,21 @@ struct option_t MuttVars[] = {
   { "pgp_export_command", 	DT_STR, R_NONE, {.p=&PgpExportCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to export a public key from the user's
-  ** key ring.
+  ** このコマンドは、ユーザのキーリングから公開鍵をエクスポートするのに使われます。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_getkeys_command",	DT_STR, R_NONE, {.p=&PgpGetkeysCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is invoked whenever Mutt needs to fetch the public key associated with
-  ** an email address.  Of the sequences supported by $$pgp_decode_command, %r is
-  ** the only \fCprintf(3)\fP-like sequence used with this format.  Note that
-  ** in this case, %r expands to the email address, not the public key ID (the key ID is
-  ** unknown, which is why Mutt is invoking this command).
-  ** (PGP only)
+  ** このコマンドは、Mutt が、メールアドレスに関連づけられた公開鍵をフェッチする
+  ** 必要がある場合はいつでも起動されます。$$pgp_decode_command によってサポート
+  ** される書式のうち、%r は、このフォーマットだけで使われる書式です。
+  ** この場合、%r は メールアドレスに展開されますが、公開鍵のID ではないことに注意して
+  ** ください(キーID は不明なので、このことが、Mutt がこのコマンドを起動する理由です)。
+  ** (PGP のみです)
   */
   { "pgp_good_sign",	DT_RX,  R_NONE, {.p=&PgpGoodSign}, {.p=0} },
   /*
