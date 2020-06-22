@@ -2302,51 +2302,49 @@ struct option_t MuttVars[] = {
   { "pgp_replyinline",		DT_BOOL, R_NONE, {.l=OPTPGPREPLYINLINE}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable will cause Mutt to always attempt to
-  ** create an inline (traditional) message when replying to a
-  ** message which is PGP encrypted/signed inline.  This can be
-  ** overridden by use of the pgp menu, when inline is not
-  ** required.  This option does not automatically detect if the
-  ** (replied-to) message is inline; instead it relies on Mutt
-  ** internals for previously checked/flagged messages.
+  ** この変数を設定すると、Mutt は、インラインでPGPで暗号化/署名されたメッセージに
+  ** 返信するときに、インライン(従来型の)メッセージを作成しようとします。
+  ** これは、インラインが不要だった場合、PGPメニューを使うことによって
+  ** 上書きできます。このオプションは(返信された)メッセージがインラインかを
+  ** 自動的には検出しません。そのかわり、以前にチェック/フラグを付けたメッセージの
+  ** Mutt 内部状態に依存します。
   ** .pp
-  ** Note that Mutt might automatically use PGP/MIME for messages
-  ** which consist of more than a single MIME part.  Mutt can be
-  ** configured to ask before sending PGP/MIME messages when inline
-  ** (traditional) would not work.
+  ** Mutt は MIME パートが複数存在する場合、メッセージに対して 自動的に PGP/MIME
+  ** を使う事があることに注意してください。Mutt は、インライン(従来型)が動かない
+  ** 場合に、PGP/MIMEメッセージを送信する前に問合せをするように設定できます。
   ** .pp
-  ** Also see the $$pgp_mime_auto variable.
+  ** $$pgp_mime_auto 変数も参照してください。
   ** .pp
-  ** Also note that using the old-style PGP message format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
-  ** (PGP only)
+  ** 古い形式の PGP メッセージ形式の使用は \fB強く\fP \fB非推奨\fP であることにも
+  ** 注意してください。
+  ** (PGP のみです)
   **
   */
   { "pgp_retainable_sigs", DT_BOOL, R_NONE, {.l=OPTPGPRETAINABLESIG}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, signed and encrypted messages will consist of nested
-  ** \fCmultipart/signed\fP and \fCmultipart/encrypted\fP body parts.
+  ** \fIset\fP の場合、署名かつ暗号化されたメッセージは、ネストされた
+  ** \fCmultipart/signed\fP と \fCmultipart/encrypted\fP 本体部分で構成されます。
   ** .pp
-  ** This is useful for applications like encrypted and signed mailing
-  ** lists, where the outer layer (\fCmultipart/encrypted\fP) can be easily
-  ** removed, while the inner \fCmultipart/signed\fP part is retained.
-  ** (PGP only)
+  ** これは外部レイヤ(\fCmultipart/encrypted\fP)が簡単に削除でき、内部の
+  ** \fCmultipart/signed\fP パートが残るので、暗号化され署名された
+  ** メーリングリストのようなアプリケーションには便利です。
+  ** (PGP のみです)
   */
   { "pgp_self_encrypt",    DT_BOOL, R_NONE, {.l=OPTPGPSELFENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, PGP encrypted messages will also be encrypted
-  ** using the key in $$pgp_default_key.
-  ** (PGP only)
+  ** \fIset\fP の場合、PGP 暗号化メッセージは $$pgp_default_key 中のキーを
+  ** 使う事で暗号化も行います。
+  ** (PGP のみです)
   */
   { "pgp_show_unusable", DT_BOOL, R_NONE, {.l=OPTPGPSHOWUNUSABLE}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will display non-usable keys on the PGP key selection
-  ** menu.  This includes keys which have been revoked, have expired, or
-  ** have been marked as ``disabled'' by the user.
-  ** (PGP only)
+  ** \fIset\fP の場合、Mutt は PGP キー選択メニュー上で使えないキーを表示します。
+  ** これは、取り消されたもの、満了したもの、あるいは、ユーザによって、``disabled'' と
+  ** マークを付けられたものを含みます。
+  ** (PGP のみです)
   */
   { "pgp_sign_as",	DT_STR,	 R_NONE, {.p=&PgpSignAs}, {.p=0} },
   /*
