@@ -2488,58 +2488,55 @@ struct option_t MuttVars[] = {
   { "pop_delete",	DT_QUAD, R_NONE, {.l=OPT_POPDELETE}, {.l=MUTT_ASKNO} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will delete successfully downloaded messages from the POP
-  ** server when using the \fC$<fetch-mail>\fP function.  When \fIunset\fP, Mutt will
-  ** download messages but also leave them on the POP server.
+  ** \fIset\fP の場合、Mutt は \fC$<fetch-mail>\fP 機能を使って POP サーバからダウンロード
+  ** 成功したメッセージを削除します。\fIunset\fP の場合は、Mutt はメッセージを
+  ** ダウンロードしますが、POP サーバ上に残したままにします。
   */
   { "pop_host",		DT_STR,	 R_NONE, {.p=&PopHost}, {.p=0} },
   /*
   ** .pp
-  ** The name of your POP server for the \fC$<fetch-mail>\fP function.  You
-  ** can also specify an alternative port, username and password, i.e.:
+  ** \fC$<fetch-mail>\fP 機能で使う POP サーバの名前です。以下のように
+  ** 代替ポート、ユーザ名、パスワードも指定することができます。
   ** .ts
   ** [pop[s]://][username[:password]@]popserver[:port]
   ** .te
   ** .pp
-  ** where ``[...]'' denotes an optional part.
+  ** ここで、 ``[...]'' はオプションの部分を意味します。
   */
   { "pop_last",		DT_BOOL, R_NONE, {.l=OPTPOPLAST}, {.l=0} },
   /*
   ** .pp
-  ** If this variable is \fIset\fP, mutt will try to use the ``\fCLAST\fP'' POP command
-  ** for retrieving only unread messages from the POP server when using
-  ** the \fC$<fetch-mail>\fP function.
+  ** この変数が\fIset\fP の場合、Mutt は、\fC$<fetch-mail>\fP 機能を使う時に、
+  ** POP サーバから未読メッセージのみを検索するために、``\fCLAST\fP'' POP コマンドを
+  ** 使おうとします。
   */
   { "pop_oauth_refresh_command", DT_STR, R_NONE, {.p=&PopOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** The command to run to generate an OAUTH refresh token for
-  ** authorizing your connection to your POP server.  This command will be
-  ** run on every connection attempt that uses the OAUTHBEARER authentication
-  ** mechanism.  See ``$oauth'' for details.
+  ** このコマンドは、POPサーバへの接続時の認証のために OAUTH リフレッシュトークンを
+  ** 生成するコマンドです。このコマンドは、OAUTHBEARER 認証メカニズムを使う
+  ** 接続時毎に実行されます。詳細は``$oauth'' を参照してください。
   */
   { "pop_pass",		DT_STR,	 R_NONE, {.p=&PopPass}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the password for your POP account.  If \fIunset\fP, Mutt will
-  ** prompt you for your password when you open a POP mailbox.
+  ** POP アカウントのパスワードを指定します。\fIunset\fP の場合、 POP メールボックスを
+  ** 開くときにパスワードの入力を求めます。
   ** .pp
-  ** \fBWarning\fP: you should only use this option when you are on a
-  ** fairly secure machine, because the superuser can read your muttrc
-  ** even if you are the only one who can read the file.
+  ** \fB警告\fP: このオプションは、自分自身しか読めないファイルであっても、スーパーユーザが
+  ** 読むことが出来るため、確実に安全なマシンでのみ使うべきです。
   */
   { "pop_reconnect",	DT_QUAD, R_NONE, {.l=OPT_POPRECONNECT}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not Mutt will try to reconnect to the POP server if
-  ** the connection is lost.
+  ** POP サーバとの接続が切れたときに、Mutt が再接続を試みるかどうかを制御します。
   */
   { "pop_user",		DT_STR,	 R_NONE, {.p=&PopUser}, {.p=0} },
   /*
   ** .pp
-  ** Your login name on the POP server.
+  ** POP サーバへのログイン名です。
   ** .pp
-  ** This variable defaults to your user name on the local machine.
+  ** 既定ではローカルマシンでのユーザ名になります。
   */
 #endif /* USE_POP */
   { "post_indent_string",DT_STR, R_NONE, {.p=&PostIndentString}, {.p=0} },
