@@ -2392,56 +2392,53 @@ struct option_t MuttVars[] = {
   { "pgp_timeout",	DT_LNUM,	 R_NONE, {.p=&PgpTimeout}, {.l=300} },
   /*
   ** .pp
-  ** The number of seconds after which a cached passphrase will expire if
-  ** not used.
-  ** (PGP only)
+  ** 使用していない場合の、キャッシュされたパスフレーズが満了するまでの、
+  ** 秒数です。
+  ** (PGP のみです)
   */
   { "pgp_use_gpg_agent", DT_BOOL, R_NONE, {.l=OPTUSEGPGAGENT}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt expects a \fCgpg-agent(1)\fP process will handle
-  ** private key passphrase prompts.  If \fIunset\fP, mutt will prompt
-  ** for the passphrase and pass it via stdin to the pgp command.
+  ** \fIset\fP の場合、Mutt は、秘密鍵パスフレーズプロンプトを扱うために、
+  ** \fCgpg-agent(1)\fP プロセスを想定します。\fIunset\fP の場合、Mutt は
+  ** パスフレーズ用のプロンプトを表示し、pgp コマンドに標準入力経由で渡します。
   ** .pp
-  ** Note that as of version 2.1, GnuPG automatically spawns an agent
-  ** and requires the agent be used for passphrase management.  Since
-  ** that version is increasingly prevalent, this variable now
-  ** defaults \fIset\fP.
+  ** バージョン 2.1 以降、GnuPG は自動的にエージェントを起動し、パスフレーズ管理に
+  ** エージェントを使う事を要求することに注意してください。このバージョンがどんどん
+  ** 流行しているので、この変数の既定値は現在 \fIset\fP となっています。
   ** .pp
-  ** Mutt works with a GUI or curses pinentry program.  A TTY pinentry
-  ** should not be used.
+  ** Mutt は GUI または curses な pinentry プログラムとして動作します。
+  ** TTY 形式の pinentry は使ってはなりません。
   ** .pp
-  ** If you are using an older version of GnuPG without an agent running,
-  ** or another encryption program without an agent, you will need to
-  ** \fIunset\fP this variable.
-  ** (PGP only)
+  ** エージェントを動かせない古いバージョンの GnuPG を使っているか、
+  ** エージェントがない他の暗号化プログラムを使っている場合は、この変数を
+  ** \fIunset\fP にする必要があります。
+  ** (PGP のみです)
   */
   { "pgp_verify_command", 	DT_STR, R_NONE, {.p=&PgpVerifyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify PGP signatures.
+  ** このコマンドは PGP 署名を検証するのに使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_verify_key_command",	DT_STR, R_NONE, {.p=&PgpVerifyKeyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify key information from the key selection
-  ** menu.
+  ** このコマンドは、キー選択メニューからキー情報を検証するのに使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pipe_decode",	DT_BOOL, R_NONE, {.l=OPTPIPEDECODE}, {.l=0} },
   /*
   ** .pp
-  ** Used in connection with the \fC<pipe-message>\fP command.  When \fIunset\fP,
-  ** Mutt will pipe the messages without any preprocessing. When \fIset\fP, Mutt
-  ** will weed headers and will attempt to decode the messages
-  ** first.
+  ** \fC<pipe-message>\fP コマンドに関連して使われます。\fIunset\fP の場合、
+  ** Mutt は何らの前処理もせずにメッセージをパイプします。\fIset\fP の場合、
+  ** Mutt はヘッダを間引き、最初にメッセージをデコードしようとします。
   */
   { "pipe_sep",		DT_STR,	 R_NONE, {.p=&PipeSep}, {.p="\n"} },
   /*
