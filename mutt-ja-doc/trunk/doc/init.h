@@ -2443,40 +2443,38 @@ struct option_t MuttVars[] = {
   { "pipe_sep",		DT_STR,	 R_NONE, {.p=&PipeSep}, {.p="\n"} },
   /*
   ** .pp
-  ** The separator to add between messages when piping a list of tagged
-  ** messages to an external Unix command.
+  ** 外部 Unix コマンドにタグが付いたメッセージの一覧をパイプするときにメッセージ間に
+  ** 付与されるセパレータです。
   */
   { "pipe_split",	DT_BOOL, R_NONE, {.l=OPTPIPESPLIT}, {.l=0} },
   /*
   ** .pp
-  ** Used in connection with the \fC<pipe-message>\fP function following
-  ** \fC<tag-prefix>\fP.  If this variable is \fIunset\fP, when piping a list of
-  ** tagged messages Mutt will concatenate the messages and will pipe them
-  ** all concatenated.  When \fIset\fP, Mutt will pipe the messages one by one.
-  ** In both cases the messages are piped in the current sorted order,
-  ** and the $$pipe_sep separator is added after each message.
+  ** \fC<tag-prefix>\fPがある\fC<pipe-message>\fP 機能に関連して使われます。
+  ** この変数が\fIunset\fP の時、タグが付いたメッセージの一覧をパイプするとき、
+  ** Mutt はメッセージを結合し、すべて結合した形でパイプします。\fIset\fP の場合、
+  ** Mutt はメッセージを1つずつパイプします。両方とも、メッセージは現在整列されている
+  ** 順でパイプされ、各メッセージの後に $$pipe_sep separator が付与されます。
   */
 #ifdef USE_POP
   { "pop_auth_try_all",	DT_BOOL, R_NONE, {.l=OPTPOPAUTHTRYALL}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will try all available authentication methods.
-  ** When \fIunset\fP, Mutt will only fall back to other authentication
-  ** methods if the previous methods are unavailable. If a method is
-  ** available but authentication fails, Mutt will not connect to the POP server.
+  ** \fIset\fP の場合、Mutt はすべての有効な認証方法を試します。
+  ** \fIunset\fP の場合、Mutt は、以前の手法が無効だった場合にのみ、他の認証方法
+  ** にフォールバックします。手法が有効だが認証に失敗した場合、Mutt は POP
+  ** サーバに接続しません。
   */
   { "pop_authenticators", DT_STR, R_NONE, {.p=&PopAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** This is a colon-delimited list of authentication methods mutt may
-  ** attempt to use to log in to an POP server, in the order mutt should
-  ** try them.  Authentication methods are either ``user'', ``apop'' or any
-  ** SASL mechanism, e.g. ``digest-md5'', ``gssapi'' or ``cram-md5''.
-  ** This option is case-insensitive. If this option is \fIunset\fP
-  ** (the default) mutt will try all available methods, in order from
-  ** most-secure to least-secure.
+  ** これは、Mutt がPOPサーバにログインする時に使う、コロンで分離された認証方法の
+  ** 一覧です。この順で Mutt は接続を試みます。認証方法は、
+  ** ``user'', ``apop'' か他の SASL メカニズムで、例えば ``digest-md5'', ``gssapi''や
+  ** ``cram-md5'' です。このオプションは大文字小文字を区別しません。
+  ** このオプションが \fIunset\fP の場合(既定値)、Mutt はすべての有効な方法を
+  ** もっともセキュアなものからそうでないものの順で試みます。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set pop_authenticators="digest-md5:apop:user"
   ** .te
@@ -2484,8 +2482,8 @@ struct option_t MuttVars[] = {
   { "pop_checkinterval", DT_NUM, R_NONE, {.p=&PopCheckTimeout}, {.l=60} },
   /*
   ** .pp
-  ** This variable configures how often (in seconds) mutt should look for
-  ** new mail in the currently selected mailbox if it is a POP mailbox.
+  ** この変数は、現在選択されているメールボックスが POP メールボックスだった場合、
+  ** Mutt が新規メールを検索する感覚を(秒単位で)設定します。
   */
   { "pop_delete",	DT_QUAD, R_NONE, {.l=OPT_POPDELETE}, {.l=MUTT_ASKNO} },
   /*
