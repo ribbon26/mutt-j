@@ -2349,46 +2349,45 @@ struct option_t MuttVars[] = {
   { "pgp_sign_as",	DT_STR,	 R_NONE, {.p=&PgpSignAs}, {.p=0} },
   /*
   ** .pp
-  ** If you have a different key pair to use for signing, you should
-  ** set this to the signing key.  Most people will only need to set
-  ** $$pgp_default_key.  It is recommended that you use the keyid form
-  ** to specify your key (e.g. \fC0x00112233\fP).
-  ** (PGP only)
+  ** 署名のための異なったキーペアがある場合、署名するキーを、これを使って指定
+  ** しなければなりません。ほとんどの場合は、$$pgp_default_key を設定しなければ
+  ** ならないだけです。キーを指定するためにキーID形式を使う事を推奨します
+  ** (たとえば\fC0x00112233\fP)。
+  ** (PGP のみです)
   */
   { "pgp_sign_command",		DT_STR, R_NONE, {.p=&PgpSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to create the detached PGP signature for a
-  ** \fCmultipart/signed\fP PGP/MIME body part.
+  ** このコマンドは、\fCmultipart/signed\fP PGP/MIME 本体部分のために、PGP 分離署名を
+  ** 作成するために使われます。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_sort_keys",	DT_SORT|DT_SORT_KEYS, R_NONE, {.p=&PgpSortKeys}, {.l=SORT_ADDRESS} },
   /*
   ** .pp
-  ** Specifies how the entries in the pgp menu are sorted. The
-  ** following are legal values:
+  ** PGP メニュー中のエントリをどのように整列するかを指定します。
+  ** 取り得る値は以下の通りです:
   ** .dl
-  ** .dt address .dd sort alphabetically by user id
-  ** .dt keyid   .dd sort alphabetically by key id
-  ** .dt date    .dd sort by key creation date
-  ** .dt trust   .dd sort by the trust of the key
+  ** .dt address .dd ユーザID のアルファベット順
+  ** .dt keyid   .dd キーID のアルファベット順
+  ** .dt date    .dd キー作成日順
+  ** .dt trust   .dd キーの trust 順
   ** .de
   ** .pp
-  ** If you prefer reverse order of the above values, prefix it with
-  ** ``reverse-''.
-  ** (PGP only)
+  ** 上記の値を逆順にしたい場合は、``reverse-'' という接頭辞を付けます。
+  ** (PGP のみです)
   */
   { "pgp_strict_enc",	DT_BOOL, R_NONE, {.l=OPTPGPSTRICTENC}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will automatically encode PGP/MIME signed messages as
-  ** quoted-printable.  Please note that unsetting this variable may
-  ** lead to problems with non-verifyable PGP signatures, so only change
-  ** this if you know what you are doing.
-  ** (PGP only)
+  ** \fIset\fP の場合、Mutt は自動的に PGP/MIME 署名メッセージを quoted-printable で
+  ** エンコードします。この変数を設定しない場合、検証できない PGP 署名で
+  ** 問題が出てくるかもしれないので、変更することの内容が割っている場合にのみ
+  ** 変更してください。
+  ** (PGP のみです)
   */
   { "pgp_timeout",	DT_LNUM,	 R_NONE, {.p=&PgpTimeout}, {.l=300} },
   /*
