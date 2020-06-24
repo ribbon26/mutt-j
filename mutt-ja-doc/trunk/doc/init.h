@@ -2542,10 +2542,10 @@ struct option_t MuttVars[] = {
   { "post_indent_string",DT_STR, R_NONE, {.p=&PostIndentString}, {.p=0} },
   /*
   ** .pp
-  ** Similar to the $$attribution variable, Mutt will append this
-  ** string after the inclusion of a message which is being replied to.
-  ** For a full listing of defined \fCprintf(3)\fP-like sequences see
-  ** the section on $$index_format.
+  ** $$attribution 変数と似ていて、Mutt はこの文字列を、返信するメッセージの引用の
+  ** あとに追加します。
+  ** 定義されている \fCprintf(3)\fP 風の書式の完全な一覧は $$index_format
+  ** 説を参照してください。
   */
   { "post_indent_str",  DT_SYN,  R_NONE, {.p="post_indent_string"}, {.p=0} },
   /*
@@ -2553,54 +2553,55 @@ struct option_t MuttVars[] = {
   { "postpone",		DT_QUAD, R_NONE, {.l=OPT_POSTPONE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not messages are saved in the $$postponed
-  ** mailbox when you elect not to send immediately.
+  ** メッセージをすぐに送らないことを選択した場合、メッセージを $$postponed
+  ** にセーブするかどうかを制御します。
   ** .pp
-  ** Also see the $$recall variable.
+  **  $$recall 変数も参照してください。
   */
   { "postponed",	DT_PATH, R_INDEX, {.p=&Postponed}, {.p="~/postponed"} },
   /*
   ** .pp
-  ** Mutt allows you to indefinitely ``$postpone sending a message'' which
-  ** you are editing.  When you choose to postpone a message, Mutt saves it
-  ** in the mailbox specified by this variable.
+  ** Mutt は編集中のメッセージを無制限に ``メッセージの送信を $postpone'' できます。
+  ** メッセージを保留にすることを選んだ場合、Mutt はこの変数で指定されたメールボックスに
+  ** 保存します。
   ** .pp
-  ** Also see the $$postpone variable.
+  ** $$postpone 変数も参照してください。
   */
   { "postpone_encrypt",    DT_BOOL, R_NONE, {.l=OPTPOSTPONEENCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, postponed messages that are marked for encryption will be
-  ** self-encrypted.  Mutt will first try to encrypt using the value specified
-  ** in $$pgp_default_key or $$smime_default_key.  If those are not
-  ** set, it will try the deprecated $$postpone_encrypt_as.
-  ** (Crypto only)
+  ** \fIset\fP の場合、暗号化するようにマークされた延期されたメッセージは、
+  ** 自己暗号化されます。Mutt は最初に $$pgp_default_key 又は $$smime_default_key
+  ** で指定された値を使って暗号化しようとします。それらが設定されていない場合、
+  ** 非推奨の $$postpone_encrypt_as を使おうとします。
+  ** (Crypto のみです)
   */
   { "postpone_encrypt_as", DT_STR,  R_NONE, {.p=&PostponeEncryptAs}, {.p=0} },
   /*
   ** .pp
-  ** This is a deprecated fall-back variable for $$postpone_encrypt.
-  ** Please use $$pgp_default_key or $$smime_default_key.
-  ** (Crypto only)
+
+  ** これは $$postpone_encrypt に対する非推奨のフォールバック変数です。
+  ** $$pgp_default_key 又は $$smime_default_key を使ってください。
+  ** (Crypto のみです)
   */
 #ifdef USE_SOCKET
   { "preconnect",	DT_STR, R_NONE, {.p=&Preconnect}, {.p=0} },
   /*
   ** .pp
-  ** If \fIset\fP, a shell command to be executed if mutt fails to establish
-  ** a connection to the server. This is useful for setting up secure
-  ** connections, e.g. with \fCssh(1)\fP. If the command returns a  nonzero
-  ** status, mutt gives up opening the server. Example:
+  ** \fIset\fP の場合、Mutt がサーバへの接続を確立するのに失敗した場合に
+  ** 実行されるシェルコマンドです。これは、たとえば、\fCssh(1)\fP のような
+  ** セキュアな接続を設定するのに便利です。コマンドの結果が非ゼロのステータス
+  ** を返す場合は、Mutt はサーバをオープンすることを諦めます。例は以下の通りです。
   ** .ts
   ** set preconnect="ssh -f -q -L 1234:mailhost.net:143 mailhost.net \(rs
   ** sleep 20 < /dev/null > /dev/null"
   ** .te
   ** .pp
-  ** Mailbox ``foo'' on ``mailhost.net'' can now be reached
-  ** as ``{localhost:1234}foo''.
+  ** ``mailhost.net'' 上のメールボックス ``foo'' はこれで ``{localhost:1234}foo''
+  ** として扱うことが出来ます。
   ** .pp
-  ** Note: For this example to work, you must be able to log in to the
-  ** remote machine without having to enter a password.
+  ** 注意: この例を動かすためには、パスワード入力なしで、リモートマシンに
+  ** ログインできる必要があります。
   */
 #endif /* USE_SOCKET */
   { "print",		DT_QUAD, R_NONE, {.l=OPT_PRINT}, {.l=MUTT_ASKNO} },
