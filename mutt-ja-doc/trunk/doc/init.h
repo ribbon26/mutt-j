@@ -2622,7 +2622,7 @@ struct option_t MuttVars[] = {
   { "print_decode",	DT_BOOL, R_NONE, {.l=OPTPRINTDECODE}, {.l=1} },
   /*
   ** .pp
-  ** \fC<print-message>\fP コマンドを使って接続する時に使います。このオプションが
+  ** \fC<print-message>\fP コマンド関連で使います。このオプションが
   ** \fIset\fP の場合、メッセージは $$print_command で指定された外部コマンドに
   ** 渡される前にデコードされます。このオプションが \fIunset\fP の場合、
   ** 印刷するときに、メッセージには何も処理を適用しません。後者は、
@@ -2632,54 +2632,52 @@ struct option_t MuttVars[] = {
   { "print_split",	DT_BOOL, R_NONE, {.l=OPTPRINTSPLIT},  {.l=0} },
   /*
   ** .pp
-  ** Used in connection with the \fC<print-message>\fP command.  If this option
-  ** is \fIset\fP, the command specified by $$print_command is executed once for
-  ** each message which is to be printed.  If this option is \fIunset\fP,
-  ** the command specified by $$print_command is executed only once, and
-  ** all the messages are concatenated, with a form feed as the message
-  ** separator.
+  ** \fC<print-message>\fP コマンド関連で使います。このオプションが
+  ** \fIset\fP の場合、印刷される各メッセージに対して、$$print_command で指定された
+  ** コマンドが1回実行されます。このオプションが\fIunset\fP の場合、
+  ** $$print_command で指定されたコマンドが1回だけ実行され、すべてのメッセージが
+  ** メッセージの区切りとしてフォームフィードを付けて結合されます。
   ** .pp
-  ** Those who use the \fCenscript\fP(1) program's mail-printing mode will
-  ** most likely want to \fIset\fP this option.
+  ** \fCenscript\fP(1) プログラムのメール印刷モードを使う場合、このオプションを
+  ** \fIset\fP に設定したいと思うようになるでしょう。
   */
   { "prompt_after",	DT_BOOL, R_NONE, {.l=OPTPROMPTAFTER}, {.l=1} },
   /*
   ** .pp
-  ** If you use an \fIexternal\fP $$pager, setting this variable will
-  ** cause Mutt to prompt you for a command when the pager exits rather
-  ** than returning to the index menu.  If \fIunset\fP, Mutt will return to the
-  ** index menu when the external pager exits.
+  ** \fIexternal\fP $$pager を使っている場合、この変数を設定すると、
+  ** ページャ終了時に、インデックスメニューに戻るのではなく、Mutt がコマンド入力を
+  ** 即すようになります。\fIunset\fP の場合、Mutt は外部ページャ終了時に、
+  ** インデックスメニューに戻ります。
   */
   { "query_command",	DT_PATH, R_NONE, {.p=&QueryCmd}, {.p=0} },
   /*
   ** .pp
-  ** This specifies the command Mutt will use to make external address
-  ** queries.  The string may contain a ``%s'', which will be substituted
-  ** with the query string the user types.  Mutt will add quotes around the
-  ** string substituted for ``%s'' automatically according to shell quoting
-  ** rules, so you should avoid adding your own.  If no ``%s'' is found in
-  ** the string, Mutt will append the user's query to the end of the string.
-  ** See ``$query'' for more information.
+  ** これは、Mutt  が外部のアドレス問合せをするのに使うコマンドを指定します。
+  ** 文字列は、ユーザが入力した問合せ文字列に置き換えられる ``%s'' を含むことも
+  ** できます。Mutt はシェルの引用ルールに沿って、Mutt は自動的に、``%s'' に
+  ** 置き換えられた文字列を引用符で囲みます。文字列中に``%s'' がない場合は、
+  ** Mutt は文字列の最後にユーザの問合せを追加します。詳細な情報については
+  ** ``$query'' を参照してください。
   */
   { "query_format",	DT_STR, R_NONE, {.p=&QueryFormat}, {.p="%4c %t %-25.25a %-25.25n %?e?(%e)?"} },
   /*
   ** .pp
-  ** This variable describes the format of the ``query'' menu. The
-  ** following \fCprintf(3)\fP-style sequences are understood:
+  ** この変数は``query'' メニューのフォーマットを記述します。以下は
+  ** 使用できる\fCprintf(3)\fP 風の書式です:
   ** .dl
-  ** .dt %a  .dd destination address
-  ** .dt %c  .dd current entry number
-  ** .dt %e  .dd extra information *
-  ** .dt %n  .dd destination name
-  ** .dt %t  .dd ``*'' if current entry is tagged, a space otherwise
-  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
-  ** .dt %|X .dd pad to the end of the line with ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %a  .dd 宛先アドレス
+  ** .dt %c  .dd 現在のエントリ番号
+  ** .dt %e  .dd 拡張情報 *
+  ** .dt %n  .dd 宛先名
+  ** .dt %t  .dd 現在のエントリがタグづけられている場合は ``*'' で空白はそれ以外
+  ** .dt %>X .dd 残りの文字列を右揃えし ``X'' で埋める
+  ** .dt %|X .dd 行の最後まで ``X'' で埋める
+  ** .dt %*X .dd 埋め草として 文字 ``X'' を使って soft-fill
   ** .de
   ** .pp
-  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
+  ** ``soft-fill'' についての説明は、$$index_format の説明を参照してください。
   ** .pp
-  ** * = can be optionally printed if nonzero, see the $$status_format documentation.
+  ** * = は、非ゼロの場合にオプションで表示されます。$$status_format の説明を参照してください。
   */
   { "quit",		DT_QUAD, R_NONE, {.l=OPT_QUIT}, {.l=MUTT_YES} },
   /*
