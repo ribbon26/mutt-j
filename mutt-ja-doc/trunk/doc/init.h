@@ -2607,14 +2607,14 @@ struct option_t MuttVars[] = {
   { "print",		DT_QUAD, R_NONE, {.l=OPT_PRINT}, {.l=MUTT_ASKNO} },
   /*
   ** .pp
-  ** Controls whether or not Mutt really prints messages.
-  ** This is set to ``ask-no'' by default, because some people
-  ** accidentally hit ``p'' often.
+  ** Mutt が本当にメッセージを印刷するかどうかを制御します。
+  ** 何人かが間違ってしばしば ``p'' を叩くために、これは既定値で
+  **  ``ask-no'' を設定します。
   */
   { "print_command",	DT_PATH, R_NONE, {.p=&PrintCmd}, {.p="lpr"} },
   /*
   ** .pp
-  ** This specifies the command pipe that should be used to print messages.
+  ** これに指定したコマンドへパイプしてメッセージを印刷します。
   */
   { "print_cmd",	DT_SYN,  R_NONE, {.p="print_command"}, {.p=0} },
   /*
@@ -2622,13 +2622,12 @@ struct option_t MuttVars[] = {
   { "print_decode",	DT_BOOL, R_NONE, {.l=OPTPRINTDECODE}, {.l=1} },
   /*
   ** .pp
-  ** Used in connection with the \fC<print-message>\fP command.  If this
-  ** option is \fIset\fP, the message is decoded before it is passed to the
-  ** external command specified by $$print_command.  If this option
-  ** is \fIunset\fP, no processing will be applied to the message when
-  ** printing it.  The latter setting may be useful if you are using
-  ** some advanced printer filter which is able to properly format
-  ** e-mail messages for printing.
+  ** \fC<print-message>\fP コマンドを使って接続する時に使います。このオプションが
+  ** \fIset\fP の場合、メッセージは $$print_command で指定された外部コマンドに
+  ** 渡される前にデコードされます。このオプションが \fIunset\fP の場合、
+  ** 印刷するときに、メッセージには何も処理を適用しません。後者は、
+  ** メールメッセイジを印刷時に適切に整形できる、高度なプリンタフィルタを
+  ** 使う場合に便利です。
   */
   { "print_split",	DT_BOOL, R_NONE, {.l=OPTPRINTSPLIT},  {.l=0} },
   /*
