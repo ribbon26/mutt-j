@@ -2754,50 +2754,47 @@ struct option_t MuttVars[] = {
   { "reflow_space_quotes",	DT_BOOL, R_NONE, {.l=OPTREFLOWSPACEQUOTES}, {.l=1} },
   /*
   ** .pp
-  ** This option controls how quotes from format=flowed messages are displayed
-  ** in the pager and when replying (with $$text_flowed \fIunset\fP).
-  ** When set, this option adds spaces after each level of quote marks, turning
-  ** ">>>foo" into "> > > foo".
+  ** このオプションはページャ中と返信時に($$text_flowed が\fIunset\fPの時)、
+  ** format=flowed メッセージからの引用がどのように表示されるかを制御します。
+  ** 設定する場合、このオプションは各レベルの引用マークの後に空白を追加し、
+  ** ">>>foo" を "> > > foo" に調整します。
   ** .pp
-  ** \fBNote:\fP If $$reflow_text is \fIunset\fP, this option has no effect.
-  ** Also, this option does not affect replies when $$text_flowed is \fIset\fP.
+  ** \fB注意:\fP $$reflow_text が \fIunset\fP の時、このオプションは無効です。
+  ** 同様に、このオプションは$$text_flowed が \fIset\fP の時には返信に何ら影響を
+  ** 与えません。
   */
   { "reflow_text",	DT_BOOL, R_NONE, {.l=OPTREFLOWTEXT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will reformat paragraphs in text/plain
-  ** parts marked format=flowed.  If \fIunset\fP, Mutt will display paragraphs
-  ** unaltered from how they appear in the message body.  See RFC3676 for
-  ** details on the \fIformat=flowed\fP format.
+  ** \fIset\fP の場合、Mutt は format=flowed にマークされた text/plain パート中の
+  ** 段落を再フォーマットします。\fIunset\fP の場合、Mutt は、メッセージ本体中で
+  ** どのように表示されるかを変更していない段落を表示します。\fIformat=flowed\fP
+  ** フォーマットの詳細については RFC3676 を参照してください。
   ** .pp
-  ** Also see $$reflow_wrap, and $$wrap.
+  ** $reflow_wrap と $$wrap も参照してください。
   */
   { "reflow_wrap",	DT_NUM,	R_NONE, {.p=&ReflowWrap}, {.l=78} },
   /*
   ** .pp
-  ** This variable controls the maximum paragraph width when reformatting text/plain
-  ** parts when $$reflow_text is \fIset\fP.  When the value is 0, paragraphs will
-  ** be wrapped at the terminal's right margin.  A positive value sets the
-  ** paragraph width relative to the left margin.  A negative value set the
-  ** paragraph width relative to the right margin.
+  ** この変数は $$reflow_text が \fIset\fP の時に text/plain パートを再フォーマットする
+  ** 時の最大段落幅を制御します。値が 0 の場合、段落は端末の右マージンで折り返されます。
+  ** 正の値は右マージンからの相対段落幅を設定します。
   ** .pp
   ** Also see $$wrap.
   */
   { "reply_regexp",	DT_RX,	 R_INDEX|R_RESORT, {.p=&ReplyRegexp}, {.p="^(re([\\[0-9\\]+])*|aw):[ \t]*"} },
   /*
   ** .pp
-  ** A regular expression used to recognize reply messages when threading
-  ** and replying. The default value corresponds to the English "Re:" and
-  ** the German "Aw:".
+  ** スレッド化および返信する時に返信メッセージを認識するために使われる正規表現
+  ** です。既定値は英語の "Re:" とドイツ語の "Aw:" に対応しています。
   */
   { "reply_self",	DT_BOOL, R_NONE, {.l=OPTREPLYSELF}, {.l=0} },
   /*
   ** .pp
-  ** If \fIunset\fP and you are replying to a message sent by you, Mutt will
-  ** assume that you want to reply to the recipients of that message rather
-  ** than to yourself.
+  ** \fIunset\fP で、自分自身から送信したメッセージに返信する場合、Mutt は
+  ** 自分自身ではなく、そのメッセージの受信者に返信したいと仮定します。
   ** .pp
-  ** Also see the ``$alternates'' command.
+  ** ``$alternates'' コマンドも参照してください。
   */
   { "reply_to",		DT_QUAD, R_NONE, {.l=OPT_REPLYTO}, {.l=MUTT_ASKYES} },
   /*
