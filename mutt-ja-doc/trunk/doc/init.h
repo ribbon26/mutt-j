@@ -2719,41 +2719,37 @@ struct option_t MuttVars[] = {
   { "read_only",	DT_BOOL, R_NONE, {.l=OPTREADONLY}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, all folders are opened in read-only mode.
+  ** \fIset\fP の場合、すべてのフォルダはリードオンリモードでオープンされます。
   */
   { "realname",		DT_STR,	 R_BOTH, {.p=&Realname}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies what ``real'' or ``personal'' name should be used
-  ** when sending messages.
+  ** この変数は、メッセージを送信するときに使う ``real'' 又は ``personal'' 名を
+  ** 指定します。
   ** .pp
-  ** By default, this is the GECOS field from \fC/etc/passwd\fP.  Note that this
-  ** variable will \fInot\fP be used when the user has set a real name
-  ** in the $$from variable.
+  ** 既定では、これは、 \fC/etc/passwd\fP の GECOS フィールドです。この変数は
+  ** $$from variable 中で本名を指定した場合には\fI使われない\fP ことに注意してくださいい。
   */
   { "recall",		DT_QUAD, R_NONE, {.l=OPT_RECALL}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not Mutt recalls postponed messages
-  ** when composing a new message.
+  ** 新規メニューを編集するときに延期メッセージから続けるかどうかを制御します。
   ** .pp
-  ** Setting this variable to \fIyes\fP is not generally useful, and thus not
-  ** recommended.  Note that the \fC<recall-message>\fP function can be used
-  ** to manually recall postponed messages.
+  ** この変数を \fIyes\fP に設定することは一般的には有用ではないので推奨されて
+  ** いません。\fC<recall-message>\fP 機能は、保留されたメッセージを手動で再度
+  ** 読み出すときに使われることに注意してください。
   ** .pp
-  ** Also see $$postponed variable.
+  ** $postponed 変数も参照してください。
   */
   { "record",		DT_PATH, R_NONE, {.p=&Outbox}, {.p="~/sent"} },
   /*
   ** .pp
-  ** This specifies the file into which your outgoing messages should be
-  ** appended.  (This is meant as the primary method for saving a copy of
-  ** your messages, but another way to do this is using the ``$my_hdr''
-  ** command to create a ``Bcc:'' field with your email address in it.)
+  ** これは、送信メッセージをどのファイルに追加して保存すべきかを指定します
+  ** (これは、メッセージのコピーをセーブする基本的な方法を意味しますが、
+  ** ほかにも、自分のメールアドレスの ``Bcc:'' フィールドを作成して、
+  ** ``$my_hdr'' コマンドを使ってそこにセーブするという方法もあります)。
   ** .pp
-  ** The value of \fI$$record\fP is overridden by the $$force_name and
-  ** $$save_name variables, and the ``$fcc-hook'' command.  Also see $$copy
-  ** and $$write_bcc.
+  ** コマンドで上書きできます。$$copy と $$write_bcc も参照してください。
   */
   { "reflow_space_quotes",	DT_BOOL, R_NONE, {.l=OPTREFLOWSPACEQUOTES}, {.l=1} },
   /*
