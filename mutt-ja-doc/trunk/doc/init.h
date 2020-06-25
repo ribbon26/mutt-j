@@ -2682,41 +2682,39 @@ struct option_t MuttVars[] = {
   { "quit",		DT_QUAD, R_NONE, {.l=OPT_QUIT}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This variable controls whether ``quit'' and ``exit'' actually quit
-  ** from mutt.  If this option is \fIset\fP, they do quit, if it is \fIunset\fP, they
-  ** have no effect, and if it is set to \fIask-yes\fP or \fIask-no\fP, you are
-  ** prompted for confirmation when you try to quit.
+  ** この変数は ``quit'' と ``exit'' が実際に Mutt を終了させるかどうかを制御します。
+  ** 終了させようとしたとき、このオプションが\fIset\fP ならば終了し、\fIunset\fP
+  ** ならば無効となり、\fIask-yes\fP か \fIask-no\fP ならば確認のために問合せを
+  ** してきます。
   */
   { "quote_regexp",	DT_RX,	 R_PAGER, {.p=&QuoteRegexp}, {.p="^([ \t]*[|>:}#])+"} },
   /*
   ** .pp
-  ** A regular expression used in the internal pager to determine quoted
-  ** sections of text in the body of a message. Quoted text may be filtered
-  ** out using the \fC<toggle-quoted>\fP command, or colored according to the
-  ** ``color quoted'' family of directives.
+  ** 内部ページャで、メッセージ本文の引用部分を見極めるために使う正規表現です。
+  ** 引用されたテキストは、\fC<toggle-quoted>\fP コマンドを使って除外するか、
+  ** ``color quoted''ファミリのディレクティブに従って色を付けることが出来ます。 
   ** .pp
-  ** Higher levels of quoting may be colored differently (``color quoted1'',
-  ** ``color quoted2'', etc.). The quoting level is determined by removing
-  ** the last character from the matched text and recursively reapplying
-  ** the regular expression until it fails to produce a match.
+  ** 高位のレベルの引用は異なって着色されることがあります
+  ** (``color quoted1'',``color quoted2'' など)。引用レベルは、一致したテキストから
+  ** 最後の文字を取り去り、一致しなくなるまで再帰的に正規表現を適用する
+  ** ることで決まります。
   ** .pp
-  ** Match detection may be overridden by the $$smileys regular expression.
+  ** 一致の検出は $$smileys 正規表現によって上書きできます。
   */
   { "read_inc",		DT_NUM,	 R_NONE, {.p=&ReadInc}, {.l=10} },
   /*
   ** .pp
-  ** If set to a value greater than 0, Mutt will display which message it
-  ** is currently on when reading a mailbox or when performing search actions
-  ** such as search and limit. The message is printed after
-  ** this many messages have been read or searched (e.g., if set to 25, Mutt will
-  ** print a message when it is at message 25, and then again when it gets
-  ** to message 50).  This variable is meant to indicate progress when
-  ** reading or searching large mailboxes which may take some time.
-  ** When set to 0, only a single message will appear before the reading
-  ** the mailbox.
+  ** 0 より大きな値に設定されていると、メールボックス読み出し中か、検索と制限の
+  ** ような検索動作を実行するときに、 Mutt が現在どのメッセージまで来たのかを
+  ** 表示するようになります。メッセージは、このたくさんのメッセージが読み出されたり
+  ** 検索された後で表示されます(たとえば 25 に設定すると、Mutt は 25 番目のメッセージを
+  ** 読んだときに表示し、さらにまた 50 番目のときにも表示します)。
+  ** この変数は、少々時間のかかる、大きなメールボックスを読み出したり検索したりするときに、
+  ** 進行条項を表示するということを意味します。0 に設定すると、メールボックスを
+  ** 読み出す前に、1度メッセージが表示されるだけになります。
   ** .pp
-  ** Also see the $$write_inc, $$net_inc and $$time_inc variables and the
-  ** ``$tuning'' section of the manual for performance considerations.
+  ** $write_inc, $$net_inc and $$time_inc 変数と、パフォーマンスの考察についての
+  ** ``$tuning'' セクションのマニュアルも参照してください。
   */
   { "read_only",	DT_BOOL, R_NONE, {.l=OPTREADONLY}, {.l=0} },
   /*
