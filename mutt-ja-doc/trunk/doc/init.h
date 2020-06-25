@@ -2799,44 +2799,40 @@ struct option_t MuttVars[] = {
   { "reply_to",		DT_QUAD, R_NONE, {.l=OPT_REPLYTO}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** If \fIset\fP, when replying to a message, Mutt will use the address listed
-  ** in the Reply-to: header as the recipient of the reply.  If \fIunset\fP,
-  ** it will use the address in the From: header field instead.  This
-  ** option is useful for reading a mailing list that sets the Reply-To:
-  ** header field to the list address and you want to send a private
-  ** message to the author of a message.
+  ** \fIset\fPの場合、メッセージに返信する時、Mutt はメッセージの Reply-to: ヘッダで
+  ** 挙げられているアドレスを返信先として使います。\fIunset\fP の場合は、
+  ** 代わりに From: フィールドのアドレスを代わりに使います。このオプションは、
+  ** Reply-To: ヘッダフィールドをメーリングリストのアドレスに設定していて、
+  ** メッセージの作者に個人的なメッセージを送信しようとする場合に便利です。
   */
   { "resolve",		DT_BOOL, R_NONE, {.l=OPTRESOLVE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, the cursor will be automatically advanced to the next
-  ** (possibly undeleted) message whenever a command that modifies the
-  ** current message is executed.
+  ** \fIset\fP の場合、現在のメッセージを変更するコマンドが実行されたときは
+  ** 必ず次(おそらく未読)のメッセージに自動的にカーソルを移動します。
   */
   { "resume_draft_files", DT_BOOL, R_NONE, {.l=OPTRESUMEDRAFTFILES}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, draft files (specified by \fC-H\fP on the command
-  ** line) are processed similarly to when resuming a postponed
-  ** message.  Recipients are not prompted for; send-hooks are not
-  ** evaluated; no alias expansion takes place; user-defined headers
-  ** and signatures are not added to the message.
+  ** \fIset\fP の場合、ドラフトファイル(コマンド行で\fC-H\fP で指定されたもの)
+  ** は、保留メッセージを復活させた時と同じように処理されます。受信者は
+  ** 要求されません。send-hooks は評価されません。別名の展開は行われません。
+  ** ユーザ定義のヘッダと署名はメッセージに追加されません。
   */
   { "resume_edited_draft_files", DT_BOOL, R_NONE, {.l=OPTRESUMEEDITEDDRAFTFILES}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, draft files previously edited (via \fC-E -H\fP on
-  ** the command line) will have $$resume_draft_files automatically
-  ** set when they are used as a draft file again.
+  ** \fIset\fP の場合、以前に編集したドラフトファイル(コマンド行での \fC-E -H\fP
+  ** 経由で)は、再度ドラフトファイルとして使われるときに、自動的に
+  ** $$resume_draft_files が設定されます。
   ** .pp
-  ** The first time a draft file is saved, mutt will add a header,
-  ** X-Mutt-Resume-Draft to the saved file.  The next time the draft
-  ** file is read in, if mutt sees the header, it will set
-  ** $$resume_draft_files.
+  ** 最初にドラフトファイルがセーブされる時、Mutt はヘッダ X-Mutt-Resume-Draft を
+  ** セーブされたファイルに追加します。次回ドラフトファイルを読み込んだときに
+  ** Mutt がヘッダを見つけると、$$resume_draft_files が設定されます。
   ** .pp
-  ** This option is designed to prevent multiple signatures,
-  ** user-defined headers, and other processing effects from being
-  ** made multiple times to the draft file.
+  ** このオプションは、複数の署名、ユーザ定義のヘッダと他の処理効果がドラフトファイルに
+  ** 対して複数回実行されることを防ぐために設計されました。
+  ** 
   */
   { "reverse_alias",	DT_BOOL, R_BOTH, {.l=OPTREVALIAS}, {.l=0} },
   /*
