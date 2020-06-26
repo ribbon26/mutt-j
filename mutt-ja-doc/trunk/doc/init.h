@@ -2837,89 +2837,83 @@ struct option_t MuttVars[] = {
   { "reverse_alias",	DT_BOOL, R_BOTH, {.l=OPTREVALIAS}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls whether or not Mutt will display the ``personal''
-  ** name from your aliases in the index menu if it finds an alias that
-  ** matches the message's sender.  For example, if you have the following
-  ** alias:
+  ** この変数は、メッセージの送信者に一致する別名があるときに、別名の ``personal''名を
+  ** インデックスメニュー中に表示するかどうかを制御します。例えば、以下のような
+  ** 別名があるとします。
   ** .ts
   ** alias juser abd30425@somewhere.net (Joe User)
   ** .te
   ** .pp
-  ** and then you receive mail which contains the following header:
+  ** この場合、以下のヘッダを含むメールを受け取ったとします。
   ** .ts
   ** From: abd30425@somewhere.net
   ** .te
   ** .pp
-  ** It would be displayed in the index menu as ``Joe User'' instead of
-  ** ``abd30425@somewhere.net.''  This is useful when the person's e-mail
-  ** address is not human friendly.
+  ** この場合、インデックスメニューには ``abd30425@somewhere.net.'' の代わりに
+  ** ``Joe User'' が表示されます。これは、個人のメールアドレスが人間向きではない
+  ** 場合に便利です。
   */
   { "reverse_name",	DT_BOOL, R_BOTH, {.l=OPTREVNAME}, {.l=0} },
   /*
   ** .pp
-  ** It may sometimes arrive that you receive mail to a certain machine,
-  ** move the messages to another machine, and reply to some the messages
-  ** from there.  If this variable is \fIset\fP, the default \fIFrom:\fP line of
-  ** the reply messages is built using the address where you received the
-  ** messages you are replying to \fBif\fP that address matches your
-  ** ``$alternates''.  If the variable is \fIunset\fP, or the address that would be
-  ** used doesn't match your ``$alternates'', the \fIFrom:\fP line will use
-  ** your address on the current machine.
+  ** 特定のマシンでメールを受信し、そのメッセージを別のマシンに移動し、そこから
+  ** いくつかのメッセージを返信するということがたまにあるかもしれません。この変数を
+  ** \fIset\fP にした場合、返信メッセージの既定の \fIFrom:\fP 行は、
+  ** ``$alternates'' に一致するアドレスの場合、返信しようとする受信したメッセージの
+  ** アドレスを使って組み立てます。変数が\fIunset\fP の場合か、``$alternates''に
+  ** 一致していなかった場合は、\fIFrom:\fP 行は現在のマシン上でのアドレスが使われます。
   ** .pp
-  ** Also see the ``$alternates'' command and $$reverse_realname.
+  ** ``$alternates'' コマンドと $$reverse_realname も参照してください。
   */
   { "reverse_realname",	DT_BOOL, R_BOTH, {.l=OPTREVREAL}, {.l=1} },
   /*
   ** .pp
-  ** This variable fine-tunes the behavior of the $$reverse_name feature.
+  ** この変数は $$reverse_name 機能の動作を微調整します。
   ** .pp
-  ** When it is \fIunset\fP, Mutt will remove the real name part of a
-  ** matching address.  This allows the use of the email address
-  ** without having to also use what the sender put in the real name
-  ** field.
+  ** \fIunset\fP の場合、Mutt は一致したアドレスの実名部分を取り除きます。
+  ** これは、送信者が実名フィールドに記述したものを使わず、メールアドレスを
+  ** 使います。
   ** .pp
-  ** When it is \fIset\fP, Mutt will use the matching address as-is.
+  ** \fIset\fP の場合、Mutt  は一致したアドレスをそのまま使います。
   ** .pp
-  ** In either case, a missing real name will be filled in afterwards
-  ** using the value of $$realname.
+  ** それ以外の場合、実名がない場合は $$realname の値を後で使って埋めます。
   */
   { "rfc2047_parameters", DT_BOOL, R_NONE, {.l=OPTRFC2047PARAMS}, {.l=0} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, Mutt will decode RFC2047-encoded MIME
-  ** parameters. You want to set this variable when mutt suggests you
-  ** to save attachments to files named like:
+  ** この変数が \fIset\fP の場合、Mutt は RFC2047 でエンコードされた MIME パラメータを
+  ** デコードします。例えば添付をファイルにセーブする場合に、Mutt が以下のような
+  ** 値を提案してくる場合は、設定したいと思うでしょう。
   ** .ts
   ** =?iso-8859-1?Q?file=5F=E4=5F991116=2Ezip?=
   ** .te
   ** .pp
-  ** When this variable is \fIset\fP interactively, the change won't be
-  ** active until you change folders.
+  ** この変数を対話的に fIset\fP にしても、フォルダを変更するまでは変更が有効に
+  ** なりません。
   ** .pp
-  ** Note that this use of RFC2047's encoding is explicitly
-  ** prohibited by the standard, but nevertheless encountered in the
-  ** wild.
+  ** この、RFC2047 エンコードの使用は規格によって明示的に禁止されているのですが、
+  ** 実際には使われていることに注意してください。
   ** .pp
-  ** Also note that setting this parameter will \fInot\fP have the effect
-  ** that mutt \fIgenerates\fP this kind of encoding.  Instead, mutt will
-  ** unconditionally use the encoding specified in RFC2231.
+  ** また、このパラメートを設定することは、Mutt がこの種のエンコーディングを
+  ** \fI生成する\fP 効果が\fない\fことにも注意してください。かわりに、Mutt は
+  ** RFC2231 で指定されたエンコーディングを無条件に使います。P
   */
   { "save_address",	DT_BOOL, R_NONE, {.l=OPTSAVEADDRESS}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will take the sender's full address when choosing a
-  ** default folder for saving a mail. If $$save_name or $$force_name
-  ** is \fIset\fP too, the selection of the Fcc folder will be changed as well.
+  ** \fIset\fP の場合、Mutt はメールをセーブする既定のフォルダを選択するときに、
+  ** 送信者の完全なアドレスを使います。$$save_name か $$force_name も \fIset\fP の
+  ** 場合、Fcc フォルダの選択も同様に変更になります。
   */
   { "save_empty",	DT_BOOL, R_NONE, {.l=OPTSAVEEMPTY}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, mailboxes which contain no saved messages will be removed
-  ** when closed (the exception is $$spoolfile which is never removed).
-  ** If \fIset\fP, mailboxes are never removed.
+  ** \fIunset\fP の場合、何らメールがセーブされていないメールボックスはクローズする
+  ** 時に削除されます(例外は $$spoolfile で決して削除されません)。If \fIset\fPの
+  ** 場合、メールボックスは決して削除されません。
   ** .pp
-  ** \fBNote:\fP This only applies to mbox and MMDF folders, Mutt does not
-  ** delete MH and Maildir directories.
+  ** \fB注意:\fP これは mbox と MMDF フォルダにのみ適用され、Mutt は MH と Maildir
+  ** ディレクトリは削除しません。
   */
   { "save_history",     DT_NUM,  R_NONE, {.p=&SaveHist}, {.l=0} },
   /*
