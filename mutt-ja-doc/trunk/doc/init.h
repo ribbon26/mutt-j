@@ -2959,47 +2959,46 @@ struct option_t MuttVars[] = {
   { "score_threshold_flag", DT_NUM, R_NONE, {.p=&ScoreThresholdFlag}, {.l=9999} },
   /*
   ** .pp
-  ** Messages which have been assigned a score greater than or equal to this
-  ** variable's value are automatically marked "flagged".
+  ** この変数の値以上のスコアが割り当てられているメッセージは自動的に "flagged" が
+  ** マークされます。
   */
   { "score_threshold_read", DT_NUM, R_NONE, {.p=&ScoreThresholdRead}, {.l=-1} },
   /*
   ** .pp
-  ** Messages which have been assigned a score equal to or lower than the value
-  ** of this variable are automatically marked as read by mutt.  Since
-  ** mutt scores are always greater than or equal to zero, the default setting
-  ** of this variable will never mark a message read.
+  ** この変数の値以下のスコアが割り当てられたメッセージは自動的にMutt によって
+  ** 既読マークが付けられます。Mutt のスコアは常時 0 以上なので、
+  ** この変数の既定の設定では、決して既読マークが付くことはありません。
   */
   { "search_context",	DT_NUM,  R_NONE, {.p=&SearchContext}, {.l=0} },
   /*
   ** .pp
-  ** For the pager, this variable specifies the number of lines shown
-  ** before search results. By default, search results will be top-aligned.
+  ** ページャにおいて、この変数は検索結果の前に表示する行数を指定します。
+  ** 既定では、検索結果は上寄せになります。
   */
   { "send_charset",	DT_STR,  R_NONE, {.p=&SendCharset}, {.p="us-ascii:iso-8859-1:utf-8"} },
   /*
   ** .pp
-  ** A colon-delimited list of character sets for outgoing messages. Mutt will use the
-  ** first character set into which the text can be converted exactly.
-  ** If your $$charset is not ``iso-8859-1'' and recipients may not
-  ** understand ``UTF-8'', it is advisable to include in the list an
-  ** appropriate widely used standard character set (such as
-  ** ``iso-8859-2'', ``koi8-r'' or ``iso-2022-jp'') either instead of or after
-  ** ``iso-8859-1''.
+  ** 送信メッセージに対する、コロンで分離された文字セットのリストです。Mutt は
+  ** テキストを正確に変換できた最初の文字セットを使います。$$charset が
+  ** ``iso-8859-1'' でなく、受信者が ``UTF-8'' を理解出来ない場合は、``iso-8859-1''の
+  ** かわり、あるいはその後に、適切で広く使われている標準的な文字セット
+  ** (たとえば``iso-8859-2'', ``koi8-r'' 又は ``iso-2022-jp'')をリスト中に含めることを
+  ** 推奨します。
   ** .pp
-  ** In case the text cannot be converted into one of these exactly,
-  ** mutt uses $$charset as a fallback.
+  ** それらのどれかに正確に変換できない場合、Mutt は $$charset を使うように
+  ** フォールバックします。
+  ** 
   */
   { "send_multipart_alternative", DT_QUAD, R_NONE, {.l=OPT_SENDMULTIPARTALT}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will generate a multipart/alternative
-  ** container and an alternative part using the filter script specified in
-  ** $$send_multipart_alternative_filter.
-  ** See the section ``MIME Multipart/Alternative'' ($alternative-order).
+  ** \fIset\fP の場合、Mutt はmultipart/alternative コンテナと
+  ** $$send_multipart_alternative_filter で指定されたフィルタスクリプトを使う
+  ** alternative パートを生成します。
+  ** ``MIME Multipart/Alternative'' ($alternative-order) を参照してください。
   ** .pp
-  ** Note that enabling multipart/alternative is not compatible with inline
-  ** PGP encryption.  Mutt will prompt to use PGP/MIME in that case.
+  ** multipart/alternative を有効にすることは、インラインの PGP 暗号化とは互換がない
+  ** ことに注意してください。Mutt はこの場合、PGP/MIME を使うように問合せしてきます。
   */
   { "send_multipart_alternative_filter", DT_PATH, R_NONE, {.p=&SendMultipartAltFilter}, {.p=0} },
   /*
