@@ -2918,44 +2918,43 @@ struct option_t MuttVars[] = {
   { "save_history",     DT_NUM,  R_NONE, {.p=&SaveHist}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the size of the history (per category) saved in the
-  ** $$history_file file.
+  ** この変数は、$$history_file ファイルにセーブされる、(カテゴリ単位の)履歴の
+  ** サイズを制御します。
   */
   { "save_name",	DT_BOOL, R_NONE, {.l=OPTSAVENAME}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls how copies of outgoing messages are saved.
-  ** When \fIset\fP, a check is made to see if a mailbox specified by the
-  ** recipient address exists (this is done by searching for a mailbox in
-  ** the $$folder directory with the \fIusername\fP part of the
-  ** recipient address).  If the mailbox exists, the outgoing message will
-  ** be saved to that mailbox, otherwise the message is saved to the
-  ** $$record mailbox.
+  ** この変数は、どのように送信メールのコピーがセーブされるかを制御します。
+  ** \fIset\fP の場合、受信者アドレスの存在によって指定されるメールボックスが
+  ** あるかどうかをチェックします(これは、受信者アドレスの \fIusername\fP 部分で
+  ** $$folder ディレクトリ中にメールボックスがあるかを検索することによって
+  ** 行います)。メールボックスが存在する場合、送信メッセージはそのメールボックスに
+  ** セーブされます。その他の場合は、メッセージは $$record メールボックスに
+  ** セーブされます。
   ** .pp
-  ** Also see the $$force_name variable.
+  ** $$force_name 変数も参照してください。
   */
   { "send_group_reply_to",	DT_BOOL, R_NONE, {.l=OPTSENDGROUPREPLYTO}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls how group replies are done.
-  ** When set, all recepients listet in "To:" are set in the
-  ** "To:" header again, else in the "CC", which is the default.
+  ** この変数はどのグループ返信が終わったかを制御します。設定された場合、
+  ** "To:" 中のすべての受信者リストは "To:" ヘッダに再度設定され、それ以外は、
+  ** 既定である "CC" になります。 
   */
   { "score", 		DT_BOOL, R_NONE, {.l=OPTSCORE}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIunset\fP, scoring is turned off.  This can
-  ** be useful to selectively disable scoring for certain folders when the
-  ** $$score_threshold_delete variable and related are used.
+  ** この変数が \fIunset\fP の場合、スコアリングは停止します。これは、
+  ** $$score_threshold_delete 変数と関連したものが使われている場合、特定のフォルダに
+  ** 対して選択的に無効にできるので便利です。
   **
   */
   { "score_threshold_delete", DT_NUM, R_NONE, {.p=&ScoreThresholdDelete}, {.l=-1} },
   /*
   ** .pp
-  ** Messages which have been assigned a score equal to or lower than the value
-  ** of this variable are automatically marked for deletion by mutt.  Since
-  ** mutt scores are always greater than or equal to zero, the default setting
-  ** of this variable will never mark a message for deletion.
+  ** この変数の値以下のスコアが割り当てられているメッセージは、Mutt によって
+  ** 自動的に削除マークが付けられます。Mutt のスコアは常時 0 以上なので、
+  ** この変数の既定の設定では、決して削除マークが付くことはありません。
   */
   { "score_threshold_flag", DT_NUM, R_NONE, {.p=&ScoreThresholdFlag}, {.l=9999} },
   /*
