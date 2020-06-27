@@ -3003,41 +3003,39 @@ struct option_t MuttVars[] = {
   { "send_multipart_alternative_filter", DT_PATH, R_NONE, {.p=&SendMultipartAltFilter}, {.p=0} },
   /*
   ** .pp
-  ** This specifies a filter script, which will convert the main
-  ** (composed) message of the email to an alternative format.  The
-  ** message will be piped to the filter's stdin.  The expected output
-  ** of the filter is the generated mime type, e.g. text/html,
-  ** followed by a blank line, and then the converted content.
-  ** See the section ``MIME Multipart/Alternative'' ($alternative-order).
+  ** これは、メールの(編集された)メインメッセージを lternative フォーマットに
+  ** 変換するスクリプトを指定します。メッセージはフィルタの標準入力にパイプされます。
+  ** フィルタで展開された出力は生成された mime タイプ、たとえば text/html で、
+  ** 空白行とその後に変換された内容が続きます。
+  ** ``MIME Multipart/Alternative'' ($alternative-order) を参照してください。
   */
   { "sendmail",		DT_PATH, R_NONE, {.p=&Sendmail}, {.p=SENDMAIL " -oem -oi"} },
   /*
   ** .pp
-  ** Specifies the program and arguments used to deliver mail sent by Mutt.
-  ** Mutt expects that the specified program interprets additional
-  ** arguments as recipient addresses.  Mutt appends all recipients after
-  ** adding a \fC--\fP delimiter (if not already present).  Additional
-  ** flags, such as for $$use_8bitmime, $$use_envelope_from,
-  ** $$dsn_notify, or $$dsn_return will be added before the delimiter.
+  ** Mutt によってメール配信を行うのに使うプログラムと引数を指定します。
+  ** Mutt は指定されたプログラムが、追加の引数を受信者のアドレスとして解釈することを
+  ** 期待しています。Mutt はデリミタ \fC--\fP (前に存在していなければ)の
+  ** 後にすべての受信者を追加します。たとえば、$$use_8bitmime, $$use_envelope_from,
+  ** $dsn_notify, 又は $$dsn_return のような追加のフラグはデリミタの前に付加されます。
   ** .pp
-  ** \fBSee also:\fP $$write_bcc.
+  ** $$write_bcc も \fB参照してください\fP。
   */
   { "sendmail_wait",	DT_NUM,  R_NONE, {.p=&SendmailWait}, {.l=0} },
   /*
   ** .pp
-  ** Specifies the number of seconds to wait for the $$sendmail process
-  ** to finish before giving up and putting delivery in the background.
+  ** $$sendmail プロセスが完了するのを諦め、バックグラウンドで配送する
+  ** 前までの秒数を指定します。
   ** .pp
-  ** Mutt interprets the value of this variable as follows:
+  ** Mutt はこの変数の値を以下のように解釈します。
   ** .dl
-  ** .dt >0 .dd number of seconds to wait for sendmail to finish before continuing
-  ** .dt 0  .dd wait forever for sendmail to finish
-  ** .dt <0 .dd always put sendmail in the background without waiting
+  ** .dt >0 .dd 継続する前に、sendmail が完了するのを待つ秒数
+  ** .dt 0  .dd sendmail の完了を無限に待つ
+  ** .dt <0 .dd 待たないで、sendmail をバックグラウンドで常時実行する
   ** .de
   ** .pp
-  ** Note that if you specify a value other than 0, the output of the child
-  ** process will be put in a temporary file.  If there is some error, you
-  ** will be informed as to where to find the output.
+  ** 0 より大きな値を指定した場合、子プロセスの出力はテンポラリファイルに
+  ** 出されることに注意してください。もしもなんらかのエラーがあった場合は、
+  ** その出力がどこにあるかを通知されることになります。
   */
   { "shell",		DT_PATH, R_NONE, {.p=&Shell}, {.p=0} },
   /*
