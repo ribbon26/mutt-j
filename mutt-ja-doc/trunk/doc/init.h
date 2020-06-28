@@ -3080,49 +3080,50 @@ struct option_t MuttVars[] = {
   { "sidebar_format", DT_STR, R_SIDEBAR, {.p=&SidebarFormat}, {.p="%B%*  %n"} },
   /*
   ** .pp
-  ** This variable allows you to customize the sidebar display. This string is
-  ** similar to $$index_format, but has its own set of \fCprintf(3)\fP-like
-  ** sequences:
+  ** この変数でサイドバーの表示をカスタマイズすることが出来るようになります。
+  ** この文字列は $$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
+  ** 持っています。
   ** .dl
-  ** .dt %B  .dd Name of the mailbox
-  ** .dt %S  .dd * Size of mailbox (total number of messages)
-  ** .dt %N  .dd * Number of unread messages in the mailbox
-  ** .dt %n  .dd N if mailbox has new mail, blank otherwise
-  ** .dt %F  .dd * Number of Flagged messages in the mailbox
-  ** .dt %!  .dd ``!'' : one flagged message;
-  **             ``!!'' : two flagged messages;
-  **             ``n!'' : n flagged messages (for n > 2).
-  **             Otherwise prints nothing.
-  ** .dt %d  .dd * @ Number of deleted messages
-  ** .dt %L  .dd * @ Number of messages after limiting
-  ** .dt %t  .dd * @ Number of tagged messages
-  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
-  ** .dt %|X .dd pad to the end of the line with ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %B  .dd メールボックスの名前
+  ** .dt %S  .dd * メールボックスのサイズ(メッセージ総数)
+  ** .dt %N  .dd * メールボックス中の未読メッセージ数
+  ** .dt %n  .dd N 新規メールがある場合、その他の場合は空白
+  ** .dt %F  .dd * メールボックス中のフラグ付きメッセージ数
+  ** .dt %!  .dd ``!'' : 1つフラグがあるメッセージ;
+  **             ``!!'' : 2つフラグがあるメッセージ;
+  **             ``n!'' : n 2つ以上フラグがあるメッセージ (n > 2)。
+  **             その他は表示なし。
+  ** .dt %d  .dd * @ 削除メッセージ数
+  ** .dt %L  .dd * @ 制限後のメッセージ数
+  ** .dt %t  .dd * @ タグ付きメッセージ数
+  ** .dt %>X .dd 残りの文字列を右寄せし、``X'' で埋める
+  ** .dt %|X .dd 行端まで ``X'' で埋める
+  ** .dt %*X .dd 埋め草として 文字 ``X'' を使って soft-fill
   ** .de
   ** .pp
-  ** * = Can be optionally printed if nonzero
-  ** @ = Only applicable to the current folder
+  ** * = 非ゼロの場合オプションで表示
+  ** @ = 現在のフォルダのみに適用されます
   ** .pp
-  ** In order to use %S, %N, %F, and %!, $$mail_check_stats must
-  ** be \fIset\fP.  When thus set, a suggested value for this option is
-  ** "%B%?F? [%F]?%* %?N?%N/?%S".
+  ** %S, %N, %F, と %! を使うために、$$mail_check_stats は
+  ** \fIset\fP としなければなりません。これを設定した場合、このオプションに対する
+  ** 推奨値は "%B%?F? [%F]?%* %?N?%N/?%S" となります。
   */
   { "sidebar_indent_string", DT_STR, R_SIDEBAR, {.p=&SidebarIndentString}, {.p="  "} },
   /*
   ** .pp
-  ** This specifies the string that is used to indent mailboxes in the sidebar.
-  ** It defaults to two spaces.
+  ** サイドバー中でメールボックスを段付けするために使われる文字列を指定します。
+  ** 既定値は2つの空白です。
   ** .pp
-  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_delim_chars.
+  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_new_mail_only", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARNEWMAILONLY}, {.l=0} },
   /*
   ** .pp
-  ** When set, the sidebar will only display mailboxes containing new, or
-  ** flagged, mail.
+  ** 設定した場合、サイドバーはメールボックスに新規メール、フラグ付きのメールがある場合
+  ** にのみ表示されます。
   ** .pp
-  ** \fBSee also:\fP $sidebar_whitelist.
+  ** $sidebar_whitelist も \fB参照してください\fP。
   */
   { "sidebar_next_new_wrap", DT_BOOL, R_NONE, {.l=OPTSIDEBARNEXTNEWWRAP}, {.l=0} },
   /*
