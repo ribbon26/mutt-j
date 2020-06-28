@@ -3128,22 +3128,21 @@ struct option_t MuttVars[] = {
   { "sidebar_next_new_wrap", DT_BOOL, R_NONE, {.l=OPTSIDEBARNEXTNEWWRAP}, {.l=0} },
   /*
   ** .pp
-  ** When set, the \fC<sidebar-next-new>\fP command will not stop and the end of
-  ** the list of mailboxes, but wrap around to the beginning. The
-  ** \fC<sidebar-prev-new>\fP command is similarly affected, wrapping around to
-  ** the end of the list.
+  ** 設定した場合、 \fC<sidebar-next-new>\fP コマンドは停止せず、メールボックス一覧の
+  ** 最後まで行きますが、最初にまで戻ります。\fC<sidebar-prev-new>\fP コマンドは
+  ** 同様に影響を受けますが、リストの最後に戻ります。
   */
   { "sidebar_relative_shortpath_indent", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARRELSPINDENT}, {.l=0} },
   /*
   ** .pp
-  ** When set, this option changes how $$sidebar_short_path and
-  ** $$sidebar_folder_indent perform shortening and indentation: both
-  ** will look at the previous sidebar entries and shorten/indent
-  ** relative to the most recent parent.
+  ** 設定した場合、このオプションは $$sidebar_short_path と 
+  ** $$sidebar_folder_indent がどのように短縮および断付けを実行するかを変更します。
+  ** 両者は以前のサイドバーエントリを見て、もっとも最新の親からの相対で、
+  ** 短縮/段づけをします。
   ** .pp
-  ** An example of this option set/unset for mailboxes listed in this
-  ** order, with $$sidebar_short_path=yes,
-  ** $$sidebar_folder_indent=yes, and $$sidebar_indent_string="→":
+  ** 以下は $$sidebar_short_path=yes,$$sidebar_folder_indent=yes と
+  ** $$sidebar_indent_string="→" を使って、この順で並んでいるメールボックスの、
+  ** オプションの設定/解除の例です。
   ** .dl
   ** .dt \fBmailbox\fP  .dd \fBset\fP   .dd \fBunset\fP
   ** .dt \fC=a.b\fP     .dd \fC=a.b\fP  .dd \fC→b\fP
@@ -3151,15 +3150,13 @@ struct option_t MuttVars[] = {
   ** .dt \fC=a.b.e\fP   .dd \fC→e\fP    .dd \fC→→e\fP
   ** .de
   ** .pp
-  ** The second line illustrates most clearly.  With this option set,
-  ** \fC=a.b.c.d\fP is shortened relative to \fC=a.b\fP, becoming
-  ** \fCc.d\fP; it is also indented one place relative to \fC=a.b\fP.
-  ** With this option unset \fC=a.b.c.d\fP is always shortened to the
-  ** last part of the mailbox, \fCd\fP and is indented three places,
-  ** with respect to $$folder (represented by '=').
+  ** 2行目はもっともわかりやすい例です。このオプションを設定すると、
+  ** \fC=a.b.c.d\fP は \fC=a.b\fP から相対的に短くなり、\fCc.d\fP となります。
+  ** また、\fC=a.b\fP から相対的に1段段付けされています。このオプションを設定しないと、
+  ** \fC=a.b.c.d\fP は常時メールボックスの最後の部分 \fCd\fP に短縮され、
+  ** $$folder ('=' で表される)を鑑みて3段段付けされます。
   ** .pp
-  ** When set, the third line will also be indented and shortened
-  ** relative to the first line.
+  ** 設定すると、3行目も最初の行からの相対で段付けされ短縮されます。
   */
   { "sidebar_short_path", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARSHORTPATH}, {.l=0} },
   /*
