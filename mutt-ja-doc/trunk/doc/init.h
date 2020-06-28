@@ -3040,41 +3040,42 @@ struct option_t MuttVars[] = {
   { "shell",		DT_PATH, R_NONE, {.p=&Shell}, {.p=0} },
   /*
   ** .pp
-  ** Command to use when spawning a subshell.  By default, the user's login
-  ** shell from \fC/etc/passwd\fP is used.
+  ** サブシェルを起動するときに使うコマンド。既定では、\fC/etc/passwd\fP で
+  ** 使われているログインシェルとなります。
   */
 #ifdef USE_SIDEBAR
   { "sidebar_delim_chars", DT_STR, R_SIDEBAR, {.p=&SidebarDelimChars}, {.p="/."} },
   /*
   ** .pp
-  ** This contains the list of characters which you would like to treat
-  ** as folder separators for displaying paths in the sidebar.
+  ** これにはサイドバー中でパスを表示するためのフォルダセパレータとして
+  ** 扱う文字の一覧が含まれています。
   ** .pp
-  ** Local mail is often arranged in directories: `dir1/dir2/mailbox'.
+  ** ローカルメールはしばしば `dir1/dir2/mailbox' というディレクトリに配置されます。
   ** .ts
   ** set sidebar_delim_chars='/'
   ** .te
   ** .pp
-  ** IMAP mailboxes are often named: `folder1.folder2.mailbox'.
+  ** IMAP メールボックスはしばしば `folder1.folder2.mailbox' という名前になります。
   ** .ts
   ** set sidebar_delim_chars='.'
   ** .te
   ** .pp
-  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string.
+  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_divider_char", DT_STR, R_SIDEBAR, {.p=&SidebarDividerChar}, {.p="|"} },
   /*
   ** .pp
-  ** This specifies the characters to be drawn between the sidebar (when
-  ** visible) and the other Mutt panels. ASCII and Unicode line-drawing
-  ** characters are supported.
+  ** これは (表示される場合)サイドバーと他の Mutt のパネルとの間に表示される
+  ** 文字を指定します。ASCII と Unicode の行描画文字がサポートされています。
   */
   { "sidebar_folder_indent", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARFOLDERINDENT}, {.l=0} },
   /*
   ** .pp
-  ** Set this to indent mailboxes in the sidebar.
+  ** サイドバー中でメールボックスを段付けする場合はこれを設定します。
   ** .pp
-  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_indent_string, $$sidebar_delim_chars.
+  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_format", DT_STR, R_SIDEBAR, {.p=&SidebarFormat}, {.p="%B%*  %n"} },
   /*
