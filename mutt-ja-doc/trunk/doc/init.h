@@ -3206,44 +3206,41 @@ struct option_t MuttVars[] = {
   { "sidebar_visible", DT_BOOL, R_REFLOW, {.l=OPTSIDEBAR}, {.l=0} },
   /*
   ** .pp
-  ** This specifies whether or not to show sidebar. The sidebar shows a list of
-  ** all your mailboxes.
+  ** これは、サイドバーを表示するか否かを指定します。サイドバーはすべてのメールボックスを
+  ** 表示します。
   ** .pp
-  ** \fBSee also:\fP $$sidebar_format, $$sidebar_width
+  ** $$sidebar_format, $$sidebar_width も\fB参照してください\fP。
   */
   { "sidebar_width", DT_NUM, R_REFLOW, {.p=&SidebarWidth}, {.l=30} },
   /*
   ** .pp
-  ** This controls the width of the sidebar.  It is measured in screen columns.
-  ** For example: sidebar_width=20 could display 20 ASCII characters, or 10
-  ** Chinese characters.
+  ** これはサイドバーの幅を制御します。画面の列で計測されます。たとえば、
+  ** sidebar_width=20 は 20 文字のASCII 文字か、10文字の中国文字を表示できます。
   */
 #endif
   { "sig_dashes",	DT_BOOL, R_NONE, {.l=OPTSIGDASHES}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, a line containing ``-- '' (note the trailing space) will be inserted before your
-  ** $$signature.  It is \fBstrongly\fP recommended that you not \fIunset\fP
-  ** this variable unless your signature contains just your name.  The
-  ** reason for this is because many software packages use ``-- \n'' to
-  ** detect your signature.  For example, Mutt has the ability to highlight
-  ** the signature in a different color in the built-in pager.
+  ** \fIset\fP の場合、``-- '' を含む行(その後に空白があることに注意)が
+  ** $$signature の前に挿入されます。署名が名前のみを含んでいる場合を除き、
+  ** この変数を\fIunset\fP しないことを\fB強く\fP 推奨します。その理由は、
+  ** 署名を検出するために、多くのソフトウェアパッケージが ``-- \n'' を使うという
+  ** ことだからです。たとえば、Mutt は内蔵ページャで異なった色で署名をハイライト
+  ** する機能があります。
   */
   { "sig_on_top",	DT_BOOL, R_NONE, {.l=OPTSIGONTOP}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, the signature will be included before any quoted or forwarded
-  ** text.  It is \fBstrongly\fP recommended that you do not set this variable
-  ** unless you really know what you are doing, and are prepared to take
-  ** some heat from netiquette guardians.
+  ** \fIset\fP の場合、署名は引用や転送テキストの前に付けられます。これが何をするかを
+  ** 完全に分かっている場合と、ネチケットの番人からの怒りを買う準備が出来ている場合を除き、
+  ** この変数を設定しないことを\fB強く\fP 推奨します。
   */
   { "signature",	DT_PATH, R_NONE, {.p=&Signature}, {.p="~/.signature"} },
   /*
   ** .pp
-  ** Specifies the filename of your signature, which is appended to all
-  ** outgoing messages.   If the filename ends with a pipe (``|''), it is
-  ** assumed that filename is a shell command and input should be read from
-  ** its standard output.
+  ** すべての送信メッセージに追加される署名のファイル名を指定します。ファイル名の
+  ** 末尾がパイプ (``|'') で終わっている場合、ファイル名はシェルコマンドで、
+  ** 入力は標準出力から読み出されるものと仮定されます。
   */
   { "simple_search",	DT_STR,	 R_NONE, {.p=&SimpleSearch}, {.p="~f %s | ~s %s"} },
   /*
