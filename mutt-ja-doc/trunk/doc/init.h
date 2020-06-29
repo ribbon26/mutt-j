@@ -3161,9 +3161,9 @@ struct option_t MuttVars[] = {
   { "sidebar_short_path", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARSHORTPATH}, {.l=0} },
   /*
   ** .pp
-  ** By default the sidebar will show the mailbox's path, relative to the
-  ** $$folder variable. Setting \fCsidebar_shortpath=yes\fP will shorten the
-  ** names relative to the previous name. Here's an example:
+  ** 既定で、サイドバーには、$$folder 変数からの相対で、メールボックスのパスを表示
+  ** します。 \fCsidebar_shortpath=yes\fP を設定すると、以前の名前から比べて
+  ** 名前が短縮されます。以下が例です。
   ** .dl
   ** .dt \fBshortpath=no\fP .dd \fBshortpath=yes\fP .dd \fBshortpath=yes, folderindent=yes, indentstr=".."\fP
   ** .dt \fCfruit\fP        .dd \fCfruit\fP         .dd \fCfruit\fP
@@ -3172,35 +3172,36 @@ struct option_t MuttVars[] = {
   ** .dt \fCfruit.cherry\fP .dd \fCcherry\fP        .dd \fC..cherry\fP
   ** .de
   ** .pp
-  ** \fBSee also:\fP $$sidebar_delim_chars, $$sidebar_folder_indent, $$sidebar_indent_string.
+  ** $$sidebar_delim_chars, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_sort_method", DT_SORT|DT_SORT_SIDEBAR, R_SIDEBAR, {.p=&SidebarSortMethod}, {.l=SORT_ORDER} },
   /*
   ** .pp
-  ** Specifies how to sort entries in the file browser.  By default, the
-  ** entries are sorted alphabetically.  Valid values:
+  ** どのようにファイルブラウザ中でエントリを整列するかを指定します。既定では
+  ** エントリは英語順に整列されます。正しい値は以下のようになります。
   ** .il
-  ** .dd alpha (alphabetically)
-  ** .dd count (all message count)
-  ** .dd flagged (flagged message count)
-  ** .dd name (alphabetically)
-  ** .dd new (unread message count)
-  ** .dd path (alphabetically)
-  ** .dd unread (unread message count)
+  ** .dd alpha (英語順)
+  ** .dd count (全部のメッセージ数順)
+  ** .dd flagged (フラグされたメッセージ数順)
+  ** .dd name (英語順)
+  ** .dd new (未読メッセージ数順)
+  ** .dd path (英語順)
+  ** .dd unread (未読メッセージ数順)
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sort_browser=reverse-date\fP'').
+  ** オプションで、逆順での整列を指定するために、``reverse-'' 接頭辞を使う事も
+  ** できます(例: ``\fCset sort_browser=reverse-date\fP'')。
   */
   { "sidebar_use_mailbox_shortcuts", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARUSEMBSHORTCUTS}, {.l=0} },
   /*
   ** .pp
-  ** When set, sidebar mailboxes will be displayed with mailbox shortcut prefixes
-  ** "=" or "~".
+  ** 設定した場合、サイドバーメールボックスは、メールボックスショートカット接頭辞
+  ** "=" 又は "~" をつけて表示されます。
   ** .pp
-  ** When unset, the sidebar will trim off a matching $$folder prefix
-  ** but otherwise not use mailbox shortcuts.
+  ** 設定しない場合、サイドバーは $$folder 接頭辞に一致したものを削除しますが、
+  ** それ以外は、メールボックスショートカットを使いません。
   */
   { "sidebar_visible", DT_BOOL, R_REFLOW, {.l=OPTSIDEBAR}, {.l=0} },
   /*
