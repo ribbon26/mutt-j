@@ -3245,47 +3245,45 @@ struct option_t MuttVars[] = {
   { "simple_search",	DT_STR,	 R_NONE, {.p=&SimpleSearch}, {.p="~f %s | ~s %s"} },
   /*
   ** .pp
-  ** Specifies how Mutt should expand a simple search into a real search
-  ** pattern.  A simple search is one that does not contain any of the ``~'' pattern
-  ** operators.  See ``$patterns'' for more information on search patterns.
+  ** どのように Mutt が単純な検索を実際の検索パターンに展開するかを指定します。
+  ** 単純な検索とは ``~'' パターン演算子を1つも含まないもののことです。
+  ** 検索パターンについての詳細な情報は ``$patterns'' を参照してください。
   ** .pp
-  ** For example, if you simply type ``joe'' at a search or limit prompt, Mutt
-  ** will automatically expand it to the value specified by this variable by
-  ** replacing ``%s'' with the supplied string.
-  ** For the default value, ``joe'' would be expanded to: ``~f joe | ~s joe''.
+  ** たとえば、単に検索または制限プロンプトに対して ``joe'' を入力したとします。
+  ** Mutt は提供された文字列で ``%s'' を、この変数で指定された値に自動的に展開します。
+  ** 既定値では ``joe'' は ``~f joe | ~s joe'' に展開されます。
   */
   { "size_show_bytes",	DT_BOOL, R_MENU, {.l=OPTSIZESHOWBYTES}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes will display bytes for values less than
-  ** 1 kilobyte.  See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズは1 キロバイトより小さい場合、バイトで
+  ** 表示されます。$formatstrings-size を参照してください。
   */
   { "size_show_fractions", DT_BOOL, R_MENU, {.l=OPTSIZESHOWFRACTIONS}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes will be displayed with a single decimal value
-  ** for sizes from 0 to 10 kilobytes and 1 to 10 megabytes.
-  ** See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズは 0 から 10キロバイトと 1から 10 メガ
+  ** バイトの時は1桁の10進数で表示されます。$formatstrings-size を参照してください。
   */
   { "size_show_mb",	DT_BOOL, R_MENU, {.l=OPTSIZESHOWMB}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes will display megabytes for values greater than
-  ** or equal to 1 megabyte.  See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズが1メガバイトより大きい場合、メガバイトで
+  ** 表示されます。$formatstrings-size を参照してください。
   */
   { "size_units_on_left", DT_BOOL, R_MENU, {.l=OPTSIZEUNITSONLEFT}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes units will be displayed to the left of the number.
-  ** See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズの単位は数字の左側に表示されます。
+  ** $formatstrings-size を参照してください。
   */
   { "sleep_time",	DT_NUM, R_NONE, {.p=&SleepTime}, {.l=1} },
   /*
   ** .pp
-  ** Specifies time, in seconds, to pause while displaying certain informational
-  ** messages, while moving from folder to folder and after expunging
-  ** messages from the current folder.  The default is to pause one second, so
-  ** a value of zero for this option suppresses the pause.
+  ** フォルダからフォルダへ移動し、現在のフォルダからメッセージを消した後、
+  ** 特定の通知メッセージを表示する間停止する時間を秒数で指定します。
+  ** 既定では、1秒間だけ止まり、このオプションの値を 0 にすると、この待ち時間を
+  ** 無くします。
   */
   { "smart_wrap",	DT_BOOL, R_PAGER_FLOW, {.l=OPTWRAP}, {.l=1} },
   /*
