@@ -3288,30 +3288,29 @@ struct option_t MuttVars[] = {
   { "smart_wrap",	DT_BOOL, R_PAGER_FLOW, {.l=OPTWRAP}, {.l=1} },
   /*
   ** .pp
-  ** Controls the display of lines longer than the screen width in the
-  ** internal pager. If \fIset\fP, long lines are wrapped at a word boundary.  If
-  ** \fIunset\fP, lines are simply wrapped at the screen edge. Also see the
-  ** $$markers variable.
+  ** 内部ページャで、画面幅よりも長い行を表示する方法を制御します。\fIset\fP の場合、
+  ** 長い行は単語の区切りで折り返されます。 \fIunset\fP の場合、長い行は
+  ** 単純に画面の幅で折り返されます。$$markers 変数も参照してください。
   */
   { "smileys",		DT_RX,	 R_PAGER, {.p=&Smileys}, {.p="(>From )|(:[-^]?[][)(><}{|/DP])"} },
   /*
   ** .pp
-  ** The \fIpager\fP uses this variable to catch some common false
-  ** positives of $$quote_regexp, most notably smileys and not consider
-  ** a line quoted text if it also matches $$smileys. This mostly
-  ** happens at the beginning of a line.
+  ** \fIページャ\fP は、この変数を使って、$$quote_regexp のよくある一般的な
+  ** 誤検知、特にスマイリー(訳注:顔文字)、$$smileys にも一致する場合は、引用された
+  ** 行を考慮せず拾います。これは主に行の先頭で発生します。
+  ** 
   */
   { "pgp_mime_signature_filename", DT_STR, R_NONE, {.p=&PgpMimeSignatureFilename}, {.p="signature.asc"} },
   /*
   ** .pp
-  ** This option sets the filename used for signature parts in PGP/MIME
-  ** signed messages.
+  ** このオプションは、PGP/MIME で署名されたメッセージ中の署名部分に使われるファイル名を
+  ** 設定します。
   */
   { "pgp_mime_signature_description", DT_STR, R_NONE, {.p=&PgpMimeSignatureDescription}, {.p="Digital signature"} },
   /*
   ** .pp
-  ** This option sets the Content-Description used for signature parts in
-  ** PGP/MIME signed messages.
+  ** このオプションは、PGP/MIME で署名されたメッセージ中の署名部分に使われる
+  ** Content-Description を指定します。
   */
   { "smime_ask_cert_label",	DT_BOOL, R_NONE, {.l=OPTASKCERTLABEL}, {.l=1} },
   /*
