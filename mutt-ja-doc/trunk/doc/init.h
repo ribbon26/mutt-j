@@ -3315,55 +3315,51 @@ struct option_t MuttVars[] = {
   { "smime_ask_cert_label",	DT_BOOL, R_NONE, {.l=OPTASKCERTLABEL}, {.l=1} },
   /*
   ** .pp
-  ** This flag controls whether you want to be asked to enter a label
-  ** for a certificate about to be added to the database or not. It is
-  ** \fIset\fP by default.
-  ** (S/MIME only)
+  ** このフラグは、データベースに追加しようとしている証明書のラベルを入力するか
+  ** どうかについて問合せをするか否かを制御します。既定では \fIset\fP です。
+  ** (S/MIME のみです)
   */
   { "smime_ca_location",	DT_PATH, R_NONE, {.p=&SmimeCALocation}, {.p=0} },
   /*
   ** .pp
-  ** This variable contains the name of either a directory, or a file which
-  ** contains trusted certificates for use with OpenSSL.
-  ** (S/MIME only)
+  ** この変数は、OpenSSL で使う信頼された証明書があるディレクトリかファイルの
+  ** 名前が含まれています。
+  ** (S/MIME のみです)
   */
   { "smime_certificates",	DT_PATH, R_NONE, {.p=&SmimeCertificates}, {.p=0} },
   /*
   ** .pp
-  ** Since for S/MIME there is no pubring/secring as with PGP, mutt has to handle
-  ** storage and retrieval of keys by itself. This is very basic right
-  ** now, and keys and certificates are stored in two different
-  ** directories, both named as the hash-value retrieved from
-  ** OpenSSL. There is an index file which contains mailbox-address
-  ** keyid pairs, and which can be manually edited. This option points to
-  ** the location of the certificates.
-  ** (S/MIME only)
+  ** S/MIME には PGP でのような pubring/secring がないので、Mutt は自分自身で
+  ** 鍵や証明書の格納および取得を行わなければなりません。この仕組みは現在とても
+  ** 基本的なもので、鍵と証明書を二つの異なる ディレクトリに格納し、ともに OpenSSL で
+  ** 取得したハッシュ値をファイル名にしています。各ディレクトリには index ファイルがあって、
+  ** メールアドレスと鍵 ID の組み合わせが入っていて、手動で編集することができます。
+  ** このオプションは証明書の位置を示すものです。
+  ** (S/MIME のみです)
   */
   { "smime_decrypt_command", 	DT_STR, R_NONE, {.p=&SmimeDecryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** This format string specifies a command which is used to decrypt
-  ** \fCapplication/x-pkcs7-mime\fP attachments.
+  ** このフォーマット文字列は \fCapplication/x-pkcs7-mime\fP 添付を復号化するのに
+  ** 使うコマンドを指定します。
   ** .pp
-  ** The OpenSSL command formats have their own set of \fCprintf(3)\fP-like sequences
-  ** similar to PGP's:
+  ** OpenSSL コマンド形式には、PGP に似た、\fCprintf(3)\fP 風の固有な書式があります。
   ** .dl
-  ** .dt %f .dd Expands to the name of a file containing a message.
-  ** .dt %s .dd Expands to the name of a file containing the signature part
-  ** .          of a \fCmultipart/signed\fP attachment when verifying it.
-  ** .dt %k .dd The key-pair specified with $$smime_default_key
-  ** .dt %c .dd One or more certificate IDs.
-  ** .dt %a .dd The algorithm used for encryption.
-  ** .dt %d .dd The message digest algorithm specified with $$smime_sign_digest_alg.
-  ** .dt %C .dd CA location:  Depending on whether $$smime_ca_location
-  ** .          points to a directory or file, this expands to
-  ** .          ``-CApath $$smime_ca_location'' or ``-CAfile $$smime_ca_location''.
+  ** .dt %f .dd メッセージが入っているファイルの名前に展開します。
+  ** .dt %s .dd \fCmultipart/signed\fP 添付を検証するときに
+                署名パートがっているファイルの名前に展開します。
+  ** .dt %k .dd $$smime_default_key で指定される鍵ペア
+  ** .dt %c .dd 1つ以上の証明書 ID。
+  ** .dt %a .dd 暗号化に使うアルゴリズム。
+  ** .dt %d .dd $$smime_sign_digest_alg で指定されたメッセージダイジェストアルゴリズム。
+  ** .dt %C .dd CA の位置:  $smime_ca_location が ディレクトリかファイルを指定するのに
+                依存。これは、``-CApath $$smime_ca_location'' か
+  **            ``-CAfile $$smime_ca_location'' に展開されます。
   ** .de
   ** .pp
-  ** For examples on how to configure these formats, see the \fCsmime.rc\fP in
-  ** the \fCsamples/\fP subdirectory which has been installed on your system
-  ** alongside the documentation.
-  ** (S/MIME only)
+  ** 上記の形式をどのように設定するかの例は、システムの文書のそばにインストールされて
+  ** いる \fCsamples/\fP サブディレクトリ中の \fCsmime.rc\fP を参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_decrypt_use_default_key",	DT_BOOL, R_NONE, {.l=OPTSDEFAULTDECRYPTKEY}, {.l=1} },
   /*
