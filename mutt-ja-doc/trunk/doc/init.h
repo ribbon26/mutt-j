@@ -3364,38 +3364,39 @@ struct option_t MuttVars[] = {
   { "smime_decrypt_use_default_key",	DT_BOOL, R_NONE, {.l=OPTSDEFAULTDECRYPTKEY}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP (default) this tells mutt to use the default key for decryption. Otherwise,
-  ** if managing multiple certificate-key-pairs, mutt will try to use the mailbox-address
-  ** to determine the key to use. It will ask you to supply a key, if it can't find one.
-  ** (S/MIME only)
+  ** \fIset\fP の場合(既定値)、これは、Muttが暗号化時に既定のキーを使うようにさせます。
+  ** その他の場合は、複数の、証明書-鍵ペア を管理する場合、Mutt は使用する鍵を決めるために、
+  ** メールボックス-アドレスを使おうとします。見つからない場合は、鍵を指定するために
+  ** 問合せをしてきます。
+  ** (S/MIME のみです)
   */
   { "smime_self_encrypt_as",	DT_SYN,  R_NONE, {.p="smime_default_key"}, {.p=0} },
   { "smime_default_key",		DT_STR,	 R_NONE, {.p=&SmimeDefaultKey}, {.p=0} },
   /*
   ** .pp
-  ** This is the default key-pair to use for S/MIME operations, and must be
-  ** set to the keyid (the hash-value that OpenSSL generates) to work properly.
+  ** これは、S/MIME 操作時に使う既定の鍵ペアで、正しく動くためには keyid (OpenSSL が生成する
+  ** ハッシュ値)を設定しなければなりません。
   ** .pp
-  ** It will be used for encryption (see $$postpone_encrypt and
-  ** $$smime_self_encrypt).
+  ** これは暗号化時に使われます($$postpone_encrypt と $$smime_self_encrypt を
+  ** 参照してください)。
   ** .pp
-  ** It will be used for decryption unless $$smime_decrypt_use_default_key
-  ** is \fIunset\fP.
+  ** これは、$$smime_decrypt_use_default_key が \fIunset\fP でない限り、
+  ** 復号化に使われます。
   ** .pp
-  ** It will also be used for signing unless $$smime_sign_as is set.
+  ** また、$$smime_sign_as が設定されていない限り、署名にも使われます。
   ** .pp
-  ** The (now deprecated) \fIsmime_self_encrypt_as\fP is an alias for this
-  ** variable, and should no longer be used.
-  ** (S/MIME only)
+  ** (現在は非推奨ですが) \fIsmime_self_encrypt_as\fP がこの変数の別名ですが、
+  ** もはや使われていません。
+  ** (S/MIME のみです)
   */
   { "smime_encrypt_command", 	DT_STR, R_NONE, {.p=&SmimeEncryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to create encrypted S/MIME messages.
+  ** このコマンドは、暗号化された S/MIME メッセージを作成するのに使われます。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、使用可能な\fCprintf(3)\fP 風の書式については
+  ** $$smime_decrypt_command コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_encrypt_with",	DT_STR,	 R_NONE, {.p=&SmimeCryptAlg}, {.p="aes256"} },
   /*
