@@ -3468,44 +3468,45 @@ struct option_t MuttVars[] = {
   { "smime_pk7out_command", 	DT_STR, R_NONE, {.p=&SmimePk7outCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract PKCS7 structures of S/MIME signatures,
-  ** in order to extract the public X509 certificate(s).
+  ** このコマンドは、 X509 公開鍵を展開するために、S/MIME署名の PKCS7 構造を
+  ** 展開するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_self_encrypt",    DT_BOOL, R_NONE, {.l=OPTSMIMESELFENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, S/MIME encrypted messages will also be encrypted
-  ** using the certificate in $$smime_default_key.
-  ** (S/MIME only)
+  ** \fIset\fP の場合、S/MIME で暗号化されたメッセージは $$smime_default_key
+  ** 中の証明書を使って暗号化することも出来ます。
+  ** (S/MIME のみです)
   */
   { "smime_sign_as",	DT_STR,	 R_NONE, {.p=&SmimeSignAs}, {.p=0} },
   /*
   ** .pp
-  ** If you have a separate key to use for signing, you should set this
-  ** to the signing key. Most people will only need to set $$smime_default_key.
-  ** (S/MIME only)
+  ** 署名のために使う、分離されたキーがある場合、これを署名キーとして設定する
+  ** 必要があります。ほとんどの場合は、$$smime_default_key を設定するだけで済みます。
+  ** (S/MIME のみです)
   */
   { "smime_sign_command", 	DT_STR, R_NONE, {.p=&SmimeSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to created S/MIME signatures of type
-  ** \fCmultipart/signed\fP, which can be read by all mail clients.
+  ** このコマンドは、すべてのメールクライアントで読むことが出来る、\fCmultipart/signed\fP
+  ** タイプの S/MIME 署名を作成するのに使われます。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.  NOTE: %c and %k will default
-  ** to $$smime_sign_as if set, otherwise $$smime_default_key.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。注意: %c と %k は、設定されている場合、
+  ** 既定で $$smime_sign_as となり、その他の場合は、$$smime_default_key となる
+  ** ことに注意してください。
+  ** (S/MIME のみです)
   */
   { "smime_sign_digest_alg",	DT_STR,	 R_NONE, {.p=&SmimeDigestAlg}, {.p="sha256"} },
   /*
   ** .pp
-  ** This sets the algorithm that should be used for the signature message digest.
-  ** Valid choices are ``md5'', ``sha1'', ``sha224'', ``sha256'', ``sha384'', ``sha512''.
-  ** (S/MIME only)
+  ** これは、メッセージダイジェストに署名するために使われるアルゴリズムを設定します。
+  ** 有効なものは、``md5'', ``sha1'', ``sha224'', ``sha256'', ``sha384'', ``sha512'' です。
+  ** (S/MIME のみです)
   */
   { "smime_sign_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeSignOpaqueCommand}, {.p=0} },
   /*
