@@ -3401,70 +3401,69 @@ struct option_t MuttVars[] = {
   { "smime_encrypt_with",	DT_STR,	 R_NONE, {.p=&SmimeCryptAlg}, {.p="aes256"} },
   /*
   ** .pp
-  ** This sets the algorithm that should be used for encryption.
-  ** Valid choices are ``aes128'', ``aes192'', ``aes256'', ``des'', ``des3'', ``rc2-40'', ``rc2-64'', ``rc2-128''.
-  ** (S/MIME only)
+  ** これは、暗号化に使うアルゴリズムを設定します。有効な選択肢は
+  ** ``aes128'', ``aes192'', ``aes256'', ``des'', ``des3'', ``rc2-40'', ``rc2-64'',``rc2-128'' です。
+  ** (S/MIME のみです)
   */
   { "smime_get_cert_command", 	DT_STR, R_NONE, {.p=&SmimeGetCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract X509 certificates from a PKCS7 structure.
+  ** このコマンドは、PKCS7 構造から X509 証明書を抽出するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_get_cert_email_command", 	DT_STR, R_NONE, {.p=&SmimeGetCertEmailCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract the mail address(es) used for storing
-  ** X509 certificates, and for verification purposes (to check whether the
-  ** certificate was issued for the sender's mailbox).
+  ** このコマンドは、X509 証明書を格納するのに使われるメールアドレスを抽出するのと、
+  ** 検証のため(証明書が送信者のメールボックス用に発行されいるか否かをチェックするため)
+  ** に使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_get_signer_cert_command", 	DT_STR, R_NONE, {.p=&SmimeGetSignerCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract only the signers X509 certificate from a S/MIME
-  ** signature, so that the certificate's owner may get compared to the
-  ** email's ``From:'' field.
+  ** このコマンドは、S/MIME 署名から 署名者の X509 証明書のみを抽出するのに使うので、
+  ** 証明書の所有者は、メールの ``From:'' フィールドと比較することが出来ます。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_import_cert_command", 	DT_STR, R_NONE, {.p=&SmimeImportCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to import a certificate via smime_keys.
+  ** このコマンドは、smime_keys から証明書をインポートするのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_is_default", DT_BOOL,  R_NONE, {.l=OPTSMIMEISDEFAULT}, {.l=0} },
   /*
   ** .pp
-  ** The default behavior of mutt is to use PGP on all auto-sign/encryption
-  ** operations. To override and to use OpenSSL instead this must be \fIset\fP.
-  ** However, this has no effect while replying, since mutt will automatically
-  ** select the same application that was used to sign/encrypt the original
-  ** message.  (Note that this variable can be overridden by unsetting $$crypt_autosmime.)
-  ** (S/MIME only)
+  ** Mutt の既定の動作は、すべての自動署名/暗号化操作に PGP を使います。これの代わりに
+  ** OpenSSL を使って上書きするには、これを \fIset\fP しなければなりません。
+  ** しかし、これは返信時には無効なので、Mutt は自動的に、オリジナルのメッセージの
+  ** 署名/暗号化に使われる同じアプリケーションを選択します(この変数は
+  ** $$crypt_autosmime を設定しないことにより上書きできます)。
+  ** (S/MIME のみです)
   */
   { "smime_keys",		DT_PATH, R_NONE, {.p=&SmimeKeys}, {.p=0} },
   /*
   ** .pp
-  ** Since for S/MIME there is no pubring/secring as with PGP, mutt has to handle
-  ** storage and retrieval of keys/certs by itself. This is very basic right now,
-  ** and stores keys and certificates in two different directories, both
-  ** named as the hash-value retrieved from OpenSSL. There is an index file
-  ** which contains mailbox-address keyid pair, and which can be manually
-  ** edited. This option points to the location of the private keys.
-  ** (S/MIME only)
+  ** S/MIME には PGP における pubring/secring がないため、Mutt は鍵や証明書の格納
+  ** および取得を自分で扱わなければなりません。この仕組みはとても
+  ** 基本的なもので、鍵と証明書を二つの異なる ディレクトリに格納し、ともに OpenSSL で
+  ** 取得したハッシュ値をファイル名にしています。各ディレクトリには index ファイルがあって、
+  ** メールアドレスと鍵 ID の組み合わせが入っていて、手動で編集することができます。
+  ** このオプションは秘密鍵の位置を示すものです。
+  ** (S/MIME のみです)
   */
   { "smime_pk7out_command", 	DT_STR, R_NONE, {.p=&SmimePk7outCommand}, {.p=0} },
   /*
