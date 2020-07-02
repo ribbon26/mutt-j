@@ -3547,15 +3547,13 @@ struct option_t MuttVars[] = {
   { "smtp_authenticators", DT_STR, R_NONE, {.p=&SmtpAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** This is a colon-delimited list of authentication methods mutt may
-  ** attempt to use to log in to an SMTP server, in the order mutt should
-  ** try them.  Authentication methods are any SASL mechanism, e.g.
-  ** ``digest-md5'', ``gssapi'' or ``cram-md5''.
-  ** This option is case-insensitive. If it is ``unset''
-  ** (the default) mutt will try all available methods, in order from
-  ** most-secure to least-secure.
+  ** これは、Mutt が SMTP サーバに ログインするのに使う、コロンで分離された
+  ** 認証方法の一覧で、この順で Mutt が試みます。認証方法は任意の SASL メカニズム、
+  ** たとえば、``digest-md5'', ``gssapi'' 又は ``cram-md5'' です。このオプションは
+  ** 大文字小文字を区別しないので、``unset'' の場合は(既定値)、Mutt は
+  ** すべての有効な方式をもっともセキュアなものからそうでないものの順で試します。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set smtp_authenticators="digest-md5:cram-md5"
   ** .te
@@ -3563,36 +3561,34 @@ struct option_t MuttVars[] = {
   { "smtp_oauth_refresh_command", DT_STR, R_NONE, {.p=&SmtpOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** The command to run to generate an OAUTH refresh token for
-  ** authorizing your connection to your SMTP server.  This command will be
-  ** run on every connection attempt that uses the OAUTHBEARER authentication
-  ** mechanism.  See ``$oauth'' for details.
+  ** SMTP サーバへの接続を認証するための、 OAUTH リフレッシュトークンを生成する
+  ** コマンドです。このコマンドは、各接続時に、OAUTHBEARER 認証メカニズムを使って
+  ** 実行されます。詳細は ``$oauth'' を参照してください。
   */
   { "smtp_pass", 	DT_STR,  R_NONE, {.p=&SmtpPass}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the password for your SMTP account.  If \fIunset\fP, Mutt will
-  ** prompt you for your password when you first send mail via SMTP.
-  ** See $$smtp_url to configure mutt to send mail via SMTP.
+  ** SMTP アカウントのパスワードを指定します。\fIunset\fP の場合、Mutt は
+  ** SMTP 経由で Mutt が差書にメールを送信する時にパスワードを聞いてきます。
+  ** Mutt が SMTP 経由でメールを送るための設定方法は $$smtp_url も参照してください。
   ** .pp
-  ** \fBWarning\fP: you should only use this option when you are on a
-  ** fairly secure machine, because the superuser can read your muttrc even
-  ** if you are the only one who can read the file.
+  ** \fB注意\fP: かなり安全なマシン上で使う時のみこのオプションを使ってください。
+  ** なぜなら、スーパーユーザは、このファイルを自分自身のみが読めるようにしていても、
+  ** muttrc を読み取ることが出来るからです。
   */
   { "smtp_url",		DT_STR, R_NONE, {.p=&SmtpUrl}, {.p=0} },
   /*
   ** .pp
-  ** Defines the SMTP smarthost where sent messages should relayed for
-  ** delivery. This should take the form of an SMTP URL, e.g.:
+  ** 配送のために送信されたメッセージが中継される SMTP スマートホストを定義
+  ** します。これは SMTP URL 形式をとります。例えば以下のようになります。
   ** .ts
   ** smtp[s]://[user[:pass]@]host[:port]
   ** .te
   ** .pp
-  ** where ``[...]'' denotes an optional part.
-  ** Setting this variable overrides the value of the $$sendmail
-  ** variable.
+  ** ここで、``[...]'' はオプションパートに依存します。
+  ** この変数を設定すると、$$sendmail 変数の値を上書きします。
   ** .pp
-  ** Also see $$write_bcc.
+  ** $$write_bcc も参照してください。
   */
 #endif /* USE_SMTP */
   { "sort",		DT_SORT, R_INDEX|R_RESORT, {.p=&Sort}, {.l=SORT_DATE} },
