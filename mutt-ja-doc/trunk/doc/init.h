@@ -3511,39 +3511,37 @@ struct option_t MuttVars[] = {
   { "smime_sign_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeSignOpaqueCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to created S/MIME signatures of type
-  ** \fCapplication/x-pkcs7-signature\fP, which can only be handled by mail
-  ** clients supporting the S/MIME extension.
+  ** このコマンドは、S/MIME 拡張をサポートするメールクライアントでのみ扱えることができる
+  ** \fCapplication/x-pkcs7-signature\fP タイプの S/MIME 署名を作成するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_timeout",		DT_LNUM,	 R_NONE, {.p=&SmimeTimeout}, {.l=300} },
   /*
   ** .pp
-  ** The number of seconds after which a cached passphrase will expire if
-  ** not used.
-  ** (S/MIME only)
+  ** キャッシュされたパスフレーズが使用されない場合、満了するまでの秒数を指定します。
+  ** (S/MIME のみです)
   */
   { "smime_verify_command", 	DT_STR, R_NONE, {.p=&SmimeVerifyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify S/MIME signatures of type \fCmultipart/signed\fP.
+  ** このコマンドは、\fCmultipart/signed\fPタイプの S/MIME 署名を検証するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_verify_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeVerifyOpaqueCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify S/MIME signatures of type
-  ** \fCapplication/x-pkcs7-mime\fP.
+  ** このコマンドは \fCapplication/x-pkcs7-mime\fP タイプの S/MIME 署名を検証するのに
+  ** 使います。  
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
 #ifdef USE_SMTP
   { "smtp_authenticators", DT_STR, R_NONE, {.p=&SmtpAuthenticators}, {.p=0} },
