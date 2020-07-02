@@ -3594,13 +3594,13 @@ struct option_t MuttVars[] = {
   { "sort",		DT_SORT, R_INDEX|R_RESORT, {.p=&Sort}, {.l=SORT_DATE} },
   /*
   ** .pp
-  ** Specifies how to sort messages in the ``index'' menu.  Valid values
-  ** are:
+  ** どのように、``index'' メニュー中でメッセージを整列するかを指定します。
+  ** 有効な値は以下の通りです。
   ** .il
-  ** .dd date or date-sent
+  ** .dd date 又は date-sent
   ** .dd date-received
   ** .dd from
-  ** .dd mailbox-order (unsorted)
+  ** .dd mailbox-order (未整列)
   ** .dd score
   ** .dd size
   ** .dd spam
@@ -3609,45 +3609,44 @@ struct option_t MuttVars[] = {
   ** .dd to
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sort=reverse-date-sent\fP'').
+  ** 逆順整列のために、接頭辞 ``reverse-'' を使う事も出来ます
+  ** (例: ``\fCset sort=reverse-date-sent\fP'')。
   */
   { "sort_alias",	DT_SORT|DT_SORT_ALIAS,	R_NONE,	{.p=&SortAlias}, {.l=SORT_ALIAS} },
   /*
   ** .pp
-  ** Specifies how the entries in the ``alias'' menu are sorted.  The
-  ** following are legal values:
+  ** どのように ``alias'' メニューのエントリを整列するかを指定します。
+  ** 使用できる値は以下の通りです。
   ** .il
-  ** .dd address (sort alphabetically by email address)
-  ** .dd alias (sort alphabetically by alias name)
-  ** .dd unsorted (leave in order specified in .muttrc)
+  ** .dd address (メールアドレスの英語順で整列)
+  ** .dd alias (別名の英語順で整列)
+  ** .dd unsorted (.muttrc で指定された順そのまま)
   ** .ie
   */
   { "sort_aux",		DT_SORT|DT_SORT_AUX, R_INDEX|R_RESORT_BOTH, {.p=&SortAux}, {.l=SORT_DATE} },
   /*
   ** .pp
-  ** This provides a secondary sort for messages in the ``index'' menu, used
-  ** when the $$sort value is equal for two messages.
+  ** これは、$$sort の値が2つのメッセージに対して同じだった場合に、``index''
+  ** メニュー中で使われる、2番目のメッセージ整列方法を提供します。
   ** .pp
-  ** When sorting by threads, this variable controls how threads are sorted
-  ** in relation to other threads, and how the branches of the thread trees
-  ** are sorted.  This can be set to any value that $$sort can, except
-  ** ``threads'' (in that case, mutt will just use ``date-sent'').  You can also
-  ** specify the ``last-'' prefix in addition to the ``reverse-'' prefix, but ``last-''
-  ** must come after ``reverse-''.  The ``last-'' prefix causes messages to be
-  ** sorted against its siblings by which has the last descendant, using
-  ** the rest of $$sort_aux as an ordering.  For instance,
+  ** スレッドで整列しているとき、この変数は、他のスレッドとの関係でスレッドを整列する
+  ** 方法と、どのようにスレッドツリーのブランチを整列するかを制御します。
+  ** これは、``threads'' (この場合、Mutt は ``date-sent'' のみを使用します) 以外の、
+  ** $$sort で使える任意の値を設定できます。また、``reverse-'' に追加して ``last-''
+  ** 接頭辞を指定することも出来ますが、``last-'' 接頭辞は ``reverse-'' の後に置かなければ
+  ** なりません。``last-'' 接頭辞は、最後の子孫を持つ兄弟に対して、残りの $$sort_aux を
+  ** 順番として使用し、メッセージを整列します。 
+  ** たとえば、
   ** .ts
   ** set sort_aux=last-date-received
   ** .te
   ** .pp
-  ** would mean that if a new message is received in a
-  ** thread, that thread becomes the last one displayed (or the first, if
-  ** you have ``\fCset sort=reverse-threads\fP''.)
+  ** は、新規メッセージがスレッド中にある場合、そのスレッドは最後に表示される
+  ** ものになります(又は、``\fCset sort=reverse-threads\fP'' を設定している場合は
+  ** 最初のスレッド)。
   ** .pp
-  ** Note: For reversed-threads $$sort
-  ** order, $$sort_aux is reversed again (which is not the right thing to do,
-  ** but kept to not break any existing configuration setting).
+  ** 注意: 逆順スレッドの $$sort 順では、$$sort_aux は再度逆順になります
+  ** (これは正しくはないのですが、既存の設定を壊さないようにしています)。
   */
   { "sort_browser",	DT_SORT|DT_SORT_BROWSER, R_NONE, {.p=&BrowserSort}, {.l=SORT_ALPHA} },
   /*
