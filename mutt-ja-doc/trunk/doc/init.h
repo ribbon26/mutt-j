@@ -3653,8 +3653,10 @@ struct option_t MuttVars[] = {
   ** .pp
   ** Specifies how to sort entries in the file browser.  By default, the
   ** entries are sorted alphabetically.  Valid values:
+  ** ファイルブラウザ中でどのようにエントリを整列させるかを指定します。既定では
+  ** エントリは英語順に整列されます。有効な値は以下の通りです。
   ** .il
-  ** .dd alpha (alphabetically)
+  ** .dd alpha (英語順)
   ** .dd count
   ** .dd date
   ** .dd size
@@ -3662,8 +3664,8 @@ struct option_t MuttVars[] = {
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sort_browser=reverse-date\fP'').
+  ** 逆順で整列したい場合には、``reverse-'' 接頭辞を使う事が出来ます
+  ** (例 ``\fCset sort_browser=reverse-date\fP'')。
   */
   { "sort_re",		DT_BOOL, R_INDEX|R_RESORT|R_RESORT_INIT, {.l=OPTSORTRE}, {.l=1} },
   /*
