@@ -3710,42 +3710,42 @@ struct option_t MuttVars[] = {
   { "ssl_client_cert", DT_PATH, R_NONE, {.p=&SslClientCert}, {.p=0} },
   /*
   ** .pp
-  ** The file containing a client certificate and its associated private
   ** key.
+  ** クライアントとそれに関連づけられている秘密鍵が入っているファイル。
   */
   { "ssl_force_tls",		DT_BOOL, R_NONE, {.l=OPTSSLFORCETLS}, {.l=0} },
   /*
   ** .pp
-  ** If this variable is \fIset\fP, Mutt will require that all connections
-  ** to remote servers be encrypted. Furthermore it will attempt to
-  ** negotiate TLS even if the server does not advertise the capability,
-  ** since it would otherwise have to abort the connection anyway. This
-  ** option supersedes $$ssl_starttls.
+  ** この変数が、 \fIset\fP だった場合、Mutt は、リモートサーバに対するすべての接続
+  ** を暗号化することを必要とします。さらに、サーバが、ケーパビリティを広告して
+  ** いなくても、TLS でネゴシエートしようとし、それ以外は接続を中止します。
+  ** このオプションは $$ssl_starttls に優先します。
   */
 # ifdef USE_SSL_GNUTLS
   { "ssl_min_dh_prime_bits", DT_NUM, R_NONE, {.p=&SslDHPrimeBits}, {.l=0} },
   /*
   ** .pp
-  ** This variable specifies the minimum acceptable prime size (in bits)
-  ** for use in any Diffie-Hellman key exchange. A value of 0 will use
-  ** the default from the GNUTLS library. (GnuTLS only)
+  ** この変数は、Diffie-Hellman カギ交換で使われる、(ビット単位の)最小の許容
+  ** 素数サイズを指定します。値が 0 の倍は、GNUTLS ライブラリからの既定値を
+  ** 使います。(GnuTLS のみです)
   */
 # endif /* USE_SSL_GNUTLS */
   { "ssl_starttls", DT_QUAD, R_NONE, {.l=OPT_SSLSTARTTLS}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** If \fIset\fP (the default), mutt will attempt to use \fCSTARTTLS\fP on servers
-  ** advertising the capability. When \fIunset\fP, mutt will not attempt to
-  ** use \fCSTARTTLS\fP regardless of the server's capabilities.
+  ** \fIset\fP (既定値)の場合、Mutt は、サーバ上でケーパビリティを広告している
+  ** \fCSTARTTLS\fP を使おうとします。 \fIunset\fP の場合、Mutt はサーバの
+  ** ケーパビリティにかかわらず \fCSTARTTLS\fP を使おうとしません。
   */
 # ifdef USE_SSL_OPENSSL
   { "ssl_use_sslv2", DT_BOOL, R_NONE, {.l=OPTSSLV2}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use SSLv2 when communicating with servers that
-  ** request it. \fBN.B. As of 2011, SSLv2 is considered insecure, and using
-  ** is inadvisable. See https://tools.ietf.org/html/rfc6176 .\fP
-  ** (OpenSSL only)
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** SSLv2 を使おうとします。
+  ** \fB注意: 2011年の時点で、SSLv2 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc6176 を参照してください。\fP
+  ** (OpenSSL のみです)
   */
 # endif /* defined USE_SSL_OPENSSL */
   { "ssl_use_sslv3", DT_BOOL, R_NONE, {.l=OPTSSLV3}, {.l=0} },
