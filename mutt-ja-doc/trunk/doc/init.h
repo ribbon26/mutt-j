@@ -3670,14 +3670,13 @@ struct option_t MuttVars[] = {
   { "sort_re",		DT_BOOL, R_INDEX|R_RESORT|R_RESORT_INIT, {.l=OPTSORTRE}, {.l=1} },
   /*
   ** .pp
-  ** This variable is only useful when sorting by threads with
-  ** $$strict_threads \fIunset\fP.  In that case, it changes the heuristic
-  ** mutt uses to thread messages by subject.  With $$sort_re \fIset\fP, mutt will
-  ** only attach a message as the child of another message by subject if
-  ** the subject of the child message starts with a substring matching the
-  ** setting of $$reply_regexp.  With $$sort_re \fIunset\fP, mutt will attach
-  ** the message whether or not this is the case, as long as the
-  ** non-$$reply_regexp parts of both messages are identical.
+  ** この変数は、$$strict_threads が \fIunset\fP 時にスレッドによる整列の時にのみ
+  ** 便利です。この場合、Mutt が使う発見的手法が、題名でスレッドにするように変更になります。
+  ** $$sort_re が \fIset\fP の時は、Mutt は、子メッセージの題名が、$$reply_regexpの
+  ** 設定と一致する部分文字列で始まっていた場合にのみ、題名で、他のメッセージの子供として
+  ** メッセージを接続します。$$sort_re が \fIunset\fP の場合、Mutt は、$$reply_regexp
+  ** 部分以外の、両方のメッセージが同じである限り、この場合の時もそうでないときも、
+  ** メッセージを接続します。
   */
   { "spam_separator",   DT_STR, R_NONE, {.p=&SpamSep}, {.p=","} },
   /*
