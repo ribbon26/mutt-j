@@ -3681,30 +3681,27 @@ struct option_t MuttVars[] = {
   { "spam_separator",   DT_STR, R_NONE, {.p=&SpamSep}, {.p=","} },
   /*
   ** .pp
-  ** This variable controls what happens when multiple spam headers
-  ** are matched: if \fIunset\fP, each successive header will overwrite any
-  ** previous matches value for the spam label. If \fIset\fP, each successive
-  ** match will append to the previous, using this variable's value as a
-  ** separator.
+  ** この変数は、複数のスパムヘッダが一致した場合に、何をするかを制御します。
+  ** \fIunset\fP の場合、この変数の値をセパレータとして、各連続した一致は、
+  ** spam ラベルの以前の一致した値を上書きします。
   */
   { "spoolfile",	DT_PATH, R_NONE, {.p=&Spoolfile}, {.p=0} },
   /*
   ** .pp
-  ** If your spool mailbox is in a non-default place where Mutt cannot find
-  ** it, you can specify its location with this variable.  Mutt will
-  ** initially set this variable to the value of the environment
-  ** variable \fC$$$MAIL\fP or \fC$$$MAILDIR\fP if either is defined.
+  ** スプールメールボックスが、Mutt が見つけられない既定値の場所にない場合、
+  ** その位置をこの変数で指定します。Mutt は、どちらかが使われている場合、
+  ** 環境変数 \fC$$$MAIL\fP 又は \fC$$$MAILDIR\fP の値を起動時にこの変数に
+  ** 設定します。 
   */
 #if defined(USE_SSL)
 #ifdef USE_SSL_GNUTLS
   { "ssl_ca_certificates_file", DT_PATH, R_NONE, {.p=&SslCACertFile}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies a file containing trusted CA certificates.
-  ** Any server certificate that is signed with one of these CA
-  ** certificates is also automatically accepted. (GnuTLS only)
+  ** この変数は信頼された CA 証明書を含むファイルを指定します。
+  ** そのCA 証明書の1つで署名された任意のサーバも自動的に許可されます。(GnuTLS のみです)
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
   ** .te
