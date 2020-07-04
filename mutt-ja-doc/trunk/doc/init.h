@@ -3751,35 +3751,40 @@ struct option_t MuttVars[] = {
   { "ssl_use_sslv3", DT_BOOL, R_NONE, {.l=OPTSSLV3}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use SSLv3 when communicating with servers that
-  ** request it. \fBN.B. As of 2015, SSLv3 is considered insecure, and using
-  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** SSLv3 を使おうとします。
+  ** \fB注意: 2015年の時点で、SSLv3 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
   */
   { "ssl_use_tlsv1", DT_BOOL, R_NONE, {.l=OPTTLSV1}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.0 when communicating with servers that
-  ** request it. \fBN.B. As of 2015, TLSv1.0 is considered insecure, and using
-  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.0 を使おうとします。
+  ** \fB注意: 2015年の時点で、TLSv1.0 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
+
   */
   { "ssl_use_tlsv1_1", DT_BOOL, R_NONE, {.l=OPTTLSV1_1}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.1 when communicating with servers that
-  ** request it. \fBN.B. As of 2015, TLSv1.1 is considered insecure, and using
-  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.1 を使おうとします。
+  ** \fB注意: 2015年の時点で、TLSv1.1 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
+
   */
   { "ssl_use_tlsv1_2", DT_BOOL, R_NONE, {.l=OPTTLSV1_2}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.2 when communicating with servers that
-  ** request it.
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.2 を使おうとします。
   */
   { "ssl_use_tlsv1_3", DT_BOOL, R_NONE, {.l=OPTTLSV1_3}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.3 when communicating with servers that
-  ** request it.
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.3 を使おうとします。
   */
 #ifdef USE_SSL_OPENSSL
   { "ssl_usesystemcerts", DT_BOOL, R_NONE, {.l=OPTSSLSYSTEMCERTS}, {.l=1} },
