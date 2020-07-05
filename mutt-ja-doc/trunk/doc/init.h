@@ -3884,70 +3884,66 @@ struct option_t MuttVars[] = {
   ** .dt %*X .dd 埋め草として ``X'' を使って soft-fill
   ** .de
   ** .pp
-  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
+  ** ``soft-fill'' の説明については、$$index_format のドキュメントを参照してください。
   ** .pp
-  ** * = can be optionally printed if nonzero
+  ** * = 非0 の場合にオプションで表示されます
   ** .pp
-  ** Some of the above sequences can be used to optionally print a string
-  ** if their value is nonzero.  For example, you may only want to see the
-  ** number of flagged messages if such messages exist, since zero is not
-  ** particularly meaningful.  To optionally print a string based upon one
-  ** of the above sequences, the following construct is used:
+  ** 上記の書式の一部は値が非0 の時にオプションで表示される文字列として使われます。
+  ** 例えば、そのようなメッセージがある場合に、フラグ付きのメッセージ数のみを
+  ** 表示したい場合、0 は特に意味がありません。上記の書式のどれかをベースにした
+  ** 文字列をオプションで表示するために、以下の構造が使われます。
   ** .pp
   **  \fC%?<sequence_char>?<optional_string>?\fP
   ** .pp
-  ** where \fIsequence_char\fP is a character from the table above, and
-  ** \fIoptional_string\fP is the string you would like printed if
-  ** \fIsequence_char\fP is nonzero.  \fIoptional_string\fP \fBmay\fP contain
-  ** other sequences as well as normal text, but you may \fBnot\fP nest
-  ** optional strings.
+  ** ここで、\fIsequence_char\fP は上記のテーブルからの文字で、\fIoptional_string\fP は
+  ** \fIsequence_char\fP が非0 の場合に表示したい文字列です。 \fIoptional_string\fP は
+  ** 通常のテキストと同じように他の書式を含むことが\fBできますが\fP、オプション
+  ** 文字列をネストすることは\fB出来ません\fP。
   ** .pp
-  ** Here is an example illustrating how to optionally print the number of
-  ** new messages in a mailbox:
+  ** 以下は、どのようにメールボックス中で新規メッセージをオプションで表示するかを
+  ** 示したものです。
   ** .pp
   ** \fC%?n?%n new messages.?\fP
   ** .pp
-  ** You can also switch between two strings using the following construct:
+  ** 以下の書式を使う事で、2つの文字列間で切替をすることも出来ます。
   ** .pp
   ** \fC%?<sequence_char>?<if_string>&<else_string>?\fP
   ** .pp
-  ** If the value of \fIsequence_char\fP is non-zero, \fIif_string\fP will
-  ** be expanded, otherwise \fIelse_string\fP will be expanded.
+  ** \fIsequence_char\fP の値が非0の場合、 \fIif_string\fP は展開され、
+  ** との場合は、\fIelse_string\fP が展開されます。
   ** .pp
-  ** You can force the result of any \fCprintf(3)\fP-like sequence to be lowercase
-  ** by prefixing the sequence character with an underscore (``_'') sign.
-  ** For example, if you want to display the local hostname in lowercase,
-  ** you would use: ``\fC%_h\fP''.
+  ** 下線 (``_'') を一連の文字の前に置くことで、任意の \fCprintf(3)\fP 風の
+  ** 書式の結果を強制的に小文字にすることが出来ます。たとえば、小文字で
+  ** ローカルホスト名を表示したい場合、``\fC%_h\fP'' を使います。
   ** .pp
-  ** If you prefix the sequence character with a colon (``:'') character, mutt
-  ** will replace any dots in the expansion by underscores. This might be helpful
-  ** with IMAP folders that don't like dots in folder names.
+  ** コロン (``:'')文字を一連の文字の前に前置した場合、Mutt は展開時に下線で
+  ** 任意のドットを置き換えます。これはフォルダ名でドットを好まない IMAP フォルダ
+  ** で便利かもしれません。
   */
   { "status_on_top",	DT_BOOL, R_REFLOW, {.l=OPTSTATUSONTOP}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable causes the ``status bar'' to be displayed on
-  ** the first line of the screen rather than near the bottom. If $$help
-  ** is \fIset\fP, too it'll be placed at the bottom.
+  ** この変数を設定すると、最下部のそばに置く代わりに、画面の最初の行に、
+  ** ``status bar'' を表示するようになります。$$help が \fIset\fP の場合、
+  ** この場合も最下部に表示されます。
   */
   { "strict_threads",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTSTRICTTHREADS}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, threading will only make use of the ``In-Reply-To'' and
-  ** ``References:'' fields when you $$sort by message threads.  By
-  ** default, messages with the same subject are grouped together in
-  ** ``pseudo threads.''. This may not always be desirable, such as in a
-  ** personal mailbox where you might have several unrelated messages with
-  ** the subjects like ``hi'' which will get grouped together. See also
-  ** $$sort_re for a less drastic way of controlling this
-  ** behavior.
+  ** \fIset\fP の場合、スレッド化は、$$sort がメッセージのスレッドの時に、
+  **  ``In-Reply-To'' と ``References:'' のみを使用して行います。既定では、
+  ** 同じ題名のメッセージは、``pseudo threads.'' にいっしょにグループ化されます。
+  ** これは、個人のメールボックスで、``hi'' と言うような題名のいくつかの未読
+  ** メッセージがいっしょにグループ化されてしまうこともあるため、常時好ましいとは
+  ** 言えません。この動作を制御する劇的な方法については、$$sort_re も
+  ** 参照してください。
   */
   { "suspend",		DT_BOOL, R_NONE, {.l=OPTSUSPEND}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, mutt won't stop when the user presses the terminal's
-  ** \fIsusp\fP key, usually ``^Z''. This is useful if you run mutt
-  ** inside an xterm using a command like ``\fCxterm -e mutt\fP''.
+  ** \fIunset\fP の場合、Mutt は通常 ``^Z'' の端末の \fIsusp\fP キーを押しても
+  ** 停止しません。これは、``\fCxterm -e mutt\fP'' のようなコマンドで、Mutt を  xterm
+  ** 内で実行している場合に便利です。
   */
   { "text_flowed", 	DT_BOOL, R_NONE, {.l=OPTTEXTFLOWED},  {.l=0} },
   /*
