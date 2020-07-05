@@ -3790,104 +3790,98 @@ struct option_t MuttVars[] = {
   { "ssl_usesystemcerts", DT_BOOL, R_NONE, {.l=OPTSSLSYSTEMCERTS}, {.l=1} },
   /*
   ** .pp
-  ** If set to \fIyes\fP, mutt will use CA certificates in the
-  ** system-wide certificate store when checking if a server certificate
-  ** is signed by a trusted CA. (OpenSSL only)
+  ** \fIyes\fP に設定した場合、Mutt は、サーバ証明書が信頼されたCA によって署名
+  ** されているかをチェックするとき、システム全体の証明書ストア中にある
+  ** CA 証明書を使います。(OpenSSLのみ)
   */
 #endif
   { "ssl_verify_dates", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYDATES}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP (the default), mutt will not automatically accept a server
-  ** certificate that is either not yet valid or already expired. You should
-  ** only unset this for particular known hosts, using the
-  ** \fC$<account-hook>\fP function.
+  ** \fIset\fP の場合(既定値)、Mutt は、まだ有効になっていないか、すでに満了に
+  ** なっているサーバ証明書を自動的に受け入れません。\fC$<account-hook>\fP 機能を
+  ** 使って、特定の既知のホストに対して、のみこれを設定解除する必要があります。
   */
   { "ssl_verify_host", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYHOST}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP (the default), mutt will not automatically accept a server
-  ** certificate whose host name does not match the host used in your folder
-  ** URL. You should only unset this for particular known hosts, using
-  ** the \fC$<account-hook>\fP function.
+  ** \fIset\fP の場合(既定値)、Mutt は、ホスト名がフォルダURL で使われている
+  ** ホストと一致しないサーバ証明書を自動的に受け入れません。\fC$<account-hook>\fP 機能を
+  ** 使って、特定の既知のホストに対して、のみこれを設定解除する必要があります。
   */
 # ifdef USE_SSL_OPENSSL
 #  ifdef HAVE_SSL_PARTIAL_CHAIN
   { "ssl_verify_partial_chains", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYPARTIAL}, {.l=0} },
   /*
   ** .pp
-  ** This option should not be changed from the default unless you understand
-  ** what you are doing.
+  ** このオプションは、これが何をするかを理解していない限り、既定値から変更すべき
+  ** ではありません。
   ** .pp
-  ** Setting this variable to \fIyes\fP will permit verifying partial
-  ** certification chains, i. e. a certificate chain where not the root,
-  ** but an intermediate certificate CA, or the host certificate, are
-  ** marked trusted (in $$certificate_file), without marking the root
-  ** signing CA as trusted.
+  ** この変数を \fIyes\fP にすると、部分的な認証チェーンの検証を出来るようにします。
+  ** すなわち、ルートでないが中間証明書CA 又はホスト証明書が信頼済みとして
+  ** マークされ($$certificate_file中で)、ルート署名CA をマークすることなしの認証チェーン
+  ** です。
   ** .pp
-  ** (OpenSSL 1.0.2b and newer only).
+  ** (OpenSSL 1.0.2b あるいはそれ以降のみ)。
   */
 #  endif /* defined HAVE_SSL_PARTIAL_CHAIN */
 # endif /* defined USE_SSL_OPENSSL */
   { "ssl_ciphers", DT_STR, R_NONE, {.p=&SslCiphers}, {.p=0} },
   /*
   ** .pp
-  ** Contains a colon-seperated list of ciphers to use when using SSL.
-  ** For OpenSSL, see ciphers(1) for the syntax of the string.
+  ** コロンで分離された、SSL で使う、暗号の一覧を含みます。
+  ** OpenSSL では、文字列の文法については、ciphers(1) を参照してください。
   ** .pp
-  ** For GnuTLS, this option will be used in place of "NORMAL" at the
-  ** start of the priority string.  See gnutls_priority_init(3) for the
-  ** syntax and more details. (Note: GnuTLS version 2.1.7 or higher is
-  ** required.)
+  ** GnuTLS では、このオプションは、優先文字列の最初にある "NORMAL" の代わりに
+  ** 使われます。詳細および文法については、gnutls_priority_init(3) を参照して
+  ** 下さい(注意: GnuTLS バージョン 2.1.7 あるいはそれ以降が必要です)。
   */
 #endif /* defined(USE_SSL) */
   { "status_chars",	DT_MBCHARTBL, R_BOTH, {.p=&StChars}, {.p="-*%A"} },
   /*
   ** .pp
-  ** Controls the characters used by the ``%r'' indicator in
-  ** $$status_format. The first character is used when the mailbox is
-  ** unchanged. The second is used when the mailbox has been changed, and
-  ** it needs to be resynchronized. The third is used if the mailbox is in
-  ** read-only mode, or if the mailbox will not be written when exiting
-  ** that mailbox (You can toggle whether to write changes to a mailbox
-  ** with the \fC<toggle-write>\fP operation, bound by default to ``%''). The fourth
-  ** is used to indicate that the current folder has been opened in attach-
-  ** message mode (Certain operations like composing a new mail, replying,
-  ** forwarding, etc. are not permitted in this mode).
+  ** $$status_format 中での``%r'' インジケータによって使われる文字を制御します。
+  ** 最初の文字は、メールボックスが変更されていないときに使われます。2番目は、
+  ** メールボックスが変更され、再同期が必要なときに使われます。3番目は、メールボックスが
+  ** リードオンリモードか、そのメールボックスを抜けるときに書き込めない場合に使われます
+  ** (既定で ``%'' に割り当てられている \fC<toggle-write>\fP 操作によってメールボックスの
+  ** 書き込み状態をON/OFFできます)。4番目は現在のフォルダが添付メッセージモード
+  ** でオープンされているかを表示するのに使われます(新規メールの編集、返信、転送
+  ** などのような特定の操作はこのモードでは許可されません)。
   */
   { "status_format",	DT_STR,	 R_BOTH, {.p=&Status}, {.p="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"} },
   /*
   ** .pp
-  ** Controls the format of the status line displayed in the ``index''
-  ** menu.  This string is similar to $$index_format, but has its own
-  ** set of \fCprintf(3)\fP-like sequences:
+  ** ``index'' メニューで表示されるステータス行のフォーマットを制御します。
+  ** この文字列は $$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
+  ** 持っています。
   ** .dl
-  ** .dt %b  .dd number of mailboxes with new mail *
-  ** .dt %d  .dd number of deleted messages *
-  ** .dt %f  .dd the full pathname of the current mailbox
-  ** .dt %F  .dd number of flagged messages *
-  ** .dt %h  .dd local hostname
-  ** .dt %l  .dd size (in bytes) of the current mailbox (see $formatstrings-size) *
-  ** .dt %L  .dd size (in bytes) of the messages shown
-  **             (i.e., which match the current limit) (see $formatstrings-size) *
-  ** .dt %m  .dd the number of messages in the mailbox *
-  ** .dt %M  .dd the number of messages shown (i.e., which match the current limit) *
-  ** .dt %n  .dd number of new messages in the mailbox *
-  ** .dt %o  .dd number of old unread messages *
-  ** .dt %p  .dd number of postponed messages *
-  ** .dt %P  .dd percentage of the way through the index
-  ** .dt %r  .dd modified/read-only/won't-write/attach-message indicator,
-  **             according to $$status_chars
-  ** .dt %R  .dd number of read messages *
-  ** .dt %s  .dd current sorting mode ($$sort)
-  ** .dt %S  .dd current aux sorting method ($$sort_aux)
-  ** .dt %t  .dd number of tagged messages *
-  ** .dt %u  .dd number of unread messages *
-  ** .dt %v  .dd Mutt version string
-  ** .dt %V  .dd currently active limit pattern, if any *
-  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
-  ** .dt %|X .dd pad to the end of the line with ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %b  .dd 新着メールのあるメールボックス数 *
+  ** .dt %d  .dd 削除メッセージ数 *
+  ** .dt %f  .dd 現在のメールボックスのフルパス名
+  ** .dt %F  .dd フラグが付いているメッセージ数 *
+  ** .dt %h  .dd ローカルのホスト名
+  ** .dt %l  .dd 現在のメールボックスの(バイト単位の)大きさ($formatstrings-size を参照) *
+  ** .dt %L  .dd 表示されているメッセージの(バイト単位の)大きさ
+  **             (すなわち、現在の制限に一致しているもの)($formatstrings-size を参照) *
+  ** .dt %m  .dd メールボックス中のメッセージ数 *
+  ** .dt %M  .dd 表示されているメッセージ数(すなわち、現在の制限に一致しているもの) *
+  ** .dt %n  .dd メールボックス中の新規メール数 *
+  ** .dt %o  .dd 古い未読メッセージ数 *
+  ** .dt %p  .dd 延期メッセージ数 *
+  ** .dt %P  .dd インデックス中における現在位置のパーセンテージ
+  ** .dt %r  .dd modified/read-only/won't-write/attach-message インジケータを
+  **             $$status_chars に基づいて表示
+  ** .dt %R  .dd 読んだメッセージ数 *
+  ** .dt %s  .dd 現在の整列モード ($$sort)
+  ** .dt %S  .dd 現在の補助整列モード ($$sort_aux)
+  ** .dt %t  .dd タグ付きメッセージ数 *
+  ** .dt %u  .dd 未読メッセージ数 *
+  ** .dt %v  .dd Mutt バージョン文字列
+  ** .dt %V  .dd もしもあれば現在有効な制限パターン *
+  ** .dt %>X .dd 残りの文字列を右寄せし、``X'' で埋める
+  ** .dt %|X .dd 行端まで ``X'' で埋める
+  ** .dt %*X .dd 埋め草として ``X'' を使って soft-fill
   ** .de
   ** .pp
   ** For an explanation of ``soft-fill'', see the $$index_format documentation.
