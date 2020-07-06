@@ -4044,33 +4044,35 @@ struct option_t MuttVars[] = {
   /* The default must be off to force in the validity checking. */
   /*
   ** .pp
-  ** Controls whether mutt tries to set the terminal status line and icon name.
-  ** Most terminal emulators emulate the status line in the window title.
+  ** Mutt が端末ステータス行とアイコン名を設定するための試みを制御します。
+  ** 多くのターミナルエミュレータはウィンドウのタイトルでステータス行をエミュレート
+  ** します。
   */
   {"ts_status_format",	DT_STR,   R_BOTH, {.p=&TSStatusFormat}, {.p="Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?"} },
   /*
   ** .pp
-  ** Controls the format of the terminal status line (or window title),
-  ** provided that ``$$ts_enabled'' has been set. This string is identical in
-  ** formatting to the one used by ``$$status_format''.
+  ** ``$$ts_enabled'' が設定されているときに、端末ステータス行(又はウィンドウの
+  ** タイトル)のフォーマットを制御します。この文字列は、``$$status_format'' で
+  ** 使われているものと同じフォーマットです。
+  ** 
   */
 #ifdef USE_SOCKET
   { "tunnel",            DT_STR, R_NONE, {.p=&Tunnel}, {.p=0} },
   /*
   ** .pp
-  ** Setting this variable will cause mutt to open a pipe to a command
-  ** instead of a raw socket. You may be able to use this to set up
-  ** preauthenticated connections to your IMAP/POP3/SMTP server. Example:
+  ** この変数を設定すると、Mutt は raw ソケットの代わりにコマンドへのパイプを開きます。
+  ** これを使って、IMAP/POP3/SMTP サーバへの事前認証済み接続を設定することが
+  ** 出来るようになります。以下が例です。
   ** .ts
   ** set tunnel="ssh -q mailhost.net /usr/local/libexec/imapd"
   ** .te
   ** .pp
-  ** Note: For this example to work you must be able to log in to the remote
-  ** machine without having to enter a password.
+  ** この例を動かすためには、パスワード入力なしで、リモートのマシンにログイン
+  ** 出来なければなりません。
   ** .pp
-  ** When set, Mutt uses the tunnel for all remote connections.
-  ** Please see ``$account-hook'' in the manual for how to use different
-  ** tunnel commands per connection.
+  ** 設定した場合、Mutt はすべてのリモートマシンに対してトンネルを使います。
+  ** 接続毎に異なったトンネルコマンドを使うかについては、 ``$account-hook'' の
+  ** マニュアルを参照してください。
   */
 #endif
   { "uncollapse_jump", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSEJUMP}, {.l=0} },
