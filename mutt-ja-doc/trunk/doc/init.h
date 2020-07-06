@@ -3948,108 +3948,97 @@ struct option_t MuttVars[] = {
   { "text_flowed", 	DT_BOOL, R_NONE, {.l=OPTTEXTFLOWED},  {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will generate ``format=flowed'' bodies with a content type
-  ** of ``\fCtext/plain; format=flowed\fP''.
-  ** This format is easier to handle for some mailing software, and generally
-  ** just looks like ordinary text.  To actually make use of this format's
-  ** features, you'll need support in your editor.
+  ** \fIset\fP の場合、Mutt はコンテキストタイプが ``\fCtext/plain; format=flowed\fP'' の
+  ** ``format=flowed'' である本文を生成します。このフォーマットはある種の
+  ** メーリングソフトで扱いやすく、一般的には通常のテキストのように見えます。
   ** .pp
-  ** The option only controls newly composed messages.  Postponed messages,
-  ** resent messages, and draft messages (via -H on the command line) will
-  ** use the content-type of the source message.
+  ** オプションは新しく編集されたメッセージのみを制御します。保留メッセージ、
+  ** 再送メッセージとドラフトメッセージ(コマンド行の  -H 経由)は、
+  ** ソースメッセージの content-type を使います。
   ** .pp
-  ** Note that $$indent_string is ignored when this option is \fIset\fP.
+  ** $$indent_string はこのオプションが  \fIset\fP の時に無視されることに注意してください。
   */
   { "thorough_search",	DT_BOOL, R_NONE, {.l=OPTTHOROUGHSRC}, {.l=1} },
   /*
   ** .pp
-  ** Affects the \fC~b\fP and \fC~h\fP search operations described in
-  ** section ``$patterns''.  If \fIset\fP, the headers and body/attachments of
-  ** messages to be searched are decoded before searching. If \fIunset\fP,
-  ** messages are searched as they appear in the folder.
+  ** セクション ``$patterns'' の節で記述されている \fC~b\fP と \fC~h\fP 検索操作に
+  ** 影響します。\fIset\fP の場合、検索されるヘッダとメッセージの本文/添付は検索の
+  ** 前に復号化されます。\fIunset\fP の場合、メッセージは、フォルダ中にあるままで
+  ** 検索されます。 
   ** .pp
-  ** Users searching attachments or for non-ASCII characters should \fIset\fP
-  ** this value because decoding also includes MIME parsing/decoding and possible
-  ** character set conversions. Otherwise mutt will attempt to match against the
-  ** raw message received (for example quoted-printable encoded or with encoded
-  ** headers) which may lead to incorrect search results.
+  ** 添付の検索や非ASCII 文字の場合は、復号化に MIME 操作とデコードと、取り得る
+  ** 文字セット変換も含むので、この値を \fIset\fP にすべきです。それ以外は、
+  ** Mutt は、不正な検索結果になり得る、受け取った生メッセージに対して一致するかを
+  ** 試みます(たとえば、 quoted-printable でエンコード、又はヘッダもエンコード)。
   */
   { "thread_received",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTTHREADRECEIVED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt uses the date received rather than the date sent
-  ** to thread messages by subject.
+  ** fIset\fP の時、Mutt は題名でメッセージをスレッド化する場合、送信時刻の代わりに
+  ** 受信時刻を使います。
   */
   { "tilde",		DT_BOOL, R_PAGER, {.l=OPTTILDE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the internal-pager will pad blank lines to the bottom of the
-  ** screen with a tilde (``~'').
+  ** \fIset\fP の場合、内部ページャは最下部までの空白行をチルダ (``~'') で埋めます。
   */
   { "time_inc",		DT_NUM,	 R_NONE, {.p=&TimeInc}, {.l=0} },
   /*
   ** .pp
-  ** Along with $$read_inc, $$write_inc, and $$net_inc, this
-  ** variable controls the frequency with which progress updates are
-  ** displayed. It suppresses updates less than $$time_inc milliseconds
-  ** apart. This can improve throughput on systems with slow terminals,
-  ** or when running mutt on a remote system.
+  ** $$read_inc, $$write_inc, と $$net_inc と共に、この変数は進行状況の更新が表示される
+  ** 頻度を制御します。$$time_inc ミリセカンドより小さい場合、更新を抑制します。
+  ** これは、遅いターミナル又はリモートシステムでMutt が
+  ** 動作している場合にシステムのスループットを改善できます。
   ** .pp
-  ** Also see the ``$tuning'' section of the manual for performance considerations.
-  */
+  ** パフォーマンスの注意事項についてはマニュアルの  ``$tuning'' 節も参照してください。 
+ */
   { "timeout",		DT_NUM,	 R_NONE, {.p=&Timeout}, {.l=600} },
   /*
   ** .pp
-  ** When Mutt is waiting for user input either idling in menus or
-  ** in an interactive prompt, Mutt would block until input is
-  ** present. Depending on the context, this would prevent certain
-  ** operations from working, like checking for new mail or keeping
-  ** an IMAP connection alive.
+  ** Mutt が メニュー中でアイドル状態か、対話的なプロンプトでユーザの入力を
+  ** 待っている場合、Mutt は入力があるまでブロックします。コンテキストに依存し、
+  ** これは、新着メールのチェックやIMAP 接続の有効を保持するなどの、特定の動作
+  ** の実行を阻害します。
   ** .pp
-  ** This variable controls how many seconds Mutt will at most wait
-  ** until it aborts waiting for input, performs these operations and
-  ** continues to wait for input.
+  ** この変数は、Mutt が入力待ちを中止して、それらの操作を実行し、入力町を
+  ** 続けるまで、最大何秒待つかを制御します。
   ** .pp
-  ** A value of zero or less will cause Mutt to never time out.
+  ** 0 またほそれ以下の値では、Mutt はタイムアウトしなくなります。
   */
   { "tmpdir",		DT_PATH, R_NONE, {.p=&Tempdir}, {.p=0} },
   /*
   ** .pp
-  ** This variable allows you to specify where Mutt will place its
-  ** temporary files needed for displaying and composing messages.  If
-  ** this variable is not set, the environment variable \fC$$$TMPDIR\fP is
-  ** used.  If \fC$$$TMPDIR\fP is not set then ``\fC/tmp\fP'' is used.
+  ** この変数は、Mutt が、メッセージの表示と編集のために必要な一時ファイルを置く
+  ** 場所を指定します。この変数が設定されていない場合、環境変数 \fC$$$TMPDIR\fP が
+  ** 使われます。\fC$$$TMPDIR\fP が設定されていない場合は、``\fC/tmp\fP'' が
+  ** 使われます。
   */
   { "to_chars",		DT_MBCHARTBL, R_BOTH, {.p=&Tochars}, {.p=" +TCFL"} },
   /*
   ** .pp
-  ** Controls the character used to indicate mail addressed to you.  The
-  ** first character is the one used when the mail is \fInot\fP addressed to your
-  ** address.  The second is used when you are the only
-  ** recipient of the message.  The third is when your address
-  ** appears in the ``To:'' header field, but you are not the only recipient of
-  ** the message.  The fourth character is used when your
-  ** address is specified in the ``Cc:'' header field, but you are not the only
-  ** recipient.  The fifth character is used to indicate mail that was sent
-  ** by \fIyou\fP.  The sixth character is used to indicate when a mail
-  ** was sent to a mailing-list you subscribe to.
+  ** 自分に来たメールを表示するために使われる文字を制御します。最初の文字は、
+  ** メールが自分のアドレスあてで \fIない\fP 場合に使われます。2番目は、
+  ** メッセージの受信者が自分自身のみの場合に使われます。3番目は、自分のアドレスが
+  ** ``To:'' ヘッダにあるが、メッセージの受信者が自分自身以外にもいることを示します。
+  ** 4番目の文字は、自分のアドレスが ``Cc:'' ヘッダにあるが、自分自身以外にも受信者が
+  ** いることを示します。5番目の文字は、自分自身が送信元のメールであることを示します。
+  ** 6番目の文字は、購読しているメーリングリストに送ったメールであることを示します。
   */
   { "trash",		DT_PATH, R_NONE, {.p=&TrashPath}, {.p=0} },
   /*
   ** .pp
-  ** If set, this variable specifies the path of the trash folder where the
-  ** mails marked for deletion will be moved, instead of being irremediably
-  ** purged.
+  ** 設定されている場合、この変数は削除マークが付けらたメールを完全に削除する代わりに
+  ** 移動するゴミ箱フォルダのパスを指定します。
   ** .pp
-  ** NOTE: When you delete a message in the trash folder, it is really
-  ** deleted, so that you have a way to clean the trash.
+  ** 注意: ゴミ箱フォルダ中のメッセージを削除した場合、完全な削除となり、
+  ** ゴミ箱をからにする方法となります。
   */
   {"ts_icon_format",	DT_STR,  R_BOTH, {.p=&TSIconFormat}, {.p="M%?n?AIL&ail?"} },
   /*
   ** .pp
-  ** Controls the format of the icon title, as long as ``$$ts_enabled'' is set.
-  ** This string is identical in formatting to the one used by
-  ** ``$$status_format''.
+  ** ``$$ts_enabled'' が設定されている限り、アイコンタイトルのフォーマットを
+  ** 制御します。この文字列は、``$$status_format'' で使われているものと、
+  ** フォーマットは同じです。
   */
   {"ts_enabled",	DT_BOOL,  R_BOTH, {.l=OPTTSENABLED}, {.l=0} },
   /* The default must be off to force in the validity checking. */
