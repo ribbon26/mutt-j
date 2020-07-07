@@ -4078,46 +4078,48 @@ struct option_t MuttVars[] = {
   { "uncollapse_jump", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSEJUMP}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will jump to the next unread message, if any,
-  ** when the current thread is \fIun\fPcollapsed.
+  ** \fIset\fP の場合、現在のスレッドが、折りたたまれて \fIいない\fP場合、
+  ** Mutt は存在していれば、次の未読メッセージにジャンプします。
   */
   { "uncollapse_new", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSENEW}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will automatically uncollapse any collapsed thread
-  ** that receives a new message. When \fIunset\fP, collapsed threads will
-  ** remain collapsed. the presence of the new message will still affect
-  ** index sorting, though.
+  ** \fIset\fP の場合、新規メッセージを受け取ったとき、Mutt は自動的に、折りたたまれた
+  ** スレッドを展開します。\fIunset\fP の場合、折りたたまれたスレッドは
+  ** 折りたたまれたままになります。ただし、新規メッセージがあると、インデックスの整列には
+  ** 影響します。
   */
   { "use_8bitmime",	DT_BOOL, R_NONE, {.l=OPTUSE8BITMIME}, {.l=0} },
   /*
   ** .pp
-  ** \fBWarning:\fP do not set this variable unless you are using a version
-  ** of sendmail which supports the \fC-B8BITMIME\fP flag (such as sendmail
-  ** 8.8.x) or you may not be able to send mail.
+  ** \fB警告:\fP 使用している sendmail のバージョンが、\fC-B8BITMIME\fP フラグ
+  ** (たとえば sendmail 8.8.x)をサポートしているものを使っていない限り、
+  ** この変数を設定してはいけません。そうしないと、メールが送れなくなって
+  ** しまいます。
   ** .pp
-  ** When \fIset\fP, Mutt will invoke $$sendmail with the \fC-B8BITMIME\fP
-  ** flag when sending 8-bit messages to enable ESMTP negotiation.
+  ** \fIset\fP とすると、 Mutt は、8ビットメッセージを送るときに、ESMTP
+  ** ネゴシエーションを有効にするため、$$sendmail を \fC-B8BITMIME\fP 付きで
+  ** 起動します。
   */
   { "use_domain",	DT_BOOL, R_NONE, {.l=OPTUSEDOMAIN}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will qualify all local addresses (ones without the
-  ** ``@host'' portion) with the value of $$hostname.  If \fIunset\fP, no
-  ** addresses will be qualified.
+  ** \fIset\fP の時、Mutt はすべてのローカルアドレス(``@host'' 部分がないもの)を
+  ** $$hostname の価を付けて補完します。\fIunset\fP の場合、アドレスの
+  ** 補完はしません。
   */
   { "use_envelope_from", 	DT_BOOL, R_NONE, {.l=OPTENVFROM}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will set the \fIenvelope\fP sender of the message.
-  ** If $$envelope_from_address is \fIset\fP, it will be used as the sender
-  ** address. If \fIunset\fP, mutt will attempt to derive the sender from the
-  ** ``From:'' header.
+  ** \fIset\fP の時、Mutt はメッセージの \fIenvelope\fP sender を設定します。
+  ** $$envelope_from_address が \fIset\fP の場合、送信者アドレスとしてそれが
+  ** 使われます。\fIunset\fP の場合、Mutt は ``From:'' ヘッダから送信者アドレスを
+  ** 抽出しようとします。
   ** .pp
-  ** Note that this information is passed to sendmail command using the
-  ** \fC-f\fP command line switch. Therefore setting this option is not useful
-  ** if the $$sendmail variable already contains \fC-f\fP or if the
-  ** executable pointed to by $$sendmail doesn't support the \fC-f\fP switch.
+  ** この情報は、\fC-f\fP コマンド行スイッチを使って sendmail コマンドに渡される
+  ** ことに注意してください。そのため、このオプションを設定することは、
+  ** $$sendmai 変数がすでに \fC-f\fP を含んでいるか、$$sendmail によって指定される
+  ** 実行形式が、\fC-f\fP スイッチをサポートしない場合には好ましくありません。
   */
   { "envelope_from",	DT_SYN,  R_NONE, {.p="use_envelope_from"}, {.p=0} },
   /*
@@ -4125,26 +4127,24 @@ struct option_t MuttVars[] = {
   { "use_from",		DT_BOOL, R_NONE, {.l=OPTUSEFROM}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will generate the ``From:'' header field when
-  ** sending messages.  If \fIunset\fP, no ``From:'' header field will be
-  ** generated unless the user explicitly sets one using the ``$my_hdr''
-  ** command.
+  ** \fIset\fP の場合、Mutt は送信時に ``From:'' ヘッダフィールドを生成します。
+  ** \fIunset\fP の場合、ユーザが、``$my_hdr'' コマンドを使って明示的に設定
+  ** しない限り、``From:'' ヘッダフィールドを生成しません。
   */
 #ifdef HAVE_GETADDRINFO
   { "use_ipv6",		DT_BOOL, R_NONE, {.l=OPTUSEIPV6}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will look for IPv6 addresses of hosts it tries to
-  ** contact.  If this option is \fIunset\fP, Mutt will restrict itself to IPv4 addresses.
-  ** Normally, the default should work.
+  ** \fIset\fP の場合、Mutt はホストの 接続のために、IPv6 アドレスを探します。
+  ** このオプションが  \fIunset\fP の場合、Mutt は IPv4 アドレスに制限します。
+  ** 通常、既定値で動作します。
   */
 #endif /* HAVE_GETADDRINFO */
   { "user_agent",	DT_BOOL, R_NONE, {.l=OPTXMAILER}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will add a ``User-Agent:'' header to outgoing
-  ** messages, indicating which version of mutt was used for composing
-  ** them.
+  ** \fIset\fP の場合、Mutt は送信メッセージに ``User-Agent:'' ヘッダを追加し、
+  ** メールの編集にどのバージョンの Mutt を使ったかを表示します。
   */
   { "visual",		DT_PATH, R_NONE, {.p=&Visual}, {.p=0} },
   /*
