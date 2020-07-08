@@ -4149,51 +4149,47 @@ struct option_t MuttVars[] = {
   { "visual",		DT_PATH, R_NONE, {.p=&Visual}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the visual editor to invoke when the ``\fC~v\fP'' command is
-  ** given in the built-in editor.
+  ** 内蔵エディタの ``\fC~v\fP'' コマンドで使われる画面エディタを指定します。
   */
   { "wait_key",		DT_BOOL, R_NONE, {.l=OPTWAITKEY}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether Mutt will ask you to press a key after an external command
-  ** has been invoked by these functions: \fC<shell-escape>\fP,
-  ** \fC<pipe-message>\fP, \fC<pipe-entry>\fP, \fC<print-message>\fP,
-  ** and \fC<print-entry>\fP commands.
+  ** Mutt が、\fC<shell-escape>\fP,\fC<pipe-message>\fP, \fC<pipe-entry>\fP,
+  **  \fC<print-message>\fP, と \fC<print-entry>\fP コマンドによって起動される
+  ** 外部コマンドの後にキーを押すかを問い合わせるかどうかを制御します。
   ** .pp
-  ** It is also used when viewing attachments with ``$auto_view'', provided
-  ** that the corresponding mailcap entry has a \fIneedsterminal\fP flag,
-  ** and the external program is interactive.
+  ** 対応する mailcap エントリが \fIneedsterminal\fP フラグががあり、外部
+  ** プログラムが対話的なものであるとき、``$auto_view'' で添付を表示するときにも使われます。
   ** .pp
-  ** When \fIset\fP, Mutt will always ask for a key. When \fIunset\fP, Mutt will wait
-  ** for a key only if the external command returned a non-zero status.
+  **  \fIset\fP の場合、Mutt は常時キーを問合せします。\fIunset\fP の時、Mutt は
+  ** 外部コマンドが非0のステータスを返した場合にのみキーを待ちます。
   */
   { "weed",		DT_BOOL, R_NONE, {.l=OPTWEED}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will weed headers when displaying, forwarding,
-  ** printing, or replying to messages.
+  ** \fIset\fP の時、Mutt はメッセージの表示、転送、印刷または返信時に
+  ** ヘッダを間引きします。
   */
   { "wrap",             DT_NUM,  R_PAGER, {.p=&Wrap}, {.l=0} },
   { "wrapcolumn",       DT_SYN,  R_NONE, {.p="wrap"}, {.p=0} },
   /*
   ** .pp
-  ** When set to a positive value, mutt will wrap text at $$wrap characters.
-  ** When set to a negative value, mutt will wrap text so that there are $$wrap
-  ** characters of empty space on the right side of the terminal. Setting it
-  ** to zero makes mutt wrap at the terminal width.
+  ** 正の値に設定すると、Mutt は $$wrap 文字でテキストを折り返します。
+  ** 負の値に設定すると、Mutt は端末の右側の空白による空間に、$$wrap 文字が
+  ** あるようにテキストを折り返します。ゼロに設定すると、Mutt は端末の幅で
+  ** 折り返します。
   ** .pp
-  ** Also see $$reflow_wrap.
+  ** $$reflow_wrap も参照してください。
   */
   { "wrap_headers",     DT_NUM,  R_PAGER, {.p=&WrapHeaders}, {.l=78} },
   /*
   ** .pp
-  ** This option specifies the number of characters to use for wrapping
-  ** an outgoing message's headers. Allowed values are between 78 and 998
-  ** inclusive.
+  ** このオプションは、送信するメッセージのヘッダを折り返すために使われる
+  ** 文字数を指定します。設定できる値は 78 以上 998 以下までです。
   ** .pp
-  ** \fBNote:\fP This option usually shouldn't be changed. RFC5233
-  ** recommends a line length of 78 (the default), so \fBplease only change
-  ** this setting when you know what you're doing\fP.
+  ** \fB注:\fP このオプションは通常変更してはなりません。RFC5233 では
+  ** 行の長さを 78(既定値)にすることを推奨していますので、
+  ** \fB何をするかを分かっている場合にのみこの値を変更してください\fP。
   */
   { "wrap_search",	DT_BOOL, R_NONE, {.l=OPTWRAPSEARCH}, {.l=1} },
   /*
