@@ -4194,32 +4194,31 @@ struct option_t MuttVars[] = {
   { "wrap_search",	DT_BOOL, R_NONE, {.l=OPTWRAPSEARCH}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether searches wrap around the end.
+  ** 検索が終端で折り返すかどうかを制御します。
   ** .pp
-  ** When \fIset\fP, searches will wrap around the first (or last) item. When
-  ** \fIunset\fP, incremental searches will not wrap.
+  ** \fIset\fP の場合、検索は最初(又は最後)の項目で折り返します。
+  ** \fIunset\fP の場合、検索の続きは折り返しません。
   */
   { "wrapmargin",	DT_NUM,	 R_PAGER, {.p=&Wrap}, {.l=0} },
   /*
   ** .pp
-  ** (DEPRECATED) Equivalent to setting $$wrap with a negative value.
+  ** (非推奨) 負の値の $$wrap の設定と同じ。
   */
   { "write_bcc",	DT_BOOL, R_NONE, {.l=OPTWRITEBCC}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether mutt writes out the ``Bcc:'' header when
-  ** preparing messages to be sent.  Some MTAs, such as Exim and
-  ** Courier, do not strip the ``Bcc:'' header; so it is advisable to
-  ** leave this unset unless you have a particular need for the header
-  ** to be in the sent message.
+  ** 送信するメッセージを準備する時に、``Bcc:'' ヘッダを書き込むかを制御します。
+  ** Exim と Courier のようないくつかのMTA では ``Bcc:'' ヘッダを取り除かないので、
+  ** 送信メッセージ中にヘッダを入れる必要がない限り、これを設定しないでおく
+  ** ことを推奨します。
   ** .pp
-  ** If mutt is set to deliver directly via SMTP (see $$smtp_url),
-  ** this option does nothing: mutt will never write out the ``Bcc:''
-  ** header in this case.
+  ** Mutt がSMTP経由で直接配送するように設定した場合($$smtp_url を参照)、
+  ** このオプションは意味を持ちません。Mutt はこの場合、決して ``Bcc:''
+  ** ヘッダを書き込みません。
   ** .pp
-  ** Note this option only affects the sending of messages.  Fcc'ed
-  ** copies of a message will always contain the ``Bcc:'' header if
-  ** one exists.
+  ** このオプションは、メッセージの送信にのみ影響することに注意してください。
+  ** Fcc されたメッセージのコピーは、存在すれば ``Bcc:'' ヘッダが常時
+  ** 含まれます。
   */
   { "write_inc",	DT_NUM,	 R_NONE, {.p=&WriteInc}, {.l=10} },
   /*
