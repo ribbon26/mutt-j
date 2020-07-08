@@ -4223,12 +4223,12 @@ struct option_t MuttVars[] = {
   { "write_inc",	DT_NUM,	 R_NONE, {.p=&WriteInc}, {.l=10} },
   /*
   ** .pp
-  ** When writing a mailbox, a message will be printed every
-  ** $$write_inc messages to indicate progress.  If set to 0, only a
-  ** single message will be displayed before writing a mailbox.
+  ** メールボックスを書き込むとき、メッセージは、処理状態を表示するために、
+  ** 各 $$write_inc メッセージ毎に表示されます。0 に設定された場合、
+  ** メールボックスを書き込む前に、1つのメッセージだけ表示されます。
   ** .pp
-  ** Also see the $$read_inc, $$net_inc and $$time_inc variables and the
-  ** ``$tuning'' section of the manual for performance considerations.
+  ** $$read_inc, $$net_inc と $$time_inc 変数と、パフォーマンスの考慮に関する
+  ** マニュアルの、``$tuning'' 節も参照してください。
   */
   {"xterm_icon",	DT_SYN,  R_NONE, {.p="ts_icon_format"}, {.p=0} },
   /*
