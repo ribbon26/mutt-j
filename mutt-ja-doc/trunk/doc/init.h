@@ -911,7 +911,7 @@ struct option_t MuttVars[] = {
   /*
   ** .pp
   ** 送信メッセージに対して\fIenvelope\fP の送信者を手動で設定します。
-  ** この値は$$use_envelopeが\fIunset\fPの場合には無視されます。
+  ** この値は$$use_envelope_fromが\fIunset\fPの場合には無視されます。
   */
   { "error_history",	DT_NUM,	 R_NONE, {.p=&ErrorHistSize}, {.l=30} },
   /*
@@ -4118,7 +4118,7 @@ struct option_t MuttVars[] = {
   ** .pp
   ** この情報は、\fC-f\fP コマンド行スイッチを使って sendmail コマンドに渡される
   ** ことに注意してください。そのため、このオプションを設定することは、
-  ** $$sendmai 変数がすでに \fC-f\fP を含んでいるか、$$sendmail によって指定される
+  ** $$sendmail 変数がすでに \fC-f\fP を含んでいるか、$$sendmail によって指定される
   ** 実行形式が、\fC-f\fP スイッチをサポートしない場合には好ましくありません。
   */
   { "envelope_from",	DT_SYN,  R_NONE, {.p="use_envelope_from"}, {.p=0} },
