@@ -1,10 +1,10 @@
-		Mutt 1.11.4用日本語版パッチリリースノート
+		Mutt 1.14.6用日本語版パッチリリースノート
 
-							2019-04-28
-							Ver 1.11.4-j1
+							2020-07-16
+							Ver 1.14.6-j1
 							mutt-j 開発チーム
 
-Copyright (C)2000-2019 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C)2000-2020 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -80,6 +80,9 @@ ports や Fedora RPM 由来のパッチを一旦削除し、日本語パッチ�
 1.11.4 以降は、メーリングリストの Subject prefix の削除機能を外しまし
 た。また、FreeBSD向けパッチを新たに提供しています。
 
+1.14.6 以降は、rfc_2047_parameters 機能を外しました。このパッチがなく
+ても運用上特に問題が発生していないためです。
+
 なお、このドキュメントおよび同梱されているファイルについては、古いまま
 のものがあります。ご了承ください。
 
@@ -116,13 +119,7 @@ ports や Fedora RPM 由来のパッチを一旦削除し、日本語パッチ�
 セージを読むことができる次のような設定オプションを追加しました。詳細は
 manual-ja-patch.ja.html および usage-japanese.ja.html をご覧下さい。
 
- a) 非 MIME 日本語ファイル名
-   
-     ● create_rfc2047_parameters
-
-この機能は、create_rfc2047パッチで実現しています。
-   
- b) 機種依存文字対策
+ a)  機種依存文字対策
    
      ● sanitize_ja_chars
 
@@ -134,7 +131,7 @@ manual-ja-patch.ja.html および usage-japanese.ja.html をご覧下さい。
 
 に変更しています。
 
- c) UCS文字の文字幅対策
+ b) UCS文字の文字幅対策
 
 UTF-8ロケールにおいてはJIS X 0208の記号・ギリシャ文字・キリル文字は、1
 桁幅の文字として扱われます。しかし、mlterm上でUCSフォントでない従来の
@@ -186,7 +183,7 @@ contrib配下にあるMakefileを書き換えます。しかし、日本語パ�
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 11.2(64bit)       iw	     Oota Tochiya
+1) FreeBSD 11.4(32bit)       iw	     Oota Tochiya
 
 オプションの意味
 
@@ -251,12 +248,6 @@ widthという特別な定義がなされているからです。特に、FreeBS
        
      ○ Mutt 日本語版のページ
        
- ● Japanese Mutt Manual
-   
-     ○ http://ha4.seikyou.ne.jp/home/Kohtaro.Hitomi/mutt/
-       
-     ○ 人見さんと西岡さんによる Mutt のマニュアルの邦訳
-       
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 
 
@@ -277,7 +268,7 @@ ML あるいは取りまとめの中心者にメールをお送り下さい。
    
  ・ Copyright (C) 2000 Kawaguti Ginga <ginga@ginganet.org>
    
- ・ Copyright (C) 2012-2019 Oota Toshiya <ribbon@users.sourceforge.jp> *
+ ・ Copyright (C) 2012-2020 Oota Toshiya <ribbon@users.sourceforge.jp> *
    
 7.1.2 メッセージカタログの邦訳
 
@@ -292,6 +283,8 @@ ML あるいは取りまとめの中心者にメールをお送り下さい。
  ・ Takuhiro Nishioka <takuhiro@super.win.ne.jp>
    
  ・ Kohtaro Hitomi <hitomi@hiei.kit.ac.jp>
+
+ ・ Oota Toshiya <ribbon@users.sourceforge.jp> *
    
 7.1.4 マニュアル以外の文書の邦訳・英訳
 
