@@ -1,7 +1,12 @@
-diff -urN ../mutt-1.11.4/configure ./configure
---- ../mutt-1.11.4/configure	2019-03-13 14:34:27.000000000 +0900
-+++ ./configure	2019-04-28 12:26:22.076065000 +0900
-@@ -833,6 +833,7 @@
+diff -urN ../mutt-1.14.6/PATCHES ./PATCHES
+--- ../mutt-1.14.6/PATCHES	2020-06-25 06:41:42.000000000 +0900
++++ ./PATCHES	2020-07-18 12:59:34.140338000 +0900
+@@ -0,0 +1 @@
++patch-1.11.4.tt.wcwidth+cjk_width.1
+diff -urN ../mutt-1.14.6/configure ./configure
+--- ../mutt-1.14.6/configure	2020-07-12 05:02:01.000000000 +0900
++++ ./configure	2020-07-18 12:59:34.131737000 +0900
+@@ -849,6 +849,7 @@
  enable_nls
  with_included_gettext
  with_idn
@@ -9,7 +14,7 @@ diff -urN ../mutt-1.11.4/configure ./configure
  with_idn2
  with_wc_funcs
  enable_doc
-@@ -1505,6 +1506,9 @@
+@@ -1522,6 +1523,9 @@
    --enable-hcache         Enable header caching
    --disable-iconv         Disable iconv support
    --disable-nls           Do not use Native Language Support
@@ -19,7 +24,7 @@ diff -urN ../mutt-1.11.4/configure ./configure
    --disable-doc           Do not build the documentation
    --disable-full-doc      Omit disabled variables
  
-@@ -13354,6 +13358,21 @@
+@@ -13813,6 +13817,21 @@
  fi
  
  
@@ -41,10 +46,10 @@ diff -urN ../mutt-1.11.4/configure ./configure
  for ac_header in wchar.h
  do :
    ac_fn_c_check_header_mongrel "$LINENO" "wchar.h" "ac_cv_header_wchar_h" "$ac_includes_default"
-diff -urN ../mutt-1.11.4/configure.ac ./configure.ac
---- ../mutt-1.11.4/configure.ac	2019-03-13 14:32:13.000000000 +0900
-+++ ./configure.ac	2019-04-28 12:26:22.077257000 +0900
-@@ -1464,6 +1464,16 @@
+diff -urN ../mutt-1.14.6/configure.ac ./configure.ac
+--- ../mutt-1.14.6/configure.ac	2020-07-12 05:01:37.000000000 +0900
++++ ./configure.ac	2020-07-18 12:59:34.132893000 +0900
+@@ -1534,6 +1534,16 @@
  
  dnl -- locales --
  
@@ -61,7 +66,7 @@ diff -urN ../mutt-1.11.4/configure.ac ./configure.ac
  AC_CHECK_HEADERS(wchar.h)
  
  AC_CACHE_CHECK([for wchar_t], mutt_cv_wchar_t,
-@@ -1534,7 +1544,10 @@
+@@ -1604,7 +1614,10 @@
  if test $wc_funcs = yes; then
          AC_DEFINE(HAVE_WC_FUNCS,1,[ Define if you are using the system's wchar_t functions. ])
  else
@@ -73,10 +78,10 @@ diff -urN ../mutt-1.11.4/configure.ac ./configure.ac
  fi
  
  AC_CACHE_CHECK([for nl_langinfo and CODESET], mutt_cv_langinfo_codeset,
-diff -urN ../mutt-1.11.4/curs_lib.c ./curs_lib.c
---- ../mutt-1.11.4/curs_lib.c	2019-03-13 14:32:13.000000000 +0900
-+++ ./curs_lib.c	2019-04-28 12:26:22.078250000 +0900
-@@ -1220,7 +1220,14 @@
+diff -urN ../mutt-1.14.6/curs_lib.c ./curs_lib.c
+--- ../mutt-1.14.6/curs_lib.c	2020-07-12 05:01:37.000000000 +0900
++++ ./curs_lib.c	2020-07-18 12:59:34.134018000 +0900
+@@ -1289,7 +1289,14 @@
        wc = replacement_char ();
      }
      if (arboreal && wc < MUTT_TREE_MAX)
@@ -92,7 +97,7 @@ diff -urN ../mutt-1.11.4/curs_lib.c ./curs_lib.c
      else
      {
  #ifdef HAVE_ISWBLANK
-@@ -1449,10 +1456,12 @@
+@@ -1518,10 +1525,12 @@
    int w;
    size_t k, n;
    mbstate_t mbstate;
@@ -105,7 +110,7 @@ diff -urN ../mutt-1.11.4/curs_lib.c ./curs_lib.c
  
    memset (&mbstate, 0, sizeof (mbstate));
    for (w=0; n && (k = mbrtowc (&wc, s, n, &mbstate)); s += k, n -= k)
-@@ -1464,9 +1473,21 @@
+@@ -1533,9 +1542,21 @@
        k = (k == (size_t)(-1)) ? 1 : n;
        wc = replacement_char ();
      }
@@ -130,10 +135,10 @@ diff -urN ../mutt-1.11.4/curs_lib.c ./curs_lib.c
    }
    return w;
  }
-diff -urN ../mutt-1.11.4/globals.h ./globals.h
---- ../mutt-1.11.4/globals.h	2019-03-13 14:32:13.000000000 +0900
-+++ ./globals.h	2019-04-28 12:26:22.079003000 +0900
-@@ -303,9 +303,31 @@
+diff -urN ../mutt-1.14.6/globals.h ./globals.h
+--- ../mutt-1.14.6/globals.h	2020-07-12 05:01:37.000000000 +0900
++++ ./globals.h	2020-07-18 12:59:34.134599000 +0900
+@@ -319,9 +319,31 @@
  
  const char * const BodyTypes[] = { "x-unknown", "audio", "application", "image", "message", "model", "multipart", "text", "video" };
  const char * const BodyEncodings[] = { "x-unknown", "7bit", "8bit", "quoted-printable", "base64", "binary", "x-uuencoded" };
@@ -165,15 +170,15 @@ diff -urN ../mutt-1.11.4/globals.h ./globals.h
  #endif
  
  #ifdef MAIN_C
-diff -urN ../mutt-1.11.4/init.h ./init.h
---- ../mutt-1.11.4/init.h	2019-03-13 14:32:13.000000000 +0900
-+++ ./init.h	2019-04-28 12:26:22.081438000 +0900
-@@ -442,6 +442,31 @@
+diff -urN ../mutt-1.14.6/init.h ./init.h
+--- ../mutt-1.14.6/init.h	2020-07-12 05:01:37.000000000 +0900
++++ ./init.h	2020-07-18 12:59:34.136741000 +0900
+@@ -538,6 +538,31 @@
    ** this variable is \fIunset\fP, no check for new mail is performed
    ** while the mailbox is open.
    */
 +#ifdef USE_CJK_WIDTH
-+  { "cjk_width",	DT_BOOL, R_NONE, OPTCJKWIDTH, 0 },
++  { "cjk_width",	DT_BOOL, R_NONE, OPTCJKWIDTH, {.l=0} },
 +  /*
 +  ** .pp
 +  ** When this option is set, characters in the East Asian Ambiguous (A)
@@ -185,7 +190,7 @@ diff -urN ../mutt-1.11.4/init.h ./init.h
 +  ** .pp
 +  ** \fBNote:\fP this option only affects in UTF-8 encoding.
 +  */
-+  { "cjk_width_tree_chars",	DT_BOOL, R_NONE, OPTCJKWIDTHTREECHARS, 0 },
++  { "cjk_width_tree_chars",	DT_BOOL, R_NONE, OPTCJKWIDTHTREECHARS, {.l=0} },
 +  /*
 +  ** .pp
 +  ** If \fIset\fP,  Mutt will use the result of $cjk_width as a column 
@@ -197,28 +202,28 @@ diff -urN ../mutt-1.11.4/init.h ./init.h
 +  ** \fBNote:\fP this option only affects in UTF-8 encoding.
 +  */
 +#endif
-   { "collapse_unread",	DT_BOOL, R_NONE, OPTCOLLAPSEUNREAD, 1 },
+   { "collapse_unread",	DT_BOOL, R_NONE, {.l=OPTCOLLAPSEUNREAD}, {.l=1} },
    /*
    ** .pp
-diff -urN ../mutt-1.11.4/main.c ./main.c
---- ../mutt-1.11.4/main.c	2019-03-13 14:32:13.000000000 +0900
-+++ ./main.c	2019-04-28 12:26:22.082311000 +0900
-@@ -456,6 +456,12 @@
- 	"-LOCALES_HACK  "
+diff -urN ../mutt-1.14.6/main.c ./main.c
+--- ../mutt-1.14.6/main.c	2020-07-12 05:01:37.000000000 +0900
++++ ./main.c	2020-07-18 12:59:34.137459000 +0900
+@@ -463,6 +463,12 @@
+     "-LOCALES_HACK  "
  #endif
- 	      
+ 
 +#ifdef USE_CJK_WIDTH
-+	"+USE_CJK_WIDTH  "
++       "+USE_CJK_WIDTH  "
 +#else
-+	"-USE_CJK_WIDTH  "
++       "-USE_CJK_WIDTH  "
 +#endif
 +
  #ifdef HAVE_WC_FUNCS
- 	"+HAVE_WC_FUNCS  "
+     "+HAVE_WC_FUNCS  "
  #else
-diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
---- ../mutt-1.11.4/mbyte.c	2019-03-13 14:32:13.000000000 +0900
-+++ ./mbyte.c	2019-04-28 12:26:22.083427000 +0900
+diff -urN ../mutt-1.14.6/mbyte.c ./mbyte.c
+--- ../mutt-1.14.6/mbyte.c	2020-05-03 06:08:56.000000000 +0900
++++ ./mbyte.c	2020-07-18 12:59:34.138316000 +0900
 @@ -17,7 +17,7 @@
   */
  
@@ -248,22 +253,17 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
    if (charset_to_utf8 != (iconv_t)(-1))
    {
      iconv_close (charset_to_utf8);
-@@ -66,12 +66,18 @@
+@@ -66,12 +66,14 @@
  
    if (mutt_is_utf8 (buffer))
      Charset_is_utf8 = 1;
 -#ifndef HAVE_WC_FUNCS
--  else if (!ascii_strcasecmp(buffer, "euc-jp") || !ascii_strcasecmp(buffer, "shift_jis")
--  	|| !ascii_strcasecmp(buffer, "cp932") || !ascii_strcasecmp(buffer, "eucJP-ms"))
-+  else if (!ascii_strcasecmp (buffer, "gb2312") ||
-+       !ascii_strcasecmp (buffer, "gb18030") ||
-+       !ascii_strcasecmp (buffer, "big5") ||
-+       !ascii_strcasecmp (buffer, "euc-tw") ||
-+       !ascii_strcasecmp (buffer, "EUC-JP") ||
-+       !ascii_strcasecmp (buffer, "eucJP-ms") ||
-+       !ascii_strcasecmp (buffer, "Shift_JIS") ||
-+       !ascii_strcasecmp (buffer, "cp932") ||
-+       !ascii_strcasecmp (buffer, "euc-kr"))
+   else if (!ascii_strcasecmp(buffer, "euc-jp") || !ascii_strcasecmp(buffer, "shift_jis")
+-           || !ascii_strcasecmp(buffer, "cp932") || !ascii_strcasecmp(buffer, "eucJP-ms"))
++           || !ascii_strcasecmp(buffer, "cp932") || !ascii_strcasecmp(buffer, "eucJP-ms")
++	   || !ascii_strcasecmp (buffer, "gb2312") || !ascii_strcasecmp (buffer, "gb18030")
++	   || !ascii_strcasecmp (buffer, "big5") || !ascii_strcasecmp (buffer, "euc-tw")
++	   || !ascii_strcasecmp (buffer, "euc-kr"))
    {
 -    charset_is_ja = 1;
 -
@@ -272,7 +272,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      /* Note flags=0 to skip charset-hooks: User masters the $charset
       * name, and we are sure of our "utf-8" constant. So there is no
       * possibility of wrong name that we would want to try to correct
-@@ -80,24 +86,68 @@
+@@ -80,24 +82,68 @@
       */
      charset_to_utf8 = mutt_iconv_open ("utf-8", charset, 0);
      charset_from_utf8 = mutt_iconv_open (charset, "utf-8", 0);
@@ -344,7 +344,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
   *     via UTF-8 using iconv.
   * Unfortunately, we can't handle non-stateless encodings.
   */
-@@ -256,7 +306,7 @@
+@@ -256,7 +302,7 @@
  
  int iswprint (wint_t wc)
  {
@@ -353,7 +353,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      return ((0x20 <= wc && wc < 0x7f) || 0xa0 <= wc);
    else
      return (0 <= wc && wc < 256) ? IsPrint (wc) : 0;
-@@ -264,7 +314,7 @@
+@@ -264,7 +310,7 @@
  
  int iswspace (wint_t wc)
  {
@@ -362,7 +362,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      return (9 <= wc && wc <= 13) || wc == 32;
    else
      return (0 <= wc && wc < 256) ? isspace (wc) : 0;
-@@ -347,7 +397,7 @@
+@@ -347,7 +393,7 @@
  
  wint_t towupper (wint_t wc)
  {
@@ -371,7 +371,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      return towupper_ucs (wc);
    else
      return (0 <= wc && wc < 256) ? toupper (wc) : wc;
-@@ -355,7 +405,7 @@
+@@ -355,7 +401,7 @@
  
  wint_t towlower (wint_t wc)
  {
@@ -380,7 +380,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      return towlower_ucs (wc);
    else
      return (0 <= wc && wc < 256) ? tolower (wc) : wc;
-@@ -363,7 +413,7 @@
+@@ -363,7 +409,7 @@
  
  int iswalnum (wint_t wc)
  {
@@ -389,7 +389,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      return iswalnum_ucs (wc);
    else
      return (0 <= wc && wc < 256) ? isalnum (wc) : 0;
-@@ -371,7 +421,7 @@
+@@ -371,7 +417,7 @@
  
  int iswalpha (wint_t wc)
  {
@@ -398,7 +398,7 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
      return iswalpha_ucs (wc);
    else
      return (0 <= wc && wc < 256) ? isalpha (wc) : 0;
-@@ -379,58 +429,12 @@
+@@ -379,58 +425,12 @@
  
  int iswupper (wint_t wc)
  {
@@ -458,9 +458,9 @@ diff -urN ../mutt-1.11.4/mbyte.c ./mbyte.c
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps)
  {
    static wchar_t mbstate;
-diff -urN ../mutt-1.11.4/mbyte.h ./mbyte.h
---- ../mutt-1.11.4/mbyte.h	2017-12-19 05:27:19.000000000 +0900
-+++ ./mbyte.h	2019-04-28 12:26:22.084105000 +0900
+diff -urN ../mutt-1.14.6/mbyte.h ./mbyte.h
+--- ../mutt-1.14.6/mbyte.h	2020-05-03 06:08:56.000000000 +0900
++++ ./mbyte.h	2020-07-18 12:59:34.139002000 +0900
 @@ -8,6 +8,12 @@
  #  ifdef HAVE_WCTYPE_H
  #   include <wctype.h>
@@ -492,11 +492,11 @@ diff -urN ../mutt-1.11.4/mbyte.h ./mbyte.h
  void mutt_set_charset (char *charset);
  extern int Charset_is_utf8;
  size_t utf8rtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *_ps);
-diff -urN ../mutt-1.11.4/mutt.h ./mutt.h
---- ../mutt-1.11.4/mutt.h	2019-03-13 14:32:13.000000000 +0900
-+++ ./mutt.h	2019-04-28 12:26:22.085014000 +0900
-@@ -372,6 +372,10 @@
-   OPTBROWSERABBRMAILBOXES,
+diff -urN ../mutt-1.14.6/mutt.h ./mutt.h
+--- ../mutt-1.14.6/mutt.h	2020-07-12 05:01:37.000000000 +0900
++++ ./mutt.h	2020-07-18 12:59:34.139829000 +0900
+@@ -400,6 +400,10 @@
+   OPTBROWSERSTICKYCURSOR,
    OPTCHECKMBOXSIZE,
    OPTCHECKNEW,
 +#ifdef USE_CJK_WIDTH
@@ -506,14 +506,9 @@ diff -urN ../mutt-1.11.4/mutt.h ./mutt.h
    OPTCOLLAPSEUNREAD,
    OPTCONFIRMAPPEND,
    OPTCONFIRMCREATE,
-diff -urN ../mutt-1.11.4/PATCHES ./PATCHES
---- ../mutt-1.11.4/PATCHES	2017-12-03 12:10:17.000000000 +0900
-+++ ./PATCHES	2019-04-28 12:26:22.085644000 +0900
-@@ -0,0 +1 @@
-+patch-1.11.4.tt.wcwidth+cjk_width.1
-diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
---- ../mutt-1.11.4/wcwidth.c	2019-03-13 14:32:13.000000000 +0900
-+++ ./wcwidth.c	2019-04-28 12:26:22.086666000 +0900
+diff -urN ../mutt-1.14.6/wcwidth.c ./wcwidth.c
+--- ../mutt-1.14.6/wcwidth.c	2020-05-03 06:08:56.000000000 +0900
++++ ./wcwidth.c	2020-07-18 12:59:34.141156000 +0900
 @@ -5,6 +5,51 @@
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcwidth.html
   * http://www.opengroup.org/onlinepubs/007904975/functions/wcswidth.html
@@ -573,9 +568,7 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
 -#ifndef HAVE_WC_FUNCS
 +#if !defined(HAVE_WC_FUNCS) || defined(USE_CJK_WIDTH)
 +#include <wchar.h>
- 
--#include "mutt.h"
--#include "mbyte.h"
++
 +struct interval {
 +  wchar_t first;
 +  wchar_t last;
@@ -597,7 +590,9 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
 +    else
 +      return 1;
 +  }
-+
+ 
+-#include "mutt.h"
+-#include "mbyte.h"
 +  return 0;
 +}
  
@@ -714,7 +709,7 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
  
    /* test for 8-bit control characters */
    if (ucs == 0)
-@@ -130,20 +191,10 @@
+@@ -130,29 +191,17 @@
    if (ucs < 32 || (ucs >= 0x7f && ucs < 0xa0))
      return -1;
  
@@ -723,7 +718,8 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
 -    return 1;
 -
    /* binary search in table of non-spacing characters */
--  while (max >= min) {
+-  while (max >= min)
+-  {
 -    mid = (min + max) / 2;
 -    if (combining[mid].last < ucs)
 -      min = mid + 1;
@@ -732,13 +728,13 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
 -    else if (combining[mid].first <= ucs && combining[mid].last >= ucs)
 -      return 0;
 -  }
+-
 +  if (bisearch(ucs, combining,
-+	       sizeof(combining) / sizeof(struct interval) - 1))
++              sizeof(combining) / sizeof(struct interval) - 1))
 +    return 0;
- 
    /* if we arrive here, ucs is not a combining or C0/C1 control character */
  
-@@ -151,7 +202,7 @@
+   /* fast test for majority of non-wide scripts */
    if (ucs < 0x1100)
      return 1;
  
@@ -747,7 +743,7 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
      (ucs >= 0x1100 &&
       (ucs <= 0x115f ||                    /* Hangul Jamo init. consonants */
        ucs == 0x2329 || ucs == 0x232a ||
-@@ -167,15 +218,120 @@
+@@ -168,15 +217,120 @@
        (ucs >= 0x30000 && ucs <= 0x3fffd)));
  }
  
@@ -871,7 +867,7 @@ diff -urN ../mutt-1.11.4/wcwidth.c ./wcwidth.c
        return -1;
      else
        width += w;
-@@ -183,3 +339,4 @@
+@@ -184,3 +338,4 @@
    return width;
  }
  #endif
