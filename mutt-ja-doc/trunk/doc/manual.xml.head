@@ -3818,6 +3818,19 @@ save-hook aol\\.com$ +spam
 コマンドも参照してください。
 </para>
 
+<para>
+Multiple mailboxes may be specified by separating them with <link
+linkend="fcc-delimiter">$fcc_delimiter</link>, if set:
+複数のメールボックスを設定する場合、
+<link linkend="fcc-delimiter">$fcc_delimiter</link>
+で区切って、指定することが出来ます。
+</para>
+
+<screen>
+  set fcc_delimiter = ','
+  fcc-hook 'foo@example\.com$' '+one,+two'
+</screen>
+
 </sect1>
 
 <sect1 id="fcc-save-hook">
