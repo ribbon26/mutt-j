@@ -3562,12 +3562,29 @@ mbox-hooks は実行されません。
 
 <cmdsynopsis>
 <command>mailboxes</command>
-<arg choice="plain">
-<replaceable class="parameter">mailbox</replaceable>
+<arg choice="opt">
+  <group choice="opt">
+    <arg choice="plain">
+      <option>-poll</option>
+    </arg>
+    <arg choice="plain">
+      <option>-nopoll</option>
+    </arg>
+  </group>
+  <group choice="opt">
+    <arg choice="plain">
+      <option>-label</option>
+      <replaceable>label</replaceable>
+    </arg>
+    <arg choice="plain">
+      <option>-nolabel</option>
+    </arg>
+  </group>
+  <arg choice="plain">
+    <replaceable class="parameter">mailbox</replaceable>
+  </arg>
 </arg>
-<arg choice="opt" rep="repeat">
-<replaceable class="parameter">mailbox</replaceable>
-</arg>
+<arg choice="opt" rep="repeat"></arg>
 
 <command>unmailboxes</command>
 <group choice="req">
@@ -3586,9 +3603,23 @@ mbox-hooks は実行されません。
 </para>
 
 <para>
-<emphasis>folder</emphasis>はローカルファイルかディレクトリのどちらかです
+ポーリングを無効にするためには、メールボックス名の前に、<literal>-nopoll</literal> を
+指定します。<literal>-poll</literal> 引数は  既存のメールボックスに対して、
+再度ポーリングを有効にするために使えます。未定義の場合、新規メールボックスは
+既存のメールボックスに変更がない間は、既定でポーリングされます。
+</para>
+
+<para>
+<literal>-label</literal>引数はメールボックスパスの代わりに、サイドバーまたは
+メールボックスブラウザ中で表示するための、別名ラベルを指定するのに使います。
+ラベルはo<literal>-nolabel</literal> 引数経由で削除できます。未定義の場合、既存の
+メールボックスラベルは変更されません。
+</para>
+
+<para>
+<emphasis>mailbox</emphasis> はローカルファイルかディレクトリのどちらかです
 (Mbox/Mmdf 又は Maildir/Mh)。Mutt が POP 又は IMAP をサポートするように
-コンパイルされている場合、<emphasis>folder</emphasis>には POP/IMAP フォルダ URLも
+コンパイルされている場合、<emphasis>mailbox</emphasis>には POP/IMAP フォルダ URLも
 使えます。URL の文法は、<xref linkend="url-syntax"/> にあり、POP と
 IMAP はそれぞれ <xref linkend="pop"/>と<xref linkend="imap"/> に説明があります。
 </para>
