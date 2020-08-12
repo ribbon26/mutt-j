@@ -3852,9 +3852,15 @@ linkend="fcc-delimiter">$fcc_delimiter</link>, if set:
 このコマンドはショートカットであり、同じ引数で
 <link linkend="fcc-hook"><command>fcc-hook</command></link> と
 <link linkend="save-hook"><command>save-hook</command></link>
-を両方とも実行するのと等価です。また、
+を両方とも実行するのと、ほとんど等価です。また、
 <link linkend="index-format">$index_format</link>による
 <emphasis>mailbox</emphasis>の %-expansion を含みます。
+</para>
+
+<para>
+fcc-save-hook はfcc-hook が行うように、複数のメールボックスを利用できるように
+設計されていないことに注意してください。正しい動作を得るためには、別の fcc と
+saveフックを使用する必要があります。
 </para>
 
 </sect1>
@@ -5761,19 +5767,20 @@ Mutt は二種類の日付、すなわち<emphasis>絶対</emphasis>日付と
 <title>絶対日付</title>
 
 <para>
-日付は必ず DD/MM/YY という形式で指定<emphasis>しなければなりません</emphasis>
+日付は必ず DD/MM/YY か YYYYMMDD という形式で指定<emphasis>しなければなりません</emphasis>
 (ただし、月と年は現在の月と年が既定になっているので省略できます)。
 正しい日付範囲の例は以下のようになります。
 </para>
 
 <screen>
 Limit to messages matching: ~d 20/1/95-31/10
+Limit to messages matching: ~d 19950120-19951031  
 </screen>
 
 <para>
-最小値 (一番目) の日付を省略して<quote>-DD/MM/YY</quote>だけ指定すると、
-<emphasis>それ以前の</emphasis>すべてのメッセージが選択されます。 最大値
-(二番目) の日付を省略して<quote>DD/MM/YY-</quote>を指定すると、
+最小値 (一番目) の日付を省略して<quote>-DD/MM/YY</quote>又は<quote>-YYYYMMDD</quote>
+だけ指定すると、<emphasis>それ以前の</emphasis>すべてのメッセージが選択されます。
+最大値 (二番目) の日付を省略して<quote>DD/MM/YY-</quote>を指定すると、
 その日<emphasis>以降の</emphasis>すべてのメッセージが選択されます。
 ダッシュ(<quote>-</quote>)なしで一つだけ日付を指定すると、
 その日付に送信されたメッセージだけが選択されます。
@@ -6346,7 +6353,19 @@ Maildir は、Mutt ではキャッシュなしだとオープンするのがか�
 </para>
 
 <screen>
-folder-hook . 'set record=^'</screen>
+  folder-hook . 'set record=^'
+</screen>
+
+<para>
+注意: <link linkend="record">$record</link> ショートカット
+<quote><literal>&lt;</literal></quote> は、複数のメールボックスと、
+<link linkend="fcc-delimiter">$fcc_delimiter</link> とは関係なく置き換え
+られます。複数の Fcc メールボックスを使用していて、
+<quote><literal>&lt;</literal></quote> メールボックスショートカットを使いたい
+場合は、プライマリメールボックスに <link linkend="record">$record</link> を
+設定し、メッセージ編集中にすべてのメールボックスに対して
+<link linkend="fcc-hook">fcc-hook</link> を設定することを推奨します。
+</para>
 
 </sect1>
 
