@@ -6634,7 +6634,8 @@ IMAP では、既定で、Mutt は新規メールを検出するために、サ�
 <para>
 インデックスメニューで、アイドル状態(<link linkend="timeout">$timeout</link>も
 参照)のとき、Mutt は定期的に<command>mailboxes</command>コマンドで
-設定されたすべてのフォルダの新規メールをチェックします。間隔は、フォルダタイプに
+設定されたすべてのフォルダの新規メールをチェックします(<literal>-nopoll</literal>
+フラグが指定されているものを除く)。間隔は、フォルダタイプに
 よって異なります。ローカル/IMAP フォルダは
 <link linkend="mail-check">$mail_check</link>で、POPフォルダは、
 <link linkend="pop-checkinterval">$pop_checkinterval</link>で決まります。
@@ -6680,7 +6681,8 @@ IMAP では、既定で、Mutt は新規メールを検出するために、サ�
 ファイルをモニタする<emphasis>Inotify</emphasis>がサポートされている場合
 (Linux のみ)で、コンパイル時に無効になっていない場合、Mutt は
 <link linkend="mailboxes"><command>mailboxes</command></link>コマンドで
-設定されたすべてのフォルダへの新規メールについてすぐに通知します。
+設定されたすべてのフォルダへの新規メールについてすぐに通知します
+(<literal>-nopoll</literal> フラグが指定されているものを除く)。
 <link linkend="mailbox-formats">mailbox format</link>にも依存しますが、
 (Maildirを除いて)追加された<emphasis>古い</emphasis>メールも追跡されます。
 </para>
@@ -8049,6 +8051,25 @@ IMAP のようなリモートメールフォルダに対しては特に操作が
 <emphasis>disposition</emphasis>は添付のContent-Disposition タイプで &mdash;
 <literal>inline</literal>又は<literal>attachment</literal> のどちらかです。
 <literal>I</literal>又は<literal>A</literal>という省略形も使えます。
+</para>
+
+<para>
+The first part of a message or multipart group, if inline, is counted
+separately than other inline parts.  Specify <literal>root</literal>
+or <literal>R</literal> for <emphasis>disposition</emphasis> to count
+these as attachments.  If this first part is of type
+multipart/alternative, note that its top-level inline parts are also
+counted via <literal>root</literal> <emphasis>disposition</emphasis>
+(if <link linkend="count-alternatives">$count_alternatives</link> is
+set).
+インラインの場合、メッセージ又はマルチパートグループの最初の部分は
+他のインラインパートとは別にカウントされます。<literal>root</literal>
+又は<emphasis>disposition</emphasis>用の<literal>R</literal> を指定することで、
+添付としてカウントします。この最初のパートが multipart/alternative なら、
+その最上位のインラインパートは <literal>root</literal> <emphasis>disposition</emphasis>
+経由でもカウントされることに注意してください
+(<link linkend="count-alternatives">$count_alternatives</link> が設定されて
+いる場合)。
 </para>
 
 <para>
