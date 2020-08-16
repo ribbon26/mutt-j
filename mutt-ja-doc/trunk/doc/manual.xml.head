@@ -8326,6 +8326,54 @@ GnuTLS では<emphasis>--enable-gnutls=...</emphasis>オプションを、
 リモートサーバに対して暗号化通信を試みます。
 </para>
 
+<sect2 id="starttls">
+  <title>STARTTLS</title>
+  <para>
+    安全性が保たれていない URL プロトコルである <literal>imap://</literal>、
+    <literal>pop://</literal> と <literal>smtp://</literal> を使う時、
+    サーバへの最初の接続は暗号化されません。<literal>STARTTLS</literal>
+    は、最初の暗号化されていない接続の後に暗号化された接続と通信をネゴシエート
+    するのに使われます。
+  </para>
+  <para>
+    2つの設定変数が、<literal>STARTTLS</literal>を使う時にMutt の動作を
+    制御します。<link linkend="ssl-starttls">$ssl_starttls</link>
+    は、サーバがサポートしていることを通知する場合は、<literal>STARTTLS</literal>
+    を開始します。<link linkend="ssl-force-tls">$ssl_force_tls</link>は
+    サーバがサポートするかどうかを通知するかしないかにかかわらず、
+    <literal>STARTTLS</literal>を開始しようとします。
+  </para>
+  <para>
+    Mutt では、暗号化されていないサーバに接続しなければならない限り、
+    <link linkend="ssl-force-tls">$ssl_force_tls</link> を設定することを
+    <emphasis>強く推奨します</emphasis>。最初の接続の間にやりとりを偽装
+    し、<literal>STARTTLS</literal>のサポートを隠すことは攻撃者には可能です。
+    これらの攻撃を防ぐ唯一の方法は、設定変数で、
+    <link linkend="ssl-force-tls">$ssl_force_tls</link>を使って強制的に
+    <literal>STARTTLS</literal>を行うことです。
+  </para>
+</sect2>
+
+<sect2 id="secure-tunnel">
+  <title>Tunnel</title>
+  <para>
+    Mutt は通常<link linkend="tunnel">$tunnel</link> すなわち
+    直接のパイプや <literal>ssh</literal> 接続が安全であると
+    仮定しています。しかし、Mutt は引き続き
+    <link linkend="ssl-starttls">$ssl_starttls</link> と
+    <link linkend="ssl-force-tls">$ssl_force_tls</link> に従って、
+    <literal>STARTTLS</literal> を使おうと試みます。
+  </para>
+  <para>
+    事前認証(<literal>PREAUTH</literal>) が設定されている IMAP サーバは
+    <literal>STARTTLS</literal> を許可しません。
+    <link linkend="tunnel">$tunnel</link> を使う場合、Mutt は接続の通貨を
+    パスすることを許可します。トンネルの外側で、
+    <link linkend="ssl-force-tls">$ssl_force_tls</link> を設定すると、
+    接続を打ち切ることになります。
+  </para>
+</sect2>
+
 </sect1>
 
 <sect1 id="pop">
