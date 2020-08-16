@@ -8883,6 +8883,12 @@ Mutt はメッセージの読み書きに、<quote>Name &lt;user@host&gt;</quote
 するようになります。<literal>mutt -v</literal>の出力中における
 <literal>EXACT_ADDRESS</literal>は、それがサポートされているかを表示します。
 </para>
+<para>
+注意: 完全なアドレスに非ASCII文字が含まれているか、RFC 2047
+エンコーディングが要求されるシーケンスの場合は、Mutt は、正しい出力を
+生成するために、正規化された<quote>Name &lt;user@host&gt;</quote> 形式
+の出力に戻ることに注意してください。
+</para>
 
 </sect1>
 
@@ -9556,7 +9562,7 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       の値を変更します。その後 Mutt を初めて実行すると、
       <link linkend="autocrypt-dir">$autocrypt_dir</link>を作成するための
       プロンプトが表示されます。Mutt はそのディレクトリ中に、自動的に sqlite3 データベースと
-      gpg キーリングを作成します。これらのファイルはプライベートな物と見なすべきなので、
+      GPG キーリングを作成します。これらのファイルはプライベートな物と見なすべきなので、
       Mutt はモードを <literal>700</literal> にしてこのディレクトリを作成します。
       手動でディレクトリを作成する場合は、同じように行う必要があります。
     </para>
@@ -9801,7 +9807,7 @@ Mutt から Mixmaster を使うには、まず編集メニューで mix 機能�
       </listitem>
       <listitem>
         <para>
-	  Mutt が gpg キーからアカウントを作成するときは、公開鍵をエクスポートし、
+	  Mutt が GPG キーからアカウントを作成するときは、公開鍵をエクスポートし、
 	  base64でエンコードし、sqlite3 データベースにその値を格納します。
 	  値は、発信するメールに追加されるAutocrypt ヘッダ中で使われます。Mutt が
 	  生成する ECC キーは変更されませんが、満了した外部キーを使う場合、
@@ -10018,8 +10024,18 @@ Mutt が非常にごくわずかの、最近見たメッセージ(通常は10)�
 </para>
 
 <para>
-パフォーマンスの向上と全部のメッセージをキャッシュするための詳細については、
-Mutt の<link linkend="body-caching">body caching</link>を参照してください。
+パフォーマンスの向上と恒久的なキャッシュするための詳細については、
+Mutt の<link linkend="body-caching">body caching</link>と
+<link linkend="header-caching">header caching</link>を参照してください。
+</para>
+
+<para>
+さらに、いくつかの、Mutt の実験的な機能は試す価値があります。
+(ヘッダキャッシングを要求する)<link linkend="imap-qresync">$imap_qresync</link>
+は、IMAPサーバがサポートする場合、メールボックスのオープンするスピードを
+大幅に改善できます。<link linkend="imap-deflate">$imap_deflate</link>は、
+巨大なメールボックスとメッセージのダウンロード時間を大幅に削減出来る圧縮機能を
+有効にします。
 </para>
 
 </sect1>
