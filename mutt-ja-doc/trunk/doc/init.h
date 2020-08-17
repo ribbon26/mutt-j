@@ -27,7 +27,7 @@
 #include "buffy.h"
 
 #ifndef _MAKEDOC
-/* If you add a data type, be sure to update doc/makedoc.c */
+/* If you add a data type, be sure to update doc/makedoc.pl */
 #define DT_MASK		0x0f
 #define DT_BOOL		1 /* boolean option */
 #define DT_NUM		2 /* a number (short) */
@@ -360,6 +360,43 @@ struct option_t MuttVars[] = {
   ** .pp
   ** $$fast_reply も参照してください。
   */
+  { "background_edit",  DT_BOOL, R_NONE, {.l=OPTBACKGROUNDEDIT}, {.l=0} },
+  /*
+  ** .pp
+  ** \fIset\fP の場合、Mutt はメッセージ編集中に裏で $$editor を動かします。
+  ** ランディングページが表示され、$$editor の終了を待ちます。
+  ** ランディングページを終了すると、メールボックスを閲覧したり、他のメッセージを
+  ** 編集出来るようになります。裏で動いているセッションは
+  ** \fC<background-compose-menu>\fP 機能経由で戻ることが出来ます。
+  ** .pp
+  ** 裏での編集を適切に行うために、 $$editor は Mutt ターミナルを使わない
+  ** エディタを設定する必要があります。たとえば、グラフィカルエディタ、あるいは
+  ** 別の GNU Screen ウィンドウでエディタを起動する(そして待ち合わせする)
+  ** スクリプトなどです。
+  ** .pp
+  ** 詳細については `$bgedit'' (マニュアル中の "バックグラウンド編集")を
+  ** 参照してください。
+  */
+  { "background_confirm_quit", DT_BOOL, R_NONE, {.l=OPTBACKGROUNDCONFIRMQUIT}, {.l=1} },
+  /*
+  ** .pp
+  ** \fIset\fP の場合、裏で何らかの編集セッションがある場合、
+  ** $$quit prompt に加えて、Mutt 終了時に確認メッセージを表示します。
+  */
+  { "background_format", DT_STR, R_MENU, {.p=&BackgroundFormat}, {.p="%10S %7p %s"} },
+  /*
+  ** .pp
+  ** この変数は ``background compose'' メニューでのフォーマットを記述します。
+  ** 以下の\fCprintf(3)\fP風の書式が使用可能です。
+  ** .dl
+  ** .dt %i .dd 親メッセージ id (返信と転送メッセージ用)
+  ** .dt %n .dd メニュー上の実行番号
+  ** .dt %p .dd $$editor process の pid
+  ** .dt %r .dd カンマで区切られた ``To:'' 受信者のリスト
+  ** .dt %R .dd カンマで区切られた ``Cc:'' 受信者のリスト
+  ** .dt %s .dd メッセージの題名
+  ** .dt %S .dd $$editor process のステータス: running/finished
+  */
   { "beep",		DT_BOOL, R_NONE, {.l=OPTBEEP}, {.l=1} },
   /*
   ** .pp
@@ -487,9 +524,6 @@ struct option_t MuttVars[] = {
   { "compose_format",	DT_STR,	 R_MENU, {.p=&ComposeFormat}, {.p="-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"} },
   /*
   ** .pp
-  ** Controls the format of the status line displayed in the ``compose''
-  ** menu.  This string is similar to $$status_format, but has its own
-  ** set of \fCprintf(3)\fP-like sequences:
   ** ``編集'' メニューで表示されているステータス行のフォーマットを制御します。
   ** この文字列は$$status_formatと似ていますが、\fCprintf(3)\fP風の、固有の
   ** パラメータを使います:
