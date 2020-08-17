@@ -10742,11 +10742,27 @@ mutt mailto:some@one.org?subject=test&amp;cc=other@one.org</screen>
 <listitem>
 <cmdsynopsis>
 <command><link linkend="mailboxes">mailboxes</link></command>
-<arg choice="plain">
-<replaceable class="parameter">mailbox</replaceable>
-</arg>
-<arg choice="opt" rep="repeat">
-<replaceable class="parameter">mailbox</replaceable>
+<arg choice="opt">
+  <group choice="opt">
+    <arg choice="plain">
+      <option>-poll</option>
+    </arg>
+    <arg choice="plain">
+      <option>-nopoll</option>
+    </arg>
+  </group>
+  <group choice="opt">
+    <arg choice="plain">
+      <option>-label</option>
+      <replaceable>label</replaceable>
+    </arg>
+    <arg choice="plain">
+      <option>-nolabel</option>
+    </arg>
+  </group>
+  <arg choice="plain">
+    <replaceable class="parameter">mailbox</replaceable>
+  </arg>
 </arg>
 
 <command><link linkend="mailboxes">unmailboxes</link></command>
