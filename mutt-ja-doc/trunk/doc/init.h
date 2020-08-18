@@ -654,6 +654,20 @@ struct option_t MuttVars[] = {
   ** pgp 又は smime メニューで手動で再度有効に出来ます。
   ** (Cryptoのみです)
    */
+  { "crypt_opportunistic_encrypt_strong_keys", DT_BOOL, R_NONE, {.l=OPTCRYPTOPPENCSTRONGKEYS}, {.l=0} },
+  /*
+  ** .pp
+  ** 設定した場合、これは "強力な鍵"、すなわち、信頼するアルゴリズムのWeb に
+  ** 従った、完全に有効な鍵のみを探すように $$crypt_opportunistic_encrypt の
+  ** 動作を変更します。限界のある、あるいは信頼性性がない鍵は日和見暗号化を
+  ** 有効にしません。
+  ** .pp
+  ** S/MIME においては、動作はバックエンドに依存します。従来の S/MIME は
+  ** .index ファイル中に 't' (trusted) フラグがある証明書をフィルタします。
+  ** GPGME バックエンドは OpenPGP と同じフィルタを使い、GPGME_VALIDITY_FULL と
+  **  GPGME_VALIDITY_ULTIMATE 有効性フラグを割り当てる GPGME のロジックに依存します。
+  */
+
   { "crypt_protected_headers_read", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSREAD}, {.l=1} },
   /*
   ** .pp
