@@ -1007,6 +1007,18 @@ struct option_t MuttVars[] = {
   ** 署名されているかにかかわらず、復号化し、かつ署名を外して保存されます。
   ** (PGP のみです)
   */
+  { "fcc_delimiter", DT_STR, R_NONE, {.p=&FccDelimiter}, {.p=0} },
+  /*
+  ** .pp
+  ** When specified, this allows the ability to Fcc to more than one
+  ** mailbox.  The fcc value will be split by this delimiter and Mutt
+  ** will evaluate each part as a mailbox separately.
+  ** 指定した場合、複数のメールボックスに Fcc 出来るようになります。
+  ** Fcc の値はこのデリミタで分離され、Mutt は各部分をメールボックスとして
+  ** 評価します。
+  ** .pp
+  ** $$record, ``$fcc-hook'' と ``$fcc-save-hook'' も参照してください。
+  */
   { "flag_safe", DT_BOOL, R_NONE, {.l=OPTFLAGSAFE}, {.l=0} },
   /*
   ** .pp
