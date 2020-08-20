@@ -1428,6 +1428,17 @@ struct option_t MuttVars[] = {
   ** 若干早くなります。残念なことに、Gmail はそのうちの1つには入らず、有効にすると
   ** 表示が遅くなります。受け取るメリットは変わる場合があります。
   */
+#ifdef USE_ZLIB
+  { "imap_deflate",		DT_BOOL, R_NONE, {.l=OPTIMAPDEFLATE}, {.l=0} },
+  /*
+  ** .pp
+  ** \fIset\fP の場合、Mutt はサーバによって通知された場合、
+  ** COMPRESS=DEFLATE 拡張 (RFC 4978) を使用します。
+  ** .pp
+  ** 一般的に、圧縮効率が実現できれば、かなり良い回線状態に置いてでも大きな
+  ** メールボックスの  ** 読み出しを高速化できます。
+  */
+#endif
   { "imap_delim_chars",		DT_STR, R_NONE, {.p=&ImapDelimChars}, {.p="/."} },
   /*
   ** .pp
@@ -1438,9 +1449,9 @@ struct option_t MuttVars[] = {
   { "imap_fetch_chunk_size",	DT_LNUM, R_NONE, {.p=&ImapFetchChunkSize}, {.l=0} },
   /*
   ** .pp
-  ** この値を 0 より大きくすると、新しいヘッダはこのサイズのセットでダウンロード
-  ** されます。非常に大きなメールボックスを使っている場合、すべての新しいヘッダを
-  ** 単一の取得操作で行う代わりに、このサイズのセット毎に取得コマンドを送ることで、
+  ** この値を 0 より大きくすると、新しいヘッダは、要求毎に、たくさんのヘッダをグループにして
+  ** ダウンロードされます。非常に大きなメールボックスを使っている場合、すべての新しいヘッダを
+  ** 単一の取得操作で行う代わりに、このたくさんのヘッダ毎に取得コマンドを送ることで、
   ** メールボックスをオープンするときにタイムアウトと切断を防ぐことが出来ます。
   */
   { "imap_headers",	DT_STR, R_INDEX, {.p=&ImapHeaders}, {.p=0} },
@@ -2809,7 +2820,11 @@ struct option_t MuttVars[] = {
   ** ほかにも、自分のメールアドレスの ``Bcc:'' フィールドを作成して、
   ** ``$my_hdr'' コマンドを使ってそこにセーブするという方法もあります)。
   ** .pp
+  ** \fI$$record\fP の値は $$force_name と $$save_nam 変数と、``$fcc-hook''
   ** コマンドで上書きできます。$$copy と $$write_bcc も参照してください。
+  ** .pp
+  ** $$fcc_delimiter が 文字列デリミタに設定されている場合、複数のメールボックスを
+  ** 指定できます。
   */
   { "reflow_space_quotes",	DT_BOOL, R_NONE, {.l=OPTREFLOWSPACEQUOTES}, {.l=1} },
   /*
@@ -3909,7 +3924,7 @@ struct option_t MuttVars[] = {
   ** でオープンされているかを表示するのに使われます(新規メールの編集、返信、転送
   ** などのような特定の操作はこのモードでは許可されません)。
   */
-  { "status_format",	DT_STR,	 R_BOTH, {.p=&Status}, {.p="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?l? %l?]---(%s/%S)-%>-(%P)---"} },
+  { "status_format",	DT_STR,	 R_BOTH, {.p=&Status}, {.p="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?B? Back:%B?%?l? %l?]---(%s/%S)-%>-(%P)---"} },
   /*
   ** .pp
   ** ``index'' メニューで表示されるステータス行のフォーマットを制御します。
@@ -3917,6 +3932,7 @@ struct option_t MuttVars[] = {
   ** 持っています。
   ** .dl
   ** .dt %b  .dd 新着メールのあるメールボックス数 *
+  ** .dt %B  .dd 裏で編集中のセッション数 *
   ** .dt %d  .dd 削除メッセージ数 *
   ** .dt %f  .dd 現在のメールボックスのフルパス名
   ** .dt %F  .dd フラグが付いているメッセージ数 *
@@ -4366,11 +4382,11 @@ const struct mapping_t SortKeyMethods[] = {
 };
 
 const struct mapping_t SortSidebarMethods[] = {
-  { "alpha",		SORT_PATH },
+  { "alpha",		SORT_SUBJECT },
   { "count",		SORT_COUNT },
   { "flagged",		SORT_FLAGGED },
   { "mailbox-order",	SORT_ORDER },
-  { "name",		SORT_PATH },
+  { "name",		SORT_SUBJECT },
   { "new",		SORT_UNREAD },  /* kept for compatibility */
   { "path",		SORT_PATH },
   { "unread",		SORT_UNREAD },
@@ -4464,8 +4480,8 @@ const struct command_t Commands[] = {
   { "index-format-hook",mutt_parse_idxfmt_hook, {.l=MUTT_IDXFMTHOOK} },
   { "lists",		parse_lists,		{.l=0} },
   { "macro",		mutt_parse_macro,	{.l=0} },
-  { "mailboxes",	mutt_parse_mailboxes,	{.l=MUTT_MAILBOXES} },
-  { "unmailboxes",	mutt_parse_mailboxes,	{.l=MUTT_UNMAILBOXES} },
+  { "mailboxes",	mutt_parse_mailboxes,	{.l=0} },
+  { "unmailboxes",	mutt_parse_unmailboxes,	{.l=0} },
   { "mailto_allow",	parse_list,		{.p=&MailtoAllow} },
   { "unmailto_allow",	parse_unlist,		{.p=&MailtoAllow} },
   { "message-hook",	mutt_parse_hook,	{.l=MUTT_MESSAGEHOOK} },
