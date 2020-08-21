@@ -41,11 +41,11 @@
 const struct binding_t OpGeneric[] = { /* map: generic */
   /*
   ** <para>
-  ** <emphasis>generic</emphasis> ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã¯å®Ÿéš›ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§ã¯ãªãã€
-  ** <emphasis>ãƒšãƒ¼ã‚¸ãƒ£</emphasis>ã¨<emphasis>ã‚¨ãƒ‡ã‚£ã‚¿</emphasis>ã‚’é™¤ã„ãŸã™ã¹ã¦ã®
-  ** ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§æœ‰åŠ¹ãªå…±é€šã®æ©Ÿèƒ½ (ä¾‹ãˆã°ç§»å‹•) ã‚’æŒ‡å®šã—ã¾ã™ã€‚ã“ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®šã‚’
-  ** å¤‰æ›´ã™ã‚‹ã¨ã€ã™ã¹ã¦ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼(ä¸Šè¨˜ã§è¨˜ã—ãŸã‚‚ã®ä»¥å¤–)ã®æ—¢å®šã®å‰²ã‚Šå½“ã¦ã«å½±éŸ¿
-  ** ã—ã¾ã™ã€‚
+  ** <emphasis>generic</emphasis> ¥á¥Ë¥å¡¼¤Ï¼Âºİ¤Î¥á¥Ë¥å¡¼¤Ç¤Ï¤Ê¤¯¡¢
+  ** <emphasis>¥Ú¡¼¥¸¥ã</emphasis>¤È<emphasis>¥¨¥Ç¥£¥¿</emphasis>¤ò½ü¤¤¤¿¤¹¤Ù¤Æ¤Î
+  ** ¥á¥Ë¥å¡¼¤ÇÍ­¸ú¤Ê¶¦ÄÌ¤Îµ¡Ç½ (Îã¤¨¤Ğ°ÜÆ°) ¤ò»ØÄê¤·¤Ş¤¹¡£¤³¤Î¥á¥Ë¥å¡¼¤ÎÀßÄê¤ò
+  ** ÊÑ¹¹¤¹¤ë¤È¡¢¤¹¤Ù¤Æ¤Î¥á¥Ë¥å¡¼(¾åµ­¤Çµ­¤·¤¿¤â¤Î°Ê³°)¤Î´ûÄê¤Î³ä¤êÅö¤Æ¤Ë±Æ¶Á
+  ** ¤·¤Ş¤¹¡£
   ** </para>
   */
   { "top-page",		OP_TOP_PAGE,		"H" },
@@ -90,6 +90,7 @@ const struct binding_t OpMain[] = { /* map: index */
 #ifdef USE_AUTOCRYPT
   { "autocrypt-acct-menu",	OP_AUTOCRYPT_ACCT_MENU,		"A" },
 #endif
+  { "background-compose-menu",  OP_BACKGROUND_COMPOSE_MENU,     "B" },
   { "bounce-message",		OP_BOUNCE_MESSAGE,		"b" },
   { "break-thread",		OP_MAIN_BREAK_THREAD,		"#" },
   { "browse-mailboxes",		OP_MAIN_BROWSE_MAILBOXES,	"y" },
@@ -183,6 +184,8 @@ const struct binding_t OpMain[] = { /* map: index */
   { "decrypt-save",		OP_DECRYPT_SAVE,		NULL },
 
 #ifdef USE_SIDEBAR
+  { "sidebar-first",		OP_SIDEBAR_FIRST,		NULL },
+  { "sidebar-last",		OP_SIDEBAR_LAST,		NULL },
   { "sidebar-next",		OP_SIDEBAR_NEXT,		NULL },
   { "sidebar-next-new",		OP_SIDEBAR_NEXT_NEW,		NULL },
   { "sidebar-open",		OP_SIDEBAR_OPEN,		NULL },
@@ -197,6 +200,7 @@ const struct binding_t OpMain[] = { /* map: index */
 };
 
 const struct binding_t OpPager[] = { /* map: pager */
+  { "background-compose-menu",  OP_BACKGROUND_COMPOSE_MENU,     "B" },
   { "break-thread",	OP_MAIN_BREAK_THREAD,		"#" },
   { "browse-mailboxes",	OP_MAIN_BROWSE_MAILBOXES,	"y" },
   { "browse-mailboxes-readonly", OP_MAIN_BROWSE_MAILBOXES_READONLY, NULL },
@@ -307,6 +311,8 @@ const struct binding_t OpPager[] = { /* map: pager */
   { "check-stats",	OP_CHECK_STATS,		NULL },
 
 #ifdef USE_SIDEBAR
+  { "sidebar-first",		OP_SIDEBAR_FIRST,		NULL },
+  { "sidebar-last",		OP_SIDEBAR_LAST,		NULL },
   { "sidebar-next",		OP_SIDEBAR_NEXT,		NULL },
   { "sidebar-next-new",		OP_SIDEBAR_NEXT_NEW,		NULL },
   { "sidebar-open",		OP_SIDEBAR_OPEN,		NULL },
@@ -390,6 +396,8 @@ const struct binding_t OpCompose[] = { /* map: compose */
   { "view-alt-mailcap", OP_COMPOSE_VIEW_ALT_MAILCAP,    "V" },
   { "send-message",	OP_COMPOSE_SEND_MESSAGE,	"y" },
   { "pipe-entry",	OP_PIPE,			"|" },
+  { "move-down",	OP_COMPOSE_MOVE_DOWN,		NULL },
+  { "move-up",		OP_COMPOSE_MOVE_UP,		NULL },
 
   { "attach-key",	OP_COMPOSE_ATTACH_KEY,		"\033k" },
   { "pgp-menu",		OP_COMPOSE_PGP_MENU,		"p" 	},
