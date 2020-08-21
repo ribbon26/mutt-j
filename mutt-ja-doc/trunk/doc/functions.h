@@ -41,11 +41,11 @@
 const struct binding_t OpGeneric[] = { /* map: generic */
   /*
   ** <para>
-  ** <emphasis>generic</emphasis> ��˥塼�ϼºݤΥ�˥塼�ǤϤʤ���
-  ** <emphasis>�ڡ�����</emphasis>��<emphasis>���ǥ���</emphasis>����������٤Ƥ�
-  ** ��˥塼��ͭ���ʶ��̤ε�ǽ (�㤨�а�ư) ����ꤷ�ޤ������Υ�˥塼�������
-  ** �ѹ�����ȡ����٤ƤΥ�˥塼(�嵭�ǵ�������ΰʳ�)�δ���γ�����Ƥ˱ƶ�
-  ** ���ޤ���
+  ** <emphasis>generic</emphasis> メニューは実際のメニューではなく、
+  ** <emphasis>ページャ</emphasis>と<emphasis>エディタ</emphasis>を除いたすべての
+  ** メニューで有効な共通の機能 (例えば移動) を指定します。このメニューの設定を
+  ** 変更すると、すべてのメニュー(上記で記したもの以外)の既定の割り当てに影響
+  ** します。
   ** </para>
   */
   { "top-page",		OP_TOP_PAGE,		"H" },

@@ -374,7 +374,7 @@ struct option_t MuttVars[] = {
   ** 別の GNU Screen ウィンドウでエディタを起動する(そして待ち合わせする)
   ** スクリプトなどです。
   ** .pp
-  ** 詳細については `$bgedit'' (マニュアル中の "バックグラウンド編集")を
+  ** 詳細については ``$bgedit'' (マニュアル中の "バックグラウンド編集")を
   ** 参照してください。
   */
   { "background_confirm_quit", DT_BOOL, R_NONE, {.l=OPTBACKGROUNDCONFIRMQUIT}, {.l=1} },
@@ -1036,9 +1036,6 @@ struct option_t MuttVars[] = {
   { "folder_format",	DT_STR,	 R_MENU, {.p=&FolderFormat}, {.p="%2C %t %N %F %2l %-8.8u %-8.8g %8s %d %f"} },
   /*
   ** .pp
-  ** This variable allows you to customize the file browser display to your
-  ** personal taste.  This string is similar to $$index_format, but has
-  ** its own set of \fCprintf(3)\fP-like sequences:
   ** この変数で、好みに応じてファイルブラウザ表示をカスタマイズできます。
   ** この文字列は $$index_format と似ていますが、固有の\fCprintf(3)\fP風の書式があります。
   ** .dl
