@@ -1,10 +1,10 @@
 		Mutt 1.14.6用日本語版パッチリリースノート
 
-							2020-07-16
-							Ver 1.14.6-j1
+							2021-11-21
+							Ver 2.1.3-j1
 							mutt-j 開発チーム
 
-Copyright (C)2000-2020 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C)2000-2021 Oota Toshiya <ribbon@users.osdn.me>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -81,7 +81,8 @@ ports や Fedora RPM 由来のパッチを一旦削除し、日本語パッチ�
 た。また、FreeBSD向けパッチを新たに提供しています。
 
 1.14.6 以降は、rfc_2047_parameters 機能を外しました。このパッチがなく
-ても運用上特に問題が発生していないためです。
+ても運用上特に問題が発生していないためです。FreeBSD向けパッチも整理
+しています。
 
 なお、このドキュメントおよび同梱されているファイルについては、古いまま
 のものがあります。ご了承ください。
@@ -167,17 +168,13 @@ usage-japanese.ja.html をご覧下さい。
    
 2.4 FreeBSD ports
 
-  1.11.4 でのFreeBSD ports は、Webサイト上に置いています。
+  1.14.6 でのFreeBSD ports は、Webサイト上に置いています。
 
-　FreeBSD の port では、portsのMakefile自身で、mutt-1.11.4のdocや
+　FreeBSD の port では、portsのMakefile自身で、mutt-1.14.6の
 contrib配下にあるMakefileを書き換えます。しかし、日本語パッチを適用
 した場合、Makefile.amも書き換えるため、再度 autotools関連の処理が走
 ります。そのため、書き換えが無効になってしまいます。そこで、FreeBSD
 が行うとの同じようなことをするパッチを新たに作っています。
-　さらに、1.11.4 での ports の Makefile での標準的なパッチ適用手法
-に沿ったやりかたでパッチを行う場合、今まで作成してきたパッチと少々
-変更が必要なため、FreeBSD向け日本語パッチも専用のものを作っています。
-　パッチはこのアーカイブ中の freebsd ディレクトリに格納しています。
 
 3. 動作確認環境
 
@@ -268,13 +265,13 @@ ML あるいは取りまとめの中心者にメールをお送り下さい。
    
  ・ Copyright (C) 2000 Kawaguti Ginga <ginga@ginganet.org>
    
- ・ Copyright (C) 2012-2020 Oota Toshiya <ribbon@users.sourceforge.jp> *
+ ・ Copyright (C) 2012-2021 Oota Toshiya <ribbon@users.osdn.me> *
    
 7.1.2 メッセージカタログの邦訳
 
  ・ Kikutani Makoto <kikutani@galaxy.net>
    
- ・ Oota Toshiya <ribbon@users.sourceforge.jp>
+ ・ Oota Toshiya <ribbon@users.osdn.me>
    
  ・ "TAKAHASHI、Tamotsu" <tamo@momonga-linux.org> *
    
@@ -284,7 +281,7 @@ ML あるいは取りまとめの中心者にメールをお送り下さい。
    
  ・ Kohtaro Hitomi <hitomi@hiei.kit.ac.jp>
 
- ・ Oota Toshiya <ribbon@users.sourceforge.jp> *
+ ・ Oota Toshiya <ribbon@users.osdn.me> *
    
 7.1.4 マニュアル以外の文書の邦訳・英訳
 
