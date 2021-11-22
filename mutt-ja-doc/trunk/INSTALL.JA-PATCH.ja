@@ -1,10 +1,10 @@
 	Mutt 1.6.1 用日本語版パッチインストール方法
 
-							2016/08/22
-							Ver 1.6.1-j1
+							2021-11-22
+							Ver 2.1.3-j1
 							mutt-j 開発チーム
 
-Copyright (C) 2000-2016 Oota Toshiya <ribbon@users.sourceforge.jp>
+Copyright (C) 2000-2021 Oota Toshiya <ribbon@users.sourceforge.jp>
 
 Copyright (C) 2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -22,7 +22,6 @@ Copyright (C) 2000-2014 TAKIZAWA Takashi <taki@cyber.email.ne.jp>
    
 2. インストール方法
    
-    S-Lang をインストールする
     libiconv をインストールする
     Mutt のソースに日本語パッチを当てる
     ./configure に必要なオプションを付けて実行する
@@ -53,9 +52,9 @@ Mutt日本語版のコンパイル前に取りそろえておくものは以下�
    
 1.2 Mutt日本語版をコンパイルするため必要なもの
 
- ● mutt-1.6.x オリジナルソース
- ● mutt-1.6.x用日本語パッチ
- ● S-Langまたはncurses
+ ● mutt-2.1.x オリジナルソース
+ ● mutt-2.1.x用日本語パッチ
+ ● ncurses
  ● 文字符号化方式の変換関数 iconv を実装している C ライブラリで日本語の文字符
     号化方式と UTF-8 に対応しているもの（恐らく，GNU/Linux(glibc-2.2)，Solaris
     2.7，AIX 4.3 以上）あるいは GNU libiconv
@@ -68,40 +67,6 @@ SASL 認証が必要な方は Cyrus SASL Library を，PGP を使いたい人は
 GnuPG を，S/MIME を使いたい人は OpenSSL を予めインストールしてください．
 
 2. インストール方法
-
-S-Lang をインストールする
-
-すでに，日本語パッチの当った S-Lang がインストールされている，あるいはオリジナ
-ルの S-Lang で SLANG_HAS_KANJI_SUPPORT が定義されてインストールされていれば次の
-項目に移ってください．
-FreeBSD環境では、ja-libslangパッケージを使用すると、UTF-8環境では正常に動作
-しません。ncursesかlibslang2パッケージを使用してください。
-
-適当なディレクトリに展開し，そのディレクトリに移ります．オリジナルの S-Lang の
-場合は src/sl-feat.h を次のように編集して，SLANG_HAS_KANJI_SUPPORT を 1 に定義
-します．
-
-    #define SLANG_HAS_KANJI_SUPPORT         1
-
-コンパイルします。configureスクリプトを変更するため、autoconf/automake
-が起動し、configureスクリプトを作り替えるはずです。そうならない場合には、
-autoconf/automakeが使えない状態になっています。インストールしてください。
-
-    $ ./configure --prefix=/usr/local
-    $ make
-    $ make runtests
-
-静的ライブラリとしてインストールする場合は次にようにします．
-
-    # make install
-
-ELF形式の共有ライブラリとしてインストールする場合はさらに次のようにします．
-
-    $ make elf
-    # make install-elf
-    # make install-links
-
-この場合はインストール後に ldconfig などでキャッシュの更新を行なってください．
 
 libiconv をインストールする
 
@@ -133,10 +98,10 @@ Mutt の tar ball を展開し，日本語パッチを当ててください．
 
 例）
 
-    $ gzip -dc mutt-1.5.x-ja.1.tar.gz | tar xvf -
-    $ gzip -dc mutt-1.6.x.tar.gz | tar xvf -
-    $ cd mutt-1.6.x
-    $ patch -p1 < ../mutt-1.6.x-ja.1/展開されたパッチファイル
+    $ gzip -dc mutt-2.1.x-ja.1.tar.gz | tar xvf -
+    $ gzip -dc mutt-2.1.x.tar.gz | tar xvf -
+    $ cd mutt-2.1.x
+    $ patch -p0 < ../mutt-2.1.x-ja.1/展開されたパッチファイル
 
 パッチは複数個ありますので、複数回パッチを当ててください。
 
@@ -156,21 +121,6 @@ Mutt の tar ball を展開し，日本語パッチを当ててください．
     ワイド文字関数と日本語のロケールデータがまともに動く環境（恐らく GNU/Linux/
     glibc-2.2，Solaris 2.7，AIX 4.3 以上）以外の方はこのオプションを忘れずに付
     けてください．
-   
- ● --with-slang[=DIR]
-   
-    S-Lang を使う場合は必ず付けてください．システムにライブラリとして存在する場
-    合は基本的にはディレクトリを指定する必要はありません．
-   
-    例) --with-slang=/usr/local
-   
- ● --with-slanglib[=NAME]
-   
-    共有ライブラリ名が libslang.so 以外の場合に，このオプションで共有ライブラリ
-    名を指定してください．例えば，共有ライブラリ名のファイル名が libslang-ja.so
-    の場合は以下のように指定します．
-   
-    例) --with-slanglib=slang-ja
    
  ● --enable-default-japanese
    
@@ -234,5 +184,5 @@ postfixなどの MTA や Nomail，nullmailer，ssmtp などの送信専用のプ
 してください．
 
 どうしても日本語の表示がうまくいかないという方は前のインストールの手順を確認し
-，S-Lang，iconv，ワイド文字関数を使うようになっているかを確かめてください．
+，iconv，ワイド文字関数を使うようになっているかを確かめてください．
 
