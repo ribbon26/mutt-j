@@ -1,10 +1,10 @@
-		Mutt 1.14.6用日本語版パッチリリースノート
+		Mutt 2.2.5 用日本語版パッチリリースノート
 
-							2021-11-21
-							Ver 2.1.3-j1
+							2022-05-22
+							Ver 2.2.5-j1
 							mutt-j 開発チーム
 
-Copyright (C)2000-2021 Oota Toshiya <ribbon@users.osdn.me>
+Copyright (C)2000-2022 Oota Toshiya <ribbon@users.osdn.me>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -180,7 +180,7 @@ contrib配下にあるMakefileを書き換えます。しかし、日本語パ�
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 11.4(32bit)       iw	     Oota Tochiya
+1) FreeBSD 12.2(32bit)       iw	     Oota Tochiya
 
 オプションの意味
 
@@ -265,7 +265,7 @@ ML あるいは取りまとめの中心者にメールをお送り下さい。
    
  ・ Copyright (C) 2000 Kawaguti Ginga <ginga@ginganet.org>
    
- ・ Copyright (C) 2012-2021 Oota Toshiya <ribbon@users.osdn.me> *
+ ・ Copyright (C) 2012-2022 Oota Toshiya <ribbon@users.osdn.me> *
    
 7.1.2 メッセージカタログの邦訳
 
