@@ -1,0 +1,71 @@
+diff -urN ../mutt-1.11.4/init.h ./init.h
+--- ../mutt-1.11.4/init.h	2019-03-13 14:32:13.000000000 +0900
++++ ./init.h	2019-04-28 12:30:52.562706000 +0900
+@@ -4077,6 +4077,17 @@
+   ** Also see the $$read_inc, $$net_inc and $$time_inc variables and the
+   ** ``$tuning'' section of the manual for performance considerations.
+   */
++  { "create_rfc2047_parameters", DT_BOOL, R_NONE, OPTCREATERFC2047PARAMS, 0 },
++  /*
++  ** .pp
++  ** When this variable is set, Mutt will add the following RFC-2047-encoded
++  ** MIME parameter to Content-Type header field as filename for attachment:
++  ** name="=?iso-2022-jp?B?GyRCO244MxsoQi50eHQ=?="
++  ** .pp
++  ** Note: this use of RFC 2047's encoding is explicitly prohibited
++  ** by the standard. You may set this variable only if a mailer
++  ** of recipients can not parse RFC 2231 parameters.
++  */
+   {"xterm_icon",	DT_SYN,  R_NONE, UL "ts_icon_format", 0 },
+   /*
+   */
+diff -urN ../mutt-1.11.4/mutt.h ./mutt.h
+--- ../mutt-1.11.4/mutt.h	2019-03-13 14:32:13.000000000 +0900
++++ ./mutt.h	2019-04-28 12:30:52.563786000 +0900
+@@ -375,6 +375,7 @@
+   OPTCOLLAPSEUNREAD,
+   OPTCONFIRMAPPEND,
+   OPTCONFIRMCREATE,
++  OPTCREATERFC2047PARAMS,
+   OPTDELETEUNTAG,
+   OPTDIGESTCOLLAPSE,
+   OPTDUPTHREADS,
+diff -urN ../mutt-1.11.4/PATCHES ./PATCHES
+--- ../mutt-1.11.4/PATCHES	2017-12-03 12:10:17.000000000 +0900
++++ ./PATCHES	2019-04-28 12:30:52.564404000 +0900
+@@ -0,0 +1 @@
++patch-1.11.4.tt.create_rfc2047_params.1
+diff -urN ../mutt-1.11.4/sendlib.c ./sendlib.c
+--- ../mutt-1.11.4/sendlib.c	2019-03-13 14:32:13.000000000 +0900
++++ ./sendlib.c	2019-04-28 12:30:52.565745000 +0900
+@@ -348,6 +348,30 @@
+     }
+   }
+ 
++  if (a->use_disp && option (OPTCREATERFC2047PARAMS))
++  {
++    if(!(fn = a->d_filename))
++      fn = a->filename;
++
++    if (fn)
++    {
++      char *tmp;
++
++      /* Strip off the leading path... */
++      if ((t = strrchr (fn, '/')))
++	t++;
++      else
++        t = fn;
++
++      buffer[0] = 0;
++      tmp = safe_strdup (t);
++      rfc2047_encode_string (&tmp);
++      rfc822_cat (buffer, sizeof (buffer), tmp, MimeSpecials);
++      FREE (&tmp);
++      fprintf (f, ";\n\tname=%s", buffer);
++    }
++  }
++
+   fputc ('\n', f);
+ 
+   if (a->description)
