@@ -10,6 +10,11 @@ prepare: xsl/docbook-wrapper.xsl
 xsl/docbook-wrapper.xsl:
 	./prepare
 
+#text : prepare README.JA-PATCH.ja INSTALL.JA-PATCH.ja \
+#manual-ja-patch.ja.txt manual-ja-patch.en.txt usage-japanese.ja.txt
+#
+#html : prepare README.JA-PATCH.ja.html INSTALL.JA-PATCH.ja.html \
+#manual-ja-patch.ja.html manual-ja-patch.en.html usage-japanese.ja.html
 text : prepare README.JA-PATCH.ja INSTALL.JA-PATCH.ja \
 manual-ja-patch.ja.txt manual-ja-patch.en.txt usage-japanese.ja.txt
 

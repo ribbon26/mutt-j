@@ -16,7 +16,7 @@ OUTPUT=${INPUT%%xml}html
 
 xsltproc ${XSL} ${INPUT} | \
 sed '
-  s{<p class="copyright">À½ºîÃøºî{<p class="copyright">Copyright {g
+  s{<p class="copyright">è£½ä½œè‘—ä½œ{<p class="copyright">Copyright {g
   s{</div><div class="sect1"{</div><hr /><div class="sect1"{g;
 ' > ${OUTPUT}
 
