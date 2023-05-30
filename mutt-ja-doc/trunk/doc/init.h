@@ -33,24 +33,27 @@
 #define DT_NUM		2 /* a number (short) */
 #define DT_STR		3 /* a string */
 #define DT_PATH		4 /* a pathname */
-#define DT_QUAD		5 /* quad-option (yes/no/ask-yes/ask-no) */
-#define DT_SORT		6 /* sorting methods */
-#define DT_RX		7 /* regular expressions */
-#define DT_MAGIC	8 /* mailbox type */
-#define DT_SYN		9 /* synonym for another variable */
-#define DT_ADDR	       10 /* e-mail address */
-#define DT_MBCHARTBL   11 /* multibyte char table */
-#define DT_LNUM        12 /* a number (long) */
+#define DT_CMD_PATH	5 /* a pathname for a command: no relpath expansion */
+#define DT_QUAD		6 /* quad-option (yes/no/ask-yes/ask-no) */
+#define DT_SORT		7 /* sorting methods */
+#define DT_RX		8 /* regular expressions */
+#define DT_MAGIC	9 /* mailbox type */
+#define DT_SYN	       10 /* synonym for another variable */
+#define DT_ADDR	       11 /* e-mail address */
+#define DT_MBCHARTBL   12 /* multibyte char table */
+#define DT_LNUM        13 /* a number (long) */
 
 #define DTYPE(x) ((x) & DT_MASK)
 
 /* subtypes */
-#define DT_SUBTYPE_MASK	0xff0
-#define DT_SORT_ALIAS	0x10
-#define DT_SORT_BROWSER 0x20
-#define DT_SORT_KEYS	0x40
-#define DT_SORT_AUX	0x80
-#define DT_SORT_SIDEBAR	0x100
+#define DT_SUBTYPE_MASK       0xff0
+#define DT_SORT_ALIAS         0x10
+#define DT_SORT_BROWSER       0x20
+#define DT_SORT_KEYS          0x40
+#define DT_SORT_AUX           0x80
+#define DT_SORT_SIDEBAR       0x100
+#define DT_L10N_STR           0x200
+#define DT_SORT_THREAD_GROUPS 0x400
 
 /* flags to parse_set() */
 #define MUTT_SET_INV	(1<<0)	/* default is to invert all vars */
@@ -86,13 +89,112 @@ struct option_t
 #define ISPELL "ispell"
 #endif
 
+/* Sort Maps:
+ * Value-to-name lookup uses the first match.  They are sorted by value
+ * to make the duplicate values more obvious. */
+
+/*+sort+*/
+const struct mapping_t SortMethods[] = {  /* DT_SORT */
+  { "date",		SORT_DATE },
+  { "date-sent",	SORT_DATE },
+  { "from",		SORT_FROM },
+  { "label",		SORT_LABEL },
+  { "mailbox-order",	SORT_ORDER },
+  { "date-received",	SORT_RECEIVED },
+  { "score",		SORT_SCORE },
+  { "size",		SORT_SIZE },
+  { "spam",		SORT_SPAM },
+  { "subject",		SORT_SUBJECT },
+  { "threads",		SORT_THREADS },
+  { "to",		SORT_TO },
+  { NULL,               0 }
+};
+
+/* same as SortMethods, but with "threads" replaced by "date" */
+
+const struct mapping_t SortAuxMethods[] = {  /* DT_SORT_AUX */
+  { "date",		SORT_DATE },
+  { "date-sent",	SORT_DATE },
+  { "threads",		SORT_DATE },	/* note: sort_aux == threads
+					 * isn't possible.
+					 */
+  { "from",		SORT_FROM },
+  { "label",		SORT_LABEL },
+  { "mailbox-order",	SORT_ORDER },
+  { "date-received",	SORT_RECEIVED },
+  { "score",		SORT_SCORE },
+  { "size",		SORT_SIZE },
+  { "spam",		SORT_SPAM },
+  { "subject",		SORT_SUBJECT },
+  { "to",		SORT_TO },
+  { NULL,               0 }
+};
+
+/* Used by $sort_thread_groups.  "aux" delegates to $sort_aux */
+const struct mapping_t SortThreadGroupsMethods[] = {  /* DT_SORT_THREAD_GROUPS */
+  { "aux",		SORT_AUX },
+  { "date",		SORT_DATE },
+  { "date-sent",	SORT_DATE },
+  { "from",		SORT_FROM },
+  { "label",		SORT_LABEL },
+  { "mailbox-order",	SORT_ORDER },
+  { "date-received",	SORT_RECEIVED },
+  { "score",		SORT_SCORE },
+  { "size",		SORT_SIZE },
+  { "spam",		SORT_SPAM },
+  { "subject",		SORT_SUBJECT },
+  { "threads",		SORT_THREADS },
+  { "to",		SORT_TO },
+  { NULL,               0 }
+};
+
+const struct mapping_t SortBrowserMethods[] = {  /* DT_SORT_BROWSER */
+  { "count",	SORT_COUNT },
+  { "date",	SORT_DATE },
+  { "unsorted",	SORT_ORDER },
+  { "size",	SORT_SIZE },
+  { "alpha",	SORT_SUBJECT },
+  { "unread",	SORT_UNREAD },
+  { NULL,       0 }
+};
+
+const struct mapping_t SortAliasMethods[] = {  /* DT_SORT_ALIAS */
+  { "address",	SORT_ADDRESS },
+  { "alias",	SORT_ALIAS },
+  { "unsorted", SORT_ORDER },
+  { NULL,       0 }
+};
+
+const struct mapping_t SortKeyMethods[] = {  /* DT_SORT_KEYS */
+  { "address",	SORT_ADDRESS },
+  { "date",	SORT_DATE },
+  { "keyid",	SORT_KEYID },
+  { "trust",	SORT_TRUST },
+  { NULL,       0 }
+};
+
+const struct mapping_t SortSidebarMethods[] = {  /* DT_SORT_SIDEBAR */
+  { "count",		SORT_COUNT },
+  { "flagged",		SORT_FLAGGED },
+  { "unsorted",		SORT_ORDER },
+  { "mailbox-order",	SORT_ORDER },
+  { "path",		SORT_PATH },
+  { "alpha",		SORT_SUBJECT },
+  { "name",		SORT_SUBJECT },
+  { "unread",		SORT_UNREAD },
+  { "new",		SORT_UNREAD },  /* kept for compatibility */
+  { NULL,		0 }
+};
+/*-sort-*/
+
+
 struct option_t MuttVars[] = {
   /*++*/
   { "abort_noattach", DT_QUAD, R_NONE, {.l=OPT_ABORTNOATTACH}, {.l=MUTT_NO} },
   /*
   ** .pp
   ** メッセージの本体が $$abort_noattach_regexp に一致し、かつ、添付がない場合、
-  ** この4択は目セージ送信を中止するかどうかを制御します。
+  ** この4択はメッセージ送信を中止するかどうかを制御します。
   */
   { "abort_noattach_regexp",  DT_RX,  R_NONE, {.p=&AbortNoattachRegexp}, {.p="attach"} },
   /*
@@ -256,21 +358,41 @@ struct option_t MuttVars[] = {
   ** .pp
   ** ``soft-fill'' の説明については $$index_format のドキュメントを参照してください。
   */
+  { "attach_save_charset_convert", DT_QUAD, R_NONE, {.l=OPT_ATTACH_SAVE_CHARCONV}, {.l=MUTT_ASKYES} },
+  /*
+  ** .pp
+  ** この4択は、受け取ったテキスト形式の添付を保存するとき、
+  ** 添付のエンコード(あるいは指定されていない場合は $$assumed_charset)
+  ** が $charset と異なる場合に、文字セットを変換するかを制御します。
+  */
+  { "attach_save_dir",	DT_PATH, R_NONE, {.p=&AttachSaveDir}, {.p=0} },
+  /*
+  ** .pp
+  ** ``attachment'' メニューから添付を保存するための既定のディレクトリ。
+  ** 存在しない場合は、Mutt は保存する前にディレクトリを作成するかどうかを
+  ** 聞いてきます。
+  ** .pp
+  ** パスが不正の場合(たとえばディレクトリでない、あるいは chdir
+  ** できない)、Mutt は現在のディレクトリを使うようにします。
+  */
   { "attach_sep",	DT_STR,	 R_NONE, {.p=&AttachSep}, {.p="\n"} },
   /*
   ** .pp
-  ** タグが付いた添付の一覧を操作するとき(セーブ、印刷、パイプなど)
+  ** タグが付いた添付の一覧を操作するとき(保存、印刷、パイプなど)
   ** 添付間に追加するためのセパレータ。
   */
   { "attach_split",	DT_BOOL, R_NONE, {.l=OPTATTACHSPLIT}, {.l=1} },
   /*
   ** .pp
-  ** この変数が\fIunset\fPで、タグが付いた添付の一覧を操作するとき(セーブ、印刷、
+  ** この変数が\fIunset\fPで、タグが付いた添付の一覧を操作するとき(保存、印刷、
   ** パイプなど)、Mutt は添付を結合し、1つの添付として処理します。$$attach_sep
   ** セパレータが各添付の後に追加されます。\fIset\fPの場合には、Mutt は
   ** 添付を1つ1つ処理します。
   */
-  { "attribution",	DT_STR,	 R_NONE, {.p=&Attribution}, {.p="On %d, %n wrote:"} },
+  /* L10N:
+     $attribution default value
+  */
+  { "attribution",	DT_STR|DT_L10N_STR, R_NONE, {.p=&Attribution}, {.p=N_("On %d, %n wrote:")} },
   /*
   ** .pp
   ** これは、返信で引用されるメッセージの前に付く文字列です。定義されている\fCprintf(3)\fP
@@ -309,7 +431,7 @@ struct option_t MuttVars[] = {
   { "autocrypt",	DT_BOOL, R_NONE, {.l=OPTAUTOCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fPの場合で、autocrypt を有効にし、ヘッダ経由で交換されるキーを
+  ** \fIset\fPの場合、autocrypt を有効にし、ヘッダ経由で交換されるキーを
   ** 使って受動的な暗号化による保護を提供します。
   ** 詳細は``$autocryptdoc''を参照してください。
   ** (これは Autocrypt のみです)
@@ -317,7 +439,7 @@ struct option_t MuttVars[] = {
   { "autocrypt_acct_format", DT_STR, R_MENU, {.p=&AutocryptAcctFormat}, {.p="%4n %-30a %20p %10s"} },
   /*
   ** .pp
-  ** この変数は、``autocrypt account''メニューのフォーマットを決めます。
+  ** この変数は、``autocrypt account''メニューのフォーマットを記述します。
   ** 以下の、\fCprintf(3)\fP風のものが使えます。
   ** .dl
   ** .dt %a  .dd メールアドレス
@@ -419,7 +541,7 @@ struct option_t MuttVars[] = {
   /*
   ** .pp
   ** この変数を\fIset\fPにした場合、mutt はメッセージ中継を行うときに、
-  ** Delivered-To ヘッダを付与します。Postfix の利用者は、この変数が\fIunset\fP
+  ** Delivered-To ヘッダを付与します。Postfix の利用者は、この変数を\fIunset\fP
   ** にしたいでしょう。
   */
   { "braille_friendly", DT_BOOL, R_NONE, {.l=OPTBRAILLEFRIENDLY}, {.l=0} },
@@ -466,7 +588,8 @@ struct option_t MuttVars[] = {
   ** .ts
   ** set certificate_file=~/.mutt/certificates
   ** .te
-  **
+  ** .pp
+  ** (OpenSSL と GnuTLS のみ)
   */
 #endif
   { "change_folder_next", DT_BOOL, R_NONE, {.l=OPTCHANGEFOLDERNEXT}, {.l=0} },
@@ -514,14 +637,28 @@ struct option_t MuttVars[] = {
   ** 各ファイルについてすでに見たかどうかをチェックするため、かなりの時間がかかる
   ** 可能性があります。この変数を\fIunset\fPにすると、メールボックスが開いている間は
   ** 新規メールのチェックを行いません。
-  ** 
   */
   { "collapse_unread",	DT_BOOL, R_NONE, {.l=OPTCOLLAPSEUNREAD}, {.l=1} },
   /*
   ** .pp
   ** \fIunset\fP の場合、Mutt は未読メッセージがあるスレッドを折りたたみません。
   */
-  { "compose_format",	DT_STR,	 R_MENU, {.p=&ComposeFormat}, {.p="-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%>-"} },
+  { "compose_confirm_detach_first", DT_BOOL, R_NONE, {.l=OPTCOMPOSECONFIRMDETACH}, {.l=1} },
+  /*
+  ** .pp
+  ** \fIset\fP の場合、Mutt は編集メニュー中で、最初のエントリ上で
+  ** \fC<detach-file>\fP を使おうとした時、確認を要求してきます。
+  ** これは、メニュー中で 'D' を間違って入力して、入力したメッセージが
+  ** 取り返しの付かない損失とならないようにするのに役に立ちます。
+  ** .pp
+  ** 注意: Mutt は初回のみ確認表示します。エントリの順序が変更された場合や、
+  ** 最初のエントリがすでに削除されている場合は、どのメッセージが入力された
+  ** メッセージであるかを記憶していません。
+  */
+  /* L10N:
+     $compose_format default value
+  */
+  { "compose_format",	DT_STR|DT_L10N_STR, R_MENU, {.p=&ComposeFormat}, {.p=N_("-- Mutt: Compose  [Approx. msg size: %l   Atts: %a]%>-")} },
   /*
   ** .pp
   ** ``編集'' メニューで表示されているステータス行のフォーマットを制御します。
@@ -549,7 +686,6 @@ struct option_t MuttVars[] = {
   ** .pp
   ** 再エンコーディングは、変換できない文字を疑問符にしてしまう場合があり、
   ** 予期せぬ副作用(たとえば正規表現で)が発生しうるので、避けるべきです。
-  ** 
   */
   { "confirmappend",	DT_BOOL, R_NONE, {.l=OPTCONFIRMAPPEND}, {.l=1} },
   /*
@@ -580,6 +716,12 @@ struct option_t MuttVars[] = {
   ** この変数は、送信メッセージのコピーを 後で参照するために保存しておくかどうかを制御します。
   ** $$record,$$save_name, $$force_name と ``$fcc-hook'' も参照してください。
   */
+  { "copy_decode_weed",	DT_BOOL, R_NONE, {.l=OPTCOPYDECODEWEED}, {.l=0} },
+  /*
+  ** .pp
+  ** \fC<decode-copy>\fP または \fC<decode-save>\fP 機能を呼び出すときに、
+  ** Mutt がヘッダを間引きするかどうかを制御します。
+  */
   { "count_alternatives", DT_BOOL, R_NONE, {.l=OPTCOUNTALTERNATIVES}, {.l=0} },
   /*
   ** .pp
@@ -592,23 +734,32 @@ struct option_t MuttVars[] = {
   ** そこに隠された、一致する添付を見つけ、カウントし、%X 経由か ~X によるパターン
   ** マッチングを使ってインデックス中に含めます。
   */
+  { "cursor_overlay", DT_BOOL, R_BOTH|R_SIDEBAR, {.l=OPTCURSOROVERLAY}, {.l=0} },
+  /*
+  ** .pp
+  ** \fIset\fPの場合、Muttはインジケータ、ツリー、サイドバー_ハイライト、および
+  ** サイドバー_インジケータの色を現在選択されている行に上書きして表示します。
+  ** これにより、それらの\fC既定値の\fP色を上書きし、属性をレイヤー間でマージ
+  ** できます。
+  */
   { "pgp_autoencrypt",		DT_SYN,  R_NONE, {.p="crypt_autoencrypt"}, {.p=0} },
   { "crypt_autoencrypt",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOENCRYPT}, {.l=0} },
   /*
   ** .pp
   ** この変数を設定すると、Mutt は送信メッセージを常時 PGP で暗号化しようとします。
-  ** これは``$send-hook'' コマンドでの接続中にのみ便利です。これは、暗号化が
-  ** 不要な場合や同様に署名が要求されている場合は PGPメニューを使う事で上書きできます。
-  ** $$smime_is_default が\fIset\fP の時は、 S/MIME メッセージを作成するのに
-  ** OpenSSL が代わりに使われ、smime メニューを使うことで代わりに設定を上書きできます。
-  ** (Crypto のみです)
+  ** これはおそらく、``$send-hook'' コマンドに接続する時にのみ便利でしょう。
+  ** 署名が不要な場合や、同様に暗号化が必要な場合に pgp メニューを使うことで
+  ** 上書きできます。$$smime_is_default が \fIset\fP の場合は、S/MIME メッセージを
+  ** 作成するのにOpenSSL が代わりに使われ、設定は、smime メニューが
+  ** 代わりに使われる事で上書きされます。
+  ** (Cryptoのみです)
   */
   { "crypt_autopgp",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOPGP}, {.l=1} },
   /*
   ** .pp
-  ** この変数は、Mutt がメッセージに自動で PGP 暗号化/署名を有効にしても 良いかどうかを制御
-  ** します。$$crypt_autoencrypt,$$crypt_replyencrypt,$$crypt_autosign, $$crypt_replysign と
-  ** $$smime_is_default も参照してください。
+  ** この変数は、mutt がメッセージの PGP 暗号化/署名を自動的に有効にするか
+  ** どうかを制御します。$$crypt_autoencrypt、$$crypt_replyencrypt、
+  ** $$crypt_autosign、$$crypt_replysign、および$$smime_is_default も参照してください。
   */
   { "pgp_autosign", 	DT_SYN,  R_NONE, {.p="crypt_autosign"}, {.p=0} },
   { "crypt_autosign",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOSIGN}, {.l=0} },
@@ -617,8 +768,8 @@ struct option_t MuttVars[] = {
   ** この変数を設定すると、Mutt は送信メッセージを常時暗号で署名しようとします。
   ** これは、署名が不要な場合や、同様に暗号化が必要な場合に pgp メニューを使うことで
   ** 上書きできます。$$smime_is_default が \fIset\fP の場合は、S/MIME メッセージを
-  ** 作成するのにOpenSSL が代わりに使われ、pgp メニューの代わりに smime メニューを
-  ** 代わりに使う事で上書きできます。
+  ** 作成するのにOpenSSL が代わりに使われ、設定は、pgp メニューの代わりに smime メニューが
+  ** 代わりに使われる事で上書きされます。
   ** (Cryptoのみです)
   */
   { "crypt_autosmime",	DT_BOOL, R_NONE, {.l=OPTCRYPTAUTOSMIME}, {.l=1} },
@@ -626,7 +777,7 @@ struct option_t MuttVars[] = {
   ** .pp
   ** この変数は、Mutt がメッセージに対して自動的に S/MiME 暗号化/署名を有効にするかを
   ** 指定します。$$crypt_autoencrypt,$$crypt_replyencrypt,$$crypt_autosign,
-  ** $$crypt_replysign と $$smime_is_default も参照してください。 
+  ** $$crypt_replysign と $$smime_is_default も参照してください。
   */
   { "crypt_confirmhook",	DT_BOOL, R_NONE, {.l=OPTCRYPTCONFIRMHOOK}, {.l=1} },
   /*
@@ -653,13 +804,13 @@ struct option_t MuttVars[] = {
   ** 有効にしている場合、このオプションはメッセージに対しては無効となります。
   ** pgp 又は smime メニューで手動で再度有効に出来ます。
   ** (Cryptoのみです)
-   */
+  */
   { "crypt_opportunistic_encrypt_strong_keys", DT_BOOL, R_NONE, {.l=OPTCRYPTOPPENCSTRONGKEYS}, {.l=0} },
   /*
   ** .pp
-  ** 設定した場合、これは "強力な鍵"、すなわち、信頼するアルゴリズムのWeb に
+  ** 設定した場合、これは "強力な鍵"、すなわち、web-of-trust アルゴリズムに
   ** 従った、完全に有効な鍵のみを探すように $$crypt_opportunistic_encrypt の
-  ** 動作を変更します。限界のある、あるいは信頼性性がない鍵は日和見暗号化を
+  ** 動作を変更します。最低限の、あるいは信頼性がない鍵は便宜的(opportunistic)暗号化を
   ** 有効にしません。
   ** .pp
   ** S/MIME においては、動作はバックエンドに依存します。従来の S/MIME は
@@ -667,11 +818,10 @@ struct option_t MuttVars[] = {
   ** GPGME バックエンドは OpenPGP と同じフィルタを使い、GPGME_VALIDITY_FULL と
   **  GPGME_VALIDITY_ULTIMATE 有効性フラグを割り当てる GPGME のロジックに依存します。
   */
-
   { "crypt_protected_headers_read", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSREAD}, {.l=1} },
   /*
   ** .pp
-  ** 設定した場合、Mutt はページャ中に保護されたヘッダ("メモリホール")を表示し、
+  ** 設定した場合、Mutt はページャ中に保護されたヘッダを表示し、
   ** インデックスとヘッダキャッシュを変更されたヘッダで更新します。
   **
   ** 保護されたヘッダはメール中の暗号化または署名されたパート中に格納され、
@@ -686,12 +836,12 @@ struct option_t MuttVars[] = {
   ** Mutt は結局ダミーの題名ヘッダを使うため、そのようなメッセージは最初に
   ** オープンするようにしてください。
   ** (Cryptoのみです)
-   */
+  */
   { "crypt_protected_headers_save", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSSAVE}, {.l=0} },
   /*
   ** .pp
   ** $$crypt_protected_headers_read を設定した場合で、保護された題名があるメッセージを
-  ** 開いている場合、Mutt は既定でヘッダキャッシュに更新された題名を保存します。
+  ** 開いた場合、Mutt は既定でヘッダキャッシュに更新された題名を保存します。
   ** これにより、メッセージを毎回再オープンすることなしに、メールボックスが
   ** 再オープンされた場合に保護された題名ヘッダをベースにした検索/制限が
   ** 出来るようになります。しかし、mbox/mh メールボックスか、ヘッダキャッシュが
@@ -706,21 +856,21 @@ struct option_t MuttVars[] = {
   ** する場合、以前に暗号化されたデータが見えてしまう可能性があります。
   ** この変数を有効にする前に、これがどういう結果になるかを十分に理解してください。
   ** (Crypto のみです)
-   */
-  { "crypt_protected_headers_subject", DT_STR, R_NONE, {.p=&ProtHdrSubject}, {.p="Encrypted subject"} },
+  */
+  { "crypt_protected_headers_subject", DT_STR, R_NONE, {.p=&ProtHdrSubject}, {.p="..."} },
   /*
   ** .pp
-  ** When $$crypt_protected_headers_write を設定した場合で、メッセージに暗号化がマークされて
+  ** $$crypt_protected_headers_write を設定した場合で、メッセージに暗号化がマークされて
   ** いる場合、これがメッセージヘッダの題名フィールドに置き換わります。
   **
   ** 題名が置換されないようにするには、この値を設定しないか、空の文字列を設定します。
   ** (Crypto のみです)
-   */
+  */
   { "crypt_protected_headers_write", DT_BOOL, R_NONE, {.l=OPTCRYPTPROTHDRSWRITE}, {.l=0} },
   /*
   ** .pp
   ** 設定する場合、Mutt は署名および暗号化したメールに対して、保護されたヘッダ
-  ** ("メモリホール")を生成します。
+  ** を生成します。
   **
   ** 保護されたヘッダはメール中の暗号化または署名されたパート中に格納され、
   ** 漏洩や改ざんを防ぎます。詳細については
@@ -728,7 +878,7 @@ struct option_t MuttVars[] = {
   **
   ** 現時点でMutt は題名ヘッダのみサポートします。
   ** (Cryptoのみです)
-   */
+     */
   { "pgp_replyencrypt",		DT_SYN,  R_NONE, {.p="crypt_replyencrypt"}, {.p=0} },
   { "crypt_replyencrypt",	DT_BOOL, R_NONE, {.l=OPTCRYPTREPLYENCRYPT}, {.l=1} },
   /*
@@ -745,14 +895,14 @@ struct option_t MuttVars[] = {
   ** 署名した返信を行います。
   ** .pp
   ** \fBNote:\fP これは、暗号化され、\fIかつ\fP 署名されているメッセージに
-  ** 対しては動作しません。
+  ** 対しては動作しません!
   ** (Crypto のみです)
   */
   { "pgp_replysignencrypted",   DT_SYN,  R_NONE, {.p="crypt_replysignencrypted"}, {.p=0} },
   { "crypt_replysignencrypted", DT_BOOL, R_NONE, {.l=OPTCRYPTREPLYSIGNENCRYPTED}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、暗号化れたメッセージに対して、自動的に PGP または OpenSSL で
+    ** \fIset\fP の場合、暗号化れたメッセージに対して、自動的に PGP または OpenSSL で
   ** 署名した返信を行います。これは、自動的に暗号化されるすべてのメッセージに署名
   ** 出来るという理由で、$$crypt_replyencrypt と組み合わせると意味があります。
   ** これは、Mutt が暗号化されたメッセージが署名されているかどうかを見つけられない
@@ -762,7 +912,6 @@ struct option_t MuttVars[] = {
   { "crypt_timestamp", DT_BOOL, R_NONE, {.l=OPTCRYPTTIMESTAMP}, {.l=1} },
   /*
   ** .pp
-  ** (Crypto only)
   ** \fIset\fP の場合、Mutt は PGP 又は S/MIME 出力を囲む行中にタイムスタンプを
   ** 含めるので、そのような行のスプーフィングはより困難になります。
   ** それらの行にマークを付けるために色設定を使い、それらに依存している場合、
@@ -781,7 +930,7 @@ struct option_t MuttVars[] = {
   ** GPGME バックエンドは古い形のインライン(従来型の) PGP で暗号化された、あるいは
   ** 署名されたメッセージ作成のサポートがないことに注意してください($$pgp_autoinlineを
   ** 参照してください)。
-   */
+  */
   { "crypt_use_pka", DT_BOOL, R_NONE, {.l=OPTCRYPTUSEPKA}, {.l=0} },
   /*
   ** .pp
@@ -829,6 +978,9 @@ struct option_t MuttVars[] = {
   ** \fIyes\fPに設定した場合、削除マークが付けられたメッセージは、問い合わせなく
   ** 自動的に削除されます。\fIno\fPに設定された場合、削除マーク付きのメッセージは
   ** メールボックスに残ったままになります。
+  ** .pp
+  ** このオプションは、$$maildir_trash が設定されている場合、maildir 形式の
+  ** メールボックスでは無視されます。
   */
   { "delete_untag",	DT_BOOL, R_NONE, {.l=OPTDELETEUNTAG}, {.l=1} },
   /*
@@ -844,7 +996,7 @@ struct option_t MuttVars[] = {
   ** 個々のメッセージの副パートを表示しません。それらサブパートを見るためには、メニュー中で
   ** ``v'' を押します。
   */
-  { "display_filter",	DT_PATH, R_PAGER, {.p=&DisplayFilter}, {.p=0} },
+  { "display_filter",	DT_CMD_PATH, R_PAGER, {.p=&DisplayFilter}, {.p=0} },
   /*
   ** .pp
   ** 設定されている場合、指定されたコマンドが、メッセージのフィルタに使われます。
@@ -852,7 +1004,7 @@ struct option_t MuttVars[] = {
   ** フィルタされたメッセージは標準出力から読み出されます。
   */
 #if defined(DL_STANDALONE) && defined(USE_DOTLOCK)
-  { "dotlock_program",  DT_PATH, R_NONE, {.p=&MuttDotlock}, {.p=BINDIR "/mutt_dotlock"} },
+  { "dotlock_program",  DT_CMD_PATH, R_NONE, {.p=&MuttDotlock}, {.p=BINDIR "/mutt_dotlock"} },
   /*
   ** .pp
   ** Mutt によって使われる  \fCmutt_dotlock(8)\fP の実行形式へのパスが含まれています。
@@ -881,7 +1033,7 @@ struct option_t MuttVars[] = {
   { "dsn_return",	DT_STR,	 R_NONE, {.p=&DsnReturn}, {.p=0} },
   /*
   ** .pp
-  ** この変数は、メッセージがどれだけDSN メッセージで帰ってくるかを制御します。
+  ** この変数は、送信したメッセージがどれだけDSN メッセージで帰ってくるかを制御します。
   ** \fIhdrs\fP に設定して、メッセージヘッダのみ返ってくるようにするか、
   ** \fIfull\fP に設定して、メッセージ全体が返ってくるかのどちらかにできます。
   ** .pp
@@ -922,7 +1074,7 @@ struct option_t MuttVars[] = {
   { "edit_hdrs",	DT_SYN,  R_NONE, {.p="edit_headers"}, {.p=0} },
   /*
   */
-  { "editor",		DT_PATH, R_NONE, {.p=&Editor}, {.p=0} },
+  { "editor",		DT_CMD_PATH, R_NONE, {.p=&Editor}, {.p=0} },
   /*
   ** .pp
   ** この変数は Mutt で使うエディタを指定します。この既定値は環境変数
@@ -953,6 +1105,7 @@ struct option_t MuttVars[] = {
   /*
   ** .pp
   ** SSL ライブラリ機能を初期化するのに使う、ランダムデータを含むファイルです。
+  ** (OpenSSL のみです)
   */
 #endif
   { "envelope_from_address", DT_ADDR, R_NONE, {.p=&EnvFrom}, {.p=0} },
@@ -964,7 +1117,6 @@ struct option_t MuttVars[] = {
   { "error_history",	DT_NUM,	 R_NONE, {.p=&ErrorHistSize}, {.l=30} },
   /*
   ** .pp
-  ** time this variable is set.
   ** この値はMutt によって表示されるエラーメッセージの大きさ(記憶されている
   ** 文字列の数)を制御します。これは\fC<error-history>\fP 機能で表示できます。
   ** 履歴はこの値が設定されている場合、毎回初期化されます。
@@ -987,16 +1139,18 @@ struct option_t MuttVars[] = {
   ** .pp
   ** この変数は送信メッセージの添付がメッセージ本体と共に保存されるかどうかを
   ** 制御します。
+  ** .pp
+  ** 注意: $$fcc_before_send はこのオプションの既定の動作(セット)を強制します。
   */
   { "fcc_before_send",	DT_BOOL, R_NONE, {.l=OPTFCCBEFORESEND}, {.l=0} },
   /*
   ** .pp
-  ** この値が \fIset\fP の場合、FCC はメッセージ送信前にが起こります。
+  ** この値が \fIset\fP の場合、FCC はメッセージ送信前に起こります。
   ** 送信前に、メッセージは操作できませんので、送信されたものと全く同じものが
   ** 保存されます。$$fcc_attach と $$fcc_clear は無視されます(それらの
   ** 既定値を使います)。
   ** .pp
-  ** \fIunset\fPの場合は既定値で、FCC は送信後に起こります。変数
+  ** \fIunset\fPの場合が既定値で、FCC は送信後に起こります。変数
   ** $$fcc_attach と $$fcc_clear が使われ、必要に応じて添付あるいは暗号化/署名
   ** なしで保存することができます。
   */
@@ -1005,14 +1159,15 @@ struct option_t MuttVars[] = {
   ** .pp
   ** この変数が \fIset\fP の場合、FCC は実際のメッセージが暗号化されているか又は
   ** 署名されているかにかかわらず、復号化し、かつ署名を外して保存されます。
+  ** .pp
+  ** 注意: $$fcc_before_send はこのオプションの既定の動作(アンセット)を強制します。
+  ** .pp
+  ** $$pgp_self_encrypt, $$smime_self_encrypt も参照してください。
   ** (PGP のみです)
   */
   { "fcc_delimiter", DT_STR, R_NONE, {.p=&FccDelimiter}, {.p=0} },
   /*
   ** .pp
-  ** When specified, this allows the ability to Fcc to more than one
-  ** mailbox.  The fcc value will be split by this delimiter and Mutt
-  ** will evaluate each part as a mailbox separately.
   ** 指定した場合、複数のメールボックスに Fcc 出来るようになります。
   ** Fcc の値はこのデリミタで分離され、Mutt は各部分をメールボックスとして
   ** 評価します。
@@ -1022,7 +1177,7 @@ struct option_t MuttVars[] = {
   { "flag_safe", DT_BOOL, R_NONE, {.l=OPTFLAGSAFE}, {.l=0} },
   /*
   ** .pp
-  ** 設定されている場合、フラグ付きのメッセージは削除できません。
+  ** If set, flagged messages cannot be deleted.
   */
   { "folder",		DT_PATH, R_NONE, {.p=&Maildir}, {.p="~/Mail"} },
   /*
@@ -1084,7 +1239,6 @@ struct option_t MuttVars[] = {
   ** 購読したメーリングリストの、自分のメッセージに対してグループ返信した場合、
   ** メーリングリストと自分のアドレス両方にメールが送信され、結果として
   ** 同じメールのコピーが2つ送られてくることになります。
-  ** 
   */
   { "force_name",	DT_BOOL, R_NONE, {.l=OPTFORCENAME}, {.l=0} },
   /*
@@ -1103,7 +1257,10 @@ struct option_t MuttVars[] = {
   ** 通常の方法でデコードできない添付は、この4択が\fIset\fP か
   ** ``yes'' と答えた場合、新しく編集するメッセージに添付されます。
   */
-  { "forward_attribution_intro", DT_STR, R_NONE, {.p=&ForwardAttrIntro}, {.p="----- Forwarded message from %f -----"} },
+  /* L10N:
+     $forward_attribution_intro default value
+  */
+  { "forward_attribution_intro", DT_STR|DT_L10N_STR, R_NONE, {.p=&ForwardAttrIntro}, {.p=N_("----- Forwarded message from %f -----")} },
   /*
   ** .pp
   ** これは、メッセージの主要な本体($$mime_forward が未設定の場合)で転送された
@@ -1111,7 +1268,10 @@ struct option_t MuttVars[] = {
   ** 完全な一覧は、$$index_format 節を参照してください。$$attribution_locale も
   ** 参照してください。
   */
-  { "forward_attribution_trailer", DT_STR, R_NONE, {.p=&ForwardAttrTrailer}, {.p="----- End forwarded message -----"} },
+  /* L10N:
+     $forward_attribution_trailer default value
+  */
+  { "forward_attribution_trailer", DT_STR|DT_L10N_STR, R_NONE, {.p=&ForwardAttrTrailer}, {.p=N_("----- End forwarded message -----")} },
   /*
   ** .pp
   ** これは、メッセージの主要な本体($$mime_forward が未設定の場合)で転送された
@@ -1125,19 +1285,20 @@ struct option_t MuttVars[] = {
   ** メッセージの転送時に、複雑な MIME メッセージを \fCtext/plain\fP に復号化するかを
   ** 制御します。メッセージヘッダもRFC2047で復号化されます。
   ** この変数は、$$mime_forward が\fIunset\fPの時にのみ使われ、
-  ** その他の場合は$$mime_forward_decode が代わりに使われます。 
+  ** その他の場合は$$mime_forward_decode が代わりに使われます。
   */
   { "forw_decode",	DT_SYN,  R_NONE, {.p="forward_decode"}, {.p=0} },
   /*
   */
-  { "forward_decrypt",	DT_BOOL, R_NONE, {.l=OPTFORWDECRYPT}, {.l=1} },
+  { "forward_decrypt",	DT_QUAD, R_NONE, {.l=OPT_FORWDECRYPT}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** メッセージを転送する時の暗号化メッセージの取り扱いを制御します。
-  ** \fIset\fP の時、暗号化の外側のレイヤは削除されます。この変数は、
-  ** $$mime_forward が\fIset\fP で、$$mime_forward_decode が\fIunset\fP
-  ** の時にのみ使われます。
-  ** (PGP のみです)
+  ** この4択は、メッセージを転送あるいは添付する時の暗号化メッセージの取り扱いを
+  ** 制御します。設定または``yes''と入力した時は、暗号化の外側のレイヤは削除されます。
+  ** .pp
+  ** この変数は、$$mime_forward が\fIset\fP で、$$mime_forward_decode が\fIunset\fP
+  ** の時に使われます。これはまた、編集メニュー中で \fC<attach-message>\fP
+  ** 経由でメッセージが添付されたときにも使われます。 (PGP のみです)
   */
   { "forw_decrypt",	DT_SYN,  R_NONE, {.p="forward_decrypt"}, {.p=0} },
   /*
@@ -1203,416 +1364,452 @@ struct option_t MuttVars[] = {
   /*
   ** .pp
   ** fIset\fPの場合、この変数は編集バッファ中に返信するメッセージのヘッダを
-  ** 含めるようにします。$$weed の設定が適当されます。
+  ** 含めるようにします。$$weed の設定が適用されます。
   */
 #ifdef USE_HCACHE
   { "header_cache", DT_PATH, R_NONE, {.p=&HeaderCache}, {.p=0} },
   /*
   ** .pp
-  ** この変数はヘッダキャッシュデータベースの場所を指定します。ディレクトリを示して
-  ** いれば、Mutt はフォルダ単位のヘッダキャッシュデータベースがあり、ファイルを示して
-  ** いれば、全体の単一ヘッダキャッシュとなります。既定では\fIunset\fPなので、
-  ** ヘッダキャッシュは使われません。
+  ** This variable points to the header cache database.
+  ** If pointing to a directory Mutt will contain a header cache
+  ** database file per folder, if pointing to a file that file will
+  ** be a single global header cache. By default it is \fIunset\fP so no header
+  ** caching will be used.  If pointing to a directory, it must be
+  ** created in advance.
   ** .pp
-  ** ヘッダキャッシュは、POP, IMAP, MH および Maildir フォルダを開くときに
-  ** 大幅なスピードの改善が出来ます。詳細については ``$caching'' を参照してください。
+  ** Header caching can greatly improve speed when opening POP, IMAP
+  ** MH or Maildir folders, see ``$caching'' for details.
   */
-#if defined(HAVE_QDBM) || defined(HAVE_TC) || defined(HAVE_KC)
+# if defined(HAVE_QDBM) || defined(HAVE_TC) || defined(HAVE_KC)
   { "header_cache_compress", DT_BOOL, R_NONE, {.l=OPTHCACHECOMPRESS}, {.l=1} },
   /*
   ** .pp
-  ** Mutt が qdbm,tokyocabinet, 又は kyotocabinet を、ヘッダキャッシュのバックエンドとして
-  ** 使うようにコンパイルされている場合、このオプションは、データベースを圧縮するか否かを
-  ** 指定します。データベース中のファイルを圧縮すると、大きさがおおよそ通常の1/5に
-  ** なりますが、展開を行うと、キャッシュされたフォルダを開くのが遅くなりますが、
-  ** ヘッダキャッシュがないフォルダを開くよりは、まだ高速に開けます。
+  ** When mutt is compiled with qdbm, tokyocabinet, or kyotocabinet as header
+  ** cache backend, this option determines whether the database will be compressed.
+  ** Compression results in database files roughly being one fifth
+  ** of the usual diskspace, but the decompression can result in a
+  ** slower opening of cached folder(s) which in general is still
+  ** much faster than opening non header cached folders.
   */
-#endif /* HAVE_QDBM */
-#if defined(HAVE_GDBM) || defined(HAVE_DB4)
+# endif /* HAVE_QDBM */
+# if defined(HAVE_GDBM) || defined(HAVE_DB4)
   { "header_cache_pagesize", DT_LNUM, R_NONE, {.p=&HeaderCachePageSize}, {.l=16384} },
   /*
   ** .pp
-  ** ヘッダキャッシュのバックエンドとして、 gdbm 又は bdb4 のどちらかを使うように
-  ** Mutt がコンパイルされている場合、このオプションはデータベースのページサイズを変更します。
-  ** 値が大きすぎたり小さすぎたりすると、余分なスペース、メモリ、CPU 時間を消費します。
-  ** 既定値はほとんどの場合において大きすぎず、小さすぎずに最適化されているはずです。
+  ** When mutt is compiled with either gdbm or bdb4 as the header cache backend,
+  ** this option changes the database page size.  Too large or too small
+  ** values can waste space, memory, or CPU time. The default should be more
+  ** or less optimal for most use cases.
   */
-#endif /* HAVE_GDBM || HAVE_DB4 */
+# endif /* HAVE_GDBM || HAVE_DB4 */
 #endif /* USE_HCACHE */
   { "header_color_partial", DT_BOOL, R_PAGER_FLOW, {.l=OPTHEADERCOLORPARTIAL}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、カラーヘッダの正規表現はカラーボディの正規表現と同じように
-  ** 振る舞います。色は正規表現によって一致した正確なテキストに適用されます。
-  ** \fIunset\fP の場合は、色はヘッダ全体に適用されます。
+  ** When \fIset\fP, color header regexps behave like color body regexps:
+  ** color is applied to the exact text matched by the regexp.  When
+  ** \fIunset\fP, color is applied to the entire header.
   ** .pp
-  ** このオプションの1つの使い方は、ヘッダラベルにのみ色を適用することです。
+  ** One use of this option might be to apply color to just the header labels.
   ** .pp
-  ** 詳細は ``$color'' を参照してください。
+  ** See ``$color'' for more details.
   */
   { "help",		DT_BOOL, R_REFLOW, {.l=OPTHELP}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、各メニューで提供される、主要な機能に対するバインディングの説明を
-  ** するヘルプ行は画面の最初の行に表示されます。
+  ** When \fIset\fP, help lines describing the bindings for the major functions
+  ** provided by each menu are displayed on the first line of the screen.
   ** .pp
-  ** \fB注意:\fP 単一のキーストロークではなく、一連のキーストロークに機能がバインド
-  ** されていると、バインディングは正確には表示されません。同様に、Mutt が動作中に
-  ** バインディングが変更されてもヘルプ行は更新されません。この変数は主に新規
-  ** ユーザを対象としているので、上記のどちらも大きな問題ではありません。
+  ** \fBNote:\fP The binding will not be displayed correctly if the
+  ** function is bound to a sequence rather than a single keystroke.  Also,
+  ** the help line may not be updated if a binding is changed while Mutt is
+  ** running.  Since this variable is primarily aimed at new users, neither
+  ** of these should present a major problem.
   */
   { "hidden_host",	DT_BOOL, R_NONE, {.l=OPTHIDDENHOST}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、アドレスにドメイン部分を付加するときに、$$hostname
-  ** 変数のホスト名部分をスキップします。この変数は Message-ID の生成には影響を
-  ** 与えず、ドメインの最初の部分を切り取ることはありません。
+  ** When \fIset\fP, mutt will skip the host name part of $$hostname variable
+  ** when adding the domain part to addresses.  This variable does not
+  ** affect the generation of Message-IDs, and it will not lead to the
+  ** cut-off of first-level domains.
   */
   { "hide_limited",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDELIMITED}, {.l=0} },
   /*
   ** .pp
-  **  \fIset\fP の場合、Mutt は、スレッドツリー中で limit 機能により隠されている
-  ** メッセージの存在を表示しません。
+  ** When \fIset\fP, mutt will not show the presence of messages that are hidden
+  ** by limiting, in the thread tree.
   */
   { "hide_missing",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDEMISSING}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はスレッドツリー中で存在しないメッセージの存在を
-  ** 表示しません。
+  ** When \fIset\fP, mutt will not show the presence of missing messages in the
+  ** thread tree.
   */
   { "hide_thread_subject", DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETHREADSUBJECT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt  はスレッドツリー内で、親と同じか以前に表示された
-  ** もっとも近い sibling と同じ題名を持つメッセージの題名を表示しません。
+  ** When \fIset\fP, mutt will not show the subject of messages in the thread
+  ** tree that have the same subject as their parent or closest previously
+  ** displayed sibling.
   */
   { "hide_top_limited",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETOPLIMITED}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は スレッドツリー中の最上位に、limit 機能によって隠されて
-  ** いるメッセージの存在を表示しません。$$hide_limited が \fIset\fP の場合、
-  ** このオプションは何の効果もないことに注意してください。
+  ** When \fIset\fP, mutt will not show the presence of messages that are hidden
+  ** by limiting, at the top of threads in the thread tree.  Note that when
+  ** $$hide_limited is \fIset\fP, this option will have no effect.
   */
   { "hide_top_missing",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETOPMISSING}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はスレッドツリーのスレッドの上部に、メッセージがないことの
-  ** 表示をしません。$$hide_missing が \fIset\fP の場合、このオプションは何の効果も
-  ** ないことに注意してください。
+  ** When \fIset\fP, mutt will not show the presence of missing messages at the
+  ** top of threads in the thread tree.  Note that when $$hide_missing is
+  ** \fIset\fP, this option will have no effect.
   */
   { "history",		DT_NUM,	 R_NONE, {.p=&HistSize}, {.l=10} },
   /*
   ** .pp
-  ** この変数はカテゴリ毎の文字列ヒストリバッファのサイズ(記憶される文字列の数)を
-  ** 制御します。バッファは変数が設定される度毎に消去されます。
+  ** This variable controls the size (in number of strings remembered) of
+  ** the string history buffer per category. The buffer is cleared each time the
+  ** variable is set.
   */
   { "history_file",     DT_PATH, R_NONE, {.p=&HistFile}, {.p="~/.mutthistory"} },
   /*
   ** .pp
-  ** Mutt がそのヒストリをセーブするファイルです。
+  ** The file in which Mutt will save its history.
   ** .pp
-  ** $$save_history も参照してください。
+  ** Also see $$save_history.
   */
   { "history_remove_dups", DT_BOOL, R_NONE, {.l=OPTHISTREMOVEDUPS}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、新しいエントリが追加されるときに、重複するかどうかを、すべての
-  ** 文字列ヒストリでスキャンします。$$history_file 中の重複するエントリは
-  ** 定期的に圧縮される時にも削除されます。
+  ** When \fIset\fP, all of the string history will be scanned for duplicates
+  ** when a new entry is added.  Duplicate entries in the $$history_file will
+  ** also be removed when it is periodically compacted.
   */
   { "honor_disposition", DT_BOOL, R_NONE, {.l=OPTHONORDISP}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はそのパートが平文で描画可能だったとしても、インラインで
-  ** ``attachment''という配置の添付を表示しません。MIME パートは添付メニュー
-  ** でのみ表示できます。
+  ** When \fIset\fP, Mutt will not display attachments with a
+  ** disposition of ``attachment'' inline even if it could
+  ** render the part to plain text. These MIME parts can only
+  ** be viewed from the attachment menu.
   ** .pp
-  ** \fIunset\fP の場合、Mutt は適切に平文に変換できる場合、すべての MIME パートを
-  ** 描画します。
+  ** If \fIunset\fP, Mutt will render all MIME parts it can
+  ** properly transform to plain text.
   */
   { "honor_followup_to", DT_QUAD, R_NONE, {.l=OPT_MFUPTO}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** この変数は Mail-Followup-To ヘッダが、メッセージに対してグループ返信するときに
-  ** 信頼できるか否かを制御します。
+  ** This variable controls whether or not a Mail-Followup-To header is
+  ** honored when group-replying to a message.
   */
   { "hostname",		DT_STR,	 R_NONE, {.p=&Fqdn}, {.p=0} },
   /*
   ** .pp
-  ** Mutt が動いているシステムでホスト名とDNS ドメイン名が存在している場合、
-  ** 完全修飾ホスト名(FQDN)を指定します。これは、ローカルメールアドレスのドメイン部分
-  ** (``@'' の後)と、Message-Id ヘッダとして使われます。
+  ** Specifies the fully-qualified hostname of the system mutt is running on
+  ** containing the host's name and the DNS domain it belongs to. It is used
+  ** as the domain part (after ``@'') for local email addresses as well as
+  ** Message-Id headers.
   ** .pp
-  ** この値は以下のようにして起動時に決まります。ノードのホスト名は \fCuname(3)\fP
-  ** 機能によって最初に決まります。ドメインは次に\fCgethostname(2)\fP と
-  ** \fCgetaddrinfo(3)\fP 機能によって検索されます。もしそれらの呼び出しで
-  ** ドメインを決定できない場合、uname の結果の完全な値が使われます。オプションで、
-  ** Mutt が固定したドメインでコンパイルできますが、この場合、検出された値は
-  ** 使われません。
+  ** Its value is determined at startup as follows: the node's
+  ** hostname is first determined by the \fCuname(3)\fP function.  The
+  ** domain is then looked up using the \fCgethostname(2)\fP and
+  ** \fCgetaddrinfo(3)\fP functions.  If those calls are unable to
+  ** determine the domain, the full value returned by uname is used.
+  ** Optionally, Mutt can be compiled with a fixed domain name in
+  ** which case a detected one is not used.
   ** .pp
-  **  $$use_domain と $$hidden_host も参照してください。
+  ** Starting in Mutt 2.0, the operations described in the previous
+  ** paragraph are performed after the muttrc is processed, instead of
+  ** beforehand.  This way, if the DNS operations are creating delays
+  ** at startup, you can avoid those by manually setting the value in
+  ** your muttrc.
+  ** .pp
+  ** Also see $$use_domain and $$hidden_host.
   */
 #if defined(HAVE_LIBIDN) || defined(HAVE_LIBIDN2)
   { "idn_decode",	DT_BOOL, R_MENU, {.l=OPTIDNDECODE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は国際化ドメイン名をデコードして表示します。
-  ** 注意: これが\fIunset\fP だったとしても、アドレスに対して IDN を使う事が出来ます。
-  ** この値はデコードのみに影響します(IDN のみです)。
+  ** When \fIset\fP, Mutt will show you international domain names decoded.
+  ** Note: You can use IDNs for addresses even if this is \fIunset\fP.
+  ** This variable only affects decoding. (IDN only)
   */
   { "idn_encode",	DT_BOOL, R_MENU, {.l=OPTIDNENCODE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は IDN を使って国際化ドメイン名をエンコードします。
-  ** 使用する SMP サーバが新しい (RFC6531) UTF-8 エンコードされたドメインを扱える
-  ** 場合は、これを設定しません。(IDN のみです)
+  ** When \fIset\fP, Mutt will encode international domain names using
+  ** IDN.  Unset this if your SMTP server can handle newer (RFC 6531)
+  ** UTF-8 encoded domains. (IDN only)
   */
 #endif /* defined(HAVE_LIBIDN) || defined(HAVE_LIBIDN2) */
   { "ignore_linear_white_space",    DT_BOOL, R_NONE, {.l=OPTIGNORELWS}, {.l=0} },
   /*
   ** .pp
-  ** このオプションは エンコードされた単語とテキストの間の linear-white-space を
-  ** MIME エンコードされた ``Subject:'' フィールドの表示が複数行に分割されてしまうことを
-  ** 防ぐために単一の空白に置き換えます。
+  ** This option replaces linear-white-space between encoded-word
+  ** and text to a single space to prevent the display of MIME-encoded
+  ** ``Subject:'' field from being divided into multiple lines.
   */
   { "ignore_list_reply_to", DT_BOOL, R_NONE, {.l=OPTIGNORELISTREPLYTO}, {.l=0} },
   /*
   ** .pp
-  ** メーリングリスト(``$subscribe'' 又は ``$lists'' コマンドで定義されたもの)
-  ** からメッセージに返信する時に\fC<reply>\fP 機能の動作に影響します。
-  ** \fIset\fPの場合で、``Reply-To:'' フィールドが ``To:'' フィールドの値と
-  ** 同じに設定されている場合、Mutt は、自動的にメーリングリストへの返信を
-  ** 自動化するために、``Reply-To:'' フィールドが、メーリングリストによって
-  ** 設定されたと仮定し、このフィールドを無視します。このオプションが\fIset\fP
-  ** の場合、メーリングリストに対する直接の返信は \fC$<list-reply>\fP 機能を
-  ** 使います。\fC<group-reply>\fP は送信者とメーリングリスト両方に返信します。
+  ** Affects the behavior of the \fC<reply>\fP function when replying to
+  ** messages from mailing lists (as defined by the ``$subscribe'' or
+  ** ``$lists'' commands).  When \fIset\fP, if the ``Reply-To:'' field is
+  ** set to the same value as the ``To:'' field, Mutt assumes that the
+  ** ``Reply-To:'' field was set by the mailing list to automate responses
+  ** to the list, and will ignore this field.  To direct a response to the
+  ** mailing list when this option is \fIset\fP, use the \fC$<list-reply>\fP
+  ** function; \fC<group-reply>\fP will reply to both the sender and the
+  ** list.
   */
 #ifdef USE_IMAP
   { "imap_authenticators", DT_STR, R_NONE, {.p=&ImapAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** これはコロンで区切られた、認証方法の一覧で、Mutt はここに並んでいる順で、
-  ** これらの方式を使って、 IMAP サーバにログインしようとします。認証方式は
-  ** ``login'' か、IMAP のケーパビリティ文字列 'AUTH=xxx' の右辺、たとえば
-  ** ``digest-md5'', ``gssapi'' 又は``cram-md5'' を使います。このオプションは
-  ** 大文字小文字を無視します。\fIunset\fPの場合(既定値)、Mutt はすべての有効な
-  ** 方式を、もっともセキュアな方法からセキュアでない方法の順で試みます。
+  ** This is a colon-delimited list of authentication methods mutt may
+  ** attempt to use to log in to an IMAP server, in the order mutt should
+  ** try them.  Authentication methods are either ``login'' or the right
+  ** side of an IMAP ``AUTH=xxx'' capability string, e.g. ``digest-md5'', ``gssapi''
+  ** or ``cram-md5''. This option is case-insensitive. If it's
+  ** \fIunset\fP (the default) mutt will try all available methods,
+  ** in order from most-secure to least-secure.
   ** .pp
-  ** 例:
+  ** Example:
   ** .ts
   ** set imap_authenticators="gssapi:cram-md5:login"
   ** .te
   ** .pp
-  ** \fB注意:\fP Mutt は前のメソッドが無効な場合にのみ、他の認証方式にフォールバック
-  ** します。メソッドが有効だが認証が失敗した場合、Mutt は IMAP サーバには
-  ** 接続しません。
+  ** \fBNote:\fP Mutt will only fall back to other authentication methods if
+  ** the previous methods are unavailable. If a method is available but
+  ** authentication fails, mutt will not connect to the IMAP server.
   */
   { "imap_check_subscribed",  DT_BOOL, R_NONE, {.l=OPTIMAPCHECKSUBSCRIBED}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は接続時に、購読しているフォルダを読み出しして、
-  ** 独立した ``$mailboxes'' コマンドを発行したのと同様に、ポーリングする
-  ** メールボックスのセットにそれらを追加します。
+  ** When \fIset\fP, mutt will fetch the set of subscribed folders from
+  ** your server on connection, and add them to the set of mailboxes
+  ** it polls for new mail just as if you had issued individual ``$mailboxes''
+  ** commands.
   */
   { "imap_condstore",  DT_BOOL, R_NONE, {.l=OPTIMAPCONDSTORE}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、サーバにより広告がある場合、CONDSTORE 拡張
-  ** (RFC 7162) を使います。Mutt の現在の実装は基本的なものであり、
-  ** 初期メッセージのフェッチとフラグの更新のみを使います。
+  ** When \fIset\fP, mutt will use the CONDSTORE extension (RFC 7162)
+  ** if advertised by the server.  Mutt's current implementation is basic,
+  ** used only for initial message fetching and flag updates.
   ** .pp
-  ** いくつかの IMAP サーバでは、これを有効にすると、初期メッセージのダウンロードが
-  ** 若干早くなります。残念なことに、Gmail はそのうちの1つには入らず、有効にすると
-  ** 表示が遅くなります。受け取るメリットは変わる場合があります。
+  ** For some IMAP servers, enabling this will slightly speed up
+  ** downloading initial messages.  Unfortunately, Gmail is not one
+  ** those, and displays worse performance when enabled.  Your
+  ** mileage may vary.
   */
 #ifdef USE_ZLIB
   { "imap_deflate",		DT_BOOL, R_NONE, {.l=OPTIMAPDEFLATE}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はサーバによって通知された場合、
-  ** COMPRESS=DEFLATE 拡張 (RFC 4978) を使用します。
+  ** When \fIset\fP, mutt will use the COMPRESS=DEFLATE extension (RFC
+  ** 4978) if advertised by the server.
   ** .pp
-  ** 一般的に、圧縮効率が実現できれば、かなり良い回線状態に置いてでも大きな
-  ** メールボックスの  ** 読み出しを高速化できます。
+  ** In general a good compression efficiency can be achieved, which
+  ** speeds up reading large mailboxes also on fairly good connections.
   */
 #endif
   { "imap_delim_chars",		DT_STR, R_NONE, {.p=&ImapDelimChars}, {.p="/."} },
   /*
   ** .pp
-  ** これには IMAP パスを表示する際にフォルダの区切りとして扱いたい 文字の一覧が
-  ** 入ります。特にこれが役立つのは、 \fIfolder\fP 変数へのショートカットのために
-  ** ``='' を使うときです。
+  ** This contains the list of characters which you would like to treat
+  ** as folder separators for displaying IMAP paths. In particular it
+  ** helps in using the ``='' shortcut for your \fIfolder\fP variable.
   */
   { "imap_fetch_chunk_size",	DT_LNUM, R_NONE, {.p=&ImapFetchChunkSize}, {.l=0} },
   /*
   ** .pp
-  ** この値を 0 より大きくすると、新しいヘッダは、要求毎に、たくさんのヘッダをグループにして
-  ** ダウンロードされます。非常に大きなメールボックスを使っている場合、すべての新しいヘッダを
-  ** 単一の取得操作で行う代わりに、このたくさんのヘッダ毎に取得コマンドを送ることで、
-  ** メールボックスをオープンするときにタイムアウトと切断を防ぐことが出来ます。
+  ** When set to a value greater than 0, new headers will be
+  ** downloaded in groups of this many headers per request.  If you
+  ** have a very large mailbox, this might prevent a timeout and
+  ** disconnect when opening the mailbox, by sending a FETCH per set
+  ** of this many headers, instead of a single FETCH for all new
+  ** headers.
   */
   { "imap_headers",	DT_STR, R_INDEX, {.p=&ImapHeaders}, {.p=0} },
   /*
   ** .pp
-  ** Mutt がインデックスメニューを表示する前に、IMAP サーバから既定のヘッダ
+  ** Mutt requests these header fields in addition to the default headers
   ** (``Date:'', ``From:'', ``Sender:'', ``Subject:'', ``To:'', ``Cc:'', ``Message-Id:'',
   ** ``References:'', ``Content-Type:'', ``Content-Description:'', ``In-Reply-To:'',
-  ** ``Reply-To:'', ``Lines:'', ``List-Post:'', ``X-Label:'') に追加で、ここで指定する
-  ** ヘッダを要求します。スパム検出のためのヘッダを追加したいときに使います。
+  ** ``Reply-To:'', ``Lines:'', ``List-Post:'', ``X-Label:'') from IMAP
+  ** servers before displaying the index menu. You may want to add more
+  ** headers for spam detection.
   ** .pp
-  ** \fB注意:\fP これは空白で分離されたリストで、各項目はすべて大文字で
-  ** コロンを含んではいけません。たとえば、``X-Bogosity:'' と ``X-Spam-Status:''
-  ** は ``X-BOGOSITY X-SPAM-STATUS'' となります。
+  ** \fBNote:\fP This is a space separated list, items should be uppercase
+  ** and not contain the colon, e.g. ``X-BOGOSITY X-SPAM-STATUS'' for the
+  ** ``X-Bogosity:'' and ``X-Spam-Status:'' header fields.
   */
   { "imap_idle",                DT_BOOL, R_NONE, {.l=OPTIMAPIDLE}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt  は現在のメールボックスで、新規メールのチェックのために
-  ** IMAP IDLE 拡張を使おうとします。いくつかのサーバ(このオプションに対しては
-  ** dovecot が想起されます)は、Mutt の実装に対して不正確に反応します。
-  ** 接続が定期的にフリーズするように見える場合は、この設定の解除を試してみてください。
+  ** When \fIset\fP, mutt will attempt to use the IMAP IDLE extension
+  ** to check for new mail in the current mailbox. Some servers
+  ** (dovecot was the inspiration for this option) react badly
+  ** to mutt's implementation. If your connection seems to freeze
+  ** up periodically, try unsetting this.
   */
   { "imap_keepalive",           DT_NUM,  R_NONE, {.p=&ImapKeepalive}, {.l=300} },
   /*
   ** .pp
-  ** この変数は、Mutt が接続を終了する前に、サーバから接続をクローズするのを
-  ** 防ぐために、オープンしている IMAP 接続をポーリングする前に Mutt が待つ
-  ** 最大時間を秒数で指定します。既定値は、サーバがこれを実行出来るようになるまで、
-  ** RFC の指定による最低限の時間(30分)内ですが、実際にはRFC はそこかしこで
-  ** 破られています。接続していないとみなされて IMAP サーバから切断されるようで
-  ** あれば、この数値を減らしてください。
+  ** This variable specifies the maximum amount of time in seconds that mutt
+  ** will wait before polling open IMAP connections, to prevent the server
+  ** from closing them before mutt has finished with them. The default is
+  ** well within the RFC-specified minimum amount of time (30 minutes) before
+  ** a server is allowed to do this, but in practice the RFC does get
+  ** violated every now and then. Reduce this number if you find yourself
+  ** getting disconnected from your IMAP server due to inactivity.
   */
   { "imap_list_subscribed",	DT_BOOL, R_NONE, {.l=OPTIMAPLSUB}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、IMAP フォルダ一覧表示で検索するのを購読フォルダのみにするか、すべての
-  ** フォルダにするかを制御します。これは、\fC<toggle-subscribed>\fP 機能を使って
-  ** IMAP ブラウザ内でON/OFFできます。
+  ** This variable configures whether IMAP folder browsing will look for
+  ** only subscribed folders or all folders.  This can be toggled in the
+  ** IMAP browser with the \fC<toggle-subscribed>\fP function.
   */
   { "imap_login",	DT_STR,  R_NONE, {.p=&ImapLogin}, {.p=0} },
   /*
   ** .pp
-  ** IMAP サーバへのログイン名。
+  ** Your login name on the IMAP server.
   ** .pp
-  ** この変数は既定で$$imap_user の値となります。
+  ** This variable defaults to the value of $$imap_user.
   */
   { "imap_oauth_refresh_command", DT_STR, R_NONE, {.p=&ImapOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** IMAP サーバの接続を認証するための OAUTH リフレッシュトークンを生成するために
-  ** 実行するコマンド。このコマンドはOAUTHBEARER 認証メカニズムを使った接続を試みる
-  ** 度毎に実行されます。詳細については``$oauth'' を参照してください。
+  ** The command to run to generate an OAUTH refresh token for
+  ** authorizing your connection to your IMAP server.  This command will be
+  ** run on every connection attempt that uses the OAUTHBEARER authentication
+  ** mechanism.  See ``$oauth'' for details.
   */
   { "imap_pass", 	DT_STR,  R_NONE, {.p=&ImapPass}, {.p=0} },
   /*
   ** .pp
-  ** IMAP アカウントのパスワードを指定します。\fIunset\fP の場合、Mutt は
-  ** \fC<imap-fetch-mail>\fP機能を起動した場合又はIMAP フォルダを開こうとするときに
-  ** パスワードを要求してきます。
+  ** Specifies the password for your IMAP account.  If \fIunset\fP, Mutt will
+  ** prompt you for your password when you invoke the \fC<imap-fetch-mail>\fP function
+  ** or try to open an IMAP folder.
   ** .pp
-  ** \fB警告\fP: このオプションは、十分に安全なマシン上でのみ使うべきです。
-  ** なぜなら、muttrc ファイルを自分以外が読めないように したつもりでも、スーパユーザは
-  ** 読めるからです。
+  ** \fBWarning\fP: you should only use this option when you are on a
+  ** fairly secure machine, because the superuser can read your muttrc even
+  ** if you are the only one who can read the file.
   */
   { "imap_passive",		DT_BOOL, R_NONE, {.l=OPTIMAPPASSIVE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は新規メールチェックのために新規のIMAP 接続を開くことは
-  ** しません。Mutt は新規メールを既存のIMAP 接続でのみ確認することになります。これが
-  ** 有用となるのは、Mutt 起動時にユーザ名とパスワードの入力を要求されたくない場合や、
-  ** 接続するのに時間がかかる場合などです。
+  ** When \fIset\fP, mutt will not open new IMAP connections to check for new
+  ** mail.  Mutt will only check for new mail over existing IMAP
+  ** connections.  This is useful if you don't want to be prompted for
+  ** user/password pairs on mutt invocation, or if opening the connection
+  ** is slow.
   */
   { "imap_peek", DT_BOOL, R_NONE, {.l=OPTIMAPPEEK}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はサーバからメッセージを読み出すときはいつでも
-  ** メールを読んだというマークを暗黙で付けることを防ぎます。これは一般的に
-  ** よい手法ですが、IMAP フォルダをクローズするときに少し遅くなることが
-  ** あります。このオプションはスピード命の人をなだめるためにあります。
+  ** When \fIset\fP, mutt will avoid implicitly marking your mail as read whenever
+  ** you fetch a message from the server. This is generally a good thing,
+  ** but can make closing an IMAP folder somewhat slower. This option
+  ** exists to appease speed freaks.
   */
   { "imap_pipeline_depth", DT_NUM,  R_NONE, {.p=&ImapPipelineDepth}, {.l=15} },
   /*
   ** .pp
-  ** サーバに対して送られる前にキューにたまる IMAP コマンドの数を制御します。
-  ** 深いパイプラインは、Mutt がサーバを待たなければならない大量の時間を節約し、
-  ** IMAP サーバの応答性を大幅に向上させるようにできます。しかし、すべてのサーバが
-  ** パイプライン化されたコマンドを正確に扱えるわけではないので、もしも問題が
-  ** 発生した場合は、この変数を 0 にしてみてください。
+  ** Controls the number of IMAP commands that may be queued up before they
+  ** are sent to the server. A deeper pipeline reduces the amount of time
+  ** mutt must wait for the server, and can make IMAP servers feel much
+  ** more responsive. But not all servers correctly handle pipelined commands,
+  ** so if you have problems you might want to try setting this variable to 0.
   ** .pp
-  ** \fB注意:\fP この変数を変更しても接続時には何の影響もありません。
+  ** \fBNote:\fP Changes to this variable have no effect on open connections.
   */
   { "imap_poll_timeout", DT_NUM,  R_NONE, {.p=&ImapPollTimeout}, {.l=15} },
   /*
   ** .pp
-  ** この変数は、新規メールのためにIMAP 接続をポーリングする時、タイムアウトと
-  ** 接続をクローズする前に、Mutt が応答を待つ最大の時間を指定します。
-  ** 0 に設定すると、タイムアウトを無効にします。
+  ** This variable specifies the maximum amount of time in seconds
+  ** that mutt will wait for a response when polling IMAP connections
+  ** for new mail, before timing out and closing the connection.  Set
+  ** to 0 to disable timing out.
   */
   { "imap_qresync",  DT_BOOL, R_NONE, {.l=OPTIMAPQRESYNC}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、サーバから広告があった場合、QRESYNC 拡張(RFC 7162)を
-  ** 使います。Mutt の現在の実装は基本的なものであり、
-  ** 初期メッセージのフェッチとフラグの更新のみを使います。
+  ** When \fIset\fP, mutt will use the QRESYNC extension (RFC 7162)
+  ** if advertised by the server.  Mutt's current implementation is basic,
+  ** used only for initial message fetching and flag updates.
   ** .pp
-  ** 注意: この機能は現在実験的なものです。たとえば、メッセージの重複や欠落のような
-  ** おかしな挙動があった場合には、バグとして是非ご連絡ください。
+  ** Note: this feature is currently experimental.  If you experience
+  ** strange behavior, such as duplicate or missing messages please
+  ** file a bug report to let us know.
   */
   { "imap_servernoise",		DT_BOOL, R_NONE, {.l=OPTIMAPSERVERNOISE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fPの場合、Mutt はエラーメッセージとして IMAP サーバからの警告メッセージを
-  ** 表示します。そのようなメッセージはしばしば無害だったり、ユーザとは関係のない
-  ** サーバ上の設定問題によって生成されたものなので、時には抑制したいかもしれません。
+  ** When \fIset\fP, mutt will display warning messages from the IMAP
+  ** server as error messages. Since these messages are often
+  ** harmless, or generated due to configuration problems on the
+  ** server which are out of the users' hands, you may wish to suppress
+  ** them at some point.
   */
   { "imap_user",	DT_STR,  R_NONE, {.p=&ImapUser}, {.p=0} },
   /*
   ** .pp
-  ** IMAP サーバ上で扱うメールの所有ユーザ名。 
+  ** The name of the user whose mail you intend to access on the IMAP
+  ** server.
   ** .pp
-  ** この変数は既定でローカルマシン上でのユーザ名となります。
+  ** This variable defaults to your user name on the local machine.
   */
 #endif
   { "implicit_autoview", DT_BOOL,R_NONE, {.l=OPTIMPLICITAUTOVIEW}, {.l=0} },
   /*
   ** .pp
-  ** ``yes'' に設定した場合、Mutt は 内部ビューワが定義されていない \fIすべての\fP
-  **  MIME 添付 に  ``\fCcopiousoutput\fP'' フラグがセットされた mailcap エントリを
-  ** 探します。そのようなエントリが見つかった場合、Mutt は本文部分をテキスト形式に
-  ** 変換するために、そのエントリに対して定義されているビューワを使います。
+  ** If set to ``yes'', mutt will look for a mailcap entry with the
+  ** ``\fCcopiousoutput\fP'' flag set for \fIevery\fP MIME attachment it doesn't have
+  ** an internal viewer defined for.  If such an entry is found, mutt will
+  ** use the viewer defined in that entry to convert the body part to text
+  ** form.
   */
   { "include",		DT_QUAD, R_NONE, {.l=OPT_INCLUDE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** 返信しようとしている元のメッセージ内容を返信に含めるかどうかを制御します。
+  ** Controls whether or not a copy of the message(s) you are replying to
+  ** is included in your reply.
   */
   { "include_encrypted",	DT_BOOL, R_NONE, {.l=OPTINCLUDEENCRYPTED}, {.l=0} },
   /*
   ** .pp
-  ** Mutt が、返信時に暗号化された添付内容を分離して含めるかどうかを制御します。
+  ** Controls whether or not Mutt includes separately encrypted attachment
+  ** contents when replying.
   ** .pp
-  ** この変数は、攻撃者に対して返信する時に、暗号化された内容を予期せぬ形で公開される
-  ** ことを防ぐために追加されました。以前に暗号化されたメッセージが攻撃者によって
-  ** 添付された場合、不注意な受信者をだましてメッセージを解読し、返信に含めることが
-  ** できます。
+  ** This variable was added to prevent accidental exposure of encrypted
+  ** contents when replying to an attacker.  If a previously encrypted message
+  ** were attached by the attacker, they could trick an unwary recipient into
+  ** decrypting and including the message in their reply.
   */
   { "include_onlyfirst",	DT_BOOL, R_NONE, {.l=OPTINCLUDEONLYFIRST}, {.l=0} },
   /*
   ** .pp
-  ** Mutt が返信時にメッセージの最初の添付のみを含めるかどうかを制御します。
+  ** Controls whether or not Mutt includes only the first attachment
+  ** of the message you are replying.
   */
   { "indent_string",	DT_STR,	 R_NONE, {.p=&Prefix}, {.p="> "} },
   /*
   ** .pp
-  ** 返信時に、メッセージ中に引用されているテキストの各行の先頭に付加する
-  ** 文字列を指定します。より狂信的なネチズンを煽る傾向があるため、この値を
-  ** 変更しないことを強く推奨します。
+  ** Specifies the string to prepend to each line of text quoted in a
+  ** message to which you are replying.  You are strongly encouraged not to
+  ** change this value, as it tends to agitate the more fanatical netizens.
   ** .pp
-  ** このオプションの値は、引用メカニズムが format=flowed に対して厳格に定義
-  ** されているため、$$text_flowed が設定されている場合は無視されます。
+  ** The value of this option is ignored if $$text_flowed is set, because
+  ** the quoting mechanism is strictly defined for format=flowed.
   ** .pp
-  ** このオプションは、書式付きの文字列で、サポートされる \fCprintf(3)\fP 形式の
-  ** 書式については$$index_format を参照してください。
+  ** This option is a format string, please see the description of
+  ** $$index_format for supported \fCprintf(3)\fP-style sequences.
   */
   { "indent_str",	DT_SYN,  R_NONE, {.p="indent_string"}, {.p=0} },
   /*
@@ -1620,349 +1817,400 @@ struct option_t MuttVars[] = {
   { "index_format",	DT_STR,	 R_BOTH, {.p=&HdrFmt}, {.p="%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"} },
   /*
   ** .pp
-  ** この変数で、個人の好みによってメッセージインデックス表示をカスタマイズする
-  ** ことができます。
+  ** This variable allows you to customize the message index display to
+  ** your personal taste.
   ** .pp
-  ** ``Format strings'' はフォーマット出力のために使う C の\fCprintf(3)\fP 関数と
-  ** 似ています(詳細はマニュアルページを参照してください)。%? の説明については
-  ** $$status_format の説明を参照してください。以下は Mutt で定義されているものです。
+  ** ``Format strings'' are similar to the strings used in the C
+  ** function \fCprintf(3)\fP to format output (see the man page for more details).
+  ** For an explanation of the %? construct, see the $$status_format description.
+  ** The following sequences are defined in Mutt:
   ** .dl
-  ** .dt %a .dd 差出人のアドレス
-  ** .dt %A .dd (もしあれば) reply-to アドレス (なければ差出人アドレス) 
-  ** .dt %b .dd オリジナルのメッセージフォルダのファイル名(mailbox です)
-  ** .dt %B .dd 送信された手紙のリストかフォルダ名 (%b).
-  ** .dt %c .dd メッセージの(バイト単位の)サイズ ($formatstrings-size 参照)
-  ** .dt %C .dd 現在のメッセージ番号
-  ** .dt %d .dd メッセージの日付と時刻を、送信者の現地時間に変換して
-  **            $$date_format の形式にしたもの
-  ** .dt %D .dd メッセージの日付と時刻を、自分の地域の時間に変換して
-  **            $$date_format の形式にしたもの
-  ** .dt %e .dd スレッド内におけるメッセージ番号 
-  ** .dt %E .dd スレッド内のメッセージ総数
-  ** .dt %f .dd 送信者 (アドレス + 実名)、From: 又は Return-Path: のどちらか
-  ** .dt %F .dd 差出人の名前か自分自身から出されたメールであれば受信者の名前
-  ** .dt %H .dd メッセージの spam 属性
-  ** .dt %i .dd 現在のメッセージの message-id
-  ** .dt %l .dd 未処理のメッセージの行数(maildir, mh, とIMAP フォルダでは
-  **            おそらく動作しない)
-  ** .dt %L .dd ``To:'' 又は ``Cc:'' ヘッダフィールドがユーザの``$subscribe''
-  **            コマンドで定義されたアドレスに一致する場合、これは "To <リスト名>"
-  **            と表示し、その他の場合は %F と同じになります。 
-  ** .dt %m .dd メールボックス中のメッセージ総数
-  ** .dt %M .dd スレッドが折りたたまれている場合の非表示のメッセージ数
-  ** .dt %N .dd メッセージのスコア
-  ** .dt %n .dd 差出人の本名(あるいは存在しなければアドレス)
-  ** .dt %O .dd Mutt がかつてメッセージを隠していたもとの保存ファイル:
-  **            リスト名又はリストに送らない場合は受信者の名前
-  ** .dt %P .dd ビルトインページャにおける処理インジケータ(どのくらいファイルが表示されたか)
-  ** .dt %r .dd コンマで分離された ``To:'' 受信者のリスト
-  ** .dt %R .dd コンマで分離された ``Cc:'' 受信者のリスト
-  ** .dt %s .dd メッセージの題名
-  ** .dt %S .dd 単一文字でのメッセージのステータス(``N''/``O''/``D''/``d''/``!''/``r''/``\(は'')
-  ** .dt %t .dd ``To:'' フィールド(受信者)
-  ** .dt %T .dd $$to_chars 文字列からの適切な文字
-  ** .dt %u .dd 送信者のユーザ(ログイン)名
-  ** .dt %v .dd 送信者のファーストネームか、メッセージが自分からのものであれば受信者
-  ** .dt %X .dd 添付の数
-  **            (可能な速度効果については ``$attachments'' の章を参照してください)
-  ** .dt %y .dd 存在すれば ``X-Label:'' フィールド
-  ** .dt %Y .dd \fI(1)\fP スレッドツリーの一部ではない、\fI(2)\fP スレッドの頂点である、
-  **            \fI(3)\fP ``X-Label:'' が 前のメッセージの ``X-Label:'' と異なる、の
-  **            いずれかで、存在していれば``X-Label:'' フィールド。
-  ** .dt %Z .dd 3桁のメッセージ状態フラグ。
-  **            最初の文字は new/read/replied フラグ (``n''/``o''/``r''/``O''/``N'')。
-  **            2番目の文字は削除/暗号化フラグ (``D''/``d''/``S''/``P''/``s''/``K'')。
-  **            3番目の文字はタグ/フラグのどちらか(``\(は''/``!'')か、$$to_chars 中にある
-  **            文字のどれか。
-  ** .dt %@name@ .dd ``$index-format-hook'' コマンドに一致する書式文字列を挿入して
-  **                   評価
-  ** .dt %{fmt} .dd メッセージの日付と時間が送信者のタイムゾーンに変換され、
-  **                ``fmt'' がライブラリ関数\fCstrftime(3)\fP によって展開されます。
-  **                先頭に感嘆符がつくものはロケールが無視されます。
-  ** .dt %[fmt] .dd メッセージの日付と時間がローカルタイムゾーンに変換され、
-  **                ``fmt'' がライブラリ関数\fCstrftime(3)\fP によって展開されます。
-  **                先頭に感嘆符がつくものはロケールが無視されます。
-  ** .dt %(fmt) .dd メッセージを受信したときのローカルの日付と時間。
-  **                ``fmt'' はライブラリ関数\fCstrftime(3)\fP によって展開されます。
-  **                先頭に感嘆符がつくものはロケールが無視されます
-  ** .dt %<fmt> .dd 現在のローカルの日付と時刻。
-  **                ``fmt'' はライブラリ関数\fCstrftime(3)\fP によって展開されます。
-  **                先頭に感嘆符がつくものはロケールが無視されます
-  ** .dt %>X    .dd 残りの文字列を右寄せして、間を ``X'' 部分の文字で詰めます。
-  ** .dt %|X    .dd 行末まで ``X'' 部分の文字で詰めます。
-  ** .dt %*X    .dd 文字 ``X'' を埋め草として、 soft-fillします。
+  ** .dt %a .dd address of the author
+  ** .dt %A .dd reply-to address (if present; otherwise: address of author)
+  ** .dt %b .dd filename of the original message folder (think mailbox)
+  ** .dt %B .dd the list to which the letter was sent, or else the folder name (%b).
+  ** .dt %c .dd number of characters (bytes) in the message (see $formatstrings-size)
+  ** .dt %C .dd current message number
+  ** .dt %d .dd date and time of the message in the format specified by
+  **            $$date_format converted to sender's time zone
+  ** .dt %D .dd date and time of the message in the format specified by
+  **            $$date_format converted to the local time zone
+  ** .dt %e .dd current message number in thread
+  ** .dt %E .dd number of messages in current thread
+  ** .dt %f .dd sender (address + real name), either From: or Return-Path:
+  ** .dt %F .dd author name, or recipient name if the message is from you
+  ** .dt %H .dd spam attribute(s) of this message
+  ** .dt %i .dd message-id of the current message
+  ** .dt %l .dd number of lines in the unprocessed message (may not work with
+  **            maildir, mh, and IMAP folders)
+  ** .dt %L .dd If an address in the ``To:'' or ``Cc:'' header field matches an address
+  **            defined by the users ``$subscribe'' command, this displays
+  **            "To <list-name>", otherwise the same as %F.
+  ** .dt %m .dd total number of message in the mailbox
+  ** .dt %M .dd number of hidden messages if the thread is collapsed.
+  ** .dt %N .dd message score
+  ** .dt %n .dd author's real name (or address if missing)
+  ** .dt %O .dd original save folder where mutt would formerly have
+  **            stashed the message: list name or recipient name
+  **            if not sent to a list
+  ** .dt %P .dd progress indicator for the built-in pager (how much of the file has been displayed)
+  ** .dt %r .dd comma separated list of ``To:'' recipients
+  ** .dt %R .dd comma separated list of ``Cc:'' recipients
+  ** .dt %s .dd subject of the message
+  ** .dt %S .dd single character status of the message (``N''/``O''/``D''/``d''/``!''/``r''/``\(as'')
+  ** .dt %t .dd ``To:'' field (recipients)
+  ** .dt %T .dd the appropriate character from the $$to_chars string
+  ** .dt %u .dd user (login) name of the author
+  ** .dt %v .dd first name of the author, or the recipient if the message is from you
+  ** .dt %X .dd number of attachments
+  **            (please see the ``$attachments'' section for possible speed effects)
+  ** .dt %y .dd ``X-Label:'' field, if present
+  ** .dt %Y .dd ``X-Label:'' field, if present, and \fI(1)\fP not at part of a thread tree,
+  **            \fI(2)\fP at the top of a thread, or \fI(3)\fP ``X-Label:'' is different from
+  **            preceding message's ``X-Label:''.
+  ** .dt %Z .dd a three character set of message status flags.
+  **            the first character is new/read/replied flags (``n''/``o''/``r''/``O''/``N'').
+  **            the second is deleted or encryption flags (``D''/``d''/``S''/``P''/``s''/``K'').
+  **            the third is either tagged/flagged (``\(as''/``!''), or one of the characters
+  **            listed in $$to_chars.
+  ** .dt %@name@ .dd insert and evaluate format-string from the matching
+  **                 ``$index-format-hook'' command
+  ** .dt %{fmt} .dd the date and time of the message is converted to sender's
+  **                time zone, and ``fmt'' is expanded by the library function
+  **                \fCstrftime(3)\fP; a leading bang disables locales
+  ** .dt %[fmt] .dd the date and time of the message is converted to the local
+  **                time zone, and ``fmt'' is expanded by the library function
+  **                \fCstrftime(3)\fP; a leading bang disables locales
+  ** .dt %(fmt) .dd the local date and time when the message was received.
+  **                ``fmt'' is expanded by the library function \fCstrftime(3)\fP;
+  **                a leading bang disables locales
+  ** .dt %<fmt> .dd the current local time. ``fmt'' is expanded by the library
+  **                function \fCstrftime(3)\fP; a leading bang disables locales.
+  ** .dt %>X    .dd right justify the rest of the string and pad with character ``X''
+  ** .dt %|X    .dd pad to the end of the line with character ``X''
+  ** .dt %*X    .dd soft-fill with character ``X'' as pad
   ** .de
   ** .pp
-  ** mbox/mmdf では、``%l'' は非圧縮メッセージに対して適用され、maildir/mh では
-  ** ``Lines:'' ヘッダフィールドが存在する場合に、そこから値は取得されることに
-  ** 注意してください(意味は通常同じです)。従って、値は、異なったメッセージの
-  ** パート中で使われるエンコーディングに依存し、実際にはほとんど意味がありません。
+  ** Note that for mbox/mmdf, ``%l'' applies to the unprocessed message, and
+  ** for maildir/mh, the value comes from the ``Lines:'' header field when
+  ** present (the meaning is normally the same). Thus the value depends on
+  ** the encodings used in the different parts of the message and has little
+  ** meaning in practice.
   ** .pp
-  ** ``Soft-fill'' についてはいくつか説明が必要でしょう: 通常の右揃えは、``%>''
-  ** の左側のものすべてをプリントし、余白がある場合にのみ、右側にあるものすべてと
-  ** 埋め草文字を表示します。それと対照的に、soft-fill は右側を優先し、それを
-  ** 表示する場所を保障し、まだ余裕がある場合にのみ、埋め草文字を表示します。
-  ** 必要に応じて、soft-fill は右側のテキストのために空間を作るため、テキストの
-  ** 左側を削除します。
+  ** ``Soft-fill'' deserves some explanation: Normal right-justification
+  ** will print everything to the left of the ``%>'', displaying padding and
+  ** whatever lies to the right only if there's room. By contrast,
+  ** soft-fill gives priority to the right-hand side, guaranteeing space
+  ** to display it and showing padding only if there's still room. If
+  ** necessary, soft-fill will eat text leftwards to make room for
+  ** rightward text.
   ** .pp
-  ** これらの展開は``$save-hook'', ``$fcc-hook'', ``$fcc-save-hook'' と
-  ** ``$index-format-hook'' でサポートされることに注意してください。
+  ** Note that these expandos are supported in
+  ** ``$save-hook'', ``$fcc-hook'', ``$fcc-save-hook'', and
+  ** ``$index-format-hook''.
   ** .pp
-  ** また、設定変数 $$attribution,
+  ** They are also supported in the configuration variables $$attribution,
   ** $$forward_attribution_intro, $$forward_attribution_trailer,
   ** $$forward_format, $$indent_string, $$message_format, $$pager_format,
-  ** と $$post_indent_string でもサポートされます。
+  ** and $$post_indent_string.
   */
-  { "ispell",		DT_PATH, R_NONE, {.p=&Ispell}, {.p=ISPELL} },
+  { "ispell",		DT_CMD_PATH, R_NONE, {.p=&Ispell}, {.p=ISPELL} },
   /*
   ** .pp
-  ** どのようにして ispell(GNU のスペリングチェックソフトウェア)を起動するかの指定です。
+  ** How to invoke ispell (GNU's spell-checking software).
   */
   { "keep_flagged", DT_BOOL, R_NONE, {.l=OPTKEEPFLAGGED}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、フラグが付けられている既読メッセージはスプール
-  ** メールボックスから $$mbox メールボックス、あるいは ``$mbox-hook'' コマンドの
-  ** 結果に移動しません。
+  ** If \fIset\fP, read messages marked as flagged will not be moved
+  ** from your spool mailbox to your $$mbox mailbox, or as a result of
+  ** a ``$mbox-hook'' command.
   */
-  { "list_reply",	DT_QUAD, R_NONE, {.l=OPT_LISTREPLY}, {.l=MUTT_NO} },
+  { "local_date_header", DT_BOOL, R_NONE, {.l=OPTLOCALDATEHEADER}, {.l=1} },
   /*
   ** .pp
-  ** 設定した場合、アドレスはもとのメッセージが来たメーリングリストに返信されます
-  ** (代わりに作成者のみ)。この設定を ``ask-yes'' か ``ask-no'' にすると
-  ** 本当に作成者のみに返信するかどうかを聞いてきます。
+  ** If \fIset\fP, the date in the Date header of emails that you send will be in
+  ** your local timezone. If unset a UTC date will be used instead to avoid
+  ** leaking information about your current location.
   */
   { "mail_check",	DT_NUM,  R_NONE, {.p=&BuffyTimeout}, {.l=5} },
   /*
   ** .pp
-  ** この変数は、どのくらいの頻度(秒単位)で、Mutt が新規メールを探しに行くかを
-  ** 設定します。$$timeout 変数も参照してください。
+  ** This variable configures how often (in seconds) mutt should look for
+  ** new mail. Also see the $$timeout variable.
   */
   { "mail_check_recent",DT_BOOL, R_NONE, {.l=OPTMAILCHECKRECENT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、最後にメールボックスを開いたときから受け取った
-  ** 新規メールについてのみ通知します。\fIunset\fP の場合、Mutt は、最近アクセスしたか否かに
-  ** かかわらず、メールボックス中に新規メールが存在するかどうかを通知します。
-  ** .pp
-  ** fI$$mark_old\fP が設定されている場合、Mutt は、古いメッセージのみが存在している
-  ** 場合、メールボックス中に新規メールが含まれているとは見なしません。
+  ** When \fIset\fP, Mutt will only notify you about new mail that has been received
+  ** since the last time you opened the mailbox.  When \fIunset\fP, Mutt will notify you
+  ** if any new mail exists in the mailbox, regardless of whether you have visited it
+  ** recently.
   */
   { "mail_check_stats", DT_BOOL, R_NONE, {.l=OPTMAILCHECKSTATS}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は新規メールのポーリング中に、定期的にメールボックスの
-  ** メッセージ統計を計算します。未読、フラグ付き、および合計メッセージ数をチェック
-  ** します。この操作は多くの能力を集中的に使うため、既定では \fIunset\fP であり、
-  ** これらのカウントを更新する頻度を制御するための、$$mail_check_stats_interval
-  ** という別のオプションがあります。
+  ** When \fIset\fP, mutt will periodically calculate message
+  ** statistics of a mailbox while polling for new mail.  It will
+  ** check for unread, flagged, and total message counts.
+  ** (Note: IMAP mailboxes only support unread and total counts).
   ** .pp
-  ** メッセージの統計情報は \fC<check-stats>\fP 機能を起動することにより、明示的に
-  ** 計算することも出来ます。
+  ** Because this operation is more performance intensive, it defaults
+  ** to \fIunset\fP, and has a separate option,
+  ** $$mail_check_stats_interval, to control how often to update these
+  ** counts.
+  ** .pp
+  ** Message statistics can also be explicitly calculated by invoking the
+  ** \fC<check-stats>\fP
+  ** function.
   */
   { "mail_check_stats_interval", DT_NUM, R_NONE, {.p=&BuffyCheckStatsInterval}, {.l=60} },
   /*
   ** .pp
-  ** $$mail_check_stats が \fIset\fP の場合、この変数はどのくらいの頻度(秒単位)で
-  ** メッセージ数を Mutt が更新するかを設定します。
+  ** When $$mail_check_stats is \fIset\fP, this variable configures
+  ** how often (in seconds) mutt will update message counts.
   */
   { "mailcap_path",	DT_STR,	 R_NONE, {.p=&MailcapPath}, {.p=0} },
   /*
   ** .pp
-  ** この変数は、Mutt で直接サポートされない MIME の本文を表示しようとする際に、
-  ** 参照するファイルを指定します。既定値は起動時に生成されます。マニュアルの
-  ** ``$mailcap'' 節を参照してください。
+  ** This variable specifies which files to consult when attempting to
+  ** display MIME bodies not directly supported by Mutt.  The default value
+  ** is generated during startup: see the ``$mailcap'' section of the manual.
   */
   { "mailcap_sanitize",	DT_BOOL, R_NONE, {.l=OPTMAILCAPSANITIZE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、%拡張を、明確に定義した安全な文字セットにすることで、
-  ** メールボックス中で使用できる文字を制限します。これは安全な設定ですが、
-  ** これにより高度な MIME 項目が壊れないとは断言できません。
+  ** If \fIset\fP, mutt will restrict possible characters in mailcap % expandos
+  ** to a well-defined set of safe characters.  This is the safe setting,
+  ** but we are not sure it doesn't break some more advanced MIME stuff.
   ** .pp
-  ** \fIこの設定は、完全に理解することなく変更してはなりません!\fP
+  ** \fBDON'T CHANGE THIS SETTING UNLESS YOU ARE REALLY SURE WHAT YOU ARE
+  ** DOING!\fP
   */
 #ifdef USE_HCACHE
   { "maildir_header_cache_verify", DT_BOOL, R_NONE, {.l=OPTHCACHEVERIFY}, {.l=1} },
   /*
   ** .pp
-  ** ヘッダキャッシュが使われている時に、maildirファイルを変更した Mutt 以外の
-  ** Maildir に対応しないプログラムを確認します。これは、フォルダのオープン毎に
-  ** メッセージ毎に1回の\fCstat(2)\fP が発生します(これは NFS フォルダの場合には
-  ** 非常に遅くなる可能性があります)。
+  ** Check for Maildir unaware programs other than mutt having modified maildir
+  ** files when the header cache is in use.  This incurs one \fCstat(2)\fP per
+  ** message every time the folder is opened (which can be very slow for NFS
+  ** folders).
   */
 #endif
-  { "maildir_trash", DT_BOOL, R_NONE, {.l=OPTMAILDIRTRASH}, {.l=0} },
+  { "maildir_trash", DT_BOOL, R_BOTH, {.l=OPTMAILDIRTRASH}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、削除マークが付いたメッセージは、削除される代わりに
-  ** maildir に ゴミ フラグを付けてセーブされます。\fB注意:\fP これは、
-  ** maildir 形式のメールボックスに対してのみ適用されます。設定は他のメールボックス
-  ** 形式には影響しません。
+  ** If \fIset\fP, messages marked as deleted will be saved with the maildir
+  ** trashed flag instead of unlinked.  \fBNote:\fP this only applies
+  ** to maildir-style mailboxes.  Setting it will have no effect on other
+  ** mailbox types.
   */
   { "maildir_check_cur", DT_BOOL, R_NONE, {.l=OPTMAILDIRCHECKCUR}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は新規メッセージについて、maildir フォルダの new と
-  ** cur ディスクの両方をポーリングします。これは、フォルダを操作する他のプログラム
-  ** (例えば dovecot)が新規メッセージを cur ディレクトリに移動する場合に
-  ** 便利です。このオプションを設定すると、大きなフォルダの場合には
-  ** Mutt がすべての cur メッセージをスキャンするために、新規メッセージの
-  ** ポーリングが遅くなる可能性があることに注意してください。
+  ** If \fIset\fP, mutt will poll both the new and cur directories of
+  ** a maildir folder for new messages.  This might be useful if other
+  ** programs interacting with the folder (e.g. dovecot) are moving new
+  ** messages to the cur directory.  Note that setting this option may
+  ** slow down polling for new messages in large folders, since mutt has
+  ** to scan all cur messages.
   */
   { "mark_macro_prefix",DT_STR, R_NONE, {.p=&MarkMacroPrefix}, {.p="'"} },
   /*
   ** .pp
-  ** メッセージのマークに使う時に作成されるマクロ用のプリフィックス。
-  ** \fI<mark-message>a\fP で、自動的に生成される新規マクロは
-  ** このプレフィックスと文字  \fIa\fP から構成されます。
+  ** Prefix for macros created using mark-message.  A new macro
+  ** automatically generated with \fI<mark-message>a\fP will be composed
+  ** from this prefix and the letter \fIa\fP.
   */
   { "mark_old",		DT_BOOL, R_BOTH, {.l=OPTMARKOLD}, {.l=1} },
   /*
   ** .pp
-  ** Mutt が \fI新規で\fP \fB未読の\fP メッセージを読まないでメールボックスから出るときに
-  ** \fIold\fP を付けるかどうかを制御します。\fIset\fP の場合、次回 Mutt を起動した
-  ** 時から、インデックスメニュー中で、メッセージの隣に ``O'' を付けて表示され、
-  ** それが古いものであることを示します。 
+  ** Controls whether or not mutt marks \fInew\fP \fBunread\fP
+  ** messages as \fIold\fP if you exit a mailbox without reading them.
+  ** With this option \fIset\fP, the next time you start mutt, the messages
+  ** will show up with an ``O'' next to them in the index menu,
+  ** indicating that they are old.
   */
   { "markers",		DT_BOOL, R_PAGER_FLOW, {.l=OPTMARKERS}, {.l=1} },
   /*
   ** .pp
-  ** 内部ページャで折り返される行の表示を制御します。設定した場合、
-  ** ``+'' と言うマーカーが、折り返された行の先頭に表示されます。
+  ** Controls the display of wrapped lines in the internal pager. If set, a
+  ** ``+'' marker is displayed at the beginning of wrapped lines.
   ** .pp
-  **  $$smart_wrap 変数も参照してください。
+  ** Also see the $$smart_wrap variable.
   */
   { "mask",		DT_RX,	 R_NONE, {.p=&Mask}, {.p="!^\\.[^.]"} },
   /*
   ** .pp
-  ** ファイルブラウザ中で使う正規表現で、\fInot\fP 演算子 ``!'' を先頭に
-  ** 付けることも出来ます。この条件に名前が一致するファイルのみが表示されます。
-  ** 一致条件は常時大文字小文字を区別します。
+  ** A regular expression used in the file browser, optionally preceded by
+  ** the \fInot\fP operator ``!''.  Only files whose names match this mask
+  ** will be shown. The match is always case-sensitive.
   */
   { "mbox",		DT_PATH, R_BOTH, {.p=&Inbox}, {.p="~/mbox"} },
   /*
   ** .pp
-  ** これは、$$spoolfile フォルダ中の既読メールを追加するフォルダです。
+  ** This specifies the folder into which read mail in your $$spoolfile
+  ** folder will be appended.
   ** .pp
-  ** $$move 変数も参照してください。
+  ** Also see the $$move variable.
   */
   { "mbox_type",	DT_MAGIC,R_NONE, {.p=&DefaultMagic}, {.l=MUTT_MBOX} },
   /*
   ** .pp
-  ** 新規フォルダを作る際の既定のメールボックスタイプ。``mbox'', ``MMDF'', ``MH'' と
-  ** ``Maildir'' のどれかです。これは、\fC-m\fP コマンド行オプションで上書きできます。
+  ** The default mailbox type used when creating new folders. May be any of
+  ** ``mbox'', ``MMDF'', ``MH'' and ``Maildir''. This is overridden by the
+  ** \fC-m\fP command-line option.
   */
   { "menu_context",	DT_NUM,  R_NONE, {.p=&MenuContext}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、メニューをスクロールするときに表示されるコンテキストの行数を制御
-  ** します($$pager_context に似ています)。
+  ** This variable controls the number of lines of context that are given
+  ** when scrolling through menus. (Similar to $$pager_context.)
   */
   { "menu_move_off",	DT_BOOL, R_NONE, {.l=OPTMENUMOVEOFF}, {.l=1} },
   /*
   ** .pp
-  ** \fIunset\fP の場合、行数よりもエントリ数が小さい場合を除き、メニュー最下部の
-  ** エントリは、画面の最下部を越えてスクロールアップしません。\fIset\fPの場合、
-  ** 最下部のエントリは最下部から動く可能性があります。
-  ** 
+  ** When \fIunset\fP, the bottom entry of menus will never scroll up past
+  ** the bottom of the screen, unless there are less entries than lines.
+  ** When \fIset\fP, the bottom entry may move off the bottom.
   */
   { "menu_scroll",	DT_BOOL, R_NONE, {.l=OPTMENUSCROLL}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、画面の境界を越えて移動しようとする場合、メニューは1行ずつ
-  ** 上下にスクロールします。\fIunset\fP の場合、画面は消去されて次又は前のメニューページ
-  ** が表示されます(大量の再描画を防ぐために、遅い回線の場合には便利です)。
+  ** When \fIset\fP, menus will be scrolled up or down one line when you
+  ** attempt to move across a screen boundary.  If \fIunset\fP, the screen
+  ** is cleared and the next or previous page of the menu is displayed
+  ** (useful for slow links to avoid many redraws).
   */
 #if defined(USE_IMAP) || defined(USE_POP)
   { "message_cache_clean", DT_BOOL, R_NONE, {.l=OPTMESSAGECACHECLEAN}, {.l=0} },
   /*
   ** .pp
-  **  \fIset\fP の場合、Mutt はメールボックスが同期されたときに、メッセージキャッシュから
-  ** 無効になったエントリを削除します。 (特に大きなフォルダでは)。若干遅くなるため、
-  ** たまに設定したいと思う程度でしょう
-  **
+  ** If \fIset\fP, mutt will clean out obsolete entries from the message cache when
+  ** the mailbox is synchronized. You probably only want to set it
+  ** every once in a while, since it can be a little slow
+  ** (especially for large folders).
   */
   { "message_cachedir",	DT_PATH,	R_NONE,	{.p=&MessageCachedir}, {.p=0} },
   /*
   ** .pp
-  ** これをディレクトリに設定すると、Mutt はIMAP と POP サーバからメッセージのコピーを
-  ** ここにキャッシュします。このエントリはいつでも削除できます。
+  ** Set this to a directory and mutt will cache copies of messages from
+  ** your IMAP and POP servers here. You are free to remove entries at any
+  ** time.
   ** .pp
-  ** この変数をディレクトリに設定すると、Mutt はすべてのリモートメッセージを1回だけ
-  ** フェッチする必要があり、ローカルフォルダと同じくらいの速さで正規表現による
-  ** 検索を実行できます。
+  ** When setting this variable to a directory, mutt needs to fetch every
+  ** remote message only once and can perform regular expression searches
+  ** as fast as for local folders.
   ** .pp
-  **  $$message_cache_clean 変数も参照してください。
+  ** Also see the $$message_cache_clean variable.
   */
 #endif
   { "message_format",	DT_STR,	 R_NONE, {.p=&MsgFmt}, {.p="%s"} },
   /*
   ** .pp
-  ** これは、\fCmessage/rfc822\fP タイプの添付用 ``attachment'' メニューで
-  ** 表示される文字列です。\fCprintf(3)\fP 風の定義されている完全な書式リストは
-  ** $$index_format 節を参照してください。
+  ** This is the string displayed in the ``attachment'' menu for
+  ** attachments of type \fCmessage/rfc822\fP.  For a full listing of defined
+  ** \fCprintf(3)\fP-like sequences see the section on $$index_format.
   */
   { "msg_format",	DT_SYN,  R_NONE, {.p="message_format"}, {.p=0} },
   /*
   */
+  { "message_id_format", DT_STR, R_NONE, {.p=&MessageIdFormat}, {.p="<%z@%f>"} },
+  /*
+  ** .pp
+  ** This variable describes the format of the Message-ID generated
+  ** when sending messages.  Mutt 2.0 introduced a more compact
+  ** format, but this variable allows the ability to choose your own
+  ** format.  The value may end in ``|'' to invoke an external filter.
+  ** See $formatstrings-filters.
+  ** .pp
+  ** Please note that the Message-ID value follows a strict syntax,
+  ** and you are responsible for ensuring correctness if you change
+  ** this from the default.  In particular, the value must follow the
+  ** syntax in RFC 5322: ``\fC"<" id-left "@" id-right ">"\fP''.  No
+  ** spaces are allowed, and \fCid-left\fP should follow the
+  ** dot-atom-text syntax in the RFC.  The \fCid-right\fP should
+  ** generally be left at %f.
+  ** .pp
+  ** The old Message-ID format can be used by setting this to:
+  ** ``\fC<%Y%02m%02d%02H%02M%02S.G%c%p@%f>\fP''
+  ** .pp
+  ** The following \fCprintf(3)\fP-style sequences are understood:
+  ** .dl
+  ** .dt %c .dd step counter looping from ``A'' to ``Z''
+  ** .dt %d .dd current day of the month (GMT)
+  ** .dt %f .dd $$hostname
+  ** .dt %H .dd current hour using a 24-hour clock (GMT)
+  ** .dt %m .dd current month number (GMT)
+  ** .dt %M .dd current minute of the hour (GMT)
+  ** .dt %p .dd pid of the running mutt process
+  ** .dt %r .dd 3 bytes of pseudorandom data encoded in Base64
+  ** .dt %S .dd current second of the minute (GMT)
+  ** .dt %x .dd 1 byte of pseudorandom data hex encoded (example: '1b')
+  ** .dt %Y .dd current year using 4 digits (GMT)
+  ** .dt %z .dd 4 byte timestamp + 8 bytes of pseudorandom data encoded in Base64
+  */
   { "meta_key",		DT_BOOL, R_NONE, {.l=OPTMETAKEY}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、最上位ビット(ビット 8) を設定したキーストロークを、ESC キーを
-  ** 押し、残りのものはすべて最上位ビットを落とした形で Mutt に解釈させます。たとえば、
-  ** 押されたキーが ASCII の値で \fC0xf8\fP の場合は、 ESC の次に ``x'' が押された
-  ** ように扱われます。これは、最上位ビットを落とした \fC0xf8\fP が、\fC0x78\fP で、
-  ** それは ASCII 文字 ``x'' だからです。
+  ** If \fIset\fP, forces Mutt to interpret keystrokes with the high bit (bit 8)
+  ** set as if the user had pressed the Esc key and whatever key remains
+  ** after having the high bit removed.  For example, if the key pressed
+  ** has an ASCII value of \fC0xf8\fP, then this is treated as if the user had
+  ** pressed Esc then ``x''.  This is because the result of removing the
+  ** high bit from \fC0xf8\fP is \fC0x78\fP, which is the ASCII character
+  ** ``x''.
   */
   { "metoo",		DT_BOOL, R_NONE, {.l=OPTMETOO}, {.l=0} },
   /*
   ** .pp
-  ** \fIunset\fP の場合、Mutt はメッセージ返信時に受信者リストからアドレスを
-  ** 取り除きます(``$alternates'' コマンドを参照してください)。
+  ** If \fIunset\fP, Mutt will remove your address (see the ``$alternates''
+  ** command) from the list of recipients when replying to a message.
   */
   { "mh_purge",		DT_BOOL, R_NONE, {.l=OPTMHPURGE}, {.l=0} },
   /*
   ** .pp
-  ** \fIunset\fP の場合、Mutt は mh の挙動を偽装し、実際に削除する代わりに mh フォルダ中で
-  ** 削除されたメッセージを \fI,<old file name>\fP に改名します。これは、メッセージを
-  ** ディスク上に残しますが、プログラムがフォルダを読むときに無視させます。変数が
-  ** \fIset\fP の場合、メッセージファイルは単に削除されます。
+  ** When \fIunset\fP, mutt will mimic mh's behavior and rename deleted messages
+  ** to \fI,<old file name>\fP in mh folders instead of really deleting
+  ** them. This leaves the message on disk but makes programs reading the folder
+  ** ignore it. If the variable is \fIset\fP, the message files will simply be
+  ** deleted.
   ** .pp
-  ** このオプションは、Maildir フォルダ用の $$maildir_trash と似ています。
+  ** This option is similar to $$maildir_trash for Maildir folders.
   */
   { "mh_seq_flagged",	DT_STR, R_NONE, {.p=&MhFlagged}, {.p="flagged"} },
   /*
   ** .pp
-  ** フラグ付きメッセージに使われる MH シーケンス名です。
+  ** The name of the MH sequence used for flagged messages.
   */
   { "mh_seq_replied",	DT_STR, R_NONE, {.p=&MhReplied}, {.p="replied"} },
   /*
   ** .pp
-  ** 返信済みメッセージに使われる MH シーケンス名です。
+  ** The name of the MH sequence used to tag replied messages.
   */
   { "mh_seq_unseen",	DT_STR, R_NONE, {.p=&MhUnseen}, {.p="unseen"} },
   /*
   ** .pp
-  ** 未読メッセージに使われる MH シーケンス名です。
+  ** The name of the MH sequence used for unseen messages.
   */
   { "mime_forward",	DT_QUAD, R_NONE, {.l=OPT_MIMEFWD}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** \fIset\fP の場合、転送するメッセージは、メッセージの本体中に含める代わりに、
-  ** 分離された \fCmessage/rfc822\fP MIME パートとして添付されます。これは、
-  ** MIME メッセージの転送に便利で、こうすることにより、受信者は自分に送られてきた
-  ** のと同じように正しくメッセージを閲覧できます。MIME と 非MIME をメール毎に
-  ** 切り換えたいのであれば、この変数を ``ask-no'' 又は ``ask-yes'' にします。
+  ** When \fIset\fP, the message you are forwarding will be attached as a
+  ** separate \fCmessage/rfc822\fP MIME part instead of included in the main body of the
+  ** message.  This is useful for forwarding MIME messages so the receiver
+  ** can properly view the message as it was delivered to you. If you like
+  ** to switch between MIME and not MIME from mail to mail, set this
+  ** variable to ``ask-no'' or ``ask-yes''.
   ** .pp
-  ** $$forward_decode と $$mime_forward_decode も参照してください。
+  ** Also see $$forward_decode and $$mime_forward_decode.
   */
   { "mime_forward_decode", DT_BOOL, R_NONE, {.l=OPTMIMEFORWDECODE}, {.l=0} },
   /*
   ** .pp
-  ** $$mime_forward が \fIset\fP の時にメッセージを転送する時、複雑な MIME メッセージを
-  ** \fCtext/plain\fP にデコードするかを制御します。それ以外は、代わりに
-  ** $$forward_decode が使われます。
+  ** Controls the decoding of complex MIME messages into \fCtext/plain\fP when
+  ** forwarding a message while $$mime_forward is \fIset\fP. Otherwise
+  ** $$forward_decode is used instead.
   */
   { "mime_fwd",		DT_SYN,  R_NONE, {.p="mime_forward"}, {.p=0} },
   /*
@@ -1970,579 +2218,650 @@ struct option_t MuttVars[] = {
   { "mime_forward_rest", DT_QUAD, R_NONE, {.l=OPT_MIMEFWDREST}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** 添付メニューから、 MIME メッセージの複数の添付を転送する時、このオプションが
-  ** \fIset\fP の時、合理的な方法でデコードできない添付は新しく編集された
-  ** メッセージに添付されます。
+  ** When forwarding multiple attachments of a MIME message from the attachment
+  ** menu, attachments which cannot be decoded in a reasonable manner will
+  ** be attached to the newly composed message if this option is \fIset\fP.
   */
   { "mime_type_query_command", DT_STR, R_NONE, {.p=&MimeTypeQueryCmd}, {.p=0} },
   /*
   ** .pp
-  ** これは、メッセージを編集するときに新しい添付の MIME タイプを決定するために
-  ** 動かすコマンドを指定します。$$mime_type_query_first が設定されている場合を除き、
-  ** これは mime.types ファイル中に添付の拡張子が見つからない場合にのみ実行されます。
+  ** This specifies a command to run, to determine the mime type of a
+  ** new attachment when composing a message.  Unless
+  ** $$mime_type_query_first is set, this will only be run if the
+  ** attachment's extension is not found in the mime.types file.
   ** .pp
-  ** 文字列には ``%s'' を含むことが出来、これは、添付ファイル名に置換されます。
-  ** Mutt はシェルの引用ルールに沿って、自動的に ``%s'' を置き換えた文字列の回りに
-  ** 引用符を追加するので、個別に囲むことは必要ありません。文字列中に ``%s'' が
-  ** ない場合は、Mutt は文字列の最後に添付ファイル名を追加します。
+  ** The string may contain a ``%s'', which will be substituted with the
+  ** attachment filename.  Mutt will add quotes around the string substituted
+  ** for ``%s'' automatically according to shell quoting rules, so you should
+  ** avoid adding your own.  If no ``%s'' is found in the string, Mutt will
+  ** append the attachment filename to the end of the string.
   ** .pp
-  ** コマンドは添付の MIME タイプを含む単一行を出力しなければなりません。
+  ** The command should output a single line containing the
+  ** attachment's mime type.
   ** .pp
-  ** 推奨される値は、 ``xdg-mime query filetype'' または ``file -bi'' です。
+  ** Suggested values are ``xdg-mime query filetype'' or
   ** ``file -bi''.
   */
   { "mime_type_query_first", DT_BOOL, R_NONE, {.l=OPTMIMETYPEQUERYFIRST}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、$mime_type_query_command は mime.types 検索の前に
-  ** 実行されます。
+  ** When \fIset\fP, the $$mime_type_query_command will be run before the
+  ** mime.types lookup.
   */
 #ifdef MIXMASTER
   { "mix_entry_format", DT_STR,  R_NONE, {.p=&MixEntryFormat}, {.p="%4n %c %-16s %a"} },
   /*
   ** .pp
-  ** この変数は、mixmaster チェーン選択画面でのリメーラ行の書式を記述します。
-  ** 以下の、\fCprintf(3)\fP 風の書式がサポートされます。
+  ** This variable describes the format of a remailer line on the mixmaster
+  ** chain selection screen.  The following \fCprintf(3)\fP-like sequences are
+  ** supported:
   ** .dl
-  ** .dt %n .dd メニュー上での実行番号
-  ** .dt %c .dd リメーラのケーパビリティ
-  ** .dt %s .dd リメーラの短縮名
-  ** .dt %a .dd リメーラのメールアドレス
+  ** .dt %n .dd The running number on the menu.
+  ** .dt %c .dd Remailer capabilities.
+  ** .dt %s .dd The remailer's short name.
+  ** .dt %a .dd The remailer's e-mail address.
   ** .de
+  ** .pp
+  ** (Mixmaster only)
   */
-  { "mixmaster",	DT_PATH, R_NONE, {.p=&Mixmaster}, {.p=MIXMASTER} },
+  { "mixmaster",	DT_CMD_PATH, R_NONE, {.p=&Mixmaster}, {.p=MIXMASTER} },
   /*
   ** .pp
-  ** この変数は、システム上の Mixmaster バイナリへのパスを記述します。
-  ** これは、種々のパラメータを付けた、既知のリメーラのリストを集めるためと、
-  ** 最終的には、mixmaster チェーンを使ってメッセージを送信するのに使われます。
+  ** This variable contains the path to the Mixmaster binary on your
+  ** system.  It is used with various sets of parameters to gather the
+  ** list of known remailers, and to finally send a message through the
+  ** mixmaster chain. (Mixmaster only)
   */
 #endif
   { "move",		DT_QUAD, R_NONE, {.l=OPT_MOVE}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** Mutt が既読メッセージをスプールメールボックスから、$$mbox メールボックス
-  ** か、``$mbox-hook'' コマンドの結果に移動するか否かを制御します。
+  ** Controls whether or not Mutt will move read messages
+  ** from your spool mailbox to your $$mbox mailbox, or as a result of
+  ** a ``$mbox-hook'' command.
+  */
+  { "muttlisp_inline_eval", DT_BOOL, R_NONE, {.l=OPTMUTTLISPINLINEEVAL}, {.l=0} },
+  /*
+  ** .pp
+  ** If \fIset\fP, Mutt will evaluate bare parenthesis arguments to commands
+  ** as MuttLisp expressions.
   */
   { "narrow_tree",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTNARROWTREE}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、\fIset\fPの時、深いスレッドを画面上に収まるように、スレッドツリーを
-  ** 狭くします。
+  ** This variable, when \fIset\fP, makes the thread tree narrower, allowing
+  ** deeper threads to fit on the screen.
   */
 #ifdef USE_SOCKET
   { "net_inc",	DT_NUM,	 R_NONE, {.p=&NetInc}, {.l=10} },
   /*
   ** .pp
-  ** ネットワーク越しに大量のデータを転送することを予定している操作は、
-  ** 処理状況を $$net_inc キロバイト毎に更新します。0 に設定すると、
-  ** 処理状況メッセージは表示されません。
+  ** Operations that expect to transfer a large amount of data over the
+  ** network will update their progress every $$net_inc kilobytes.
+  ** If set to 0, no progress messages will be displayed.
   ** .pp
-  ** $read_inc, $$write_inc と $$net_inc も参照してください。
+  ** See also $$read_inc, $$write_inc and $$net_inc.
   */
 #endif
-  { "new_mail_command",	DT_PATH, R_NONE, {.p=&NewMailCmd}, {.p=0} },
+  { "new_mail_command",	DT_CMD_PATH, R_NONE, {.p=&NewMailCmd}, {.p=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は新規メッセージを受信後にこのコマンドを呼び出します。
-  ** このコマンド中にフォーマットできうる値については、$$status_formatの説明を
-  ** 参照してください。
+  ** If \fIset\fP, Mutt will call this command after a new message is received.
+  ** See the $$status_format documentation for the values that can be formatted
+  ** into this command.
   */
-  { "pager",		DT_PATH, R_NONE, {.p=&Pager}, {.p="builtin"} },
+  { "pager",		DT_CMD_PATH, R_NONE, {.p=&Pager}, {.p="builtin"} },
   /*
   ** .pp
-  ** この変数は、メッセージを表示するのに使うページャを指定します。``builtin''
-  ** と言う値は、内蔵ページャを使う事を意味し、それ以外は、使用したい外部ページャの
-  ** パスを指定します。
+  ** This variable specifies which pager you would like to use to view
+  ** messages. The value ``builtin'' means to use the built-in pager, otherwise this
+  ** variable should specify the pathname of the external pager you would
+  ** like to use.
   ** .pp
-  ** 外部ページャを使う場合には若干弱点があります。ページャから直接 Mutt の
-  ** 機能を呼び出せないために、追加のキー操作が必要で、さらに、画面のリサイズを
-  ** すると、ヘルプメニュー中で、画面の幅より長い行は不正にレイアウトされてしまいます。
+  ** The string may contain a ``%s'', which will be substituted with
+  ** the generated message filename.  Mutt will add quotes around the
+  ** string substituted for ``%s'' automatically according to shell
+  ** quoting rules, so you should avoid adding your own.  If no ``%s''
+  ** is found in the string, Mutt will append the message filename to
+  ** the end of the string.
   ** .pp
-  ** 外部ページャを使う場合は、既定で \fIset\fP になっている $$prompt_after も
-  ** 参照してください。
+  ** Using an external pager may have some disadvantages: Additional
+  ** keystrokes are necessary because you can't call mutt functions
+  ** directly from the pager, and screen resizes cause lines longer than
+  ** the screen width to be badly formatted in the help menu.
+  ** .pp
+  ** When using an external pager, also see $$prompt_after which defaults
+  ** \fIset\fP.
   */
   { "pager_context",	DT_NUM,	 R_NONE, {.p=&PagerContext}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、内部ページャで、次または前のページを表示するときに、コンテキストと
-  ** して残す行数を制御します。既定では、Mutt は画面上の最後の行の次の行を
-  ** 次のページの最上位に表示します(コンテキストが 0行)。
+  ** This variable controls the number of lines of context that are given
+  ** when displaying the next or previous page in the internal pager.  By
+  ** default, Mutt will display the line after the last one on the screen
+  ** at the top of the next page (0 lines of context).
   ** .pp
-  ** この変数は検索の結果のコンテキスト量も指定します。値が正ならば、一致する前の
-  ** 行数が表示され、0 の場合は、一致は上揃えとなります。
+  ** This variable also specifies the amount of context given for search
+  ** results. If positive, this many lines will be given before a match,
+  ** if 0, the match will be top-aligned.
   */
   { "pager_format",	DT_STR,	 R_PAGER, {.p=&PagerFmt}, {.p="-%Z- %C/%m: %-20.20n   %s%*  -- (%P)"} },
   /*
   ** .pp
-  ** この変数は、内部又は外部ページャ中の各メッセージの前に表示される、
-  ** 1行の ``status'' メッセージの書式を制御します。正しい書式は $$index_format
-  ** 節に記してあります。
+  ** This variable controls the format of the one-line message ``status''
+  ** displayed before each message in either the internal or an external
+  ** pager.  The valid sequences are listed in the $$index_format
+  ** section.
   */
   { "pager_index_lines",DT_NUM,	 R_PAGER, {.p=&PagerIndexLines}, {.l=0} },
   /*
   ** .pp
-  ** ページャ中に表示されるミニインデックスの行数を指定します。フォルダの
-  ** 上端や下端にいる場合を除き、現在のメッセージは好みにインデックス画面の中で、
-  ** おおよそ1/3の位置にあり、メッセージの前後に数行がコンテキストとして、
-  ** メッセージを読むときに表示されます。これは、たとえば、現在のスレッドに
-  ** どのくらい未読が残っているかを判断するのに便利です。行のうち1行は、
-  ** インデックスのステータスバーとして予約されているので、6 に設定すると、
-  ** 実際のインデックスでは 5 行のみが表示されます。現在のフォルダ中のメッセージ数が
-  ** $$pager_index_lines より少ない場合は、インデックスは必要な数の行だけを
-  ** 使用します。
+  ** Determines the number of lines of a mini-index which is shown when in
+  ** the pager.  The current message, unless near the top or bottom of the
+  ** folder, will be roughly one third of the way down this mini-index,
+  ** giving the reader the context of a few messages before and after the
+  ** message.  This is useful, for example, to determine how many messages
+  ** remain to be read in the current thread.  One of the lines is reserved
+  ** for the status bar from the index, so a setting of 6
+  ** will only show 5 lines of the actual index.  A value of 0 results in
+  ** no index being shown.  If the number of messages in the current folder
+  ** is less than $$pager_index_lines, then the index will only use as
+  ** many lines as it needs.
+  */
+  { "pager_skip_quoted_context", DT_NUM, R_NONE, {.p=&PagerSkipQuotedContext}, {.l=0} },
+  /*
+  ** .pp
+  ** Determines the number of lines of context to show before the
+  ** unquoted text when using \fC$<skip-quoted>\fP. When set to a
+  ** positive number at most that many lines of the previous quote are
+  ** displayed. If the previous quote is shorter the whole quote is
+  ** displayed.
   */
   { "pager_stop",	DT_BOOL, R_NONE, {.l=OPTPAGERSTOP}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、内部ページャは、メッセージの最後にいて、\fC<next-page>\fP 
-  ** 機能を呼び出しても、次のメッセージに移動\fBしません\fP。
+  ** When \fIset\fP, the internal-pager will \fBnot\fP move to the next message
+  ** when you are at the end of a message and invoke the \fC<next-page>\fP
+  ** function.
+  */
+  { "pattern_format", DT_STR, R_NONE, {.p=&PatternFormat}, {.p="%2n %-15e  %d"} },
+  /*
+  ** .pp
+  ** This variable describes the format of the ``pattern completion'' menu. The
+  ** following \fCprintf(3)\fP-style sequences are understood:
+  ** .dl
+  ** .dt %d  .dd pattern description
+  ** .dt %e  .dd pattern expression
+  ** .dt %n  .dd index number
+  ** .de
+  ** .pp
   */
   { "pgp_auto_decode", DT_BOOL, R_NONE, {.l=OPTPGPAUTODEC}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、ユーザがメッセージの内容を操作するような通常の操作を
-  ** 実行しようとすると、従来の PGP メッセージを自動的に復号化しようとします。たとえば、
-  ** \fC$<check-traditional-pgp>\fP 機能を使って手動でチェックされていない
-  ** 従来の PGP メッセージを表示した場合、Mutt は自動的に、メッセージが従来の PGP かを
-  ** チェックします。
+  ** If \fIset\fP, mutt will automatically attempt to decrypt traditional PGP
+  ** messages whenever the user performs an operation which ordinarily would
+  ** result in the contents of the message being operated on.  For example,
+  ** if the user displays a pgp-traditional message which has not been manually
+  ** checked with the \fC$<check-traditional-pgp>\fP function, mutt will automatically
+  ** check the message for traditional pgp.
   */
   { "pgp_create_traditional",	DT_SYN, R_NONE, {.p="pgp_autoinline"}, {.p=0} },
   { "pgp_autoinline",		DT_BOOL, R_NONE, {.l=OPTPGPAUTOINLINE}, {.l=0} },
   /*
   ** .pp
-  ** このオプションは、特定の環境で、古いスタイルのインライン(旧来の)PGP 暗号化または
-  ** 署名されたメッセージを生成するかどうかを制御します。これは インラインが不要の場合、
-  ** PGP メニューを使う事で上書きできます。GPGME バックエンドはこのオプションを
-  ** サポートしません。
+  ** This option controls whether Mutt generates old-style inline
+  ** (traditional) PGP encrypted or signed messages under certain
+  ** circumstances.  This can be overridden by use of the pgp menu,
+  ** when inline is not required.  The GPGME backend does not support
+  ** this option.
   ** .pp
-  ** Mutt は、MIME パートが1つより多く存在している場合、メッセージに対して、
-  ** 自動的に PGP/MIME を使用する場合があることに注意してください。Mutt は
-  ** インライン(従来型) が動作しない場合に、PGP/MIME メッセージを送信する前に
-  ** 問合せをするように設定できます。
+  ** Note that Mutt might automatically use PGP/MIME for messages
+  ** which consist of more than a single MIME part.  Mutt can be
+  ** configured to ask before sending PGP/MIME messages when inline
+  ** (traditional) would not work.
   ** .pp
-  ** $$pgp_mime_auto 変数も参照してください。
+  ** Also see the $$pgp_mime_auto variable.
   ** .pp
-  ** また、古い形式の PGP メッセージ形式を使う事は\fB強く\fP \fB非推奨に\fP
-  ** なっていることにも注意してください。
-  ** (PGP のみです)
+  ** Also note that using the old-style PGP message format is \fBstrongly\fP
+  ** \fBdeprecated\fP.
+  ** (PGP only)
   */
   { "pgp_check_exit",	DT_BOOL, R_NONE, {.l=OPTPGPCHECKEXIT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は署名又は暗号化時に PGP サブプロセスの終了コードを
-  ** チェックします。ゼロでない終了コードはサブプロセスが異常終了したことを
-  ** 意味します。
-  ** (PGP のみです)
+  ** If \fIset\fP, mutt will check the exit code of the PGP subprocess when
+  ** signing or encrypting.  A non-zero exit code means that the
+  ** subprocess failed.
+  ** (PGP only)
   */
   { "pgp_check_gpg_decrypt_status_fd", DT_BOOL, R_NONE, {.l=OPTPGPCHECKGPGDECRYPTSTATUSFD}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fPの場合、Mutt は GnuPG ステータスコードが復号が成功したことを表示する
-  **  $$pgp_decrypt_command と $$pgp_decode_command コマンドののステータスファイル記述子
-  ** 出力をチェックします。これは DECRYPTION_OKAY の存在、DECRYPTION_FAILED の不在および
-  ** BEGIN_DECRYPTION と END_DECRYPTION ステータスコードの間にすべての
-  ** PLAINTEXT が存在することをチェックします。
+  ** If \fIset\fP, mutt will check the status file descriptor output
+  ** of $$pgp_decrypt_command and $$pgp_decode_command for GnuPG status codes
+  ** indicating successful decryption.  This will check for the presence of
+  ** DECRYPTION_OKAY, absence of DECRYPTION_FAILED, and that all
+  ** PLAINTEXT occurs between the BEGIN_DECRYPTION and END_DECRYPTION
+  ** status codes.
   ** .pp
-  ** \fIunset\fP の場合、Mutt は $$pgp_decryption_okay と fd 出力のステータスを
-  ** 代わりに照合します。
-  ** (PGP のみです)
+  ** If \fIunset\fP, mutt will instead match the status fd output
+  ** against $$pgp_decryption_okay.
+  ** (PGP only)
   */
   { "pgp_clearsign_command",	DT_STR,	R_NONE, {.p=&PgpClearSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** このフォーマットは、旧形式の ``clearsigned'' な PGP メッセージを作成するのに
-  ** 使います。このフォーマットの使用は \fB強く\fP \fB非推奨\fP であることに
-  ** 注意してください。
-  ** 
+  ** This format is used to create an old-style ``clearsigned'' PGP
+  ** message.  Note that the use of this format is \fBstrongly\fP
+  ** \fBdeprecated\fP.
   ** .pp
-  ** これはフォーマット文字列です。使える\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
   ** (PGP only)
   */
   { "pgp_decode_command",       DT_STR, R_NONE, {.p=&PgpDecodeCommand}, {.p=0} },
   /*
   ** .pp
-  ** このフォーマット文字列は、application/pgp 添付を復号するために使われる
-  ** コマンドを指定します。
+  ** This format strings specifies a command which is used to decode
+  ** application/pgp attachments.
   ** .pp
-  ** PGP コマンドフォーマットは \fCprintf(3)\fP 風の固有の書式があります。
+  ** The PGP command formats have their own set of \fCprintf(3)\fP-like sequences:
   ** .dl
-  ** .dt %p .dd パスフェーズが必要な場合に 任意の空白文字列などをPGPPASSFD=0 に
-  **            展開します。注意: これは %? も使うことができます。
-  ** .dt %f .dd メッセージを含むファイルの名前を展開します。
-  ** .dt %s .dd 検証するときに \fCmultipart/signed\fP 添付の署名パートを含む
-  **            ファイル名を展開します。
-  ** .dt %a .dd 設定されている場合、$$pgp_sign_as の値で、そのほかは、
-  **            $$pgp_default_key の値。
-  ** .dt %r .dd 1つ以上の キー ID (あるいはもしもあればフィンガープリント)
+  ** .dt %p .dd Expands to PGPPASSFD=0 when a pass phrase is needed, to an empty
+  **            string otherwise. Note: This may be used with a %? construct.
+  ** .dt %f .dd Expands to the name of a file containing a message.
+  ** .dt %s .dd Expands to the name of a file containing the signature part
+  ** .          of a \fCmultipart/signed\fP attachment when verifying it.
+  ** .dt %a .dd The value of $$pgp_sign_as if set, otherwise the value
+  **            of $$pgp_default_key.
+  ** .dt %r .dd One or more key IDs (or fingerprints if available).
   ** .de
   ** .pp
-  ** PGP の種々のバージョンに対してこれらのフォーマットをどのように設定するかの例は
-  ** ドキュメントといっしょにシステムにインストールされている the \fCsamples/\fP
-  ** サブディレクトリ にある、pgp と gpg 設定ファイルの例を参照してください。
-  ** (PGP のみです)
+  ** For examples on how to configure these formats for the various versions
+  ** of PGP which are floating around, see the pgp and gpg sample configuration files in
+  ** the \fCsamples/\fP subdirectory which has been installed on your system
+  ** alongside the documentation.
+  ** (PGP only)
   */
   { "pgp_decrypt_command", 	DT_STR, R_NONE, {.p=&PgpDecryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは PGP で暗号化されたメッセージの復号に使います。
+  ** This command is used to decrypt a PGP encrypted message.
   ** .pp
-  ** これはフォーマット文字列で、使用できる \fCprintf(3)\fP 風の書式は
-  ** $$pgp_decode_command を参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_decryption_okay",	DT_RX,  R_NONE, {.p=&PgpDecryptionOkay}, {.p=0} },
   /*
   ** .pp
-  ** この変数にテキストを割り当てた場合、暗号化された PGP メッセージは、
-  ** $$pgp_decrypt_command からの出力がテキストを含んでいるときのみ、
-  ** 復号が成功したとします。これは、multipart/encrypted ヘッダがあるが、
-  ** ブロックが完全には暗号化されていないブロックを含む場合、暗号化された
-  ** メッセージの盗聴を防ぐのに便利です(すなわち、単純に署名されて、ASCII で
-  ** 防御されたテキスト)。
+  ** If you assign text to this variable, then an encrypted PGP
+  ** message is only considered successfully decrypted if the output
+  ** from $$pgp_decrypt_command contains the text.  This is used to
+  ** protect against a spoofed encrypted message, with multipart/encrypted
+  ** headers but containing a block that is not actually encrypted.
+  ** (e.g. simply signed and ascii armored text).
   ** .pp
-  ** $$pgp_check_gpg_decrypt_status_fd が設定されている場合、この変数は
-  ** 無視されることに注意してください。
-  ** (PGP のみです)
+  ** Note that if $$pgp_check_gpg_decrypt_status_fd is set, this variable
+  ** is ignored.
+  ** (PGP only)
   */
   { "pgp_self_encrypt_as",	DT_SYN,  R_NONE, {.p="pgp_default_key"}, {.p=0} },
   { "pgp_default_key",		DT_STR,	 R_NONE, {.p=&PgpDefaultKey}, {.p=0} },
   /*
   ** .pp
-  ** これは PGP 操作に使う、既定のキーペアです。これは暗号化の時に使います
-  ** ($$postpone_encrypt と $$pgp_self_encrypt を参照してください)。
+  ** This is the default key-pair to use for PGP operations.  It will be
+  ** used for encryption (see $$postpone_encrypt and $$pgp_self_encrypt).
   ** .pp
-  ** $$pgp_sign_as が設定されていない限り、署名にも使われます。
+  ** It will also be used for signing unless $$pgp_sign_as is set.
   ** .pp
   ** The (now deprecated) \fIpgp_self_encrypt_as\fP is an alias for this
   ** variable, and should no longer be used.
-  ** (現在は非推奨の) fIpgp_self_encrypt_as\fP はこの変数の別名ですが、
-  ** もはや使われていません。
-  ** (PGP のみです)
+  ** (PGP only)
   */
   { "pgp_encrypt_only_command", DT_STR, R_NONE, {.p=&PgpEncryptOnlyCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、署名なしで本文を暗号化するために使います。
+  ** This command is used to encrypt a body part without signing it.
   ** .pp
-  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_encrypt_sign_command",	DT_STR, R_NONE, {.p=&PgpEncryptSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、本文の署名と暗号化両方に使います。
+  ** This command is used to both sign and encrypt a body part.
   ** .pp
-  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_entry_format", DT_STR,  R_NONE, {.p=&PgpEntryFormat}, {.p="%4n %t%f %4l/0x%k %-4a %2c %u"} },
   /*
   ** .pp
-  ** この変数は、好みに応じて PGP キー選択メニューをカスタマイズ出来るようにします。
-  ** この文字列は$$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
-  ** 持っています。
+  ** This variable allows you to customize the PGP key selection menu to
+  ** your personal taste. This string is similar to $$index_format, but
+  ** has its own set of \fCprintf(3)\fP-like sequences:
   ** .dl
-  ** .dt %n     .dd 番号
-  ** .dt %k     .dd キー id
+  ** .dt %n     .dd number
+  ** .dt %k     .dd key id
   ** .dt %u     .dd user id
-  ** .dt %a     .dd アルゴリズム
-  ** .dt %l     .dd キー長
-  ** .dt %f     .dd フラグ
-  ** .dt %c     .dd ケーパビリティ
-  ** .dt %t     .dd key-uid アソシエーションの 信頼性/有効性
-  ** .dt %[<s>] .dd \fCstrftime(3)\fP 形式のキーの日付
+  ** .dt %a     .dd algorithm
+  ** .dt %l     .dd key length
+  ** .dt %f     .dd flags
+  ** .dt %c     .dd capabilities
+  ** .dt %t     .dd trust/validity of the key-uid association
+  ** .dt %[<s>] .dd date of the key where <s> is an \fCstrftime(3)\fP expression
   ** .de
   ** .pp
-  ** (PGP のみです)
+  ** (PGP only)
   */
   { "pgp_export_command", 	DT_STR, R_NONE, {.p=&PgpExportCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、ユーザのキーリングから公開鍵をエクスポートするのに使われます。
+  ** This command is used to export a public key from the user's
+  ** key ring.
   ** .pp
-  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_getkeys_command",	DT_STR, R_NONE, {.p=&PgpGetkeysCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、Mutt が、メールアドレスに関連づけられた公開鍵をフェッチする
-  ** 必要がある場合はいつでも起動されます。$$pgp_decode_command によってサポート
-  ** される書式のうち、%r は、このフォーマットだけで使われる書式です。
-  ** この場合、%r は メールアドレスに展開されますが、公開鍵のID ではないことに注意して
-  ** ください(キーID は不明なので、このことが、Mutt がこのコマンドを起動する理由です)。
-  ** (PGP のみです)
+  ** This command is invoked whenever Mutt needs to fetch the public key associated with
+  ** an email address.  Of the sequences supported by $$pgp_decode_command, %r is
+  ** the only \fCprintf(3)\fP-like sequence used with this format.  Note that
+  ** in this case, %r expands to the email address, not the public key ID (the key ID is
+  ** unknown, which is why Mutt is invoking this command).
+  ** (PGP only)
   */
   { "pgp_good_sign",	DT_RX,  R_NONE, {.p=&PgpGoodSign}, {.p=0} },
   /*
   ** .pp
-  ** この変数にテキストを割り当てた場合、$$pgp_verify_command からの出力が
-  ** テキストの場合にのみ、PGP 署名 は検証されていると見なされます。不正な
-  ** 署名であっても、コマンドの終了コードが 0 の場合はこの変数を使います。
-  ** (PGP のみです)
+  ** If you assign a text to this variable, then a PGP signature is only
+  ** considered verified if the output from $$pgp_verify_command contains
+  ** the text. Use this variable if the exit code from the command is 0
+  ** even for bad signatures.
+  ** (PGP only)
   */
   { "pgp_ignore_subkeys", DT_BOOL, R_NONE, {.l=OPTPGPIGNORESUB}, {.l=1} },
   /*
   ** .pp
-  ** この変数を設定すると、Mutt は OpenPGP 副キーを無視するようになります。代わりに、
-  ** プリンシパルキー に副キーのケーパビリティが継承されます。興味深いキー選択
-  ** ゲームを楽しみたい場合は、これを \fIUnset\fP にします。
-  ** (PGP のみです)
+  ** Setting this variable will cause Mutt to ignore OpenPGP subkeys. Instead,
+  ** the principal key will inherit the subkeys' capabilities.  \fIUnset\fP this
+  ** if you want to play interesting key selection games.
+  ** (PGP only)
   */
   { "pgp_import_command",	DT_STR, R_NONE, {.p=&PgpImportCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、ユーザの公開キーリングにメッセージからキーをインポートする
-  ** のに使います。
+  ** This command is used to import a key from a message into
+  ** the user's public key ring.
   ** .pp
-  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_list_pubring_command", DT_STR, R_NONE, {.p=&PgpListPubringCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、公開キーリングの内容を一覧表示するのに使います。
-  ** 出力形式は以下で使用しているものに似ている必要があります。
+  ** This command is used to list the public key ring's contents.  The
+  ** output format must be analogous to the one used by
   ** .ts
   ** gpg --list-keys --with-colons --with-fingerprint
   ** .te
   ** .pp
-  ** このフォーマットは、Mutt 由来の \fCmutt_pgpring\fP ユーティリティによっても
-  ** 生成されます。
+  ** This format is also generated by the \fCmutt_pgpring\fP utility which comes
+  ** with mutt.
   ** .pp
-  ** 注意: gpg の \fCfixed-list-mode\fP オプションは使ってはなりません。これは、
-  ** Mutt 中で不正なキー生成日付を表示る結果となる異なった日付形式を生成します。
+  ** Note: gpg's \fCfixed-list-mode\fP option should not be used.  It
+  ** produces a different date format which may result in mutt showing
+  ** incorrect key generation dates.
   ** .pp
-  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** この場合、 %r は、メールアドレス、名前、あるいはキーIDのような、1つ以上のクォート
-  ** された文字列の一覧である検索文字列に展開されることに注意してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** Note that in this case, %r expands to the search string, which is a list of
+  ** one or more quoted values such as email address, name, or keyid.
+  ** (PGP only)
   */
   { "pgp_list_secring_command",	DT_STR, R_NONE, {.p=&PgpListSecringCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは秘密鍵リングの内容を一覧表示するのに使います。
-  ** 出力形式は以下で使用しているものに似ている必要があります。
+  ** This command is used to list the secret key ring's contents.  The
+  ** output format must be analogous to the one used by:
   ** .ts
   ** gpg --list-keys --with-colons --with-fingerprint
   ** .te
   ** .pp
-  ** このフォーマットは、Mutt 由来の \fCmutt_pgpring\fP ユーティリティによっても
-  ** 生成されます。
+  ** This format is also generated by the \fCmutt_pgpring\fP utility which comes
+  ** with mutt.
   ** .pp
-  ** 注意: gpg の \fCfixed-list-mode\fP オプションは使ってはなりません。これは、
-  ** Mutt 中で不正なキー生成日付を表示る結果となる異なった日付形式を生成します。
+  ** Note: gpg's \fCfixed-list-mode\fP option should not be used.  It
+  ** produces a different date format which may result in mutt showing
+  ** incorrect key generation dates.
   ** .pp
-  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** この場合、 %r は、メールアドレス、名前、あるいはキーIDのような、1つ以上のクォート
-  ** された文字列の一覧である検索文字列に展開されることに注意してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** Note that in this case, %r expands to the search string, which is a list of
+  ** one or more quoted values such as email address, name, or keyid.
+  ** (PGP only)
   */
   { "pgp_long_ids",	DT_BOOL, R_NONE, {.l=OPTPGPLONGIDS}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、64ビットの PGP キーID を使い、\fIunset\fP の場合、通常の
-  ** 32ビットキーIDを使います。注意:内部的に、Mutt はフィンガープリント(あるいは
-  ** フォールバックとしての長いキーID)の使用に移行しました。このオプションは、
-  ** キー選択メニューでの内容の表示やいくつかの他の場所での制御にのみ使われます。
-  ** (PGP のみです)
+  ** If \fIset\fP, use 64 bit PGP key IDs, if \fIunset\fP use the normal 32 bit key IDs.
+  ** NOTE: Internally, Mutt has transitioned to using fingerprints (or long key IDs
+  ** as a fallback).  This option now only controls the display of key IDs
+  ** in the key selection menu and a few other places.
+  ** (PGP only)
   */
   { "pgp_mime_auto", DT_QUAD, R_NONE, {.l=OPT_PGPMIMEAUTO}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** このオプションは、インライン(従来型の)で(何らかの理由で)うまくいかなかった
-  ** 場合、PGP/MIME を使う(署名/暗号化)メッセージの自動的な送信に対して
-  ** Mutt が問合せをするかどうかを制御します。
+  ** This option controls whether Mutt will prompt you for
+  ** automatically sending a (signed/encrypted) message using
+  ** PGP/MIME when inline (traditional) fails (for any reason).
   ** .pp
-  ** 古い形式の PGP メッセージ形式の使用は \fB強く\fP \fB非推奨\fP であることにも
-  ** 注意してください。
-  ** (PGP のみです)
+  ** Also note that using the old-style PGP message format is \fBstrongly\fP
+  ** \fBdeprecated\fP.
+  ** (PGP only)
   */
   { "pgp_auto_traditional",	DT_SYN, R_NONE, {.p="pgp_replyinline"}, {.p=0} },
   { "pgp_replyinline",		DT_BOOL, R_NONE, {.l=OPTPGPREPLYINLINE}, {.l=0} },
   /*
   ** .pp
-  ** この変数を設定すると、Mutt は、インラインでPGPで暗号化/署名されたメッセージに
-  ** 返信するときに、インライン(従来型の)メッセージを作成しようとします。
-  ** これは、インラインが不要だった場合、PGPメニューを使うことによって
-  ** 上書きできます。このオプションは(返信された)メッセージがインラインかを
-  ** 自動的には検出しません。そのかわり、以前にチェック/フラグを付けたメッセージの
-  ** Mutt 内部状態に依存します。
+  ** Setting this variable will cause Mutt to always attempt to
+  ** create an inline (traditional) message when replying to a
+  ** message which is PGP encrypted/signed inline.  This can be
+  ** overridden by use of the pgp menu, when inline is not
+  ** required.  This option does not automatically detect if the
+  ** (replied-to) message is inline; instead it relies on Mutt
+  ** internals for previously checked/flagged messages.
   ** .pp
-  ** Mutt は MIME パートが複数存在する場合、メッセージに対して 自動的に PGP/MIME
-  ** を使う事があることに注意してください。Mutt は、インライン(従来型)が動かない
-  ** 場合に、PGP/MIMEメッセージを送信する前に問合せをするように設定できます。
+  ** Note that Mutt might automatically use PGP/MIME for messages
+  ** which consist of more than a single MIME part.  Mutt can be
+  ** configured to ask before sending PGP/MIME messages when inline
+  ** (traditional) would not work.
   ** .pp
-  ** $$pgp_mime_auto 変数も参照してください。
+  ** Also see the $$pgp_mime_auto variable.
   ** .pp
-  ** 古い形式の PGP メッセージ形式の使用は \fB強く\fP \fB非推奨\fP であることにも
-  ** 注意してください。
-  ** (PGP のみです)
+  ** Also note that using the old-style PGP message format is \fBstrongly\fP
+  ** \fBdeprecated\fP.
+  ** (PGP only)
   **
   */
   { "pgp_retainable_sigs", DT_BOOL, R_NONE, {.l=OPTPGPRETAINABLESIG}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、署名かつ暗号化されたメッセージは、ネストされた
-  ** \fCmultipart/signed\fP と \fCmultipart/encrypted\fP 本体部分で構成されます。
+  ** If \fIset\fP, signed and encrypted messages will consist of nested
+  ** \fCmultipart/signed\fP and \fCmultipart/encrypted\fP body parts.
   ** .pp
-  ** これは外部レイヤ(\fCmultipart/encrypted\fP)が簡単に削除でき、内部の
-  ** \fCmultipart/signed\fP パートが残るので、暗号化され署名された
-  ** メーリングリストのようなアプリケーションには便利です。
-  ** (PGP のみです)
+  ** This is useful for applications like encrypted and signed mailing
+  ** lists, where the outer layer (\fCmultipart/encrypted\fP) can be easily
+  ** removed, while the inner \fCmultipart/signed\fP part is retained.
+  ** (PGP only)
   */
   { "pgp_self_encrypt",    DT_BOOL, R_NONE, {.l=OPTPGPSELFENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、PGP 暗号化メッセージは $$pgp_default_key 中のキーを
-  ** 使う事で暗号化も行います。
-  ** (PGP のみです)
+  ** When \fIset\fP, PGP encrypted messages will also be encrypted
+  ** using the key in $$pgp_default_key.
+  ** (PGP only)
   */
   { "pgp_show_unusable", DT_BOOL, R_NONE, {.l=OPTPGPSHOWUNUSABLE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は PGP キー選択メニュー上で使えないキーを表示します。
-  ** これは、取り消されたもの、満了したもの、あるいは、ユーザによって、``disabled'' と
-  ** マークを付けられたものを含みます。
-  ** (PGP のみです)
+  ** If \fIset\fP, mutt will display non-usable keys on the PGP key selection
+  ** menu.  This includes keys which have been revoked, have expired, or
+  ** have been marked as ``disabled'' by the user.
+  ** (PGP only)
   */
   { "pgp_sign_as",	DT_STR,	 R_NONE, {.p=&PgpSignAs}, {.p=0} },
   /*
   ** .pp
-  ** 署名のための異なったキーペアがある場合、署名するキーを、これを使って指定
-  ** しなければなりません。ほとんどの場合は、$$pgp_default_key を設定しなければ
-  ** ならないだけです。キーを指定するためにキーID形式を使う事を推奨します
-  ** (たとえば\fC0x00112233\fP)。
-  ** (PGP のみです)
+  ** If you have a different key pair to use for signing, you should
+  ** set this to the signing key.  Most people will only need to set
+  ** $$pgp_default_key.  It is recommended that you use the keyid form
+  ** to specify your key (e.g. \fC0x00112233\fP).
+  ** (PGP only)
   */
   { "pgp_sign_command",		DT_STR, R_NONE, {.p=&PgpSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、\fCmultipart/signed\fP PGP/MIME 本体部分のために、PGP 分離署名を
-  ** 作成するために使われます。
+  ** This command is used to create the detached PGP signature for a
+  ** \fCmultipart/signed\fP PGP/MIME body part.
   ** .pp
-  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_sort_keys",	DT_SORT|DT_SORT_KEYS, R_NONE, {.p=&PgpSortKeys}, {.l=SORT_ADDRESS} },
   /*
   ** .pp
-  ** PGP メニュー中のエントリをどのように整列するかを指定します。
-  ** 取り得る値は以下の通りです:
+  ** Specifies how the entries in the pgp menu are sorted. The
+  ** following are legal values:
   ** .dl
-  ** .dt address .dd ユーザID のアルファベット順
-  ** .dt keyid   .dd キーID のアルファベット順
-  ** .dt date    .dd キー作成日順
-  ** .dt trust   .dd キーの trust 順
+  ** .dt address .dd sort alphabetically by user id
+  ** .dt keyid   .dd sort alphabetically by key id
+  ** .dt date    .dd sort by key creation date
+  ** .dt trust   .dd sort by the trust of the key
   ** .de
   ** .pp
-  ** 上記の値を逆順にしたい場合は、``reverse-'' という接頭辞を付けます。
-  ** (PGP のみです)
+  ** If you prefer reverse order of the above values, prefix it with
+  ** ``reverse-''.
+  ** (PGP only)
   */
   { "pgp_strict_enc",	DT_BOOL, R_NONE, {.l=OPTPGPSTRICTENC}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は自動的に PGP/MIME 署名メッセージを quoted-printable で
-  ** エンコードします。この変数を設定しない場合、検証できない PGP 署名で
-  ** 問題が出てくるかもしれないので、変更することの内容が割っている場合にのみ
-  ** 変更してください。
-  ** (PGP のみです)
+  ** If \fIset\fP, Mutt will automatically encode PGP/MIME signed messages as
+  ** quoted-printable.  Please note that unsetting this variable may
+  ** lead to problems with non-verifyable PGP signatures, so only change
+  ** this if you know what you are doing.
+  ** (PGP only)
   */
   { "pgp_timeout",	DT_LNUM,	 R_NONE, {.p=&PgpTimeout}, {.l=300} },
   /*
   ** .pp
-  ** 使用していない場合の、キャッシュされたパスフレーズが満了するまでの、
-  ** 秒数です。
-  ** (PGP のみです)
+  ** The number of seconds after which a cached passphrase will expire if
+  ** not used.
+  ** (PGP only)
   */
   { "pgp_use_gpg_agent", DT_BOOL, R_NONE, {.l=OPTUSEGPGAGENT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、秘密鍵パスフレーズプロンプトを扱うために、
-  ** \fCgpg-agent(1)\fP プロセスを想定します。\fIunset\fP の場合、Mutt は
-  ** パスフレーズ用のプロンプトを表示し、pgp コマンドに標準入力経由で渡します。
+  ** If \fIset\fP, mutt expects a \fCgpg-agent(1)\fP process will handle
+  ** private key passphrase prompts.  If \fIunset\fP, mutt will prompt
+  ** for the passphrase and pass it via stdin to the pgp command.
   ** .pp
-  ** バージョン 2.1 以降、GnuPG は自動的にエージェントを起動し、パスフレーズ管理に
-  ** エージェントを使う事を要求することに注意してください。このバージョンがどんどん
-  ** 流行しているので、この変数の既定値は現在 \fIset\fP となっています。
+  ** Note that as of version 2.1, GnuPG automatically spawns an agent
+  ** and requires the agent be used for passphrase management.  Since
+  ** that version is increasingly prevalent, this variable now
+  ** defaults \fIset\fP.
   ** .pp
-  ** Mutt は GUI または curses な pinentry プログラムとして動作します。
-  ** TTY 形式の pinentry は使ってはなりません。
+  ** Mutt works with a GUI or curses pinentry program.  A TTY pinentry
+  ** should not be used.
   ** .pp
-  ** エージェントを動かせない古いバージョンの GnuPG を使っているか、
-  ** エージェントがない他の暗号化プログラムを使っている場合は、この変数を
-  ** \fIunset\fP にする必要があります。
-  ** (PGP のみです)
+  ** If you are using an older version of GnuPG without an agent running,
+  ** or another encryption program without an agent, you will need to
+  ** \fIunset\fP this variable.
+  ** (PGP only)
   */
   { "pgp_verify_command", 	DT_STR, R_NONE, {.p=&PgpVerifyCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは PGP 署名を検証するのに使います。
+  ** This command is used to verify PGP signatures.
   ** .pp
-  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pgp_verify_key_command",	DT_STR, R_NONE, {.p=&PgpVerifyKeyCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、キー選択メニューからキー情報を検証するのに使います。
+  ** This command is used to verify key information from the key selection
+  ** menu.
   ** .pp
-  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
-  ** $$pgp_decode_command コマンドを参照してください。
-  ** (PGP のみです)
+  ** This is a format string, see the $$pgp_decode_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (PGP only)
   */
   { "pipe_decode",	DT_BOOL, R_NONE, {.l=OPTPIPEDECODE}, {.l=0} },
   /*
   ** .pp
-  ** \fC<pipe-message>\fP コマンドに関連して使われます。\fIunset\fP の場合、
-  ** Mutt は何らの前処理もせずにメッセージをパイプします。\fIset\fP の場合、
-  ** Mutt はヘッダを間引き、最初にメッセージをデコードしようとします。
+  ** Used in connection with the \fC<pipe-message>\fP function.  When \fIunset\fP,
+  ** Mutt will pipe the messages without any preprocessing. When \fIset\fP, Mutt
+  ** will attempt to decode the messages first.
+  ** .pp
+  ** Also see $$pipe_decode_weed, which controls whether headers will
+  ** be weeded when this is \fIset\fP.
+  */
+  { "pipe_decode_weed",	DT_BOOL, R_NONE, {.l=OPTPIPEDECODEWEED}, {.l=1} },
+  /*
+  ** .pp
+  ** For \fC<pipe-message>\fP, when $$pipe_decode is set, this further
+  ** controls whether Mutt will weed headers.
   */
   { "pipe_sep",		DT_STR,	 R_NONE, {.p=&PipeSep}, {.p="\n"} },
   /*
   ** .pp
-  ** 外部 Unix コマンドにタグが付いたメッセージの一覧をパイプするときにメッセージ間に
-  ** 付与されるセパレータです。
+  ** The separator to add between messages when piping a list of tagged
+  ** messages to an external Unix command.
   */
   { "pipe_split",	DT_BOOL, R_NONE, {.l=OPTPIPESPLIT}, {.l=0} },
   /*
   ** .pp
-  ** \fC<tag-prefix>\fPがある\fC<pipe-message>\fP 機能に関連して使われます。
-  ** この変数が\fIunset\fP の時、タグが付いたメッセージの一覧をパイプするとき、
-  ** Mutt はメッセージを結合し、すべて結合した形でパイプします。\fIset\fP の場合、
-  ** Mutt はメッセージを1つずつパイプします。両方とも、メッセージは現在整列されている
-  ** 順でパイプされ、各メッセージの後に $$pipe_sep separator が付与されます。
+  ** Used in connection with the \fC<pipe-message>\fP function following
+  ** \fC<tag-prefix>\fP.  If this variable is \fIunset\fP, when piping a list of
+  ** tagged messages Mutt will concatenate the messages and will pipe them
+  ** all concatenated.  When \fIset\fP, Mutt will pipe the messages one by one.
+  ** In both cases the messages are piped in the current sorted order,
+  ** and the $$pipe_sep separator is added after each message.
   */
 #ifdef USE_POP
   { "pop_auth_try_all",	DT_BOOL, R_NONE, {.l=OPTPOPAUTHTRYALL}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はすべての有効な認証方法を試します。
-  ** \fIunset\fP の場合、Mutt は、以前の手法が無効だった場合にのみ、他の認証方法
-  ** にフォールバックします。手法が有効だが認証に失敗した場合、Mutt は POP
-  ** サーバに接続しません。
+  ** If \fIset\fP, Mutt will try all available authentication methods.
+  ** When \fIunset\fP, Mutt will only fall back to other authentication
+  ** methods if the previous methods are unavailable. If a method is
+  ** available but authentication fails, Mutt will not connect to the POP server.
   */
   { "pop_authenticators", DT_STR, R_NONE, {.p=&PopAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** これは、Mutt がPOPサーバにログインする時に使う、コロンで分離された認証方法の
-  ** 一覧です。この順で Mutt は接続を試みます。認証方法は、
-  ** ``user'', ``apop'' か他の SASL メカニズムで、例えば ``digest-md5'', ``gssapi''や
-  ** ``cram-md5'' です。このオプションは大文字小文字を区別しません。
-  ** このオプションが \fIunset\fP の場合(既定値)、Mutt はすべての有効な方法を
-  ** もっともセキュアなものからそうでないものの順で試みます。
+  ** This is a colon-delimited list of authentication methods mutt may
+  ** attempt to use to log in to an POP server, in the order mutt should
+  ** try them.  Authentication methods are either ``user'', ``apop'' or any
+  ** SASL mechanism, e.g. ``digest-md5'', ``gssapi'' or ``cram-md5''.
+  ** This option is case-insensitive. If this option is \fIunset\fP
+  ** (the default) mutt will try all available methods, in order from
+  ** most-secure to least-secure.
   ** .pp
-  ** 例:
+  ** Example:
   ** .ts
   ** set pop_authenticators="digest-md5:apop:user"
   ** .te
@@ -2550,70 +2869,73 @@ struct option_t MuttVars[] = {
   { "pop_checkinterval", DT_NUM, R_NONE, {.p=&PopCheckTimeout}, {.l=60} },
   /*
   ** .pp
-  ** この変数は、現在選択されているメールボックスが POP メールボックスだった場合、
-  ** Mutt が新規メールを検索する感覚を(秒単位で)設定します。
+  ** This variable configures how often (in seconds) mutt should look for
+  ** new mail in the currently selected mailbox if it is a POP mailbox.
   */
   { "pop_delete",	DT_QUAD, R_NONE, {.l=OPT_POPDELETE}, {.l=MUTT_ASKNO} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は \fC$<fetch-mail>\fP 機能を使って POP サーバからダウンロード
-  ** 成功したメッセージを削除します。\fIunset\fP の場合は、Mutt はメッセージを
-  ** ダウンロードしますが、POP サーバ上に残したままにします。
+  ** If \fIset\fP, Mutt will delete successfully downloaded messages from the POP
+  ** server when using the \fC$<fetch-mail>\fP function.  When \fIunset\fP, Mutt will
+  ** download messages but also leave them on the POP server.
   */
   { "pop_host",		DT_STR,	 R_NONE, {.p=&PopHost}, {.p=0} },
   /*
   ** .pp
-  ** \fC$<fetch-mail>\fP 機能で使う POP サーバの名前です。以下のように
-  ** 代替ポート、ユーザ名、パスワードも指定することができます。
+  ** The name of your POP server for the \fC$<fetch-mail>\fP function.  You
+  ** can also specify an alternative port, username and password, i.e.:
   ** .ts
   ** [pop[s]://][username[:password]@]popserver[:port]
   ** .te
   ** .pp
-  ** ここで、 ``[...]'' はオプションの部分を意味します。
+  ** where ``[...]'' denotes an optional part.
   */
   { "pop_last",		DT_BOOL, R_NONE, {.l=OPTPOPLAST}, {.l=0} },
   /*
   ** .pp
-  ** この変数が\fIset\fP の場合、Mutt は、\fC$<fetch-mail>\fP 機能を使う時に、
-  ** POP サーバから未読メッセージのみを検索するために、``\fCLAST\fP'' POP コマンドを
-  ** 使おうとします。
+  ** If this variable is \fIset\fP, mutt will try to use the ``\fCLAST\fP'' POP command
+  ** for retrieving only unread messages from the POP server when using
+  ** the \fC$<fetch-mail>\fP function.
   */
   { "pop_oauth_refresh_command", DT_STR, R_NONE, {.p=&PopOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、POPサーバへの接続時の認証のために OAUTH リフレッシュトークンを
-  ** 生成するコマンドです。このコマンドは、OAUTHBEARER 認証メカニズムを使う
-  ** 接続時毎に実行されます。詳細は``$oauth'' を参照してください。
+  ** The command to run to generate an OAUTH refresh token for
+  ** authorizing your connection to your POP server.  This command will be
+  ** run on every connection attempt that uses the OAUTHBEARER authentication
+  ** mechanism.  See ``$oauth'' for details.
   */
   { "pop_pass",		DT_STR,	 R_NONE, {.p=&PopPass}, {.p=0} },
   /*
   ** .pp
-  ** POP アカウントのパスワードを指定します。\fIunset\fP の場合、 POP メールボックスを
-  ** 開くときにパスワードの入力を求めます。
+  ** Specifies the password for your POP account.  If \fIunset\fP, Mutt will
+  ** prompt you for your password when you open a POP mailbox.
   ** .pp
-  ** \fB警告\fP: このオプションは、自分自身しか読めないファイルであっても、スーパーユーザが
-  ** 読むことが出来るため、確実に安全なマシンでのみ使うべきです。
+  ** \fBWarning\fP: you should only use this option when you are on a
+  ** fairly secure machine, because the superuser can read your muttrc
+  ** even if you are the only one who can read the file.
   */
   { "pop_reconnect",	DT_QUAD, R_NONE, {.l=OPT_POPRECONNECT}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** POP サーバとの接続が切れたときに、Mutt が再接続を試みるかどうかを制御します。
+  ** Controls whether or not Mutt will try to reconnect to the POP server if
+  ** the connection is lost.
   */
   { "pop_user",		DT_STR,	 R_NONE, {.p=&PopUser}, {.p=0} },
   /*
   ** .pp
-  ** POP サーバへのログイン名です。
+  ** Your login name on the POP server.
   ** .pp
-  ** 既定ではローカルマシンでのユーザ名になります。
+  ** This variable defaults to your user name on the local machine.
   */
 #endif /* USE_POP */
   { "post_indent_string",DT_STR, R_NONE, {.p=&PostIndentString}, {.p=0} },
   /*
   ** .pp
-  ** $$attribution 変数と似ていて、Mutt はこの文字列を、返信するメッセージの引用の
-  ** あとに追加します。
-  ** 定義されている \fCprintf(3)\fP 風の書式の完全な一覧は $$index_format
-  ** 説を参照してください。
+  ** Similar to the $$attribution variable, Mutt will append this
+  ** string after the inclusion of a message which is being replied to.
+  ** For a full listing of defined \fCprintf(3)\fP-like sequences see
+  ** the section on $$index_format.
   */
   { "post_indent_str",  DT_SYN,  R_NONE, {.p="post_indent_string"}, {.p=0} },
   /*
@@ -2621,68 +2943,67 @@ struct option_t MuttVars[] = {
   { "postpone",		DT_QUAD, R_NONE, {.l=OPT_POSTPONE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** メッセージをすぐに送らないことを選択した場合、メッセージを $$postponed
-  ** にセーブするかどうかを制御します。
+  ** Controls whether or not messages are saved in the $$postponed
+  ** mailbox when you elect not to send immediately.
   ** .pp
-  **  $$recall 変数も参照してください。
+  ** Also see the $$recall variable.
   */
   { "postponed",	DT_PATH, R_INDEX, {.p=&Postponed}, {.p="~/postponed"} },
   /*
   ** .pp
-  ** Mutt は編集中のメッセージを無制限に ``メッセージの送信を $postpone'' できます。
-  ** メッセージを保留にすることを選んだ場合、Mutt はこの変数で指定されたメールボックスに
-  ** 保存します。
+  ** Mutt allows you to indefinitely ``$postpone sending a message'' which
+  ** you are editing.  When you choose to postpone a message, Mutt saves it
+  ** in the mailbox specified by this variable.
   ** .pp
-  ** $$postpone 変数も参照してください。
+  ** Also see the $$postpone variable.
   */
   { "postpone_encrypt",    DT_BOOL, R_NONE, {.l=OPTPOSTPONEENCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、暗号化するようにマークされた延期されたメッセージは、
-  ** 自己暗号化されます。Mutt は最初に $$pgp_default_key 又は $$smime_default_key
-  ** で指定された値を使って暗号化しようとします。それらが設定されていない場合、
-  ** 非推奨の $$postpone_encrypt_as を使おうとします。
-  ** (Crypto のみです)
+  ** When \fIset\fP, postponed messages that are marked for encryption will be
+  ** self-encrypted.  Mutt will first try to encrypt using the value specified
+  ** in $$pgp_default_key or $$smime_default_key.  If those are not
+  ** set, it will try the deprecated $$postpone_encrypt_as.
+  ** (Crypto only)
   */
   { "postpone_encrypt_as", DT_STR,  R_NONE, {.p=&PostponeEncryptAs}, {.p=0} },
   /*
   ** .pp
-
-  ** これは $$postpone_encrypt に対する非推奨のフォールバック変数です。
-  ** $$pgp_default_key 又は $$smime_default_key を使ってください。
-  ** (Crypto のみです)
+  ** This is a deprecated fall-back variable for $$postpone_encrypt.
+  ** Please use $$pgp_default_key or $$smime_default_key.
+  ** (Crypto only)
   */
 #ifdef USE_SOCKET
   { "preconnect",	DT_STR, R_NONE, {.p=&Preconnect}, {.p=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt がサーバへの接続を確立するのに失敗した場合に
-  ** 実行されるシェルコマンドです。これは、たとえば、\fCssh(1)\fP のような
-  ** セキュアな接続を設定するのに便利です。コマンドの結果が非ゼロのステータス
-  ** を返す場合は、Mutt はサーバをオープンすることを諦めます。例は以下の通りです。
+  ** If \fIset\fP, a shell command to be executed if mutt fails to establish
+  ** a connection to the server. This is useful for setting up secure
+  ** connections, e.g. with \fCssh(1)\fP. If the command returns a  nonzero
+  ** status, mutt gives up opening the server. Example:
   ** .ts
   ** set preconnect="ssh -f -q -L 1234:mailhost.net:143 mailhost.net \(rs
   ** sleep 20 < /dev/null > /dev/null"
   ** .te
   ** .pp
-  ** ``mailhost.net'' 上のメールボックス ``foo'' はこれで ``{localhost:1234}foo''
-  ** として扱うことが出来ます。
+  ** Mailbox ``foo'' on ``mailhost.net'' can now be reached
+  ** as ``{localhost:1234}foo''.
   ** .pp
-  ** 注意: この例を動かすためには、パスワード入力なしで、リモートマシンに
-  ** ログインできる必要があります。
+  ** Note: For this example to work, you must be able to log in to the
+  ** remote machine without having to enter a password.
   */
 #endif /* USE_SOCKET */
   { "print",		DT_QUAD, R_NONE, {.l=OPT_PRINT}, {.l=MUTT_ASKNO} },
   /*
   ** .pp
-  ** Mutt が本当にメッセージを印刷するかどうかを制御します。
-  ** 何人かが間違ってしばしば ``p'' を叩くために、これは既定値で
-  **  ``ask-no'' を設定します。
+  ** Controls whether or not Mutt really prints messages.
+  ** This is set to ``ask-no'' by default, because some people
+  ** accidentally hit ``p'' often.
   */
-  { "print_command",	DT_PATH, R_NONE, {.p=&PrintCmd}, {.p="lpr"} },
+  { "print_command",	DT_CMD_PATH, R_NONE, {.p=&PrintCmd}, {.p="lpr"} },
   /*
   ** .pp
-  ** これに指定したコマンドへパイプしてメッセージを印刷します。
+  ** This specifies the command pipe that should be used to print messages.
   */
   { "print_cmd",	DT_SYN,  R_NONE, {.p="print_command"}, {.p=0} },
   /*
@@ -2690,531 +3011,614 @@ struct option_t MuttVars[] = {
   { "print_decode",	DT_BOOL, R_NONE, {.l=OPTPRINTDECODE}, {.l=1} },
   /*
   ** .pp
-  ** \fC<print-message>\fP コマンド関連で使います。このオプションが
-  ** \fIset\fP の場合、メッセージは $$print_command で指定された外部コマンドに
-  ** 渡される前にデコードされます。このオプションが \fIunset\fP の場合、
-  ** 印刷するときに、メッセージには何も処理を適用しません。後者は、
-  ** メールメッセイジを印刷時に適切に整形できる、高度なプリンタフィルタを
-  ** 使う場合に便利です。
+  ** Used in connection with the \fC<print-message>\fP function.  If this
+  ** option is \fIset\fP, the message is decoded before it is passed to the
+  ** external command specified by $$print_command.  If this option
+  ** is \fIunset\fP, no processing will be applied to the message when
+  ** printing it.  The latter setting may be useful if you are using
+  ** some advanced printer filter which is able to properly format
+  ** e-mail messages for printing.
+  ** .pp
+  ** Also see $$print_decode_weed, which controls whether headers will
+  ** be weeded when this is \fIset\fP.
+  */
+  { "print_decode_weed", DT_BOOL, R_NONE, {.l=OPTPRINTDECODEWEED}, {.l=1} },
+  /*
+  ** .pp
+  ** For \fC<print-message>\fP, when $$print_decode is set, this
+  ** further controls whether Mutt will weed headers.
   */
   { "print_split",	DT_BOOL, R_NONE, {.l=OPTPRINTSPLIT},  {.l=0} },
   /*
   ** .pp
-  ** \fC<print-message>\fP コマンド関連で使います。このオプションが
-  ** \fIset\fP の場合、印刷される各メッセージに対して、$$print_command で指定された
-  ** コマンドが1回実行されます。このオプションが\fIunset\fP の場合、
-  ** $$print_command で指定されたコマンドが1回だけ実行され、すべてのメッセージが
-  ** メッセージの区切りとしてフォームフィードを付けて結合されます。
+  ** Used in connection with the \fC<print-message>\fP function.  If this option
+  ** is \fIset\fP, the command specified by $$print_command is executed once for
+  ** each message which is to be printed.  If this option is \fIunset\fP,
+  ** the command specified by $$print_command is executed only once, and
+  ** all the messages are concatenated, with a form feed as the message
+  ** separator.
   ** .pp
-  ** \fCenscript\fP(1) プログラムのメール印刷モードを使う場合、このオプションを
-  ** \fIset\fP に設定したいと思うようになるでしょう。
+  ** Those who use the \fCenscript\fP(1) program's mail-printing mode will
+  ** most likely want to \fIset\fP this option.
   */
   { "prompt_after",	DT_BOOL, R_NONE, {.l=OPTPROMPTAFTER}, {.l=1} },
   /*
   ** .pp
-  ** \fIexternal\fP $$pager を使っている場合、この変数を設定すると、
-  ** ページャ終了時に、インデックスメニューに戻るのではなく、Mutt がコマンド入力を
-  ** 即すようになります。\fIunset\fP の場合、Mutt は外部ページャ終了時に、
-  ** インデックスメニューに戻ります。
+  ** If you use an \fIexternal\fP $$pager, setting this variable will
+  ** cause Mutt to prompt you for a command when the pager exits rather
+  ** than returning to the index menu.  If \fIunset\fP, Mutt will return to the
+  ** index menu when the external pager exits.
   */
-  { "query_command",	DT_PATH, R_NONE, {.p=&QueryCmd}, {.p=0} },
+  { "query_command",	DT_CMD_PATH, R_NONE, {.p=&QueryCmd}, {.p=0} },
   /*
   ** .pp
-  ** これは、Mutt  が外部のアドレス問合せをするのに使うコマンドを指定します。
-  ** 文字列は、ユーザが入力した問合せ文字列に置き換えられる ``%s'' を含むことも
-  ** できます。Mutt はシェルの引用ルールに沿って、Mutt は自動的に、``%s'' に
-  ** 置き換えられた文字列を引用符で囲みます。文字列中に``%s'' がない場合は、
-  ** Mutt は文字列の最後にユーザの問合せを追加します。詳細な情報については
-  ** ``$query'' を参照してください。
+  ** This specifies the command Mutt will use to make external address
+  ** queries.  The string may contain a ``%s'', which will be substituted
+  ** with the query string the user types.  Mutt will add quotes around the
+  ** string substituted for ``%s'' automatically according to shell quoting
+  ** rules, so you should avoid adding your own.  If no ``%s'' is found in
+  ** the string, Mutt will append the user's query to the end of the string.
+  ** See ``$query'' for more information.
   */
   { "query_format",	DT_STR, R_NONE, {.p=&QueryFormat}, {.p="%4c %t %-25.25a %-25.25n %?e?(%e)?"} },
   /*
   ** .pp
-  ** この変数は``query'' メニューのフォーマットを記述します。以下は
-  ** 使用できる\fCprintf(3)\fP 風の書式です:
+  ** This variable describes the format of the ``query'' menu. The
+  ** following \fCprintf(3)\fP-style sequences are understood:
   ** .dl
-  ** .dt %a  .dd 宛先アドレス
-  ** .dt %c  .dd 現在のエントリ番号
-  ** .dt %e  .dd 拡張情報 *
-  ** .dt %n  .dd 宛先名
-  ** .dt %t  .dd 現在のエントリがタグづけられている場合は ``*'' で空白はそれ以外
-  ** .dt %>X .dd 残りの文字列を右揃えし ``X'' で埋める
-  ** .dt %|X .dd 行の最後まで ``X'' で埋める
-  ** .dt %*X .dd 埋め草として 文字 ``X'' を使って soft-fill
+  ** .dt %a  .dd destination address
+  ** .dt %c  .dd current entry number
+  ** .dt %e  .dd extra information *
+  ** .dt %n  .dd destination name
+  ** .dt %t  .dd ``*'' if current entry is tagged, a space otherwise
+  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
+  ** .dt %|X .dd pad to the end of the line with ``X''
+  ** .dt %*X .dd soft-fill with character ``X'' as pad
   ** .de
   ** .pp
-  ** ``soft-fill'' についての説明は、$$index_format の説明を参照してください。
+  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
   ** .pp
-  ** * = は、非ゼロの場合にオプションで表示されます。$$status_format の説明を参照してください。
+  ** * = can be optionally printed if nonzero, see the $$status_format documentation.
   */
   { "quit",		DT_QUAD, R_NONE, {.l=OPT_QUIT}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** この変数は ``quit'' と ``exit'' が実際に Mutt を終了させるかどうかを制御します。
-  ** 終了させようとしたとき、このオプションが\fIset\fP ならば終了し、\fIunset\fP
-  ** ならば無効となり、\fIask-yes\fP か \fIask-no\fP ならば確認のために問合せを
-  ** してきます。
+  ** This variable controls whether ``quit'' and ``exit'' actually quit
+  ** from mutt.  If this option is \fIset\fP, they do quit, if it is \fIunset\fP, they
+  ** have no effect, and if it is set to \fIask-yes\fP or \fIask-no\fP, you are
+  ** prompted for confirmation when you try to quit.
   */
   { "quote_regexp",	DT_RX,	 R_PAGER, {.p=&QuoteRegexp}, {.p="^([ \t]*[|>:}#])+"} },
   /*
   ** .pp
-  ** 内部ページャで、メッセージ本文の引用部分を見極めるために使う正規表現です。
-  ** 引用されたテキストは、\fC<toggle-quoted>\fP コマンドを使って除外するか、
-  ** ``color quoted''ファミリのディレクティブに従って色を付けることが出来ます。 
+  ** A regular expression used in the internal pager to determine quoted
+  ** sections of text in the body of a message. Quoted text may be filtered
+  ** out using the \fC<toggle-quoted>\fP command, or colored according to the
+  ** ``color quoted'' family of directives.
   ** .pp
-  ** 高位のレベルの引用は異なって着色されることがあります
-  ** (``color quoted1'',``color quoted2'' など)。引用レベルは、一致したテキストから
-  ** 最後の文字を取り去り、一致しなくなるまで再帰的に正規表現を適用する
-  ** ることで決まります。
+  ** Higher levels of quoting may be colored differently (``color quoted1'',
+  ** ``color quoted2'', etc.). The quoting level is determined by removing
+  ** the last character from the matched text and recursively reapplying
+  ** the regular expression until it fails to produce a match.
   ** .pp
-  ** 一致の検出は $$smileys 正規表現によって上書きできます。
+  ** Match detection may be overridden by the $$smileys regular expression.
   */
   { "read_inc",		DT_NUM,	 R_NONE, {.p=&ReadInc}, {.l=10} },
   /*
   ** .pp
-  ** 0 より大きな値に設定されていると、メールボックス読み出し中か、検索と制限の
-  ** ような検索動作を実行するときに、 Mutt が現在どのメッセージまで来たのかを
-  ** 表示するようになります。メッセージは、このたくさんのメッセージが読み出されたり
-  ** 検索された後で表示されます(たとえば 25 に設定すると、Mutt は 25 番目のメッセージを
-  ** 読んだときに表示し、さらにまた 50 番目のときにも表示します)。
-  ** この変数は、少々時間のかかる、大きなメールボックスを読み出したり検索したりするときに、
-  ** 進行条項を表示するということを意味します。0 に設定すると、メールボックスを
-  ** 読み出す前に、1度メッセージが表示されるだけになります。
+  ** If set to a value greater than 0, Mutt will display which message it
+  ** is currently on when reading a mailbox or when performing search actions
+  ** such as search and limit. The message is printed after
+  ** this many messages have been read or searched (e.g., if set to 25, Mutt will
+  ** print a message when it is at message 25, and then again when it gets
+  ** to message 50).  This variable is meant to indicate progress when
+  ** reading or searching large mailboxes which may take some time.
+  ** When set to 0, only a single message will appear before the reading
+  ** the mailbox.
   ** .pp
-  ** $write_inc, $$net_inc and $$time_inc 変数と、パフォーマンスの考察についての
-  ** ``$tuning'' セクションのマニュアルも参照してください。
+  ** Also see the $$write_inc, $$net_inc and $$time_inc variables and the
+  ** ``$tuning'' section of the manual for performance considerations.
   */
   { "read_only",	DT_BOOL, R_NONE, {.l=OPTREADONLY}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、すべてのフォルダはリードオンリモードでオープンされます。
+  ** If \fIset\fP, all folders are opened in read-only mode.
   */
   { "realname",		DT_STR,	 R_BOTH, {.p=&Realname}, {.p=0} },
   /*
   ** .pp
-  ** この変数は、メッセージを送信するときに使う ``real'' 又は ``personal'' 名を
-  ** 指定します。
+  ** This variable specifies what ``real'' or ``personal'' name should be used
+  ** when sending messages.
   ** .pp
-  ** 既定では、これは、 \fC/etc/passwd\fP の GECOS フィールドです。この変数は
-  ** $$from variable 中で本名を指定した場合には\fI使われない\fP ことに注意してくださいい。
+  ** By default, this is the GECOS field from \fC/etc/passwd\fP.  Note that this
+  ** variable will \fInot\fP be used when the user has set a real name
+  ** in the $$from variable.
   */
   { "recall",		DT_QUAD, R_NONE, {.l=OPT_RECALL}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** 新規メニューを編集するときに延期メッセージから続けるかどうかを制御します。
+  ** Controls whether or not Mutt recalls postponed messages
+  ** when composing a new message.
   ** .pp
-  ** この変数を \fIyes\fP に設定することは一般的には有用ではないので推奨されて
-  ** いません。\fC<recall-message>\fP 機能は、保留されたメッセージを手動で再度
-  ** 読み出すときに使われることに注意してください。
+  ** Setting this variable to \fIyes\fP is not generally useful, and thus not
+  ** recommended.  Note that the \fC<recall-message>\fP function can be used
+  ** to manually recall postponed messages.
   ** .pp
-  ** $postponed 変数も参照してください。
+  ** Also see $$postponed variable.
   */
   { "record",		DT_PATH, R_NONE, {.p=&Outbox}, {.p="~/sent"} },
   /*
   ** .pp
-  ** これは、送信メッセージをどのファイルに追加して保存すべきかを指定します
-  ** (これは、メッセージのコピーをセーブする基本的な方法を意味しますが、
-  ** ほかにも、自分のメールアドレスの ``Bcc:'' フィールドを作成して、
-  ** ``$my_hdr'' コマンドを使ってそこにセーブするという方法もあります)。
+  ** This specifies the file into which your outgoing messages should be
+  ** appended.  (This is meant as the primary method for saving a copy of
+  ** your messages, but another way to do this is using the ``$my_hdr''
+  ** command to create a ``Bcc:'' field with your email address in it.)
   ** .pp
-  ** \fI$$record\fP の値は $$force_name と $$save_nam 変数と、``$fcc-hook''
-  ** コマンドで上書きできます。$$copy と $$write_bcc も参照してください。
+  ** The value of \fI$$record\fP is overridden by the $$force_name and
+  ** $$save_name variables, and the ``$fcc-hook'' command.  Also see $$copy
+  ** and $$write_bcc.
   ** .pp
-  ** $$fcc_delimiter が 文字列デリミタに設定されている場合、複数のメールボックスを
-  ** 指定できます。
+  ** Multiple mailboxes may be specified if $$fcc_delimiter is
+  ** set to a string delimiter.
   */
   { "reflow_space_quotes",	DT_BOOL, R_NONE, {.l=OPTREFLOWSPACEQUOTES}, {.l=1} },
   /*
   ** .pp
-  ** このオプションはページャ中と返信時に($$text_flowed が\fIunset\fPの時)、
-  ** format=flowed メッセージからの引用がどのように表示されるかを制御します。
-  ** 設定する場合、このオプションは各レベルの引用マークの後に空白を追加し、
-  ** ">>>foo" を "> > > foo" に調整します。
+  ** This option controls how quotes from format=flowed messages are displayed
+  ** in the pager and when replying (with $$text_flowed \fIunset\fP).
+  ** When set, this option adds spaces after each level of quote marks, turning
+  ** ">>>foo" into "> > > foo".
   ** .pp
-  ** \fB注意:\fP $$reflow_text が \fIunset\fP の時、このオプションは無効です。
-  ** 同様に、このオプションは$$text_flowed が \fIset\fP の時には返信に何ら影響を
-  ** 与えません。
+  ** \fBNote:\fP If $$reflow_text is \fIunset\fP, this option has no effect.
+  ** Also, this option does not affect replies when $$text_flowed is \fIset\fP.
   */
   { "reflow_text",	DT_BOOL, R_NONE, {.l=OPTREFLOWTEXT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は format=flowed にマークされた text/plain パート中の
-  ** 段落を再フォーマットします。\fIunset\fP の場合、Mutt は、メッセージ本体中で
-  ** どのように表示されるかを変更していない段落を表示します。\fIformat=flowed\fP
-  ** フォーマットの詳細については RFC3676 を参照してください。
+  ** When \fIset\fP, Mutt will reformat paragraphs in text/plain
+  ** parts marked format=flowed.  If \fIunset\fP, Mutt will display paragraphs
+  ** unaltered from how they appear in the message body.  See RFC3676 for
+  ** details on the \fIformat=flowed\fP format.
   ** .pp
-  ** $reflow_wrap と $$wrap も参照してください。
+  ** Also see $$reflow_wrap, and $$wrap.
   */
   { "reflow_wrap",	DT_NUM,	R_NONE, {.p=&ReflowWrap}, {.l=78} },
   /*
   ** .pp
-  ** この変数は $$reflow_text が \fIset\fP の時に text/plain パートを再フォーマットする
-  ** 時の最大段落幅を制御します。値が 0 の場合、段落は端末の右マージンで折り返されます。
-  ** 正の値は右マージンからの相対段落幅を設定します。
+  ** This variable controls the maximum paragraph width when reformatting text/plain
+  ** parts when $$reflow_text is \fIset\fP.  When the value is 0, paragraphs will
+  ** be wrapped at the terminal's right margin.  A positive value sets the
+  ** paragraph width relative to the left margin.  A negative value set the
+  ** paragraph width relative to the right margin.
   ** .pp
   ** Also see $$wrap.
   */
-  { "reply_regexp",	DT_RX,	 R_INDEX|R_RESORT, {.p=&ReplyRegexp}, {.p="^(re([\\[0-9\\]+])*|aw):[ \t]*"} },
+  /* L10N:
+     $reply_regexp default value.
+
+     This is a regular expression that matches reply subject lines.
+     By default, it only matches an initial "Re: ", which is the
+     standardized Latin prefix.
+
+     However, many locales have other prefixes that are commonly used
+     too, such as Aw in Germany.  To add other prefixes, modify the first
+     parenthesized expression, such as:
+        "^(re|aw)
+     you can add multiple values, for example:
+        "^(re|aw|se)
+
+     Important:
+     - Use all lower case letters.
+     - Don't remove the 're' prefix from the list of choices.
+     - Please test the value you use inside Mutt.  A mistake here
+       will break Mutt's threading behavior.  Note: the header cache
+       can interfere with testing, so be sure to test with $header_cache
+       unset.
+  */
+  { "reply_regexp",	DT_RX|DT_L10N_STR, R_INDEX|R_RESORT|R_RESORT_INIT, {.p=&ReplyRegexp}, {.p=N_("^(re)(\\[[0-9]+\\])*:[ \t]*")} },
   /*
   ** .pp
-  ** スレッド化および返信する時に返信メッセージを認識するために使われる正規表現
-  ** です。既定値は英語の "Re:" とドイツ語の "Aw:" に対応しています。
+  ** A regular expression used to recognize reply messages when
+  ** threading and replying. The default value corresponds to the
+  ** standard Latin "Re:" prefix.
+  ** .pp
+  ** This value may have been localized by the translator for your
+  ** locale, adding other prefixes that are common in the locale. You
+  ** can add your own prefixes by appending inside \fC"^(re)"\fP.  For
+  ** example: \fC"^(re|se)"\fP or \fC"^(re|aw|se)"\fP.
+  ** .pp
+  ** The second parenthesized expression matches zero or more
+  ** bracketed numbers following the prefix, such as \fC"Re[1]: "\fP.
+  ** The initial \fC"\\["\fP means a literal left-bracket character.
+  ** Note the backslash must be doubled when used inside a double
+  ** quoted string in the muttrc.  \fC"[0-9]+"\fP means one or more
+  ** numbers.  \fC"\\]"\fP means a literal right-bracket.  Finally the
+  ** whole parenthesized expression has a \fC"*"\fP suffix, meaning it
+  ** can occur zero or more times.
+  ** .pp
+  ** The last part matches a colon followed by an optional space or
+  ** tab.  Note \fC"\t"\fP is converted to a literal tab inside a
+  ** double quoted string.  If you use a single quoted string, you
+  ** would have to type an actual tab character, and would need to
+  ** convert the double-backslashes to single backslashes.
+  ** .pp
+  ** Note: the result of this regexp match against the subject is
+  ** stored in the header cache.  Mutt isn't smart enough to
+  ** invalidate a header cache entry based on changing $$reply_regexp,
+  ** so if you aren't seeing correct values in the index, try
+  ** temporarily turning off the header cache.  If that fixes the
+  ** problem, then once the variable is set to your liking, remove
+  ** your stale header cache files and turn the header cache back on.
   */
   { "reply_self",	DT_BOOL, R_NONE, {.l=OPTREPLYSELF}, {.l=0} },
   /*
   ** .pp
-  ** \fIunset\fP で、自分自身から送信したメッセージに返信する場合、Mutt は
-  ** 自分自身ではなく、そのメッセージの受信者に返信したいと仮定します。
+  ** If \fIunset\fP and you are replying to a message sent by you, Mutt will
+  ** assume that you want to reply to the recipients of that message rather
+  ** than to yourself.
   ** .pp
-  ** ``$alternates'' コマンドも参照してください。
+  ** Also see the ``$alternates'' command.
   */
   { "reply_to",		DT_QUAD, R_NONE, {.l=OPT_REPLYTO}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** \fIset\fPの場合、メッセージに返信する時、Mutt はメッセージの Reply-to: ヘッダで
-  ** 挙げられているアドレスを返信先として使います。\fIunset\fP の場合は、
-  ** 代わりに From: フィールドのアドレスを代わりに使います。このオプションは、
-  ** Reply-To: ヘッダフィールドをメーリングリストのアドレスに設定していて、
-  ** メッセージの作者に個人的なメッセージを送信しようとする場合に便利です。
+  ** If \fIset\fP, when replying to a message, Mutt will use the address listed
+  ** in the Reply-to: header as the recipient of the reply.  If \fIunset\fP,
+  ** it will use the address in the From: header field instead.  This
+  ** option is useful for reading a mailing list that sets the Reply-To:
+  ** header field to the list address and you want to send a private
+  ** message to the author of a message.
   */
   { "resolve",		DT_BOOL, R_NONE, {.l=OPTRESOLVE}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、現在のメッセージを変更するコマンドが実行されたときは
-  ** 必ず次(おそらく未読)のメッセージに自動的にカーソルを移動します。
+  ** When \fIset\fP, the cursor will be automatically advanced to the next
+  ** (possibly undeleted) message whenever a command that modifies the
+  ** current message is executed.
   */
   { "resume_draft_files", DT_BOOL, R_NONE, {.l=OPTRESUMEDRAFTFILES}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、ドラフトファイル(コマンド行で\fC-H\fP で指定されたもの)
-  ** は、保留メッセージを復活させた時と同じように処理されます。受信者は
-  ** 要求されません。send-hooks は評価されません。別名の展開は行われません。
-  ** ユーザ定義のヘッダと署名はメッセージに追加されません。
+  ** If \fIset\fP, draft files (specified by \fC-H\fP on the command
+  ** line) are processed similarly to when resuming a postponed
+  ** message.  Recipients are not prompted for; send-hooks are not
+  ** evaluated; no alias expansion takes place; user-defined headers
+  ** and signatures are not added to the message.
   */
   { "resume_edited_draft_files", DT_BOOL, R_NONE, {.l=OPTRESUMEEDITEDDRAFTFILES}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、以前に編集したドラフトファイル(コマンド行での \fC-E -H\fP
-  ** 経由で)は、再度ドラフトファイルとして使われるときに、自動的に
-  ** $$resume_draft_files が設定されます。
+  ** If \fIset\fP, draft files previously edited (via \fC-E -H\fP on
+  ** the command line) will have $$resume_draft_files automatically
+  ** set when they are used as a draft file again.
   ** .pp
-  ** 最初にドラフトファイルがセーブされる時、Mutt はヘッダ X-Mutt-Resume-Draft を
-  ** セーブされたファイルに追加します。次回ドラフトファイルを読み込んだときに
-  ** Mutt がヘッダを見つけると、$$resume_draft_files が設定されます。
+  ** The first time a draft file is saved, mutt will add a header,
+  ** X-Mutt-Resume-Draft to the saved file.  The next time the draft
+  ** file is read in, if mutt sees the header, it will set
+  ** $$resume_draft_files.
   ** .pp
-  ** このオプションは、複数の署名、ユーザ定義のヘッダと他の処理効果がドラフトファイルに
-  ** 対して複数回実行されることを防ぐために設計されました。
-  ** 
+  ** This option is designed to prevent multiple signatures,
+  ** user-defined headers, and other processing effects from being
+  ** made multiple times to the draft file.
   */
   { "reverse_alias",	DT_BOOL, R_BOTH, {.l=OPTREVALIAS}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、メッセージの送信者に一致する別名があるときに、別名の ``personal''名を
-  ** インデックスメニュー中に表示するかどうかを制御します。例えば、以下のような
-  ** 別名があるとします。
+  ** This variable controls whether or not Mutt will display the ``personal''
+  ** name from your aliases in the index menu if it finds an alias that
+  ** matches the message's sender.  For example, if you have the following
+  ** alias:
   ** .ts
   ** alias juser abd30425@somewhere.net (Joe User)
   ** .te
   ** .pp
-  ** この場合、以下のヘッダを含むメールを受け取ったとします。
+  ** and then you receive mail which contains the following header:
   ** .ts
   ** From: abd30425@somewhere.net
   ** .te
   ** .pp
-  ** この場合、インデックスメニューには ``abd30425@somewhere.net.'' の代わりに
-  ** ``Joe User'' が表示されます。これは、個人のメールアドレスが人間向きではない
-  ** 場合に便利です。
+  ** It would be displayed in the index menu as ``Joe User'' instead of
+  ** ``abd30425@somewhere.net.''  This is useful when the person's e-mail
+  ** address is not human friendly.
   */
   { "reverse_name",	DT_BOOL, R_BOTH, {.l=OPTREVNAME}, {.l=0} },
   /*
   ** .pp
-  ** 特定のマシンでメールを受信し、そのメッセージを別のマシンに移動し、そこから
-  ** いくつかのメッセージを返信するということがたまにあるかもしれません。この変数を
-  ** \fIset\fP にした場合、返信メッセージの既定の \fIFrom:\fP 行は、
-  ** ``$alternates'' に一致するアドレスの場合、返信しようとする受信したメッセージの
-  ** アドレスを使って組み立てます。変数が\fIunset\fP の場合か、``$alternates''に
-  ** 一致していなかった場合は、\fIFrom:\fP 行は現在のマシン上でのアドレスが使われます。
+  ** It may sometimes arrive that you receive mail to a certain machine,
+  ** move the messages to another machine, and reply to some the messages
+  ** from there.  If this variable is \fIset\fP, the default \fIFrom:\fP line of
+  ** the reply messages is built using the address where you received the
+  ** messages you are replying to \fBif\fP that address matches your
+  ** ``$alternates''.  If the variable is \fIunset\fP, or the address that would be
+  ** used doesn't match your ``$alternates'', the \fIFrom:\fP line will use
+  ** your address on the current machine.
   ** .pp
-  ** ``$alternates'' コマンドと $$reverse_realname も参照してください。
+  ** Also see the ``$alternates'' command and $$reverse_realname.
   */
   { "reverse_realname",	DT_BOOL, R_BOTH, {.l=OPTREVREAL}, {.l=1} },
   /*
   ** .pp
-  ** この変数は $$reverse_name 機能の動作を微調整します。
+  ** This variable fine-tunes the behavior of the $$reverse_name feature.
   ** .pp
-  ** \fIunset\fP の場合、Mutt は一致したアドレスの実名部分を取り除きます。
-  ** これは、送信者が実名フィールドに記述したものを使わず、メールアドレスを
-  ** 使います。
+  ** When it is \fIunset\fP, Mutt will remove the real name part of a
+  ** matching address.  This allows the use of the email address
+  ** without having to also use what the sender put in the real name
+  ** field.
   ** .pp
-  ** \fIset\fP の場合、Mutt  は一致したアドレスをそのまま使います。
+  ** When it is \fIset\fP, Mutt will use the matching address as-is.
   ** .pp
-  ** それ以外の場合、実名がない場合は $$realname の値を後で使って埋めます。
+  ** In either case, a missing real name will be filled in afterwards
+  ** using the value of $$realname.
   */
-  { "rfc2047_parameters", DT_BOOL, R_NONE, {.l=OPTRFC2047PARAMS}, {.l=0} },
+  { "rfc2047_parameters", DT_BOOL, R_NONE, {.l=OPTRFC2047PARAMS}, {.l=1} },
   /*
   ** .pp
-  ** この変数が \fIset\fP の場合、Mutt は RFC2047 でエンコードされた MIME パラメータを
-  ** デコードします。例えば添付をファイルにセーブする場合に、Mutt が以下のような
-  ** 値を提案してくる場合は、設定したいと思うでしょう。
+  ** When this variable is \fIset\fP, Mutt will decode RFC2047-encoded MIME
+  ** parameters. You want to set this variable when mutt suggests you
+  ** to save attachments to files named like:
   ** .ts
   ** =?iso-8859-1?Q?file=5F=E4=5F991116=2Ezip?=
   ** .te
   ** .pp
-  ** この変数を対話的に fIset\fP にしても、フォルダを変更するまでは変更が有効に
-  ** なりません。
+  ** When this variable is \fIset\fP interactively, the change won't be
+  ** active until you change folders.
   ** .pp
-  ** この、RFC2047 エンコードの使用は規格によって明示的に禁止されているのですが、
-  ** 実際には使われていることに注意してください。
+  ** Note that this use of RFC2047's encoding is explicitly
+  ** prohibited by the standard, but nevertheless encountered in the
+  ** wild.
   ** .pp
-  ** また、このパラメートを設定することは、Mutt がこの種のエンコーディングを
-  ** \fI生成する\fP 効果が\fない\fことにも注意してください。かわりに、Mutt は
-  ** RFC2231 で指定されたエンコーディングを無条件に使います。P
+  ** Also note that setting this parameter will \fInot\fP have the effect
+  ** that mutt \fIgenerates\fP this kind of encoding.  Instead, mutt will
+  ** unconditionally use the encoding specified in RFC2231.
   */
   { "save_address",	DT_BOOL, R_NONE, {.l=OPTSAVEADDRESS}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はメールをセーブする既定のフォルダを選択するときに、
-  ** 送信者の完全なアドレスを使います。$$save_name か $$force_name も \fIset\fP の
-  ** 場合、Fcc フォルダの選択も同様に変更になります。
+  ** If \fIset\fP, mutt will take the sender's full address when choosing a
+  ** default folder for saving a mail. If $$save_name or $$force_name
+  ** is \fIset\fP too, the selection of the Fcc folder will be changed as well.
   */
   { "save_empty",	DT_BOOL, R_NONE, {.l=OPTSAVEEMPTY}, {.l=1} },
   /*
   ** .pp
-  ** \fIunset\fP の場合、何らメールがセーブされていないメールボックスはクローズする
-  ** 時に削除されます(例外は $$spoolfile で決して削除されません)。If \fIset\fPの
-  ** 場合、メールボックスは決して削除されません。
+  ** When \fIunset\fP, mailboxes which contain no saved messages will be removed
+  ** when closed (the exception is $$spoolfile which is never removed).
+  ** If \fIset\fP, mailboxes are never removed.
   ** .pp
-  ** \fB注意:\fP これは mbox と MMDF フォルダにのみ適用され、Mutt は MH と Maildir
-  ** ディレクトリは削除しません。
+  ** \fBNote:\fP This only applies to mbox and MMDF folders, Mutt does not
+  ** delete MH and Maildir directories.
   */
   { "save_history",     DT_NUM,  R_NONE, {.p=&SaveHist}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、$$history_file ファイルにセーブされる、(カテゴリ単位の)履歴の
-  ** サイズを制御します。
+  ** This variable controls the size of the history (per category) saved in the
+  ** $$history_file file.
   */
   { "save_name",	DT_BOOL, R_NONE, {.l=OPTSAVENAME}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、どのように送信メールのコピーがセーブされるかを制御します。
-  ** \fIset\fP の場合、受信者アドレスの存在によって指定されるメールボックスが
-  ** あるかどうかをチェックします(これは、受信者アドレスの \fIusername\fP 部分で
-  ** $$folder ディレクトリ中にメールボックスがあるかを検索することによって
-  ** 行います)。メールボックスが存在する場合、送信メッセージはそのメールボックスに
-  ** セーブされます。その他の場合は、メッセージは $$record メールボックスに
-  ** セーブされます。
+  ** This variable controls how copies of outgoing messages are saved.
+  ** When \fIset\fP, a check is made to see if a mailbox specified by the
+  ** recipient address exists (this is done by searching for a mailbox in
+  ** the $$folder directory with the \fIusername\fP part of the
+  ** recipient address).  If the mailbox exists, the outgoing message will
+  ** be saved to that mailbox, otherwise the message is saved to the
+  ** $$record mailbox.
   ** .pp
-  ** $$force_name 変数も参照してください。
-  */
-  { "send_group_reply_to",	DT_BOOL, R_NONE, {.l=OPTSENDGROUPREPLYTO}, {.l=0} },
-  /*
-  ** .pp
-  ** この変数はどのグループ返信が終わったかを制御します。設定された場合、
-  ** "To:" 中のすべての受信者リストは "To:" ヘッダに再度設定され、それ以外は、
-  ** 既定である "CC" になります。 
+  ** Also see the $$force_name variable.
   */
   { "score", 		DT_BOOL, R_NONE, {.l=OPTSCORE}, {.l=1} },
   /*
   ** .pp
-  ** この変数が \fIunset\fP の場合、スコアリングは停止します。これは、
-  ** $$score_threshold_delete 変数と関連したものが使われている場合、特定のフォルダに
-  ** 対して選択的に無効にできるので便利です。
+  ** When this variable is \fIunset\fP, scoring is turned off.  This can
+  ** be useful to selectively disable scoring for certain folders when the
+  ** $$score_threshold_delete variable and related are used.
   **
   */
   { "score_threshold_delete", DT_NUM, R_NONE, {.p=&ScoreThresholdDelete}, {.l=-1} },
   /*
   ** .pp
-  ** この変数の値以下のスコアが割り当てられているメッセージは、Mutt によって
-  ** 自動的に削除マークが付けられます。Mutt のスコアは常時 0 以上なので、
-  ** この変数の既定の設定では、決して削除マークが付くことはありません。
+  ** Messages which have been assigned a score equal to or lower than the value
+  ** of this variable are automatically marked for deletion by mutt.  Since
+  ** mutt scores are always greater than or equal to zero, the default setting
+  ** of this variable will never mark a message for deletion.
   */
   { "score_threshold_flag", DT_NUM, R_NONE, {.p=&ScoreThresholdFlag}, {.l=9999} },
   /*
   ** .pp
-  ** この変数の値以上のスコアが割り当てられているメッセージは自動的に "flagged" が
-  ** マークされます。
+  ** Messages which have been assigned a score greater than or equal to this
+  ** variable's value are automatically marked "flagged".
   */
   { "score_threshold_read", DT_NUM, R_NONE, {.p=&ScoreThresholdRead}, {.l=-1} },
   /*
   ** .pp
-  ** この変数の値以下のスコアが割り当てられたメッセージは自動的にMutt によって
-  ** 既読マークが付けられます。Mutt のスコアは常時 0 以上なので、
-  ** この変数の既定の設定では、決して既読マークが付くことはありません。
+  ** Messages which have been assigned a score equal to or lower than the value
+  ** of this variable are automatically marked as read by mutt.  Since
+  ** mutt scores are always greater than or equal to zero, the default setting
+  ** of this variable will never mark a message read.
   */
   { "search_context",	DT_NUM,  R_NONE, {.p=&SearchContext}, {.l=0} },
   /*
   ** .pp
-  ** ページャにおいて、この変数は検索結果の前に表示する行数を指定します。
-  ** 既定では、検索結果は上寄せになります。
+  ** For the pager, this variable specifies the number of lines shown
+  ** before search results. By default, search results will be top-aligned.
   */
   { "send_charset",	DT_STR,  R_NONE, {.p=&SendCharset}, {.p="us-ascii:iso-8859-1:utf-8"} },
   /*
   ** .pp
-  ** 送信メッセージに対する、コロンで分離された文字セットのリストです。Mutt は
-  ** テキストを正確に変換できた最初の文字セットを使います。$$charset が
-  ** ``iso-8859-1'' でなく、受信者が ``UTF-8'' を理解出来ない場合は、``iso-8859-1''の
-  ** かわり、あるいはその後に、適切で広く使われている標準的な文字セット
-  ** (たとえば``iso-8859-2'', ``koi8-r'' 又は ``iso-2022-jp'')をリスト中に含めることを
-  ** 推奨します。
+  ** A colon-delimited list of character sets for outgoing messages. Mutt will use the
+  ** first character set into which the text can be converted exactly.
+  ** If your $$charset is not ``iso-8859-1'' and recipients may not
+  ** understand ``UTF-8'', it is advisable to include in the list an
+  ** appropriate widely used standard character set (such as
+  ** ``iso-8859-2'', ``koi8-r'' or ``iso-2022-jp'') either instead of or after
+  ** ``iso-8859-1''.
   ** .pp
-  ** それらのどれかに正確に変換できない場合、Mutt は $$charset を使うように
-  ** フォールバックします。
-  ** 
+  ** In case the text cannot be converted into one of these exactly,
+  ** mutt uses $$charset as a fallback.
   */
   { "send_multipart_alternative", DT_QUAD, R_NONE, {.l=OPT_SENDMULTIPARTALT}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はmultipart/alternative コンテナと
-  ** $$send_multipart_alternative_filter で指定されたフィルタスクリプトを使う
-  ** alternative パートを生成します。
-  ** ``MIME Multipart/Alternative'' ($alternative-order) を参照してください。
+  ** If \fIset\fP, Mutt will generate a multipart/alternative
+  ** container and an alternative part using the filter script specified in
+  ** $$send_multipart_alternative_filter.
+  ** See the section ``MIME Multipart/Alternative'' ($alternative-order).
   ** .pp
-  ** multipart/alternative を有効にすることは、インラインの PGP 暗号化とは互換がない
-  ** ことに注意してください。Mutt はこの場合、PGP/MIME を使うように問合せしてきます。
+  ** Note that enabling multipart/alternative is not compatible with inline
+  ** PGP encryption.  Mutt will prompt to use PGP/MIME in that case.
   */
-  { "send_multipart_alternative_filter", DT_PATH, R_NONE, {.p=&SendMultipartAltFilter}, {.p=0} },
+  { "send_multipart_alternative_filter", DT_CMD_PATH, R_NONE, {.p=&SendMultipartAltFilter}, {.p=0} },
   /*
   ** .pp
-  ** これは、メールの(編集された)メインメッセージを lternative フォーマットに
-  ** 変換するスクリプトを指定します。メッセージはフィルタの標準入力にパイプされます。
-  ** フィルタで展開された出力は生成された mime タイプ、たとえば text/html で、
-  ** 空白行とその後に変換された内容が続きます。
-  ** ``MIME Multipart/Alternative'' ($alternative-order) を参照してください。
+  ** This specifies a filter script, which will convert the main
+  ** (composed) message of the email to an alternative format.  The
+  ** message will be piped to the filter's stdin.  The expected output
+  ** of the filter is the generated mime type, e.g. text/html,
+  ** followed by a blank line, and then the converted content.
+  ** See the section ``MIME Multipart/Alternative'' ($alternative-order).
   */
-  { "sendmail",		DT_PATH, R_NONE, {.p=&Sendmail}, {.p=SENDMAIL " -oem -oi"} },
+  { "sendmail",	DT_CMD_PATH, R_NONE, {.p=&Sendmail}, {.p=SENDMAIL " -oem -oi"} },
   /*
   ** .pp
-  ** Mutt によってメール配信を行うのに使うプログラムと引数を指定します。
-  ** Mutt は指定されたプログラムが、追加の引数を受信者のアドレスとして解釈することを
-  ** 期待しています。Mutt はデリミタ \fC--\fP (前に存在していなければ)の
-  ** 後にすべての受信者を追加します。たとえば、$$use_8bitmime, $$use_envelope_from,
-  ** $dsn_notify, 又は $$dsn_return のような追加のフラグはデリミタの前に付加されます。
+  ** Specifies the program and arguments used to deliver mail sent by Mutt.
+  ** Mutt expects that the specified program interprets additional
+  ** arguments as recipient addresses.  Mutt appends all recipients after
+  ** adding a \fC--\fP delimiter (if not already present).  Additional
+  ** flags, such as for $$use_8bitmime, $$use_envelope_from,
+  ** $$dsn_notify, or $$dsn_return will be added before the delimiter.
   ** .pp
-  ** $$write_bcc も \fB参照してください\fP。
+  ** \fBNote:\fP This command is invoked differently from most other
+  ** commands in Mutt.  It is tokenized by space, and invoked directly
+  ** via \fCexecvp(3)\fP with an array of arguments - so commands or
+  ** arguments with spaces in them are not supported.  The shell is
+  ** not used to run the command, so shell quoting is also not
+  ** supported.
+  ** .pp
+  ** \fBSee also:\fP $$write_bcc.
   */
   { "sendmail_wait",	DT_NUM,  R_NONE, {.p=&SendmailWait}, {.l=0} },
   /*
   ** .pp
-  ** $$sendmail プロセスが完了するのを諦め、バックグラウンドで配送する
-  ** 前までの秒数を指定します。
+  ** Specifies the number of seconds to wait for the $$sendmail process
+  ** to finish before giving up and putting delivery in the background.
   ** .pp
-  ** Mutt はこの変数の値を以下のように解釈します。
+  ** Mutt interprets the value of this variable as follows:
   ** .dl
-  ** .dt >0 .dd 継続する前に、sendmail が完了するのを待つ秒数
-  ** .dt 0  .dd sendmail の完了を無限に待つ
-  ** .dt <0 .dd 待たないで、sendmail をバックグラウンドで常時実行する
+  ** .dt >0 .dd number of seconds to wait for sendmail to finish before continuing
+  ** .dt 0  .dd wait forever for sendmail to finish
+  ** .dt <0 .dd always put sendmail in the background without waiting
   ** .de
   ** .pp
-  ** 0 より大きな値を指定した場合、子プロセスの出力はテンポラリファイルに
-  ** 出されることに注意してください。もしもなんらかのエラーがあった場合は、
-  ** その出力がどこにあるかを通知されることになります。
+  ** Note that if you specify a value other than 0, the output of the child
+  ** process will be put in a temporary file.  If there is some error, you
+  ** will be informed as to where to find the output.
   */
-  { "shell",		DT_PATH, R_NONE, {.p=&Shell}, {.p=0} },
+  { "shell",		DT_CMD_PATH, R_NONE, {.p=&Shell}, {.p=0} },
   /*
   ** .pp
-  ** サブシェルを起動するときに使うコマンド。既定では、\fC/etc/passwd\fP で
-  ** 使われているログインシェルとなります。
+  ** Command to use when spawning a subshell.  By default, the user's login
+  ** shell from \fC/etc/passwd\fP is used.
   */
 #ifdef USE_SIDEBAR
   { "sidebar_delim_chars", DT_STR, R_SIDEBAR, {.p=&SidebarDelimChars}, {.p="/."} },
   /*
   ** .pp
-  ** これにはサイドバー中でパスを表示するためのフォルダセパレータとして
-  ** 扱う文字の一覧が含まれています。
+  ** This contains the list of characters which you would like to treat
+  ** as folder separators for displaying paths in the sidebar.
   ** .pp
-  ** ローカルメールはしばしば `dir1/dir2/mailbox' というディレクトリに配置されます。
+  ** Local mail is often arranged in directories: `dir1/dir2/mailbox'.
   ** .ts
   ** set sidebar_delim_chars='/'
   ** .te
   ** .pp
-  ** IMAP メールボックスはしばしば `folder1.folder2.mailbox' という名前になります。
+  ** IMAP mailboxes are often named: `folder1.folder2.mailbox'.
   ** .ts
   ** set sidebar_delim_chars='.'
   ** .te
   ** .pp
-  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
-  ** \fB参照してください\fP。
+  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string.
   */
   { "sidebar_divider_char", DT_STR, R_SIDEBAR, {.p=&SidebarDividerChar}, {.p="|"} },
   /*
   ** .pp
-  ** これは (表示される場合)サイドバーと他の Mutt のパネルとの間に表示される
-  ** 文字を指定します。ASCII と Unicode の行描画文字がサポートされています。
+  ** This specifies the characters to be drawn between the sidebar (when
+  ** visible) and the other Mutt panels. ASCII and Unicode line-drawing
+  ** characters are supported.
   */
   { "sidebar_folder_indent", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARFOLDERINDENT}, {.l=0} },
   /*
   ** .pp
-  ** サイドバー中でメールボックスを段付けする場合はこれを設定します。
+  ** Set this to indent mailboxes in the sidebar.
   ** .pp
-  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
-  ** \fB参照してください\fP。
+  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_indent_string, $$sidebar_delim_chars.
   */
   { "sidebar_format", DT_STR, R_SIDEBAR, {.p=&SidebarFormat}, {.p="%B%*  %n"} },
   /*
   ** .pp
-  ** この変数でサイドバーの表示をカスタマイズすることが出来るようになります。
-  ** この文字列は $$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
-  ** 持っています。
+  ** This variable allows you to customize the sidebar display. This string is
+  ** similar to $$index_format, but has its own set of \fCprintf(3)\fP-like
+  ** sequences:
   ** .dl
-  ** .dt %B  .dd メールボックスの名前
-  ** .dt %S  .dd * メールボックスのサイズ(メッセージ総数)
-  ** .dt %N  .dd * メールボックス中の未読メッセージ数
-  ** .dt %n  .dd N 新規メールがある場合、その他の場合は空白
-  ** .dt %F  .dd * メールボックス中のフラグ付きメッセージ数
-  ** .dt %!  .dd ``!'' : 1つフラグがあるメッセージ;
-  **             ``!!'' : 2つフラグがあるメッセージ;
-  **             ``n!'' : n 2つ以上フラグがあるメッセージ (n > 2)。
-  **             その他は表示なし。
-  ** .dt %d  .dd * @ 削除メッセージ数
-  ** .dt %L  .dd * @ 制限後のメッセージ数
-  ** .dt %t  .dd * @ タグ付きメッセージ数
-  ** .dt %>X .dd 残りの文字列を右寄せし、``X'' で埋める
-  ** .dt %|X .dd 行端まで ``X'' で埋める
-  ** .dt %*X .dd 埋め草として 文字 ``X'' を使って soft-fill
+  ** .dt %B  .dd Name of the mailbox
+  ** .dt %S  .dd * Size of mailbox (total number of messages)
+  ** .dt %N  .dd * Number of unread messages in the mailbox
+  ** .dt %n  .dd N if mailbox has new mail, blank otherwise
+  ** .dt %F  .dd * Number of Flagged messages in the mailbox
+  ** .dt %!  .dd ``!'' : one flagged message;
+  **             ``!!'' : two flagged messages;
+  **             ``n!'' : n flagged messages (for n > 2).
+  **             Otherwise prints nothing.
+  ** .dt %d  .dd * @ Number of deleted messages
+  ** .dt %L  .dd * @ Number of messages after limiting
+  ** .dt %t  .dd * @ Number of tagged messages
+  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
+  ** .dt %|X .dd pad to the end of the line with ``X''
+  ** .dt %*X .dd soft-fill with character ``X'' as pad
   ** .de
   ** .pp
-  ** * = 非ゼロの場合オプションで表示
-  ** @ = 現在のフォルダのみに適用されます
+  ** * = Can be optionally printed if nonzero
+  ** @ = Only applicable to the current folder
   ** .pp
-  ** %S, %N, %F, と %! を使うために、$$mail_check_stats は
-  ** \fIset\fP としなければなりません。これを設定した場合、このオプションに対する
-  ** 推奨値は "%B%?F? [%F]?%* %?N?%N/?%S" となります。
+  ** In order to use %S, %N, %F, and %!, $$mail_check_stats must
+  ** be \fIset\fP.  When thus set, a suggested value for this option is
+  ** "%B%?F? [%F]?%* %?N?%N/?%S".
   */
   { "sidebar_indent_string", DT_STR, R_SIDEBAR, {.p=&SidebarIndentString}, {.p="  "} },
   /*
   ** .pp
-  ** サイドバー中でメールボックスを段付けするために使われる文字列を指定します。
-  ** 既定値は2つの空白です。
+  ** This specifies the string that is used to indent mailboxes in the sidebar.
+  ** It defaults to two spaces.
   ** .pp
-  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
-  ** \fB参照してください\fP。
+  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_delim_chars.
   */
   { "sidebar_new_mail_only", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARNEWMAILONLY}, {.l=0} },
   /*
   ** .pp
-  ** 設定した場合、サイドバーはメールボックスに新規メール、フラグ付きのメールがある場合
-  ** にのみ表示されます。
+  ** When set, the sidebar will only display mailboxes containing new, or
+  ** flagged, mail.
   ** .pp
-  ** $sidebar_whitelist も \fB参照してください\fP。
+  ** \fBSee also:\fP $sidebar_whitelist.
   */
   { "sidebar_next_new_wrap", DT_BOOL, R_NONE, {.l=OPTSIDEBARNEXTNEWWRAP}, {.l=0} },
   /*
   ** .pp
-  ** 設定した場合、 \fC<sidebar-next-new>\fP コマンドは停止せず、メールボックス一覧の
-  ** 最後まで行きますが、最初にまで戻ります。\fC<sidebar-prev-new>\fP コマンドは
-  ** 同様に影響を受けますが、リストの最後に戻ります。
+  ** When set, the \fC<sidebar-next-new>\fP command will not stop and the end of
+  ** the list of mailboxes, but wrap around to the beginning. The
+  ** \fC<sidebar-prev-new>\fP command is similarly affected, wrapping around to
+  ** the end of the list.
   */
   { "sidebar_relative_shortpath_indent", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARRELSPINDENT}, {.l=0} },
   /*
   ** .pp
-  ** 設定した場合、このオプションは $$sidebar_short_path と 
-  ** $$sidebar_folder_indent がどのように短縮および断付けを実行するかを変更します。
-  ** 両者は以前のサイドバーエントリを見て、もっとも最新の親からの相対で、
-  ** 短縮/段づけをします。
+  ** When set, this option changes how $$sidebar_short_path and
+  ** $$sidebar_folder_indent perform shortening and indentation: both
+  ** will look at the previous sidebar entries and shorten/indent
+  ** relative to the most recent parent.
   ** .pp
-  ** 以下は $$sidebar_short_path=yes,$$sidebar_folder_indent=yes と
-  ** $$sidebar_indent_string="→" を使って、この順で並んでいるメールボックスの、
-  ** オプションの設定/解除の例です。
+  ** An example of this option set/unset for mailboxes listed in this
+  ** order, with $$sidebar_short_path=yes,
+  ** $$sidebar_folder_indent=yes, and $$sidebar_indent_string="→":
   ** .dl
   ** .dt \fBmailbox\fP  .dd \fBset\fP   .dd \fBunset\fP
   ** .dt \fC=a.b\fP     .dd \fC=a.b\fP  .dd \fC→b\fP
@@ -3222,20 +3626,22 @@ struct option_t MuttVars[] = {
   ** .dt \fC=a.b.e\fP   .dd \fC→e\fP    .dd \fC→→e\fP
   ** .de
   ** .pp
-  ** 2行目はもっともわかりやすい例です。このオプションを設定すると、
-  ** \fC=a.b.c.d\fP は \fC=a.b\fP から相対的に短くなり、\fCc.d\fP となります。
-  ** また、\fC=a.b\fP から相対的に1段段付けされています。このオプションを設定しないと、
-  ** \fC=a.b.c.d\fP は常時メールボックスの最後の部分 \fCd\fP に短縮され、
-  ** $$folder ('=' で表される)を鑑みて3段段付けされます。
+  ** The second line illustrates most clearly.  With this option set,
+  ** \fC=a.b.c.d\fP is shortened relative to \fC=a.b\fP, becoming
+  ** \fCc.d\fP; it is also indented one place relative to \fC=a.b\fP.
+  ** With this option unset \fC=a.b.c.d\fP is always shortened to the
+  ** last part of the mailbox, \fCd\fP and is indented three places,
+  ** with respect to $$folder (represented by '=').
   ** .pp
-  ** 設定すると、3行目も最初の行からの相対で段付けされ短縮されます。
+  ** When set, the third line will also be indented and shortened
+  ** relative to the first line.
   */
   { "sidebar_short_path", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARSHORTPATH}, {.l=0} },
   /*
   ** .pp
-  ** 既定で、サイドバーには、$$folder 変数からの相対で、メールボックスのパスを表示
-  ** します。 \fCsidebar_shortpath=yes\fP を設定すると、以前の名前から比べて
-  ** 名前が短縮されます。以下が例です。
+  ** By default the sidebar will show the mailbox's path, relative to the
+  ** $$folder variable. Setting \fCsidebar_shortpath=yes\fP will shorten the
+  ** names relative to the previous name. Here's an example:
   ** .dl
   ** .dt \fBshortpath=no\fP .dd \fBshortpath=yes\fP .dd \fBshortpath=yes, folderindent=yes, indentstr=".."\fP
   ** .dt \fCfruit\fP        .dd \fCfruit\fP         .dd \fCfruit\fP
@@ -3244,388 +3650,392 @@ struct option_t MuttVars[] = {
   ** .dt \fCfruit.cherry\fP .dd \fCcherry\fP        .dd \fC..cherry\fP
   ** .de
   ** .pp
-  ** $$sidebar_delim_chars, $$sidebar_folder_indent, $$sidebar_indent_string も
-  ** \fB参照してください\fP。
+  ** \fBSee also:\fP $$sidebar_delim_chars, $$sidebar_folder_indent, $$sidebar_indent_string.
   */
   { "sidebar_sort_method", DT_SORT|DT_SORT_SIDEBAR, R_SIDEBAR, {.p=&SidebarSortMethod}, {.l=SORT_ORDER} },
   /*
   ** .pp
-  ** どのようにファイルブラウザ中でエントリを整列するかを指定します。既定では
-  ** エントリは英語順に整列されます。正しい値は以下のようになります。
+  ** Specifies how to sort mailbox entries in the sidebar.  By default, the
+  ** entries are sorted alphabetically.  Valid values:
   ** .il
-  ** .dd alpha (英語順)
-  ** .dd count (全部のメッセージ数順)
-  ** .dd flagged (フラグされたメッセージ数順)
-  ** .dd name (英語順)
-  ** .dd new (未読メッセージ数順)
-  ** .dd path (英語順)
-  ** .dd unread (未読メッセージ数順)
+  ** .dd alpha (alphabetically)
+  ** .dd count (all message count)
+  ** .dd flagged (flagged message count)
+  ** .dd name (alphabetically)
+  ** .dd new (unread message count)
+  ** .dd path (alphabetically)
+  ** .dd unread (unread message count)
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** オプションで、逆順での整列を指定するために、``reverse-'' 接頭辞を使う事も
-  ** できます(例: ``\fCset sort_browser=reverse-date\fP'')。
+  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
+  ** order (example: ``\fCset sidebar_sort_method=reverse-alpha\fP'').
   */
   { "sidebar_use_mailbox_shortcuts", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARUSEMBSHORTCUTS}, {.l=0} },
   /*
   ** .pp
-  ** 設定した場合、サイドバーメールボックスは、メールボックスショートカット接頭辞
-  ** "=" 又は "~" をつけて表示されます。
+  ** When set, sidebar mailboxes will be displayed with mailbox shortcut prefixes
+  ** "=" or "~".
   ** .pp
-  ** 設定しない場合、サイドバーは $$folder 接頭辞に一致したものを削除しますが、
-  ** それ以外は、メールボックスショートカットを使いません。
+  ** When unset, the sidebar will trim off a matching $$folder prefix
+  ** but otherwise not use mailbox shortcuts.
   */
   { "sidebar_visible", DT_BOOL, R_REFLOW, {.l=OPTSIDEBAR}, {.l=0} },
   /*
   ** .pp
-  ** これは、サイドバーを表示するか否かを指定します。サイドバーはすべてのメールボックスを
-  ** 表示します。
+  ** This specifies whether or not to show sidebar. The sidebar shows a list of
+  ** all your mailboxes.
   ** .pp
-  ** $$sidebar_format, $$sidebar_width も\fB参照してください\fP。
+  ** \fBSee also:\fP $$sidebar_format, $$sidebar_width
   */
   { "sidebar_width", DT_NUM, R_REFLOW, {.p=&SidebarWidth}, {.l=30} },
   /*
   ** .pp
-  ** これはサイドバーの幅を制御します。画面の列で計測されます。たとえば、
-  ** sidebar_width=20 は 20 文字のASCII 文字か、10文字の中国文字を表示できます。
+  ** This controls the width of the sidebar.  It is measured in screen columns.
+  ** For example: sidebar_width=20 could display 20 ASCII characters, or 10
+  ** Chinese characters.
   */
 #endif
   { "sig_dashes",	DT_BOOL, R_NONE, {.l=OPTSIGDASHES}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、``-- '' を含む行(その後に空白があることに注意)が
-  ** $$signature の前に挿入されます。署名が名前のみを含んでいる場合を除き、
-  ** この変数を\fIunset\fP しないことを\fB強く\fP 推奨します。その理由は、
-  ** 署名を検出するために、多くのソフトウェアパッケージが ``-- \n'' を使うという
-  ** ことだからです。たとえば、Mutt は内蔵ページャで異なった色で署名をハイライト
-  ** する機能があります。
+  ** If \fIset\fP, a line containing ``-- '' (note the trailing space) will be inserted before your
+  ** $$signature.  It is \fBstrongly\fP recommended that you not \fIunset\fP
+  ** this variable unless your signature contains just your name.  The
+  ** reason for this is because many software packages use ``-- \n'' to
+  ** detect your signature.  For example, Mutt has the ability to highlight
+  ** the signature in a different color in the built-in pager.
   */
   { "sig_on_top",	DT_BOOL, R_NONE, {.l=OPTSIGONTOP}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、署名は引用や転送テキストの前に付けられます。これが何をするかを
-  ** 完全に分かっている場合と、ネチケットの番人からの怒りを買う準備が出来ている場合を除き、
-  ** この変数を設定しないことを\fB強く\fP 推奨します。
+  ** If \fIset\fP, the signature will be included before any quoted or forwarded
+  ** text.  It is \fBstrongly\fP recommended that you do not set this variable
+  ** unless you really know what you are doing, and are prepared to take
+  ** some heat from netiquette guardians.
   */
   { "signature",	DT_PATH, R_NONE, {.p=&Signature}, {.p="~/.signature"} },
   /*
   ** .pp
-  ** すべての送信メッセージに追加される署名のファイル名を指定します。ファイル名の
-  ** 末尾がパイプ (``|'') で終わっている場合、ファイル名はシェルコマンドで、
-  ** 入力は標準出力から読み出されるものと仮定されます。
+  ** Specifies the filename of your signature, which is appended to all
+  ** outgoing messages.   If the filename ends with a pipe (``|''), it is
+  ** assumed that filename is a shell command and input should be read from
+  ** its standard output.
   */
   { "simple_search",	DT_STR,	 R_NONE, {.p=&SimpleSearch}, {.p="~f %s | ~s %s"} },
   /*
   ** .pp
-  ** どのように Mutt が単純な検索を実際の検索パターンに展開するかを指定します。
-  ** 単純な検索とは ``~'' パターン演算子を1つも含まないもののことです。
-  ** 検索パターンについての詳細な情報は ``$patterns'' を参照してください。
+  ** Specifies how Mutt should expand a simple search into a real search
+  ** pattern.  A simple search is one that does not contain any of the ``~'' pattern
+  ** modifiers.  See ``$patterns'' for more information on search patterns.
   ** .pp
-  ** たとえば、単に検索または制限プロンプトに対して ``joe'' を入力したとします。
-  ** Mutt は提供された文字列で ``%s'' を、この変数で指定された値に自動的に展開します。
-  ** 既定値では ``joe'' は ``~f joe | ~s joe'' に展開されます。
+  ** For example, if you simply type ``joe'' at a search or limit prompt, Mutt
+  ** will automatically expand it to the value specified by this variable by
+  ** replacing ``%s'' with the supplied string.
+  ** For the default value, ``joe'' would be expanded to: ``~f joe | ~s joe''.
   */
   { "size_show_bytes",	DT_BOOL, R_MENU, {.l=OPTSIZESHOWBYTES}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、メッセージサイズは1 キロバイトより小さい場合、バイトで
-  ** 表示されます。$formatstrings-size を参照してください。
+  ** If \fIset\fP, message sizes will display bytes for values less than
+  ** 1 kilobyte.  See $formatstrings-size.
   */
   { "size_show_fractions", DT_BOOL, R_MENU, {.l=OPTSIZESHOWFRACTIONS}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、メッセージサイズは 0 から 10キロバイトと 1から 10 メガ
-  ** バイトの時は1桁の10進数で表示されます。$formatstrings-size を参照してください。
+  ** If \fIset\fP, message sizes will be displayed with a single decimal value
+  ** for sizes from 0 to 10 kilobytes and 1 to 10 megabytes.
+  ** See $formatstrings-size.
   */
   { "size_show_mb",	DT_BOOL, R_MENU, {.l=OPTSIZESHOWMB}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、メッセージサイズが1メガバイトより大きい場合、メガバイトで
-  ** 表示されます。$formatstrings-size を参照してください。
+  ** If \fIset\fP, message sizes will display megabytes for values greater than
+  ** or equal to 1 megabyte.  See $formatstrings-size.
   */
   { "size_units_on_left", DT_BOOL, R_MENU, {.l=OPTSIZEUNITSONLEFT}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、メッセージサイズの単位は数字の左側に表示されます。
-  ** $formatstrings-size を参照してください。
+  ** If \fIset\fP, message sizes units will be displayed to the left of the number.
+  ** See $formatstrings-size.
   */
   { "sleep_time",	DT_NUM, R_NONE, {.p=&SleepTime}, {.l=1} },
   /*
   ** .pp
-  ** フォルダからフォルダへ移動し、現在のフォルダからメッセージを消した後、
-  ** 特定の通知メッセージを表示する間停止する時間を秒数で指定します。
-  ** 既定では、1秒間だけ止まり、このオプションの値を 0 にすると、この待ち時間を
-  ** 無くします。
+  ** Specifies time, in seconds, to pause while displaying certain informational
+  ** messages, while moving from folder to folder and after expunging
+  ** messages from the current folder.  The default is to pause one second, so
+  ** a value of zero for this option suppresses the pause.
   */
   { "smart_wrap",	DT_BOOL, R_PAGER_FLOW, {.l=OPTWRAP}, {.l=1} },
   /*
   ** .pp
-  ** 内部ページャで、画面幅よりも長い行を表示する方法を制御します。\fIset\fP の場合、
-  ** 長い行は単語の区切りで折り返されます。 \fIunset\fP の場合、長い行は
-  ** 単純に画面の幅で折り返されます。$$markers 変数も参照してください。
+  ** Controls the display of lines longer than the screen width in the
+  ** internal pager. If \fIset\fP, long lines are wrapped at a word boundary.  If
+  ** \fIunset\fP, lines are simply wrapped at the screen edge. Also see the
+  ** $$markers variable.
   */
   { "smileys",		DT_RX,	 R_PAGER, {.p=&Smileys}, {.p="(>From )|(:[-^]?[][)(><}{|/DP])"} },
   /*
   ** .pp
-  ** \fIページャ\fP は、この変数を使って、$$quote_regexp のよくある一般的な
-  ** 誤検知、特にスマイリー(訳注:顔文字)、$$smileys にも一致する場合は、引用された
-  ** 行を考慮せず拾います。これは主に行の先頭で発生します。
-  ** 
+  ** The \fIpager\fP uses this variable to catch some common false
+  ** positives of $$quote_regexp, most notably smileys and not consider
+  ** a line quoted text if it also matches $$smileys. This mostly
+  ** happens at the beginning of a line.
   */
-  { "pgp_mime_signature_filename", DT_STR, R_NONE, {.p=&PgpMimeSignatureFilename}, {.p="signature.asc"} },
-  /*
-  ** .pp
-  ** このオプションは、PGP/MIME で署名されたメッセージ中の署名部分に使われるファイル名を
-  ** 設定します。
-  */
-  { "pgp_mime_signature_description", DT_STR, R_NONE, {.p=&PgpMimeSignatureDescription}, {.p="Digital signature"} },
-  /*
-  ** .pp
-  ** このオプションは、PGP/MIME で署名されたメッセージ中の署名部分に使われる
-  ** Content-Description を指定します。
-  */
+
+
+
   { "smime_ask_cert_label",	DT_BOOL, R_NONE, {.l=OPTASKCERTLABEL}, {.l=1} },
   /*
   ** .pp
-  ** このフラグは、データベースに追加しようとしている証明書のラベルを入力するか
-  ** どうかについて問合せをするか否かを制御します。既定では \fIset\fP です。
-  ** (S/MIME のみです)
+  ** This flag controls whether you want to be asked to enter a label
+  ** for a certificate about to be added to the database or not. It is
+  ** \fIset\fP by default.
+  ** (S/MIME only)
   */
   { "smime_ca_location",	DT_PATH, R_NONE, {.p=&SmimeCALocation}, {.p=0} },
   /*
   ** .pp
-  ** この変数は、OpenSSL で使う信頼された証明書があるディレクトリかファイルの
-  ** 名前が含まれています。
-  ** (S/MIME のみです)
+  ** This variable contains the name of either a directory, or a file which
+  ** contains trusted certificates for use with OpenSSL.
+  ** (S/MIME only)
   */
   { "smime_certificates",	DT_PATH, R_NONE, {.p=&SmimeCertificates}, {.p=0} },
   /*
   ** .pp
-  ** S/MIME には PGP でのような pubring/secring がないので、Mutt は自分自身で
-  ** 鍵や証明書の格納および取得を行わなければなりません。この仕組みは現在とても
-  ** 基本的なもので、鍵と証明書を二つの異なる ディレクトリに格納し、ともに OpenSSL で
-  ** 取得したハッシュ値をファイル名にしています。各ディレクトリには index ファイルがあって、
-  ** メールアドレスと鍵 ID の組み合わせが入っていて、手動で編集することができます。
-  ** このオプションは証明書の位置を示すものです。
-  ** (S/MIME のみです)
+  ** Since for S/MIME there is no pubring/secring as with PGP, mutt has to handle
+  ** storage and retrieval of keys by itself. This is very basic right
+  ** now, and keys and certificates are stored in two different
+  ** directories, both named as the hash-value retrieved from
+  ** OpenSSL. There is an index file which contains mailbox-address
+  ** keyid pairs, and which can be manually edited. This option points to
+  ** the location of the certificates.
+  ** (S/MIME only)
   */
   { "smime_decrypt_command", 	DT_STR, R_NONE, {.p=&SmimeDecryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** このフォーマット文字列は \fCapplication/x-pkcs7-mime\fP 添付を復号化するのに
-  ** 使うコマンドを指定します。
+  ** This format string specifies a command which is used to decrypt
+  ** \fCapplication/x-pkcs7-mime\fP attachments.
   ** .pp
-  ** OpenSSL コマンド形式には、PGP に似た、\fCprintf(3)\fP 風の固有な書式があります。
+  ** The OpenSSL command formats have their own set of \fCprintf(3)\fP-like sequences
+  ** similar to PGP's:
   ** .dl
-  ** .dt %f .dd メッセージが入っているファイルの名前に展開します。
-  ** .dt %s .dd \fCmultipart/signed\fP 添付を検証するときに
-                署名パートがっているファイルの名前に展開します。
-  ** .dt %k .dd $$smime_default_key で指定される鍵ペア
-  ** .dt %c .dd 1つ以上の証明書 ID。
-  ** .dt %a .dd 暗号化に使うアルゴリズム。
-  ** .dt %d .dd $$smime_sign_digest_alg で指定されたメッセージダイジェストアルゴリズム。
-  ** .dt %C .dd CA の位置:  $smime_ca_location が ディレクトリかファイルを指定するのに
-                依存。これは、``-CApath $$smime_ca_location'' か
-  **            ``-CAfile $$smime_ca_location'' に展開されます。
+  ** .dt %f .dd Expands to the name of a file containing a message.
+  ** .dt %s .dd Expands to the name of a file containing the signature part
+  ** .          of a \fCmultipart/signed\fP attachment when verifying it.
+  ** .dt %k .dd The key-pair specified with $$smime_default_key
+  ** .dt %c .dd One or more certificate IDs.
+  ** .dt %a .dd The algorithm used for encryption.
+  ** .dt %d .dd The message digest algorithm specified with $$smime_sign_digest_alg.
+  ** .dt %C .dd CA location:  Depending on whether $$smime_ca_location
+  ** .          points to a directory or file, this expands to
+  ** .          ``-CApath $$smime_ca_location'' or ``-CAfile $$smime_ca_location''.
   ** .de
   ** .pp
-  ** 上記の形式をどのように設定するかの例は、システムの文書のそばにインストールされて
-  ** いる \fCsamples/\fP サブディレクトリ中の \fCsmime.rc\fP を参照してください。
-  ** (S/MIME のみです)
+  ** For examples on how to configure these formats, see the \fCsmime.rc\fP in
+  ** the \fCsamples/\fP subdirectory which has been installed on your system
+  ** alongside the documentation.
+  ** (S/MIME only)
   */
   { "smime_decrypt_use_default_key",	DT_BOOL, R_NONE, {.l=OPTSDEFAULTDECRYPTKEY}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合(既定値)、これは、Muttが暗号化時に既定のキーを使うようにさせます。
-  ** その他の場合は、複数の、証明書-鍵ペア を管理する場合、Mutt は使用する鍵を決めるために、
-  ** メールボックス-アドレスを使おうとします。見つからない場合は、鍵を指定するために
-  ** 問合せをしてきます。
-  ** (S/MIME のみです)
+  ** If \fIset\fP (default) this tells mutt to use the default key for decryption. Otherwise,
+  ** if managing multiple certificate-key-pairs, mutt will try to use the mailbox-address
+  ** to determine the key to use. It will ask you to supply a key, if it can't find one.
+  ** (S/MIME only)
   */
   { "smime_self_encrypt_as",	DT_SYN,  R_NONE, {.p="smime_default_key"}, {.p=0} },
   { "smime_default_key",		DT_STR,	 R_NONE, {.p=&SmimeDefaultKey}, {.p=0} },
   /*
   ** .pp
-  ** これは、S/MIME 操作時に使う既定の鍵ペアで、正しく動くためには keyid (OpenSSL が生成する
-  ** ハッシュ値)を設定しなければなりません。
+  ** This is the default key-pair to use for S/MIME operations, and must be
+  ** set to the keyid (the hash-value that OpenSSL generates) to work properly.
   ** .pp
-  ** これは暗号化時に使われます($$postpone_encrypt と $$smime_self_encrypt を
-  ** 参照してください)。
+  ** It will be used for encryption (see $$postpone_encrypt and
+  ** $$smime_self_encrypt). If GPGME is enabled, this is the key id displayed
+  ** by gpgsm.
   ** .pp
-  ** これは、$$smime_decrypt_use_default_key が \fIunset\fP でない限り、
-  ** 復号化に使われます。
+  ** It will be used for decryption unless $$smime_decrypt_use_default_key
+  ** is \fIunset\fP.
   ** .pp
-  ** また、$$smime_sign_as が設定されていない限り、署名にも使われます。
+  ** It will also be used for signing unless $$smime_sign_as is set.
   ** .pp
-  ** (現在は非推奨ですが) \fIsmime_self_encrypt_as\fP がこの変数の別名ですが、
-  ** もはや使われていません。
-  ** (S/MIME のみです)
+  ** The (now deprecated) \fIsmime_self_encrypt_as\fP is an alias for this
+  ** variable, and should no longer be used.
+  ** (S/MIME only)
   */
   { "smime_encrypt_command", 	DT_STR, R_NONE, {.p=&SmimeEncryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、暗号化された S/MIME メッセージを作成するのに使われます。
+  ** This command is used to create encrypted S/MIME messages.
   ** .pp
-  ** これはフォーマット文字列で、使用可能な\fCprintf(3)\fP 風の書式については
-  ** $$smime_decrypt_command コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_encrypt_with",	DT_STR,	 R_NONE, {.p=&SmimeCryptAlg}, {.p="aes256"} },
   /*
   ** .pp
-  ** これは、暗号化に使うアルゴリズムを設定します。有効な選択肢は
-  ** ``aes128'', ``aes192'', ``aes256'', ``des'', ``des3'', ``rc2-40'', ``rc2-64'',``rc2-128'' です。
-  ** (S/MIME のみです)
+  ** This sets the algorithm that should be used for encryption.
+  ** Valid choices are ``aes128'', ``aes192'', ``aes256'', ``des'', ``des3'', ``rc2-40'', ``rc2-64'', ``rc2-128''.
+  ** (S/MIME only)
   */
   { "smime_get_cert_command", 	DT_STR, R_NONE, {.p=&SmimeGetCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、PKCS7 構造から X509 証明書を抽出するのに使います。
+  ** This command is used to extract X509 certificates from a PKCS7 structure.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_get_cert_email_command", 	DT_STR, R_NONE, {.p=&SmimeGetCertEmailCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、X509 証明書を格納するのに使われるメールアドレスを抽出するのと、
-  ** 検証のため(証明書が送信者のメールボックス用に発行されいるか否かをチェックするため)
-  ** に使います。
+  ** This command is used to extract the mail address(es) used for storing
+  ** X509 certificates, and for verification purposes (to check whether the
+  ** certificate was issued for the sender's mailbox).
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_get_signer_cert_command", 	DT_STR, R_NONE, {.p=&SmimeGetSignerCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、S/MIME 署名から 署名者の X509 証明書のみを抽出するのに使うので、
-  ** 証明書の所有者は、メールの ``From:'' フィールドと比較することが出来ます。
+  ** This command is used to extract only the signers X509 certificate from a S/MIME
+  ** signature, so that the certificate's owner may get compared to the
+  ** email's ``From:'' field.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_import_cert_command", 	DT_STR, R_NONE, {.p=&SmimeImportCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、smime_keys から証明書をインポートするのに使います。
+  ** This command is used to import a certificate via smime_keys.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_is_default", DT_BOOL,  R_NONE, {.l=OPTSMIMEISDEFAULT}, {.l=0} },
   /*
   ** .pp
-  ** Mutt の既定の動作は、すべての自動署名/暗号化操作に PGP を使います。これの代わりに
-  ** OpenSSL を使って上書きするには、これを \fIset\fP しなければなりません。
-  ** しかし、これは返信時には無効なので、Mutt は自動的に、オリジナルのメッセージの
-  ** 署名/暗号化に使われる同じアプリケーションを選択します(この変数は
-  ** $$crypt_autosmime を設定しないことにより上書きできます)。
-  ** (S/MIME のみです)
+  ** The default behavior of mutt is to use PGP on all auto-sign/encryption
+  ** operations. To override and to use OpenSSL instead this must be \fIset\fP.
+  ** However, this has no effect while replying, since mutt will automatically
+  ** select the same application that was used to sign/encrypt the original
+  ** message.  (Note that this variable can be overridden by unsetting $$crypt_autosmime.)
+  ** (S/MIME only)
   */
   { "smime_keys",		DT_PATH, R_NONE, {.p=&SmimeKeys}, {.p=0} },
   /*
   ** .pp
-  ** S/MIME には PGP における pubring/secring がないため、Mutt は鍵や証明書の格納
-  ** および取得を自分で扱わなければなりません。この仕組みはとても
-  ** 基本的なもので、鍵と証明書を二つの異なる ディレクトリに格納し、ともに OpenSSL で
-  ** 取得したハッシュ値をファイル名にしています。各ディレクトリには index ファイルがあって、
-  ** メールアドレスと鍵 ID の組み合わせが入っていて、手動で編集することができます。
-  ** このオプションは秘密鍵の位置を示すものです。
-  ** (S/MIME のみです)
+  ** Since for S/MIME there is no pubring/secring as with PGP, mutt has to handle
+  ** storage and retrieval of keys/certs by itself. This is very basic right now,
+  ** and stores keys and certificates in two different directories, both
+  ** named as the hash-value retrieved from OpenSSL. There is an index file
+  ** which contains mailbox-address keyid pair, and which can be manually
+  ** edited. This option points to the location of the private keys.
+  ** (S/MIME only)
   */
   { "smime_pk7out_command", 	DT_STR, R_NONE, {.p=&SmimePk7outCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、 X509 公開鍵を展開するために、S/MIME署名の PKCS7 構造を
-  ** 展開するのに使います。
+  ** This command is used to extract PKCS7 structures of S/MIME signatures,
+  ** in order to extract the public X509 certificate(s).
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_self_encrypt",    DT_BOOL, R_NONE, {.l=OPTSMIMESELFENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、S/MIME で暗号化されたメッセージは $$smime_default_key
-  ** 中の証明書を使って暗号化することも出来ます。
-  ** (S/MIME のみです)
+  ** When \fIset\fP, S/MIME encrypted messages will also be encrypted
+  ** using the certificate in $$smime_default_key.
+  ** (S/MIME only)
   */
   { "smime_sign_as",	DT_STR,	 R_NONE, {.p=&SmimeSignAs}, {.p=0} },
   /*
   ** .pp
-  ** 署名のために使う、分離されたキーがある場合、これを署名キーとして設定する
-  ** 必要があります。ほとんどの場合は、$$smime_default_key を設定するだけで済みます。
-  ** (S/MIME のみです)
+  ** If you have a separate key to use for signing, you should set this
+  ** to the signing key. Most people will only need to set $$smime_default_key.
+  ** (S/MIME only)
   */
   { "smime_sign_command", 	DT_STR, R_NONE, {.p=&SmimeSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、すべてのメールクライアントで読むことが出来る、\fCmultipart/signed\fP
-  ** タイプの S/MIME 署名を作成するのに使われます。
+  ** This command is used to created S/MIME signatures of type
+  ** \fCmultipart/signed\fP, which can be read by all mail clients.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。注意: %c と %k は、設定されている場合、
-  ** 既定で $$smime_sign_as となり、その他の場合は、$$smime_default_key となる
-  ** ことに注意してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.  NOTE: %c and %k will default
+  ** to $$smime_sign_as if set, otherwise $$smime_default_key.
+  ** (S/MIME only)
   */
   { "smime_sign_digest_alg",	DT_STR,	 R_NONE, {.p=&SmimeDigestAlg}, {.p="sha256"} },
   /*
   ** .pp
-  ** これは、メッセージダイジェストに署名するために使われるアルゴリズムを設定します。
-  ** 有効なものは、``md5'', ``sha1'', ``sha224'', ``sha256'', ``sha384'', ``sha512'' です。
-  ** (S/MIME のみです)
+  ** This sets the algorithm that should be used for the signature message digest.
+  ** Valid choices are ``md5'', ``sha1'', ``sha224'', ``sha256'', ``sha384'', ``sha512''.
+  ** (S/MIME only)
   */
   { "smime_sign_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeSignOpaqueCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、S/MIME 拡張をサポートするメールクライアントでのみ扱えることができる
-  ** \fCapplication/x-pkcs7-signature\fP タイプの S/MIME 署名を作成するのに使います。
+  ** This command is used to created S/MIME signatures of type
+  ** \fCapplication/x-pkcs7-signature\fP, which can only be handled by mail
+  ** clients supporting the S/MIME extension.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_timeout",		DT_LNUM,	 R_NONE, {.p=&SmimeTimeout}, {.l=300} },
   /*
   ** .pp
-  ** キャッシュされたパスフレーズが使用されない場合、満了するまでの秒数を指定します。
-  ** (S/MIME のみです)
+  ** The number of seconds after which a cached passphrase will expire if
+  ** not used.
+  ** (S/MIME only)
   */
   { "smime_verify_command", 	DT_STR, R_NONE, {.p=&SmimeVerifyCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは、\fCmultipart/signed\fPタイプの S/MIME 署名を検証するのに使います。
+  ** This command is used to verify S/MIME signatures of type \fCmultipart/signed\fP.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
   { "smime_verify_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeVerifyOpaqueCommand}, {.p=0} },
   /*
   ** .pp
-  ** このコマンドは \fCapplication/x-pkcs7-mime\fP タイプの S/MIME 署名を検証するのに
-  ** 使います。  
+  ** This command is used to verify S/MIME signatures of type
+  ** \fCapplication/x-pkcs7-mime\fP.
   ** .pp
-  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
-  ** コマンドを参照してください。
-  ** (S/MIME のみです)
+  ** This is a format string, see the $$smime_decrypt_command command for
+  ** possible \fCprintf(3)\fP-like sequences.
+  ** (S/MIME only)
   */
 #ifdef USE_SMTP
   { "smtp_authenticators", DT_STR, R_NONE, {.p=&SmtpAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** これは、Mutt が SMTP サーバに ログインするのに使う、コロンで分離された
-  ** 認証方法の一覧で、この順で Mutt が試みます。認証方法は任意の SASL メカニズム、
-  ** たとえば、``digest-md5'', ``gssapi'' 又は ``cram-md5'' です。このオプションは
-  ** 大文字小文字を区別しないので、``unset'' の場合は(既定値)、Mutt は
-  ** すべての有効な方式をもっともセキュアなものからそうでないものの順で試します。
+  ** This is a colon-delimited list of authentication methods mutt may
+  ** attempt to use to log in to an SMTP server, in the order mutt should
+  ** try them.  Authentication methods are any SASL mechanism, e.g.
+  ** ``digest-md5'', ``gssapi'' or ``cram-md5''.
+  ** This option is case-insensitive. If it is ``unset''
+  ** (the default) mutt will try all available methods, in order from
+  ** most-secure to least-secure.
   ** .pp
-  ** 例:
+  ** Example:
   ** .ts
   ** set smtp_authenticators="digest-md5:cram-md5"
   ** .te
@@ -3633,46 +4043,48 @@ struct option_t MuttVars[] = {
   { "smtp_oauth_refresh_command", DT_STR, R_NONE, {.p=&SmtpOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** SMTP サーバへの接続を認証するための、 OAUTH リフレッシュトークンを生成する
-  ** コマンドです。このコマンドは、各接続時に、OAUTHBEARER 認証メカニズムを使って
-  ** 実行されます。詳細は ``$oauth'' を参照してください。
+  ** The command to run to generate an OAUTH refresh token for
+  ** authorizing your connection to your SMTP server.  This command will be
+  ** run on every connection attempt that uses the OAUTHBEARER authentication
+  ** mechanism.  See ``$oauth'' for details.
   */
   { "smtp_pass", 	DT_STR,  R_NONE, {.p=&SmtpPass}, {.p=0} },
   /*
   ** .pp
-  ** SMTP アカウントのパスワードを指定します。\fIunset\fP の場合、Mutt は
-  ** SMTP 経由で Mutt が差書にメールを送信する時にパスワードを聞いてきます。
-  ** Mutt が SMTP 経由でメールを送るための設定方法は $$smtp_url も参照してください。
+  ** Specifies the password for your SMTP account.  If \fIunset\fP, Mutt will
+  ** prompt you for your password when you first send mail via SMTP.
+  ** See $$smtp_url to configure mutt to send mail via SMTP.
   ** .pp
-  ** \fB注意\fP: かなり安全なマシン上で使う時のみこのオプションを使ってください。
-  ** なぜなら、スーパーユーザは、このファイルを自分自身のみが読めるようにしていても、
-  ** muttrc を読み取ることが出来るからです。
+  ** \fBWarning\fP: you should only use this option when you are on a
+  ** fairly secure machine, because the superuser can read your muttrc even
+  ** if you are the only one who can read the file.
   */
   { "smtp_url",		DT_STR, R_NONE, {.p=&SmtpUrl}, {.p=0} },
   /*
   ** .pp
-  ** 配送のために送信されたメッセージが中継される SMTP スマートホストを定義
-  ** します。これは SMTP URL 形式をとります。例えば以下のようになります。
+  ** Defines the SMTP smarthost where sent messages should relayed for
+  ** delivery. This should take the form of an SMTP URL, e.g.:
   ** .ts
   ** smtp[s]://[user[:pass]@]host[:port]
   ** .te
   ** .pp
-  ** ここで、``[...]'' はオプションパートに依存します。
-  ** この変数を設定すると、$$sendmail 変数の値を上書きします。
+  ** where ``[...]'' denotes an optional part.
+  ** Setting this variable overrides the value of the $$sendmail
+  ** variable.
   ** .pp
-  ** $$write_bcc も参照してください。
+  ** Also see $$write_bcc.
   */
 #endif /* USE_SMTP */
   { "sort",		DT_SORT, R_INDEX|R_RESORT, {.p=&Sort}, {.l=SORT_DATE} },
   /*
   ** .pp
-  ** どのように、``index'' メニュー中でメッセージを整列するかを指定します。
-  ** 有効な値は以下の通りです。
+  ** Specifies how to sort messages in the ``index'' menu.  Valid values
+  ** are:
   ** .il
-  ** .dd date 又は date-sent
+  ** .dd date or date-sent
   ** .dd date-received
   ** .dd from
-  ** .dd mailbox-order (未整列)
+  ** .dd mailbox-order (unsorted)
   ** .dd score
   ** .dd size
   ** .dd spam
@@ -3681,54 +4093,62 @@ struct option_t MuttVars[] = {
   ** .dd to
   ** .ie
   ** .pp
-  ** 逆順整列のために、接頭辞 ``reverse-'' を使う事も出来ます
-  ** (例: ``\fCset sort=reverse-date-sent\fP'')。
+  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
+  ** order (example: ``\fCset sort=reverse-date-sent\fP'').
+  ** .pp
+  ** For values except ``threads'', this provides the primary sort
+  ** method.  When two message sort values are equal, $$sort_aux will
+  ** be used for a secondary sort.
+  ** .pp
+  ** When set to ``threads'', Mutt threads messages in the index. It
+  ** uses the variable $$sort_thread_groups to sort between threads
+  ** (at the top/root level), and $$sort_aux to sort sub-threads and
+  ** children.
   */
   { "sort_alias",	DT_SORT|DT_SORT_ALIAS,	R_NONE,	{.p=&SortAlias}, {.l=SORT_ALIAS} },
   /*
   ** .pp
-  ** どのように ``alias'' メニューのエントリを整列するかを指定します。
-  ** 使用できる値は以下の通りです。
+  ** Specifies how the entries in the ``alias'' menu are sorted.  The
+  ** following are legal values:
   ** .il
-  ** .dd address (メールアドレスの英語順で整列)
-  ** .dd alias (別名の英語順で整列)
-  ** .dd unsorted (.muttrc で指定された順そのまま)
+  ** .dd address (sort alphabetically by email address)
+  ** .dd alias (sort alphabetically by alias name)
+  ** .dd unsorted (leave in order specified in .muttrc)
   ** .ie
   */
   { "sort_aux",		DT_SORT|DT_SORT_AUX, R_INDEX|R_RESORT_BOTH, {.p=&SortAux}, {.l=SORT_DATE} },
   /*
   ** .pp
-  ** これは、$$sort の値が2つのメッセージに対して同じだった場合に、``index''
-  ** メニュー中で使われる、2番目のメッセージ整列方法を提供します。
+  ** For non-threaded mode, this provides a secondary sort for
+  ** messages in the ``index'' menu, used when the $$sort value is
+  ** equal for two messages.
   ** .pp
-  ** スレッドで整列しているとき、この変数は、他のスレッドとの関係でスレッドを整列する
-  ** 方法と、どのようにスレッドツリーのブランチを整列するかを制御します。
-  ** これは、``threads'' (この場合、Mutt は ``date-sent'' のみを使用します) 以外の、
-  ** $$sort で使える任意の値を設定できます。また、``reverse-'' に追加して ``last-''
-  ** 接頭辞を指定することも出来ますが、``last-'' 接頭辞は ``reverse-'' の後に置かなければ
-  ** なりません。``last-'' 接頭辞は、最後の子孫を持つ兄弟に対して、残りの $$sort_aux を
-  ** 順番として使用し、メッセージを整列します。 
-  ** たとえば、
+  ** When sorting by threads, this variable controls how the branches
+  ** of the thread trees are sorted.  This can be set to any value
+  ** that $$sort can, except ``threads'' (in that case, mutt will just
+  ** use ``date-sent'').  You can also specify the ``last-'' prefix in
+  ** addition to the ``reverse-'' prefix, but ``last-'' must come
+  ** after ``reverse-''.  The ``last-'' prefix causes messages to be
+  ** sorted against its siblings by which has the last descendant,
+  ** using the rest of $$sort_aux as an ordering.  For instance,
   ** .ts
   ** set sort_aux=last-date-received
   ** .te
   ** .pp
-  ** は、新規メッセージがスレッド中にある場合、そのスレッドは最後に表示される
-  ** ものになります(又は、``\fCset sort=reverse-threads\fP'' を設定している場合は
-  ** 最初のスレッド)。
+  ** would mean that if a new message is received in a sub-thread,
+  ** that sub-thread becomes the last one displayed.
   ** .pp
-  ** 注意: 逆順スレッドの $$sort 順では、$$sort_aux は再度逆順になります
-  ** (これは正しくはないのですが、既存の設定を壊さないようにしています)。
+  ** Note: For reversed-threads $$sort
+  ** order, $$sort_aux is reversed again (which is not the right thing to do,
+  ** but kept to not break any existing configuration setting).
   */
-  { "sort_browser",	DT_SORT|DT_SORT_BROWSER, R_NONE, {.p=&BrowserSort}, {.l=SORT_ALPHA} },
+  { "sort_browser",	DT_SORT|DT_SORT_BROWSER, R_NONE, {.p=&BrowserSort}, {.l=SORT_SUBJECT} },
   /*
   ** .pp
   ** Specifies how to sort entries in the file browser.  By default, the
   ** entries are sorted alphabetically.  Valid values:
-  ** ファイルブラウザ中でどのようにエントリを整列させるかを指定します。既定では
-  ** エントリは英語順に整列されます。有効な値は以下の通りです。
   ** .il
-  ** .dd alpha (英語順)
+  ** .dd alpha (alphabetically)
   ** .dd count
   ** .dd date
   ** .dd size
@@ -3736,463 +4156,556 @@ struct option_t MuttVars[] = {
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** 逆順で整列したい場合には、``reverse-'' 接頭辞を使う事が出来ます
-  ** (例 ``\fCset sort_browser=reverse-date\fP'')。
+  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
+  ** order (example: ``\fCset sort_browser=reverse-date\fP'').
+  */
+  { "sort_browser_mailboxes", DT_SORT|DT_SORT_BROWSER, R_NONE, {.p=&BrowserSortMailboxes}, {.l=SORT_ORDER} },
+  /*
+  ** .pp
+  ** Specifies how to sort entries in the mailbox browser.  By default, the
+  ** entries are unsorted, displayed in the same order as listed
+  ** in the ``mailboxes'' command.  Valid values:
+  ** .il
+  ** .dd alpha (alphabetically)
+  ** .dd count
+  ** .dd date
+  ** .dd size
+  ** .dd unread
+  ** .dd unsorted
+  ** .ie
+  ** .pp
+  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
+  ** order (example: ``\fCset sort_browser_mailboxes=reverse-alpha\fP'').
   */
   { "sort_re",		DT_BOOL, R_INDEX|R_RESORT|R_RESORT_INIT, {.l=OPTSORTRE}, {.l=1} },
   /*
   ** .pp
-  ** この変数は、$$strict_threads が \fIunset\fP 時にスレッドによる整列の時にのみ
-  ** 便利です。この場合、Mutt が使う発見的手法が、題名でスレッドにするように変更になります。
-  ** $$sort_re が \fIset\fP の時は、Mutt は、子メッセージの題名が、$$reply_regexpの
-  ** 設定と一致する部分文字列で始まっていた場合にのみ、題名で、他のメッセージの子供として
-  ** メッセージを接続します。$$sort_re が \fIunset\fP の場合、Mutt は、$$reply_regexp
-  ** 部分以外の、両方のメッセージが同じである限り、この場合の時もそうでないときも、
-  ** メッセージを接続します。
+  ** This variable is only useful when sorting by threads with
+  ** $$strict_threads \fIunset\fP.  In that case, it changes the heuristic
+  ** mutt uses to thread messages by subject.  With $$sort_re \fIset\fP, mutt will
+  ** only attach a message as the child of another message by subject if
+  ** the subject of the child message starts with a substring matching the
+  ** setting of $$reply_regexp.  With $$sort_re \fIunset\fP, mutt will attach
+  ** the message whether or not this is the case, as long as the
+  ** non-$$reply_regexp parts of both messages are identical.
+  */
+  { "sort_thread_groups", DT_SORT|DT_SORT_THREAD_GROUPS, R_INDEX|R_RESORT_BOTH, {.p=&SortThreadGroups}, {.l=SORT_AUX} },
+  /*
+  ** .pp
+  ** When sorting by threads, this variable controls how threads are
+  ** sorted in relation to other threads (at the top/root level).
+  ** This can be set to any value that $$sort can, except ``threads''.
+  ** You can also specify the ``last-'' prefix in addition to the
+  ** ``reverse-'' prefix, but ``last-'' must come after ``reverse-''.
+  ** The ``last-'' prefix causes messages to be sorted against its
+  ** siblings by which has the last descendant, using the rest of
+  ** $$sort_thread_groups as an ordering.
+  ** .pp
+  ** For backward compatibility, the default value is ``aux'', which
+  ** means to use $$sort_aux for top-level thread sorting too.  The
+  ** value ``aux'' does not respect ``last-'' or ``reverse-''
+  ** prefixes, it simply delegates sorting directly to $$sort_aux.
+  ** .pp
+  ** Note: For reversed-threads $$sort order, $$sort_thread_groups is
+  ** reversed again (which is not the right thing to do, but kept to
+  ** not break any existing configuration setting).
   */
   { "spam_separator",   DT_STR, R_NONE, {.p=&SpamSep}, {.p=","} },
   /*
   ** .pp
-  ** この変数は、複数のスパムヘッダが一致した場合に、何をするかを制御します。
-  ** \fIunset\fP の場合、この変数の値をセパレータとして、各連続した一致は、
-  ** spam ラベルの以前の一致した値を上書きします。
+  ** This variable controls what happens when multiple spam headers
+  ** are matched: if \fIunset\fP, each successive header will overwrite any
+  ** previous matches value for the spam label. If \fIset\fP, each successive
+  ** match will append to the previous, using this variable's value as a
+  ** separator.
   */
   { "spoolfile",	DT_PATH, R_NONE, {.p=&Spoolfile}, {.p=0} },
   /*
   ** .pp
-  ** スプールメールボックスが、Mutt が見つけられない既定値の場所にない場合、
-  ** その位置をこの変数で指定します。Mutt は、どちらかが使われている場合、
-  ** 環境変数 \fC$$$MAIL\fP 又は \fC$$$MAILDIR\fP の値を起動時にこの変数に
-  ** 設定します。 
+  ** If your spool mailbox is in a non-default place where Mutt cannot find
+  ** it, you can specify its location with this variable.  Mutt will
+  ** initially set this variable to the value of the environment
+  ** variable \fC$$$MAIL\fP or \fC$$$MAILDIR\fP if either is defined.
   */
 #if defined(USE_SSL)
-#ifdef USE_SSL_GNUTLS
+# ifdef USE_SSL_GNUTLS
   { "ssl_ca_certificates_file", DT_PATH, R_NONE, {.p=&SslCACertFile}, {.p=0} },
   /*
   ** .pp
-  ** この変数は信頼された CA 証明書を含むファイルを指定します。
-  ** そのCA 証明書の1つで署名された任意のサーバも自動的に許可されます。(GnuTLS のみです)
+  ** This variable specifies a file containing trusted CA certificates.
+  ** Any server certificate that is signed with one of these CA
+  ** certificates is also automatically accepted. (GnuTLS only)
   ** .pp
-  ** 例:
+  ** Example:
   ** .ts
   ** set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
   ** .te
   */
-#endif /* USE_SSL_GNUTLS */
+# endif /* USE_SSL_GNUTLS */
   { "ssl_client_cert", DT_PATH, R_NONE, {.p=&SslClientCert}, {.p=0} },
   /*
   ** .pp
+  ** The file containing a client certificate and its associated private
   ** key.
-  ** クライアントとそれに関連づけられている秘密鍵が入っているファイル。
   */
-  { "ssl_force_tls",		DT_BOOL, R_NONE, {.l=OPTSSLFORCETLS}, {.l=0} },
+  { "ssl_force_tls",		DT_BOOL, R_NONE, {.l=OPTSSLFORCETLS}, {.l=1} },
   /*
   ** .pp
-  ** この変数が、 \fIset\fP だった場合、Mutt は、リモートサーバに対するすべての接続
-  ** を暗号化することを必要とします。さらに、サーバが、ケーパビリティを広告して
-  ** いなくても、TLS でネゴシエートしようとし、それ以外は接続を中止します。
-  ** このオプションは $$ssl_starttls に優先します。
+  ** If this variable is \fIset\fP, Mutt will require that all connections
+  ** to remote servers be encrypted. Furthermore it will attempt to
+  ** negotiate TLS even if the server does not advertise the capability,
+  ** since it would otherwise have to abort the connection anyway. This
+  ** option supersedes $$ssl_starttls.
   */
 # ifdef USE_SSL_GNUTLS
   { "ssl_min_dh_prime_bits", DT_NUM, R_NONE, {.p=&SslDHPrimeBits}, {.l=0} },
   /*
   ** .pp
-  ** この変数は、Diffie-Hellman カギ交換で使われる、(ビット単位の)最小の許容
-  ** 素数サイズを指定します。値が 0 の倍は、GNUTLS ライブラリからの既定値を
-  ** 使います。(GnuTLS のみです)
+  ** This variable specifies the minimum acceptable prime size (in bits)
+  ** for use in any Diffie-Hellman key exchange. A value of 0 will use
+  ** the default from the GNUTLS library. (GnuTLS only)
   */
 # endif /* USE_SSL_GNUTLS */
   { "ssl_starttls", DT_QUAD, R_NONE, {.l=OPT_SSLSTARTTLS}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** \fIset\fP (既定値)の場合、Mutt は、サーバ上でケーパビリティを広告している
-  ** \fCSTARTTLS\fP を使おうとします。 \fIunset\fP の場合、Mutt はサーバの
-  ** ケーパビリティにかかわらず \fCSTARTTLS\fP を使おうとしません。
+  ** If \fIset\fP (the default), mutt will attempt to use \fCSTARTTLS\fP on servers
+  ** advertising the capability. When \fIunset\fP, mutt will not attempt to
+  ** use \fCSTARTTLS\fP regardless of the server's capabilities.
+  ** .pp
+  ** \fBNote\fP that \fCSTARTTLS\fP is subject to many kinds of
+  ** attacks, including the ability of a machine-in-the-middle to
+  ** suppress the advertising of support.  Setting $$ssl_force_tls is
+  ** recommended if you rely on \fCSTARTTLS\fP.
   */
 # ifdef USE_SSL_OPENSSL
   { "ssl_use_sslv2", DT_BOOL, R_NONE, {.l=OPTSSLV2}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
-  ** SSLv2 を使おうとします。
-  ** \fB注意: 2011年の時点で、SSLv2 は安全でないと見なされ、使用すべきではありません。
-  ** https://tools.ietf.org/html/rfc6176 を参照してください。\fP
-  ** (OpenSSL のみです)
+  ** If \fIset\fP , Mutt will use SSLv2 when communicating with servers that
+  ** request it. \fBN.B. As of 2011, SSLv2 is considered insecure, and using
+  ** is inadvisable. See https://tools.ietf.org/html/rfc6176 .\fP
+  ** (OpenSSL only)
   */
 # endif /* defined USE_SSL_OPENSSL */
   { "ssl_use_sslv3", DT_BOOL, R_NONE, {.l=OPTSSLV3}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
-  ** SSLv3 を使おうとします。
-  ** \fB注意: 2015年の時点で、SSLv3 は安全でないと見なされ、使用すべきではありません。
-  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
+  ** If \fIset\fP , Mutt will use SSLv3 when communicating with servers that
+  ** request it. \fBN.B. As of 2015, SSLv3 is considered insecure, and using
+  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
   */
   { "ssl_use_tlsv1", DT_BOOL, R_NONE, {.l=OPTTLSV1}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
-  ** TLSv1.0 を使おうとします。
-  ** \fB注意: 2015年の時点で、TLSv1.0 は安全でないと見なされ、使用すべきではありません。
-  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
-
+  ** If \fIset\fP , Mutt will use TLSv1.0 when communicating with servers that
+  ** request it. \fBN.B. As of 2015, TLSv1.0 is considered insecure, and using
+  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
   */
   { "ssl_use_tlsv1_1", DT_BOOL, R_NONE, {.l=OPTTLSV1_1}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
-  ** TLSv1.1 を使おうとします。
-  ** \fB注意: 2015年の時点で、TLSv1.1 は安全でないと見なされ、使用すべきではありません。
-  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
-
+  ** If \fIset\fP , Mutt will use TLSv1.1 when communicating with servers that
+  ** request it. \fBN.B. As of 2015, TLSv1.1 is considered insecure, and using
+  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
   */
   { "ssl_use_tlsv1_2", DT_BOOL, R_NONE, {.l=OPTTLSV1_2}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
-  ** TLSv1.2 を使おうとします。
+  ** If \fIset\fP , Mutt will use TLSv1.2 when communicating with servers that
+  ** request it.
   */
   { "ssl_use_tlsv1_3", DT_BOOL, R_NONE, {.l=OPTTLSV1_3}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
-  ** TLSv1.3 を使おうとします。
+  ** If \fIset\fP , Mutt will use TLSv1.3 when communicating with servers that
+  ** request it.
   */
 #ifdef USE_SSL_OPENSSL
   { "ssl_usesystemcerts", DT_BOOL, R_NONE, {.l=OPTSSLSYSTEMCERTS}, {.l=1} },
   /*
   ** .pp
-  ** \fIyes\fP に設定した場合、Mutt は、サーバ証明書が信頼されたCA によって署名
-  ** されているかをチェックするとき、システム全体の証明書ストア中にある
-  ** CA 証明書を使います。(OpenSSLのみ)
+  ** If set to \fIyes\fP, mutt will use CA certificates in the
+  ** system-wide certificate store when checking if a server certificate
+  ** is signed by a trusted CA. (OpenSSL only)
   */
 #endif
   { "ssl_verify_dates", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYDATES}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合(既定値)、Mutt は、まだ有効になっていないか、すでに満了に
-  ** なっているサーバ証明書を自動的に受け入れません。\fC$<account-hook>\fP 機能を
-  ** 使って、特定の既知のホストに対して、のみこれを設定解除する必要があります。
+  ** If \fIset\fP (the default), mutt will not automatically accept a server
+  ** certificate that is either not yet valid or already expired. You should
+  ** only unset this for particular known hosts, using the
+  ** \fC$<account-hook>\fP function.
   */
   { "ssl_verify_host", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYHOST}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合(既定値)、Mutt は、ホスト名がフォルダURL で使われている
-  ** ホストと一致しないサーバ証明書を自動的に受け入れません。\fC$<account-hook>\fP 機能を
-  ** 使って、特定の既知のホストに対して、のみこれを設定解除する必要があります。
+  ** If \fIset\fP (the default), mutt will not automatically accept a server
+  ** certificate whose host name does not match the host used in your folder
+  ** URL. You should only unset this for particular known hosts, using
+  ** the \fC$<account-hook>\fP function.
+  */
+  { "ssl_verify_host_override", DT_STR, R_NONE, {.p=&SslVerifyHostOverride}, {.p=0} },
+  /*
+  ** .pp
+  ** Defines an alternate host name to verify the server certificate against.
+  ** This should not be set unless you are sure what you are doing, but it
+  ** might be useful for connection to a .onion host without a properly
+  ** configured host name in the certificate.  See $$ssl_verify_host.
   */
 # ifdef USE_SSL_OPENSSL
 #  ifdef HAVE_SSL_PARTIAL_CHAIN
   { "ssl_verify_partial_chains", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYPARTIAL}, {.l=0} },
   /*
   ** .pp
-  ** このオプションは、これが何をするかを理解していない限り、既定値から変更すべき
-  ** ではありません。
+  ** This option should not be changed from the default unless you understand
+  ** what you are doing.
   ** .pp
-  ** この変数を \fIyes\fP にすると、部分的な認証チェーンの検証を出来るようにします。
-  ** すなわち、ルートでないが中間証明書CA 又はホスト証明書が信頼済みとして
-  ** マークされ($$certificate_file中で)、ルート署名CA をマークすることなしの認証チェーン
-  ** です。
+  ** Setting this variable to \fIyes\fP will permit verifying partial
+  ** certification chains, i. e. a certificate chain where not the root,
+  ** but an intermediate certificate CA, or the host certificate, are
+  ** marked trusted (in $$certificate_file), without marking the root
+  ** signing CA as trusted.
   ** .pp
-  ** (OpenSSL 1.0.2b あるいはそれ以降のみ)。
+  ** (OpenSSL 1.0.2b and newer only).
   */
 #  endif /* defined HAVE_SSL_PARTIAL_CHAIN */
 # endif /* defined USE_SSL_OPENSSL */
   { "ssl_ciphers", DT_STR, R_NONE, {.p=&SslCiphers}, {.p=0} },
   /*
   ** .pp
-  ** コロンで分離された、SSL で使う、暗号の一覧を含みます。
-  ** OpenSSL では、文字列の文法については、ciphers(1) を参照してください。
+  ** Contains a colon-separated list of ciphers to use when using SSL.
+  ** For OpenSSL, see ciphers(1) for the syntax of the string.
   ** .pp
-  ** GnuTLS では、このオプションは、優先文字列の最初にある "NORMAL" の代わりに
-  ** 使われます。詳細および文法については、gnutls_priority_init(3) を参照して
-  ** 下さい(注意: GnuTLS バージョン 2.1.7 あるいはそれ以降が必要です)。
+  ** For GnuTLS, this option will be used in place of "NORMAL" at the
+  ** start of the priority string.  See gnutls_priority_init(3) for the
+  ** syntax and more details. (Note: GnuTLS version 2.1.7 or higher is
+  ** required.)
   */
 #endif /* defined(USE_SSL) */
   { "status_chars",	DT_MBCHARTBL, R_BOTH, {.p=&StChars}, {.p="-*%A"} },
   /*
   ** .pp
-  ** $$status_format 中での``%r'' インジケータによって使われる文字を制御します。
-  ** 最初の文字は、メールボックスが変更されていないときに使われます。2番目は、
-  ** メールボックスが変更され、再同期が必要なときに使われます。3番目は、メールボックスが
-  ** リードオンリモードか、そのメールボックスを抜けるときに書き込めない場合に使われます
-  ** (既定で ``%'' に割り当てられている \fC<toggle-write>\fP 操作によってメールボックスの
-  ** 書き込み状態をON/OFFできます)。4番目は現在のフォルダが添付メッセージモード
-  ** でオープンされているかを表示するのに使われます(新規メールの編集、返信、転送
-  ** などのような特定の操作はこのモードでは許可されません)。
+  ** Controls the characters used by the ``%r'' indicator in
+  ** $$status_format. The first character is used when the mailbox is
+  ** unchanged. The second is used when the mailbox has been changed, and
+  ** it needs to be resynchronized. The third is used if the mailbox is in
+  ** read-only mode, or if the mailbox will not be written when exiting
+  ** that mailbox (You can toggle whether to write changes to a mailbox
+  ** with the \fC<toggle-write>\fP operation, bound by default to ``%''). The fourth
+  ** is used to indicate that the current folder has been opened in attach-
+  ** message mode (Certain operations like composing a new mail, replying,
+  ** forwarding, etc. are not permitted in this mode).
   */
-  { "status_format",	DT_STR,	 R_BOTH, {.p=&Status}, {.p="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?B? Back:%B?%?l? %l?]---(%s/%S)-%>-(%P)---"} },
+  /* L10N:
+     $status_format default value
+  */
+  { "status_format", DT_STR|DT_L10N_STR, R_BOTH, {.p=&Status}, {.p=N_("-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?B? Back:%B?%?l? %l?]---(%s/%?T?%T/?%S)-%>-(%P)---")} },
   /*
   ** .pp
-  ** ``index'' メニューで表示されるステータス行のフォーマットを制御します。
-  ** この文字列は $$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
-  ** 持っています。
+  ** Controls the format of the status line displayed in the ``index''
+  ** menu.  This string is similar to $$index_format, but has its own
+  ** set of \fCprintf(3)\fP-like sequences:
   ** .dl
-  ** .dt %b  .dd 新着メールのあるメールボックス数 *
-  ** .dt %B  .dd 裏で編集中のセッション数 *
-  ** .dt %d  .dd 削除メッセージ数 *
-  ** .dt %f  .dd 現在のメールボックスのフルパス名
-  ** .dt %F  .dd フラグが付いているメッセージ数 *
-  ** .dt %h  .dd ローカルのホスト名
-  ** .dt %l  .dd 現在のメールボックスの(バイト単位の)大きさ($formatstrings-size を参照) *
-  ** .dt %L  .dd 表示されているメッセージの(バイト単位の)大きさ
-  **             (すなわち、現在の制限に一致しているもの)($formatstrings-size を参照) *
-  ** .dt %m  .dd メールボックス中のメッセージ数 *
-  ** .dt %M  .dd 表示されているメッセージ数(すなわち、現在の制限に一致しているもの) *
-  ** .dt %n  .dd メールボックス中の新規メール数 *
-  ** .dt %o  .dd 古い未読メッセージ数 *
-  ** .dt %p  .dd 延期メッセージ数 *
-  ** .dt %P  .dd インデックス中における現在位置のパーセンテージ
-  ** .dt %r  .dd modified/read-only/won't-write/attach-message インジケータを
-  **             $$status_chars に基づいて表示
-  ** .dt %R  .dd 読んだメッセージ数 *
-  ** .dt %s  .dd 現在の整列モード ($$sort)
-  ** .dt %S  .dd 現在の補助整列モード ($$sort_aux)
-  ** .dt %t  .dd タグ付きメッセージ数 *
-  ** .dt %u  .dd 未読メッセージ数 *
-  ** .dt %v  .dd Mutt バージョン文字列
-  ** .dt %V  .dd もしもあれば現在有効な制限パターン *
-  ** .dt %>X .dd 残りの文字列を右寄せし、``X'' で埋める
-  ** .dt %|X .dd 行端まで ``X'' で埋める
-  ** .dt %*X .dd 埋め草として ``X'' を使って soft-fill
+  ** .dt %b  .dd number of mailboxes with new mail *
+  ** .dt %B  .dd number of backgrounded editing sessions *
+  ** .dt %d  .dd number of deleted messages *
+  ** .dt %f  .dd the full pathname of the current mailbox
+  ** .dt %F  .dd number of flagged messages *
+  ** .dt %h  .dd local hostname
+  ** .dt %l  .dd size (in bytes) of the current mailbox (see $formatstrings-size) *
+  ** .dt %L  .dd size (in bytes) of the messages shown
+  **             (i.e., which match the current limit) (see $formatstrings-size) *
+  ** .dt %m  .dd the number of messages in the mailbox *
+  ** .dt %M  .dd the number of messages shown (i.e., which match the current limit) *
+  ** .dt %n  .dd number of new messages in the mailbox *
+  ** .dt %o  .dd number of old unread messages *
+  ** .dt %p  .dd number of postponed messages *
+  ** .dt %P  .dd percentage of the way through the index
+  ** .dt %r  .dd modified/read-only/won't-write/attach-message indicator,
+  **             according to $$status_chars
+  ** .dt %R  .dd number of read messages *
+  ** .dt %s  .dd current sorting mode ($$sort)
+  ** .dt %S  .dd current aux sorting method ($$sort_aux)
+  ** .dt %t  .dd number of tagged messages *
+  ** .dt %T  .dd current thread group sorting method ($$sort_thread_groups) *
+  ** .dt %u  .dd number of unread messages *
+  ** .dt %v  .dd Mutt version string
+  ** .dt %V  .dd currently active limit pattern, if any *
+  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
+  ** .dt %|X .dd pad to the end of the line with ``X''
+  ** .dt %*X .dd soft-fill with character ``X'' as pad
   ** .de
   ** .pp
-  ** ``soft-fill'' の説明については、$$index_format のドキュメントを参照してください。
+  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
   ** .pp
-  ** * = 非0 の場合にオプションで表示されます
+  ** * = can be optionally printed if nonzero
   ** .pp
-  ** 上記の書式の一部は値が非0 の時にオプションで表示される文字列として使われます。
-  ** 例えば、そのようなメッセージがある場合に、フラグ付きのメッセージ数のみを
-  ** 表示したい場合、0 は特に意味がありません。上記の書式のどれかをベースにした
-  ** 文字列をオプションで表示するために、以下の構造が使われます。
+  ** Some of the above sequences can be used to optionally print a string
+  ** if their value is nonzero.  For example, you may only want to see the
+  ** number of flagged messages if such messages exist, since zero is not
+  ** particularly meaningful.  To optionally print a string based upon one
+  ** of the above sequences, the following construct is used:
   ** .pp
   **  \fC%?<sequence_char>?<optional_string>?\fP
   ** .pp
-  ** ここで、\fIsequence_char\fP は上記のテーブルからの文字で、\fIoptional_string\fP は
-  ** \fIsequence_char\fP が非0 の場合に表示したい文字列です。 \fIoptional_string\fP は
-  ** 通常のテキストと同じように他の書式を含むことが\fBできますが\fP、オプション
-  ** 文字列をネストすることは\fB出来ません\fP。
+  ** where \fIsequence_char\fP is a character from the table above, and
+  ** \fIoptional_string\fP is the string you would like printed if
+  ** \fIsequence_char\fP is nonzero.  \fIoptional_string\fP \fBmay\fP contain
+  ** other sequences as well as normal text, but you may \fBnot\fP nest
+  ** optional strings.
   ** .pp
-  ** 以下は、どのようにメールボックス中で新規メッセージをオプションで表示するかを
-  ** 示したものです。
+  ** Here is an example illustrating how to optionally print the number of
+  ** new messages in a mailbox:
   ** .pp
   ** \fC%?n?%n new messages.?\fP
   ** .pp
-  ** 以下の書式を使う事で、2つの文字列間で切替をすることも出来ます。
+  ** You can also switch between two strings using the following construct:
   ** .pp
   ** \fC%?<sequence_char>?<if_string>&<else_string>?\fP
   ** .pp
-  ** \fIsequence_char\fP の値が非0の場合、 \fIif_string\fP は展開され、
-  ** との場合は、\fIelse_string\fP が展開されます。
+  ** If the value of \fIsequence_char\fP is non-zero, \fIif_string\fP will
+  ** be expanded, otherwise \fIelse_string\fP will be expanded.
   ** .pp
-  ** 下線 (``_'') を一連の文字の前に置くことで、任意の \fCprintf(3)\fP 風の
-  ** 書式の結果を強制的に小文字にすることが出来ます。たとえば、小文字で
-  ** ローカルホスト名を表示したい場合、``\fC%_h\fP'' を使います。
+  ** You can force the result of any \fCprintf(3)\fP-like sequence to be lowercase
+  ** by prefixing the sequence character with an underscore (``_'') sign.
+  ** For example, if you want to display the local hostname in lowercase,
+  ** you would use: ``\fC%_h\fP''.
   ** .pp
-  ** コロン (``:'')文字を一連の文字の前に前置した場合、Mutt は展開時に下線で
-  ** 任意のドットを置き換えます。これはフォルダ名でドットを好まない IMAP フォルダ
-  ** で便利かもしれません。
+  ** If you prefix the sequence character with a colon (``:'') character, mutt
+  ** will replace any dots in the expansion by underscores. This might be helpful
+  ** with IMAP folders that don't like dots in folder names.
   */
   { "status_on_top",	DT_BOOL, R_REFLOW, {.l=OPTSTATUSONTOP}, {.l=0} },
   /*
   ** .pp
-  ** この変数を設定すると、最下部のそばに置く代わりに、画面の最初の行に、
-  ** ``status bar'' を表示するようになります。$$help が \fIset\fP の場合、
-  ** この場合も最下部に表示されます。
+  ** Setting this variable causes the ``status bar'' to be displayed on
+  ** the first line of the screen rather than near the bottom. If $$help
+  ** is \fIset\fP, too it'll be placed at the bottom.
   */
   { "strict_threads",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTSTRICTTHREADS}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、スレッド化は、$$sort がメッセージのスレッドの時に、
-  **  ``In-Reply-To'' と ``References:'' のみを使用して行います。既定では、
-  ** 同じ題名のメッセージは、``pseudo threads.'' にいっしょにグループ化されます。
-  ** これは、個人のメールボックスで、``hi'' と言うような題名のいくつかの未読
-  ** メッセージがいっしょにグループ化されてしまうこともあるため、常時好ましいとは
-  ** 言えません。この動作を制御する劇的な方法については、$$sort_re も
-  ** 参照してください。
+  ** If \fIset\fP, threading will only make use of the ``In-Reply-To'' and
+  ** ``References:'' fields when you $$sort by message threads.  By
+  ** default, messages with the same subject are grouped together in
+  ** ``pseudo threads.''. This may not always be desirable, such as in a
+  ** personal mailbox where you might have several unrelated messages with
+  ** the subjects like ``hi'' which will get grouped together. See also
+  ** $$sort_re for a less drastic way of controlling this
+  ** behavior.
   */
   { "suspend",		DT_BOOL, R_NONE, {.l=OPTSUSPEND}, {.l=1} },
   /*
   ** .pp
-  ** \fIunset\fP の場合、Mutt は通常 ``^Z'' の端末の \fIsusp\fP キーを押しても
-  ** 停止しません。これは、``\fCxterm -e mutt\fP'' のようなコマンドで、Mutt を  xterm
-  ** 内で実行している場合に便利です。
+  ** When \fIunset\fP, mutt won't stop when the user presses the terminal's
+  ** \fIsusp\fP key, usually ``^Z''. This is useful if you run mutt
+  ** inside an xterm using a command like ``\fCxterm -e mutt\fP''.
   */
   { "text_flowed", 	DT_BOOL, R_NONE, {.l=OPTTEXTFLOWED},  {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はコンテキストタイプが ``\fCtext/plain; format=flowed\fP'' の
-  ** ``format=flowed'' である本文を生成します。このフォーマットはある種の
-  ** メーリングソフトで扱いやすく、一般的には通常のテキストのように見えます。
+  ** When \fIset\fP, mutt will generate ``format=flowed'' bodies with a content type
+  ** of ``\fCtext/plain; format=flowed\fP''.
+  ** This format is easier to handle for some mailing software, and generally
+  ** just looks like ordinary text.  To actually make use of this format's
+  ** features, you'll need support in your editor.
   ** .pp
-  ** オプションは新しく編集されたメッセージのみを制御します。保留メッセージ、
-  ** 再送メッセージとドラフトメッセージ(コマンド行の  -H 経由)は、
-  ** ソースメッセージの content-type を使います。
+  ** The option only controls newly composed messages.  Postponed messages,
+  ** resent messages, and draft messages (via -H on the command line) will
+  ** use the content-type of the source message.
   ** .pp
-  ** $$indent_string はこのオプションが  \fIset\fP の時に無視されることに注意してください。
+  ** Note that $$indent_string is ignored when this option is \fIset\fP.
   */
   { "thorough_search",	DT_BOOL, R_NONE, {.l=OPTTHOROUGHSRC}, {.l=1} },
   /*
   ** .pp
-  ** セクション ``$patterns'' の節で記述されている \fC~b\fP と \fC~h\fP 検索操作に
-  ** 影響します。\fIset\fP の場合、検索されるヘッダとメッセージの本文/添付は検索の
-  ** 前に復号化されます。\fIunset\fP の場合、メッセージは、フォルダ中にあるままで
-  ** 検索されます。 
+  ** Affects the \fC~b\fP, \fC~B\fP, and \fC~h\fP search operations described in
+  ** section ``$patterns''.  If \fIset\fP, the headers and body/attachments of
+  ** messages to be searched are decoded before searching. If \fIunset\fP,
+  ** messages are searched as they appear in the folder.
   ** .pp
-  ** 添付の検索や非ASCII 文字の場合は、復号化に MIME 操作とデコードと、取り得る
-  ** 文字セット変換も含むので、この値を \fIset\fP にすべきです。それ以外は、
-  ** Mutt は、不正な検索結果になり得る、受け取った生メッセージに対して一致するかを
-  ** 試みます(たとえば、 quoted-printable でエンコード、又はヘッダもエンコード)。
+  ** Users searching attachments or for non-ASCII characters should \fIset\fP
+  ** this value because decoding also includes MIME parsing/decoding and possible
+  ** character set conversions. Otherwise mutt will attempt to match against the
+  ** raw message received (for example quoted-printable encoded or with encoded
+  ** headers) which may lead to incorrect search results.
   */
   { "thread_received",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTTHREADRECEIVED}, {.l=0} },
   /*
   ** .pp
-  ** fIset\fP の時、Mutt は題名でメッセージをスレッド化する場合、送信時刻の代わりに
-  ** 受信時刻を使います。
+  ** When \fIset\fP, mutt uses the date received rather than the date sent
+  ** to thread messages by subject.
   */
   { "tilde",		DT_BOOL, R_PAGER, {.l=OPTTILDE}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、内部ページャは最下部までの空白行をチルダ (``~'') で埋めます。
+  ** When \fIset\fP, the internal-pager will pad blank lines to the bottom of the
+  ** screen with a tilde (``~'').
   */
   { "time_inc",		DT_NUM,	 R_NONE, {.p=&TimeInc}, {.l=0} },
   /*
   ** .pp
-  ** $$read_inc, $$write_inc, と $$net_inc と共に、この変数は進行状況の更新が表示される
-  ** 頻度を制御します。$$time_inc ミリセカンドより小さい場合、更新を抑制します。
-  ** これは、遅いターミナル又はリモートシステムでMutt が
-  ** 動作している場合にシステムのスループットを改善できます。
+  ** Along with $$read_inc, $$write_inc, and $$net_inc, this
+  ** variable controls the frequency with which progress updates are
+  ** displayed. It suppresses updates less than $$time_inc milliseconds
+  ** apart. This can improve throughput on systems with slow terminals,
+  ** or when running mutt on a remote system.
   ** .pp
-  ** パフォーマンスの注意事項についてはマニュアルの  ``$tuning'' 節も参照してください。 
- */
+  ** Also see the ``$tuning'' section of the manual for performance considerations.
+  */
   { "timeout",		DT_NUM,	 R_NONE, {.p=&Timeout}, {.l=600} },
   /*
   ** .pp
-  ** Mutt が メニュー中でアイドル状態か、対話的なプロンプトでユーザの入力を
-  ** 待っている場合、Mutt は入力があるまでブロックします。コンテキストに依存し、
-  ** これは、新着メールのチェックやIMAP 接続の有効を保持するなどの、特定の動作
-  ** の実行を阻害します。
+  ** When Mutt is waiting for user input either idling in menus or
+  ** in an interactive prompt, Mutt would block until input is
+  ** present. Depending on the context, this would prevent certain
+  ** operations from working, like checking for new mail or keeping
+  ** an IMAP connection alive.
   ** .pp
-  ** この変数は、Mutt が入力待ちを中止して、それらの操作を実行し、入力町を
-  ** 続けるまで、最大何秒待つかを制御します。
+  ** This variable controls how many seconds Mutt will at most wait
+  ** until it aborts waiting for input, performs these operations and
+  ** continues to wait for input.
   ** .pp
-  ** 0 またほそれ以下の値では、Mutt はタイムアウトしなくなります。
+  ** A value of zero or less will cause Mutt to never time out.
   */
   { "tmpdir",		DT_PATH, R_NONE, {.p=&Tempdir}, {.p=0} },
   /*
   ** .pp
-  ** この変数は、Mutt が、メッセージの表示と編集のために必要な一時ファイルを置く
-  ** 場所を指定します。この変数が設定されていない場合、環境変数 \fC$$$TMPDIR\fP が
-  ** 使われます。\fC$$$TMPDIR\fP が設定されていない場合は、``\fC/tmp\fP'' が
-  ** 使われます。
+  ** This variable allows you to specify where Mutt will place its
+  ** temporary files needed for displaying and composing messages.  If
+  ** this variable is not set, the environment variable \fC$$$TMPDIR\fP is
+  ** used.  If \fC$$$TMPDIR\fP is not set then ``\fC/tmp\fP'' is used.
   */
   { "to_chars",		DT_MBCHARTBL, R_BOTH, {.p=&Tochars}, {.p=" +TCFL"} },
   /*
   ** .pp
-  ** 自分に来たメールを表示するために使われる文字を制御します。最初の文字は、
-  ** メールが自分のアドレスあてで \fIない\fP 場合に使われます。2番目は、
-  ** メッセージの受信者が自分自身のみの場合に使われます。3番目は、自分のアドレスが
-  ** ``To:'' ヘッダにあるが、メッセージの受信者が自分自身以外にもいることを示します。
-  ** 4番目の文字は、自分のアドレスが ``Cc:'' ヘッダにあるが、自分自身以外にも受信者が
-  ** いることを示します。5番目の文字は、自分自身が送信元のメールであることを示します。
-  ** 6番目の文字は、購読しているメーリングリストに送ったメールであることを示します。
+  ** Controls the character used to indicate mail addressed to you.  The
+  ** first character is the one used when the mail is \fInot\fP addressed to your
+  ** address.  The second is used when you are the only
+  ** recipient of the message.  The third is when your address
+  ** appears in the ``To:'' header field, but you are not the only recipient of
+  ** the message.  The fourth character is used when your
+  ** address is specified in the ``Cc:'' header field, but you are not the only
+  ** recipient.  The fifth character is used to indicate mail that was sent
+  ** by \fIyou\fP.  The sixth character is used to indicate when a mail
+  ** was sent to a mailing-list you subscribe to.
   */
   { "trash",		DT_PATH, R_NONE, {.p=&TrashPath}, {.p=0} },
   /*
   ** .pp
-  ** 設定されている場合、この変数は削除マークが付けらたメールを完全に削除する代わりに
-  ** 移動するゴミ箱フォルダのパスを指定します。
+  ** If set, this variable specifies the path of the trash folder where the
+  ** mails marked for deletion will be moved, instead of being irremediably
+  ** purged.
   ** .pp
-  ** 注意: ゴミ箱フォルダ中のメッセージを削除した場合、完全な削除となり、
-  ** ゴミ箱をからにする方法となります。
+  ** NOTE: When you delete a message in the trash folder, it is really
+  ** deleted, so that you have a way to clean the trash.
   */
-  {"ts_icon_format",	DT_STR,  R_BOTH, {.p=&TSIconFormat}, {.p="M%?n?AIL&ail?"} },
+  /* L10N:
+     $ts_icon_format default value
+  */
+  {"ts_icon_format", DT_STR|DT_L10N_STR, R_BOTH, {.p=&TSIconFormat}, {.p=N_("M%?n?AIL&ail?")} },
   /*
   ** .pp
-  ** ``$$ts_enabled'' が設定されている限り、アイコンタイトルのフォーマットを
-  ** 制御します。この文字列は、``$$status_format'' で使われているものと、
-  ** フォーマットは同じです。
+  ** Controls the format of the icon title, as long as ``$$ts_enabled'' is set.
+  ** This string is identical in formatting to the one used by
+  ** ``$$status_format''.
   */
   {"ts_enabled",	DT_BOOL,  R_BOTH, {.l=OPTTSENABLED}, {.l=0} },
   /* The default must be off to force in the validity checking. */
   /*
   ** .pp
-  ** Mutt が端末ステータス行とアイコン名を設定するための試みを制御します。
-  ** 多くのターミナルエミュレータはウィンドウのタイトルでステータス行をエミュレート
-  ** します。
+  ** Controls whether mutt tries to set the terminal status line and icon name.
+  ** Most terminal emulators emulate the status line in the window title.
   */
-  {"ts_status_format",	DT_STR,   R_BOTH, {.p=&TSStatusFormat}, {.p="Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?"} },
+  /* L10N:
+     $ts_status_format default value
+  */
+  {"ts_status_format", DT_STR|DT_L10N_STR, R_BOTH, {.p=&TSStatusFormat}, {.p=N_("Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?")} },
   /*
   ** .pp
-  ** ``$$ts_enabled'' が設定されているときに、端末ステータス行(又はウィンドウの
-  ** タイトル)のフォーマットを制御します。この文字列は、``$$status_format'' で
-  ** 使われているものと同じフォーマットです。
-  ** 
+  ** Controls the format of the terminal status line (or window title),
+  ** provided that ``$$ts_enabled'' has been set. This string is identical in
+  ** formatting to the one used by ``$$status_format''.
   */
 #ifdef USE_SOCKET
   { "tunnel",            DT_STR, R_NONE, {.p=&Tunnel}, {.p=0} },
   /*
   ** .pp
-  ** この変数を設定すると、Mutt は raw ソケットの代わりにコマンドへのパイプを開きます。
-  ** これを使って、IMAP/POP3/SMTP サーバへの事前認証済み接続を設定することが
-  ** 出来るようになります。以下が例です。
+  ** Setting this variable will cause mutt to open a pipe to a command
+  ** instead of a raw socket. You may be able to use this to set up
+  ** preauthenticated connections to your IMAP/POP3/SMTP server. Example:
   ** .ts
   ** set tunnel="ssh -q mailhost.net /usr/local/libexec/imapd"
   ** .te
   ** .pp
-  ** この例を動かすためには、パスワード入力なしで、リモートのマシンにログイン
-  ** 出来なければなりません。
+  ** Note: For this example to work you must be able to log in to the remote
+  ** machine without having to enter a password.
   ** .pp
-  ** 設定した場合、Mutt はすべてのリモートマシンに対してトンネルを使います。
-  ** 接続毎に異なったトンネルコマンドを使うかについては、 ``$account-hook'' の
-  ** マニュアルを参照してください。
+  ** When set, Mutt uses the tunnel for all remote connections.
+  ** Please see ``$account-hook'' in the manual for how to use different
+  ** tunnel commands per connection.
   */
 #endif
+  { "tunnel_is_secure", DT_BOOL, R_NONE, {.l=OPTTUNNELISSECURE}, {.l=1} },
+  /*
+  ** .pp
+  ** When \fIset\fP, Mutt will assume the $$tunnel connection does not need
+  ** STARTTLS to be enabled.  It will also allow IMAP PREAUTH server
+  ** responses inside a $tunnel to proceed.  This is appropriate if $$tunnel
+  ** uses ssh or directly invokes the server locally.
+  ** .pp
+  ** When \fIunset\fP, Mutt will negotiate STARTTLS according to the
+  ** $ssl_starttls and $ssl_force_tls variables.  If $ssl_force_tls is
+  ** set, Mutt will abort connecting if an IMAP server responds with PREAUTH.
+  ** This setting is appropriate if $$tunnel does not provide security and
+  ** could be tampered with by attackers.
+  */
   { "uncollapse_jump", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSEJUMP}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、現在のスレッドが、折りたたまれて \fIいない\fP場合、
-  ** Mutt は存在していれば、次の未読メッセージにジャンプします。
+  ** When \fIset\fP, Mutt will jump to the next unread message, if any,
+  ** when the current thread is \fIun\fPcollapsed.
   */
   { "uncollapse_new", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSENEW}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、新規メッセージを受け取ったとき、Mutt は自動的に、折りたたまれた
-  ** スレッドを展開します。\fIunset\fP の場合、折りたたまれたスレッドは
-  ** 折りたたまれたままになります。ただし、新規メッセージがあると、インデックスの整列には
-  ** 影響します。
+  ** When \fIset\fP, Mutt will automatically uncollapse any collapsed
+  ** thread that receives a newly delivered message.  When
+  ** \fIunset\fP, collapsed threads will remain collapsed. The
+  ** presence of the newly delivered message will still affect index
+  ** sorting, though.
   */
   { "use_8bitmime",	DT_BOOL, R_NONE, {.l=OPTUSE8BITMIME}, {.l=0} },
   /*
   ** .pp
-  ** \fB警告:\fP 使用している sendmail のバージョンが、\fC-B8BITMIME\fP フラグ
-  ** (たとえば sendmail 8.8.x)をサポートしているものを使っていない限り、
-  ** この変数を設定してはいけません。そうしないと、メールが送れなくなって
-  ** しまいます。
+  ** \fBWarning:\fP do not set this variable unless you are using a version
+  ** of sendmail which supports the \fC-B8BITMIME\fP flag (such as sendmail
+  ** 8.8.x) or you may not be able to send mail.
   ** .pp
-  ** \fIset\fP とすると、 Mutt は、8ビットメッセージを送るときに、ESMTP
-  ** ネゴシエーションを有効にするため、$$sendmail を \fC-B8BITMIME\fP 付きで
-  ** 起動します。
+  ** When \fIset\fP, Mutt will invoke $$sendmail with the \fC-B8BITMIME\fP
+  ** flag when sending 8-bit messages to enable ESMTP negotiation.
   */
   { "use_domain",	DT_BOOL, R_NONE, {.l=OPTUSEDOMAIN}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の時、Mutt はすべてのローカルアドレス(``@host'' 部分がないもの)を
-  ** $$hostname の価を付けて補完します。\fIunset\fP の場合、アドレスの
-  ** 補完はしません。
+  ** When \fIset\fP, Mutt will qualify all local addresses (ones without the
+  ** ``@host'' portion) with the value of $$hostname.  If \fIunset\fP, no
+  ** addresses will be qualified.
   */
   { "use_envelope_from", 	DT_BOOL, R_NONE, {.l=OPTENVFROM}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の時、Mutt はメッセージの \fIenvelope\fP sender を設定します。
-  ** $$envelope_from_address が \fIset\fP の場合、送信者アドレスとしてそれが
-  ** 使われます。\fIunset\fP の場合、Mutt は ``From:'' ヘッダから送信者アドレスを
-  ** 抽出しようとします。
+  ** When \fIset\fP, mutt will set the \fIenvelope\fP sender of the message.
+  ** If $$envelope_from_address is \fIset\fP, it will be used as the sender
+  ** address. If \fIunset\fP, mutt will attempt to derive the sender from the
+  ** ``From:'' header.
   ** .pp
-  ** この情報は、\fC-f\fP コマンド行スイッチを使って sendmail コマンドに渡される
-  ** ことに注意してください。そのため、このオプションを設定することは、
-  ** $$sendmail 変数がすでに \fC-f\fP を含んでいるか、$$sendmail によって指定される
-  ** 実行形式が、\fC-f\fP スイッチをサポートしない場合には好ましくありません。
+  ** Note that this information is passed to sendmail command using the
+  ** \fC-f\fP command line switch. Therefore setting this option is not useful
+  ** if the $$sendmail variable already contains \fC-f\fP or if the
+  ** executable pointed to by $$sendmail doesn't support the \fC-f\fP switch.
   */
   { "envelope_from",	DT_SYN,  R_NONE, {.p="use_envelope_from"}, {.p=0} },
   /*
@@ -4200,108 +4713,116 @@ struct option_t MuttVars[] = {
   { "use_from",		DT_BOOL, R_NONE, {.l=OPTUSEFROM}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は送信時に ``From:'' ヘッダフィールドを生成します。
-  ** \fIunset\fP の場合、ユーザが、``$my_hdr'' コマンドを使って明示的に設定
-  ** しない限り、``From:'' ヘッダフィールドを生成しません。
+  ** When \fIset\fP, Mutt will generate the ``From:'' header field when
+  ** sending messages.  If \fIunset\fP, no ``From:'' header field will be
+  ** generated unless the user explicitly sets one using the ``$my_hdr''
+  ** command.
   */
 #ifdef HAVE_GETADDRINFO
   { "use_ipv6",		DT_BOOL, R_NONE, {.l=OPTUSEIPV6}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt はホストの 接続のために、IPv6 アドレスを探します。
-  ** このオプションが  \fIunset\fP の場合、Mutt は IPv4 アドレスに制限します。
-  ** 通常、既定値で動作します。
+  ** When \fIset\fP, Mutt will look for IPv6 addresses of hosts it tries to
+  ** contact.  If this option is \fIunset\fP, Mutt will restrict itself to IPv4 addresses.
+  ** Normally, the default should work.
   */
 #endif /* HAVE_GETADDRINFO */
   { "user_agent",	DT_BOOL, R_NONE, {.l=OPTXMAILER}, {.l=0} },
   /*
   ** .pp
-  ** \fIset\fP の場合、Mutt は送信メッセージに ``User-Agent:'' ヘッダを追加し、
-  ** メールの編集にどのバージョンの Mutt を使ったかを表示します。
+  ** When \fIset\fP, mutt will add a ``User-Agent:'' header to outgoing
+  ** messages, indicating which version of mutt was used for composing
+  ** them.
   */
-  { "visual",		DT_PATH, R_NONE, {.p=&Visual}, {.p=0} },
+  { "visual",		DT_CMD_PATH, R_NONE, {.p=&Visual}, {.p=0} },
   /*
   ** .pp
-  ** 内蔵エディタの ``\fC~v\fP'' コマンドで使われる画面エディタを指定します。
+  ** Specifies the visual editor to invoke when the ``\fC~v\fP'' command is
+  ** given in the built-in editor.
   */
   { "wait_key",		DT_BOOL, R_NONE, {.l=OPTWAITKEY}, {.l=1} },
   /*
   ** .pp
-  ** Mutt が、\fC<shell-escape>\fP,\fC<pipe-message>\fP, \fC<pipe-entry>\fP,
-  **  \fC<print-message>\fP, と \fC<print-entry>\fP コマンドによって起動される
-  ** 外部コマンドの後にキーを押すかを問い合わせるかどうかを制御します。
+  ** Controls whether Mutt will ask you to press a key after an external command
+  ** has been invoked by these functions: \fC<shell-escape>\fP,
+  ** \fC<pipe-message>\fP, \fC<pipe-entry>\fP, \fC<print-message>\fP,
+  ** and \fC<print-entry>\fP commands.
   ** .pp
-  ** 対応する mailcap エントリが \fIneedsterminal\fP フラグががあり、外部
-  ** プログラムが対話的なものであるとき、``$auto_view'' で添付を表示するときにも使われます。
+  ** It is also used when viewing attachments with ``$auto_view'', provided
+  ** that the corresponding mailcap entry has a \fIneedsterminal\fP flag,
+  ** and the external program is interactive.
   ** .pp
-  **  \fIset\fP の場合、Mutt は常時キーを問合せします。\fIunset\fP の時、Mutt は
-  ** 外部コマンドが非0のステータスを返した場合にのみキーを待ちます。
+  ** When \fIset\fP, Mutt will always ask for a key. When \fIunset\fP, Mutt will wait
+  ** for a key only if the external command returned a non-zero status.
   */
   { "weed",		DT_BOOL, R_NONE, {.l=OPTWEED}, {.l=1} },
   /*
   ** .pp
-  ** \fIset\fP の時、Mutt はメッセージの表示、転送、印刷または返信時に
-  ** ヘッダを間引きします。
+  ** When \fIset\fP, mutt will weed headers when displaying, forwarding,
+  ** or replying to messages.
+  ** .pp
+  ** Also see $$copy_decode_weed, $$pipe_decode_weed, $$print_decode_weed.
   */
-  { "wrap",             DT_NUM,  R_PAGER, {.p=&Wrap}, {.l=0} },
-  { "wrapcolumn",       DT_SYN,  R_NONE, {.p="wrap"}, {.p=0} },
+  { "wrap",             DT_NUM,  R_PAGER_FLOW, {.p=&Wrap}, {.l=0} },
   /*
   ** .pp
-  ** 正の値に設定すると、Mutt は $$wrap 文字でテキストを折り返します。
-  ** 負の値に設定すると、Mutt は端末の右側の空白による空間に、$$wrap 文字が
-  ** あるようにテキストを折り返します。ゼロに設定すると、Mutt は端末の幅で
-  ** 折り返します。
+  ** When set to a positive value, mutt will wrap text at $$wrap characters.
+  ** When set to a negative value, mutt will wrap text so that there are $$wrap
+  ** characters of empty space on the right side of the terminal. Setting it
+  ** to zero makes mutt wrap at the terminal width.
   ** .pp
-  ** $$reflow_wrap も参照してください。
+  ** Also see $$reflow_wrap.
   */
   { "wrap_headers",     DT_NUM,  R_PAGER, {.p=&WrapHeaders}, {.l=78} },
   /*
   ** .pp
-  ** このオプションは、送信するメッセージのヘッダを折り返すために使われる
-  ** 文字数を指定します。設定できる値は 78 以上 998 以下までです。
+  ** This option specifies the number of characters to use for wrapping
+  ** an outgoing message's headers. Allowed values are between 78 and 998
+  ** inclusive.
   ** .pp
-  ** \fB注:\fP このオプションは通常変更してはなりません。RFC5233 では
-  ** 行の長さを 78(既定値)にすることを推奨していますので、
-  ** \fB何をするかを分かっている場合にのみこの値を変更してください\fP。
+  ** \fBNote:\fP This option usually shouldn't be changed. RFC5233
+  ** recommends a line length of 78 (the default), so \fBplease only change
+  ** this setting when you know what you're doing\fP.
   */
   { "wrap_search",	DT_BOOL, R_NONE, {.l=OPTWRAPSEARCH}, {.l=1} },
   /*
   ** .pp
-  ** 検索が終端で折り返すかどうかを制御します。
+  ** Controls whether searches wrap around the end.
   ** .pp
-  ** \fIset\fP の場合、検索は最初(又は最後)の項目で折り返します。
-  ** \fIunset\fP の場合、検索の続きは折り返しません。
+  ** When \fIset\fP, searches will wrap around the first (or last) item. When
+  ** \fIunset\fP, incremental searches will not wrap.
   */
-  { "wrapmargin",	DT_NUM,	 R_PAGER, {.p=&Wrap}, {.l=0} },
+  { "wrapmargin",	DT_NUM,	 R_PAGER_FLOW, {.p=&Wrap}, {.l=0} },
   /*
   ** .pp
-  ** (非推奨) 負の値の $$wrap の設定と同じ。
+  ** (DEPRECATED) Equivalent to setting $$wrap with a negative value.
   */
   { "write_bcc",	DT_BOOL, R_NONE, {.l=OPTWRITEBCC}, {.l=0} },
   /*
   ** .pp
-  ** 送信するメッセージを準備する時に、``Bcc:'' ヘッダを書き込むかを制御します。
-  ** Exim と Courier のようないくつかのMTA では ``Bcc:'' ヘッダを取り除かないので、
-  ** 送信メッセージ中にヘッダを入れる必要がない限り、これを設定しないでおく
-  ** ことを推奨します。
+  ** Controls whether mutt writes out the ``Bcc:'' header when
+  ** preparing messages to be sent.  Some MTAs, such as Exim and
+  ** Courier, do not strip the ``Bcc:'' header; so it is advisable to
+  ** leave this unset unless you have a particular need for the header
+  ** to be in the sent message.
   ** .pp
-  ** Mutt がSMTP経由で直接配送するように設定した場合($$smtp_url を参照)、
-  ** このオプションは意味を持ちません。Mutt はこの場合、決して ``Bcc:''
-  ** ヘッダを書き込みません。
+  ** If mutt is set to deliver directly via SMTP (see $$smtp_url),
+  ** this option does nothing: mutt will never write out the ``Bcc:''
+  ** header in this case.
   ** .pp
-  ** このオプションは、メッセージの送信にのみ影響することに注意してください。
-  ** Fcc されたメッセージのコピーは、存在すれば ``Bcc:'' ヘッダが常時
-  ** 含まれます。
+  ** Note this option only affects the sending of messages.  Fcc'ed
+  ** copies of a message will always contain the ``Bcc:'' header if
+  ** one exists.
   */
   { "write_inc",	DT_NUM,	 R_NONE, {.p=&WriteInc}, {.l=10} },
   /*
   ** .pp
-  ** メールボックスを書き込むとき、メッセージは、処理状態を表示するために、
-  ** 各 $$write_inc メッセージ毎に表示されます。0 に設定された場合、
-  ** メールボックスを書き込む前に、1つのメッセージだけ表示されます。
+  ** When writing a mailbox, a message will be printed every
+  ** $$write_inc messages to indicate progress.  If set to 0, only a
+  ** single message will be displayed before writing a mailbox.
   ** .pp
-  ** $$read_inc, $$net_inc と $$time_inc 変数と、パフォーマンスの考慮に関する
-  ** マニュアルの、``$tuning'' 節も参照してください。
+  ** Also see the $$read_inc, $$net_inc and $$time_inc variables and the
+  ** ``$tuning'' section of the manual for performance considerations.
   */
   {"xterm_icon",	DT_SYN,  R_NONE, {.p="ts_icon_format"}, {.p=0} },
   /*
@@ -4314,81 +4835,6 @@ struct option_t MuttVars[] = {
   */
   /*--*/
   { NULL, 0, 0, {.l=0}, {.l=0} }
-};
-
-const struct mapping_t SortMethods[] = {
-  { "date",		SORT_DATE },
-  { "date-sent",	SORT_DATE },
-  { "date-received",	SORT_RECEIVED },
-  { "mailbox-order",	SORT_ORDER },
-  { "subject",		SORT_SUBJECT },
-  { "from",		SORT_FROM },
-  { "size",		SORT_SIZE },
-  { "threads",		SORT_THREADS },
-  { "to",		SORT_TO },
-  { "score",		SORT_SCORE },
-  { "spam",		SORT_SPAM },
-  { "label",		SORT_LABEL },
-  { NULL,               0 }
-};
-
-/* same as SortMethods, but with "threads" replaced by "date" */
-
-const struct mapping_t SortAuxMethods[] = {
-  { "date",		SORT_DATE },
-  { "date-sent",	SORT_DATE },
-  { "date-received",	SORT_RECEIVED },
-  { "mailbox-order",	SORT_ORDER },
-  { "subject",		SORT_SUBJECT },
-  { "from",		SORT_FROM },
-  { "size",		SORT_SIZE },
-  { "threads",		SORT_DATE },	/* note: sort_aux == threads
-					 * isn't possible.
-					 */
-  { "to",		SORT_TO },
-  { "score",		SORT_SCORE },
-  { "spam",		SORT_SPAM },
-  { "label",		SORT_LABEL },
-  { NULL,               0 }
-};
-
-
-const struct mapping_t SortBrowserMethods[] = {
-  { "alpha",	SORT_SUBJECT },
-  { "count",	SORT_COUNT },
-  { "date",	SORT_DATE },
-  { "size",	SORT_SIZE },
-  { "unread",	SORT_UNREAD },
-  { "unsorted",	SORT_ORDER },
-  { NULL,       0 }
-};
-
-const struct mapping_t SortAliasMethods[] = {
-  { "alias",	SORT_ALIAS },
-  { "address",	SORT_ADDRESS },
-  { "unsorted", SORT_ORDER },
-  { NULL,       0 }
-};
-
-const struct mapping_t SortKeyMethods[] = {
-  { "address",	SORT_ADDRESS },
-  { "date",	SORT_DATE },
-  { "keyid",	SORT_KEYID },
-  { "trust",	SORT_TRUST },
-  { NULL,       0 }
-};
-
-const struct mapping_t SortSidebarMethods[] = {
-  { "alpha",		SORT_SUBJECT },
-  { "count",		SORT_COUNT },
-  { "flagged",		SORT_FLAGGED },
-  { "mailbox-order",	SORT_ORDER },
-  { "name",		SORT_SUBJECT },
-  { "new",		SORT_UNREAD },  /* kept for compatibility */
-  { "path",		SORT_PATH },
-  { "unread",		SORT_UNREAD },
-  { "unsorted",		SORT_ORDER },
-  { NULL,		0 }
 };
 
 
@@ -4411,7 +4857,9 @@ static int parse_unalias (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_echo (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_ignore (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_unignore (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
+static int parse_run (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_source (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
+static int parse_cd (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_set (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_setenv (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
 static int parse_my_hdr (BUFFER *, BUFFER *, union pointer_long_t, BUFFER *);
@@ -4452,6 +4900,7 @@ const struct command_t Commands[] = {
   { "auto_view",	parse_list,		{.p=&AutoViewList} },
   { "alternative_order",	parse_list,	{.p=&AlternativeOrderList} },
   { "bind",		mutt_parse_bind,	{.l=0} },
+  { "cd",		parse_cd,		{.l=0} },
   { "charset-hook",	mutt_parse_hook,	{.l=MUTT_CHARSETHOOK} },
 #ifdef HAVE_COLOR
   { "color",		mutt_parse_color,	{.l=0} },
@@ -4492,6 +4941,7 @@ const struct command_t Commands[] = {
   { "push",		mutt_parse_push,	{.l=0} },
   { "reply-hook",	mutt_parse_hook,	{.l=MUTT_REPLYHOOK} },
   { "reset",		parse_set,		{.l=MUTT_SET_RESET} },
+  { "run",		parse_run,		{.l=0} },
   { "save-hook",	mutt_parse_hook,	{.l=MUTT_SAVEHOOK} },
   { "score",		mutt_parse_score,	{.l=0} },
   { "send-hook",	mutt_parse_hook,	{.l=MUTT_SENDHOOK} },
