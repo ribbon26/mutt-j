@@ -1370,400 +1370,370 @@ struct option_t MuttVars[] = {
   { "header_cache", DT_PATH, R_NONE, {.p=&HeaderCache}, {.p=0} },
   /*
   ** .pp
-  ** This variable points to the header cache database.
-  ** If pointing to a directory Mutt will contain a header cache
-  ** database file per folder, if pointing to a file that file will
-  ** be a single global header cache. By default it is \fIunset\fP so no header
-  ** caching will be used.  If pointing to a directory, it must be
-  ** created in advance.
+  ** この変数はヘッダキャッシュデータベースの場所を指定します。ディレクトリを示して
+  ** いれば、Mutt はフォルダ単位のヘッダキャッシュデータベースがあり、ファイルを示して
+  ** いれば、全体の単一ヘッダキャッシュとなります。既定では\fIunset\fPなので、
+  ** ヘッダキャッシュは使われません。
   ** .pp
-  ** Header caching can greatly improve speed when opening POP, IMAP
-  ** MH or Maildir folders, see ``$caching'' for details.
+  ** ヘッダキャッシュは、POP, IMAP, MH および Maildir フォルダを開くときに
+  ** 大幅なスピードの改善が出来ます。詳細については ``$caching'' を参照してください。
   */
 # if defined(HAVE_QDBM) || defined(HAVE_TC) || defined(HAVE_KC)
   { "header_cache_compress", DT_BOOL, R_NONE, {.l=OPTHCACHECOMPRESS}, {.l=1} },
   /*
   ** .pp
-  ** When mutt is compiled with qdbm, tokyocabinet, or kyotocabinet as header
-  ** cache backend, this option determines whether the database will be compressed.
-  ** Compression results in database files roughly being one fifth
-  ** of the usual diskspace, but the decompression can result in a
-  ** slower opening of cached folder(s) which in general is still
-  ** much faster than opening non header cached folders.
+  ** Mutt が qdbm,tokyocabinet, 又は kyotocabinet を、ヘッダキャッシュのバックエンドとして
+  ** 使うようにコンパイルされている場合、このオプションは、データベースを圧縮するか否かを
+  ** 指定します。データベース中のファイルを圧縮すると、大きさがおおよそ通常の1/5に
+  ** なりますが、展開を行うと、キャッシュされたフォルダを開くのが遅くなりますが、
+  ** ヘッダキャッシュがないフォルダを開くよりは、まだ高速に開けます。
   */
 # endif /* HAVE_QDBM */
 # if defined(HAVE_GDBM) || defined(HAVE_DB4)
   { "header_cache_pagesize", DT_LNUM, R_NONE, {.p=&HeaderCachePageSize}, {.l=16384} },
   /*
   ** .pp
-  ** When mutt is compiled with either gdbm or bdb4 as the header cache backend,
-  ** this option changes the database page size.  Too large or too small
-  ** values can waste space, memory, or CPU time. The default should be more
-  ** or less optimal for most use cases.
+  ** ヘッダキャッシュのバックエンドとして、 gdbm 又は bdb4 のどちらかを使うように
+  ** Mutt がコンパイルされている場合、このオプションはデータベースのページサイズを変更します。
+  ** 値が大きすぎたり小さすぎたりすると、余分なスペース、メモリ、CPU 時間を消費します。
+  ** 既定値はほとんどの場合において大きすぎず、小さすぎずに最適化されているはずです。
   */
 # endif /* HAVE_GDBM || HAVE_DB4 */
 #endif /* USE_HCACHE */
   { "header_color_partial", DT_BOOL, R_PAGER_FLOW, {.l=OPTHEADERCOLORPARTIAL}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, color header regexps behave like color body regexps:
-  ** color is applied to the exact text matched by the regexp.  When
-  ** \fIunset\fP, color is applied to the entire header.
+  ** \fIset\fP の場合、カラーヘッダの正規表現はカラーボディの正規表現と同じように
+  ** 振る舞います。色は正規表現によって一致した正確なテキストに適用されます。
+  ** \fIunset\fP の場合は、色はヘッダ全体に適用されます。
   ** .pp
-  ** One use of this option might be to apply color to just the header labels.
+  ** このオプションの1つの使い方は、ヘッダラベルにのみ色を適用することです。
   ** .pp
-  ** See ``$color'' for more details.
+  ** 詳細は ``$color'' を参照してください。
   */
   { "help",		DT_BOOL, R_REFLOW, {.l=OPTHELP}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, help lines describing the bindings for the major functions
-  ** provided by each menu are displayed on the first line of the screen.
+  ** \fIset\fP の場合、各メニューで提供される、主要な機能に対するバインディングの説明を
+  ** するヘルプ行は画面の最初の行に表示されます。
   ** .pp
-  ** \fBNote:\fP The binding will not be displayed correctly if the
-  ** function is bound to a sequence rather than a single keystroke.  Also,
-  ** the help line may not be updated if a binding is changed while Mutt is
-  ** running.  Since this variable is primarily aimed at new users, neither
-  ** of these should present a major problem.
+  ** \fB注意:\fP 単一のキーストロークではなく、一連のキーストロークに機能がバインド
+  ** されていると、バインディングは正確には表示されません。同様に、Mutt が動作中に
+  ** バインディングが変更されてもヘルプ行は更新されません。この変数は主に新規
+  ** ユーザを対象としているので、上記のどちらも大きな問題ではありません。
   */
   { "hidden_host",	DT_BOOL, R_NONE, {.l=OPTHIDDENHOST}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will skip the host name part of $$hostname variable
-  ** when adding the domain part to addresses.  This variable does not
-  ** affect the generation of Message-IDs, and it will not lead to the
-  ** cut-off of first-level domains.
+  ** \fIset\fP の場合、Mutt は、アドレスにドメイン部分を付加するときに、$$hostname
+  ** 変数のホスト名部分をスキップします。この変数は Message-ID の生成には影響を
+  ** 与えず、ドメインの最初の部分を切り取ることはありません。
   */
   { "hide_limited",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDELIMITED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of messages that are hidden
-  ** by limiting, in the thread tree.
+  **  \fIset\fP の場合、Mutt は、スレッドツリー中で limit 機能により隠されている
+  ** メッセージの存在を表示しません。
   */
   { "hide_missing",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDEMISSING}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of missing messages in the
-  ** thread tree.
+  ** \fIset\fP の場合、Mutt はスレッドツリー中で存在しないメッセージの存在を
+  ** 表示しません。
   */
   { "hide_thread_subject", DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETHREADSUBJECT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the subject of messages in the thread
-  ** tree that have the same subject as their parent or closest previously
-  ** displayed sibling.
+  ** \fIset\fP の場合、Mutt  はスレッドツリー内で、親と同じか以前に表示された
+  ** もっとも近い sibling と同じ題名を持つメッセージの題名を表示しません。
   */
   { "hide_top_limited",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETOPLIMITED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of messages that are hidden
-  ** by limiting, at the top of threads in the thread tree.  Note that when
-  ** $$hide_limited is \fIset\fP, this option will have no effect.
+  ** \fIset\fP の場合、Mutt は スレッドツリー中の最上位に、limit 機能によって隠されて
+  ** いるメッセージの存在を表示しません。$$hide_limited が \fIset\fP の場合、
+  ** このオプションは何の効果もないことに注意してください。
   */
   { "hide_top_missing",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTHIDETOPMISSING}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not show the presence of missing messages at the
-  ** top of threads in the thread tree.  Note that when $$hide_missing is
-  ** \fIset\fP, this option will have no effect.
+  ** \fIset\fP の場合、Mutt はスレッドツリーのスレッドの上部に、メッセージがないことの
+  ** 表示をしません。$$hide_missing が \fIset\fP の場合、このオプションは何の効果も
+  ** ないことに注意してください。
   */
   { "history",		DT_NUM,	 R_NONE, {.p=&HistSize}, {.l=10} },
   /*
   ** .pp
-  ** This variable controls the size (in number of strings remembered) of
-  ** the string history buffer per category. The buffer is cleared each time the
-  ** variable is set.
+  ** この変数はカテゴリ毎の文字列ヒストリバッファのサイズ(記憶される文字列の数)を
+  ** 制御します。バッファは変数が設定される度毎に消去されます。
   */
   { "history_file",     DT_PATH, R_NONE, {.p=&HistFile}, {.p="~/.mutthistory"} },
   /*
   ** .pp
-  ** The file in which Mutt will save its history.
+  ** Mutt がそのヒストリをセーブするファイルです。
   ** .pp
-  ** Also see $$save_history.
+  ** $$save_history も参照してください。
   */
   { "history_remove_dups", DT_BOOL, R_NONE, {.l=OPTHISTREMOVEDUPS}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, all of the string history will be scanned for duplicates
-  ** when a new entry is added.  Duplicate entries in the $$history_file will
-  ** also be removed when it is periodically compacted.
+  ** \fIset\fP の場合、新しいエントリが追加されるときに、重複するかどうかを、すべての
+  ** 文字列ヒストリでスキャンします。$$history_file 中の重複するエントリは
+  ** 定期的に圧縮される時にも削除されます。
   */
   { "honor_disposition", DT_BOOL, R_NONE, {.l=OPTHONORDISP}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will not display attachments with a
-  ** disposition of ``attachment'' inline even if it could
-  ** render the part to plain text. These MIME parts can only
-  ** be viewed from the attachment menu.
+  ** \fIset\fP の場合、Mutt はそのパートが平文で描画可能だったとしても、インラインで
+  ** ``attachment''という配置の添付を表示しません。MIME パートは添付メニュー
+  ** でのみ表示できます。
   ** .pp
-  ** If \fIunset\fP, Mutt will render all MIME parts it can
-  ** properly transform to plain text.
+  ** \fIunset\fP の場合、Mutt は適切に平文に変換できる場合、すべての MIME パートを
+  ** 描画します。
   */
   { "honor_followup_to", DT_QUAD, R_NONE, {.l=OPT_MFUPTO}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This variable controls whether or not a Mail-Followup-To header is
-  ** honored when group-replying to a message.
+  ** この変数は Mail-Followup-To ヘッダが、メッセージに対してグループ返信するときに
+  ** 信頼できるか否かを制御します。
   */
   { "hostname",		DT_STR,	 R_NONE, {.p=&Fqdn}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the fully-qualified hostname of the system mutt is running on
-  ** containing the host's name and the DNS domain it belongs to. It is used
-  ** as the domain part (after ``@'') for local email addresses as well as
-  ** Message-Id headers.
+  ** Mutt が動いているシステムでホスト名とDNS ドメイン名が存在している場合、
+  ** 完全修飾ホスト名(FQDN)を指定します。これは、ローカルメールアドレスのドメイン部分
+  ** (``@'' の後)と、Message-Id ヘッダとして使われます。
   ** .pp
-  ** Its value is determined at startup as follows: the node's
-  ** hostname is first determined by the \fCuname(3)\fP function.  The
-  ** domain is then looked up using the \fCgethostname(2)\fP and
-  ** \fCgetaddrinfo(3)\fP functions.  If those calls are unable to
-  ** determine the domain, the full value returned by uname is used.
-  ** Optionally, Mutt can be compiled with a fixed domain name in
-  ** which case a detected one is not used.
+  ** この値は以下のようにして起動時に決まります。ノードのホスト名は \fCuname(3)\fP
+  ** 関数によって最初に決まります。ドメインは次に\fCgethostname(2)\fP と
+  ** \fCgetaddrinfo(3)\fP 関数によって検索されます。もしそれらの呼び出しで
+  ** ドメインを決定できない場合、uname の結果の完全な値が使われます。オプションで、
+  ** Mutt が固定したドメインでコンパイルできますが、この場合、検出された値は
+  ** 使われません。
   ** .pp
-  ** Starting in Mutt 2.0, the operations described in the previous
-  ** paragraph are performed after the muttrc is processed, instead of
-  ** beforehand.  This way, if the DNS operations are creating delays
-  ** at startup, you can avoid those by manually setting the value in
-  ** your muttrc.
+  ** Mutt 2.0 から、前の段落で説明した操作は、muttrc が処理される前ではなく、
+  ** 処理されたあとに実行されます。この方法では、DNS 操作が起動時に遅延を
+  ** 発生させる場合、この値を muttrc に手動で設定することにより、遅延を
+  ** 防ぐことが出来ます。
   ** .pp
-  ** Also see $$use_domain and $$hidden_host.
+  **  $$use_domain と $$hidden_host も参照してください。
   */
 #if defined(HAVE_LIBIDN) || defined(HAVE_LIBIDN2)
   { "idn_decode",	DT_BOOL, R_MENU, {.l=OPTIDNDECODE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will show you international domain names decoded.
-  ** Note: You can use IDNs for addresses even if this is \fIunset\fP.
-  ** This variable only affects decoding. (IDN only)
+  ** \fIset\fP の場合、Mutt は国際化ドメイン名をデコードして表示します。
+  ** 注意: これが\fIunset\fP だったとしても、アドレスに対して IDN を使う事が出来ます。
+  ** この値はデコードのみに影響します(IDN のみです)。
   */
   { "idn_encode",	DT_BOOL, R_MENU, {.l=OPTIDNENCODE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will encode international domain names using
-  ** IDN.  Unset this if your SMTP server can handle newer (RFC 6531)
-  ** UTF-8 encoded domains. (IDN only)
+  ** \fIset\fP の場合、Mutt は IDN を使って国際化ドメイン名をエンコードします。
+  ** 使用する SMP サーバが新しい (RFC6531) UTF-8 エンコードされたドメインを扱える
+  ** 場合は、これを設定しません。(IDN のみです)
   */
 #endif /* defined(HAVE_LIBIDN) || defined(HAVE_LIBIDN2) */
   { "ignore_linear_white_space",    DT_BOOL, R_NONE, {.l=OPTIGNORELWS}, {.l=0} },
   /*
   ** .pp
-  ** This option replaces linear-white-space between encoded-word
-  ** and text to a single space to prevent the display of MIME-encoded
-  ** ``Subject:'' field from being divided into multiple lines.
+  ** このオプションは エンコードされた単語とテキストの間の linear-white-space を
+  ** MIME エンコードされた ``Subject:'' フィールドの表示が複数行に分割されてしまうことを
+  ** 防ぐために単一の空白に置き換えます。
   */
   { "ignore_list_reply_to", DT_BOOL, R_NONE, {.l=OPTIGNORELISTREPLYTO}, {.l=0} },
   /*
   ** .pp
-  ** Affects the behavior of the \fC<reply>\fP function when replying to
-  ** messages from mailing lists (as defined by the ``$subscribe'' or
-  ** ``$lists'' commands).  When \fIset\fP, if the ``Reply-To:'' field is
-  ** set to the same value as the ``To:'' field, Mutt assumes that the
-  ** ``Reply-To:'' field was set by the mailing list to automate responses
-  ** to the list, and will ignore this field.  To direct a response to the
-  ** mailing list when this option is \fIset\fP, use the \fC$<list-reply>\fP
-  ** function; \fC<group-reply>\fP will reply to both the sender and the
-  ** list.
+  ** メーリングリスト(``$subscribe'' 又は ``$lists'' コマンドで定義されたもの)
+  ** からメッセージに返信する時に\fC<reply>\fP 機能の動作に影響します。
+  ** \fIset\fPの場合で、``Reply-To:'' フィールドが ``To:'' フィールドの値と
+  ** 同じに設定されている場合、Mutt は、自動的にメーリングリストへの返信を
+  ** 自動化するために、``Reply-To:'' フィールドが、メーリングリストによって
+  ** 設定されたと仮定し、このフィールドを無視します。このオプションが\fIset\fP
+  ** の場合、メーリングリストに対する直接の返信は \fC$<list-reply>\fP 機能を
+  ** 使います。\fC<group-reply>\fP は送信者とメーリングリスト両方に返信します。
   */
 #ifdef USE_IMAP
   { "imap_authenticators", DT_STR, R_NONE, {.p=&ImapAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** This is a colon-delimited list of authentication methods mutt may
-  ** attempt to use to log in to an IMAP server, in the order mutt should
-  ** try them.  Authentication methods are either ``login'' or the right
-  ** side of an IMAP ``AUTH=xxx'' capability string, e.g. ``digest-md5'', ``gssapi''
-  ** or ``cram-md5''. This option is case-insensitive. If it's
-  ** \fIunset\fP (the default) mutt will try all available methods,
-  ** in order from most-secure to least-secure.
+  ** これはコロンで区切られた、認証方法の一覧で、Mutt はここに並んでいる順で、
+  ** これらの方式を使って、 IMAP サーバにログインしようとします。認証方式は
+  ** ``login'' か、IMAP のケーパビリティ文字列 'AUTH=xxx' の右辺、たとえば
+  ** ``digest-md5'', ``gssapi'' 又は``cram-md5'' を使います。このオプションは
+  ** 大文字小文字を無視します。\fIunset\fPの場合(既定値)、Mutt はすべての有効な
+  ** 方式を、もっともセキュアな方法からセキュアでない方法の順で試みます。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set imap_authenticators="gssapi:cram-md5:login"
   ** .te
   ** .pp
-  ** \fBNote:\fP Mutt will only fall back to other authentication methods if
-  ** the previous methods are unavailable. If a method is available but
-  ** authentication fails, mutt will not connect to the IMAP server.
+  ** \fB注意:\fP Mutt は前のメソッドが無効な場合にのみ、他の認証方式にフォールバック
+  ** します。メソッドが有効だが認証が失敗した場合、Mutt は IMAP サーバには
+  ** 接続しません。
   */
   { "imap_check_subscribed",  DT_BOOL, R_NONE, {.l=OPTIMAPCHECKSUBSCRIBED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will fetch the set of subscribed folders from
-  ** your server on connection, and add them to the set of mailboxes
-  ** it polls for new mail just as if you had issued individual ``$mailboxes''
-  ** commands.
+  ** \fIset\fP の場合、Mutt は接続時に、購読しているフォルダを読み出しして、
+  ** 独立した ``$mailboxes'' コマンドを発行したのと同様に、ポーリングする
+  ** メールボックスのセットにそれらを追加します。
   */
   { "imap_condstore",  DT_BOOL, R_NONE, {.l=OPTIMAPCONDSTORE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will use the CONDSTORE extension (RFC 7162)
-  ** if advertised by the server.  Mutt's current implementation is basic,
-  ** used only for initial message fetching and flag updates.
+  ** \fIset\fP の場合、Mutt は、サーバにより広告がある場合、CONDSTORE 拡張
+  ** (RFC 7162) を使います。Mutt の現在の実装は基本的なものであり、
+  ** 初期メッセージのフェッチとフラグの更新のみを使います。
   ** .pp
-  ** For some IMAP servers, enabling this will slightly speed up
-  ** downloading initial messages.  Unfortunately, Gmail is not one
-  ** those, and displays worse performance when enabled.  Your
-  ** mileage may vary.
+  ** いくつかの IMAP サーバでは、これを有効にすると、初期メッセージのダウンロードが
+  ** 若干早くなります。残念なことに、Gmail はそのうちの1つには入らず、有効にすると
+  ** 表示が遅くなります。受け取るメリットは変わる場合があります。
   */
 #ifdef USE_ZLIB
   { "imap_deflate",		DT_BOOL, R_NONE, {.l=OPTIMAPDEFLATE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will use the COMPRESS=DEFLATE extension (RFC
-  ** 4978) if advertised by the server.
+  ** \fIset\fP の場合、Mutt はサーバによって通知された場合、
+  ** COMPRESS=DEFLATE 拡張 (RFC 4978) を使用します。
   ** .pp
-  ** In general a good compression efficiency can be achieved, which
-  ** speeds up reading large mailboxes also on fairly good connections.
+  ** 一般的に、圧縮効率が実現できれば、かなり良い回線状態に置いてでも大きな
+  ** メールボックスの読み出しを高速化できます。
   */
 #endif
   { "imap_delim_chars",		DT_STR, R_NONE, {.p=&ImapDelimChars}, {.p="/."} },
   /*
   ** .pp
-  ** This contains the list of characters which you would like to treat
-  ** as folder separators for displaying IMAP paths. In particular it
-  ** helps in using the ``='' shortcut for your \fIfolder\fP variable.
   */
   { "imap_fetch_chunk_size",	DT_LNUM, R_NONE, {.p=&ImapFetchChunkSize}, {.l=0} },
   /*
   ** .pp
-  ** When set to a value greater than 0, new headers will be
-  ** downloaded in groups of this many headers per request.  If you
-  ** have a very large mailbox, this might prevent a timeout and
-  ** disconnect when opening the mailbox, by sending a FETCH per set
-  ** of this many headers, instead of a single FETCH for all new
-  ** headers.
+  ** この値を 0 より大きくすると、新しいヘッダは、要求毎に、たくさんのヘッダをグループにして
+  ** ダウンロードされます。非常に大きなメールボックスを使っている場合、すべての新しいヘッダを
+  ** 単一の取得操作で行う代わりに、このたくさんのヘッダ毎に取得コマンドを送ることで、
+  ** メールボックスをオープンするときにタイムアウトと切断を防ぐことが出来ます。
   */
   { "imap_headers",	DT_STR, R_INDEX, {.p=&ImapHeaders}, {.p=0} },
   /*
   ** .pp
-  ** Mutt requests these header fields in addition to the default headers
+  ** Mutt がインデックスメニューを表示する前に、IMAP サーバから既定のヘッダ
   ** (``Date:'', ``From:'', ``Sender:'', ``Subject:'', ``To:'', ``Cc:'', ``Message-Id:'',
   ** ``References:'', ``Content-Type:'', ``Content-Description:'', ``In-Reply-To:'',
-  ** ``Reply-To:'', ``Lines:'', ``List-Post:'', ``X-Label:'') from IMAP
-  ** servers before displaying the index menu. You may want to add more
-  ** headers for spam detection.
+  ** ``Reply-To:'', ``Lines:'', ``List-Post:'', ``X-Label:'') に追加で、ここで指定する
+  ** ヘッダを要求します。スパム検出のためのヘッダを追加したいときに使います。
   ** .pp
-  ** \fBNote:\fP This is a space separated list, items should be uppercase
-  ** and not contain the colon, e.g. ``X-BOGOSITY X-SPAM-STATUS'' for the
-  ** ``X-Bogosity:'' and ``X-Spam-Status:'' header fields.
+  ** \fB注意:\fP これは空白で分離されたリストで、各項目はすべて大文字で
+  ** コロンを含んではいけません。たとえば、``X-Bogosity:'' と ``X-Spam-Status:''
+  ** は ``X-BOGOSITY X-SPAM-STATUS'' となります。
   */
   { "imap_idle",                DT_BOOL, R_NONE, {.l=OPTIMAPIDLE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will attempt to use the IMAP IDLE extension
-  ** to check for new mail in the current mailbox. Some servers
-  ** (dovecot was the inspiration for this option) react badly
-  ** to mutt's implementation. If your connection seems to freeze
-  ** up periodically, try unsetting this.
+  ** \fIset\fP の場合、Mutt  は現在のメールボックスで、新規メールのチェックのために
+  ** IMAP IDLE 拡張を使おうとします。いくつかのサーバ(このオプションに対しては
+  ** dovecot が想起されます)は、Mutt の実装に対して不正確に反応します。
+  ** 接続が定期的にフリーズするように見える場合は、この設定の解除を試してみてください。
   */
   { "imap_keepalive",           DT_NUM,  R_NONE, {.p=&ImapKeepalive}, {.l=300} },
   /*
   ** .pp
-  ** This variable specifies the maximum amount of time in seconds that mutt
-  ** will wait before polling open IMAP connections, to prevent the server
-  ** from closing them before mutt has finished with them. The default is
-  ** well within the RFC-specified minimum amount of time (30 minutes) before
-  ** a server is allowed to do this, but in practice the RFC does get
-  ** violated every now and then. Reduce this number if you find yourself
-  ** getting disconnected from your IMAP server due to inactivity.
+  ** この変数は、Mutt が接続を終了する前に、サーバから接続をクローズするのを
+  ** 防ぐために、オープンしている IMAP 接続をポーリングする前に Mutt が待つ
+  ** 最大時間を秒数で指定します。既定値は、サーバがこれを実行出来るようになるまで、
+  ** RFC の指定による最低限の時間(30分)内ですが、実際にはRFC はそこかしこで
+  ** 破られています。接続していないとみなされて IMAP サーバから切断されるようで
+  ** あれば、この数値を減らしてください。
   */
   { "imap_list_subscribed",	DT_BOOL, R_NONE, {.l=OPTIMAPLSUB}, {.l=0} },
   /*
   ** .pp
-  ** This variable configures whether IMAP folder browsing will look for
-  ** only subscribed folders or all folders.  This can be toggled in the
-  ** IMAP browser with the \fC<toggle-subscribed>\fP function.
+  ** この変数は、IMAP フォルダ一覧表示で検索するのを購読フォルダのみにするか、すべての
+  ** フォルダにするかを制御します。これは、\fC<toggle-subscribed>\fP 機能を使って
+  ** IMAP ブラウザ内でON/OFFできます。
   */
   { "imap_login",	DT_STR,  R_NONE, {.p=&ImapLogin}, {.p=0} },
   /*
   ** .pp
-  ** Your login name on the IMAP server.
+  ** IMAP サーバへのログイン名。
   ** .pp
-  ** This variable defaults to the value of $$imap_user.
+  ** この変数は既定で$$imap_user の値となります。
   */
   { "imap_oauth_refresh_command", DT_STR, R_NONE, {.p=&ImapOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** The command to run to generate an OAUTH refresh token for
-  ** authorizing your connection to your IMAP server.  This command will be
-  ** run on every connection attempt that uses the OAUTHBEARER authentication
-  ** mechanism.  See ``$oauth'' for details.
+  ** IMAP サーバの接続を認証するための OAUTH リフレッシュトークンを生成するために
+  ** 実行するコマンド。このコマンドはOAUTHBEARER 認証メカニズムを使った接続を試みる
+  ** 度毎に実行されます。詳細については``$oauth'' を参照してください。
   */
   { "imap_pass", 	DT_STR,  R_NONE, {.p=&ImapPass}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the password for your IMAP account.  If \fIunset\fP, Mutt will
-  ** prompt you for your password when you invoke the \fC<imap-fetch-mail>\fP function
-  ** or try to open an IMAP folder.
+  ** IMAP アカウントのパスワードを指定します。\fIunset\fP の場合、Mutt は
+  ** \fC<imap-fetch-mail>\fP機能を起動した場合又はIMAP フォルダを開こうとするときに
+  ** パスワードを要求してきます。
   ** .pp
-  ** \fBWarning\fP: you should only use this option when you are on a
-  ** fairly secure machine, because the superuser can read your muttrc even
-  ** if you are the only one who can read the file.
+  ** \fB警告\fP: このオプションは、十分に安全なマシン上でのみ使うべきです。
+  ** なぜなら、muttrc ファイルを自分以外が読めないように したつもりでも、スーパユーザは
+  ** 読めるからです。
   */
   { "imap_passive",		DT_BOOL, R_NONE, {.l=OPTIMAPPASSIVE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will not open new IMAP connections to check for new
-  ** mail.  Mutt will only check for new mail over existing IMAP
-  ** connections.  This is useful if you don't want to be prompted for
-  ** user/password pairs on mutt invocation, or if opening the connection
-  ** is slow.
+  ** \fIset\fP の場合、Mutt は新規メールチェックのために新規のIMAP 接続を開くことは
+  ** しません。Mutt は新規メールを既存のIMAP 接続でのみ確認することになります。これが
+  ** 有用となるのは、Mutt 起動時にユーザ名とパスワードの入力を要求されたくない場合や、
+  ** 接続するのに時間がかかる場合などです。
   */
   { "imap_peek", DT_BOOL, R_NONE, {.l=OPTIMAPPEEK}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will avoid implicitly marking your mail as read whenever
-  ** you fetch a message from the server. This is generally a good thing,
-  ** but can make closing an IMAP folder somewhat slower. This option
-  ** exists to appease speed freaks.
+  ** \fIset\fP の場合、Mutt はサーバからメッセージを読み出すときはいつでも
+  ** メールを読んだというマークを暗黙で付けることを防ぎます。これは一般的に
+  ** よい手法ですが、IMAP フォルダをクローズするときに少し遅くなることが
+  ** あります。このオプションはスピード命の人をなだめるためにあります。
   */
   { "imap_pipeline_depth", DT_NUM,  R_NONE, {.p=&ImapPipelineDepth}, {.l=15} },
   /*
   ** .pp
-  ** Controls the number of IMAP commands that may be queued up before they
-  ** are sent to the server. A deeper pipeline reduces the amount of time
-  ** mutt must wait for the server, and can make IMAP servers feel much
-  ** more responsive. But not all servers correctly handle pipelined commands,
-  ** so if you have problems you might want to try setting this variable to 0.
+  ** サーバに対して送られる前にキューにたまる IMAP コマンドの数を制御します。
+  ** 深いパイプラインは、Mutt がサーバを待たなければならない大量の時間を節約し、
+  ** IMAP サーバの応答性を大幅に向上させるようにできます。しかし、すべてのサーバが
+  ** パイプライン化されたコマンドを正確に扱えるわけではないので、もしも問題が
+  ** 発生した場合は、この変数を 0 にしてみてください。
   ** .pp
-  ** \fBNote:\fP Changes to this variable have no effect on open connections.
+  ** \fB注意:\fP この値を変更しても接続時には何の影響もありません。
   */
   { "imap_poll_timeout", DT_NUM,  R_NONE, {.p=&ImapPollTimeout}, {.l=15} },
   /*
   ** .pp
-  ** This variable specifies the maximum amount of time in seconds
-  ** that mutt will wait for a response when polling IMAP connections
-  ** for new mail, before timing out and closing the connection.  Set
-  ** to 0 to disable timing out.
+  ** この変数は、新規メールのためにIMAP 接続をポーリングする時、タイムアウトと
+  ** 接続をクローズする前に、Mutt が応答を待つ最大の時間を指定します。
+  ** 0 に設定すると、タイムアウトを無効にします。
   */
   { "imap_qresync",  DT_BOOL, R_NONE, {.l=OPTIMAPQRESYNC}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will use the QRESYNC extension (RFC 7162)
-  ** if advertised by the server.  Mutt's current implementation is basic,
-  ** used only for initial message fetching and flag updates.
+  ** \fIset\fP の場合、Mutt は、サーバから広告があった場合、QRESYNC 拡張(RFC 7162)を
+  ** 使います。Mutt の現在の実装は基本的なものであり、
+  ** 初期メッセージのフェッチとフラグの更新のみを使います。
   ** .pp
-  ** Note: this feature is currently experimental.  If you experience
-  ** strange behavior, such as duplicate or missing messages please
-  ** file a bug report to let us know.
+  ** 注意: この機能は現在実験的なものです。たとえば、メッセージの重複や欠落のような
+  ** おかしな挙動があった場合には、バグとして是非ご連絡ください。
   */
   { "imap_servernoise",		DT_BOOL, R_NONE, {.l=OPTIMAPSERVERNOISE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will display warning messages from the IMAP
-  ** server as error messages. Since these messages are often
-  ** harmless, or generated due to configuration problems on the
-  ** server which are out of the users' hands, you may wish to suppress
-  ** them at some point.
+  ** \fIset\fPの場合、Mutt はエラーメッセージとして IMAP サーバからの警告メッセージを
+  ** 表示します。そのようなメッセージはしばしば無害だったり、ユーザとは関係のない
+  ** サーバ上の設定問題によって生成されたものなので、時には抑制したいかもしれません。
   */
   { "imap_user",	DT_STR,  R_NONE, {.p=&ImapUser}, {.p=0} },
   /*
   ** .pp
-  ** The name of the user whose mail you intend to access on the IMAP
-  ** server.
+  ** IMAP サーバ上でアクセスするメールのユーザ名。
   ** .pp
-  ** This variable defaults to your user name on the local machine.
+  ** この変数は既定でローカルマシン上でのユーザ名となります。
   */
 #endif
   { "implicit_autoview", DT_BOOL,R_NONE, {.l=OPTIMPLICITAUTOVIEW}, {.l=0} },
