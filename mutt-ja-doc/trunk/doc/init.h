@@ -1739,47 +1739,43 @@ struct option_t MuttVars[] = {
   { "implicit_autoview", DT_BOOL,R_NONE, {.l=OPTIMPLICITAUTOVIEW}, {.l=0} },
   /*
   ** .pp
-  ** If set to ``yes'', mutt will look for a mailcap entry with the
-  ** ``\fCcopiousoutput\fP'' flag set for \fIevery\fP MIME attachment it doesn't have
-  ** an internal viewer defined for.  If such an entry is found, mutt will
-  ** use the viewer defined in that entry to convert the body part to text
-  ** form.
+  ** ``yes'' に設定した場合、Mutt は 内部ビューワが定義されていない \fIすべての\fP
+  **  MIME 添付 に  ``\fCcopiousoutput\fP'' フラグがセットされた mailcap エントリを
+  ** 探します。そのようなエントリが見つかった場合、Mutt は本文部分をテキスト形式に
+  ** 変換するために、そのエントリに対して定義されているビューワを使います。
   */
   { "include",		DT_QUAD, R_NONE, {.l=OPT_INCLUDE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not a copy of the message(s) you are replying to
-  ** is included in your reply.
+  ** 返信しようとしている元のメッセージ内容を返信に含めるかどうかを制御します。
   */
   { "include_encrypted",	DT_BOOL, R_NONE, {.l=OPTINCLUDEENCRYPTED}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether or not Mutt includes separately encrypted attachment
-  ** contents when replying.
+  ** Mutt が、返信時に暗号化された添付内容を分離して含めるかどうかを制御します。
   ** .pp
-  ** This variable was added to prevent accidental exposure of encrypted
-  ** contents when replying to an attacker.  If a previously encrypted message
-  ** were attached by the attacker, they could trick an unwary recipient into
-  ** decrypting and including the message in their reply.
+  ** この変数は、攻撃者に対して返信する時に、暗号化された内容を予期せぬ形で公開される
+  ** ことを防ぐために追加されました。以前に暗号化されたメッセージが攻撃者によって
+  ** 添付された場合、攻撃者は不注意な受信者をだましてメッセージを解読し、返信に含めることが
+  ** できます。
   */
   { "include_onlyfirst",	DT_BOOL, R_NONE, {.l=OPTINCLUDEONLYFIRST}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether or not Mutt includes only the first attachment
-  ** of the message you are replying.
+  ** Mutt が返信時にメッセージの最初の添付のみを含めるかどうかを制御します。
   */
   { "indent_string",	DT_STR,	 R_NONE, {.p=&Prefix}, {.p="> "} },
   /*
   ** .pp
-  ** Specifies the string to prepend to each line of text quoted in a
-  ** message to which you are replying.  You are strongly encouraged not to
-  ** change this value, as it tends to agitate the more fanatical netizens.
+  ** 返信時に、メッセージ中に引用されているテキストの各行の先頭に付加する
+  ** 文字列を指定します。より狂信的なネチズンを煽る傾向があるため、この値を
+  ** 変更しないことを強く推奨します。
   ** .pp
-  ** The value of this option is ignored if $$text_flowed is set, because
-  ** the quoting mechanism is strictly defined for format=flowed.
+  ** このオプションの値は、引用メカニズムが format=flowed に対して厳格に定義
+  ** されているため、$$text_flowed が設定されている場合は無視されます。
   ** .pp
-  ** This option is a format string, please see the description of
-  ** $$index_format for supported \fCprintf(3)\fP-style sequences.
+  ** このオプションは、書式付きの文字列で、サポートされる \fCprintf(3)\fP 形式の
+  ** 書式については$$index_format を参照してください。
   */
   { "indent_str",	DT_SYN,  R_NONE, {.p="indent_string"}, {.p=0} },
   /*
@@ -1787,300 +1783,286 @@ struct option_t MuttVars[] = {
   { "index_format",	DT_STR,	 R_BOTH, {.p=&HdrFmt}, {.p="%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"} },
   /*
   ** .pp
-  ** This variable allows you to customize the message index display to
-  ** your personal taste.
+  ** この変数で、個人の好みによってメッセージインデックス表示をカスタマイズする
+  ** ことができます。
   ** .pp
-  ** ``Format strings'' are similar to the strings used in the C
-  ** function \fCprintf(3)\fP to format output (see the man page for more details).
-  ** For an explanation of the %? construct, see the $$status_format description.
-  ** The following sequences are defined in Mutt:
+  ** ``Format strings'' はフォーマット出力のために使う C の\fCprintf(3)\fP 関数と
+  ** 似ています(詳細はマニュアルページを参照してください)。%? の説明については
+  ** $$status_format の説明を参照してください。以下は Mutt で定義されているものです。
   ** .dl
-  ** .dt %a .dd address of the author
-  ** .dt %A .dd reply-to address (if present; otherwise: address of author)
-  ** .dt %b .dd filename of the original message folder (think mailbox)
-  ** .dt %B .dd the list to which the letter was sent, or else the folder name (%b).
-  ** .dt %c .dd number of characters (bytes) in the message (see $formatstrings-size)
-  ** .dt %C .dd current message number
-  ** .dt %d .dd date and time of the message in the format specified by
-  **            $$date_format converted to sender's time zone
-  ** .dt %D .dd date and time of the message in the format specified by
-  **            $$date_format converted to the local time zone
-  ** .dt %e .dd current message number in thread
-  ** .dt %E .dd number of messages in current thread
-  ** .dt %f .dd sender (address + real name), either From: or Return-Path:
-  ** .dt %F .dd author name, or recipient name if the message is from you
-  ** .dt %H .dd spam attribute(s) of this message
-  ** .dt %i .dd message-id of the current message
-  ** .dt %l .dd number of lines in the unprocessed message (may not work with
-  **            maildir, mh, and IMAP folders)
-  ** .dt %L .dd If an address in the ``To:'' or ``Cc:'' header field matches an address
-  **            defined by the users ``$subscribe'' command, this displays
-  **            "To <list-name>", otherwise the same as %F.
-  ** .dt %m .dd total number of message in the mailbox
-  ** .dt %M .dd number of hidden messages if the thread is collapsed.
-  ** .dt %N .dd message score
-  ** .dt %n .dd author's real name (or address if missing)
-  ** .dt %O .dd original save folder where mutt would formerly have
-  **            stashed the message: list name or recipient name
-  **            if not sent to a list
-  ** .dt %P .dd progress indicator for the built-in pager (how much of the file has been displayed)
-  ** .dt %r .dd comma separated list of ``To:'' recipients
-  ** .dt %R .dd comma separated list of ``Cc:'' recipients
-  ** .dt %s .dd subject of the message
-  ** .dt %S .dd single character status of the message (``N''/``O''/``D''/``d''/``!''/``r''/``\(as'')
-  ** .dt %t .dd ``To:'' field (recipients)
-  ** .dt %T .dd the appropriate character from the $$to_chars string
-  ** .dt %u .dd user (login) name of the author
-  ** .dt %v .dd first name of the author, or the recipient if the message is from you
-  ** .dt %X .dd number of attachments
-  **            (please see the ``$attachments'' section for possible speed effects)
-  ** .dt %y .dd ``X-Label:'' field, if present
-  ** .dt %Y .dd ``X-Label:'' field, if present, and \fI(1)\fP not at part of a thread tree,
-  **            \fI(2)\fP at the top of a thread, or \fI(3)\fP ``X-Label:'' is different from
-  **            preceding message's ``X-Label:''.
-  ** .dt %Z .dd a three character set of message status flags.
-  **            the first character is new/read/replied flags (``n''/``o''/``r''/``O''/``N'').
-  **            the second is deleted or encryption flags (``D''/``d''/``S''/``P''/``s''/``K'').
-  **            the third is either tagged/flagged (``\(as''/``!''), or one of the characters
-  **            listed in $$to_chars.
-  ** .dt %@name@ .dd insert and evaluate format-string from the matching
-  **                 ``$index-format-hook'' command
-  ** .dt %{fmt} .dd the date and time of the message is converted to sender's
-  **                time zone, and ``fmt'' is expanded by the library function
-  **                \fCstrftime(3)\fP; a leading bang disables locales
-  ** .dt %[fmt] .dd the date and time of the message is converted to the local
-  **                time zone, and ``fmt'' is expanded by the library function
-  **                \fCstrftime(3)\fP; a leading bang disables locales
-  ** .dt %(fmt) .dd the local date and time when the message was received.
-  **                ``fmt'' is expanded by the library function \fCstrftime(3)\fP;
-  **                a leading bang disables locales
-  ** .dt %<fmt> .dd the current local time. ``fmt'' is expanded by the library
-  **                function \fCstrftime(3)\fP; a leading bang disables locales.
-  ** .dt %>X    .dd right justify the rest of the string and pad with character ``X''
-  ** .dt %|X    .dd pad to the end of the line with character ``X''
-  ** .dt %*X    .dd soft-fill with character ``X'' as pad
+  ** .dt %a .dd 差出人のアドレス
+  ** .dt %A .dd (もしあれば) reply-to アドレス (なければ差出人アドレス)
+  ** .dt %b .dd オリジナルのメッセージフォルダのファイル名(mailbox です)
+  ** .dt %B .dd 送信された手紙のリストかフォルダ名 (%b).
+  ** .dt %c .dd メッセージの(バイト単位の)サイズ ($formatstrings-size 参照)
+  ** .dt %C .dd 現在のメッセージ番号
+  ** .dt %d .dd メッセージの日付と時刻を、送信者の現地時間に変換して
+  **            $$date_format の形式にしたもの
+  ** .dt %D .dd メッセージの日付と時刻を、自分の地域の時間に変換して
+  **            $$date_format の形式にしたもの
+  ** .dt %e .dd スレッド内におけるメッセージ番号
+  ** .dt %E .dd スレッド内のメッセージ総数
+  ** .dt %f .dd 送信者 (アドレス + 実名)、From: 又は Return-Path: のどちらか
+  ** .dt %F .dd 差出人の名前か自分自身から出されたメールであれば受信者の名前
+  ** .dt %H .dd メッセージの spam 属性
+  ** .dt %i .dd 現在のメッセージの message-id
+  ** .dt %l .dd 未処理のメッセージの行数(maildir, mh, とIMAP フォルダでは
+  **            おそらく動作しない)
+  ** .dt %L .dd ``To:'' 又は ``Cc:'' ヘッダフィールドがユーザの``$subscribe''
+  **            コマンドで定義されたアドレスに一致する場合、これは "To <リスト名>"
+  **            と表示し、その他の場合は %F と同じになります。
+  ** .dt %m .dd メールボックス中のメッセージ総数
+  ** .dt %M .dd スレッドが折りたたまれている場合の非表示のメッセージ数
+  ** .dt %N .dd メッセージのスコア
+  ** .dt %n .dd 差出人の本名(あるいは存在しなければアドレス)
+  ** .dt %O .dd Mutt がかつてメッセージを隠していたもとの保存ファイル:
+  **            リスト名又はリストに送らない場合は受信者の名前
+  ** .dt %P .dd ビルトインページャにおける処理インジケータ(どのくらいファイルが表示されたか)
+  ** .dt %r .dd コンマで分離された ``To:'' 受信者のリスト
+  ** .dt %R .dd コンマで分離された ``Cc:'' 受信者のリスト
+  ** .dt %s .dd メッセージの題名
+  ** .dt %S .dd 単一文字でのメッセージのステータス(``N''/``O''/``D''/``d''/``!''/``r''/``\(は'')
+  ** .dt %t .dd ``To:'' フィールド(受信者)
+  ** .dt %T .dd $$to_chars 文字列からの適切な文字
+  ** .dt %u .dd 送信者のユーザ(ログイン)名
+  ** .dt %v .dd 送信者のファーストネームか、メッセージが自分からのものであれば受信者
+  ** .dt %X .dd 添付の数
+  **            (可能な速度効果については ``$attachments'' の章を参照してください)
+  ** .dt %y .dd 存在すれば ``X-Label:'' フィールド
+  ** .dt %Y .dd \fI(1)\fP スレッドツリーの一部ではない、\fI(2)\fP スレッドの頂点である、
+  **            \fI(3)\fP ``X-Label:'' が 前のメッセージの ``X-Label:'' と異なる、の
+  **            いずれかで、存在していれば``X-Label:'' フィールド。
+  ** .dt %Z .dd 3桁のメッセージ状態フラグ。
+  **            最初の文字は new/read/replied フラグ (``n''/``o''/``r''/``O''/``N'')。
+  **            2番目の文字は削除/暗号化フラグ (``D''/``d''/``S''/``P''/``s''/``K'')。
+  **            3番目の文字はタグ/フラグのどちらか(``\(は''/``!'')か、$$to_chars 中にある
+  **            文字のどれか。
+  ** .dt %@name@ .dd ``$index-format-hook'' コマンドに一致する書式文字列を挿入して
+  **                   評価
+  ** .dt %{fmt} .dd メッセージの日付と時間が送信者のタイムゾーンに変換され、
+  **                ``fmt'' がライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます。
+  ** .dt %[fmt] .dd メッセージの日付と時間がローカルタイムゾーンに変換され、
+  **                ``fmt'' がライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます。
+  ** .dt %(fmt) .dd メッセージを受信したときのローカルの日付と時間。
+  **                ``fmt'' はライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます
+  ** .dt %<fmt> .dd 現在のローカルの日付と時刻。
+  **                ``fmt'' はライブラリ関数\fCstrftime(3)\fP によって展開されます。
+  **                先頭に感嘆符がつくものはロケールが無視されます
+  ** .dt %>X    .dd 残りの文字列を右寄せして、間を ``X'' 部分の文字で詰めます。
+  ** .dt %|X    .dd 行末まで ``X'' 部分の文字で詰めます。
+  ** .dt %*X    .dd 文字 ``X'' を埋め草として、 soft-fillします。
   ** .de
   ** .pp
-  ** Note that for mbox/mmdf, ``%l'' applies to the unprocessed message, and
-  ** for maildir/mh, the value comes from the ``Lines:'' header field when
-  ** present (the meaning is normally the same). Thus the value depends on
-  ** the encodings used in the different parts of the message and has little
-  ** meaning in practice.
+  ** mbox/mmdf では、``%l'' は非圧縮メッセージに対して適用され、maildir/mh では
+  ** ``Lines:'' ヘッダフィールドが存在する場合に、そこから値は取得されることに
+  ** 注意してください(意味は通常同じです)。従って、値は、異なったメッセージの
+  ** パート中で使われるエンコーディングに依存し、実際にはほとんど意味がありません。
   ** .pp
-  ** ``Soft-fill'' deserves some explanation: Normal right-justification
-  ** will print everything to the left of the ``%>'', displaying padding and
-  ** whatever lies to the right only if there's room. By contrast,
-  ** soft-fill gives priority to the right-hand side, guaranteeing space
-  ** to display it and showing padding only if there's still room. If
-  ** necessary, soft-fill will eat text leftwards to make room for
-  ** rightward text.
+  ** ``Soft-fill'' についてはいくつか説明が必要でしょう: 通常の右揃えは、``%>''
+  ** の左側のものすべてをプリントし、余白がある場合にのみ、右側にあるものすべてと
+  ** 埋め草文字を表示します。それと対照的に、soft-fill は右側を優先し、それを
+  ** 表示する場所を保障し、まだ余裕がある場合にのみ、埋め草文字を表示します。
+  ** 必要に応じて、soft-fill は右側のテキストのために空間を作るため、テキストの
+  ** 左側を削除します。
   ** .pp
-  ** Note that these expandos are supported in
-  ** ``$save-hook'', ``$fcc-hook'', ``$fcc-save-hook'', and
-  ** ``$index-format-hook''.
+  ** これらの展開は``$save-hook'', ``$fcc-hook'', ``$fcc-save-hook'' と
+  ** ``$index-format-hook'' でサポートされることに注意してください。
   ** .pp
-  ** They are also supported in the configuration variables $$attribution,
+  ** また、設定変数 $$attribution,
   ** $$forward_attribution_intro, $$forward_attribution_trailer,
   ** $$forward_format, $$indent_string, $$message_format, $$pager_format,
-  ** and $$post_indent_string.
+  ** と $$post_indent_string でもサポートされます。
   */
   { "ispell",		DT_CMD_PATH, R_NONE, {.p=&Ispell}, {.p=ISPELL} },
   /*
   ** .pp
-  ** How to invoke ispell (GNU's spell-checking software).
+  ** どのようにして ispell(GNU のスペリングチェックソフトウェア)を起動するかの指定です。
   */
   { "keep_flagged", DT_BOOL, R_NONE, {.l=OPTKEEPFLAGGED}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, read messages marked as flagged will not be moved
-  ** from your spool mailbox to your $$mbox mailbox, or as a result of
-  ** a ``$mbox-hook'' command.
+  ** \fIset\fP の場合、フラグが付けられている既読メッセージはスプール
+  ** メールボックスから $$mbox メールボックス、あるいは ``$mbox-hook'' コマンドの
+  ** 結果に移動しません。
   */
   { "local_date_header", DT_BOOL, R_NONE, {.l=OPTLOCALDATEHEADER}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, the date in the Date header of emails that you send will be in
-  ** your local timezone. If unset a UTC date will be used instead to avoid
-  ** leaking information about your current location.
+  ** \fIset\fP の場合、送信したメールの Date ヘッダ中の日付は使用している
+  ** ローカルのタイムゾーンになります。設定しなかった場合、現在の地域についての
+  ** 情報を漏らさないようにするために、UTC 日付が使われます。
   */
   { "mail_check",	DT_NUM,  R_NONE, {.p=&BuffyTimeout}, {.l=5} },
   /*
   ** .pp
-  ** This variable configures how often (in seconds) mutt should look for
-  ** new mail. Also see the $$timeout variable.
+  ** この変数は、どのくらいの頻度(秒単位)で、Mutt が新規メールを探しに行くかを
+  ** 設定します。$$timeout 変数も参照してください。
   */
   { "mail_check_recent",DT_BOOL, R_NONE, {.l=OPTMAILCHECKRECENT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will only notify you about new mail that has been received
-  ** since the last time you opened the mailbox.  When \fIunset\fP, Mutt will notify you
-  ** if any new mail exists in the mailbox, regardless of whether you have visited it
-  ** recently.
+  ** \fIset\fP の場合、Mutt は、最後にメールボックスを開いたときから受け取った
+  ** 新規メールについてのみ通知します。\fIunset\fP の場合、Mutt は、最近アクセスしたか否かに
+  ** かかわらず、メールボックス中に新規メールが存在するかどうかを通知します。
   */
   { "mail_check_stats", DT_BOOL, R_NONE, {.l=OPTMAILCHECKSTATS}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will periodically calculate message
-  ** statistics of a mailbox while polling for new mail.  It will
-  ** check for unread, flagged, and total message counts.
-  ** (Note: IMAP mailboxes only support unread and total counts).
+  ** \fIset\fP の場合、Mutt は新規メールのポーリング中に、定期的にメールボックスの
+  ** メッセージ統計を計算します。未読、フラグ付き、および合計メッセージ数をチェック
+  ** します。
+  ** (注意: IMAP メールボックスでは未読と合計メッセージ数のみをサポートします)。
   ** .pp
-  ** Because this operation is more performance intensive, it defaults
-  ** to \fIunset\fP, and has a separate option,
-  ** $$mail_check_stats_interval, to control how often to update these
-  ** counts.
+  ** この操作は多くの能力を集中的に使うため、既定では \fIunset\fP であり、
+  ** これらのカウントを更新する頻度を制御するための、$$mail_check_stats_interval
+  ** という別のオプションがあります。
   ** .pp
-  ** Message statistics can also be explicitly calculated by invoking the
-  ** \fC<check-stats>\fP
-  ** function.
+  ** メッセージの統計情報は \fC<check-stats>\fP 機能を起動することにより、明示的に
+  ** 計算することも出来ます。
   */
   { "mail_check_stats_interval", DT_NUM, R_NONE, {.p=&BuffyCheckStatsInterval}, {.l=60} },
   /*
   ** .pp
-  ** When $$mail_check_stats is \fIset\fP, this variable configures
-  ** how often (in seconds) mutt will update message counts.
+  ** $$mail_check_stats が \fIset\fP の場合、この変数はどのくらいの頻度(秒単位)で
+  ** メッセージ数を Mutt が更新するかを設定します。
   */
   { "mailcap_path",	DT_STR,	 R_NONE, {.p=&MailcapPath}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies which files to consult when attempting to
-  ** display MIME bodies not directly supported by Mutt.  The default value
-  ** is generated during startup: see the ``$mailcap'' section of the manual.
+  ** この変数は、Mutt で直接サポートされない MIME の本文を表示しようとする際に、
+  ** 参照するファイルを指定します。既定値は起動時に生成されます。マニュアルの
+  ** ``$mailcap'' 節を参照してください。
   */
   { "mailcap_sanitize",	DT_BOOL, R_NONE, {.l=OPTMAILCAPSANITIZE}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will restrict possible characters in mailcap % expandos
-  ** to a well-defined set of safe characters.  This is the safe setting,
-  ** but we are not sure it doesn't break some more advanced MIME stuff.
+  ** \fIset\fP の場合、Mutt は、%拡張を、明確に定義した安全な文字セットにすることで、
+  ** メールボックス中で使用できる文字を制限します。これは安全な設定ですが、
+  ** これにより高度な MIME 項目が壊れないとは断言できません。
   ** .pp
-  ** \fBDON'T CHANGE THIS SETTING UNLESS YOU ARE REALLY SURE WHAT YOU ARE
-  ** DOING!\fP
+  ** \fIこの設定は、完全に理解することなく変更してはなりません!\fP
   */
 #ifdef USE_HCACHE
   { "maildir_header_cache_verify", DT_BOOL, R_NONE, {.l=OPTHCACHEVERIFY}, {.l=1} },
   /*
   ** .pp
-  ** Check for Maildir unaware programs other than mutt having modified maildir
-  ** files when the header cache is in use.  This incurs one \fCstat(2)\fP per
-  ** message every time the folder is opened (which can be very slow for NFS
-  ** folders).
+  ** ヘッダキャッシュが使われている時に、maildirファイルを変更した Mutt 以外の
+  ** Maildir に対応しないプログラムを確認します。これは、フォルダのオープン毎に
+  ** メッセージ毎に1回の\fCstat(2)\fP が発生します(これは NFS フォルダの場合には
+  ** 非常に遅くなる可能性があります)。
   */
 #endif
   { "maildir_trash", DT_BOOL, R_BOTH, {.l=OPTMAILDIRTRASH}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, messages marked as deleted will be saved with the maildir
-  ** trashed flag instead of unlinked.  \fBNote:\fP this only applies
-  ** to maildir-style mailboxes.  Setting it will have no effect on other
-  ** mailbox types.
+  ** \fIset\fP の場合、削除マークが付いたメッセージは、削除される代わりに
+  ** maildir に ゴミ フラグを付けてセーブされます。\fB注意:\fP これは、
+  ** maildir 形式のメールボックスに対してのみ適用されます。設定は他のメールボックス
+  ** 形式には影響しません。
   */
   { "maildir_check_cur", DT_BOOL, R_NONE, {.l=OPTMAILDIRCHECKCUR}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will poll both the new and cur directories of
-  ** a maildir folder for new messages.  This might be useful if other
-  ** programs interacting with the folder (e.g. dovecot) are moving new
-  ** messages to the cur directory.  Note that setting this option may
-  ** slow down polling for new messages in large folders, since mutt has
-  ** to scan all cur messages.
+  ** \fIset\fP の場合、Mutt は新規メッセージについて、maildir フォルダの new と
+  ** cur ディスクの両方をポーリングします。これは、フォルダを操作する他のプログラム
+  ** (例えば dovecot)が新規メッセージを cur ディレクトリに移動する場合に
+  ** 便利です。このオプションを設定すると、大きなフォルダの場合には
+  ** Mutt がすべての cur メッセージをスキャンするために、新規メッセージの
+  ** ポーリングが遅くなる可能性があることに注意してください。
   */
   { "mark_macro_prefix",DT_STR, R_NONE, {.p=&MarkMacroPrefix}, {.p="'"} },
   /*
   ** .pp
-  ** Prefix for macros created using mark-message.  A new macro
-  ** automatically generated with \fI<mark-message>a\fP will be composed
-  ** from this prefix and the letter \fIa\fP.
+  ** メッセージのマークに使う時に作成されるマクロ用のプリフィックス。
+  ** \fI<mark-message>a\fP で、自動的に生成される新規マクロは
+  ** このプレフィックスと文字  \fIa\fP から構成されます。
   */
   { "mark_old",		DT_BOOL, R_BOTH, {.l=OPTMARKOLD}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether or not mutt marks \fInew\fP \fBunread\fP
-  ** messages as \fIold\fP if you exit a mailbox without reading them.
-  ** With this option \fIset\fP, the next time you start mutt, the messages
-  ** will show up with an ``O'' next to them in the index menu,
-  ** indicating that they are old.
+  ** Mutt が \fI新規で\fP \fB未読の\fP メッセージを読まないでメールボックスから出るときに
+  ** \fIold\fP を付けるかどうかを制御します。\fIset\fP の場合、次回 Mutt を起動した
+  ** 時から、インデックスメニュー中で、メッセージの隣に ``O'' を付けて表示され、
+  ** それが古いものであることを示します。
   */
   { "markers",		DT_BOOL, R_PAGER_FLOW, {.l=OPTMARKERS}, {.l=1} },
   /*
   ** .pp
-  ** Controls the display of wrapped lines in the internal pager. If set, a
-  ** ``+'' marker is displayed at the beginning of wrapped lines.
+  ** 内部ページャで折り返される行の表示を制御します。設定した場合、
+  ** ``+'' と言うマーカーが、折り返された行の先頭に表示されます。
   ** .pp
-  ** Also see the $$smart_wrap variable.
+  **  $$smart_wrap 変数も参照してください。
   */
   { "mask",		DT_RX,	 R_NONE, {.p=&Mask}, {.p="!^\\.[^.]"} },
   /*
   ** .pp
-  ** A regular expression used in the file browser, optionally preceded by
-  ** the \fInot\fP operator ``!''.  Only files whose names match this mask
-  ** will be shown. The match is always case-sensitive.
+  ** ファイルブラウザ中で使う正規表現で、\fInot\fP 演算子 ``!'' を先頭に
+  ** 付けることも出来ます。この条件に名前が一致するファイルのみが表示されます。
+  ** 一致条件は常時大文字小文字を区別します。
   */
   { "mbox",		DT_PATH, R_BOTH, {.p=&Inbox}, {.p="~/mbox"} },
   /*
   ** .pp
-  ** This specifies the folder into which read mail in your $$spoolfile
-  ** folder will be appended.
+  ** これは、$$spoolfile フォルダ中の既読メールを追加するフォルダです。
   ** .pp
-  ** Also see the $$move variable.
+  ** $$move 変数も参照してください。
   */
   { "mbox_type",	DT_MAGIC,R_NONE, {.p=&DefaultMagic}, {.l=MUTT_MBOX} },
   /*
   ** .pp
-  ** The default mailbox type used when creating new folders. May be any of
-  ** ``mbox'', ``MMDF'', ``MH'' and ``Maildir''. This is overridden by the
-  ** \fC-m\fP command-line option.
+  ** 新規フォルダを作る際の既定のメールボックスタイプ。``mbox'', ``MMDF'', ``MH'' と
+  ** ``Maildir'' のどれかです。これは、\fC-m\fP コマンド行オプションで上書きできます。
   */
   { "menu_context",	DT_NUM,  R_NONE, {.p=&MenuContext}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the number of lines of context that are given
-  ** when scrolling through menus. (Similar to $$pager_context.)
+  ** この変数は、メニューをスクロールするときに表示されるコンテキストの行数を制御
+  ** します($$pager_context に似ています)。
   */
   { "menu_move_off",	DT_BOOL, R_NONE, {.l=OPTMENUMOVEOFF}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, the bottom entry of menus will never scroll up past
-  ** the bottom of the screen, unless there are less entries than lines.
-  ** When \fIset\fP, the bottom entry may move off the bottom.
+  ** \fIunset\fP の場合、行数よりもエントリ数が小さい場合を除き、メニュー最下部の
+  ** エントリは、画面の最下部を越えてスクロールアップしません。\fIset\fPの場合、
+  ** 最下部のエントリは最下部から動く可能性があります。
   */
   { "menu_scroll",	DT_BOOL, R_NONE, {.l=OPTMENUSCROLL}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, menus will be scrolled up or down one line when you
-  ** attempt to move across a screen boundary.  If \fIunset\fP, the screen
-  ** is cleared and the next or previous page of the menu is displayed
-  ** (useful for slow links to avoid many redraws).
+  ** \fIset\fP の場合、画面の境界を越えて移動しようとする場合、メニューは1行ずつ
+  ** 上下にスクロールします。\fIunset\fP の場合、画面は消去されて次又は前のメニューページ
+  ** が表示されます(大量の再描画を防ぐために、遅い回線の場合には便利です)。
   */
 #if defined(USE_IMAP) || defined(USE_POP)
   { "message_cache_clean", DT_BOOL, R_NONE, {.l=OPTMESSAGECACHECLEAN}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will clean out obsolete entries from the message cache when
-  ** the mailbox is synchronized. You probably only want to set it
-  ** every once in a while, since it can be a little slow
-  ** (especially for large folders).
+  **  \fIset\fP の場合、Mutt はメールボックスが同期されたときに、メッセージキャッシュから
+  ** 無効になったエントリを削除します。 (特に大きなフォルダでは)若干遅くなるため、
+  ** たまに設定したいと思う程度でしょう。
   */
   { "message_cachedir",	DT_PATH,	R_NONE,	{.p=&MessageCachedir}, {.p=0} },
   /*
   ** .pp
-  ** Set this to a directory and mutt will cache copies of messages from
-  ** your IMAP and POP servers here. You are free to remove entries at any
-  ** time.
+  ** これをディレクトリに設定すると、Mutt はIMAP と POP サーバからメッセージのコピーを
+  ** ここにキャッシュします。このエントリはいつでも削除できます。
   ** .pp
-  ** When setting this variable to a directory, mutt needs to fetch every
-  ** remote message only once and can perform regular expression searches
-  ** as fast as for local folders.
+  ** この変数をディレクトリに設定すると、Mutt はすべてのリモートメッセージを1回だけ
+  ** フェッチする必要があり、ローカルフォルダと同じくらいの速さで正規表現による
+  ** 検索を実行できます。
   ** .pp
-  ** Also see the $$message_cache_clean variable.
+  **  $$message_cache_clean 変数も参照してください。
   */
 #endif
   { "message_format",	DT_STR,	 R_NONE, {.p=&MsgFmt}, {.p="%s"} },
   /*
   ** .pp
-  ** This is the string displayed in the ``attachment'' menu for
-  ** attachments of type \fCmessage/rfc822\fP.  For a full listing of defined
-  ** \fCprintf(3)\fP-like sequences see the section on $$index_format.
+  ** これは、\fCmessage/rfc822\fP タイプの添付用 ``attachment'' メニューで
+  ** 表示される文字列です。\fCprintf(3)\fP 風の定義されている完全な書式リストは
+  ** $$index_format 節を参照してください。
   */
   { "msg_format",	DT_SYN,  R_NONE, {.p="message_format"}, {.p=0} },
   /*
