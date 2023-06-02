@@ -2070,99 +2070,93 @@ struct option_t MuttVars[] = {
   { "message_id_format", DT_STR, R_NONE, {.p=&MessageIdFormat}, {.p="<%z@%f>"} },
   /*
   ** .pp
-  ** This variable describes the format of the Message-ID generated
-  ** when sending messages.  Mutt 2.0 introduced a more compact
-  ** format, but this variable allows the ability to choose your own
-  ** format.  The value may end in ``|'' to invoke an external filter.
-  ** See $formatstrings-filters.
+  ** この変数は、メッセージを送信するときに生成される Message-ID のフォーマットを
+  ** 記述します。Mutt 2.0では、よりコンパクトなフォーマットが導入されましたが、
+  ** この変数を使用すると独自のフォーマットを選択できます。外部フィルタを起動する
+  ** には、値の最後に ``|''を付けます。$formatstrings-filtersを参照してください。
   ** .pp
-  ** Please note that the Message-ID value follows a strict syntax,
-  ** and you are responsible for ensuring correctness if you change
-  ** this from the default.  In particular, the value must follow the
-  ** syntax in RFC 5322: ``\fC"<" id-left "@" id-right ">"\fP''.  No
-  ** spaces are allowed, and \fCid-left\fP should follow the
-  ** dot-atom-text syntax in the RFC.  The \fCid-right\fP should
-  ** generally be left at %f.
+  ** Message-ID の値は厳密な構文に従い、これを既定値から変更する場合は、
+  ** 正確性を確保する責任があルことに注意してください。特に、値は RFC 5322の構文:
+  ** ``\fC"<" id-left "@" id-right ">"\fP''に従う必要があります。スペースは使用
+  ** できず、また、\fCid-left\fP は RFC の dot-atom-text 構文に従う必要があります。
+  ** \fCid-right\fP は通常 %f に残す必要があります。
   ** .pp
-  ** The old Message-ID format can be used by setting this to:
+  ** 古い Message-ID フォーマットも、以下のように設定することで使えます:
   ** ``\fC<%Y%02m%02d%02H%02M%02S.G%c%p@%f>\fP''
   ** .pp
-  ** The following \fCprintf(3)\fP-style sequences are understood:
+  ** 以下の、\fCprintf(3)\fP スタイルの構文が利用できます:
   ** .dl
-  ** .dt %c .dd step counter looping from ``A'' to ``Z''
-  ** .dt %d .dd current day of the month (GMT)
+  ** .dt %c .dd ``A'' から ``Z'' をループするステップカウンタ
+  ** .dt %d .dd 現在の日付 (GMT)
   ** .dt %f .dd $$hostname
-  ** .dt %H .dd current hour using a 24-hour clock (GMT)
-  ** .dt %m .dd current month number (GMT)
-  ** .dt %M .dd current minute of the hour (GMT)
-  ** .dt %p .dd pid of the running mutt process
-  ** .dt %r .dd 3 bytes of pseudorandom data encoded in Base64
-  ** .dt %S .dd current second of the minute (GMT)
-  ** .dt %x .dd 1 byte of pseudorandom data hex encoded (example: '1b')
-  ** .dt %Y .dd current year using 4 digits (GMT)
-  ** .dt %z .dd 4 byte timestamp + 8 bytes of pseudorandom data encoded in Base64
+  ** .dt %H .dd 24時間制の、現在の時 (GMT)
+  ** .dt %m .dd 現在の月 (GMT)
+  ** .dt %M .dd 現在の分 (GMT)
+  ** .dt %p .dd 動いている mutt プロセスの pid
+  ** .dt %r .dd Base64 でエンコードされた、3バイトの疑似ランダムデータ
+  ** .dt %S .dd 現在の秒 (GMT)
+  ** .dt %x .dd 16進でエンコードされた１バイトの疑似ランダムデータ (例: '1b')
+  ** .dt %Y .dd 4桁の年 (GMT)
+  ** .dt %z .dd Base64 でエンコードされた、4バイトのタイムスタンプ + 8バイトの疑似ランダムデータ
   */
   { "meta_key",		DT_BOOL, R_NONE, {.l=OPTMETAKEY}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, forces Mutt to interpret keystrokes with the high bit (bit 8)
-  ** set as if the user had pressed the Esc key and whatever key remains
-  ** after having the high bit removed.  For example, if the key pressed
-  ** has an ASCII value of \fC0xf8\fP, then this is treated as if the user had
-  ** pressed Esc then ``x''.  This is because the result of removing the
-  ** high bit from \fC0xf8\fP is \fC0x78\fP, which is the ASCII character
-  ** ``x''.
+  ** \fIset\fP の場合、最上位ビット(ビット 8) を設定したキーストロークを、ESC キーを
+  ** 押し、残りのものはすべて最上位ビットを落とした形で Mutt に解釈させます。たとえば、
+  ** 押されたキーが ASCII の値で \fC0xf8\fP の場合は、 ESC の次に ``x'' が押された
+  ** ように扱われます。これは、最上位ビットを落とした \fC0xf8\fP が、\fC0x78\fP で、
+  ** それは ASCII 文字 ``x'' だからです。
   */
   { "metoo",		DT_BOOL, R_NONE, {.l=OPTMETOO}, {.l=0} },
   /*
   ** .pp
-  ** If \fIunset\fP, Mutt will remove your address (see the ``$alternates''
-  ** command) from the list of recipients when replying to a message.
+  ** \fIunset\fP の場合、Mutt はメッセージ返信時に受信者リストからアドレスを
+  ** 取り除きます(``$alternates'' コマンドを参照してください)。
   */
   { "mh_purge",		DT_BOOL, R_NONE, {.l=OPTMHPURGE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIunset\fP, mutt will mimic mh's behavior and rename deleted messages
-  ** to \fI,<old file name>\fP in mh folders instead of really deleting
-  ** them. This leaves the message on disk but makes programs reading the folder
-  ** ignore it. If the variable is \fIset\fP, the message files will simply be
-  ** deleted.
+  ** \fIunset\fP の場合、Mutt は mh の挙動を偽装し、実際に削除する代わりに mh フォルダ中で
+  ** 削除されたメッセージを \fI,<old file name>\fP に改名します。これは、メッセージを
+  ** ディスク上に残しますが、プログラムがフォルダを読むときに無視させます。変数が
+  ** \fIset\fP の場合、メッセージファイルは単に削除されます。
   ** .pp
-  ** This option is similar to $$maildir_trash for Maildir folders.
+  ** このオプションは、Maildir フォルダ用の $$maildir_trash と似ています。
   */
   { "mh_seq_flagged",	DT_STR, R_NONE, {.p=&MhFlagged}, {.p="flagged"} },
   /*
   ** .pp
-  ** The name of the MH sequence used for flagged messages.
+  ** フラグ付きメッセージに使われる MH シーケンス名です。
   */
   { "mh_seq_replied",	DT_STR, R_NONE, {.p=&MhReplied}, {.p="replied"} },
   /*
   ** .pp
-  ** The name of the MH sequence used to tag replied messages.
+  ** 返信済みメッセージに使われる MH シーケンス名です。
   */
   { "mh_seq_unseen",	DT_STR, R_NONE, {.p=&MhUnseen}, {.p="unseen"} },
   /*
   ** .pp
-  ** The name of the MH sequence used for unseen messages.
+  ** 未読メッセージに使われる MH シーケンス名です。
   */
   { "mime_forward",	DT_QUAD, R_NONE, {.l=OPT_MIMEFWD}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** When \fIset\fP, the message you are forwarding will be attached as a
-  ** separate \fCmessage/rfc822\fP MIME part instead of included in the main body of the
-  ** message.  This is useful for forwarding MIME messages so the receiver
-  ** can properly view the message as it was delivered to you. If you like
-  ** to switch between MIME and not MIME from mail to mail, set this
-  ** variable to ``ask-no'' or ``ask-yes''.
+  ** \fIset\fP の場合、転送するメッセージは、メッセージの本体中に含める代わりに、
+  ** 分離された \fCmessage/rfc822\fP MIME パートとして添付されます。これは、
+  ** MIME メッセージの転送に便利で、こうすることにより、受信者は自分に送られてきた
+  ** のと同じように正しくメッセージを閲覧できます。MIME と 非MIME をメール毎に
+  ** 切り換えたいのであれば、この変数を ``ask-no'' 又は ``ask-yes'' にします。
   ** .pp
-  ** Also see $$forward_decode and $$mime_forward_decode.
+  ** $$forward_decode と $$mime_forward_decode も参照してください。
   */
   { "mime_forward_decode", DT_BOOL, R_NONE, {.l=OPTMIMEFORWDECODE}, {.l=0} },
   /*
   ** .pp
-  ** Controls the decoding of complex MIME messages into \fCtext/plain\fP when
-  ** forwarding a message while $$mime_forward is \fIset\fP. Otherwise
-  ** $$forward_decode is used instead.
+  ** $$mime_forward が \fIset\fP の時にメッセージを転送する時、複雑な MIME メッセージを
+  ** \fCtext/plain\fP にデコードするかを制御します。それ以外は、代わりに
+  ** $$forward_decode が使われます。
+  */
   */
   { "mime_fwd",		DT_SYN,  R_NONE, {.p="mime_forward"}, {.p=0} },
   /*
@@ -2170,155 +2164,141 @@ struct option_t MuttVars[] = {
   { "mime_forward_rest", DT_QUAD, R_NONE, {.l=OPT_MIMEFWDREST}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** When forwarding multiple attachments of a MIME message from the attachment
-  ** menu, attachments which cannot be decoded in a reasonable manner will
-  ** be attached to the newly composed message if this option is \fIset\fP.
+  ** 添付メニューから、 MIME メッセージの複数の添付を転送する時、このオプションが
+  ** \fIset\fP の時、合理的な方法でデコードできない添付は新しく編集された
+  ** メッセージに添付されます。
   */
   { "mime_type_query_command", DT_STR, R_NONE, {.p=&MimeTypeQueryCmd}, {.p=0} },
   /*
   ** .pp
-  ** This specifies a command to run, to determine the mime type of a
-  ** new attachment when composing a message.  Unless
-  ** $$mime_type_query_first is set, this will only be run if the
-  ** attachment's extension is not found in the mime.types file.
+  ** これは、メッセージを編集するときに新しい添付の MIME タイプを決定するために
+  ** 動かすコマンドを指定します。$$mime_type_query_first が設定されている場合を除き、
+  ** これは mime.types ファイル中に添付の拡張子が見つからない場合にのみ実行されます。
   ** .pp
-  ** The string may contain a ``%s'', which will be substituted with the
-  ** attachment filename.  Mutt will add quotes around the string substituted
-  ** for ``%s'' automatically according to shell quoting rules, so you should
-  ** avoid adding your own.  If no ``%s'' is found in the string, Mutt will
-  ** append the attachment filename to the end of the string.
+  ** 文字列には ``%s'' を含むことが出来、これは、添付ファイル名に置換されます。
+  ** Mutt はシェルの引用ルールに沿って、自動的に ``%s'' を置き換えた文字列の回りに
+  ** 引用符を追加するので、個別に囲むことは必要ありません。文字列中に ``%s'' が
+  ** ない場合は、Mutt は文字列の最後に添付ファイル名を追加します。
   ** .pp
-  ** The command should output a single line containing the
-  ** attachment's mime type.
+  ** コマンドは添付の MIME タイプを含む単一行を出力しなければなりません。
   ** .pp
-  ** Suggested values are ``xdg-mime query filetype'' or
-  ** ``file -bi''.
+  ** 推奨される値は、 ``xdg-mime query filetype'' または ``file -bi'' です。
   */
   { "mime_type_query_first", DT_BOOL, R_NONE, {.l=OPTMIMETYPEQUERYFIRST}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the $$mime_type_query_command will be run before the
-  ** mime.types lookup.
+  ** \fIset\fP の場合、$mime_type_query_command は mime.types 検索の前に
+  ** 実行されます。
   */
 #ifdef MIXMASTER
   { "mix_entry_format", DT_STR,  R_NONE, {.p=&MixEntryFormat}, {.p="%4n %c %-16s %a"} },
   /*
   ** .pp
-  ** This variable describes the format of a remailer line on the mixmaster
-  ** chain selection screen.  The following \fCprintf(3)\fP-like sequences are
-  ** supported:
+  ** この変数は、mixmaster チェーン選択画面でのリメーラ行の書式を記述します。
+  ** 以下の、\fCprintf(3)\fP 風の書式がサポートされます。
   ** .dl
-  ** .dt %n .dd The running number on the menu.
-  ** .dt %c .dd Remailer capabilities.
-  ** .dt %s .dd The remailer's short name.
-  ** .dt %a .dd The remailer's e-mail address.
+  ** .dt %n .dd メニュー上での実行番号
+  ** .dt %c .dd リメーラのケーパビリティ
+  ** .dt %s .dd リメーラの短縮名
+  ** .dt %a .dd リメーラのメールアドレス
   ** .de
   ** .pp
-  ** (Mixmaster only)
+  ** (Mixmaster のみです)
   */
   { "mixmaster",	DT_CMD_PATH, R_NONE, {.p=&Mixmaster}, {.p=MIXMASTER} },
   /*
   ** .pp
-  ** This variable contains the path to the Mixmaster binary on your
-  ** system.  It is used with various sets of parameters to gather the
-  ** list of known remailers, and to finally send a message through the
-  ** mixmaster chain. (Mixmaster only)
+  ** この変数は、システム上の Mixmaster バイナリへのパスを記述します。
+  ** これは、種々のパラメータを付けた、既知のリメーラのリストを集めるためと、
+  ** 最終的には、mixmaster チェーンを使ってメッセージを送信するのに使われます。
+  ** (Mixmaster のみです)
   */
 #endif
   { "move",		DT_QUAD, R_NONE, {.l=OPT_MOVE}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** Controls whether or not Mutt will move read messages
-  ** from your spool mailbox to your $$mbox mailbox, or as a result of
-  ** a ``$mbox-hook'' command.
+  ** Mutt が既読メッセージをスプールメールボックスから、$$mbox メールボックス
+  ** か、``$mbox-hook'' コマンドの結果に移動するか否かを制御します。
   */
   { "muttlisp_inline_eval", DT_BOOL, R_NONE, {.l=OPTMUTTLISPINLINEEVAL}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will evaluate bare parenthesis arguments to commands
-  ** as MuttLisp expressions.
+  ** \fIset\fP の場合、Mutt は MuttLisp の式として、コマンドへの丸括弧
+  ** 引数を解釈します。
   */
   { "narrow_tree",	DT_BOOL, R_TREE|R_INDEX, {.l=OPTNARROWTREE}, {.l=0} },
   /*
   ** .pp
-  ** This variable, when \fIset\fP, makes the thread tree narrower, allowing
-  ** deeper threads to fit on the screen.
+  ** この変数は、\fIset\fPの時、深いスレッドを画面上に収まるように、スレッドツリーを
+  ** 狭くします。
   */
 #ifdef USE_SOCKET
   { "net_inc",	DT_NUM,	 R_NONE, {.p=&NetInc}, {.l=10} },
   /*
   ** .pp
-  ** Operations that expect to transfer a large amount of data over the
-  ** network will update their progress every $$net_inc kilobytes.
-  ** If set to 0, no progress messages will be displayed.
+  ** ネットワーク越しに大量のデータを転送することを予定している操作は、
+  ** 処理状況を $$net_inc キロバイト毎に更新します。0 に設定すると、
+  ** 処理状況メッセージは表示されません。
   ** .pp
-  ** See also $$read_inc, $$write_inc and $$net_inc.
+  ** $read_inc, $$write_inc と $$net_inc も参照してください。
   */
 #endif
   { "new_mail_command",	DT_CMD_PATH, R_NONE, {.p=&NewMailCmd}, {.p=0} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will call this command after a new message is received.
-  ** See the $$status_format documentation for the values that can be formatted
-  ** into this command.
+  ** \fIset\fP の場合、Mutt は新規メッセージを受信後にこのコマンドを呼び出します。
+  ** このコマンド中にフォーマットできうる値については、$$status_formatの説明を
+  ** 参照してください。
   */
   { "pager",		DT_CMD_PATH, R_NONE, {.p=&Pager}, {.p="builtin"} },
   /*
   ** .pp
-  ** This variable specifies which pager you would like to use to view
-  ** messages. The value ``builtin'' means to use the built-in pager, otherwise this
-  ** variable should specify the pathname of the external pager you would
-  ** like to use.
+  ** この変数は、メッセージを表示するのに使うページャを指定します。``builtin''
+  ** と言う値は、内蔵ページャを使う事を意味し、それ以外は、使用したい外部ページャの
+  ** パスを指定します。
   ** .pp
-  ** The string may contain a ``%s'', which will be substituted with
-  ** the generated message filename.  Mutt will add quotes around the
-  ** string substituted for ``%s'' automatically according to shell
-  ** quoting rules, so you should avoid adding your own.  If no ``%s''
-  ** is found in the string, Mutt will append the message filename to
-  ** the end of the string.
+  ** 文字列には生成されたメッセージファイル名に置換される ``%s'' を含む
+  ** ことが出来ます。Mutt はシェルの引用ルールに沿って、自動的に ``%s'' を
+  ** 置き換えた文字列の回りに引用符を追加するので、個別に囲むことは必要ありません。
+  ** 文字列中に ``%s'' がない場合は、Mutt は文字列の最後に添付ファイル名を
+  ** 追加します。
   ** .pp
-  ** Using an external pager may have some disadvantages: Additional
-  ** keystrokes are necessary because you can't call mutt functions
-  ** directly from the pager, and screen resizes cause lines longer than
-  ** the screen width to be badly formatted in the help menu.
+  ** 外部ページャを使う場合には若干弱点があります。ページャから直接 Mutt の
+  ** 機能を呼び出せないために、追加のキー操作が必要で、さらに、画面のリサイズを
+  ** すると、ヘルプメニュー中で、画面の幅より長い行は不正にレイアウトされてしまいます。
   ** .pp
-  ** When using an external pager, also see $$prompt_after which defaults
-  ** \fIset\fP.
+  ** 外部ページャを使う場合は、既定で \fIset\fP になっている $$prompt_after も
+  ** 参照してください。
   */
   { "pager_context",	DT_NUM,	 R_NONE, {.p=&PagerContext}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the number of lines of context that are given
-  ** when displaying the next or previous page in the internal pager.  By
-  ** default, Mutt will display the line after the last one on the screen
-  ** at the top of the next page (0 lines of context).
+  ** この変数は、内部ページャで、次または前のページを表示するときに、コンテキストと
+  ** して残す行数を制御します。既定では、Mutt は画面上の最後の行の次の行を
+  ** 次のページの最上位に表示します(コンテキストが 0行)。
   ** .pp
-  ** This variable also specifies the amount of context given for search
-  ** results. If positive, this many lines will be given before a match,
-  ** if 0, the match will be top-aligned.
+  ** この変数は検索の結果のコンテキスト量も指定します。値が正ならば、一致する前の
+  ** 行数が表示され、0 の場合は、一致は上揃えとなります。
   */
   { "pager_format",	DT_STR,	 R_PAGER, {.p=&PagerFmt}, {.p="-%Z- %C/%m: %-20.20n   %s%*  -- (%P)"} },
   /*
   ** .pp
-  ** This variable controls the format of the one-line message ``status''
-  ** displayed before each message in either the internal or an external
-  ** pager.  The valid sequences are listed in the $$index_format
-  ** section.
+  ** この変数は、内部又は外部ページャ中の各メッセージの前に表示される、
+  ** 1行の ``status'' メッセージの書式を制御します。正しい書式は $$index_format
+  ** 節に記してあります。
   */
   { "pager_index_lines",DT_NUM,	 R_PAGER, {.p=&PagerIndexLines}, {.l=0} },
   /*
   ** .pp
-  ** Determines the number of lines of a mini-index which is shown when in
-  ** the pager.  The current message, unless near the top or bottom of the
-  ** folder, will be roughly one third of the way down this mini-index,
-  ** giving the reader the context of a few messages before and after the
-  ** message.  This is useful, for example, to determine how many messages
-  ** remain to be read in the current thread.  One of the lines is reserved
-  ** for the status bar from the index, so a setting of 6
-  ** will only show 5 lines of the actual index.  A value of 0 results in
-  ** no index being shown.  If the number of messages in the current folder
-  ** is less than $$pager_index_lines, then the index will only use as
-  ** many lines as it needs.
+  ** ページャ中に表示されるミニインデックスの行数を指定します。フォルダの
+  ** 上端や下端にいる場合を除き、現在のメッセージは好みにインデックス画面の中で、
+  ** おおよそ1/3の位置にあり、メッセージの前後に数行がコンテキストとして、
+  ** メッセージを読むときに表示されます。これは、たとえば、現在のスレッドに
+  ** どのくらい未読が残っているかを判断するのに便利です。行のうち1行は、
+  ** インデックスのステータスバーとして予約されているので、6 に設定すると、
+  ** 実際のインデックスでは 5 行のみが表示されます。現在のフォルダ中のメッセージ数が
+  ** $$pager_index_lines より少ない場合は、インデックスは必要な数の行だけを
+  ** 使用します。
   */
   { "pager_skip_quoted_context", DT_NUM, R_NONE, {.p=&PagerSkipQuotedContext}, {.l=0} },
   /*
