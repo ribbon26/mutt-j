@@ -2763,23 +2763,22 @@ struct option_t MuttVars[] = {
   { "pop_auth_try_all",	DT_BOOL, R_NONE, {.l=OPTPOPAUTHTRYALL}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will try all available authentication methods.
-  ** When \fIunset\fP, Mutt will only fall back to other authentication
-  ** methods if the previous methods are unavailable. If a method is
-  ** available but authentication fails, Mutt will not connect to the POP server.
+  ** \fIset\fP の場合、Mutt はすべての有効な認証方法を試します。
+  ** \fIunset\fP の場合、Mutt は、以前の手法が無効だった場合にのみ、他の認証方法
+  ** にフォールバックします。手法が有効だが認証に失敗した場合、Mutt は POP
+  ** サーバに接続しません。
   */
   { "pop_authenticators", DT_STR, R_NONE, {.p=&PopAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** This is a colon-delimited list of authentication methods mutt may
-  ** attempt to use to log in to an POP server, in the order mutt should
-  ** try them.  Authentication methods are either ``user'', ``apop'' or any
-  ** SASL mechanism, e.g. ``digest-md5'', ``gssapi'' or ``cram-md5''.
-  ** This option is case-insensitive. If this option is \fIunset\fP
-  ** (the default) mutt will try all available methods, in order from
-  ** most-secure to least-secure.
+  ** これは、Mutt がPOPサーバにログインする時に使う、コロンで分離された認証方法の
+  ** 一覧です。この順で Mutt は接続を試みます。認証方法は、
+  ** ``user'', ``apop'' か他の SASL メカニズムで、例えば ``digest-md5'', ``gssapi''や
+  ** ``cram-md5'' です。このオプションは大文字小文字を区別しません。
+  ** このオプションが \fIunset\fP の場合(既定値)、Mutt はすべての有効な方法を
+  ** もっともセキュアなものからそうでないものの順で試みます。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set pop_authenticators="digest-md5:apop:user"
   ** .te
@@ -2787,73 +2786,70 @@ struct option_t MuttVars[] = {
   { "pop_checkinterval", DT_NUM, R_NONE, {.p=&PopCheckTimeout}, {.l=60} },
   /*
   ** .pp
-  ** This variable configures how often (in seconds) mutt should look for
-  ** new mail in the currently selected mailbox if it is a POP mailbox.
+  ** この変数は、現在選択されているメールボックスが POP メールボックスだった場合、
+  ** Mutt が新規メールを検索する感覚を(秒単位で)設定します。
   */
   { "pop_delete",	DT_QUAD, R_NONE, {.l=OPT_POPDELETE}, {.l=MUTT_ASKNO} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will delete successfully downloaded messages from the POP
-  ** server when using the \fC$<fetch-mail>\fP function.  When \fIunset\fP, Mutt will
-  ** download messages but also leave them on the POP server.
+  ** \fIset\fP の場合、Mutt は \fC$<fetch-mail>\fP 機能を使って POP サーバからダウンロード
+  ** 成功したメッセージを削除します。\fIunset\fP の場合は、Mutt はメッセージを
+  ** ダウンロードしますが、POP サーバ上に残したままにします。
   */
   { "pop_host",		DT_STR,	 R_NONE, {.p=&PopHost}, {.p=0} },
   /*
   ** .pp
-  ** The name of your POP server for the \fC$<fetch-mail>\fP function.  You
-  ** can also specify an alternative port, username and password, i.e.:
+  ** \fC$<fetch-mail>\fP 機能で使う POP サーバの名前です。以下のように
+  ** 代替ポート、ユーザ名、パスワードも指定することができます。
   ** .ts
   ** [pop[s]://][username[:password]@]popserver[:port]
   ** .te
   ** .pp
-  ** where ``[...]'' denotes an optional part.
+  ** ここで、 ``[...]'' はオプションの部分を意味します。
   */
   { "pop_last",		DT_BOOL, R_NONE, {.l=OPTPOPLAST}, {.l=0} },
   /*
   ** .pp
-  ** If this variable is \fIset\fP, mutt will try to use the ``\fCLAST\fP'' POP command
-  ** for retrieving only unread messages from the POP server when using
-  ** the \fC$<fetch-mail>\fP function.
+  ** この変数が\fIset\fP の場合、Mutt は、\fC$<fetch-mail>\fP 機能を使う時に、
+  ** POP サーバから未読メッセージのみを検索するために、``\fCLAST\fP'' POP コマンドを
+  ** 使おうとします。
   */
   { "pop_oauth_refresh_command", DT_STR, R_NONE, {.p=&PopOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** The command to run to generate an OAUTH refresh token for
-  ** authorizing your connection to your POP server.  This command will be
-  ** run on every connection attempt that uses the OAUTHBEARER authentication
-  ** mechanism.  See ``$oauth'' for details.
+  ** このコマンドは、POPサーバへの接続時の認証のために OAUTH リフレッシュトークンを
+  ** 生成するコマンドです。このコマンドは、OAUTHBEARER 認証メカニズムを使う
+  ** 接続時毎に実行されます。詳細は``$oauth'' を参照してください。
   */
   { "pop_pass",		DT_STR,	 R_NONE, {.p=&PopPass}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the password for your POP account.  If \fIunset\fP, Mutt will
-  ** prompt you for your password when you open a POP mailbox.
+  ** POP アカウントのパスワードを指定します。\fIunset\fP の場合、 POP メールボックスを
+  ** 開くときにパスワードの入力を求めます。
   ** .pp
-  ** \fBWarning\fP: you should only use this option when you are on a
-  ** fairly secure machine, because the superuser can read your muttrc
-  ** even if you are the only one who can read the file.
+  ** \fB警告\fP: このオプションは、自分自身しか読めないファイルであっても、スーパーユーザが
+  ** 読むことが出来るため、確実に安全なマシンでのみ使うべきです。
   */
   { "pop_reconnect",	DT_QUAD, R_NONE, {.l=OPT_POPRECONNECT}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not Mutt will try to reconnect to the POP server if
-  ** the connection is lost.
+  ** POP サーバとの接続が切れたときに、Mutt が再接続を試みるかどうかを制御します。
   */
   { "pop_user",		DT_STR,	 R_NONE, {.p=&PopUser}, {.p=0} },
   /*
   ** .pp
-  ** Your login name on the POP server.
+  ** POP サーバへのログイン名です。
   ** .pp
-  ** This variable defaults to your user name on the local machine.
+  ** 既定ではローカルマシンでのユーザ名になります。
   */
 #endif /* USE_POP */
   { "post_indent_string",DT_STR, R_NONE, {.p=&PostIndentString}, {.p=0} },
   /*
   ** .pp
-  ** Similar to the $$attribution variable, Mutt will append this
-  ** string after the inclusion of a message which is being replied to.
-  ** For a full listing of defined \fCprintf(3)\fP-like sequences see
-  ** the section on $$index_format.
+  ** $$attribution 変数と似ていて、Mutt はこの文字列を、返信するメッセージの引用の
+  ** あとに追加します。
+  ** 定義されている \fCprintf(3)\fP 風の書式の完全な一覧は $$index_format
+  ** 説を参照してください。
   */
   { "post_indent_str",  DT_SYN,  R_NONE, {.p="post_indent_string"}, {.p=0} },
   /*
@@ -2861,67 +2857,67 @@ struct option_t MuttVars[] = {
   { "postpone",		DT_QUAD, R_NONE, {.l=OPT_POSTPONE}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not messages are saved in the $$postponed
-  ** mailbox when you elect not to send immediately.
+  ** メッセージをすぐに送らないことを選択した場合、メッセージを $$postponed
+  ** にセーブするかどうかを制御します。
   ** .pp
-  ** Also see the $$recall variable.
+  **  $$recall 変数も参照してください。
   */
   { "postponed",	DT_PATH, R_INDEX, {.p=&Postponed}, {.p="~/postponed"} },
   /*
   ** .pp
-  ** Mutt allows you to indefinitely ``$postpone sending a message'' which
-  ** you are editing.  When you choose to postpone a message, Mutt saves it
-  ** in the mailbox specified by this variable.
+  ** Mutt は編集中のメッセージを無制限に ``メッセージの送信を $postpone'' できます。
+  ** メッセージを保留にすることを選んだ場合、Mutt はこの変数で指定されたメールボックスに
+  ** 保存します。
   ** .pp
-  ** Also see the $$postpone variable.
+  ** $$postpone 変数も参照してください。
   */
   { "postpone_encrypt",    DT_BOOL, R_NONE, {.l=OPTPOSTPONEENCRYPT}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, postponed messages that are marked for encryption will be
-  ** self-encrypted.  Mutt will first try to encrypt using the value specified
-  ** in $$pgp_default_key or $$smime_default_key.  If those are not
-  ** set, it will try the deprecated $$postpone_encrypt_as.
-  ** (Crypto only)
+  ** \fIset\fP の場合、暗号化するようにマークされた延期されたメッセージは、
+  ** 自己暗号化されます。Mutt は最初に $$pgp_default_key 又は $$smime_default_key
+  ** で指定された値を使って暗号化しようとします。それらが設定されていない場合、
+  ** 非推奨の $$postpone_encrypt_as を使おうとします。
+  ** (Crypto のみです)
   */
   { "postpone_encrypt_as", DT_STR,  R_NONE, {.p=&PostponeEncryptAs}, {.p=0} },
   /*
   ** .pp
-  ** This is a deprecated fall-back variable for $$postpone_encrypt.
-  ** Please use $$pgp_default_key or $$smime_default_key.
-  ** (Crypto only)
+  ** これは $$postpone_encrypt に対する非推奨のフォールバック変数です。
+  ** $$pgp_default_key 又は $$smime_default_key を使ってください。
+  ** (Crypto のみです)
   */
 #ifdef USE_SOCKET
   { "preconnect",	DT_STR, R_NONE, {.p=&Preconnect}, {.p=0} },
   /*
   ** .pp
-  ** If \fIset\fP, a shell command to be executed if mutt fails to establish
-  ** a connection to the server. This is useful for setting up secure
-  ** connections, e.g. with \fCssh(1)\fP. If the command returns a  nonzero
-  ** status, mutt gives up opening the server. Example:
+  ** \fIset\fP の場合、Mutt がサーバへの接続を確立するのに失敗した場合に
+  ** 実行されるシェルコマンドです。これは、たとえば、\fCssh(1)\fP のような
+  ** セキュアな接続を設定するのに便利です。コマンドの結果が非ゼロのステータス
+  ** を返す場合は、Mutt はサーバをオープンすることを諦めます。例は以下の通りです。
   ** .ts
   ** set preconnect="ssh -f -q -L 1234:mailhost.net:143 mailhost.net \(rs
   ** sleep 20 < /dev/null > /dev/null"
   ** .te
   ** .pp
-  ** Mailbox ``foo'' on ``mailhost.net'' can now be reached
-  ** as ``{localhost:1234}foo''.
+  ** ``mailhost.net'' 上のメールボックス ``foo'' はこれで ``{localhost:1234}foo''
+  ** として扱うことが出来ます。
   ** .pp
-  ** Note: For this example to work, you must be able to log in to the
-  ** remote machine without having to enter a password.
+  ** 注意: この例を動かすためには、パスワード入力なしで、リモートマシンに
+  ** ログインできる必要があります。
   */
 #endif /* USE_SOCKET */
   { "print",		DT_QUAD, R_NONE, {.l=OPT_PRINT}, {.l=MUTT_ASKNO} },
   /*
   ** .pp
-  ** Controls whether or not Mutt really prints messages.
-  ** This is set to ``ask-no'' by default, because some people
-  ** accidentally hit ``p'' often.
+  ** Mutt が本当にメッセージを印刷するかどうかを制御します。
+  ** 何人かが間違ってしばしば ``p'' を叩くために、これは既定値で
+  **  ``ask-no'' を設定します。
   */
   { "print_command",	DT_CMD_PATH, R_NONE, {.p=&PrintCmd}, {.p="lpr"} },
   /*
   ** .pp
-  ** This specifies the command pipe that should be used to print messages.
+  ** これに指定したコマンドへパイプしてメッセージを印刷します。
   */
   { "print_cmd",	DT_SYN,  R_NONE, {.p="print_command"}, {.p=0} },
   /*
@@ -2929,118 +2925,113 @@ struct option_t MuttVars[] = {
   { "print_decode",	DT_BOOL, R_NONE, {.l=OPTPRINTDECODE}, {.l=1} },
   /*
   ** .pp
-  ** Used in connection with the \fC<print-message>\fP function.  If this
-  ** option is \fIset\fP, the message is decoded before it is passed to the
-  ** external command specified by $$print_command.  If this option
-  ** is \fIunset\fP, no processing will be applied to the message when
-  ** printing it.  The latter setting may be useful if you are using
-  ** some advanced printer filter which is able to properly format
-  ** e-mail messages for printing.
+  ** \fC<print-message>\fP コマンド関連で使います。このオプションが
+  ** \fIset\fP の場合、メッセージは $$print_command で指定された外部コマンドに
+  ** 渡される前にデコードされます。このオプションが \fIunset\fP の場合、
+  ** 印刷するときに、メッセージには何も処理を適用しません。後者は、
+  ** メールメッセージを印刷時に適切に整形できる、高度なプリンタフィルタを
+  ** 使う場合に便利です。
   ** .pp
-  ** Also see $$print_decode_weed, which controls whether headers will
-  ** be weeded when this is \fIset\fP.
+  ** これが \fIset\fP の時、ヘッダを間引く(weed)する稼働を制御する
+  ** $$print_decode_weed も参照してください。
   */
   { "print_decode_weed", DT_BOOL, R_NONE, {.l=OPTPRINTDECODEWEED}, {.l=1} },
   /*
   ** .pp
-  ** For \fC<print-message>\fP, when $$print_decode is set, this
-  ** further controls whether Mutt will weed headers.
+  ** $$print_decode が設定されていたとき、\fC<print-message>\fP 用に、
+  ** この機能は Mutt がヘッダを間引き(weed) するかどうかを制御します。
   */
   { "print_split",	DT_BOOL, R_NONE, {.l=OPTPRINTSPLIT},  {.l=0} },
   /*
   ** .pp
-  ** Used in connection with the \fC<print-message>\fP function.  If this option
-  ** is \fIset\fP, the command specified by $$print_command is executed once for
-  ** each message which is to be printed.  If this option is \fIunset\fP,
-  ** the command specified by $$print_command is executed only once, and
-  ** all the messages are concatenated, with a form feed as the message
-  ** separator.
+  ** \fC<print-message>\fP コマンド関連で使います。このオプションが
+  ** \fIset\fP の場合、印刷される各メッセージに対して、$$print_command で指定された
+  ** コマンドが1回実行されます。このオプションが\fIunset\fP の場合、
+  ** $$print_command で指定されたコマンドが1回だけ実行され、すべてのメッセージが
+  ** メッセージの区切りとしてフォームフィードを付けて結合されます。
   ** .pp
-  ** Those who use the \fCenscript\fP(1) program's mail-printing mode will
-  ** most likely want to \fIset\fP this option.
+  ** \fCenscript\fP(1) プログラムのメール印刷モードを使う場合、このオプションを
+  ** \fIset\fP に設定したいと思うようになるでしょう。
   */
   { "prompt_after",	DT_BOOL, R_NONE, {.l=OPTPROMPTAFTER}, {.l=1} },
   /*
   ** .pp
-  ** If you use an \fIexternal\fP $$pager, setting this variable will
-  ** cause Mutt to prompt you for a command when the pager exits rather
-  ** than returning to the index menu.  If \fIunset\fP, Mutt will return to the
-  ** index menu when the external pager exits.
+  ** \fIexternal\fP $$pager を使っている場合、この変数を設定すると、
+  ** ページャ終了時に、インデックスメニューに戻るのではなく、Mutt がコマンド入力を
+  ** 即すようになります。\fIunset\fP の場合、Mutt は外部ページャ終了時に、
+  ** インデックスメニューに戻ります。
   */
   { "query_command",	DT_CMD_PATH, R_NONE, {.p=&QueryCmd}, {.p=0} },
   /*
   ** .pp
-  ** This specifies the command Mutt will use to make external address
-  ** queries.  The string may contain a ``%s'', which will be substituted
-  ** with the query string the user types.  Mutt will add quotes around the
-  ** string substituted for ``%s'' automatically according to shell quoting
-  ** rules, so you should avoid adding your own.  If no ``%s'' is found in
-  ** the string, Mutt will append the user's query to the end of the string.
-  ** See ``$query'' for more information.
+  ** これは、Mutt  が外部のアドレス問合せをするのに使うコマンドを指定します。
+  ** 文字列は、ユーザが入力した問合せ文字列に置き換えられる ``%s'' を含むことも
+  ** できます。Mutt はシェルの引用ルールに沿って、Mutt は自動的に、``%s'' に
+  ** 置き換えられた文字列を引用符で囲みます。文字列中に``%s'' がない場合は、
+  ** Mutt は文字列の最後にユーザの問合せを追加します。詳細な情報については
+  ** ``$query'' を参照してください。
   */
   { "query_format",	DT_STR, R_NONE, {.p=&QueryFormat}, {.p="%4c %t %-25.25a %-25.25n %?e?(%e)?"} },
   /*
   ** .pp
-  ** This variable describes the format of the ``query'' menu. The
-  ** following \fCprintf(3)\fP-style sequences are understood:
+  ** この変数は``query'' メニューのフォーマットを記述します。以下は
+  ** 使用できる\fCprintf(3)\fP 風の書式です:
   ** .dl
-  ** .dt %a  .dd destination address
-  ** .dt %c  .dd current entry number
-  ** .dt %e  .dd extra information *
-  ** .dt %n  .dd destination name
-  ** .dt %t  .dd ``*'' if current entry is tagged, a space otherwise
-  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
-  ** .dt %|X .dd pad to the end of the line with ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %a  .dd 宛先アドレス
+  ** .dt %c  .dd 現在のエントリ番号
+  ** .dt %e  .dd 拡張情報 *
+  ** .dt %n  .dd 宛先名
+  ** .dt %t  .dd 現在のエントリがタグづけられている場合は ``*'' で空白はそれ以外
+  ** .dt %>X .dd 残りの文字列を右揃えし ``X'' で埋める
+  ** .dt %|X .dd 行の最後まで ``X'' で埋める
+  ** .dt %*X .dd 埋め草として 文字 ``X'' を使って soft-fill
   ** .de
   ** .pp
-  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
+  ** ``soft-fill'' についての説明は、$$index_format の説明を参照してください。
   ** .pp
-  ** * = can be optionally printed if nonzero, see the $$status_format documentation.
+  ** * = は、非ゼロの場合にオプションで表示されます。$$status_format の説明を参照してください。
   */
   { "quit",		DT_QUAD, R_NONE, {.l=OPT_QUIT}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** This variable controls whether ``quit'' and ``exit'' actually quit
-  ** from mutt.  If this option is \fIset\fP, they do quit, if it is \fIunset\fP, they
-  ** have no effect, and if it is set to \fIask-yes\fP or \fIask-no\fP, you are
-  ** prompted for confirmation when you try to quit.
+  ** この変数は ``quit'' と ``exit'' が実際に Mutt を終了させるかどうかを制御します。
+  ** 終了させようとしたとき、このオプションが\fIset\fP ならば終了し、\fIunset\fP
+  ** ならば無効となり、\fIask-yes\fP か \fIask-no\fP ならば確認のために問合せを
+  ** してきます。
   */
   { "quote_regexp",	DT_RX,	 R_PAGER, {.p=&QuoteRegexp}, {.p="^([ \t]*[|>:}#])+"} },
   /*
   ** .pp
-  ** A regular expression used in the internal pager to determine quoted
-  ** sections of text in the body of a message. Quoted text may be filtered
-  ** out using the \fC<toggle-quoted>\fP command, or colored according to the
-  ** ``color quoted'' family of directives.
+  ** 内部ページャで、メッセージ本文の引用部分を見極めるために使う正規表現です。
+  ** 引用されたテキストは、\fC<toggle-quoted>\fP コマンドを使って除外するか、
+  ** ``color quoted''ファミリのディレクティブに従って色を付けることが出来ます。
   ** .pp
-  ** Higher levels of quoting may be colored differently (``color quoted1'',
-  ** ``color quoted2'', etc.). The quoting level is determined by removing
-  ** the last character from the matched text and recursively reapplying
-  ** the regular expression until it fails to produce a match.
+  ** 高位のレベルの引用は異なって着色されることがあります
+  ** (``color quoted1'',``color quoted2'' など)。引用レベルは、一致したテキストから
+  ** 最後の文字を取り去り、一致しなくなるまで再帰的に正規表現を適用する
+  ** ることで決まります。
   ** .pp
-  ** Match detection may be overridden by the $$smileys regular expression.
+  ** 一致の検出は $$smileys 正規表現によって上書きできます。
   */
   { "read_inc",		DT_NUM,	 R_NONE, {.p=&ReadInc}, {.l=10} },
   /*
   ** .pp
-  ** If set to a value greater than 0, Mutt will display which message it
-  ** is currently on when reading a mailbox or when performing search actions
-  ** such as search and limit. The message is printed after
-  ** this many messages have been read or searched (e.g., if set to 25, Mutt will
-  ** print a message when it is at message 25, and then again when it gets
-  ** to message 50).  This variable is meant to indicate progress when
-  ** reading or searching large mailboxes which may take some time.
-  ** When set to 0, only a single message will appear before the reading
-  ** the mailbox.
+  ** 0 より大きな値に設定されていると、メールボックス読み出し中か、検索と制限の
+  ** ような検索動作を実行するときに、 Mutt が現在どのメッセージまで来たのかを
+  ** 表示するようになります。メッセージは、このたくさんのメッセージが読み出されたり
+  ** 検索された後で表示されます(たとえば 25 に設定すると、Mutt は 25 番目のメッセージを
+  ** 読んだときに表示し、さらにまた 50 番目のときにも表示します)。
+  ** この変数は、少々時間のかかる、大きなメールボックスを読み出したり検索したりするときに、
+  ** 進行条項を表示するということを意味します。0 に設定すると、メールボックスを
+  ** 読み出す前に、1度メッセージが表示されるだけになります。
   ** .pp
-  ** Also see the $$write_inc, $$net_inc and $$time_inc variables and the
-  ** ``$tuning'' section of the manual for performance considerations.
+  ** $write_inc, $$net_inc and $$time_inc 変数と、パフォーマンスの考察についての
+  ** ``$tuning'' セクションのマニュアルも参照してください。
   */
   { "read_only",	DT_BOOL, R_NONE, {.l=OPTREADONLY}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, all folders are opened in read-only mode.
+  ** \fIset\fP の場合、すべてのフォルダはリードオンリモードでオープンされます。
   */
   { "realname",		DT_STR,	 R_BOTH, {.p=&Realname}, {.p=0} },
   /*
