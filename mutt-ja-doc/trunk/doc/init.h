@@ -2303,475 +2303,461 @@ struct option_t MuttVars[] = {
   { "pager_skip_quoted_context", DT_NUM, R_NONE, {.p=&PagerSkipQuotedContext}, {.l=0} },
   /*
   ** .pp
-  ** Determines the number of lines of context to show before the
-  ** unquoted text when using \fC$<skip-quoted>\fP. When set to a
-  ** positive number at most that many lines of the previous quote are
-  ** displayed. If the previous quote is shorter the whole quote is
-  ** displayed.
+  ** \fC$<skip-quoted>\fP を使用する場合に、引用符で囲まれていないテキストの前に
+  ** 表示するコンテキストの行数を指定します。正の数に設定すると、最大で前の
+  ** 引用符の行数が表示されます。前の引用符が短い場合は、引用符全体が表示されます。
   */
   { "pager_stop",	DT_BOOL, R_NONE, {.l=OPTPAGERSTOP}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the internal-pager will \fBnot\fP move to the next message
-  ** when you are at the end of a message and invoke the \fC<next-page>\fP
-  ** function.
+  ** \fIset\fP の場合、内部ページャは、メッセージの最後にいて、\fC<next-page>\fP
+  ** 機能を呼び出しても、次のメッセージに移動\fBしません\fP。
   */
   { "pattern_format", DT_STR, R_NONE, {.p=&PatternFormat}, {.p="%2n %-15e  %d"} },
   /*
   ** .pp
-  ** This variable describes the format of the ``pattern completion'' menu. The
-  ** following \fCprintf(3)\fP-style sequences are understood:
+  ** この値は、``pattern completion'' メニューのフォーマットを記述します。
+  ** 以下の、\fCprintf(3)\fP 形式のシーケンスが使えます:
   ** .dl
-  ** .dt %d  .dd pattern description
-  ** .dt %e  .dd pattern expression
-  ** .dt %n  .dd index number
+  ** .dt %d  .dd パターンの記述
+  ** .dt %e  .dd パターンの式
+  ** .dt %n  .dd インデックス番号
   ** .de
   ** .pp
   */
   { "pgp_auto_decode", DT_BOOL, R_NONE, {.l=OPTPGPAUTODEC}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will automatically attempt to decrypt traditional PGP
-  ** messages whenever the user performs an operation which ordinarily would
-  ** result in the contents of the message being operated on.  For example,
-  ** if the user displays a pgp-traditional message which has not been manually
-  ** checked with the \fC$<check-traditional-pgp>\fP function, mutt will automatically
-  ** check the message for traditional pgp.
+  ** \fIset\fP の場合、Mutt は、ユーザがメッセージの内容を操作するような通常の操作を
+  ** 実行しようとすると、従来の PGP メッセージを自動的に復号化しようとします。たとえば、
+  ** \fC$<check-traditional-pgp>\fP 機能を使って手動でチェックされていない
+  ** 従来の PGP メッセージを表示した場合、Mutt は自動的に、メッセージが従来の PGP かを
+  ** チェックします。
   */
   { "pgp_create_traditional",	DT_SYN, R_NONE, {.p="pgp_autoinline"}, {.p=0} },
   { "pgp_autoinline",		DT_BOOL, R_NONE, {.l=OPTPGPAUTOINLINE}, {.l=0} },
   /*
   ** .pp
-  ** This option controls whether Mutt generates old-style inline
-  ** (traditional) PGP encrypted or signed messages under certain
-  ** circumstances.  This can be overridden by use of the pgp menu,
-  ** when inline is not required.  The GPGME backend does not support
-  ** this option.
+  ** このオプションは、特定の環境で、古いスタイルのインライン(旧来の)PGP 暗号化または
+  ** 署名されたメッセージを生成するかどうかを制御します。これは インラインが不要の場合、
+  ** PGP メニューを使う事で上書きできます。GPGME バックエンドはこのオプションを
+  ** サポートしません。
   ** .pp
-  ** Note that Mutt might automatically use PGP/MIME for messages
-  ** which consist of more than a single MIME part.  Mutt can be
-  ** configured to ask before sending PGP/MIME messages when inline
-  ** (traditional) would not work.
+  ** Mutt は、MIME パートが1つより多く存在している場合、メッセージに対して、
+  ** 自動的に PGP/MIME を使用する場合があることに注意してください。Mutt は
+  ** インライン(従来型) が動作しない場合に、PGP/MIME メッセージを送信する前に
+  ** 問合せをするように設定できます。
   ** .pp
-  ** Also see the $$pgp_mime_auto variable.
+  ** $$pgp_mime_auto 変数も参照してください。
   ** .pp
-  ** Also note that using the old-style PGP message format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
-  ** (PGP only)
+  ** また、古い形式の PGP メッセージ形式を使う事は\fB強く\fP \fB非推奨に\fP
+  ** なっていることにも注意してください。
+  ** (PGP のみです)
   */
   { "pgp_check_exit",	DT_BOOL, R_NONE, {.l=OPTPGPCHECKEXIT}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will check the exit code of the PGP subprocess when
-  ** signing or encrypting.  A non-zero exit code means that the
-  ** subprocess failed.
-  ** (PGP only)
+  ** \fIset\fP の場合、muttは署名または暗号化するときにPGPサブプロセスの
+  ** 終了コードをチェックします。0以外の終了コードは、サブプロセスが失敗
+  ** したことを意味します。
+  ** (PGP のみです)
   */
   { "pgp_check_gpg_decrypt_status_fd", DT_BOOL, R_NONE, {.l=OPTPGPCHECKGPGDECRYPTSTATUSFD}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will check the status file descriptor output
-  ** of $$pgp_decrypt_command and $$pgp_decode_command for GnuPG status codes
-  ** indicating successful decryption.  This will check for the presence of
-  ** DECRYPTION_OKAY, absence of DECRYPTION_FAILED, and that all
-  ** PLAINTEXT occurs between the BEGIN_DECRYPTION and END_DECRYPTION
-  ** status codes.
+  ** \fIset\fPの場合、Mutt は GnuPG ステータスコードが復号が成功したことを表示する
+  **  $$pgp_decrypt_command と $$pgp_decode_command コマンドののステータスファイル記述子
+  ** 出力をチェックします。これは DECRYPTION_OKAY の存在、DECRYPTION_FAILED の不在および
+  ** BEGIN_DECRYPTION と END_DECRYPTION ステータスコードの間にすべての
+  ** PLAINTEXT が存在することをチェックします。
   ** .pp
-  ** If \fIunset\fP, mutt will instead match the status fd output
-  ** against $$pgp_decryption_okay.
-  ** (PGP only)
+  ** \fIunset\fP の場合、Mutt は $$pgp_decryption_okay と fd 出力のステータスを
+  ** 代わりに照合します。
+  ** (PGP のみです)
   */
   { "pgp_clearsign_command",	DT_STR,	R_NONE, {.p=&PgpClearSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This format is used to create an old-style ``clearsigned'' PGP
-  ** message.  Note that the use of this format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
+  ** このフォーマットは、旧形式の ``clearsigned'' な PGP メッセージを作成するのに
+  ** 使います。このフォーマットの使用は \fB強く\fP \fB非推奨\fP であることに
+  ** 注意してください。
+  **
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列です。使える\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_decode_command",       DT_STR, R_NONE, {.p=&PgpDecodeCommand}, {.p=0} },
   /*
   ** .pp
-  ** This format strings specifies a command which is used to decode
-  ** application/pgp attachments.
+  ** このフォーマット文字列は、application/pgp 添付を復号するために使われる
+  ** コマンドを指定します。
   ** .pp
-  ** The PGP command formats have their own set of \fCprintf(3)\fP-like sequences:
+  ** PGP コマンドフォーマットは \fCprintf(3)\fP 風の固有の書式があります。
   ** .dl
-  ** .dt %p .dd Expands to PGPPASSFD=0 when a pass phrase is needed, to an empty
-  **            string otherwise. Note: This may be used with a %? construct.
-  ** .dt %f .dd Expands to the name of a file containing a message.
-  ** .dt %s .dd Expands to the name of a file containing the signature part
-  ** .          of a \fCmultipart/signed\fP attachment when verifying it.
-  ** .dt %a .dd The value of $$pgp_sign_as if set, otherwise the value
-  **            of $$pgp_default_key.
-  ** .dt %r .dd One or more key IDs (or fingerprints if available).
+  ** .dt %p .dd パスフェーズが必要な場合に 任意の空白文字列などをPGPPASSFD=0 に
+  **            展開します。注意: これは %? も使うことができます。
+  ** .dt %f .dd メッセージを含むファイルの名前を展開します。
+  ** .dt %s .dd 検証するときに \fCmultipart/signed\fP 添付の署名パートを含む
+  **            ファイル名を展開します。
+  ** .dt %a .dd 設定されている場合、$$pgp_sign_as の値で、そのほかは、
+  **            $$pgp_default_key の値。
+  ** .dt %r .dd 1つ以上の キー ID (あるいはもしもあればフィンガープリント)
   ** .de
   ** .pp
-  ** For examples on how to configure these formats for the various versions
-  ** of PGP which are floating around, see the pgp and gpg sample configuration files in
-  ** the \fCsamples/\fP subdirectory which has been installed on your system
-  ** alongside the documentation.
-  ** (PGP only)
+  ** PGP の種々のバージョンに対してこれらのフォーマットをどのように設定するかの例は
+  ** ドキュメントといっしょにシステムにインストールされている the \fCsamples/\fP
+  ** サブディレクトリ にある、pgp と gpg 設定ファイルの例を参照してください。
+  ** (PGP のみです)
   */
   { "pgp_decrypt_command", 	DT_STR, R_NONE, {.p=&PgpDecryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to decrypt a PGP encrypted message.
+  ** このコマンドは PGP で暗号化されたメッセージの復号に使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用できる \fCprintf(3)\fP 風の書式は
+  ** $$pgp_decode_command を参照してください。
+  ** (PGP のみです)
   */
   { "pgp_decryption_okay",	DT_RX,  R_NONE, {.p=&PgpDecryptionOkay}, {.p=0} },
   /*
   ** .pp
-  ** If you assign text to this variable, then an encrypted PGP
-  ** message is only considered successfully decrypted if the output
-  ** from $$pgp_decrypt_command contains the text.  This is used to
-  ** protect against a spoofed encrypted message, with multipart/encrypted
-  ** headers but containing a block that is not actually encrypted.
-  ** (e.g. simply signed and ascii armored text).
+  ** この変数にテキストを割り当てた場合、暗号化された PGP メッセージは、
+  ** $$pgp_decrypt_command からの出力がテキストを含んでいるときのみ、
+  ** 復号が成功したとします。これは、multipart/encrypted ヘッダがあるが、
+  ** ブロックが完全には暗号化されていないブロックを含む場合、暗号化された
+  ** メッセージの盗聴を防ぐのに便利です(すなわち、単純に署名されて、ASCII で
+  ** 防御されたテキスト)。
   ** .pp
-  ** Note that if $$pgp_check_gpg_decrypt_status_fd is set, this variable
-  ** is ignored.
-  ** (PGP only)
+  ** $$pgp_check_gpg_decrypt_status_fd が設定されている場合、この変数は
+  ** 無視されることに注意してください。
+  ** (PGP のみです)
   */
   { "pgp_self_encrypt_as",	DT_SYN,  R_NONE, {.p="pgp_default_key"}, {.p=0} },
   { "pgp_default_key",		DT_STR,	 R_NONE, {.p=&PgpDefaultKey}, {.p=0} },
   /*
   ** .pp
-  ** This is the default key-pair to use for PGP operations.  It will be
-  ** used for encryption (see $$postpone_encrypt and $$pgp_self_encrypt).
+  ** これは PGP 操作に使う、既定のキーペアです。これは暗号化の時に使います
+  ** ($$postpone_encrypt と $$pgp_self_encrypt を参照してください)。
   ** .pp
-  ** It will also be used for signing unless $$pgp_sign_as is set.
+  ** $$pgp_sign_as が設定されていない限り、署名にも使われます。
   ** .pp
   ** The (now deprecated) \fIpgp_self_encrypt_as\fP is an alias for this
   ** variable, and should no longer be used.
-  ** (PGP only)
+  ** (現在は非推奨の) \fIpgp_self_encrypt_as\fP はこの変数の別名ですが、
+  ** もはや使われていません。
+  ** (PGP のみです)
   */
   { "pgp_encrypt_only_command", DT_STR, R_NONE, {.p=&PgpEncryptOnlyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to encrypt a body part without signing it.
+  ** このコマンドは、署名なしで本文を暗号化するために使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_encrypt_sign_command",	DT_STR, R_NONE, {.p=&PgpEncryptSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to both sign and encrypt a body part.
+  ** このコマンドは、本文の署名と暗号化両方に使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_entry_format", DT_STR,  R_NONE, {.p=&PgpEntryFormat}, {.p="%4n %t%f %4l/0x%k %-4a %2c %u"} },
   /*
   ** .pp
-  ** This variable allows you to customize the PGP key selection menu to
-  ** your personal taste. This string is similar to $$index_format, but
-  ** has its own set of \fCprintf(3)\fP-like sequences:
+  ** この変数は、好みに応じて PGP キー選択メニューをカスタマイズ出来るようにします。
+  ** この文字列は$$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
+  ** 持っています。
   ** .dl
-  ** .dt %n     .dd number
-  ** .dt %k     .dd key id
+  ** .dt %n     .dd 番号
+  ** .dt %k     .dd キー id
   ** .dt %u     .dd user id
-  ** .dt %a     .dd algorithm
-  ** .dt %l     .dd key length
-  ** .dt %f     .dd flags
-  ** .dt %c     .dd capabilities
-  ** .dt %t     .dd trust/validity of the key-uid association
-  ** .dt %[<s>] .dd date of the key where <s> is an \fCstrftime(3)\fP expression
+  ** .dt %a     .dd アルゴリズム
+  ** .dt %l     .dd キー長
+  ** .dt %f     .dd フラグ
+  ** .dt %c     .dd ケーパビリティ
+  ** .dt %t     .dd key-uid アソシエーションの 信頼性/有効性
+  ** .dt %[<s>] .dd \fCstrftime(3)\fP 形式のキーの日付
   ** .de
   ** .pp
-  ** (PGP only)
+  ** (PGP のみです)
   */
   { "pgp_export_command", 	DT_STR, R_NONE, {.p=&PgpExportCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to export a public key from the user's
-  ** key ring.
+  ** このコマンドは、ユーザのキーリングから公開鍵をエクスポートするのに使われます。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、使用可能な \fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_getkeys_command",	DT_STR, R_NONE, {.p=&PgpGetkeysCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is invoked whenever Mutt needs to fetch the public key associated with
-  ** an email address.  Of the sequences supported by $$pgp_decode_command, %r is
-  ** the only \fCprintf(3)\fP-like sequence used with this format.  Note that
-  ** in this case, %r expands to the email address, not the public key ID (the key ID is
-  ** unknown, which is why Mutt is invoking this command).
-  ** (PGP only)
+  ** このコマンドは、Mutt が、メールアドレスに関連づけられた公開鍵をフェッチする
+  ** 必要がある場合はいつでも起動されます。$$pgp_decode_command によってサポート
+  ** される書式のうち、%r は、このフォーマットだけで使われる書式です。
+  ** この場合、%r は メールアドレスに展開されますが、公開鍵のID ではないことに注意して
+  ** ください(キーID は不明なので、このことが、Mutt がこのコマンドを起動する理由です)。
+  ** (PGP のみです)
   */
   { "pgp_good_sign",	DT_RX,  R_NONE, {.p=&PgpGoodSign}, {.p=0} },
   /*
   ** .pp
-  ** If you assign a text to this variable, then a PGP signature is only
-  ** considered verified if the output from $$pgp_verify_command contains
-  ** the text. Use this variable if the exit code from the command is 0
-  ** even for bad signatures.
-  ** (PGP only)
+  ** この変数にテキストを割り当てた場合、$$pgp_verify_command からの出力が
+  ** テキストの場合にのみ、PGP 署名 は検証されていると見なされます。不正な
+  ** 署名であっても、コマンドの終了コードが 0 の場合はこの変数を使います。
+  ** (PGP のみです)
   */
   { "pgp_ignore_subkeys", DT_BOOL, R_NONE, {.l=OPTPGPIGNORESUB}, {.l=1} },
   /*
   ** .pp
-  ** Setting this variable will cause Mutt to ignore OpenPGP subkeys. Instead,
-  ** the principal key will inherit the subkeys' capabilities.  \fIUnset\fP this
-  ** if you want to play interesting key selection games.
-  ** (PGP only)
+  ** この変数を設定すると、Mutt は OpenPGP 副キーを無視するようになります。代わりに、
+  ** プリンシパルキー に副キーのケーパビリティが継承されます。興味深いキー選択
+  ** ゲームを楽しみたい場合は、これを \fIUnset\fP にします。
+  ** (PGP のみです)
   */
   { "pgp_import_command",	DT_STR, R_NONE, {.p=&PgpImportCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to import a key from a message into
-  ** the user's public key ring.
+  ** このコマンドは、ユーザの公開キーリングにメッセージからキーをインポートする
+  ** のに使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_list_pubring_command", DT_STR, R_NONE, {.p=&PgpListPubringCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to list the public key ring's contents.  The
-  ** output format must be analogous to the one used by
+  ** このコマンドは、公開キーリングの内容を一覧表示するのに使います。
+  ** 出力形式は以下で使用しているものに似ている必要があります。
   ** .ts
   ** gpg --list-keys --with-colons --with-fingerprint
   ** .te
   ** .pp
-  ** This format is also generated by the \fCmutt_pgpring\fP utility which comes
-  ** with mutt.
+  ** このフォーマットは、Mutt 由来の \fCmutt_pgpring\fP ユーティリティによっても
+  ** 生成されます。
   ** .pp
-  ** Note: gpg's \fCfixed-list-mode\fP option should not be used.  It
-  ** produces a different date format which may result in mutt showing
-  ** incorrect key generation dates.
+  ** 注意: gpg の \fCfixed-list-mode\fP オプションは使ってはなりません。これは、
+  ** Mutt 中で不正なキー生成日付を表示する結果となる異なった日付形式を生成します。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** Note that in this case, %r expands to the search string, which is a list of
-  ** one or more quoted values such as email address, name, or keyid.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** この場合、 %r は、メールアドレス、名前、あるいはキーIDのような、1つ以上のクォート
+  ** された文字列の一覧である検索文字列に展開されることに注意してください。
+  ** (PGP のみです)
   */
   { "pgp_list_secring_command",	DT_STR, R_NONE, {.p=&PgpListSecringCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to list the secret key ring's contents.  The
-  ** output format must be analogous to the one used by:
+  ** このコマンドは秘密鍵リングの内容を一覧表示するのに使います。
+  ** 出力形式は以下で使用しているものに似ている必要があります。
   ** .ts
   ** gpg --list-keys --with-colons --with-fingerprint
   ** .te
   ** .pp
-  ** This format is also generated by the \fCmutt_pgpring\fP utility which comes
-  ** with mutt.
+  ** このフォーマットは、Mutt 由来の \fCmutt_pgpring\fP ユーティリティによっても
+  ** 生成されます。
   ** .pp
-  ** Note: gpg's \fCfixed-list-mode\fP option should not be used.  It
-  ** produces a different date format which may result in mutt showing
-  ** incorrect key generation dates.
+  ** 注意: gpg の \fCfixed-list-mode\fP オプションは使ってはなりません。これは、
+  ** Mutt 中で不正なキー生成日付を表示する結果となる異なった日付形式を生成します。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** Note that in this case, %r expands to the search string, which is a list of
-  ** one or more quoted values such as email address, name, or keyid.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** この場合、 %r は、メールアドレス、名前、あるいはキーIDのような、1つ以上のクォート
+  ** された文字列の一覧である検索文字列に展開されることに注意してください。
+  ** (PGP のみです)
   */
   { "pgp_long_ids",	DT_BOOL, R_NONE, {.l=OPTPGPLONGIDS}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, use 64 bit PGP key IDs, if \fIunset\fP use the normal 32 bit key IDs.
-  ** NOTE: Internally, Mutt has transitioned to using fingerprints (or long key IDs
-  ** as a fallback).  This option now only controls the display of key IDs
-  ** in the key selection menu and a few other places.
-  ** (PGP only)
+  ** \fIset\fP の場合、64ビットの PGP キーID を使い、\fIunset\fP の場合、通常の
+  ** 32ビットキーIDを使います。注意:内部的に、Mutt はフィンガープリント(あるいは
+  ** フォールバックとしての長いキーID)の使用に移行しました。このオプションは、
+  ** キー選択メニューでの内容の表示やいくつかの他の場所での制御にのみ使われます。
+  ** (PGP のみです)
   */
   { "pgp_mime_auto", DT_QUAD, R_NONE, {.l=OPT_PGPMIMEAUTO}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** This option controls whether Mutt will prompt you for
-  ** automatically sending a (signed/encrypted) message using
-  ** PGP/MIME when inline (traditional) fails (for any reason).
+  ** このオプションは、インライン(従来型の)で(何らかの理由で)うまくいかなかった
+  ** 場合、PGP/MIME を使う(署名/暗号化)メッセージの自動的な送信に対して
+  ** Mutt が問合せをするかどうかを制御します。
   ** .pp
-  ** Also note that using the old-style PGP message format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
-  ** (PGP only)
+  ** 古い形式の PGP メッセージ形式の使用は \fB強く\fP \fB非推奨\fP であることにも
+  ** 注意してください。
+  ** (PGP のみです)
   */
   { "pgp_auto_traditional",	DT_SYN, R_NONE, {.p="pgp_replyinline"}, {.p=0} },
   { "pgp_replyinline",		DT_BOOL, R_NONE, {.l=OPTPGPREPLYINLINE}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable will cause Mutt to always attempt to
-  ** create an inline (traditional) message when replying to a
-  ** message which is PGP encrypted/signed inline.  This can be
-  ** overridden by use of the pgp menu, when inline is not
-  ** required.  This option does not automatically detect if the
-  ** (replied-to) message is inline; instead it relies on Mutt
-  ** internals for previously checked/flagged messages.
+  ** この変数を設定すると、Mutt は、インラインでPGPで暗号化/署名されたメッセージに
+  ** 返信するときに、インライン(従来型の)メッセージを作成しようとします。
+  ** これは、インラインが不要だった場合、PGPメニューを使うことによって
+  ** 上書きできます。このオプションは(返信された)メッセージがインラインかを
+  ** 自動的には検出しません。そのかわり、以前にチェック/フラグを付けたメッセージの
+  ** Mutt 内部状態に依存します。
   ** .pp
-  ** Note that Mutt might automatically use PGP/MIME for messages
-  ** which consist of more than a single MIME part.  Mutt can be
-  ** configured to ask before sending PGP/MIME messages when inline
-  ** (traditional) would not work.
+  ** Mutt は MIME パートが複数存在する場合、メッセージに対して 自動的に PGP/MIME
+  ** を使う事があることに注意してください。Mutt は、インライン(従来型)が動かない
+  ** 場合に、PGP/MIMEメッセージを送信する前に問合せをするように設定できます。
   ** .pp
-  ** Also see the $$pgp_mime_auto variable.
+  ** $$pgp_mime_auto 変数も参照してください。
   ** .pp
-  ** Also note that using the old-style PGP message format is \fBstrongly\fP
-  ** \fBdeprecated\fP.
-  ** (PGP only)
+  ** 古い形式の PGP メッセージ形式の使用は \fB強く\fP \fB非推奨\fP であることにも
+  ** 注意してください。
+  ** (PGP のみです)
   **
   */
   { "pgp_retainable_sigs", DT_BOOL, R_NONE, {.l=OPTPGPRETAINABLESIG}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, signed and encrypted messages will consist of nested
-  ** \fCmultipart/signed\fP and \fCmultipart/encrypted\fP body parts.
+  ** \fIset\fP の場合、署名かつ暗号化されたメッセージは、ネストされた
+  ** \fCmultipart/signed\fP と \fCmultipart/encrypted\fP 本体部分で構成されます。
   ** .pp
-  ** This is useful for applications like encrypted and signed mailing
-  ** lists, where the outer layer (\fCmultipart/encrypted\fP) can be easily
-  ** removed, while the inner \fCmultipart/signed\fP part is retained.
-  ** (PGP only)
+  ** これは外部レイヤ(\fCmultipart/encrypted\fP)が簡単に削除でき、内部の
+  ** \fCmultipart/signed\fP パートが残るので、暗号化され署名された
+  ** メーリングリストのようなアプリケーションには便利です。
+  ** (PGP のみです)
   */
   { "pgp_self_encrypt",    DT_BOOL, R_NONE, {.l=OPTPGPSELFENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, PGP encrypted messages will also be encrypted
-  ** using the key in $$pgp_default_key.
-  ** (PGP only)
+  ** \fIset\fP の場合、PGP 暗号化メッセージは $$pgp_default_key 中のキーを
+  ** 使う事で暗号化も行います。
+  ** (PGP のみです)
   */
   { "pgp_show_unusable", DT_BOOL, R_NONE, {.l=OPTPGPSHOWUNUSABLE}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will display non-usable keys on the PGP key selection
-  ** menu.  This includes keys which have been revoked, have expired, or
-  ** have been marked as ``disabled'' by the user.
-  ** (PGP only)
+  ** \fIset\fP の場合、Mutt は PGP キー選択メニュー上で使えないキーを表示します。
+  ** これは、取り消されたもの、満了したもの、あるいは、ユーザによって、``disabled'' と
+  ** マークを付けられたものを含みます。
+  ** (PGP のみです)
   */
   { "pgp_sign_as",	DT_STR,	 R_NONE, {.p=&PgpSignAs}, {.p=0} },
   /*
   ** .pp
-  ** If you have a different key pair to use for signing, you should
-  ** set this to the signing key.  Most people will only need to set
-  ** $$pgp_default_key.  It is recommended that you use the keyid form
-  ** to specify your key (e.g. \fC0x00112233\fP).
-  ** (PGP only)
+  ** 署名のための異なったキーペアがある場合、署名するキーを、これを使って指定
+  ** しなければなりません。ほとんどの場合は、$$pgp_default_key を設定しなければ
+  ** ならないだけです。キーを指定するためにキーID形式を使う事を推奨します
+  ** (たとえば\fC0x00112233\fP)。
+  ** (PGP のみです)
   */
   { "pgp_sign_command",		DT_STR, R_NONE, {.p=&PgpSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to create the detached PGP signature for a
-  ** \fCmultipart/signed\fP PGP/MIME body part.
+  ** このコマンドは、\fCmultipart/signed\fP PGP/MIME 本体部分のために、PGP 分離署名を
+  ** 作成するために使われます。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_sort_keys",	DT_SORT|DT_SORT_KEYS, R_NONE, {.p=&PgpSortKeys}, {.l=SORT_ADDRESS} },
   /*
   ** .pp
-  ** Specifies how the entries in the pgp menu are sorted. The
-  ** following are legal values:
+  ** PGP メニュー中のエントリをどのように整列するかを指定します。
+  ** 取り得る値は以下の通りです:
   ** .dl
-  ** .dt address .dd sort alphabetically by user id
-  ** .dt keyid   .dd sort alphabetically by key id
-  ** .dt date    .dd sort by key creation date
-  ** .dt trust   .dd sort by the trust of the key
+  ** .dt address .dd ユーザID のアルファベット順
+  ** .dt keyid   .dd キーID のアルファベット順
+  ** .dt date    .dd キー作成日順
+  ** .dt trust   .dd キーの trust 順
   ** .de
   ** .pp
-  ** If you prefer reverse order of the above values, prefix it with
-  ** ``reverse-''.
-  ** (PGP only)
+  ** 上記の値を逆順にしたい場合は、``reverse-'' という接頭辞を付けます。
+  ** (PGP のみです)
   */
   { "pgp_strict_enc",	DT_BOOL, R_NONE, {.l=OPTPGPSTRICTENC}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will automatically encode PGP/MIME signed messages as
-  ** quoted-printable.  Please note that unsetting this variable may
-  ** lead to problems with non-verifyable PGP signatures, so only change
-  ** this if you know what you are doing.
-  ** (PGP only)
+  ** \fIset\fP の場合、Mutt は自動的に PGP/MIME 署名メッセージを quoted-printable で
+  ** エンコードします。この変数を設定しない場合、検証できない PGP 署名で
+  ** 問題が出てくるかもしれないので、変更することの内容が割っている場合にのみ
+  ** 変更してください。
+  ** (PGP のみです)
   */
   { "pgp_timeout",	DT_LNUM,	 R_NONE, {.p=&PgpTimeout}, {.l=300} },
   /*
   ** .pp
-  ** The number of seconds after which a cached passphrase will expire if
-  ** not used.
-  ** (PGP only)
+  ** 使用していない場合の、キャッシュされたパスフレーズが満了するまでの、
+  ** 秒数です。
+  ** (PGP のみです)
   */
   { "pgp_use_gpg_agent", DT_BOOL, R_NONE, {.l=OPTUSEGPGAGENT}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt expects a \fCgpg-agent(1)\fP process will handle
-  ** private key passphrase prompts.  If \fIunset\fP, mutt will prompt
-  ** for the passphrase and pass it via stdin to the pgp command.
+  ** \fIset\fP の場合、Mutt は、秘密鍵パスフレーズプロンプトを扱うために、
+  ** \fCgpg-agent(1)\fP プロセスを想定します。\fIunset\fP の場合、Mutt は
+  ** パスフレーズ用のプロンプトを表示し、pgp コマンドに標準入力経由で渡します。
   ** .pp
-  ** Note that as of version 2.1, GnuPG automatically spawns an agent
-  ** and requires the agent be used for passphrase management.  Since
-  ** that version is increasingly prevalent, this variable now
-  ** defaults \fIset\fP.
+  ** バージョン 2.1 以降、GnuPG は自動的にエージェントを起動し、パスフレーズ管理に
+  ** エージェントを使う事を要求することに注意してください。このバージョンがどんどん
+  ** 流行しているので、この変数の既定値は現在 \fIset\fP となっています。
   ** .pp
-  ** Mutt works with a GUI or curses pinentry program.  A TTY pinentry
-  ** should not be used.
+  ** Mutt は GUI または curses な pinentry プログラムとして動作します。
+  ** TTY 形式の pinentry は使ってはなりません。
   ** .pp
-  ** If you are using an older version of GnuPG without an agent running,
-  ** or another encryption program without an agent, you will need to
-  ** \fIunset\fP this variable.
-  ** (PGP only)
+  ** エージェントを動かせない古いバージョンの GnuPG を使っているか、
+  ** エージェントがない他の暗号化プログラムを使っている場合は、この変数を
+  ** \fIunset\fP にする必要があります。
+  ** (PGP のみです)
   */
   { "pgp_verify_command", 	DT_STR, R_NONE, {.p=&PgpVerifyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify PGP signatures.
+  ** このコマンドは PGP 署名を検証するのに使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pgp_verify_key_command",	DT_STR, R_NONE, {.p=&PgpVerifyKeyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify key information from the key selection
-  ** menu.
+  ** このコマンドは、キー選択メニューからキー情報を検証するのに使います。
   ** .pp
-  ** This is a format string, see the $$pgp_decode_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (PGP only)
+  ** これはフォーマット文字列で、取り得る\fCprintf(3)\fP 風の書式については
+  ** $$pgp_decode_command コマンドを参照してください。
+  ** (PGP のみです)
   */
   { "pipe_decode",	DT_BOOL, R_NONE, {.l=OPTPIPEDECODE}, {.l=0} },
   /*
   ** .pp
-  ** Used in connection with the \fC<pipe-message>\fP function.  When \fIunset\fP,
-  ** Mutt will pipe the messages without any preprocessing. When \fIset\fP, Mutt
-  ** will attempt to decode the messages first.
+  ** \fC<pipe-message>\fP コマンドに関連して使われます。\fIunset\fP の場合、
+  ** Mutt は何らの前処理もせずにメッセージをパイプします。\fIset\fP の場合、
+  ** Mutt はヘッダを間引き、最初にメッセージをデコードしようとします。
   ** .pp
-  ** Also see $$pipe_decode_weed, which controls whether headers will
-  ** be weeded when this is \fIset\fP.
+  ** これが \fIset\fP のとき、ヘッダを間引き(weed)するか否かを制御する
+  ** $$pipe_decode_weed も参照してください。
   */
   { "pipe_decode_weed",	DT_BOOL, R_NONE, {.l=OPTPIPEDECODEWEED}, {.l=1} },
   /*
   ** .pp
-  ** For \fC<pipe-message>\fP, when $$pipe_decode is set, this further
-  ** controls whether Mutt will weed headers.
+  ** \fC<pipe-message>\fP に対して、$$pipe_decode が設定されているとき、
+  ** Mutt がヘッダを間引き(weed)するかをさらに制御します。
   */
   { "pipe_sep",		DT_STR,	 R_NONE, {.p=&PipeSep}, {.p="\n"} },
   /*
   ** .pp
-  ** The separator to add between messages when piping a list of tagged
-  ** messages to an external Unix command.
+  ** 外部 Unix コマンドにタグが付いたメッセージの一覧をパイプするときにメッセージ間に
+  ** 付与されるセパレータです。
   */
   { "pipe_split",	DT_BOOL, R_NONE, {.l=OPTPIPESPLIT}, {.l=0} },
   /*
   ** .pp
-  ** Used in connection with the \fC<pipe-message>\fP function following
-  ** \fC<tag-prefix>\fP.  If this variable is \fIunset\fP, when piping a list of
-  ** tagged messages Mutt will concatenate the messages and will pipe them
-  ** all concatenated.  When \fIset\fP, Mutt will pipe the messages one by one.
-  ** In both cases the messages are piped in the current sorted order,
-  ** and the $$pipe_sep separator is added after each message.
+  ** \fC<tag-prefix>\fPがある\fC<pipe-message>\fP 機能に関連して使われます。
+  ** この変数が\fIunset\fP の時、タグが付いたメッセージの一覧をパイプするとき、
+  ** Mutt はメッセージを結合し、すべて結合した形でパイプします。\fIset\fP の場合、
+  ** Mutt はメッセージを1つずつパイプします。両方とも、メッセージは現在整列されている
+  ** 順でパイプされ、各メッセージの後に $$pipe_sep separator が付与されます。
   */
 #ifdef USE_POP
   { "pop_auth_try_all",	DT_BOOL, R_NONE, {.l=OPTPOPAUTHTRYALL}, {.l=1} },
