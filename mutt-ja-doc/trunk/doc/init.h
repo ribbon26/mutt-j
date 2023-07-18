@@ -3036,60 +3036,60 @@ struct option_t MuttVars[] = {
   { "realname",		DT_STR,	 R_BOTH, {.p=&Realname}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies what ``real'' or ``personal'' name should be used
-  ** when sending messages.
+  ** この変数は、メッセージ送信時に使用する ``実名'' 又は ``個人名l'' を指定します。
   ** .pp
-  ** By default, this is the GECOS field from \fC/etc/passwd\fP.  Note that this
-  ** variable will \fInot\fP be used when the user has set a real name
-  ** in the $$from variable.
+  ** 既定では、これは \fC/etc/passwd\fP の GECOS フィールドになります。この変数は、
+  ** 利用者が $$from 変数中で実名を設定しているときには \fI使われない\f ことに
+  ** 注意して下さい。
   */
   { "recall",		DT_QUAD, R_NONE, {.l=OPT_RECALL}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** Controls whether or not Mutt recalls postponed messages
-  ** when composing a new message.
+  ** 新規メニューを編集するときに延期メッセージから続けるかどうかを制御します。
   ** .pp
-  ** Setting this variable to \fIyes\fP is not generally useful, and thus not
-  ** recommended.  Note that the \fC<recall-message>\fP function can be used
-  ** to manually recall postponed messages.
+  ** 新規メニューを編集するときに延期メッセージから続けるかどうかを制御します。
   ** .pp
-  ** Also see $$postponed variable.
+  ** この変数を \fIyes\fP に設定することは一般的には有用ではないので推奨されて
+  ** いません。\fC<recall-message>\fP 機能は、保留されたメッセージを手動で再度
+  ** 読み出すときに使われることに注意してください。
+  ** .pp
+  ** $postponed 変数も参照してください。
   */
   { "record",		DT_PATH, R_NONE, {.p=&Outbox}, {.p="~/sent"} },
   /*
   ** .pp
-  ** This specifies the file into which your outgoing messages should be
-  ** appended.  (This is meant as the primary method for saving a copy of
-  ** your messages, but another way to do this is using the ``$my_hdr''
-  ** command to create a ``Bcc:'' field with your email address in it.)
+  ** これは、送信メッセージをどのファイルに追加して保存すべきかを指定します
+  ** (これは、メッセージのコピーを保存する基本的な方法を意味しますが、
+  ** ほかにも、自分のメールアドレスの ``Bcc:'' フィールドを作成して、
+  ** ``$my_hdr'' コマンドを使ってそこにセーブするという方法もあります)。
   ** .pp
-  ** The value of \fI$$record\fP is overridden by the $$force_name and
-  ** $$save_name variables, and the ``$fcc-hook'' command.  Also see $$copy
-  ** and $$write_bcc.
+  ** \fI$$record\fP の値は $$force_name と $$save_nam 変数と、``$fcc-hook''
+  ** コマンドで上書きできます。$$copy と $$write_bcc も参照してください。
   ** .pp
-  ** Multiple mailboxes may be specified if $$fcc_delimiter is
-  ** set to a string delimiter.
+  ** $$fcc_delimiter が 文字列デリミタに設定されている場合、複数のメールボックスを
+  ** 指定できます。
   */
   { "reflow_space_quotes",	DT_BOOL, R_NONE, {.l=OPTREFLOWSPACEQUOTES}, {.l=1} },
   /*
   ** .pp
-  ** This option controls how quotes from format=flowed messages are displayed
-  ** in the pager and when replying (with $$text_flowed \fIunset\fP).
-  ** When set, this option adds spaces after each level of quote marks, turning
-  ** ">>>foo" into "> > > foo".
+  ** このオプションはページャ中と返信時に($$text_flowed が\fIunset\fPの時)、
+  ** format=flowed メッセージからの引用がどのように表示されるかを制御します。
+  ** 設定する場合、このオプションは各レベルの引用マークの後に空白を追加し、
+  ** ">>>foo" を "> > > foo" に調整します。
   ** .pp
-  ** \fBNote:\fP If $$reflow_text is \fIunset\fP, this option has no effect.
-  ** Also, this option does not affect replies when $$text_flowed is \fIset\fP.
+  ** \fB注意:\fP $$reflow_text が \fIunset\fP の時、このオプションは無効です。
+  ** 同様に、このオプションは$$text_flowed が \fIset\fP の時には返信に何ら影響を
+  ** 与えません。
   */
   { "reflow_text",	DT_BOOL, R_NONE, {.l=OPTREFLOWTEXT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will reformat paragraphs in text/plain
-  ** parts marked format=flowed.  If \fIunset\fP, Mutt will display paragraphs
-  ** unaltered from how they appear in the message body.  See RFC3676 for
-  ** details on the \fIformat=flowed\fP format.
+  ** \fIset\fP の場合、Mutt は format=flowed にマークされた text/plain パート中の
+  ** 段落を再フォーマットします。\fIunset\fP の場合、Mutt は、メッセージ本体中で
+  ** 表示される段落を変更しないで表示します。\fIformat=flowed\fP
+  ** フォーマットの詳細については RFC3676 を参照してください。
   ** .pp
-  ** Also see $$reflow_wrap, and $$wrap.
+  ** $reflow_wrap と $$wrap も参照してください。
   */
   { "reflow_wrap",	DT_NUM,	R_NONE, {.p=&ReflowWrap}, {.l=78} },
   /*
