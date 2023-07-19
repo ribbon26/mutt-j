@@ -3094,13 +3094,12 @@ struct option_t MuttVars[] = {
   { "reflow_wrap",	DT_NUM,	R_NONE, {.p=&ReflowWrap}, {.l=78} },
   /*
   ** .pp
-  ** This variable controls the maximum paragraph width when reformatting text/plain
-  ** parts when $$reflow_text is \fIset\fP.  When the value is 0, paragraphs will
-  ** be wrapped at the terminal's right margin.  A positive value sets the
-  ** paragraph width relative to the left margin.  A negative value set the
-  ** paragraph width relative to the right margin.
+  ** この変数は $$reflow_text が \fIset\fP の時に text/plain パートを再フォーマットする
+  ** 時の最大段落幅を制御します。値が 0 の場合、段落は端末の右マージンで折り返されます。
+  ** 正の値が設定された時には、左マージンからの相対段落幅を設定します。負の値が設定された
+  ** 時には右マージンからの相対段落幅を設定します。
   ** .pp
-  ** Also see $$wrap.
+  ** $$wrap も参照してください。
   */
   /* L10N:
      $reply_regexp default value.
@@ -3127,122 +3126,107 @@ struct option_t MuttVars[] = {
   { "reply_regexp",	DT_RX|DT_L10N_STR, R_INDEX|R_RESORT|R_RESORT_INIT, {.p=&ReplyRegexp}, {.p=N_("^(re)(\\[[0-9]+\\])*:[ \t]*")} },
   /*
   ** .pp
-  ** A regular expression used to recognize reply messages when
-  ** threading and replying. The default value corresponds to the
-  ** standard Latin "Re:" prefix.
+  ** スレッド化および返信する時に返信メッセージを認識するために使われる正規表現
+  ** です。既定値は英語の "Re:" に対応しています。
   ** .pp
-  ** This value may have been localized by the translator for your
-  ** locale, adding other prefixes that are common in the locale. You
-  ** can add your own prefixes by appending inside \fC"^(re)"\fP.  For
-  ** example: \fC"^(re|se)"\fP or \fC"^(re|aw|se)"\fP.
+  ** この値は、翻訳者によってロケールに合わせてローカライズされ、そのロケールで
+  ** 一般的な他の接頭辞が追加されている可能性があります。\fC"^(re)"\fP内に追加する
+  ** ことで、独自の接頭辞を追加できます。例:  \fC"^(re|se)"\fP or \fC"^(re|aw|se)"\fP。
   ** .pp
-  ** The second parenthesized expression matches zero or more
-  ** bracketed numbers following the prefix, such as \fC"Re[1]: "\fP.
-  ** The initial \fC"\\["\fP means a literal left-bracket character.
-  ** Note the backslash must be doubled when used inside a double
-  ** quoted string in the muttrc.  \fC"[0-9]+"\fP means one or more
-  ** numbers.  \fC"\\]"\fP means a literal right-bracket.  Finally the
-  ** whole parenthesized expression has a \fC"*"\fP suffix, meaning it
-  ** can occur zero or more times.
+  ** 2番目の括弧で囲まれた式は、\fC"Re[1]:"\fPのように、接頭辞に続く0個以上の括弧で
+  ** 囲まれた数字と一致します。最初の\fC"\\["\fPは、リテラルの左角括弧文字を意味しま
+  ** す。muttrc 中で二重引用符で囲まれた文字列内で使用する場合は、バックスラッシュを
+  ** 二重にする必要があることに注意してください。\fC"[0-9]+"\fPは1つまたは複数の数字を
+  ** 意味します。\fC"\\]"\fPはリテラルの右角括弧を意味します。最後に、括弧で囲まれた
+  ** 式全体に\fC"*"\fP接尾辞があります。これは0回以上発生することがあります。
   ** .pp
-  ** The last part matches a colon followed by an optional space or
-  ** tab.  Note \fC"\t"\fP is converted to a literal tab inside a
-  ** double quoted string.  If you use a single quoted string, you
-  ** would have to type an actual tab character, and would need to
-  ** convert the double-backslashes to single backslashes.
+  ** 最後の部分は、コロンとそれに続くオプションのスペースまたはタブに一致します。
+  ** \fC"\t"\fPは、二重引用符で囲まれた文字列内のリテラルタブに変換されることに
+  ** 注意してください。単一引用符で囲まれた文字列を使用する場合は、実際のタブ文字を
+  ** 入力する必要があり、二重バックスラッシュを単一バックスラッシュに変換する必要が
+  ** あります。
   ** .pp
-  ** Note: the result of this regexp match against the subject is
-  ** stored in the header cache.  Mutt isn't smart enough to
-  ** invalidate a header cache entry based on changing $$reply_regexp,
-  ** so if you aren't seeing correct values in the index, try
-  ** temporarily turning off the header cache.  If that fixes the
-  ** problem, then once the variable is set to your liking, remove
-  ** your stale header cache files and turn the header cache back on.
+  ** 注意:このregexpが題名と一致した結果は、ヘッダーキャッシュに保存されます。Muttは、
+  ** $$reply_regexpの変更に基づいてヘッダーキャッシュエントリを無効にするほど賢くない
+  ** ので、インデックスに正しい値が表示されない場合は、一時的にヘッダーキャッシュを
+  ** オフにしてみてください。これで問題が解決したら、変数が好みに設定されたら、古い
+  ** ヘッダーキャッシュファイルを削除して、ヘッダーキャッシュをオンに戻します。
   */
   { "reply_self",	DT_BOOL, R_NONE, {.l=OPTREPLYSELF}, {.l=0} },
   /*
   ** .pp
-  ** If \fIunset\fP and you are replying to a message sent by you, Mutt will
-  ** assume that you want to reply to the recipients of that message rather
-  ** than to yourself.
+  ** \fIunset\fP で、自分自身から送信したメッセージに返信する場合、Mutt は
+  ** 自分自身ではなく、そのメッセージの受信者に返信したいと仮定します。
   ** .pp
-  ** Also see the ``$alternates'' command.
+  ** ``$alternates'' コマンドも参照してください。
   */
   { "reply_to",		DT_QUAD, R_NONE, {.l=OPT_REPLYTO}, {.l=MUTT_ASKYES} },
   /*
   ** .pp
-  ** If \fIset\fP, when replying to a message, Mutt will use the address listed
-  ** in the Reply-to: header as the recipient of the reply.  If \fIunset\fP,
-  ** it will use the address in the From: header field instead.  This
-  ** option is useful for reading a mailing list that sets the Reply-To:
-  ** header field to the list address and you want to send a private
-  ** message to the author of a message.
+  ** \fIset\fPの場合、メッセージに返信する時、Mutt はメッセージの Reply-to: ヘッダで
+  ** 挙げられているアドレスを返信先として使います。\fIunset\fP の場合は、
+  ** 代わりに From: フィールドのアドレスを代わりに使います。このオプションは、
+  ** Reply-To: ヘッダフィールドをメーリングリストのアドレスに設定していて、
+  ** メッセージの作者に個人的なメッセージを送信しようとする場合に便利です。
   */
   { "resolve",		DT_BOOL, R_NONE, {.l=OPTRESOLVE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, the cursor will be automatically advanced to the next
-  ** (possibly undeleted) message whenever a command that modifies the
-  ** current message is executed.
+  ** \fIset\fP の場合、現在のメッセージを変更するコマンドが実行されたときは
+  ** 必ず次(おそらく未読)のメッセージに自動的にカーソルを移動します。
   */
   { "resume_draft_files", DT_BOOL, R_NONE, {.l=OPTRESUMEDRAFTFILES}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, draft files (specified by \fC-H\fP on the command
-  ** line) are processed similarly to when resuming a postponed
-  ** message.  Recipients are not prompted for; send-hooks are not
-  ** evaluated; no alias expansion takes place; user-defined headers
-  ** and signatures are not added to the message.
+  ** \fIset\fP の場合、ドラフトファイル(コマンド行で\fC-H\fP で指定されたもの)
+  ** は、保留メッセージを復活させた時と同じように処理されます。受信者は
+  ** 要求されません。send-hooks は評価されません。別名の展開は行われません。
+  ** ユーザ定義のヘッダと署名はメッセージに追加されません。
   */
   { "resume_edited_draft_files", DT_BOOL, R_NONE, {.l=OPTRESUMEEDITEDDRAFTFILES}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, draft files previously edited (via \fC-E -H\fP on
-  ** the command line) will have $$resume_draft_files automatically
-  ** set when they are used as a draft file again.
+  ** \fIset\fP の場合、以前に編集したドラフトファイル(コマンド行での \fC-E -H\fP
+  ** 経由で)は、再度ドラフトファイルとして使われるときに、自動的に
+  ** $$resume_draft_files が設定されます。
   ** .pp
-  ** The first time a draft file is saved, mutt will add a header,
-  ** X-Mutt-Resume-Draft to the saved file.  The next time the draft
-  ** file is read in, if mutt sees the header, it will set
-  ** $$resume_draft_files.
+  ** 最初にドラフトファイルがセーブされる時、Mutt はヘッダ X-Mutt-Resume-Draft を
+  ** セーブされたファイルに追加します。次回ドラフトファイルを読み込んだときに
+  ** Mutt がヘッダを見つけると、$$resume_draft_files が設定されます。
   ** .pp
-  ** This option is designed to prevent multiple signatures,
-  ** user-defined headers, and other processing effects from being
-  ** made multiple times to the draft file.
+  ** このオプションは、複数の署名、ユーザ定義のヘッダと他の処理効果がドラフトファイルに
+  ** 対して複数回実行されることを防ぐために設計されました。
   */
   { "reverse_alias",	DT_BOOL, R_BOTH, {.l=OPTREVALIAS}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls whether or not Mutt will display the ``personal''
-  ** name from your aliases in the index menu if it finds an alias that
-  ** matches the message's sender.  For example, if you have the following
-  ** alias:
+  ** この変数は、メッセージの送信者に一致する別名があるときに、別名の ``personal''名を
+  ** インデックスメニュー中に表示するかどうかを制御します。例えば、以下のような
+  ** 別名があるとします。
   ** .ts
   ** alias juser abd30425@somewhere.net (Joe User)
   ** .te
   ** .pp
-  ** and then you receive mail which contains the following header:
+  ** この場合、以下のヘッダを含むメールを受け取ったとします。
   ** .ts
   ** From: abd30425@somewhere.net
   ** .te
   ** .pp
-  ** It would be displayed in the index menu as ``Joe User'' instead of
-  ** ``abd30425@somewhere.net.''  This is useful when the person's e-mail
-  ** address is not human friendly.
+  ** この場合、インデックスメニューには ``abd30425@somewhere.net.'' の代わりに
+  ** ``Joe User'' が表示されます。これは、個人のメールアドレスが人間向きではない
+  ** 場合に便利です。
   */
   { "reverse_name",	DT_BOOL, R_BOTH, {.l=OPTREVNAME}, {.l=0} },
   /*
   ** .pp
-  ** It may sometimes arrive that you receive mail to a certain machine,
-  ** move the messages to another machine, and reply to some the messages
-  ** from there.  If this variable is \fIset\fP, the default \fIFrom:\fP line of
-  ** the reply messages is built using the address where you received the
-  ** messages you are replying to \fBif\fP that address matches your
-  ** ``$alternates''.  If the variable is \fIunset\fP, or the address that would be
-  ** used doesn't match your ``$alternates'', the \fIFrom:\fP line will use
-  ** your address on the current machine.
+  ** 特定のマシンでメールを受信し、そのメッセージを別のマシンに移動し、そこから
+  ** いくつかのメッセージを返信するということがたまにあるかもしれません。この変数を
+  ** \fIset\fP にした場合、返信メッセージの既定の \fIFrom:\fP 行は、
+  ** ``$alternates'' に一致するアドレスの場合、返信しようとする受信したメッセージの
+  ** アドレスを使って組み立てます。変数が\fIunset\fP の場合か、``$alternates''に
+  ** 一致していなかった場合は、\fIFrom:\fP 行は現在のマシン上でのアドレスが使われます。
   ** .pp
-  ** Also see the ``$alternates'' command and $$reverse_realname.
+  ** ``$alternates'' コマンドと $$reverse_realname も参照してください。
   */
   { "reverse_realname",	DT_BOOL, R_BOTH, {.l=OPTREVREAL}, {.l=1} },
   /*
