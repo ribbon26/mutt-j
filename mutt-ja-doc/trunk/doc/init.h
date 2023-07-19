@@ -2157,7 +2157,6 @@ struct option_t MuttVars[] = {
   ** \fCtext/plain\fP にデコードするかを制御します。それ以外は、代わりに
   ** $$forward_decode が使われます。
   */
-  */
   { "mime_fwd",		DT_SYN,  R_NONE, {.p="mime_forward"}, {.p=0} },
   /*
   */
