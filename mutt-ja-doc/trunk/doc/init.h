@@ -3230,251 +3230,242 @@ struct option_t MuttVars[] = {
   { "reverse_realname",	DT_BOOL, R_BOTH, {.l=OPTREVREAL}, {.l=1} },
   /*
   ** .pp
-  ** This variable fine-tunes the behavior of the $$reverse_name feature.
+  ** この変数は $$reverse_name 機能の動作を微調整します。
   ** .pp
-  ** When it is \fIunset\fP, Mutt will remove the real name part of a
-  ** matching address.  This allows the use of the email address
-  ** without having to also use what the sender put in the real name
-  ** field.
+  ** \fIunset\fP の場合、Mutt は一致したアドレスの実名部分を取り除きます。
+  ** これにより、送信者が実名フィールドに記述したものを使わずとも、メール
+  ** アドレスを使えます。
   ** .pp
-  ** When it is \fIset\fP, Mutt will use the matching address as-is.
+  ** \fIset\fP の場合、Mutt  は一致したアドレスをそのまま使います。
   ** .pp
-  ** In either case, a missing real name will be filled in afterwards
-  ** using the value of $$realname.
+  ** それ以外の場合、実名がない場合は $$realname の値を後で使って埋めます。
   */
   { "rfc2047_parameters", DT_BOOL, R_NONE, {.l=OPTRFC2047PARAMS}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIset\fP, Mutt will decode RFC2047-encoded MIME
-  ** parameters. You want to set this variable when mutt suggests you
-  ** to save attachments to files named like:
+  ** この変数が \fIset\fP の場合、Mutt は RFC2047 でエンコードされた MIME パラメータを
+  ** デコードします。例えば添付をファイルにセーブする場合に、Mutt が以下のような
+  ** 値を提案してくる場合は、これを設定したいと思うでしょう。
   ** .ts
   ** =?iso-8859-1?Q?file=5F=E4=5F991116=2Ezip?=
   ** .te
   ** .pp
-  ** When this variable is \fIset\fP interactively, the change won't be
-  ** active until you change folders.
+  ** この変数を対話的に fIset\fP にしても、フォルダを変更するまでは変更が有効に
+  ** なりません。
   ** .pp
-  ** Note that this use of RFC2047's encoding is explicitly
-  ** prohibited by the standard, but nevertheless encountered in the
-  ** wild.
+  ** この、RFC2047 エンコードの使用は規格によって明示的に禁止されているのですが、
+  ** 実際には使われていることに注意してください。
   ** .pp
-  ** Also note that setting this parameter will \fInot\fP have the effect
-  ** that mutt \fIgenerates\fP this kind of encoding.  Instead, mutt will
-  ** unconditionally use the encoding specified in RFC2231.
+  ** また、このパラメートを設定することは、Mutt がこの種のエンコーディングを
+  ** \fI生成する\fP 効果が\fない\fことにも注意してください。かわりに、Mutt は
+  ** RFC2231 で指定されたエンコーディングを無条件に使います。
   */
   { "save_address",	DT_BOOL, R_NONE, {.l=OPTSAVEADDRESS}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, mutt will take the sender's full address when choosing a
-  ** default folder for saving a mail. If $$save_name or $$force_name
-  ** is \fIset\fP too, the selection of the Fcc folder will be changed as well.
+  ** \fIset\fP の場合、Mutt はメールをセーブする既定のフォルダを選択するときに、
+  ** 送信者の完全なアドレスを使います。$$save_name か $$force_name も \fIset\fP の
+  ** 場合、Fcc フォルダの選択も同様に変更になります。
   */
   { "save_empty",	DT_BOOL, R_NONE, {.l=OPTSAVEEMPTY}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, mailboxes which contain no saved messages will be removed
-  ** when closed (the exception is $$spoolfile which is never removed).
-  ** If \fIset\fP, mailboxes are never removed.
+  ** \fIunset\fP の場合、何らメールがセーブされていないメールボックスはクローズする
+  ** 時に削除されます(例外は $$spoolfile で決して削除されません)。If \fIset\fPの
+  ** 場合、メールボックスは決して削除されません。
   ** .pp
-  ** \fBNote:\fP This only applies to mbox and MMDF folders, Mutt does not
-  ** delete MH and Maildir directories.
+  ** \fB注意:\fP これは mbox と MMDF フォルダにのみ適用され、Mutt は MH と Maildir
+  ** ディレクトリは削除しません。
   */
   { "save_history",     DT_NUM,  R_NONE, {.p=&SaveHist}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls the size of the history (per category) saved in the
-  ** $$history_file file.
+  ** この変数は、$$history_file ファイルにセーブされる、(カテゴリ単位の)履歴の
+  ** サイズを制御します。
   */
   { "save_name",	DT_BOOL, R_NONE, {.l=OPTSAVENAME}, {.l=0} },
   /*
   ** .pp
-  ** This variable controls how copies of outgoing messages are saved.
-  ** When \fIset\fP, a check is made to see if a mailbox specified by the
-  ** recipient address exists (this is done by searching for a mailbox in
-  ** the $$folder directory with the \fIusername\fP part of the
-  ** recipient address).  If the mailbox exists, the outgoing message will
-  ** be saved to that mailbox, otherwise the message is saved to the
-  ** $$record mailbox.
+  ** この変数は、どのように送信メールのコピーがセーブされるかを制御します。
+  ** \fIset\fP の場合、受信者アドレスの存在によって指定されるメールボックスが
+  ** あるかどうかをチェックします(これは、受信者アドレスの \fIusername\fP 部分で
+  ** $$folder ディレクトリ中にメールボックスがあるかを検索することによって
+  ** 行います)。メールボックスが存在する場合、送信メッセージはそのメールボックスに
+  ** セーブされます。その他の場合は、メッセージは $$record メールボックスに
+  ** セーブされます。
   ** .pp
-  ** Also see the $$force_name variable.
+  ** $$force_name 変数も参照してください。
   */
   { "score", 		DT_BOOL, R_NONE, {.l=OPTSCORE}, {.l=1} },
   /*
   ** .pp
-  ** When this variable is \fIunset\fP, scoring is turned off.  This can
-  ** be useful to selectively disable scoring for certain folders when the
-  ** $$score_threshold_delete variable and related are used.
+  ** この変数が \fIunset\fP の場合、スコアリングは停止します。これは、
+  ** $$score_threshold_delete 変数と関連したものが使われている場合、特定のフォルダに
+  ** 対して選択的に無効にできるので便利です。
   **
   */
   { "score_threshold_delete", DT_NUM, R_NONE, {.p=&ScoreThresholdDelete}, {.l=-1} },
   /*
   ** .pp
-  ** Messages which have been assigned a score equal to or lower than the value
-  ** of this variable are automatically marked for deletion by mutt.  Since
-  ** mutt scores are always greater than or equal to zero, the default setting
-  ** of this variable will never mark a message for deletion.
+  ** この変数の値以下のスコアが割り当てられているメッセージは、Mutt によって
+  ** 自動的に削除マークが付けられます。Mutt のスコアは常時 0 以上なので、
+  ** この変数の既定の設定では、決して削除マークが付くことはありません。
   */
   { "score_threshold_flag", DT_NUM, R_NONE, {.p=&ScoreThresholdFlag}, {.l=9999} },
   /*
   ** .pp
-  ** Messages which have been assigned a score greater than or equal to this
-  ** variable's value are automatically marked "flagged".
+  ** この変数の値以上のスコアが割り当てられているメッセージは自動的に "flagged" が
+  ** マークされます。
   */
   { "score_threshold_read", DT_NUM, R_NONE, {.p=&ScoreThresholdRead}, {.l=-1} },
   /*
   ** .pp
-  ** Messages which have been assigned a score equal to or lower than the value
-  ** of this variable are automatically marked as read by mutt.  Since
-  ** mutt scores are always greater than or equal to zero, the default setting
-  ** of this variable will never mark a message read.
+  ** この変数の値以下のスコアが割り当てられたメッセージは自動的にMutt によって
+  ** 既読マークが付けられます。Mutt のスコアは常時 0 以上なので、
+  ** この変数の既定の設定では、決して既読マークが付くことはありません。
   */
   { "search_context",	DT_NUM,  R_NONE, {.p=&SearchContext}, {.l=0} },
   /*
   ** .pp
-  ** For the pager, this variable specifies the number of lines shown
-  ** before search results. By default, search results will be top-aligned.
+  ** ページャにおいて、この変数は検索結果の前に表示する行数を指定します。
+  ** 既定では、検索結果は上寄せになります。
   */
   { "send_charset",	DT_STR,  R_NONE, {.p=&SendCharset}, {.p="us-ascii:iso-8859-1:utf-8"} },
   /*
   ** .pp
-  ** A colon-delimited list of character sets for outgoing messages. Mutt will use the
-  ** first character set into which the text can be converted exactly.
-  ** If your $$charset is not ``iso-8859-1'' and recipients may not
-  ** understand ``UTF-8'', it is advisable to include in the list an
-  ** appropriate widely used standard character set (such as
-  ** ``iso-8859-2'', ``koi8-r'' or ``iso-2022-jp'') either instead of or after
-  ** ``iso-8859-1''.
+  ** 送信メッセージに対する、コロンで分離された文字セットのリストです。Mutt は
+  ** テキストを正確に変換できた最初の文字セットを使います。$$charset が
+  ** ``iso-8859-1'' でなく、受信者が ``UTF-8'' を理解出来ない場合は、``iso-8859-1''の
+  ** かわり、あるいはその後に、適切で広く使われている標準的な文字セット
+  ** (たとえば``iso-8859-2'', ``koi8-r'' 又は ``iso-2022-jp'')をリスト中に含めることを
+  ** 推奨します。
   ** .pp
-  ** In case the text cannot be converted into one of these exactly,
-  ** mutt uses $$charset as a fallback.
+  ** それらのどれかに正確に変換できない場合、Mutt は $$charset を使うように
+  ** フォールバックします。
   */
   { "send_multipart_alternative", DT_QUAD, R_NONE, {.l=OPT_SENDMULTIPARTALT}, {.l=MUTT_NO} },
   /*
   ** .pp
-  ** If \fIset\fP, Mutt will generate a multipart/alternative
-  ** container and an alternative part using the filter script specified in
-  ** $$send_multipart_alternative_filter.
-  ** See the section ``MIME Multipart/Alternative'' ($alternative-order).
+  ** \fIset\fP の場合、Mutt はmultipart/alternative コンテナと
+  ** $$send_multipart_alternative_filter で指定されたフィルタスクリプトを使う
+  ** alternative パートを生成します。
+  ** ``MIME Multipart/Alternative'' ($alternative-order) を参照してください。
   ** .pp
-  ** Note that enabling multipart/alternative is not compatible with inline
-  ** PGP encryption.  Mutt will prompt to use PGP/MIME in that case.
+  ** multipart/alternative を有効にすることは、インラインの PGP 暗号化とは互換がない
+  ** ことに注意してください。Mutt はこの場合、PGP/MIME を使うように問合せしてきます。
   */
   { "send_multipart_alternative_filter", DT_CMD_PATH, R_NONE, {.p=&SendMultipartAltFilter}, {.p=0} },
   /*
   ** .pp
-  ** This specifies a filter script, which will convert the main
-  ** (composed) message of the email to an alternative format.  The
-  ** message will be piped to the filter's stdin.  The expected output
-  ** of the filter is the generated mime type, e.g. text/html,
-  ** followed by a blank line, and then the converted content.
-  ** See the section ``MIME Multipart/Alternative'' ($alternative-order).
+  ** これは、メールの(編集された)メインメッセージを lternative フォーマットに
+  ** 変換するスクリプトを指定します。メッセージはフィルタの標準入力にパイプされます。
+  ** フィルタで展開された出力は生成された mime タイプ、たとえば text/html で、
+  ** 空白行とその後に変換された内容が続きます。
+  ** ``MIME Multipart/Alternative'' ($alternative-order) を参照してください。
   */
   { "sendmail",	DT_CMD_PATH, R_NONE, {.p=&Sendmail}, {.p=SENDMAIL " -oem -oi"} },
   /*
   ** .pp
-  ** Specifies the program and arguments used to deliver mail sent by Mutt.
-  ** Mutt expects that the specified program interprets additional
-  ** arguments as recipient addresses.  Mutt appends all recipients after
-  ** adding a \fC--\fP delimiter (if not already present).  Additional
-  ** flags, such as for $$use_8bitmime, $$use_envelope_from,
-  ** $$dsn_notify, or $$dsn_return will be added before the delimiter.
+  ** Mutt によってメール配信を行うのに使うプログラムと引数を指定します。
+  ** Mutt は指定されたプログラムが、追加の引数を受信者のアドレスとして解釈することを
+  ** 期待しています。Mutt はデリミタ \fC--\fP (前に存在していなければ)の
+  ** 後にすべての受信者を追加します。たとえば、$$use_8bitmime, $$use_envelope_from,
+  ** $dsn_notify, 又は $$dsn_return のような追加のフラグはデリミタの前に付加されます。
   ** .pp
-  ** \fBNote:\fP This command is invoked differently from most other
-  ** commands in Mutt.  It is tokenized by space, and invoked directly
-  ** via \fCexecvp(3)\fP with an array of arguments - so commands or
-  ** arguments with spaces in them are not supported.  The shell is
-  ** not used to run the command, so shell quoting is also not
-  ** supported.
+  ** \fB注意:\fP このコマンドは、Muttの他のほとんどのコマンドとは異なる方法で呼び出さ
+  ** れます。スペースでトークン化され、\fCexecvp(3)\fPを介して引数の配列とともに直接
+  ** 呼び出されます。したがって、スペースを含むコマンドや引数はサポートされません。
+  ** シェルはコマンドの実行に使用されないため、シェルの引用もサポートされません。
   ** .pp
-  ** \fBSee also:\fP $$write_bcc.
+  ** $$write_bcc も \fB参照してください\fP。
   */
   { "sendmail_wait",	DT_NUM,  R_NONE, {.p=&SendmailWait}, {.l=0} },
   /*
   ** .pp
-  ** Specifies the number of seconds to wait for the $$sendmail process
-  ** to finish before giving up and putting delivery in the background.
+  ** $$sendmail プロセスが完了するのを諦め、バックグラウンドで配送する
+  ** 前までの秒数を指定します。
   ** .pp
-  ** Mutt interprets the value of this variable as follows:
+  ** Mutt はこの変数の値を以下のように解釈します。
   ** .dl
-  ** .dt >0 .dd number of seconds to wait for sendmail to finish before continuing
-  ** .dt 0  .dd wait forever for sendmail to finish
-  ** .dt <0 .dd always put sendmail in the background without waiting
+  ** .dt >0 .dd 継続する前に、sendmail が完了するのを待つ秒数
+  ** .dt 0  .dd sendmail の完了を無限に待つ
+  ** .dt <0 .dd 待たないで、sendmail をバックグラウンドで常時実行する
   ** .de
   ** .pp
-  ** Note that if you specify a value other than 0, the output of the child
-  ** process will be put in a temporary file.  If there is some error, you
-  ** will be informed as to where to find the output.
+  ** 0 より大きな値を指定した場合、子プロセスの出力はテンポラリファイルに
+  ** 出されることに注意してください。もしもなんらかのエラーがあった場合は、
+  ** その出力がどこにあるかを通知されることになります。
   */
   { "shell",		DT_CMD_PATH, R_NONE, {.p=&Shell}, {.p=0} },
   /*
   ** .pp
-  ** Command to use when spawning a subshell.  By default, the user's login
-  ** shell from \fC/etc/passwd\fP is used.
+  ** サブシェルを起動するときに使うコマンド。既定では、\fC/etc/passwd\fP で
+  ** 使われているログインシェルとなります。
   */
 #ifdef USE_SIDEBAR
   { "sidebar_delim_chars", DT_STR, R_SIDEBAR, {.p=&SidebarDelimChars}, {.p="/."} },
   /*
   ** .pp
-  ** This contains the list of characters which you would like to treat
-  ** as folder separators for displaying paths in the sidebar.
+  ** これにはサイドバー中でパスを表示するためのフォルダセパレータとして
+  ** 扱う文字の一覧が含まれています。
   ** .pp
-  ** Local mail is often arranged in directories: `dir1/dir2/mailbox'.
+  ** ローカルメールはしばしば `dir1/dir2/mailbox' というディレクトリに配置されます。
   ** .ts
   ** set sidebar_delim_chars='/'
   ** .te
   ** .pp
-  ** IMAP mailboxes are often named: `folder1.folder2.mailbox'.
+  ** IMAP メールボックスはしばしば `folder1.folder2.mailbox' という名前になります。
   ** .ts
   ** set sidebar_delim_chars='.'
   ** .te
   ** .pp
-  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string.
+  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_divider_char", DT_STR, R_SIDEBAR, {.p=&SidebarDividerChar}, {.p="|"} },
   /*
   ** .pp
-  ** This specifies the characters to be drawn between the sidebar (when
-  ** visible) and the other Mutt panels. ASCII and Unicode line-drawing
-  ** characters are supported.
+  ** これは (表示される場合)サイドバーと他の Mutt のパネルとの間に表示される
+  ** 文字を指定します。ASCII と Unicode の行描画文字がサポートされています。
   */
   { "sidebar_folder_indent", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARFOLDERINDENT}, {.l=0} },
   /*
   ** .pp
-  ** Set this to indent mailboxes in the sidebar.
+  ** サイドバー中でメールボックスを段付けする場合はこれを設定します。
   ** .pp
-  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_indent_string, $$sidebar_delim_chars.
+  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_format", DT_STR, R_SIDEBAR, {.p=&SidebarFormat}, {.p="%B%*  %n"} },
   /*
   ** .pp
-  ** This variable allows you to customize the sidebar display. This string is
-  ** similar to $$index_format, but has its own set of \fCprintf(3)\fP-like
-  ** sequences:
+  ** この変数でサイドバーの表示をカスタマイズすることが出来るようになります。
+  ** この文字列は $$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
+  ** 持っています。
   ** .dl
-  ** .dt %B  .dd Name of the mailbox
-  ** .dt %S  .dd * Size of mailbox (total number of messages)
-  ** .dt %N  .dd * Number of unread messages in the mailbox
-  ** .dt %n  .dd N if mailbox has new mail, blank otherwise
-  ** .dt %F  .dd * Number of Flagged messages in the mailbox
-  ** .dt %!  .dd ``!'' : one flagged message;
-  **             ``!!'' : two flagged messages;
-  **             ``n!'' : n flagged messages (for n > 2).
-  **             Otherwise prints nothing.
-  ** .dt %d  .dd * @ Number of deleted messages
-  ** .dt %L  .dd * @ Number of messages after limiting
-  ** .dt %t  .dd * @ Number of tagged messages
-  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
-  ** .dt %|X .dd pad to the end of the line with ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %B  .dd メールボックスの名前
+  ** .dt %S  .dd * メールボックスのサイズ(メッセージ総数)
+  ** .dt %N  .dd * メールボックス中の未読メッセージ数
+  ** .dt %n  .dd N 新規メールがある場合、その他の場合は空白
+  ** .dt %F  .dd * メールボックス中のフラグ付きメッセージ数
+  ** .dt %!  .dd ``!'' : 1つフラグがあるメッセージ;
+  **             ``!!'' : 2つフラグがあるメッセージ;
+  **             ``n!'' : n 2つ以上フラグがあるメッセージ (n > 2)。
+  **             その他は表示なし。
+  ** .dt %d  .dd * @ 削除メッセージ数
+  ** .dt %L  .dd * @ 制限後のメッセージ数
+  ** .dt %t  .dd * @ タグ付きメッセージ数
+  ** .dt %>X .dd 残りの文字列を右寄せし、``X'' で埋める
+  ** .dt %|X .dd 行端まで ``X'' で埋める
+  ** .dt %*X .dd 埋め草として 文字 ``X'' を使って soft-fill
   ** .de
   ** .pp
-  ** * = Can be optionally printed if nonzero
-  ** @ = Only applicable to the current folder
+  ** * = 非ゼロの場合オプションで表示
+  ** @ = 現在のフォルダのみに適用されます
   ** .pp
-  ** In order to use %S, %N, %F, and %!, $$mail_check_stats must
-  ** be \fIset\fP.  When thus set, a suggested value for this option is
-  ** "%B%?F? [%F]?%* %?N?%N/?%S".
+  ** %S, %N, %F, と %! を使うために、$$mail_check_stats は
+  ** \fIset\fP としなければなりません。これを設定した場合、このオプションに対する
+  ** 推奨値は "%B%?F? [%F]?%* %?N?%N/?%S" となります。
   */
   { "sidebar_indent_string", DT_STR, R_SIDEBAR, {.p=&SidebarIndentString}, {.p="  "} },
   /*
