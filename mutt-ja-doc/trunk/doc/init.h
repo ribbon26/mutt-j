@@ -3470,38 +3470,38 @@ struct option_t MuttVars[] = {
   { "sidebar_indent_string", DT_STR, R_SIDEBAR, {.p=&SidebarIndentString}, {.p="  "} },
   /*
   ** .pp
-  ** This specifies the string that is used to indent mailboxes in the sidebar.
-  ** It defaults to two spaces.
+  ** サイドバー中でメールボックスを段付けするために使われる文字列を指定します。
+  ** 既定値は2つの空白です。
   ** .pp
-  ** \fBSee also:\fP $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_delim_chars.
+  ** $$sidebar_short_path, $$sidebar_folder_indent, $$sidebar_delim_chars も
+  ** \fB参照してください\fP。
   */
   { "sidebar_new_mail_only", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARNEWMAILONLY}, {.l=0} },
   /*
   ** .pp
-  ** When set, the sidebar will only display mailboxes containing new, or
-  ** flagged, mail.
+  ** 設定した場合、サイドバーはメールボックスに新規メール、フラグ付きのメールがある場合
+  ** にのみ表示されます。
   ** .pp
-  ** \fBSee also:\fP $sidebar_whitelist.
+  ** $sidebar_whitelist も \fB参照してください\fP。
   */
   { "sidebar_next_new_wrap", DT_BOOL, R_NONE, {.l=OPTSIDEBARNEXTNEWWRAP}, {.l=0} },
   /*
   ** .pp
-  ** When set, the \fC<sidebar-next-new>\fP command will not stop and the end of
-  ** the list of mailboxes, but wrap around to the beginning. The
-  ** \fC<sidebar-prev-new>\fP command is similarly affected, wrapping around to
-  ** the end of the list.
+  ** 設定した場合、 \fC<sidebar-next-new>\fP コマンドは停止せず、メールボックス一覧の
+  ** 最後まで行きますが、最初にまで戻ります。\fC<sidebar-prev-new>\fP コマンドは
+  ** 同様に影響を受けますが、リストの最後に戻ります。
   */
   { "sidebar_relative_shortpath_indent", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARRELSPINDENT}, {.l=0} },
   /*
   ** .pp
-  ** When set, this option changes how $$sidebar_short_path and
-  ** $$sidebar_folder_indent perform shortening and indentation: both
-  ** will look at the previous sidebar entries and shorten/indent
-  ** relative to the most recent parent.
+  ** 設定した場合、このオプションは $$sidebar_short_path と
+  ** $$sidebar_folder_indent がどのように短縮および段付けを実行するかを変更します。
+  ** 両者は以前のサイドバーエントリを見て、もっとも最新の親からの相対で、
+  ** 短縮/段づけをします。
   ** .pp
-  ** An example of this option set/unset for mailboxes listed in this
-  ** order, with $$sidebar_short_path=yes,
-  ** $$sidebar_folder_indent=yes, and $$sidebar_indent_string="→":
+  ** 以下は $$sidebar_short_path=yes,$$sidebar_folder_indent=yes と
+  ** $$sidebar_indent_string="→" を使って、この順で並んでいるメールボックスの、
+  ** オプションの設定/解除の例です。
   ** .dl
   ** .dt \fBmailbox\fP  .dd \fBset\fP   .dd \fBunset\fP
   ** .dt \fC=a.b\fP     .dd \fC=a.b\fP  .dd \fC→b\fP
@@ -3509,22 +3509,20 @@ struct option_t MuttVars[] = {
   ** .dt \fC=a.b.e\fP   .dd \fC→e\fP    .dd \fC→→e\fP
   ** .de
   ** .pp
-  ** The second line illustrates most clearly.  With this option set,
-  ** \fC=a.b.c.d\fP is shortened relative to \fC=a.b\fP, becoming
-  ** \fCc.d\fP; it is also indented one place relative to \fC=a.b\fP.
-  ** With this option unset \fC=a.b.c.d\fP is always shortened to the
-  ** last part of the mailbox, \fCd\fP and is indented three places,
-  ** with respect to $$folder (represented by '=').
+  ** 2行目はもっともわかりやすい例です。このオプションを設定すると、
+  ** \fC=a.b.c.d\fP は \fC=a.b\fP から相対的に短くなり、\fCc.d\fP となります。
+  ** また、\fC=a.b\fP から相対的に1段段付けされています。このオプションを設定しないと、
+  ** \fC=a.b.c.d\fP は常時メールボックスの最後の部分 \fCd\fP に短縮され、
+  ** $$folder ('=' で表される)を鑑みて3段段付けされます。
   ** .pp
-  ** When set, the third line will also be indented and shortened
-  ** relative to the first line.
+  ** 設定すると、3行目も最初の行からの相対で段付けされ短縮されます。
   */
   { "sidebar_short_path", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARSHORTPATH}, {.l=0} },
   /*
   ** .pp
-  ** By default the sidebar will show the mailbox's path, relative to the
-  ** $$folder variable. Setting \fCsidebar_shortpath=yes\fP will shorten the
-  ** names relative to the previous name. Here's an example:
+  ** 既定で、サイドバーには、$$folder 変数からの相対で、メールボックスのパスを表示
+  ** します。 \fCsidebar_shortpath=yes\fP を設定すると、以前の名前から比べて
+  ** 名前が短縮されます。以下が例です。
   ** .dl
   ** .dt \fBshortpath=no\fP .dd \fBshortpath=yes\fP .dd \fBshortpath=yes, folderindent=yes, indentstr=".."\fP
   ** .dt \fCfruit\fP        .dd \fCfruit\fP         .dd \fCfruit\fP
@@ -3533,168 +3531,157 @@ struct option_t MuttVars[] = {
   ** .dt \fCfruit.cherry\fP .dd \fCcherry\fP        .dd \fC..cherry\fP
   ** .de
   ** .pp
-  ** \fBSee also:\fP $$sidebar_delim_chars, $$sidebar_folder_indent, $$sidebar_indent_string.
+  ** $$sidebar_delim_chars, $$sidebar_folder_indent, $$sidebar_indent_string も
+  ** \fB参照してください\fP。
   */
   { "sidebar_sort_method", DT_SORT|DT_SORT_SIDEBAR, R_SIDEBAR, {.p=&SidebarSortMethod}, {.l=SORT_ORDER} },
   /*
   ** .pp
-  ** Specifies how to sort mailbox entries in the sidebar.  By default, the
-  ** entries are sorted alphabetically.  Valid values:
+  ** どのようにサイドバー中でエントリを整列するかを指定します。既定では
+  ** エントリは英語順に整列されます。正しい値は以下のようになります。
   ** .il
-  ** .dd alpha (alphabetically)
-  ** .dd count (all message count)
-  ** .dd flagged (flagged message count)
-  ** .dd name (alphabetically)
-  ** .dd new (unread message count)
-  ** .dd path (alphabetically)
-  ** .dd unread (unread message count)
+  ** .dd alpha (英語順)
+  ** .dd count (全部のメッセージ数順)
+  ** .dd flagged (フラグされたメッセージ数順)
+  ** .dd name (英語順)
+  ** .dd new (未読メッセージ数順)
+  ** .dd path (英語順)
+  ** .dd unread (未読メッセージ数順)
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sidebar_sort_method=reverse-alpha\fP'').
+  ** オプションで、逆順での整列を指定するために、``reverse-'' 接頭辞を使う事も
+  ** できます(例: ``\fCset sort_browser=reverse-date\fP'')。
   */
   { "sidebar_use_mailbox_shortcuts", DT_BOOL, R_SIDEBAR, {.l=OPTSIDEBARUSEMBSHORTCUTS}, {.l=0} },
   /*
   ** .pp
-  ** When set, sidebar mailboxes will be displayed with mailbox shortcut prefixes
-  ** "=" or "~".
+  ** 設定した場合、サイドバーメールボックスは、メールボックスショートカット接頭辞
+  ** "=" 又は "~" をつけて表示されます。
   ** .pp
-  ** When unset, the sidebar will trim off a matching $$folder prefix
-  ** but otherwise not use mailbox shortcuts.
+  ** 設定しない場合、サイドバーは $$folder 接頭辞に一致したものを削除しますが、
+  ** それ以外は、メールボックスショートカットを使いません。
   */
   { "sidebar_visible", DT_BOOL, R_REFLOW, {.l=OPTSIDEBAR}, {.l=0} },
   /*
   ** .pp
-  ** This specifies whether or not to show sidebar. The sidebar shows a list of
-  ** all your mailboxes.
+  ** これは、サイドバーを表示するか否かを指定します。サイドバーはすべてのメールボックスを
+  ** 表示します。
   ** .pp
-  ** \fBSee also:\fP $$sidebar_format, $$sidebar_width
+  ** $$sidebar_format, $$sidebar_width も\fB参照してください\fP。
   */
   { "sidebar_width", DT_NUM, R_REFLOW, {.p=&SidebarWidth}, {.l=30} },
   /*
   ** .pp
-  ** This controls the width of the sidebar.  It is measured in screen columns.
-  ** For example: sidebar_width=20 could display 20 ASCII characters, or 10
-  ** Chinese characters.
+  ** これはサイドバーの幅を制御します。画面の列で計測されます。たとえば、
+  ** sidebar_width=20 は 20 文字のASCII 文字か、10文字の中国文字を表示できます。
   */
 #endif
   { "sig_dashes",	DT_BOOL, R_NONE, {.l=OPTSIGDASHES}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, a line containing ``-- '' (note the trailing space) will be inserted before your
-  ** $$signature.  It is \fBstrongly\fP recommended that you not \fIunset\fP
-  ** this variable unless your signature contains just your name.  The
-  ** reason for this is because many software packages use ``-- \n'' to
-  ** detect your signature.  For example, Mutt has the ability to highlight
-  ** the signature in a different color in the built-in pager.
+  ** \fIset\fP の場合、``-- '' を含む行(その後に空白があることに注意)が
+  ** $$signature の前に挿入されます。署名が名前のみを含んでいる場合を除き、
+  ** この変数を\fIunset\fP しないことを\fB強く\fP 推奨します。その理由は、
+  ** 署名を検出するために、多くのソフトウェアパッケージが ``-- \n'' を使うという
+  ** ことだからです。たとえば、Mutt は内蔵ページャで異なった色で署名をハイライト
+  ** する機能があります。
   */
   { "sig_on_top",	DT_BOOL, R_NONE, {.l=OPTSIGONTOP}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, the signature will be included before any quoted or forwarded
-  ** text.  It is \fBstrongly\fP recommended that you do not set this variable
-  ** unless you really know what you are doing, and are prepared to take
-  ** some heat from netiquette guardians.
+  ** \fIset\fP の場合、署名は引用や転送テキストの前に付けられます。これが何をするかを
+  ** 完全に分かっている場合と、ネチケットの番人からの怒りを買う準備が出来ている場合を除き、
+  ** この変数を設定しないことを\fB強く\fP 推奨します。
   */
   { "signature",	DT_PATH, R_NONE, {.p=&Signature}, {.p="~/.signature"} },
   /*
   ** .pp
-  ** Specifies the filename of your signature, which is appended to all
-  ** outgoing messages.   If the filename ends with a pipe (``|''), it is
-  ** assumed that filename is a shell command and input should be read from
-  ** its standard output.
+  ** すべての送信メッセージに追加される署名のファイル名を指定します。ファイル名の
+  ** 末尾がパイプ (``|'') で終わっている場合、ファイル名はシェルコマンドで、
+  ** 入力は標準出力から読み出されるものと仮定されます。
   */
   { "simple_search",	DT_STR,	 R_NONE, {.p=&SimpleSearch}, {.p="~f %s | ~s %s"} },
   /*
   ** .pp
-  ** Specifies how Mutt should expand a simple search into a real search
-  ** pattern.  A simple search is one that does not contain any of the ``~'' pattern
-  ** modifiers.  See ``$patterns'' for more information on search patterns.
+  ** どのように Mutt が単純な検索を実際の検索パターンに展開するかを指定します。
+  ** 単純な検索とは ``~'' パターン演算子を1つも含まないもののことです。
+  ** 検索パターンについての詳細な情報は ``$patterns'' を参照してください。
   ** .pp
-  ** For example, if you simply type ``joe'' at a search or limit prompt, Mutt
-  ** will automatically expand it to the value specified by this variable by
-  ** replacing ``%s'' with the supplied string.
-  ** For the default value, ``joe'' would be expanded to: ``~f joe | ~s joe''.
+  ** たとえば、単に検索または制限プロンプトに対して ``joe'' を入力したとします。
+  ** Mutt は提供された文字列で ``%s'' を、この変数で指定された値に自動的に展開します。
+  ** 既定値では ``joe'' は ``~f joe | ~s joe'' に展開されます。
   */
   { "size_show_bytes",	DT_BOOL, R_MENU, {.l=OPTSIZESHOWBYTES}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes will display bytes for values less than
-  ** 1 kilobyte.  See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズは1 キロバイトより小さい場合、バイトで
+  ** 表示されます。$formatstrings-size を参照してください。
   */
   { "size_show_fractions", DT_BOOL, R_MENU, {.l=OPTSIZESHOWFRACTIONS}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes will be displayed with a single decimal value
-  ** for sizes from 0 to 10 kilobytes and 1 to 10 megabytes.
-  ** See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズは 0 から 10キロバイトと 1から 10 メガ
+  ** バイトの時は1桁の10進数で表示されます。$formatstrings-size を参照してください。
   */
   { "size_show_mb",	DT_BOOL, R_MENU, {.l=OPTSIZESHOWMB}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes will display megabytes for values greater than
-  ** or equal to 1 megabyte.  See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズが1メガバイトより大きい場合、メガバイトで
+  ** 表示されます。$formatstrings-size を参照してください。
   */
   { "size_units_on_left", DT_BOOL, R_MENU, {.l=OPTSIZEUNITSONLEFT}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, message sizes units will be displayed to the left of the number.
-  ** See $formatstrings-size.
+  ** \fIset\fP の場合、メッセージサイズの単位は数字の左側に表示されます。
+  ** $formatstrings-size を参照してください。
   */
   { "sleep_time",	DT_NUM, R_NONE, {.p=&SleepTime}, {.l=1} },
   /*
   ** .pp
-  ** Specifies time, in seconds, to pause while displaying certain informational
-  ** messages, while moving from folder to folder and after expunging
-  ** messages from the current folder.  The default is to pause one second, so
-  ** a value of zero for this option suppresses the pause.
+  ** フォルダからフォルダへ移動し、現在のフォルダからメッセージを消した後、
+  ** 特定の通知メッセージを表示する間停止する時間を秒数で指定します。
+  ** 既定では、1秒間だけ止まり、このオプションの値を 0 にすると、この待ち時間を
+  ** 無くします。
   */
   { "smart_wrap",	DT_BOOL, R_PAGER_FLOW, {.l=OPTWRAP}, {.l=1} },
   /*
   ** .pp
-  ** Controls the display of lines longer than the screen width in the
-  ** internal pager. If \fIset\fP, long lines are wrapped at a word boundary.  If
-  ** \fIunset\fP, lines are simply wrapped at the screen edge. Also see the
-  ** $$markers variable.
+  ** 内部ページャで、画面幅よりも長い行を表示する方法を制御します。\fIset\fP の場合、
+  ** 長い行は単語の区切りで折り返されます。 \fIunset\fP の場合、長い行は
+  ** 単純に画面の幅で折り返されます。$$markers 変数も参照してください。
   */
   { "smileys",		DT_RX,	 R_PAGER, {.p=&Smileys}, {.p="(>From )|(:[-^]?[][)(><}{|/DP])"} },
   /*
   ** .pp
-  ** The \fIpager\fP uses this variable to catch some common false
-  ** positives of $$quote_regexp, most notably smileys and not consider
-  ** a line quoted text if it also matches $$smileys. This mostly
-  ** happens at the beginning of a line.
+  ** \fIページャ\fP は、この変数を使って、$$quote_regexp のよくある一般的な
+  ** 誤検知を検出します。それは特にスマイリー(訳注:顔文字)で、$$smileys と一致する場合、
+  ** 引用された行は考慮しません。これは主に行の先頭で発生します。
   */
-
-
-
   { "smime_ask_cert_label",	DT_BOOL, R_NONE, {.l=OPTASKCERTLABEL}, {.l=1} },
   /*
   ** .pp
-  ** This flag controls whether you want to be asked to enter a label
-  ** for a certificate about to be added to the database or not. It is
-  ** \fIset\fP by default.
-  ** (S/MIME only)
+  ** このフラグは、データベースに追加しようとしている証明書のラベルを入力するか
+  ** どうかについて問合せをするか否かを制御します。既定では \fIset\fP です。
+  ** (S/MIME のみです)
   */
   { "smime_ca_location",	DT_PATH, R_NONE, {.p=&SmimeCALocation}, {.p=0} },
   /*
   ** .pp
-  ** This variable contains the name of either a directory, or a file which
-  ** contains trusted certificates for use with OpenSSL.
-  ** (S/MIME only)
+  ** この変数は、OpenSSL で使う信頼された証明書があるディレクトリかファイルの
+  ** 名前が含まれています。
+  ** (S/MIME のみです)
   */
   { "smime_certificates",	DT_PATH, R_NONE, {.p=&SmimeCertificates}, {.p=0} },
   /*
   ** .pp
-  ** Since for S/MIME there is no pubring/secring as with PGP, mutt has to handle
-  ** storage and retrieval of keys by itself. This is very basic right
-  ** now, and keys and certificates are stored in two different
-  ** directories, both named as the hash-value retrieved from
-  ** OpenSSL. There is an index file which contains mailbox-address
-  ** keyid pairs, and which can be manually edited. This option points to
-  ** the location of the certificates.
-  ** (S/MIME only)
+  ** S/MIME には PGP でのような pubring/secring がないので、Mutt は自分自身で
+  ** 鍵や証明書の格納および取得を行わなければなりません。この仕組みは現在とても
+  ** 基本的なもので、鍵と証明書を二つの異なる ディレクトリに格納し、ともに OpenSSL で
+  ** 取得したハッシュ値をファイル名にしています。各ディレクトリには index ファイルがあって、
+  ** メールアドレスと鍵 ID の組み合わせが入っていて、手動で編集することができます。
+  ** このオプションは証明書の位置を示すものです。
+  ** (S/MIME のみです)
   */
   { "smime_decrypt_command", 	DT_STR, R_NONE, {.p=&SmimeDecryptCommand}, {.p=0} },
   /*
