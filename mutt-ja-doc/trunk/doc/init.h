@@ -4087,11 +4087,10 @@ struct option_t MuttVars[] = {
   { "ssl_ca_certificates_file", DT_PATH, R_NONE, {.p=&SslCACertFile}, {.p=0} },
   /*
   ** .pp
-  ** This variable specifies a file containing trusted CA certificates.
-  ** Any server certificate that is signed with one of these CA
-  ** certificates is also automatically accepted. (GnuTLS only)
+  ** この変数は信頼された CA 証明書を含むファイルを指定します。
+  ** そのCA 証明書の1つで署名された任意のサーバも自動的に許可されます。(GnuTLS のみです)
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set ssl_ca_certificates_file=/etc/ssl/certs/ca-certificates.crt
   ** .te
@@ -4100,106 +4099,106 @@ struct option_t MuttVars[] = {
   { "ssl_client_cert", DT_PATH, R_NONE, {.p=&SslClientCert}, {.p=0} },
   /*
   ** .pp
-  ** The file containing a client certificate and its associated private
-  ** key.
+  ** クライアントとそれに関連づけられている秘密鍵が入っているファイル。
   */
   { "ssl_force_tls",		DT_BOOL, R_NONE, {.l=OPTSSLFORCETLS}, {.l=1} },
   /*
   ** .pp
-  ** If this variable is \fIset\fP, Mutt will require that all connections
-  ** to remote servers be encrypted. Furthermore it will attempt to
-  ** negotiate TLS even if the server does not advertise the capability,
-  ** since it would otherwise have to abort the connection anyway. This
-  ** option supersedes $$ssl_starttls.
+  ** この変数が、 \fIset\fP だった場合、Mutt は、リモートサーバに対するすべての接続
+  ** を暗号化することを必要とします。さらに、サーバが、ケーパビリティを広告して
+  ** いなくても、TLS でネゴシエートしようとし、それ以外は接続を中止します。
+  ** このオプションは $$ssl_starttls に優先します。
   */
 # ifdef USE_SSL_GNUTLS
   { "ssl_min_dh_prime_bits", DT_NUM, R_NONE, {.p=&SslDHPrimeBits}, {.l=0} },
   /*
   ** .pp
-  ** This variable specifies the minimum acceptable prime size (in bits)
-  ** for use in any Diffie-Hellman key exchange. A value of 0 will use
-  ** the default from the GNUTLS library. (GnuTLS only)
+  ** この変数は、Diffie-Hellman カギ交換で使われる、(ビット単位の)最小の許容
+  ** 素数サイズを指定します。値が 0 の倍は、GNUTLS ライブラリからの既定値を
+  ** 使います。(GnuTLS のみです)
   */
 # endif /* USE_SSL_GNUTLS */
   { "ssl_starttls", DT_QUAD, R_NONE, {.l=OPT_SSLSTARTTLS}, {.l=MUTT_YES} },
   /*
   ** .pp
-  ** If \fIset\fP (the default), mutt will attempt to use \fCSTARTTLS\fP on servers
-  ** advertising the capability. When \fIunset\fP, mutt will not attempt to
-  ** use \fCSTARTTLS\fP regardless of the server's capabilities.
+  ** \fIset\fP (既定値)の場合、Mutt は、サーバ上でケーパビリティを広告している
+  ** \fCSTARTTLS\fP を使おうとします。 \fIunset\fP の場合、Mutt はサーバの
+  ** ケーパビリティにかかわらず \fCSTARTTLS\fP を使おうとしません。
   ** .pp
-  ** \fBNote\fP that \fCSTARTTLS\fP is subject to many kinds of
-  ** attacks, including the ability of a machine-in-the-middle to
-  ** suppress the advertising of support.  Setting $$ssl_force_tls is
-  ** recommended if you rely on \fCSTARTTLS\fP.
+  ** \fCSTARTTLS\fPは、中間マシンがサポートのアドバタイズを抑制するなど、
+  ** さまざまな攻撃を受けやすいことに\fB注意してください\fP。
+  ** \fCSTARTTLS\fPに依存している場合は、$$ssl_force_tlsを設定することを
+  ** お勧めします。
   */
 # ifdef USE_SSL_OPENSSL
   { "ssl_use_sslv2", DT_BOOL, R_NONE, {.l=OPTSSLV2}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use SSLv2 when communicating with servers that
-  ** request it. \fBN.B. As of 2011, SSLv2 is considered insecure, and using
-  ** is inadvisable. See https://tools.ietf.org/html/rfc6176 .\fP
-  ** (OpenSSL only)
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** SSLv2 を使おうとします。
+  ** \fB注意: 2011年の時点で、SSLv2 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc6176 を参照してください。\fP
+  ** (OpenSSL のみです)
   */
 # endif /* defined USE_SSL_OPENSSL */
   { "ssl_use_sslv3", DT_BOOL, R_NONE, {.l=OPTSSLV3}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use SSLv3 when communicating with servers that
-  ** request it. \fBN.B. As of 2015, SSLv3 is considered insecure, and using
-  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** SSLv3 を使おうとします。
+  ** \fB注意: 2015年の時点で、SSLv3 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
   */
   { "ssl_use_tlsv1", DT_BOOL, R_NONE, {.l=OPTTLSV1}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.0 when communicating with servers that
-  ** request it. \fBN.B. As of 2015, TLSv1.0 is considered insecure, and using
-  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.0 を使おうとします。
+  ** \fB注意: 2015年の時点で、TLSv1.0 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
   */
   { "ssl_use_tlsv1_1", DT_BOOL, R_NONE, {.l=OPTTLSV1_1}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.1 when communicating with servers that
-  ** request it. \fBN.B. As of 2015, TLSv1.1 is considered insecure, and using
-  ** it is inadvisable. See https://tools.ietf.org/html/rfc7525 .\fP
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.1 を使おうとします。
+  ** \fB注意: 2015年の時点で、TLSv1.1 は安全でないと見なされ、使用すべきではありません。
+  ** https://tools.ietf.org/html/rfc7525 を参照してください。\fP
   */
   { "ssl_use_tlsv1_2", DT_BOOL, R_NONE, {.l=OPTTLSV1_2}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.2 when communicating with servers that
-  ** request it.
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.2 を使おうとします。
   */
   { "ssl_use_tlsv1_3", DT_BOOL, R_NONE, {.l=OPTTLSV1_3}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP , Mutt will use TLSv1.3 when communicating with servers that
-  ** request it.
+  ** \fIset\fP の場合、Mutt は、それを要求されたときに、サーバとの通信に
+  ** TLSv1.3 を使おうとします。
   */
 #ifdef USE_SSL_OPENSSL
   { "ssl_usesystemcerts", DT_BOOL, R_NONE, {.l=OPTSSLSYSTEMCERTS}, {.l=1} },
   /*
   ** .pp
-  ** If set to \fIyes\fP, mutt will use CA certificates in the
-  ** system-wide certificate store when checking if a server certificate
-  ** is signed by a trusted CA. (OpenSSL only)
+  ** \fIyes\fP に設定した場合、Mutt は、サーバ証明書が信頼されたCA によって署名
+  ** されているかをチェックするとき、システム全体の証明書ストア中にある
+  ** CA 証明書を使います。(OpenSSLのみ)
   */
 #endif
   { "ssl_verify_dates", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYDATES}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP (the default), mutt will not automatically accept a server
-  ** certificate that is either not yet valid or already expired. You should
-  ** only unset this for particular known hosts, using the
-  ** \fC$<account-hook>\fP function.
+  ** \fIset\fP の場合(既定値)、Mutt は、まだ有効になっていないか、すでに満了に
+  ** なっているサーバ証明書を自動的に受け入れません。\fC$<account-hook>\fP 機能を
+  ** 使って、特定の既知のホストに対して、のみこれを設定解除する必要があります。
   */
   { "ssl_verify_host", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYHOST}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP (the default), mutt will not automatically accept a server
-  ** certificate whose host name does not match the host used in your folder
-  ** URL. You should only unset this for particular known hosts, using
-  ** the \fC$<account-hook>\fP function.
+  ** \fIset\fP の場合(既定値)、Mutt は、ホスト名がフォルダURL で使われている
+  ** ホストと一致しないサーバ証明書を自動的に受け入れません。\fC$<account-hook>\fP 機能を
+  ** 使って、特定の既知のホストに対して、のみこれを設定解除する必要があります。
   */
   { "ssl_verify_host_override", DT_STR, R_NONE, {.p=&SslVerifyHostOverride}, {.p=0} },
   /*
@@ -4214,44 +4213,40 @@ struct option_t MuttVars[] = {
   { "ssl_verify_partial_chains", DT_BOOL, R_NONE, {.l=OPTSSLVERIFYPARTIAL}, {.l=0} },
   /*
   ** .pp
-  ** This option should not be changed from the default unless you understand
-  ** what you are doing.
+  ** このオプションは、これが何をするかを理解していない限り、既定値から変更すべき
+  ** ではありません。
   ** .pp
-  ** Setting this variable to \fIyes\fP will permit verifying partial
-  ** certification chains, i. e. a certificate chain where not the root,
-  ** but an intermediate certificate CA, or the host certificate, are
-  ** marked trusted (in $$certificate_file), without marking the root
-  ** signing CA as trusted.
+  ** この変数を \fIyes\fP にすると、部分的な認証チェーンの検証を出来るようにします。
+  ** すなわち、ルートでないが中間証明書CA 又はホスト証明書が信頼済みとして
+  ** マークされ($$certificate_file中で)、ルート署名CA をマークすることなしの認証チェーン
+  ** です。
   ** .pp
-  ** (OpenSSL 1.0.2b and newer only).
+  ** (OpenSSL 1.0.2b あるいはそれ以降のみ)。
   */
 #  endif /* defined HAVE_SSL_PARTIAL_CHAIN */
 # endif /* defined USE_SSL_OPENSSL */
   { "ssl_ciphers", DT_STR, R_NONE, {.p=&SslCiphers}, {.p=0} },
   /*
   ** .pp
-  ** Contains a colon-separated list of ciphers to use when using SSL.
-  ** For OpenSSL, see ciphers(1) for the syntax of the string.
+  ** コロンで分離された、SSL で使う、暗号の一覧を含みます。
+  ** OpenSSL では、文字列の文法については、ciphers(1) を参照してください。
   ** .pp
-  ** For GnuTLS, this option will be used in place of "NORMAL" at the
-  ** start of the priority string.  See gnutls_priority_init(3) for the
-  ** syntax and more details. (Note: GnuTLS version 2.1.7 or higher is
-  ** required.)
+  ** GnuTLS では、このオプションは、優先文字列の最初にある "NORMAL" の代わりに
+  ** 使われます。詳細および文法については、gnutls_priority_init(3) を参照して
+  ** 下さい(注意: GnuTLS バージョン 2.1.7 あるいはそれ以降が必要です)。
   */
 #endif /* defined(USE_SSL) */
   { "status_chars",	DT_MBCHARTBL, R_BOTH, {.p=&StChars}, {.p="-*%A"} },
   /*
   ** .pp
-  ** Controls the characters used by the ``%r'' indicator in
-  ** $$status_format. The first character is used when the mailbox is
-  ** unchanged. The second is used when the mailbox has been changed, and
-  ** it needs to be resynchronized. The third is used if the mailbox is in
-  ** read-only mode, or if the mailbox will not be written when exiting
-  ** that mailbox (You can toggle whether to write changes to a mailbox
-  ** with the \fC<toggle-write>\fP operation, bound by default to ``%''). The fourth
-  ** is used to indicate that the current folder has been opened in attach-
-  ** message mode (Certain operations like composing a new mail, replying,
-  ** forwarding, etc. are not permitted in this mode).
+  ** $$status_format 中での``%r'' インジケータによって使われる文字を制御します。
+  ** 最初の文字は、メールボックスが変更されていないときに使われます。2番目は、
+  ** メールボックスが変更され、再同期が必要なときに使われます。3番目は、メールボックスが
+  ** リードオンリモードか、そのメールボックスを抜けるときに書き込めない場合に使われます
+  ** (既定で ``%'' に割り当てられている \fC<toggle-write>\fP 操作によってメールボックスの
+  ** 書き込み状態をON/OFFできます)。4番目は現在のフォルダが添付メッセージモード
+  ** でオープンされているかを表示するのに使われます(新規メールの編集、返信、転送
+  ** などのような特定の操作はこのモードでは許可されません)。
   */
   /* L10N:
      $status_format default value
@@ -4259,78 +4254,75 @@ struct option_t MuttVars[] = {
   { "status_format", DT_STR|DT_L10N_STR, R_BOTH, {.p=&Status}, {.p=N_("-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?o? Old:%o?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?%?B? Back:%B?%?l? %l?]---(%s/%?T?%T/?%S)-%>-(%P)---")} },
   /*
   ** .pp
-  ** Controls the format of the status line displayed in the ``index''
-  ** menu.  This string is similar to $$index_format, but has its own
-  ** set of \fCprintf(3)\fP-like sequences:
+  ** ``index'' メニューで表示されるステータス行のフォーマットを制御します。
+  ** この文字列は $$index_format と似ていますが、\fCprintf(3)\fP 風の固有の書式を
+  ** 持っています。
   ** .dl
-  ** .dt %b  .dd number of mailboxes with new mail *
-  ** .dt %B  .dd number of backgrounded editing sessions *
-  ** .dt %d  .dd number of deleted messages *
-  ** .dt %f  .dd the full pathname of the current mailbox
-  ** .dt %F  .dd number of flagged messages *
-  ** .dt %h  .dd local hostname
-  ** .dt %l  .dd size (in bytes) of the current mailbox (see $formatstrings-size) *
-  ** .dt %L  .dd size (in bytes) of the messages shown
-  **             (i.e., which match the current limit) (see $formatstrings-size) *
-  ** .dt %m  .dd the number of messages in the mailbox *
-  ** .dt %M  .dd the number of messages shown (i.e., which match the current limit) *
-  ** .dt %n  .dd number of new messages in the mailbox *
-  ** .dt %o  .dd number of old unread messages *
-  ** .dt %p  .dd number of postponed messages *
-  ** .dt %P  .dd percentage of the way through the index
-  ** .dt %r  .dd modified/read-only/won't-write/attach-message indicator,
-  **             according to $$status_chars
-  ** .dt %R  .dd number of read messages *
-  ** .dt %s  .dd current sorting mode ($$sort)
-  ** .dt %S  .dd current aux sorting method ($$sort_aux)
-  ** .dt %t  .dd number of tagged messages *
-  ** .dt %T  .dd current thread group sorting method ($$sort_thread_groups) *
-  ** .dt %u  .dd number of unread messages *
-  ** .dt %v  .dd Mutt version string
-  ** .dt %V  .dd currently active limit pattern, if any *
-  ** .dt %>X .dd right justify the rest of the string and pad with ``X''
-  ** .dt %|X .dd pad to the end of the line with ``X''
-  ** .dt %*X .dd soft-fill with character ``X'' as pad
+  ** .dt %b  .dd 新着メールのあるメールボックス数 *
+  ** .dt %B  .dd 裏で編集中のセッション数 *
+  ** .dt %d  .dd 削除メッセージ数 *
+  ** .dt %f  .dd 現在のメールボックスのフルパス名
+  ** .dt %F  .dd フラグが付いているメッセージ数 *
+  ** .dt %h  .dd ローカルのホスト名
+  ** .dt %l  .dd 現在のメールボックスの(バイト単位の)大きさ($formatstrings-size を参照) *
+  ** .dt %L  .dd 表示されているメッセージの(バイト単位の)大きさ
+  **             (すなわち、現在の制限に一致しているもの)($formatstrings-size を参照) *
+  ** .dt %m  .dd メールボックス中のメッセージ数 *
+  ** .dt %M  .dd 表示されているメッセージ数(すなわち、現在の制限に一致しているもの) *
+  ** .dt %n  .dd メールボックス中の新規メール数 *
+  ** .dt %o  .dd 古い未読メッセージ数 *
+  ** .dt %p  .dd 延期メッセージ数 *
+  ** .dt %P  .dd インデックス中における現在位置のパーセンテージ
+  ** .dt %r  .dd modified/read-only/won't-write/attach-message インジケータを
+  **             $$status_chars に基づいて表示
+  ** .dt %R  .dd 読んだメッセージ数 *
+  ** .dt %s  .dd 現在の整列モード ($$sort)
+  ** .dt %S  .dd 現在の補助整列モード ($$sort_aux)
+  ** .dt %t  .dd タグ付きメッセージ数 *
+  ** .dt %T  .dd 現在のスレッドグループ整列方式 ($$sort_thread_groups) *
+  ** .dt %u  .dd 未読メッセージ数 *
+  ** .dt %v  .dd Mutt バージョン文字列
+  ** .dt %V  .dd もしもあれば現在有効な制限パターン *
+  ** .dt %>X .dd 残りの文字列を右寄せし、``X'' で埋める
+  ** .dt %|X .dd 行端まで ``X'' で埋める
+  ** .dt %*X .dd 埋め草として ``X'' を使って soft-fill
   ** .de
   ** .pp
-  ** For an explanation of ``soft-fill'', see the $$index_format documentation.
+  ** ``soft-fill'' の説明については、$$index_format のドキュメントを参照してください。
   ** .pp
-  ** * = can be optionally printed if nonzero
+  ** * = 非0 の場合にオプションで表示されます
   ** .pp
-  ** Some of the above sequences can be used to optionally print a string
-  ** if their value is nonzero.  For example, you may only want to see the
-  ** number of flagged messages if such messages exist, since zero is not
-  ** particularly meaningful.  To optionally print a string based upon one
-  ** of the above sequences, the following construct is used:
+  ** 上記の書式の一部は値が非0 の時にオプションで表示される文字列として使われます。
+  ** 例えば、そのようなメッセージがある場合に、フラグ付きのメッセージ数のみを
+  ** 表示したい場合、0 は特に意味がありません。上記の書式のどれかをベースにした
+  ** 文字列をオプションで表示するために、以下の構造が使われます。
   ** .pp
   **  \fC%?<sequence_char>?<optional_string>?\fP
   ** .pp
-  ** where \fIsequence_char\fP is a character from the table above, and
-  ** \fIoptional_string\fP is the string you would like printed if
-  ** \fIsequence_char\fP is nonzero.  \fIoptional_string\fP \fBmay\fP contain
-  ** other sequences as well as normal text, but you may \fBnot\fP nest
-  ** optional strings.
+  ** ここで、\fIsequence_char\fP は上記のテーブルからの文字で、\fIoptional_string\fP は
+  ** \fIsequence_char\fP が非0 の場合に表示したい文字列です。 \fIoptional_string\fP は
+  ** 通常のテキストと同じように他の書式を含むことが\fBできますが\fP、オプション
+  ** 文字列をネストすることは\fB出来ません\fP。
   ** .pp
-  ** Here is an example illustrating how to optionally print the number of
-  ** new messages in a mailbox:
+  ** 以下は、どのようにメールボックス中で新規メッセージをオプションで表示するかを
+  ** 示したものです。
   ** .pp
   ** \fC%?n?%n new messages.?\fP
   ** .pp
-  ** You can also switch between two strings using the following construct:
+  ** 以下の書式を使う事で、2つの文字列間で切替をすることも出来ます。
   ** .pp
   ** \fC%?<sequence_char>?<if_string>&<else_string>?\fP
   ** .pp
-  ** If the value of \fIsequence_char\fP is non-zero, \fIif_string\fP will
-  ** be expanded, otherwise \fIelse_string\fP will be expanded.
+  ** \fIsequence_char\fP の値が非0の場合、 \fIif_string\fP は展開され、
+  ** との場合は、\fIelse_string\fP が展開されます。
   ** .pp
-  ** You can force the result of any \fCprintf(3)\fP-like sequence to be lowercase
-  ** by prefixing the sequence character with an underscore (``_'') sign.
-  ** For example, if you want to display the local hostname in lowercase,
-  ** you would use: ``\fC%_h\fP''.
+  ** 下線 (``_'') を一連の文字の前に置くことで、任意の \fCprintf(3)\fP 風の
+  ** 書式の結果を強制的に小文字にすることが出来ます。たとえば、小文字で
+  ** ローカルホスト名を表示したい場合、``\fC%_h\fP'' を使います。
   ** .pp
-  ** If you prefix the sequence character with a colon (``:'') character, mutt
-  ** will replace any dots in the expansion by underscores. This might be helpful
-  ** with IMAP folders that don't like dots in folder names.
+  ** コロン (``:'')文字を一連の文字の前に前置した場合、Mutt は展開時に下線で
+  ** 任意のドットを置き換えます。これはフォルダ名でドットを好まない IMAP フォルダ
+  ** で便利かもしれません。
   */
   { "status_on_top",	DT_BOOL, R_REFLOW, {.l=OPTSTATUSONTOP}, {.l=0} },
   /*
