@@ -3686,157 +3686,152 @@ struct option_t MuttVars[] = {
   { "smime_decrypt_command", 	DT_STR, R_NONE, {.p=&SmimeDecryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** This format string specifies a command which is used to decrypt
-  ** \fCapplication/x-pkcs7-mime\fP attachments.
+  ** このフォーマット文字列は \fCapplication/x-pkcs7-mime\fP 添付を復号化するのに
+  ** 使うコマンドを指定します。
   ** .pp
-  ** The OpenSSL command formats have their own set of \fCprintf(3)\fP-like sequences
-  ** similar to PGP's:
+  ** OpenSSL コマンド形式には、PGP に似た、\fCprintf(3)\fP 風の固有な書式があります。
   ** .dl
-  ** .dt %f .dd Expands to the name of a file containing a message.
-  ** .dt %s .dd Expands to the name of a file containing the signature part
-  ** .          of a \fCmultipart/signed\fP attachment when verifying it.
-  ** .dt %k .dd The key-pair specified with $$smime_default_key
-  ** .dt %c .dd One or more certificate IDs.
-  ** .dt %a .dd The algorithm used for encryption.
-  ** .dt %d .dd The message digest algorithm specified with $$smime_sign_digest_alg.
-  ** .dt %C .dd CA location:  Depending on whether $$smime_ca_location
-  ** .          points to a directory or file, this expands to
-  ** .          ``-CApath $$smime_ca_location'' or ``-CAfile $$smime_ca_location''.
+  ** .dt %f .dd メッセージが入っているファイルの名前に展開します。
+  ** .dt %s .dd \fCmultipart/signed\fP 添付を検証するときに
+                署名パートがっているファイルの名前に展開します。
+  ** .dt %k .dd $$smime_default_key で指定される鍵ペア。
+  ** .dt %c .dd 1つ以上の証明書 ID。
+  ** .dt %a .dd 暗号化に使うアルゴリズム。
+  ** .dt %d .dd $$smime_sign_digest_alg で指定されたメッセージダイジェストアルゴリズム。
+  ** .dt %C .dd CA の位置:  $smime_ca_location が ディレクトリかファイルを指定するのに
+                依存。これは、``-CApath $$smime_ca_location'' か
+  **            ``-CAfile $$smime_ca_location'' に展開されます。
   ** .de
   ** .pp
-  ** For examples on how to configure these formats, see the \fCsmime.rc\fP in
-  ** the \fCsamples/\fP subdirectory which has been installed on your system
-  ** alongside the documentation.
-  ** (S/MIME only)
+  ** 上記の形式をどのように設定するかの例は、システムの文書のそばにインストールされて
+  ** いる \fCsamples/\fP サブディレクトリ中の \fCsmime.rc\fP を参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_decrypt_use_default_key",	DT_BOOL, R_NONE, {.l=OPTSDEFAULTDECRYPTKEY}, {.l=1} },
   /*
   ** .pp
-  ** If \fIset\fP (default) this tells mutt to use the default key for decryption. Otherwise,
-  ** if managing multiple certificate-key-pairs, mutt will try to use the mailbox-address
-  ** to determine the key to use. It will ask you to supply a key, if it can't find one.
-  ** (S/MIME only)
+  ** \fIset\fP の場合(既定値)、これは、Muttが複合化時に既定のキーを使うようにさせます。
+  ** その他の場合は、複数の、証明書-鍵ペア を管理する場合、Mutt は使用する鍵を決めるために、
+  ** メールボックス-アドレスを使おうとします。見つからない場合は、鍵を指定するために
+  ** 問合せをしてきます。
+  ** (S/MIME のみです)
   */
   { "smime_self_encrypt_as",	DT_SYN,  R_NONE, {.p="smime_default_key"}, {.p=0} },
   { "smime_default_key",		DT_STR,	 R_NONE, {.p=&SmimeDefaultKey}, {.p=0} },
   /*
   ** .pp
-  ** This is the default key-pair to use for S/MIME operations, and must be
-  ** set to the keyid (the hash-value that OpenSSL generates) to work properly.
+  ** これは、S/MIME 操作時に使う既定の鍵ペアで、正しく動くためには keyid (OpenSSL が生成する
+  ** ハッシュ値)を設定しなければなりません。
   ** .pp
-  ** It will be used for encryption (see $$postpone_encrypt and
-  ** $$smime_self_encrypt). If GPGME is enabled, this is the key id displayed
-  ** by gpgsm.
+  ** これは暗号化時に使われます($$postpone_encrypt と $$smime_self_encrypt を
+  ** 参照してください)。
   ** .pp
-  ** It will be used for decryption unless $$smime_decrypt_use_default_key
-  ** is \fIunset\fP.
+  ** これは、$$smime_decrypt_use_default_key が \fIunset\fP でない限り、
+  ** 復号化に使われます。
   ** .pp
-  ** It will also be used for signing unless $$smime_sign_as is set.
+  ** また、$$smime_sign_as が設定されていない限り、署名にも使われます。
   ** .pp
-  ** The (now deprecated) \fIsmime_self_encrypt_as\fP is an alias for this
-  ** variable, and should no longer be used.
-  ** (S/MIME only)
+  ** (現在は非推奨ですが) \fIsmime_self_encrypt_as\fP がこの変数の別名ですが、
+  ** もはや使われていません。
+  ** (S/MIME のみです)
   */
   { "smime_encrypt_command", 	DT_STR, R_NONE, {.p=&SmimeEncryptCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to create encrypted S/MIME messages.
-  ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、使用可能な\fCprintf(3)\fP 風の書式については
+  ** $$smime_decrypt_command コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_encrypt_with",	DT_STR,	 R_NONE, {.p=&SmimeCryptAlg}, {.p="aes256"} },
   /*
   ** .pp
-  ** This sets the algorithm that should be used for encryption.
-  ** Valid choices are ``aes128'', ``aes192'', ``aes256'', ``des'', ``des3'', ``rc2-40'', ``rc2-64'', ``rc2-128''.
-  ** (S/MIME only)
+  ** これは、暗号化に使うアルゴリズムを設定します。有効な選択肢は
+  ** ``aes128'', ``aes192'', ``aes256'', ``des'', ``des3'', ``rc2-40'', ``rc2-64'',``rc2-128'' です。
+  ** (S/MIME のみです)
   */
   { "smime_get_cert_command", 	DT_STR, R_NONE, {.p=&SmimeGetCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract X509 certificates from a PKCS7 structure.
+  ** このコマンドは、PKCS7 構造から X509 証明書を抽出するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_get_cert_email_command", 	DT_STR, R_NONE, {.p=&SmimeGetCertEmailCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract the mail address(es) used for storing
-  ** X509 certificates, and for verification purposes (to check whether the
-  ** certificate was issued for the sender's mailbox).
+  ** このコマンドは、X509 証明書を格納するのに使われるメールアドレスを抽出するのと、
+  ** 検証のため(証明書が送信者のメールボックス用に発行されいるか否かをチェックするため)
+  ** に使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_get_signer_cert_command", 	DT_STR, R_NONE, {.p=&SmimeGetSignerCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract only the signers X509 certificate from a S/MIME
-  ** signature, so that the certificate's owner may get compared to the
-  ** email's ``From:'' field.
+  ** このコマンドは、S/MIME 署名から 署名者の X509 証明書のみを抽出するのに使うので、
+  ** 証明書の所有者は、メールの ``From:'' フィールドと比較することが出来ます。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_import_cert_command", 	DT_STR, R_NONE, {.p=&SmimeImportCertCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to import a certificate via smime_keys.
+  ** このコマンドは、smime_keys から証明書をインポートするのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_is_default", DT_BOOL,  R_NONE, {.l=OPTSMIMEISDEFAULT}, {.l=0} },
   /*
   ** .pp
-  ** The default behavior of mutt is to use PGP on all auto-sign/encryption
-  ** operations. To override and to use OpenSSL instead this must be \fIset\fP.
-  ** However, this has no effect while replying, since mutt will automatically
-  ** select the same application that was used to sign/encrypt the original
-  ** message.  (Note that this variable can be overridden by unsetting $$crypt_autosmime.)
-  ** (S/MIME only)
+  ** Mutt の既定の動作は、すべての自動署名/暗号化操作に PGP を使います。これの代わりに
+  ** OpenSSL を使って上書きするには、これを \fIset\fP しなければなりません。
+  ** しかし、これは返信時には無効なので、Mutt は自動的に、オリジナルのメッセージの
+  ** 署名/暗号化に使われる同じアプリケーションを選択します(この変数は
+  ** $$crypt_autosmime を設定しないことにより上書きできます)。
+  ** (S/MIME のみです)
   */
   { "smime_keys",		DT_PATH, R_NONE, {.p=&SmimeKeys}, {.p=0} },
   /*
   ** .pp
-  ** Since for S/MIME there is no pubring/secring as with PGP, mutt has to handle
-  ** storage and retrieval of keys/certs by itself. This is very basic right now,
-  ** and stores keys and certificates in two different directories, both
-  ** named as the hash-value retrieved from OpenSSL. There is an index file
-  ** which contains mailbox-address keyid pair, and which can be manually
-  ** edited. This option points to the location of the private keys.
-  ** (S/MIME only)
+  ** S/MIME には PGP における pubring/secring がないため、Mutt は鍵や証明書の格納
+  ** および取得を自分で扱わなければなりません。この仕組みはとても
+  ** 基本的なもので、鍵と証明書を二つの異なる ディレクトリに格納し、ともに OpenSSL で
+  ** 取得したハッシュ値をファイル名にしています。各ディレクトリには index ファイルがあって、
+  ** メールアドレスと鍵 ID の組み合わせが入っていて、手動で編集することができます。
+  ** このオプションは秘密鍵の位置を示すものです。
+  ** (S/MIME のみです)
   */
   { "smime_pk7out_command", 	DT_STR, R_NONE, {.p=&SmimePk7outCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to extract PKCS7 structures of S/MIME signatures,
-  ** in order to extract the public X509 certificate(s).
+  ** このコマンドは、 X509 公開鍵を展開するために、S/MIME署名の PKCS7 構造を
+  ** 展開するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_self_encrypt",    DT_BOOL, R_NONE, {.l=OPTSMIMESELFENCRYPT}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, S/MIME encrypted messages will also be encrypted
-  ** using the certificate in $$smime_default_key.
-  ** (S/MIME only)
+  ** \fIset\fP の場合、S/MIME で暗号化されたメッセージは $$smime_default_key
+  ** 中の証明書を使って暗号化することも出来ます。
+  ** (S/MIME のみです)
   */
   { "smime_sign_as",	DT_STR,	 R_NONE, {.p=&SmimeSignAs}, {.p=0} },
   /*
   ** .pp
-  ** If you have a separate key to use for signing, you should set this
-  ** to the signing key. Most people will only need to set $$smime_default_key.
-  ** (S/MIME only)
+  ** 署名のために使う、分離されたキーがある場合、これを署名キーとして設定する
+  ** 必要があります。ほとんどの場合は、$$smime_default_key を設定するだけで済みます。
+  ** (S/MIME のみです)
   */
   { "smime_sign_command", 	DT_STR, R_NONE, {.p=&SmimeSignCommand}, {.p=0} },
   /*
