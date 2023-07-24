@@ -3836,71 +3836,68 @@ struct option_t MuttVars[] = {
   { "smime_sign_command", 	DT_STR, R_NONE, {.p=&SmimeSignCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to created S/MIME signatures of type
-  ** \fCmultipart/signed\fP, which can be read by all mail clients.
+  ** このコマンドは、すべてのメールクライアントで読むことが出来る、\fCmultipart/signed\fP
+  ** タイプの S/MIME 署名を作成するのに使われます。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.  NOTE: %c and %k will default
-  ** to $$smime_sign_as if set, otherwise $$smime_default_key.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。注意: %c と %k は、設定されている場合、
+  ** 既定で $$smime_sign_as となり、その他の場合は、$$smime_default_key となる
+  ** ことに注意してください。
+  ** (S/MIME のみです)
   */
   { "smime_sign_digest_alg",	DT_STR,	 R_NONE, {.p=&SmimeDigestAlg}, {.p="sha256"} },
   /*
   ** .pp
-  ** This sets the algorithm that should be used for the signature message digest.
-  ** Valid choices are ``md5'', ``sha1'', ``sha224'', ``sha256'', ``sha384'', ``sha512''.
-  ** (S/MIME only)
+  ** これは、メッセージダイジェストに署名するために使われるアルゴリズムを設定します。
+  ** 有効なものは、``md5'', ``sha1'', ``sha224'', ``sha256'', ``sha384'', ``sha512'' です。
+  ** (S/MIME のみです)
   */
   { "smime_sign_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeSignOpaqueCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to created S/MIME signatures of type
-  ** \fCapplication/x-pkcs7-signature\fP, which can only be handled by mail
-  ** clients supporting the S/MIME extension.
+  ** このコマンドは、S/MIME 拡張をサポートするメールクライアントでのみ扱えることができる
+  ** \fCapplication/x-pkcs7-signature\fP タイプの S/MIME 署名を作成するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_timeout",		DT_LNUM,	 R_NONE, {.p=&SmimeTimeout}, {.l=300} },
   /*
   ** .pp
-  ** The number of seconds after which a cached passphrase will expire if
-  ** not used.
-  ** (S/MIME only)
+  ** キャッシュされたパスフレーズが使用されない場合、満了するまでの秒数を指定します。
+  ** (S/MIME のみです)
   */
   { "smime_verify_command", 	DT_STR, R_NONE, {.p=&SmimeVerifyCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify S/MIME signatures of type \fCmultipart/signed\fP.
+  ** このコマンドは、\fCmultipart/signed\fPタイプの S/MIME 署名を検証するのに使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
   { "smime_verify_opaque_command", 	DT_STR, R_NONE, {.p=&SmimeVerifyOpaqueCommand}, {.p=0} },
   /*
   ** .pp
-  ** This command is used to verify S/MIME signatures of type
-  ** \fCapplication/x-pkcs7-mime\fP.
+  ** このコマンドは \fCapplication/x-pkcs7-mime\fP タイプの S/MIME 署名を検証するのに
+  ** 使います。
   ** .pp
-  ** This is a format string, see the $$smime_decrypt_command command for
-  ** possible \fCprintf(3)\fP-like sequences.
-  ** (S/MIME only)
+  ** これはフォーマット文字列で、\fCprintf(3)\fP 風の書式については、$$smime_decrypt_command
+  ** コマンドを参照してください。
+  ** (S/MIME のみです)
   */
 #ifdef USE_SMTP
   { "smtp_authenticators", DT_STR, R_NONE, {.p=&SmtpAuthenticators}, {.p=0} },
   /*
   ** .pp
-  ** This is a colon-delimited list of authentication methods mutt may
-  ** attempt to use to log in to an SMTP server, in the order mutt should
-  ** try them.  Authentication methods are any SASL mechanism, e.g.
-  ** ``digest-md5'', ``gssapi'' or ``cram-md5''.
-  ** This option is case-insensitive. If it is ``unset''
-  ** (the default) mutt will try all available methods, in order from
-  ** most-secure to least-secure.
+  ** これは、Mutt が SMTP サーバに ログインするのに使う、コロンで分離された
+  ** 認証方法の一覧で、この順で Mutt が試みます。認証方法は任意の SASL メカニズム、
+  ** たとえば、``digest-md5'', ``gssapi'' 又は ``cram-md5'' です。このオプションは
+  ** 大文字小文字を区別しないので、``unset'' の場合は(既定値)、Mutt は
+  ** すべての有効な方式をもっともセキュアなものからそうでないものの順で試します。
   ** .pp
-  ** Example:
+  ** 例:
   ** .ts
   ** set smtp_authenticators="digest-md5:cram-md5"
   ** .te
@@ -3908,48 +3905,46 @@ struct option_t MuttVars[] = {
   { "smtp_oauth_refresh_command", DT_STR, R_NONE, {.p=&SmtpOauthRefreshCmd}, {.p=0} },
   /*
   ** .pp
-  ** The command to run to generate an OAUTH refresh token for
-  ** authorizing your connection to your SMTP server.  This command will be
-  ** run on every connection attempt that uses the OAUTHBEARER authentication
-  ** mechanism.  See ``$oauth'' for details.
+  ** SMTP サーバへの接続を認証するための、 OAUTH リフレッシュトークンを生成する
+  ** コマンドです。このコマンドは、各接続時に、OAUTHBEARER 認証メカニズムを使って
+  ** 実行されます。詳細は ``$oauth'' を参照してください。
   */
   { "smtp_pass", 	DT_STR,  R_NONE, {.p=&SmtpPass}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the password for your SMTP account.  If \fIunset\fP, Mutt will
-  ** prompt you for your password when you first send mail via SMTP.
-  ** See $$smtp_url to configure mutt to send mail via SMTP.
+  ** SMTP アカウントのパスワードを指定します。\fIunset\fP の場合、Mutt は
+  ** SMTP 経由で Mutt が差書にメールを送信する時にパスワードを聞いてきます。
+  ** Mutt が SMTP 経由でメールを送るための設定方法は $$smtp_url も参照してください。
   ** .pp
-  ** \fBWarning\fP: you should only use this option when you are on a
-  ** fairly secure machine, because the superuser can read your muttrc even
-  ** if you are the only one who can read the file.
+  ** \fB注意\fP: かなり安全なマシン上で使う時のみこのオプションを使ってください。
+  ** なぜなら、スーパーユーザは、このファイルを自分自身のみが読めるようにしていても、
+  ** muttrc を読み取ることが出来るからです。
   */
   { "smtp_url",		DT_STR, R_NONE, {.p=&SmtpUrl}, {.p=0} },
   /*
   ** .pp
-  ** Defines the SMTP smarthost where sent messages should relayed for
-  ** delivery. This should take the form of an SMTP URL, e.g.:
+  ** 配送のために送信されたメッセージが中継される SMTP スマートホストを定義
+  ** します。これは SMTP URL 形式をとります。例えば以下のようになります。
   ** .ts
   ** smtp[s]://[user[:pass]@]host[:port]
   ** .te
   ** .pp
-  ** where ``[...]'' denotes an optional part.
-  ** Setting this variable overrides the value of the $$sendmail
-  ** variable.
+  ** ここで、``[...]'' はオプションパートに依存します。
+  ** この変数を設定すると、$$sendmail 変数の値を上書きします。
   ** .pp
-  ** Also see $$write_bcc.
+  ** $$write_bcc も参照してください。
   */
 #endif /* USE_SMTP */
   { "sort",		DT_SORT, R_INDEX|R_RESORT, {.p=&Sort}, {.l=SORT_DATE} },
   /*
   ** .pp
-  ** Specifies how to sort messages in the ``index'' menu.  Valid values
-  ** are:
+  ** どのように、``index'' メニュー中でメッセージを整列するかを指定します。
+  ** 有効な値は以下の通りです。
   ** .il
-  ** .dd date or date-sent
+  ** .dd date 又は date-sent
   ** .dd date-received
   ** .dd from
-  ** .dd mailbox-order (unsorted)
+  ** .dd mailbox-order (未整列)
   ** .dd score
   ** .dd size
   ** .dd spam
@@ -3958,62 +3953,59 @@ struct option_t MuttVars[] = {
   ** .dd to
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sort=reverse-date-sent\fP'').
+  ** 逆順整列のために、接頭辞 ``reverse-'' を使う事も出来ます
+  ** (例: ``\fCset sort=reverse-date-sent\fP'')。
   ** .pp
-  ** For values except ``threads'', this provides the primary sort
-  ** method.  When two message sort values are equal, $$sort_aux will
-  ** be used for a secondary sort.
+  ** 「スレッド」以外の値に対しては、これは一次整列方法を提供します。
+  ** 2つのメッセージ整列値が等しい場合、$$sort_auxは二次整列に使用されます。
   ** .pp
-  ** When set to ``threads'', Mutt threads messages in the index. It
-  ** uses the variable $$sort_thread_groups to sort between threads
-  ** (at the top/root level), and $$sort_aux to sort sub-threads and
-  ** children.
+  ** 「threads」に設定すると、Muttはインデックス内のメッセージをスレッド化
+  ** します。変数$$sort_thread_groupsを使ってスレッド間(トップ/ルートレベル)を
+  ** 整列し、$$sort_auxを使ってサブスレッドと子スレッドを整列します。
   */
   { "sort_alias",	DT_SORT|DT_SORT_ALIAS,	R_NONE,	{.p=&SortAlias}, {.l=SORT_ALIAS} },
   /*
   ** .pp
-  ** Specifies how the entries in the ``alias'' menu are sorted.  The
-  ** following are legal values:
+  ** どのように ``alias'' メニューのエントリを整列するかを指定します。
+  ** 使用できる値は以下の通りです。
   ** .il
-  ** .dd address (sort alphabetically by email address)
-  ** .dd alias (sort alphabetically by alias name)
-  ** .dd unsorted (leave in order specified in .muttrc)
+  ** .dd address (メールアドレスの英語順で整列)
+  ** .dd alias (別名の英語順で整列)
+  ** .dd unsorted (.muttrc で指定された順そのまま)
   ** .ie
   */
   { "sort_aux",		DT_SORT|DT_SORT_AUX, R_INDEX|R_RESORT_BOTH, {.p=&SortAux}, {.l=SORT_DATE} },
   /*
   ** .pp
-  ** For non-threaded mode, this provides a secondary sort for
-  ** messages in the ``index'' menu, used when the $$sort value is
-  ** equal for two messages.
+  ** 非スレッドモードの場合、これは、$$sort の値が2つのメッセージに対して
+  ** 同じだった場合に、``index'' メニュー中で使われる、2番目のメッセージ
+  ** 整列方法を提供します。
   ** .pp
-  ** When sorting by threads, this variable controls how the branches
-  ** of the thread trees are sorted.  This can be set to any value
-  ** that $$sort can, except ``threads'' (in that case, mutt will just
-  ** use ``date-sent'').  You can also specify the ``last-'' prefix in
-  ** addition to the ``reverse-'' prefix, but ``last-'' must come
-  ** after ``reverse-''.  The ``last-'' prefix causes messages to be
-  ** sorted against its siblings by which has the last descendant,
-  ** using the rest of $$sort_aux as an ordering.  For instance,
+  ** スレッドで整列しているとき、この変数は、どのようにスレッドツリーの
+  ** ブランチを整列するかを制御します。これは、``threads'' (この場合、
+  ** Mutt は ``date-sent'' のみを使用します) 以外の、$$sort で使える任意の値を
+  ** 設定できます。また、``reverse-'' に追加して ``last-'' 接頭辞を指定する
+  ** ことも出来ますが、``last-'' 接頭辞は ``reverse-'' の後に置かなければ
+  ** なりません。``last-'' 接頭辞は、最後の子孫を持つ兄弟に対して、残りの $$sort_aux を
+  ** 順番として使用し、メッセージを整列します。たとえば、
   ** .ts
   ** set sort_aux=last-date-received
   ** .te
   ** .pp
-  ** would mean that if a new message is received in a sub-thread,
-  ** that sub-thread becomes the last one displayed.
+  ** は、新規メッセージがスレッド中にある場合、そのスレッドは最後に表示される
+  ** ものになります(又は、``\fCset sort=reverse-threads\fP'' を設定している場合は
+  ** 最初のスレッド)。
   ** .pp
-  ** Note: For reversed-threads $$sort
-  ** order, $$sort_aux is reversed again (which is not the right thing to do,
-  ** but kept to not break any existing configuration setting).
+  ** 注意: 逆順スレッドの $$sort 順では、$$sort_aux は再度逆順になります
+  ** (これは正しくはないのですが、既存の設定を壊さないようにしています)。
   */
   { "sort_browser",	DT_SORT|DT_SORT_BROWSER, R_NONE, {.p=&BrowserSort}, {.l=SORT_SUBJECT} },
   /*
   ** .pp
-  ** Specifies how to sort entries in the file browser.  By default, the
-  ** entries are sorted alphabetically.  Valid values:
+  ** ファイルブラウザ中でどのようにエントリを整列させるかを指定します。既定では
+  ** エントリは英語順に整列されます。有効な値は以下の通りです。
   ** .il
-  ** .dd alpha (alphabetically)
+  ** .dd alpha (英語順)
   ** .dd count
   ** .dd date
   ** .dd size
@@ -4021,8 +4013,8 @@ struct option_t MuttVars[] = {
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sort_browser=reverse-date\fP'').
+  ** 逆順で整列したい場合には、``reverse-'' 接頭辞を使う事が出来ます
+  ** (例 ``\fCset sort_browser=reverse-date\fP'')。
   */
   { "sort_browser_mailboxes", DT_SORT|DT_SORT_BROWSER, R_NONE, {.p=&BrowserSortMailboxes}, {.l=SORT_ORDER} },
   /*
@@ -4030,8 +4022,11 @@ struct option_t MuttVars[] = {
   ** Specifies how to sort entries in the mailbox browser.  By default, the
   ** entries are unsorted, displayed in the same order as listed
   ** in the ``mailboxes'' command.  Valid values:
+  ** メールボックスブラウザでエントリを整列する方法を指定します。既定では、
+  ** エントリは整列されず、「mailboxes」コマンドでリストされたのと同じ順序で
+  ** 表示されます。有効な値は次のとおりです。
   ** .il
-  ** .dd alpha (alphabetically)
+  ** .dd alpha (英語順)
   ** .dd count
   ** .dd date
   ** .dd size
@@ -4039,58 +4034,53 @@ struct option_t MuttVars[] = {
   ** .dd unsorted
   ** .ie
   ** .pp
-  ** You may optionally use the ``reverse-'' prefix to specify reverse sorting
-  ** order (example: ``\fCset sort_browser_mailboxes=reverse-alpha\fP'').
+  ** 逆順で整列したい場合には、``reverse-'' 接頭辞を使う事が出来ます
+  ** (例  ``\fCset sort_browser_mailboxes=reverse-alpha\fP'')。
   */
   { "sort_re",		DT_BOOL, R_INDEX|R_RESORT|R_RESORT_INIT, {.l=OPTSORTRE}, {.l=1} },
   /*
   ** .pp
-  ** This variable is only useful when sorting by threads with
-  ** $$strict_threads \fIunset\fP.  In that case, it changes the heuristic
-  ** mutt uses to thread messages by subject.  With $$sort_re \fIset\fP, mutt will
-  ** only attach a message as the child of another message by subject if
-  ** the subject of the child message starts with a substring matching the
-  ** setting of $$reply_regexp.  With $$sort_re \fIunset\fP, mutt will attach
-  ** the message whether or not this is the case, as long as the
-  ** non-$$reply_regexp parts of both messages are identical.
+  ** この変数は、$$strict_threads が \fIunset\fP で、スレッドによる整列の時にのみ
+  ** 便利です。この場合、Mutt が使う発見的手法が、題名でスレッドにするように変更になります。
+  ** $$sort_re が \fIset\fP の時は、Mutt は、子メッセージの題名が、$$reply_regexpの
+  ** 設定と一致する部分文字列で始まっていた場合にのみ、題名で、他のメッセージの子供として
+  ** メッセージを接続します。$$sort_re が \fIunset\fP の場合、Mutt は、$$reply_regexp
+  ** 部分以外の、両方のメッセージが同じである限り、この場合の時もそうでないときも、
+  ** メッセージを接続します。
   */
   { "sort_thread_groups", DT_SORT|DT_SORT_THREAD_GROUPS, R_INDEX|R_RESORT_BOTH, {.p=&SortThreadGroups}, {.l=SORT_AUX} },
   /*
   ** .pp
-  ** When sorting by threads, this variable controls how threads are
-  ** sorted in relation to other threads (at the top/root level).
-  ** This can be set to any value that $$sort can, except ``threads''.
-  ** You can also specify the ``last-'' prefix in addition to the
-  ** ``reverse-'' prefix, but ``last-'' must come after ``reverse-''.
-  ** The ``last-'' prefix causes messages to be sorted against its
-  ** siblings by which has the last descendant, using the rest of
-  ** $$sort_thread_groups as an ordering.
+  ** スレッド別に整列する場合、この変数は、他のスレッド(トップ/ルートレベル)との
+  ** 関係でスレッドを整列する方法を制御します。これは、「スレッド」を除いて、
+  ** $$sortが設定できる任意の値に設定できます。「reverse-」プレフィックスに加えて
+  ** 「last-」プレフィックスを指定することもできますが、「last-」は「reverse-」の
+  ** 後に指定する必要があります。「last-」プレフィックスは、
+  ** $$sort_thread_groupsの残りの部分を順序付けとして使用して、最後の子孫を持つ
+  ** 兄弟に対してメッセージを整列します。
   ** .pp
-  ** For backward compatibility, the default value is ``aux'', which
-  ** means to use $$sort_aux for top-level thread sorting too.  The
-  ** value ``aux'' does not respect ``last-'' or ``reverse-''
-  ** prefixes, it simply delegates sorting directly to $$sort_aux.
+  ** 下位互換性のために、既定値は``aux''です。これはトップレベルのスレッド整列
+  ** にも$$sort_auxを使用することを意味します。値``aux''は``last-''や`
+  ** `reverse-''プレフィックスを考慮せず、単に整列を直接$$sort_auxに委任します。
   ** .pp
-  ** Note: For reversed-threads $$sort order, $$sort_thread_groups is
-  ** reversed again (which is not the right thing to do, but kept to
-  ** not break any existing configuration setting).
+  ** 注意:reversed-threadsの$$sort順の場合、$$sort_thread_groupsは再び逆に
+  ** なります(これは正しい動作ではありませんが、既存の設定を壊さないように保持されます)。
   */
   { "spam_separator",   DT_STR, R_NONE, {.p=&SpamSep}, {.p=","} },
   /*
   ** .pp
-  ** This variable controls what happens when multiple spam headers
-  ** are matched: if \fIunset\fP, each successive header will overwrite any
-  ** previous matches value for the spam label. If \fIset\fP, each successive
-  ** match will append to the previous, using this variable's value as a
-  ** separator.
+  ** この変数は、複数のスパムヘッダが一致した場合に、何をするかを制御します。
+  ** \fIunset\fP の場合、この変数の値をセパレータとして、各連続した一致は、
+  ** spam ラベルの以前の一致した値を上書きします。\fIset\fP の場合、
+  ** 各成功した一致は、この変数の値をセパレータとして以前のものに追加されます。
   */
   { "spoolfile",	DT_PATH, R_NONE, {.p=&Spoolfile}, {.p=0} },
   /*
   ** .pp
-  ** If your spool mailbox is in a non-default place where Mutt cannot find
-  ** it, you can specify its location with this variable.  Mutt will
-  ** initially set this variable to the value of the environment
-  ** variable \fC$$$MAIL\fP or \fC$$$MAILDIR\fP if either is defined.
+  ** スプールメールボックスが、既定値外の場所にあり、Mutt が見つけられない場合、
+  ** その位置をこの変数で指定します。Mutt は、どちらかが使われている場合、
+  ** 環境変数 \fC$$$MAIL\fP 又は \fC$$$MAILDIR\fP の値を起動時にこの変数に
+  ** 設定します。
   */
 #if defined(USE_SSL)
 # ifdef USE_SSL_GNUTLS
