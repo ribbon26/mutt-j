@@ -4327,127 +4327,115 @@ struct option_t MuttVars[] = {
   { "status_on_top",	DT_BOOL, R_REFLOW, {.l=OPTSTATUSONTOP}, {.l=0} },
   /*
   ** .pp
-  ** Setting this variable causes the ``status bar'' to be displayed on
-  ** the first line of the screen rather than near the bottom. If $$help
-  ** is \fIset\fP, too it'll be placed at the bottom.
+  ** この変数を設定すると、最下部のそばに置く代わりに、画面の最初の行に、
+  ** ``status bar'' を表示するようになります。$$help が \fIset\fP の場合、
+  ** この場合も最下部に表示されます。
   */
   { "strict_threads",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTSTRICTTHREADS}, {.l=0} },
   /*
   ** .pp
-  ** If \fIset\fP, threading will only make use of the ``In-Reply-To'' and
-  ** ``References:'' fields when you $$sort by message threads.  By
-  ** default, messages with the same subject are grouped together in
-  ** ``pseudo threads.''. This may not always be desirable, such as in a
-  ** personal mailbox where you might have several unrelated messages with
-  ** the subjects like ``hi'' which will get grouped together. See also
-  ** $$sort_re for a less drastic way of controlling this
-  ** behavior.
+  ** \fIset\fP の場合、スレッド化は、$$sort がメッセージのスレッドの時に、
+  **  ``In-Reply-To'' と ``References:'' のみを使用して行います。既定では、
+  ** 同じ題名のメッセージは、``pseudo threads.'' にいっしょにグループ化されます。
+  ** これは、個人のメールボックスで、``hi'' と言うような題名のいくつかの未読
+  ** メッセージがいっしょにグループ化されてしまうこともあるため、常時好ましいとは
+  ** 言えません。この動作を制御する劇的な方法については、$$sort_re も
+  ** 参照してください。
   */
   { "suspend",		DT_BOOL, R_NONE, {.l=OPTSUSPEND}, {.l=1} },
   /*
   ** .pp
-  ** When \fIunset\fP, mutt won't stop when the user presses the terminal's
-  ** \fIsusp\fP key, usually ``^Z''. This is useful if you run mutt
-  ** inside an xterm using a command like ``\fCxterm -e mutt\fP''.
+  ** \fIunset\fP の場合、Mutt は通常 ``^Z'' の端末の \fIsusp\fP キーを押しても
+  ** 停止しません。これは、``\fCxterm -e mutt\fP'' のようなコマンドで、Mutt を  xterm
+  ** 内で実行している場合に便利です。
   */
   { "text_flowed", 	DT_BOOL, R_NONE, {.l=OPTTEXTFLOWED},  {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will generate ``format=flowed'' bodies with a content type
-  ** of ``\fCtext/plain; format=flowed\fP''.
-  ** This format is easier to handle for some mailing software, and generally
-  ** just looks like ordinary text.  To actually make use of this format's
-  ** features, you'll need support in your editor.
+  ** \fIset\fP の場合、Mutt はコンテキストタイプが ``\fCtext/plain; format=flowed\fP'' の
+  ** ``format=flowed'' である本文を生成します。このフォーマットはある種の
+  ** メーリングソフトで扱いやすく、一般的には通常のテキストのように見えます。
   ** .pp
-  ** The option only controls newly composed messages.  Postponed messages,
-  ** resent messages, and draft messages (via -H on the command line) will
-  ** use the content-type of the source message.
+  ** オプションは新しく編集されたメッセージのみを制御します。保留メッセージ、
+  ** 再送メッセージとドラフトメッセージ(コマンド行の  -H 経由)は、
+  ** ソースメッセージの content-type を使います。
   ** .pp
-  ** Note that $$indent_string is ignored when this option is \fIset\fP.
+  ** $$indent_string はこのオプションが  \fIset\fP の時に無視されることに注意してください。
   */
   { "thorough_search",	DT_BOOL, R_NONE, {.l=OPTTHOROUGHSRC}, {.l=1} },
   /*
   ** .pp
-  ** Affects the \fC~b\fP, \fC~B\fP, and \fC~h\fP search operations described in
-  ** section ``$patterns''.  If \fIset\fP, the headers and body/attachments of
-  ** messages to be searched are decoded before searching. If \fIunset\fP,
-  ** messages are searched as they appear in the folder.
+  ** セクション ``$patterns'' の節で記述されている \fC~b\fP と \fC~h\fP 検索操作に
+  ** 影響します。\fIset\fP の場合、検索されるヘッダとメッセージの本文/添付は検索の
+  ** 前に復号化されます。\fIunset\fP の場合、メッセージは、フォルダ中にあるままで
+  ** 検索されます。
   ** .pp
-  ** Users searching attachments or for non-ASCII characters should \fIset\fP
-  ** this value because decoding also includes MIME parsing/decoding and possible
-  ** character set conversions. Otherwise mutt will attempt to match against the
-  ** raw message received (for example quoted-printable encoded or with encoded
-  ** headers) which may lead to incorrect search results.
+  ** 添付の検索や非ASCII 文字の場合は、復号化に MIME 操作とデコードと、取り得る
+  ** 文字セット変換も含むので、この値を \fIset\fP にすべきです。それ以外は、
+  ** Mutt は、不正な検索結果になり得る、受け取った生メッセージに対して一致するかを
+  ** 試みます(たとえば、 quoted-printable でエンコード、又はヘッダもエンコード)。
   */
   { "thread_received",	DT_BOOL, R_RESORT|R_RESORT_INIT|R_INDEX, {.l=OPTTHREADRECEIVED}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt uses the date received rather than the date sent
-  ** to thread messages by subject.
+  ** fIset\fP の時、Mutt は題名でメッセージをスレッド化する場合、送信時刻の代わりに
+  ** 受信時刻を使います。
   */
   { "tilde",		DT_BOOL, R_PAGER, {.l=OPTTILDE}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, the internal-pager will pad blank lines to the bottom of the
-  ** screen with a tilde (``~'').
+  ** \fIset\fP の場合、内部ページャは最下部までの空白行をチルダ (``~'') で埋めます。
   */
   { "time_inc",		DT_NUM,	 R_NONE, {.p=&TimeInc}, {.l=0} },
   /*
   ** .pp
-  ** Along with $$read_inc, $$write_inc, and $$net_inc, this
-  ** variable controls the frequency with which progress updates are
-  ** displayed. It suppresses updates less than $$time_inc milliseconds
-  ** apart. This can improve throughput on systems with slow terminals,
-  ** or when running mutt on a remote system.
+  ** $$read_inc, $$write_inc, と $$net_inc と共に、この変数は進行状況の更新が表示される
+  ** 頻度を制御します。$$time_inc ミリセカンドより小さい場合、更新を抑制します。
+  ** これは、遅いターミナル又はリモートシステムでMutt が
+  ** 動作している場合にシステムのスループットを改善できます。
   ** .pp
-  ** Also see the ``$tuning'' section of the manual for performance considerations.
+  ** パフォーマンスの注意事項についてはマニュアルの  ``$tuning'' 節も参照してください。
   */
   { "timeout",		DT_NUM,	 R_NONE, {.p=&Timeout}, {.l=600} },
   /*
   ** .pp
-  ** When Mutt is waiting for user input either idling in menus or
-  ** in an interactive prompt, Mutt would block until input is
-  ** present. Depending on the context, this would prevent certain
-  ** operations from working, like checking for new mail or keeping
-  ** an IMAP connection alive.
+  ** Mutt が メニュー中でアイドル状態か、対話的なプロンプトでユーザの入力を
+  ** 待っている場合、Mutt は入力があるまでブロックします。コンテキストに依存し、
+  ** これは、新着メールのチェックやIMAP 接続の有効を保持するなどの、特定の動作
+  ** の実行を阻害します。
   ** .pp
-  ** This variable controls how many seconds Mutt will at most wait
-  ** until it aborts waiting for input, performs these operations and
-  ** continues to wait for input.
+  ** この変数は、Mutt が入力待ちを中止して、それらの操作を実行し、入力町を
+  ** 続けるまで、最大何秒待つかを制御します。
   ** .pp
-  ** A value of zero or less will cause Mutt to never time out.
+  ** 0 またほそれ以下の値では、Mutt はタイムアウトしなくなります。
   */
   { "tmpdir",		DT_PATH, R_NONE, {.p=&Tempdir}, {.p=0} },
   /*
   ** .pp
-  ** This variable allows you to specify where Mutt will place its
-  ** temporary files needed for displaying and composing messages.  If
-  ** this variable is not set, the environment variable \fC$$$TMPDIR\fP is
-  ** used.  If \fC$$$TMPDIR\fP is not set then ``\fC/tmp\fP'' is used.
+  ** この変数は、Mutt が、メッセージの表示と編集のために必要な一時ファイルを置く
+  ** 場所を指定します。この変数が設定されていない場合、環境変数 \fC$$$TMPDIR\fP が
+  ** 使われます。\fC$$$TMPDIR\fP が設定されていない場合は、``\fC/tmp\fP'' が
+  ** 使われます。
   */
   { "to_chars",		DT_MBCHARTBL, R_BOTH, {.p=&Tochars}, {.p=" +TCFL"} },
   /*
   ** .pp
-  ** Controls the character used to indicate mail addressed to you.  The
-  ** first character is the one used when the mail is \fInot\fP addressed to your
-  ** address.  The second is used when you are the only
-  ** recipient of the message.  The third is when your address
-  ** appears in the ``To:'' header field, but you are not the only recipient of
-  ** the message.  The fourth character is used when your
-  ** address is specified in the ``Cc:'' header field, but you are not the only
-  ** recipient.  The fifth character is used to indicate mail that was sent
-  ** by \fIyou\fP.  The sixth character is used to indicate when a mail
-  ** was sent to a mailing-list you subscribe to.
+  ** 自分に来たメールを表示するために使われる文字を制御します。最初の文字は、
+  ** メールが自分のアドレスあてで \fIない\fP 場合に使われます。2番目は、
+  ** メッセージの受信者が自分自身のみの場合に使われます。3番目は、自分のアドレスが
+  ** ``To:'' ヘッダにあるが、メッセージの受信者が自分自身以外にもいることを示します。
+  ** 4番目の文字は、自分のアドレスが ``Cc:'' ヘッダにあるが、自分自身以外にも受信者が
+  ** いることを示します。5番目の文字は、自分自身が送信元のメールであることを示します。
+  ** 6番目の文字は、購読しているメーリングリストに送ったメールであることを示します。
   */
   { "trash",		DT_PATH, R_NONE, {.p=&TrashPath}, {.p=0} },
   /*
   ** .pp
-  ** If set, this variable specifies the path of the trash folder where the
-  ** mails marked for deletion will be moved, instead of being irremediably
-  ** purged.
+  ** 設定されている場合、この変数は削除マークが付けらたメールを完全に削除する代わりに
+  ** 移動するゴミ箱フォルダのパスを指定します。
   ** .pp
-  ** NOTE: When you delete a message in the trash folder, it is really
-  ** deleted, so that you have a way to clean the trash.
+  ** 注意: ゴミ箱フォルダ中のメッセージを削除した場合、完全な削除となり、
+  ** ゴミ箱をからにする方法となります。
   */
   /* L10N:
      $ts_icon_format default value
@@ -4455,16 +4443,17 @@ struct option_t MuttVars[] = {
   {"ts_icon_format", DT_STR|DT_L10N_STR, R_BOTH, {.p=&TSIconFormat}, {.p=N_("M%?n?AIL&ail?")} },
   /*
   ** .pp
-  ** Controls the format of the icon title, as long as ``$$ts_enabled'' is set.
-  ** This string is identical in formatting to the one used by
-  ** ``$$status_format''.
+  ** ``$$ts_enabled'' が設定されている限り、アイコンタイトルのフォーマットを
+  ** 制御します。この文字列は、``$$status_format'' で使われているものと、
+  ** フォーマットは同じです。
   */
   {"ts_enabled",	DT_BOOL,  R_BOTH, {.l=OPTTSENABLED}, {.l=0} },
   /* The default must be off to force in the validity checking. */
   /*
   ** .pp
-  ** Controls whether mutt tries to set the terminal status line and icon name.
-  ** Most terminal emulators emulate the status line in the window title.
+  ** Mutt が端末ステータス行とアイコン名を設定するための試みを制御します。
+  ** 多くのターミナルエミュレータはウィンドウのタイトルでステータス行をエミュレート
+  ** します。
   */
   /* L10N:
      $ts_status_format default value
@@ -4472,87 +4461,88 @@ struct option_t MuttVars[] = {
   {"ts_status_format", DT_STR|DT_L10N_STR, R_BOTH, {.p=&TSStatusFormat}, {.p=N_("Mutt with %?m?%m messages&no messages?%?n? [%n NEW]?")} },
   /*
   ** .pp
-  ** Controls the format of the terminal status line (or window title),
-  ** provided that ``$$ts_enabled'' has been set. This string is identical in
-  ** formatting to the one used by ``$$status_format''.
+  ** ``$$ts_enabled'' が設定されているときに、端末ステータス行(又はウィンドウの
+  ** タイトル)のフォーマットを制御します。この文字列は、``$$status_format'' で
+  ** 使われているものと同じフォーマットです。
   */
 #ifdef USE_SOCKET
   { "tunnel",            DT_STR, R_NONE, {.p=&Tunnel}, {.p=0} },
   /*
   ** .pp
-  ** Setting this variable will cause mutt to open a pipe to a command
-  ** instead of a raw socket. You may be able to use this to set up
-  ** preauthenticated connections to your IMAP/POP3/SMTP server. Example:
+  ** この変数を設定すると、Mutt は raw ソケットの代わりにコマンドへのパイプを開きます。
+  ** これを使って、IMAP/POP3/SMTP サーバへの事前認証済み接続を設定することが
+  ** 出来るようになります。以下が例です。
   ** .ts
   ** set tunnel="ssh -q mailhost.net /usr/local/libexec/imapd"
   ** .te
   ** .pp
-  ** Note: For this example to work you must be able to log in to the remote
-  ** machine without having to enter a password.
+  ** この例を動かすためには、パスワード入力なしで、リモートのマシンにログイン
+  ** 出来なければなりません。
   ** .pp
-  ** When set, Mutt uses the tunnel for all remote connections.
-  ** Please see ``$account-hook'' in the manual for how to use different
-  ** tunnel commands per connection.
+  ** 設定した場合、Mutt はすべてのリモートマシンに対してトンネルを使います。
+  ** 接続毎に異なったトンネルコマンドを使うかについては、 ``$account-hook'' の
+  ** マニュアルを参照してください。
   */
 #endif
   { "tunnel_is_secure", DT_BOOL, R_NONE, {.l=OPTTUNNELISSECURE}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will assume the $$tunnel connection does not need
-  ** STARTTLS to be enabled.  It will also allow IMAP PREAUTH server
-  ** responses inside a $tunnel to proceed.  This is appropriate if $$tunnel
-  ** uses ssh or directly invokes the server locally.
+  ** \fIset\fPの場合、Muttは $$tunnel 接続が STARTTLS を有効にする必要がないと
+  ** 想定します。また、$tunnel 内の IMAP PREAUTH サーバ応答を続行できるように
+  ** します。これは、$$tunnel が ssh を使用するか、ローカルでサーバを直接
+  ** 呼び出す場合に適しています。
   ** .pp
-  ** When \fIunset\fP, Mutt will negotiate STARTTLS according to the
-  ** $ssl_starttls and $ssl_force_tls variables.  If $ssl_force_tls is
-  ** set, Mutt will abort connecting if an IMAP server responds with PREAUTH.
-  ** This setting is appropriate if $$tunnel does not provide security and
-  ** could be tampered with by attackers.
+  ** \fIunset\fPの場合、Mutt は $ssl_starttls 変数と $ssl_force_tls 変数に
+  ** 従って STARTTLS をネゴシエートします。$ssl_force_tls が設定されている場合、
+  ** IMAP サーバーが PREAUTH で応答すると、Mutt は接続を中止します。この設定は、
+  ** $$tunnel がセキュリティを提供せず、攻撃者によって改ざんされる可能性がある
+  ** 場合に適しています。
   */
   { "uncollapse_jump", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSEJUMP}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will jump to the next unread message, if any,
-  ** when the current thread is \fIun\fPcollapsed.
+  ** \fIset\fP の場合、現在のスレッドが、折りたたまれて \fIいない\fP場合、
+  ** Mutt は存在していれば、次の未読メッセージにジャンプします。
   */
   { "uncollapse_new", 	DT_BOOL, R_NONE, {.l=OPTUNCOLLAPSENEW}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will automatically uncollapse any collapsed
-  ** thread that receives a newly delivered message.  When
-  ** \fIunset\fP, collapsed threads will remain collapsed. The
-  ** presence of the newly delivered message will still affect index
-  ** sorting, though.
+  ** \fIset\fP の場合、新規メッセージを受け取ったとき、Mutt は自動的に、折りたたまれた
+  ** スレッドを展開します。\fIunset\fP の場合、折りたたまれたスレッドは
+  ** 折りたたまれたままになります。ただし、新規メッセージがあると、インデックスの整列には
+  ** 影響します。
   */
   { "use_8bitmime",	DT_BOOL, R_NONE, {.l=OPTUSE8BITMIME}, {.l=0} },
   /*
   ** .pp
-  ** \fBWarning:\fP do not set this variable unless you are using a version
-  ** of sendmail which supports the \fC-B8BITMIME\fP flag (such as sendmail
-  ** 8.8.x) or you may not be able to send mail.
+  ** \fB警告:\fP 使用している sendmail のバージョンが、\fC-B8BITMIME\fP フラグ
+  ** (たとえば sendmail 8.8.x)をサポートしているものを使っていない限り、
+  ** この変数を設定してはいけません。そうしないと、メールが送れなくなって
+  ** しまいます。
   ** .pp
-  ** When \fIset\fP, Mutt will invoke $$sendmail with the \fC-B8BITMIME\fP
-  ** flag when sending 8-bit messages to enable ESMTP negotiation.
+  ** \fIset\fP とすると、 Mutt は、8ビットメッセージを送るときに、ESMTP
+  ** ネゴシエーションを有効にするため、$$sendmail を \fC-B8BITMIME\fP 付きで
+  ** 起動します。
   */
   { "use_domain",	DT_BOOL, R_NONE, {.l=OPTUSEDOMAIN}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will qualify all local addresses (ones without the
-  ** ``@host'' portion) with the value of $$hostname.  If \fIunset\fP, no
-  ** addresses will be qualified.
+  ** \fIset\fP の時、Mutt はすべてのローカルアドレス(``@host'' 部分がないもの)を
+  ** $$hostname の価を付けて補完します。\fIunset\fP の場合、アドレスの
+  ** 補完はしません。
   */
   { "use_envelope_from", 	DT_BOOL, R_NONE, {.l=OPTENVFROM}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will set the \fIenvelope\fP sender of the message.
-  ** If $$envelope_from_address is \fIset\fP, it will be used as the sender
-  ** address. If \fIunset\fP, mutt will attempt to derive the sender from the
-  ** ``From:'' header.
+  ** \fIset\fP の時、Mutt はメッセージの \fIenvelope\fP sender を設定します。
+  ** $$envelope_from_address が \fIset\fP の場合、送信者アドレスとしてそれが
+  ** 使われます。\fIunset\fP の場合、Mutt は ``From:'' ヘッダから送信者アドレスを
+  ** 抽出しようとします。
   ** .pp
-  ** Note that this information is passed to sendmail command using the
-  ** \fC-f\fP command line switch. Therefore setting this option is not useful
-  ** if the $$sendmail variable already contains \fC-f\fP or if the
-  ** executable pointed to by $$sendmail doesn't support the \fC-f\fP switch.
+  ** この情報は、\fC-f\fP コマンド行スイッチを使って sendmail コマンドに渡される
+  ** ことに注意してください。そのため、このオプションを設定することは、
+  ** $$sendmail 変数がすでに \fC-f\fP を含んでいるか、$$sendmail によって指定される
+  ** 実行形式が、\fC-f\fP スイッチをサポートしない場合には好ましくありません。
   */
   { "envelope_from",	DT_SYN,  R_NONE, {.p="use_envelope_from"}, {.p=0} },
   /*
@@ -4560,116 +4550,109 @@ struct option_t MuttVars[] = {
   { "use_from",		DT_BOOL, R_NONE, {.l=OPTUSEFROM}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will generate the ``From:'' header field when
-  ** sending messages.  If \fIunset\fP, no ``From:'' header field will be
-  ** generated unless the user explicitly sets one using the ``$my_hdr''
-  ** command.
+  ** \fIset\fP の場合、Mutt は送信時に ``From:'' ヘッダフィールドを生成します。
+  ** \fIunset\fP の場合、ユーザが、``$my_hdr'' コマンドを使って明示的に設定
+  ** しない限り、``From:'' ヘッダフィールドを生成しません。
   */
 #ifdef HAVE_GETADDRINFO
   { "use_ipv6",		DT_BOOL, R_NONE, {.l=OPTUSEIPV6}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, Mutt will look for IPv6 addresses of hosts it tries to
-  ** contact.  If this option is \fIunset\fP, Mutt will restrict itself to IPv4 addresses.
-  ** Normally, the default should work.
+  ** \fIset\fP の場合、Mutt はホストの 接続のために、IPv6 アドレスを探します。
+  ** このオプションが  \fIunset\fP の場合、Mutt は IPv4 アドレスに制限します。
+  ** 通常、既定値で動作します。
   */
 #endif /* HAVE_GETADDRINFO */
   { "user_agent",	DT_BOOL, R_NONE, {.l=OPTXMAILER}, {.l=0} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will add a ``User-Agent:'' header to outgoing
-  ** messages, indicating which version of mutt was used for composing
-  ** them.
+  ** \fIset\fP の場合、Mutt は送信メッセージに ``User-Agent:'' ヘッダを追加し、
+  ** メールの編集にどのバージョンの Mutt を使ったかを表示します。
   */
   { "visual",		DT_CMD_PATH, R_NONE, {.p=&Visual}, {.p=0} },
   /*
   ** .pp
-  ** Specifies the visual editor to invoke when the ``\fC~v\fP'' command is
-  ** given in the built-in editor.
+  ** 内蔵エディタの ``\fC~v\fP'' コマンドで使われる画面エディタを指定します。
   */
   { "wait_key",		DT_BOOL, R_NONE, {.l=OPTWAITKEY}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether Mutt will ask you to press a key after an external command
-  ** has been invoked by these functions: \fC<shell-escape>\fP,
-  ** \fC<pipe-message>\fP, \fC<pipe-entry>\fP, \fC<print-message>\fP,
-  ** and \fC<print-entry>\fP commands.
+  ** Mutt が、\fC<shell-escape>\fP,\fC<pipe-message>\fP, \fC<pipe-entry>\fP,
+  **  \fC<print-message>\fP, と \fC<print-entry>\fP コマンドによって起動される
+  ** 外部コマンドの後にキーを押すかを問い合わせるかどうかを制御します。
   ** .pp
-  ** It is also used when viewing attachments with ``$auto_view'', provided
-  ** that the corresponding mailcap entry has a \fIneedsterminal\fP flag,
-  ** and the external program is interactive.
+  ** 対応する mailcap エントリが \fIneedsterminal\fP フラグががあり、外部
+  ** プログラムが対話的なものであるとき、``$auto_view'' で添付を表示するときにも使われます。
   ** .pp
-  ** When \fIset\fP, Mutt will always ask for a key. When \fIunset\fP, Mutt will wait
-  ** for a key only if the external command returned a non-zero status.
+  **  \fIset\fP の場合、Mutt は常時キーを問合せします。\fIunset\fP の時、Mutt は
+  ** 外部コマンドが非0のステータスを返した場合にのみキーを待ちます。
   */
   { "weed",		DT_BOOL, R_NONE, {.l=OPTWEED}, {.l=1} },
   /*
   ** .pp
-  ** When \fIset\fP, mutt will weed headers when displaying, forwarding,
-  ** or replying to messages.
+  ** \fIset\fP の時、Mutt はメッセージの表示、転送、印刷または返信時に
+  ** ヘッダを間引きします。
   ** .pp
-  ** Also see $$copy_decode_weed, $$pipe_decode_weed, $$print_decode_weed.
+  **  $$copy_decode_weed, $$pipe_decode_weed, $$print_decode_weed も参照してください。
   */
   { "wrap",             DT_NUM,  R_PAGER_FLOW, {.p=&Wrap}, {.l=0} },
   /*
   ** .pp
-  ** When set to a positive value, mutt will wrap text at $$wrap characters.
-  ** When set to a negative value, mutt will wrap text so that there are $$wrap
-  ** characters of empty space on the right side of the terminal. Setting it
-  ** to zero makes mutt wrap at the terminal width.
+  ** 正の値に設定すると、Mutt は $$wrap 文字でテキストを折り返します。
+  ** 負の値に設定すると、Mutt は端末の右側の空白による空間に、$$wrap 文字が
+  ** あるようにテキストを折り返します。ゼロに設定すると、Mutt は端末の幅で
+  ** 折り返します。
   ** .pp
-  ** Also see $$reflow_wrap.
+  ** $$reflow_wrap も参照してください。
   */
   { "wrap_headers",     DT_NUM,  R_PAGER, {.p=&WrapHeaders}, {.l=78} },
   /*
   ** .pp
-  ** This option specifies the number of characters to use for wrapping
-  ** an outgoing message's headers. Allowed values are between 78 and 998
-  ** inclusive.
+  ** このオプションは、送信するメッセージのヘッダを折り返すために使われる
+  ** 文字数を指定します。設定できる値は 78 以上 998 以下までです。
   ** .pp
-  ** \fBNote:\fP This option usually shouldn't be changed. RFC5233
-  ** recommends a line length of 78 (the default), so \fBplease only change
-  ** this setting when you know what you're doing\fP.
+  ** \fB注:\fP このオプションは通常変更してはなりません。RFC5233 では
+  ** 行の長さを 78(既定値)にすることを推奨していますので、
+  ** \fB何をするかを分かっている場合にのみこの値を変更してください\fP。
   */
   { "wrap_search",	DT_BOOL, R_NONE, {.l=OPTWRAPSEARCH}, {.l=1} },
   /*
   ** .pp
-  ** Controls whether searches wrap around the end.
+  ** 検索が終端で折り返すかどうかを制御します。
   ** .pp
-  ** When \fIset\fP, searches will wrap around the first (or last) item. When
-  ** \fIunset\fP, incremental searches will not wrap.
+  ** \fIset\fP の場合、検索は最初(又は最後)の項目で折り返します。
+  ** \fIunset\fP の場合、検索の続きは折り返しません。
   */
   { "wrapmargin",	DT_NUM,	 R_PAGER_FLOW, {.p=&Wrap}, {.l=0} },
   /*
   ** .pp
-  ** (DEPRECATED) Equivalent to setting $$wrap with a negative value.
+  ** (非推奨) 負の値の $$wrap の設定と同じ。
   */
   { "write_bcc",	DT_BOOL, R_NONE, {.l=OPTWRITEBCC}, {.l=0} },
   /*
   ** .pp
-  ** Controls whether mutt writes out the ``Bcc:'' header when
-  ** preparing messages to be sent.  Some MTAs, such as Exim and
-  ** Courier, do not strip the ``Bcc:'' header; so it is advisable to
-  ** leave this unset unless you have a particular need for the header
-  ** to be in the sent message.
+  ** 送信するメッセージを準備する時に、``Bcc:'' ヘッダを書き込むかを制御します。
+  ** Exim と Courier のようないくつかのMTA では ``Bcc:'' ヘッダを取り除かないので、
+  ** 送信メッセージ中にヘッダを入れる必要がない限り、これを設定しないでおく
+  ** ことを推奨します。
   ** .pp
-  ** If mutt is set to deliver directly via SMTP (see $$smtp_url),
-  ** this option does nothing: mutt will never write out the ``Bcc:''
-  ** header in this case.
+  ** Mutt がSMTP経由で直接配送するように設定した場合($$smtp_url を参照)、
+  ** このオプションは意味を持ちません。Mutt はこの場合、決して ``Bcc:''
+  ** ヘッダを書き込みません。
   ** .pp
-  ** Note this option only affects the sending of messages.  Fcc'ed
-  ** copies of a message will always contain the ``Bcc:'' header if
-  ** one exists.
+  ** このオプションは、メッセージの送信にのみ影響することに注意してください。
+  ** Fcc されたメッセージのコピーは、存在すれば ``Bcc:'' ヘッダが常時
+  ** 含まれます。
   */
   { "write_inc",	DT_NUM,	 R_NONE, {.p=&WriteInc}, {.l=10} },
   /*
   ** .pp
-  ** When writing a mailbox, a message will be printed every
-  ** $$write_inc messages to indicate progress.  If set to 0, only a
-  ** single message will be displayed before writing a mailbox.
+  ** メールボックスを書き込むとき、メッセージは、処理状態を表示するために、
+  ** 各 $$write_inc メッセージ毎に表示されます。0 に設定された場合、
+  ** メールボックスを書き込む前に、1つのメッセージだけ表示されます。
   ** .pp
-  ** Also see the $$read_inc, $$net_inc and $$time_inc variables and the
-  ** ``$tuning'' section of the manual for performance considerations.
+  ** $$read_inc, $$net_inc と $$time_inc 変数と、パフォーマンスの考慮に関する
+  ** マニュアルの、``$tuning'' 節も参照してください。
   */
   {"xterm_icon",	DT_SYN,  R_NONE, {.p="ts_icon_format"}, {.p=0} },
   /*
