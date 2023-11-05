@@ -1,51 +1,12 @@
-<!DOCTYPE html 
-    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
-<head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-<meta http-equiv="content-style-type" content="text/css" />
-<title>mutt-j project</title>
-<!-- Cascading Style Sheet -->
-<style type="text/css"> <!--
-	BODY,P,DIV,OL,UL,LI,P,BODY,TR,TH,TD,FORM { font-family: arial,helvetica,sans-serif; font-size: small; }
-	STRONG,TH { font-family: verdana,arial,helvetica,sans-serif; text-align: left;}
-	PRE,TT,INPUT,TEXTAREA,SELECT { font-family: monospace; font-size: small; }
 
-	H1 { font-size: large; font-family: verdana,arial,helvetica,sans-serif; padding: 3px 0px; margin: 0px; }
-	H2 { font-size: medium; font-family: verdana,arial,helvetica,sans-serif; }
-	H3 { font-size: small; font-family: verdana,arial,helvetica,sans-serif; }
-	H4 { font-size: x-small; font-family: verdana,arial,helvetica,sans-serif; }
-	H5 { font-size: xx-small; font-family: verdana,arial,helvetica,sans-serif; }
-	H6 { font-size: xx-small; font-family: verdana,arial,helvetica,sans-serif; }
 
-	A:link { text-decoration:none; color: #003399; }
-	A:visited { text-decoration:none; color: #003399; }
-	A:active { text-decoration:none }
-	A:hover { text-decoration:underline; color:#0066FF }
-	A.frs_name { text-decoration:none; color:#000000; }
+# このプロジェクトではパワフルなテキストベースのメールクライアント Mutt に対する日本語パッチの開発と日本語の文書の整備を行っています。
 
-	IMG { border-width: 0;}
-
-	H1.title { font-size: medium; font-family: verdana,arial,helvetica,sans-serif; }
-	TD.footer { font-family: verdana,arial,helvetica,sans-serif; color: #666666; }
-
-	.medium { font-size: small; }
-	.small { font-size: x-small; }
-	.uri { display: block; }
---> </style>
-</head>
-<body>
-
-<h1 class="title">mutt-j project</h1>
-<p>このプロジェクトではパワフルなテキストベースのメールクライアント
-Mutt に対する日本語パッチの開発と日本語の文書の整備を行っています。</p>
-
-<h2> 日本語マニュアル </h2>
+## 日本語マニュアル 
 
 最新版の日本語マニュアル(2.2.10対応)は、 <a href="manual.ja.html"> manual.ja.html </a>です。暫定版で、まだ未訳の所が残っています。
 
-<h2>最新ニュース</h2>
+## 最新ニュース
 <ul>
 <li>2023年3月25日 mutt-2.2.10 がリリースされました。</li>
 <li>2020年11月7日 mutt-2.0.0 がリリースされました。</li>
@@ -62,15 +23,15 @@ Mutt に対する日本語パッチの開発と日本語の文書の整備を行
 <li>2004年2月12日:mutt-1.4.1i以前のバージョンにバッファーオーバーフローが見つかりました。詳しくは "<a href="security-20040212.txt">buffer overflow</a>" をご覧ください。</li>
 </ul>
 
-<h2>プロジェクト概要</h2>
+## プロジェクト概要
 <p><a class="uri" href="http://sourceforge.jp/projects/mutt-j/">
 http://sourceforge.jp/projects/mutt-j/</a></p>
 
-<h2>ダウンロード</h2>
+## ダウンロード
 <p><a href="http://sourceforge.jp/frs/index.php?group_id=351">
 リリースファイル・リスト</a> (sourceforge.jp)</p>
 
-<h2>ports, rpm等</h2>
+## ports, rpm等
 <ul>
 <li><a href="http://www.cetus-net.org/ftp/NetBSD/pkgsrc-test/">
 NetBSD の非公式 pkgsrc</a>
@@ -83,7 +44,7 @@ linux.matchy.net - 私家版 rpm - mutt 日本語版</a>
 (Linux 塔載 Zaurus 用パッケージ)</li>
 </ul>
 
-<h2>メーリングリスト</h2>
+## メーリングリスト
 <p>Mutt に関する日本語のメーリングリスト <strong>mutt-j-users</strong> があります。
 有意義な情報交換のために積極的にご利用ください。</p>
 
@@ -93,7 +54,7 @@ linux.matchy.net - 私家版 rpm - mutt 日本語版</a>
 <a href="http://lists.sourceforge.jp/mailman/archives/mutt-j-users">保存書庫</a>
 で過去のメールを読むことができます。</p>
 
-<h2>リンク</h2>
+## リンク
 <dl>
 <dt><a href="http://www.mutt.org/">
 Mutt Home Page</a>
@@ -126,17 +87,4 @@ plain text 版</a>
 tar + gz アーカイブもあります)</dt>
 <dd><code>diff -du manual.sgml manual.ja.sgml</code>
 とすると対応が見える邦訳です。(tamomo)</dd>
-<!-- <dt><a href="http://mutt-j.sourceforge.jp/pukiwiki/"> -->
-<!-- mutt-j wiki</a></dt> -->
-<!-- <dd>FAQ やパッチリストなどを書き込める Wiki (試験運用中)</dd> -->
-</dl>
 
-<hr />
-<div>
-<a href="http://sourceforge.jp"><img
-src="http://sourceforge.jp/sflogo.php?group_id=351" width="96" height="31"
-alt="SourceForge.jp" /></a>
-</div>
-
-</body>
-</html>
