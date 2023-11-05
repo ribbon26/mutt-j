@@ -1,0 +1,21 @@
+--- mutt-1.5.6/mbyte.c~	Mon Sep 13 14:30:09 2004
++++ mutt-1.5.6/mbyte.c	Mon Sep 13 14:39:39 2004
+@@ -64,7 +64,7 @@
+     Charset_is_utf8 = 1;
+ #ifndef HAVE_WC_FUNCS
+   else if (!strcmp(buffer, "euc-jp") || !strcmp(buffer, "shift_jis")
+-  	|| !strcmp(buffer, "cp932"))
++  	|| !strcmp(buffer, "cp932") || !strcmp(buffer, "eucJP-ms"))
+   {
+     charset_is_ja = 1;
+     charset_to_utf8 = mutt_iconv_open ("UTF-8", charset, 0);
+--- mutt-1.5.6/charset.c~	Mon Sep 13 14:30:07 2004
++++ mutt-1.5.6/charset.c	Mon Sep 13 14:41:55 2004
+@@ -196,6 +196,7 @@
+   /* seems to be common on some systems */
+ 
+   { "sjis",		"Shift_JIS"	},
++  { "euc-jp-ms",	"eucJP-ms"	},
+ 
+ 
+   /*

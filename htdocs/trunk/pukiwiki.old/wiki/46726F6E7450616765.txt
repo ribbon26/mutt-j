@@ -1,0 +1,17 @@
+#freeze
+*mutt-j wiki
+カウンタ: [&counter;]
+
+Mutt で難しかった (けど解決した) ことなどの情報を共有しましょう。
+
+-[[MuttFaq]]
+--よくぶつかる問題とその解決策を収集しています。
+
+-[[MuttWiki:http://wiki.mutt.org/]]
+--英語が苦にならない人はこちらもどうぞ。
+
+-[[CopyRight]]
+--投稿に際しての注意など。
+
+コメントをどうぞ。
+#comment

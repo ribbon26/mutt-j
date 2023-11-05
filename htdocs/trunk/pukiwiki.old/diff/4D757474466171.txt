@@ -1,0 +1,90 @@
+ [[MuttFaq]]
+ 
+ よくある質問と答えです。質問だけ書いておくのも可能です。自作自演も歓迎。
+ 
+ ----
+ -英語では、こんな文書があります。
+ --http://www.fefe.de/muttfaq/
+ --http://mutt.blackfish.org.uk/
+ --http://wiki.mutt.org/?MuttFaq
+ -日本語では、Linux Japan に連載された滝澤氏の記事の PDF が入手可能です。
+ --http://www.emaillab.org/mutt/linuxjapan.html
+--2 ちゃんねるにスレがあり%%ます(20040420 現在)%%ました。
+---http://pc3.2ch.net/test/read.cgi/unix/1043606156/
++-2 ちゃんねるにスレがあります (20040707 現在)。
++--http://pc5.2ch.net/test/read.cgi/unix/1043606156/
+ --検索: http://find.2ch.net/?BBS=2ch&TYPE=TITLE&STR=Mutt&COUNT=10
+ ----
+ 
+ *送信
+ -Q: メールを送信できないのですが、どうすれば良いですか。
+ --A: qmail, exim, postfix などの MTA を適切にインストールするか、
+ LightWeightSmtpClients にある SMTP クライアントをご利用ください。
+ muttrc ファイルで関連する変数は $sendmail (と [[$envelope_from>./Header]]) です。
+ 
+ *メールボックス
+ -Q: メールボックスを開くのがとても遅いです。[[Maildir>./Maildir]] を使っています。
+ --A: HeaderCache をご覧ください。Thomas Glanzmann 氏のパッチが役に立ちます。
+ --A: Linux 2.6 の機能を使って ext3 ファイルシステム上で高速化するパッチが
+ mutt-dev に投稿され、debian でもテストされているようです (2004年5月現在)。
+ http://does-not-exist.org/mail-archives/mutt-dev/msg00205.html です。
+ -Q: 階層になっているローカルのメールフォルダを再帰的に検索したいのですが。
+ -Q: qmail を使っていない場合、[[Maildir>./Maildir]] を使うことに利点がありますか。
+ --A: [[./Maildir]] および MaildirFormat をご覧ください。
+ 
+ *[[暗号>./Encryption]]
+ -Q: PGP や GPG を使うにはどうすればいいでしょうか。
+ -Q: S/MIME を使うにはどうすればいいでしょうか。
+ -Q: パスワード/パスフレーズを間違えて入力してしまったのに、
+ Mutt はそれが正しいと思い込んでしまいました。
+ -Q: SSL の証明書を毎回確認するのは面倒です。
+ --A: [[./Encryption]] をご覧ください。
+ 
+ *[[ヘッダ>./Header]]
+ -Q: From を設定するにはどうしますか。
+ -Q: それとは別に SMTP 通信に使うエンベロープ from を設定するには。
+ -Q: BCC ヘッダの内容が相手に見えてしまいました。
+ --A: [[./Header]] をご覧ください。
+ 
+ *[[添付ファイル>./Attachment]]
+ -Q: 添付ファイルごと転送するにはどうしますか。
+ -Q: しかも本文部分を引用・編集したいのですが。
+ --A: [[マニュアル>http://mutt-j.sourceforge.jp/manual.ja.html#forwarding_mail]]
+ で [[$mime_forward>http://mutt-j.sourceforge.jp/manual.ja.html#mime_forward]]
+ を確認しましたか。
+ さらに詳細な点は [[./Attachment]] をご覧ください。
+ -Q: 添付ファイルや転送メッセージが文字化けします。
+ -Q: ファイル名が変だと言われます。
+ -Q: しょっちゅうファイルを添付し忘れてしまいます。
+ --A: [[./Attachment]] をご覧ください。
+ 
+ *色
+ -Q: default という色は何ですか。
+ -Q: 同じ設定でも端末によって色が違うのは何故ですか。
+ --A: [[マニュアル>http://mutt-j.sourceforge.jp/manual.ja.html#color]]
+ に書いてあります。お手元のマニュアルで、
+ COLORFGBG などのキーワードを検索してみてください。
+ ---ちなみに $COLORFGBG 環境変数は "default;default" でダメなら
+ "black;white" か "white;black" でいいと思います。
+ なお、今でも $COLORTERM が必要な terminal があるかどうかは
+ 分かりませんが、色が出なかったら何か値を設定してみましょう。
+ 
+ *[[IMAP>./IMAP]]
+ -Q: IMAP フォルダを開くにはどうしますか。
+ -Q: IMAP で SSL を使うには imaps://server/ と指定しますが、
+ SSH を使うにはどうしたら良いでしょうか。
+ -Q: IMAP が遅いです。速くすることができますか。
+ --A: [[./IMAP]] をご覧ください。
+ 
+ *[[その他>./Misc]]
+ -Q: フックが発動すると、その後ずっと設定が変わってしまいます。
+ -Q: フックで正規表現を使おうとしていますが、うまくいきません。
+ -Q: Mutt で NNTP を扱えると聞きましたが。
+ -Q: $alias_file を設定したのにエイリアスが使えません。
+ -Q: アドレス帳はありますか。
+ -Q: 間違ったキーを押してしまったときは、どうしたら良いですか。
+ --A: [[./Misc]] をご覧ください。
+ 
+ ----
+ コメント
+ #comment

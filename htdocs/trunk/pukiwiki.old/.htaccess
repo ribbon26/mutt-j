@@ -1,0 +1,6 @@
+DirectoryIndex pukiwiki.php
+
+<FilesMatch "^(\.htaccess|pukiwiki\.ini\.php|.*~)$">
+order allow,deny
+deny from all
+</FilesMatch>

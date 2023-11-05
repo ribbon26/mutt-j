@@ -1,0 +1,26 @@
+[[PatchList]]
+
+1.5.18対応のパッチ
+- [[wcwidth:http://www.emaillab.org/mutt/1.5.18/patch-1.5.18.tt.wcwidth.1]]
+- ja 1.5.18 patch (rfc2047 params) トラッカー番号 [[14299:http://sourceforge.jp/tracker/index.php?func=detail&aid=14299&group_id=351&atid=1400]]
+- ja 1.5.18 patch (delete prefix) トラッカー番号 [[14301:http://sourceforge.jp/tracker/index.php?func=detail&aid=14301&group_id=351&atid=1400]]
+
+
+有名なパッチ一覧
+
+- http://home.worldonline.dk/byrial/mutt/patches/ -- Byrial Ole Jensen (bj)
+-- current_shortcut -- 今いるメールボックスへのショートカット文字 ^ を導入
+-- noquote_hdr_term -- ヘッダ終端を記号付きで引用しない
+-- status-time -- ステータス行に現在時刻を表示
+-- my_hdr_subject -- subject の設定前に send-hook 実行
+-- hash_destroy -- メールボックスを閉じるのを少しだけ速くする
+- http://cedricduval.free.fr/mutt/patches/ -- Cedric Duval (cd)
+-- edit_threads -- スレッドをつないだり切ったりできる (http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/ にもある)
+-- trash_folder and purge_message -- windows で言うところの「ごみ箱」
+-- my_list -- フックやメールボックス、購読しているメーリングリストなどの一覧を表示
+-- signatures_menu -- 署名をメニューから選べる
+-- ifdef -- 機能があるかどうかで分岐
+-- pattern_broken -- 壊れたスレッドを検索
+-- source_multiple -- 一度に複数のファイルを source
+- http://www.schrab.com/aaron/mutt/ -- Aaron Schrab (ats)
+-- date_conditional -- インデックスの日付表

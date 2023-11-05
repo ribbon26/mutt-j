@@ -1,0 +1,18 @@
+ヘッダキャッシュのパッチに関する情報です。
+
+-Maildir &amp; IMAP 用パッチ: http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/
+--by Thomas Glanzmann
+--Michael Elkins のパッチを参考にしている。(しかし既にまったく別物)
+--gdbm か db4 (4.1 以上) が必要らしい。作者は gdbm を推奨している。
+--$maildir_header_cache_verify を unset するとさらに速くなる。通常は unset しても問題ない。
+--パッチのバージョンを上げるたびに db ファイルを rm するべき。(最近は自己削除機能が付いたが、まだ念のため手動で消そう)
+--IMAP に対応した。
+--FreeBSD 用 ports が http://www.momonga-linux.org/~tamo/ にあるかも。
+
+-IMAP 用パッチ: http://dwyn.net/mutt/
+--by Tudor Bosman
+--FreeBSD の (日本語版でないほうの) port は IMAP header cache 対応: http://www.freebsd.org/cgi/cvsweb.cgi/ports/mail/mutt-devel/
+
+-IMAP とローカル Maildir を同期させる外部プログラム: http://isync.sourceforge.net/
+--最初の作者は Michael Elkins, 現在のメンテナは Oswald Buddenhagen
+--かなり意図は違うが、IMAP をキャッシュしていると言えなくもない。

@@ -1,0 +1,44 @@
+[[MuttFaq]]/Encryption
+
+SSH を使った IMAP については [[../IMAP]] をご覧ください。
+
+*共通 [#vc5d1957]
+-Q: 間違ったパスワード/パスフレーズを入力してしまいました。
+取り消すにはどうすればいいのでしょうか。
+--A: ^F (forget-passphrase) を押します。
+なお、これは Ctrl を押しながら f を押すという意味です。
+-Q: SSL を使うたびに証明書を確認させられます。一度で良いのではありませんか。
+--A: $ssl_usesystemcerts を有効にしていてもそうなるのでしたら、
+書き込み権限のあるファイルを $certificate_file に設定してみましょう。
+信用することにした証明書が次からそのファイルに保存されます。
+もちろん自分で証明書を書いておくこともできます。
+
+*PGP [#n5bf74b5]
+-Q: PGP や GPG を使うにはどうすればいいでしょうか。
+--A1: 文書と一緒に samples/gpg.rc や samples/pgp6.rc
+というファイルがあるはずなので、それらを source してください。
+日本語パッチには samples/sample.muttrc-tt というファイルが
+同梱されていて、日本語環境で PGP/GPG を使うための設定が
+コメント内に書いてあるはずです。
+--A2: 1.5.8 以降では
+---gpgme-1.0 以上と gnupg をインストールし、
+---configure --enable-gpgme として Mutt をビルドし、
+---$crypt_use_gpgme 変数を (muttrc ファイルの中で) 有効にすると、
+---gpgme を使った処理がおこなわれるはずです。
+-Q: PGP/MIME で送ったのに「変な文字 ("=4D=55=54=54" とか) に化けてるよ」と言われます。
+--A: Quoted-Printable になっているようです。$pgp_strict_enc=no にしてみると良いでしょう。
+
+*S/MIME [#afea43ab]
+-Q: S/MIME を使うにはどうすればいいでしょうか。
+--A1: openssl を使う場合には openssl をインストールします。あとは smime-notes.txt か
+日本語パッチ付属の [[smime-notes.ja.txt>http://cvs.sourceforge.jp/cgi-bin/viewcvs.cgi/mutt-j/mutt-ja-doc/smime-notes.ja.txt?rev=HEAD&content-type=text/plain]] に従ってください。
+なお、smime_keys を使わずに自分で設定すれば自己署名の鍵も使えますが、
+それだと S/MIME の意味がほとんどないでしょう。
+---Note: パッチを当てていない openssl-0.9.7d は S/MIME 暗号化に失敗するようです。
+[[openssl.org の記事>http://www.mail-archive.com/openssl-dev@openssl.org/msg17377.html]] をどうぞ。
+--A2: 1.5.8 以降では
+---gpgme-1.0 以上と gnupg-1.9 以上をインストールし、
+---configure --enable-gpgme として Mutt をビルドし、
+---$crypt_use_gpgme 変数を (muttrc ファイル中で) 有効にすると、
+---gpgme ライブラリを通して gpgsm の機能を利用することができます。
+---この場合のおもな設定は ~/.gnupg/gpgsm.conf などに書くことになります。

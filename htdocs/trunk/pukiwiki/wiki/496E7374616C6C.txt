@@ -1,0 +1,27 @@
+インストール手順
+
+-RPM や deb パッケージを apt などで入れてください。
+-終わり。
+
+----
+
+どうしても自分でビルドしたい人は
+
+-ソースを取得
+-必要ならパッチを適用
+-ソースを CVS から取得したかパッチを当てた場合は ./prepare を、それ以外は ./configure を実行
+-make
+-make install
+
+ただし curses ライブラリ (slang など) が必要ですし、
+HeaderCache を使うなら QDBM などが必要ですし、
+いろいろ面倒です。
+
+mutt の configure はあまり賢くありません。
+適宜 CPPFLAGS や LDFLAGS を追加したりする必要があるかもしれません。
+
+たとえばこんなに長くなることがあります。
+
+ $ ./prepare --with-ssl --without-wc-funcs --enable-locales-fix --enable-pop --enable-imap --prefix=/home/tamo --with-libiconv-prefix=/usr/local --enable-debug --enable-hcache --with-qdbm --without-gdbm --without-bdb CPPFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib
+
+やめておいたほうがいいですよ。

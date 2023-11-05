@@ -1,0 +1,29 @@
+[[MuttFaq]]/Charset
+
+-Q: UTF-8 が、一部文字化けしたり、画面からはみ出したりします。
+--A: ふつうの S-Lang や日本語化 S-Lang では、UTF-8 対応が不十分です。
+http://www.emaillab.org/mutt/tools/slang-1.4.8-utf8.diff.gz
+をダウンロードして使いましょう。
+
+-Q: muttrc も環境変数も正しいはずなのに、送信メールが文字化けします。
+なぜでしょうか。
+--A: 署名が $charset の文字セットで書かれているか確認してください。
+また、エディタが必ず $charset の文字セットでファイルを保存するか確認しましょう。
+そもそも自分のエディタが $charset に対応していないということはありませんか。
+さらに、alias ファイルも確認しましょう。特に手で追加した場合などに注意が必要です。
+
+-Q: 丸数字など、いわゆる機種依存文字を扱えますか。
+--A: iconv が対応していれば、可能性はあります。
+既に [mutt-j:02343] で[[森山氏>http://www2d.biglobe.ne.jp/~msyk/]]がパッチを投稿しています。そのパッチを当てれば、
+ iconv-hook iso-2022-jp cp50220
+ iconv-hook shift_jis   cp932
+ iconv-hook euc-jp      eucJP-ms
+ set sanitize_ja_chars=no
+という設定で、それぞれの文字セットを上書きすることができます。
+その際、$charset か環境変数 LC_CTYPE も、
+そうした文字を含んでいて相互変換できる文字セットにする必要があるようです。
+たとえば
+ set charset=eucJP-ms
+ということです。
+また、当然ながら端末のフォントもそれらの文字に対応している必要があります。
+#ref(patch-1.5.4.msyk.iconv-hook_overwrite.1)

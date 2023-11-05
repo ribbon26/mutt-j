@@ -1,0 +1,37 @@
+ MaildirFormat
+ 
+ cf. [[MuttFaq/Maildir]]
+ 
+ 技術的な事柄については、次のサイトを参照してください。
+ 
+ - http://cr.yp.to/proto/maildir.html (英語)
+--- 翻訳したい人は [[MaildirFormat/Specification]] でどうぞ
++-- [[MaildirFormat/Specification]] で翻訳してみましたが、鵜呑みにしないでください。
+ - http://man.qmail.jp/jman5/maildir.html
+ 
+ 基本的には、このような配置になっています。
+  Maildir/
+          cur/
+          new/
+          tmp/
+ メッセージごとに個別のファイルとして cur や new ディレクトリに保管されます。
+ 未読なら new に、既読なら cur に保管されます。しかし tmp を作り忘れないようにしましょう。
+ 
+ Mutt 側で特別な指定は必要ありません。ディレクトリ構造を見て自動検出してくれます。
+ 
+ シェルから Maildir を作成するには
+  mkdir -p testbox/{cur,new,tmp}
+  chmod 700 testbox/{,cur,new,tmp}
+ または
+  maildirmake testbox
+ とします。
+ 
+ Mutt が新しいメールボックスを作成するときに Maildir を使うようにするには
+  set mbox_type=maildir 
+ を ~/.muttrc に書いておきます。
+ 
++なお、多くのユーザが Maildir を階層にしており、
++IMAP サーバも MUA もそれを問題視することはほとんどありませんが、
++厳密には Maildir を階層化することは認められていないようです。~
++参考: http://does-not-exist.org/mail-archives/mutt-users/msg01879.html
++

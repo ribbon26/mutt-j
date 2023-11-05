@@ -1,0 +1,24 @@
+[[MuttFaq]]/Header
+
+-Q: From を設定するにはどうしますか。
+--A: $from (アドレス), $use_from ("yes"), $realname (名前) を設定します。
+また $hdrs と my_hdr も使えます。(my_hdr "From: namae <add@ress>")
+
+-Q: それとは別に SMTP 通信に使うエンベロープ from を設定するには。
+--A: $envelope_from と $sendmail を確認してください。
+あなたの $sendmail が -f オプションを受け付けるなら
+$envelope_from を yes にします。
+それ以外のオプションが必要なら $sendmail に直接追加します。
+または LightWeightSmtpClients の設定ファイルに書きます。
+
+-Q: 正しく From を設定しているのに SMTP サーバから
+「そのドメインからは送信できません」というようなエラーを返されます。
+--A: エンベロープ from が正しくないようです。
+上記の通りに設定を直しましょう。
+
+-Q: BCC が消えません。To の宛先の人にも見えてしまっています。
+--A: $write_bcc はデフォルトで yes なので、
+BCC ヘッダを消してくれない MTA を使っている場合には
+no にする必要があります。Exim は消してくれないようです。
+これはバグではなく、Exim が「Bcc を消すのは MUA の仕事だ」と
+考えているためで、-t オプションを付けない限り消さない仕様なのです。

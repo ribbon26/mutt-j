@@ -1,0 +1,6 @@
+IndexIgnore *
+IndexOptions SuppressLastModified SuppressSize SuppressDescription
+<FilesMatch "^(\.htaccess|.*~)$">
+order allow,deny
+deny from all
+</FilesMatch>

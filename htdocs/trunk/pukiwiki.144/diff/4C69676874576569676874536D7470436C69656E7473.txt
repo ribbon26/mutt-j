@@ -1,0 +1,43 @@
+ Mutt 自身は SMTP を話さないので、自分でサーバを立てるか、このような SMTP クライアントを使う必要があります。使い方は、muttrc に set sendmail="ほげほげ" と指定するだけです。
+ 使ってみた感想などをどんどん書き込んでみてください。
+ 
+ -msmtp http://msmtp.sourceforge.net/
+ --TLS(smtps及びstarttls), IPv6, CRAM-MD5 認証に対応 (GSASL サポート付きでコンパイルすれば DIGEST-MD5 と NTLM　も)
+ --DSN 対応
+ --複数アカウント対応
+ 
+ -nbsmtp http://nbsmtp.ferdyx.org/
+ --TLS, SASL 対応
+ --syslog 出力機能つき
+ --IPv6, STARTTLS は実装予定
+ 
+ -esmtp http://esmtp.sourceforge.net/
+ --sendmail コマンドラインオプション準拠
+ --AUTH SMTP (CRAM-MD5 and NTLM SASL), StartTLS 対応
+ 
+ -masqmail http://innominate.org/kurth/masqmail/
+ --クライアントと言うより MTA と言ったほうが良さそう。Glib に依存するが Gtk は不要
+ 
+ -nomail http://www.ku3g.org/negi/nomail/
+ --ソースは http://www.luky.org/opensrc/nomail/
+ --ローカル配信にも対応しているので xinetd などから呼べば受信もできる。
+---http://www.ku3g.org/negi/nomail/nomail-ipv6.patch をあてれば IPv6 に対応する。
++--IPv6 対応
+ --国産なので日本語文書がある。perl なので改造が簡単。
+ 
+ -ssmtp http://packages.debian.org/testing/mail/ssmtp.html
+ --ソースは ftp://ftp.debian.org/debian/pool/main/s/ssmtp/
+ --TLS, IPv6, MD5-auth対応。From: ヘッダ書き換え可能
+ --2.48 用の AUTH patch は http://www.emaillab.org/mutt/tools/ssmtp-2.48-auth.diff.gz
+ --http://www.debian.org/security/2004/dsa-485 に注意
+ 
+ -nullmailer http://untroubled.org/nullmailer/
+ --SMTP auth や SSL はサポートしていない模様
+ --QMQP に対応
+ 
+ -mini_sendmail http://www.acme.com/software/mini_sendmail/
+ --IPv6 対応。
+ --set sendmail="mini_sendmail -t -sサーバ" とする。(-s とサーバ名の間を空けない)
+ 
+ -libesmtp パッチ http://www.deez.info/sengelha/projects/mutt/libesmtp/
+ --libESMTP を使って、外部 MTA を不要にする。まだ不安定か?

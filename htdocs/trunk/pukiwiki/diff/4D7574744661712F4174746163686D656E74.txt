@@ -1,0 +1,52 @@
+ [[MuttFaq]]/Attachment
+ 
+ -Q: 添付ファイルが文字化けします。
+ --A: $file_charset を設定してください。
+ その際、$forward_decode=yes かつ $mime_forward_decode=no
+ にしておくよう推奨されています。
+ 
+ -Q: ファイル名がおかしいと言われました。
+ --A: 仕方がありませんね。RFC 違反を覚悟なら
+  set strict_mime=no
+  set create_rfc2047_parameters=yes
+ と設定することができます。
+ 
++-Q: 返信に本文は引用しますが、添付ファイルまで引用したくはありません。
++--A: $include_onlyfirst を設定すると、最初のパート (普通は本文) だけ引用するようになります。
++
++
+ *本文を編集しながら添付ファイルを転送 [#v500a0cd]
+ 
+ 添付ファイルを含めて転送するには $mime_forward を使います
+ (またはコンポーズメニューから A (attach-message) を押し、
+ 添付したいメッセージに t (tag-message) で印を付けて q (quit) すると
+ メッセージを message/rfc822 形式で添付できます) が、
+ 「本文 + 添付ファイル + 添付ファイル ...」
+ というようなメッセージを転送する際、最初の本文だけ編集したい
+ こともあります。しかし、そういう機能は Mutt には備わっていません。
+ あきらめるか、次の手順を踏んでください。
+ 
+ +転送したいメッセージの上で v キー (view-attachments) を押します。
+ +すべての添付ファイルを t (tag-entry) で指定します。
+ +それらを転送するため、;f と押します。(tag-prefix forward-message)
+ +あとは好きなように手を加えられます。
+ D で不要な添付ファイルを消したり ^Xe で編集したりできます。
+ 
+ recvattach メニューで tag-pattern が使えないという問題さえなければ
+ マクロにできるのですが……。
+ 
+ なお、Reference ヘッダのことなどを気にしなければ、他にも
+ copy-message してから edit して転送、という方法や
+ resend-message を使うという方法もあります。
+ 
+ 
+ *添付し忘れないようにするには [#n10461b5]
+ 
+ 以前に mutt-dev に、「本文に attach という単語が出てきたら
+ 添付ファイルを確認するパッチ」というのが投稿されていましたが、
+ 考えてみると、$sendmail で grep して、「添付」があったら
+ multipart かどうか調べるというのが Mutt 的ではないかと思います。
+ 簡単にスクリプトを書けると思いますよ。(例えば http://does-not-exist.org/mail-archives/mutt-dev/msg01957.html )
+ しかし、暗号化するときには grep が使えませんので、
+ コンポーズメニューの y を macro にして、チェックのスクリプト
+ と sendmail に割り当てた方が良いかもしれません。--tamo

@@ -1,0 +1,45 @@
+- ''[[mutt-j project>http://mutt-j.sourceforge.jp/]]''~
+- ├[[メーリングリスト>http://lists.sourceforge.jp/mailman/listinfo/mutt-j-users]]~
+- └[[wiki（ココ）>http://mutt-j.sourceforge.jp/pukiwiki/]]~
+- 
+- 
+- ''導入''~
+- ├[[Muttの特徴>http://mutt-j.sourceforge.jp/manual.ja.html#s1]]~
+- ├[[インストール手順>Install]]~
+- └[[パッチ>PatchList]]~
+- 
+- ''設定''~
+- ├[[日本語マニュアル>http://mutt-j.sourceforge.jp/manual.ja.html]]~
+- ├[[基本>http://mutt-j.sourceforge.jp/manual.ja.html#s3]]~
+- ├[[FAQ/TIPS>MuttFaq]]~
+- ├[[Macro>MuttFaq/Macro]]~
+- ├[[IMAP>MuttFaq/IMAP]]~
+- └[[Color>MuttFaq/Color]]~
+- 
+- [[CopyRight]]~
+- 
+- 
+- #recent(15)
++''[[mutt-j project>http://mutt-j.sourceforge.jp/]]''~
++├[[メーリングリスト>http://lists.sourceforge.jp/mailman/listinfo/mutt-j-users]]~
++└[[wiki（ココ）>http://mutt-j.sourceforge.jp/pukiwiki/]]~
+ 
++
++''導入''~
++├[[Muttの特徴>http://mutt-j.sourceforge.jp/manual.ja.html#s1]]~
++├[[インストール手順>Install]]~
++└[[パッチ>PatchList]]~
++
++''設定''~
++├[[日本語マニュアル>http://mutt-j.sourceforge.jp/manual.ja.html]]~
++├[[基本>http://mutt-j.sourceforge.jp/manual.ja.html#s3]]~
++├[[FAQ/TIPS>MuttFaq]]~
++├[[Macro>MuttFaq/Macro]]~
++├[[IMAP>MuttFaq/IMAP]]~
++└[[Color>MuttFaq/Color]]~
++
++[[CopyRight]]~
++
++
++#recent(15)
++

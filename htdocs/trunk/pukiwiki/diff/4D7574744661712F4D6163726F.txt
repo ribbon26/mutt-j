@@ -1,0 +1,23 @@
++[[MuttFaq]]/Macro
++-Q: ゴミ箱を使いたい（メールの削除時にゴミ箱フォルダに移動させたい）
++--A: trashフォルダを作成し、以下の設定をしておきます。
++実態はdによるメールの削除をすると、trashフォルダに移動しyを入力しています。
++ folder-hook . 'macro index d "s=trash\ny"'
++ folder-hook . 'macro pager d "s=trash\ny"'
+ 
++-Q: 便利なマクロはありませんか
++--A: 私も知りたいです（笑）というのは半分冗談として使っているものを書いておきます。
++---アドレス帳を編集する (^a)
++ macro index \ca "!vi $HOME/.mail_aliases\n:source =".mutt/mail_aliases"\n"
++ macro pager \ca "!vi $HOME/.mail_aliases\n:source =".mutt/mail_aliases"\n"
++---fetchmailを起動する (^f)
++ macro index \cf "!fetchmail >/dev/null 2>&1 &\n"
++ macro pager \cf "!fetchmail >/dev/null 2>&1 &\n"
++---urlviewを起動する
++ macro pager l |urlview\n
++ macro index \cb |urlview\n
++ macro pager \cb |urlview\n
++---muttで受信した添付ファイルをWindowsで閲覧する
++---Windowsとの連携
++
++

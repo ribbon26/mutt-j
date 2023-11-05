@@ -1,0 +1,19 @@
+## Access control needs 'AllowOverride Limit' at httpd.conf.
+<FilesMatch "\.(ini\.php|lng\.php|txt|gz|tgz|zip)$">
+	Order allow,deny
+	Deny from all
+</FilesMatch>
+#<FilesMatch "\.php$">
+# <Limit POST>
+#  Order deny,allow
+#  deny from all
+#  allow from .jp
+#  allow from .net
+#  allow from .com
+#  allow from .org
+# </Limit>
+#</FilesMatch>
+
+## Using zlib.output_compression per directory (via .htaccess),
+## needs 'AllowOverride Options' at httpd.conf.
+#php_flag zlib.output_compression On

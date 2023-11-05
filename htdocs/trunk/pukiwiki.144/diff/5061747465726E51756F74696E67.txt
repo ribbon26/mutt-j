@@ -1,0 +1,24 @@
++[[PatternQuoting]]
+ 
++ちょっと複雑な正規表現を使おうとすると、ダブルクォートとシングルクォート、
++バックスラッシュ (半角￥)、括弧、バッククォートなどの関係で混乱させられます。
++少し整理しておきましょう。
++
++本家[[MuttWiki:PatternQuoting]]の最後の方を追ってみます。
++
++シングルクォートの例です。
++ save-hook '~f "(john|bob)@mutt\\.org"' +those-mutt-guys
++正しくクォートされているので、Mutt はこれを
++ save-hook
++ '~f "(john|bob)@mutt\\.org"'
++ +those-mutt-guys
++の三つと認識してくれます。それからクォートを解釈して
++ save-hook
++ ~f "(john|bob)@mutt\\.org"
++ +those-mutt-guys
++となります。この時点でも正規表現がちゃんとクォートされて残っていますね。
++ここから Mutt は正規表現を解釈しますので、
++ (john|bob)@mutt\.org
++という期待通りの正規表現が得られるわけです。
++(\\. が \. になっただけ、という点に注目)
++

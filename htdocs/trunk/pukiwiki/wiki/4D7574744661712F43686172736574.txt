@@ -1,0 +1,45 @@
+[[MuttFaq]]/Charset
+
+-Q: UTF-8 が、一部文字化けしたり、画面からはみ出したりします。
+--A: ふつうの S-Lang や日本語化 S-Lang では、UTF-8 対応が不十分です。
+http://www.emaillab.org/mutt/tools/slang-1.4.8-utf8.diff.gz
+をダウンロードして使いましょう。
+--A: 新しい ncurses (enable-widec 版) なら UTF-8 でもきちんと動作します。
+20050327 以降をお勧めします。なお、mutt をビルドする際には --with-ncurses''w''
+というオプションが使えます。
+
+-Q: muttrc も環境変数も正しいはずなのに、送信メールが文字化けします。
+なぜでしょうか。
+--A: 署名が $charset の文字セットで書かれているか確認してください。
+また、エディタが必ず $charset の文字セットでファイルを保存するか確認しましょう。
+そもそも自分のエディタが $charset に対応していないということはありませんか。
+さらに、alias ファイルも確認しましょう。特に手で追加した場合などに注意が必要です。
+
+-Q: たまに ISO-2022-JP ではなく UTF-8 として送信されてしまいます。
+--A: send_charset の順番を確認しましょう。
+--A: Windows から SSH などで接続している場合には、見た目が同じでも
+ISO-2022-JP への変換で問題の生じる文字があるようです。
+[[滝澤さんのスクリプト>http://d.hatena.ne.jp/t-tkzw/20060420/p1]]
+をエディタに設定すると、glibc でも ISO-2022-JP に変換できるそうです。
+
+-Q: 丸数字など、いわゆる機種依存文字を扱えますか。
+--A: iconv が対応していれば、可能性はあります。
+既に [mutt-j:02343] で[[森山氏>http://www2d.biglobe.ne.jp/~msyk/]]がパッチを投稿しています。
+#ref(patch-1.5.4.msyk.iconv-hook_overwrite.1)
+そのパッチを当てれば、
+ iconv-hook iso-2022-jp cp50220
+ iconv-hook shift_jis   cp932
+ iconv-hook euc-jp      eucJP-ms
+ set sanitize_ja_chars=no
+という設定で、それぞれの文字セットを上書きすることができます。
+その際、$charset か環境変数 LC_CTYPE も、
+そうした文字を含んでいて相互変換できる文字セットにする必要があるようです。
+たとえば
+ set charset=eucJP-ms
+ということです。
+また、当然ながら端末のフォントもそれらの文字に対応している必要があります。
+なお、iconv と関係のない文字列処理部分もありますので注意が必要です。
+--A: 表示に関しては [[vimrc diary / 2005-02>http://vimrc.hp.infoseek.co.jp/diary/2005-02.html#2005-02-10-5]]
+で公開されている display_filter を利用すると簡単に幸せになれます。Hiroshi SAKURAI さんに感謝。
+--A: これまた表示だけですが、[[SKF>http://sourceforge.jp/projects/skf/]] も display_filter に便利です。
+JF などの活動で有名な金子さんが作者のようですね。

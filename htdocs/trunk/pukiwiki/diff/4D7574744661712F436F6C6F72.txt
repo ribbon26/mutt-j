@@ -1,0 +1,34 @@
+ [[MuttFaq]]/Color
+ -Q: 色の設定
+ --A: $colorを設定することにより色の変更が可能です。
+ 環境変数COLORFGBGに何か（空でも可だったかな）を設定しておく必要があります。
+ 
+ -Q: カラー設定のサンプル
+ --A: default;blackの場合の例を示します。（ターミナルは黒地に白字で使っています）
+  color hdrdefault cyan default
+  color header yellow default ^(From|Subject):
+  color search black yellow
+  color normal white black
+  color message white black
+  color body red black [_a-z\.A-Z0-9-]+@[a-zA-Z0-9\./\-]+
+  color body red black (http|ftp)://[_a-zA-Z0-9\./~\-]+
+  color quoted magenta black
+  color signature blue black
+  color attachment black green
+  color tree red black
+  color indicator black cyan
+  color status yellow blue
+  color tilde blue black
+ 
+ -Q: メールの一覧の画面上で「重要」フラグ付きのメールを視覚的にわかるようにしたい
+ --A: 以下のように設定すると、メールの一覧で色が付きます（が、少し重くなります）
+  folder-hook 'color index red default "~h X-Priority:.*High"'
+  folder-hook 'color index red default "~h X-Priority:.[1]"'
+  folder-hook 'color index red default "~h X-MSMail-Priority:.High"'
+ 特定のフォルダによって色を表示させたくない場合は以下のような感じで。
+  folder-hook ! no-color-folder 'color index red default "~h X-Priority:.*High"'
+ 
+ -Q: メールの一覧の画面上で添付ファイル付のメールを視覚的にわかるようにしたい
+---A: 以下のように設定すると、メールの一覧で色が付きます（が、かなり重くなります）
++--A: 以下のように設定すると、メールの一覧で色が付きます（が、少し重くなります）
+  folder-hook 'color index yellow default "~h multipart"'

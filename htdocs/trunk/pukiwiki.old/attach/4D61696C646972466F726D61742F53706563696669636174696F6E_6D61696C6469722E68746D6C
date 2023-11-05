@@ -1,0 +1,125 @@
+<html>
+<body>
+<a href="../djb.html">D. J. Bernstein</a>
+<br><a href="../mail.html">Internet mail</a>
+<h1>Using maildir format</h1>
+<h2>Why should I use maildir?</h2>
+Two words: <b>no locks</b>.
+An MUA can read and delete messages while new mail is being delivered:
+each message is stored in a separate file with a unique name,
+so it isn't affected by operations on other messages.
+An MUA doesn't have to worry about partially delivered mail:
+each message is safely written to disk in the <b>tmp</b> subdirectory
+before it is moved to <b>new</b>.
+The maildir format is reliable even over NFS.
+<h2>How are unique names created?</h2>
+Unless you're writing messages to a maildir,
+the format of a unique name is none of your business.
+A unique name can be anything
+that doesn't contain a colon (or slash)
+and doesn't start with a dot.
+Do not try to extract information from unique names.
+<p>
+Okay, so you're writing messages.
+A unique name has three pieces, separated by dots.
+On the left is the result of time() or the second counter from gettimeofday().
+On the right is the result of gethostname().
+(To deal with invalid host names,
+replace / with \057 and : with \072.)
+In the middle is a delivery identifier, discussed below.
+<p>
+As the terminology suggests,
+<b>every delivery to this maildir must have its own unique name</b>.
+When a maildir is shared through NFS,
+every machine that delivers to the maildir <b>must</b> have its own hostname.
+Within one machine,
+every delivery within the same second
+<b>must</b> have a different delivery identifier.
+<p>
+Modern delivery identifiers are created by concatenating
+enough of the following strings to guarantee uniqueness:
+<ul>
+<li>#<i>n</i>,
+where <i>n</i> is (in hexadecimal) the output of
+the operating system's unix_sequencenumber() system call,
+which returns a number that increases by 1 every time it is called,
+starting from 0 after reboot.
+<li>X<i>n</i>,
+where <i>n</i> is (in hexadecimal) the output of
+the operating system's unix_bootnumber() system call,
+which reports the number of times that the system has been booted.
+Together with #, this guarantees uniqueness;
+unfortunately, most operating systems don't support
+unix_sequencenumber() and unix_bootnumber.
+<li>R<i>n</i>,
+where <i>n</i> is (in hexadecimal) the output of
+the operating system's unix_cryptorandomnumber() system call,
+or an equivalent source such as /dev/urandom.
+Unfortunately,
+some operating systems don't include cryptographic random number generators.
+<li>I<i>n</i>,
+where <i>n</i> is (in hexadecimal) the UNIX inode number of this file.
+Unfortunately, inode numbers aren't always available through NFS.
+<li>V<i>n</i>,
+where <i>n</i> is (in hexadecimal) the UNIX device number of this file.
+Unfortunately, device numbers aren't always available through NFS.
+(Device numbers are also not helpful with the standard UNIX filesystem:
+a maildir has to be within a single UNIX device
+for link() and rename() to work.)
+<li>M<i>n</i>,
+where <i>n</i> is (in decimal) the microsecond counter
+from the same gettimeofday() used for the left part of the unique name.
+<li>P<i>n</i>,
+where <i>n</i> is (in decimal) the process ID.
+<li>Q<i>n</i>,
+where <i>n</i> is (in decimal) the number of deliveries made by this process.
+</ul>
+Old-fashioned delivery identifiers use the following formats:
+<ul>
+<li><i>n</i>, where <i>n</i> is the process ID,
+and where this process has been forked to make one delivery.
+Unfortunately,
+some foolish operating systems repeat process IDs quickly,
+breaking the standard time+pid combination.
+<li><i>n</i>_<i>m</i>, where <i>n</i> is the process ID
+and <i>m</i> is the number of deliveries made by this process.
+</ul>
+<h2>What can I put in info?</h2>
+When you move a file from <b>new</b> to <b>cur</b>,
+you have to change its name from <i>uniq</i> to <i>uniq:info</i>.
+Make sure to preserve the <i>uniq</i> string,
+so that separate messages can't bump into each other.
+<p>
+<i>info</i> is morally equivalent to the Status field used by mbox readers.
+It'd be useful to have MUAs agree on the meaning of <i>info</i>,
+so I'm keeping a list of <i>info</i> semantics.
+Here it is.
+<p>
+<i>info</i> starting with "1,": Experimental semantics.
+<p>
+<i>info</i> starting with "2,":
+Each character after the comma is an independent flag.
+<ul>
+<li>Flag "P" (passed): the user has resent/forwarded/bounced this message
+to someone else.
+<li>Flag "R" (replied): the user has replied to this message.
+<li>Flag "S" (seen): the user has viewed this message, though perhaps
+he didn't read all the way through it.
+<li>Flag "T" (trashed): the user has moved this message to the trash;
+the trash will be emptied by a later user action.
+<li>Flag "D" (draft): the user considers this message a draft;
+toggled at user discretion.
+<li>Flag "F" (flagged): user-defined flag; toggled at user discretion.
+</ul>
+New flags may be defined later.
+Flags must be stored in ASCII order: e.g., "2,FRS".
+<h2>Can a maildir contain more than tmp, new, cur?</h2>
+Yes:
+<ul>
+<li>.qmail: used to do direct deliveries with qmail-local.
+<li>bulletintime: empty file, used by system-wide bulletin programs.
+<li>bulletinlock: empty file, used by system-wide bulletin programs.
+<li>seriallock: empty file, used to serialize AutoTURN.
+</ul>
+</body>
+</html>

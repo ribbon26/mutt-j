@@ -1,0 +1,42 @@
+[[MuttFaq]]/Maildir
+
+*再帰検索 [#vd82f4dc]
+-Q: Maildir で階層になっているメールフォルダを掘り進んで検索するには
+どうすれば良いでしょうか。Mutt 自体には再帰検索機能が付いていないのです。
+--A: grep, find, xargs などの、お馴染みのツールで検索してもよいでしょう。
+--A: 英語だけで良ければ、もっと簡単に検索する方法があります。
+[[mairix:http://www.rrbcurnow.freeuk.com/mairix/]] です。
+これは検索条件に合致したメッセージのシンボリックリンクかコピーを
+特定のフォルダに集めるツールです。Mutt から !mairix などとして
+呼び出し、その検索結果のフォルダに移動すれば良いのです。
+--A: 日本語を検索するには [[namazu>http://www.namazu.org]] などを
+使う必要があるでしょう。
+2ch の mutt スレの 249 番では、MH について mairix と似た機能を
+namazu で実現する方法が提案されていました。Maildir でも
+同じようなスクリプトを使えば便利になるはずです。
+ $ mknmz -h -O $MAILINDEX $MAILDIR
+というような状態で
+ #!/bin/sh
+ # nmz4mutt 改
+ # 使用例: ! nmz4mutt +subject:mutt and ホゲホゲ
+ [ -z "$*" ] && exit 1
+ [ -z "${MAILINDEX}" ] && MAILINDEX="${HOME}/index_dir"
+ [ -z "${VFOLDER}" ] && VFOLDER="${HOME}/vfolder"
+ [ -d "${VFOLDER}/cur" ] || maildirmake "${VFOLDER}" || exit 1
+ rm -f ${VFOLDER}/cur/*
+ for i in `namazu -l "$*" ${MAILINDEX}`
+ do
+  [ -r "$i" ] && ln -s $i ${VFOLDER}/cur/
+ done
+というスクリプトで動いているような気がします。
+
+*mbox との比較 [#n315165a]
+-Q: MaildirFormat にはどんな利点がありますか。
+--A: 英語ですが、こちらに mbox との比較があります。
+http://www.courier-mta.org/mbox-vs-maildir/
+--A: 日本語の解説はこちら。
+http://man.qmail.jp/jman5/maildir.html
+--A: 問題もあります。Mutt 側の問題として、
+maildir/ というように最後にスラッシュを付けた場合と付けない場合で
+扱いが異なる部分があります。
+また、メッセージを読むまで行数が把握されない、といった相違点もあります。

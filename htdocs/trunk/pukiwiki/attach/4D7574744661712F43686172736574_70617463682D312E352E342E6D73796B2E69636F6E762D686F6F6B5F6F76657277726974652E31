@@ -1,0 +1,163 @@
+Date:  Fri, 11 Jul 2003 22:37:50 +0900
+From:  MORIYAMA Masayuki 
+Subject:  [mutt-j:02343] Re: 丸数字問題
+To:  mutt-j@ribbon.or.jp
+X-Mail-Count: 02343
+
+はじめまして、森山と申します。
+
+At Thu, 23 May 2002 23:46:31 +0900,
+TAKIZAWA Takashi さん:
+> 1.3以降の場合は iconv を使っている関係上、ISO-2022-JP から EUC-JP に
+> 変換する際に、iconv を経由していため、ISO-2022-JP を構成する JIS X 0208
+> のテーブルに存在しない文字は扱えません。
+> そのため、滝澤が考えるところでは、次の２つのどれかを行うしかないと思います。
+>   -  iconv の JIS X 0208 のテーブルを機種依存文字対応にする。
+>      具体的に書くと、GNU libiconv の lib/jisx0208.h に手を加えるだけで
+>      よいはず。
+>      機種依存文字はたいてい JIS X 0212 に含まれていて、さらに、JIS X 0212
+>      に存在する文字は Unicode に含まれているので変換テーブルは作れるはず。
+>      # IBM選定IBM拡張文字がやっかいかも
+>   -  iconv の前処理で機種依存文字を一時的に iconv で通る文字に置き換
+>      えると共にその位置を記憶し、iconv の変換後に、EUC-JPに変換した
+>      文字に戻してやる。多分、処理が遅くなります。
+> iconv を使わないという考えもありますが、1.3以降の存在を否定する考え
+> なので、この考えは捨てます。
+>
+> ということで、もしやるとしたら前者の iconv に対するパッチを作るという
+> ことでしょうか。
+
+突然出てきて、なおかつ昔のメールへの返信で申し訳ありませんが、以
+下のようなパッチを作ってみましたのでお試しください。
+
+修正内容
+
+  libiconv 1.8 に対して
+  ・libiconv 1.8 の cp932 の変換をマイクロソフトのものと同一のも
+    のに修正する。(“〜”の変換など)
+  ・Windows のコードページ 50220 (ISO-2022-JP) 相当のものと、
+    The Open Group / JVC の eucJP-ms を libiconv に追加
+
+  mutt に対して
+  ・mutt-j の iconv-hook が正しく機能するように修正し、~/.muttrc
+    に以下の設定を追加もしくは修正して使用する。
+
+    追加
+      iconv-hook iso-2022-jp cp50220
+      iconv-hook shift_jis   cp932
+      iconv-hook euc-jp      eucJP-ms
+    修正
+      set sanitize_ja_chars=no
+
+パッチ
+
+  ・日本語版 mutt 1.5.4 で、iconv-hook を期待通りに動作させる為
+    のパッチはメールの最後に添付しておきます。
+  ・libiconv 1.8 へのパッチは、次の場所においておきます。
+
+    http://www2d.biglobe.ne.jp/~msyk/software/libiconv-1.8-cp932-family.html
+
+libiconv-1.8-cp932-family.diff.gz について
+
+  cp932 を ダイレクトに EUC符号化, RFC1468符号化する事が出来るよ
+  うになります。
+
+  また、以下のような直交関係がありますから、WAVE DASH vs
+  FULLWIDTH TILDE 等の問題で悩まずに済むようになります。
+
+        CES       JIS系エンコーディング MS系エンコーディング
+    ------------ --------------------- --------------------
+     シフトJIS       Shift_JIS         cp932 (Microsoft)
+     EUC             EUC-JP            eucJP-ms (TOG/JVC)
+     RFC1468         ISO-2022-JP       cp50220 (Microsoft)
+
+  ちなみに、MS 系エンコーディングでは、YEN SIGN 問題に関して、
+  0x5C を U+005C と対応付けするように統一されていますので、使い
+  勝手はよいと思います。
+
+  ※Shift_JIS/EUC-JP/ISO-2022-JP は、オリジナルのものに一切、手
+    を付けないようにしてあります。
+
+Glibc と libiconv の iconv() について
+
+  Glibc の iconv() についても、私が cp932 の修正と、eucJP-ms の追加の
+  パッチを作成して (こちらは cp50220 の修正は入ってません)、
+  webdav-jp メーリングリスト経由で、吉田あきらさんが Ulrich さん
+  へ修正を働きかけてくれています。
+
+    Glibc 2.2.5 の cp932 修正、eucJP-ms 追加のパッチ (ドキュメント無し)
+    http://www2d.biglobe.ne.jp/~msyk/software/glibc/glibc-2.2.5.diff.gz
+
+  libiconv に関しても、Samba-ja 経由で Sambaユーザ会の方に、
+  Bruno さんへ同様の修正の働きかけをしていただいたのですが、こち
+  らは、途中まで話が進んでそれ以降進んでいないという状態です。
+
+  今回、日本国内での実績作りも兼ねて、libiconv 1.8 に cp50220 を
+  追加してみましたので、ぜひご意見をお聞かせいただけたらと思って
+  おります。(cp932 の修正と、eucJP-ms の追加は、以前から行って自
+  分の Web ページで紹介していました。)
+
+‖ 森山 将之 (MORIYAMA, Masayuki)
+‖ E-Mail: xxxx@xxxx
+‖ Web Page: http://www2d.biglobe.ne.jp/~msyk/
+
+--- cut here ---
+diff -Nur mutt-1.5.4.orig/charset.c mutt-1.5.4/charset.c
+--- mutt-1.5.4.orig/charset.c   Sun May 11 16:09:52 2003
++++ mutt-1.5.4/charset.c    Sun May 11 16:08:16 2003
+@@ -325,10 +325,13 @@
+   if ((flags & M_ICONV_HOOK_FROM) && (tmp = mutt_charset_hook (fromcode1)))
+     mutt_canonical_charset (fromcode1, sizeof (fromcode1), tmp);
+
+-  if ((cd = iconv_open (tocode1, fromcode1)) != (iconv_t) -1)
++  tocode2 = mutt_iconv_hook (tocode1);
++  tocode2 = (tocode2) ? tocode2 : tocode1;
++  fromcode2 = mutt_iconv_hook (fromcode1);
++  fromcode2 = (fromcode2) ? fromcode2 : fromcode1;
++
++  if ((cd = iconv_open (tocode2, fromcode2)) != (iconv_t) -1)
+     return cd;
+-  if ((tocode2 = mutt_iconv_hook (tocode1)) && (fromcode2 = mutt_iconv_hook (fromcode1)))
+-    return iconv_open (tocode2, fromcode2);
+
+   return (iconv_t) -1;
+ }
+diff -Nur mutt-1.5.4.orig/hook.c mutt-1.5.4/hook.c
+--- mutt-1.5.4.orig/hook.c  Tue Jan 21 21:25:21 2003
++++ mutt-1.5.4/hook.c   Sun May 11 16:08:16 2003
+@@ -88,7 +88,7 @@
+     memset (&pattern, 0, sizeof (pattern));
+     pattern.data = safe_strdup (path);
+   }
+-  else if (DefaultHook && !(data & (M_CHARSETHOOK | M_ACCOUNTHOOK))
++  else if (DefaultHook && !(data & (M_CHARSETHOOK|M_ICONVHOOK|M_ACCOUNTHOOK))
+            && (!WithCrypto || !(data & M_CRYPTHOOK))
+       )
+   {
+@@ -157,7 +157,7 @@
+   {
+     rx = safe_malloc (sizeof (regex_t));
+ #ifdef M_CRYPTHOOK
+-    if ((rc = REGCOMP (rx, NONULL(pattern.data), ((data & (M_CRYPTHOOK|M_CHARSETHOOK)) ? REG_ICASE : 0))) != 0)
++    if ((rc = REGCOMP (rx, NONULL(pattern.data), ((data & (M_CRYPTHOOK|M_CHARSETHOOK|M_ICONVHOOK)) ? REG_ICASE : 0))) != 0)
+ #else
+     if ((rc = REGCOMP (rx, NONULL(pattern.data), (data & (M_CHARSETHOOK|M_ICONVHOOK)) ? REG_ICASE : 0)) != 0)
+ #endif /* M_CRYPTHOOK */
+diff -Nur mutt-1.5.4.orig/mbyte.c mutt-1.5.4/mbyte.c
+--- mutt-1.5.4.orig/mbyte.c Sun May 11 16:09:52 2003
++++ mutt-1.5.4/mbyte.c  Sun May 11 16:08:16 2003
+@@ -67,8 +67,8 @@
+    || !strcmp(buffer, "cp932"))
+   {
+     charset_is_ja = 1;
+-    charset_to_utf8 = iconv_open ("UTF-8", charset);
+-    charset_from_utf8 = iconv_open (charset, "UTF-8");
++    charset_to_utf8 = mutt_iconv_open ("UTF-8", charset, 0);
++    charset_from_utf8 = mutt_iconv_open (charset, "UTF-8", 0);
+   }
+ #endif
+
+--- cut here ---
+
+
+

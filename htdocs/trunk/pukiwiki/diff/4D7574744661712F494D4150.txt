@@ -1,0 +1,65 @@
+ [[MuttFaq]]/IMAP
+ 
+-キャッシュで高速化を図る方法にについては
++キャッシュで高速化を図る方法については
+ HeaderCache にリンクがあります。
+ なお、IMAP の HeaderCache は 1.5.7 に取り込まれました。
+ 
+ ----
+ 
+ 英語ですが、http://mutt.sourceforge.net/imap/ が詳しいです。
+ この著者 Brendan Cully は Mutt の IMAP コードを書いた人だったはずです。
+ 以下では、この文書を FAQ 風に抜粋・改変してみます。
+ 
+ -Q: IMAP フォルダが開けません。
+ --A: まず、サーバの種類を確認しましょう。Courier と Cyrus では
+ フォルダを区切る記号が「.」ですが、UW-IMAP は「/」を使い、
+ Lotus Notes は「\」を使うようです。普通は Mutt が識別してくれるので
+ 単に / を使えば良いのですが、こんな感じに幾つか試してみると
+ うまくいくかもしれません。
+  imap://hostname/lists/mutt-dev
+  imap://hostname/INBOX.lists.mutt-dev
+ 
+ -Q: IMAP サーバとの間を SSH でトンネリングしたいのですが。
+ -Q: SSH トンネリングしようとすると "Broken pipe" と表示されてしまいます。
+ --A: Mutt は $tunnel に設定したコマンドを実行して、
+ その入出力を IMAP サーバへの接続として扱います。
+ ユーザはそのコマンドと対話することができませんので、
+ パスワードなどを聞かれたり入力したりすることはできません。単純に
+  set tunnel="ssh -q mailhost /usr/libexec/imapd"
+ とする場合には、パスワードを入力しなくても済むように
+ ssh-agent などを使ってください。
+ 
+ -Q: ポートフォワーディングして IMAP サーバと交信したいのですが。
+ --A: $preconnect を設定すると、IMAP との接続前にそのコマンドを実行します。
+ それで、SSH を実行してポートを転送しておくことができます。
+  set preconnect="ssh -f -q -L 1234:mailhost:143 mailhost sleep 5"
+ としておくなら、
+  imap://localhost:1234/
+ が実際には
+  imap://mailhost/
+ を意味することになります。サーバとの間は SSH で暗号化されます。
+ 
+ -Q: IMAP を使っているのでローカルにメールを置きません。
+ --A: そんな場合には $spoolfile や $folder に
+ IMAP フォルダを指定すると便利です。
+  set spoolfile=imap://hostname/INBOX
+  set folder=imap://hostname/
+ 
+ -Q: IMAP でも新着メッセージを自動で確認してほしいのです。
+ --A: mailboxes に IMAP フォルダを含めてください。
+  mailboxes imap://hostname/lists/mutt-dev imap://hostname/lists/mutt-users
+ すでに $folder を指定してあるなら、
+  mailboxes =lists/mutt-dev =lists/mutt-users
+ のようにすることもできます。
+ ---注意: mailboxes に指定されているフォルダは $mail_check 秒ごとに
+ 確認されます。この既定値は 5 ですが、二つ以上の IMAP フォルダを
+ mailboxes に含めると辛いことになります。60 以上にした方が快適でしょう。
+ ---注意: 閲覧中のフォルダをチェックする間隔は $timeout 秒です。
+ この既定値は 600 ですから、かなり下げた方が良いでしょう。
+ ---余談: 日本語パッチには $pager_hdrs_only という変数があります。
+ yes にすると、IMAP のようにネットワークを介した閲覧の際には
+ 体感速度がかなり改善されるかもしれません。
+ 
+ Mutt の IMAP サポートを書き、かつ有益な文書を書いてくれた
+ Brendan Cully 氏に感謝します。--tamo

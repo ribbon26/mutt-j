@@ -1,0 +1,96 @@
+[[PatchList]]
+
+有名なパッチ一覧
+- http://www.pizzashack.org/mutt/ -- Derek Martin (ddm)
+-- pgp-auto-decode -- 旧式 PGP を自動的に復号
+- http://home.worldonline.dk/byrial/mutt/patches/ -- Byrial Ole Jensen (bj)
+-- current_shortcut -- 今いるメールボックスへのショートカット文字 ^ を導入
+-- noquote_hdr_term -- ヘッダ終端を記号付きで引用しない
+-- status-time -- ステータス行に現在時刻を表示
+-- my_hdr_subject -- subject の設定前に send-hook 実行
+-- hash_destroy -- メールボックスを閉じるのを少しだけ速くする
+- http://cedricduval.free.fr/mutt/patches/ -- Cedric Duval (cd)
+-- edit_threads -- スレッドをつないだり切ったりできる (http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/ にもある)
+-- trash_folder and purge_message -- windows で言うところの「ごみ箱」
+-- my_list -- フックやメールボックス、購読しているメーリングリストなどの一覧を表示
+-- signatures_menu -- 署名をメニューから選べる
+-- ifdef -- 機能があるかどうかで分岐
+-- pattern_broken -- 壊れたスレッドを検索
+-- source_multiple -- 一度に複数のファイルを source
+- http://www.schrab.com/aaron/mutt/ -- Aaron Schrab (ats)
+-- date_conditional -- インデックスの日付表示を、どれだけ最近かによって変更
+-- mark_old -- mark_old を四択オプションにする
+-- parent_match -- 親メッセージに合致するパターン
+- http://www.rachinsky.de/nicolas/mutt.html -- Nicolas Rachinsky (nr)
+-- color-questions -- 質問などプロンプトの色
+-- threadcomplete -- タグ付きメッセージのあるスレッド全体に合致させる [thread_pattern も見よ]
+- http://www.42.org/~sec/mutt/ -- Stefan Zehl (sec)
+-- _A -- %A は pager_format でメッセージの数を表示
+-- backlog -- X-Current-Backlog ヘッダを送信メッセージに付加
+-- keypad -- FreeBSD 2.2.7 の壊れた ncurses に対処
+-- pager_status_on_top -- colored pager status on top/bottom
+-- mailcap-fix -- 表示できない添付ファイルだけあるメールに関する mailcap の扱いを修正
+-- pgp_shorten -- PGP 出力を短くする
+-- previous_jump -- ジャンプする前の場所に戻る
+- http://www.spinnaker.de/mutt/compressed/ -- Roland Rosenfeld (rr)
+-- compressed -- 圧縮および暗号化されたフォルダに対応 (http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/ にもある)
+- http://mutt.org.ua/download/ -- Vsevolod Volkov (vvv)
+-- initials -- index_format でイニシャル表示
+-- nntp -- NNTP/news 対応
+-- quote -- 引用文の書式を改善
+- http://www.woolridge.org/mutt/ -- Dale Woolridge (dw)
+-- maildir-mtime -- フォルダ一覧のとき、maildir を最新未読ファイルの日付でソート
+-- pgp-menu-traditional -- コンポーズメニューで旧式 PGP 署名 (既に可能な気がする……)
+-- confirm-crypt-hook -- "鍵 ID" を聞かないようにできる
+-- multiple-crypt-hook -- ひとつのパターンに対して複数の crypt-hook, つまり複数の鍵 ID を関連付けられるようにする
+-- crypt-autoselectkey -- "PGP 鍵" メニューで一つしか選択できないときは自動選択
+-- mbox-hook -- printf 風シーケンスで mbox-hook のメールボックスを指定
+-- pgp-timeout -- pgp_timeout の時間を増やしていく ( http://does-not-exist.org/mail-archives/mutt-dev/msg01143.html も参照)
+-- pgp-hook -- confirm-crypt-hook, multiple-crypt-hook, crypt-autoselectkey を合体
+-- urlview-html -- urlview が HTML を生成するようにする
+- http://home.uchicago.edu/~dgc/mutt/ -- David Champion (dgc)
+-- krb -- MIT Kerberos 1.2.4 リンク問題を修正
+-- xlabel-ext -- X-Label: ヘッダを編集
+-- unbind -- キーバインドを解除できるように (bind noop では generic を見てくれない問題を修正することもできる)
+-- attach -- インデックスで添付ファイル数を表示
+-- deepif -- フォーマット文字列に if-else シーケンスを
+-- isalias -- エイリアスを使ってパターン指定ができるように
+-- markmsg -- メッセージにマークを付けて、簡単に戻ってこれるようにする
+-- fmtpipe -- フォーマット文字列にパイプを使えるように
+- http://software.lpr.ch/Mutt -- Lukas Ruf (lpr)
+-- signin と signoff -- はじめの挨拶 (greeting) と最後の挨拶 (regard) を付ける
+-- collapse_flagged -- フラグ付きメッセージのあるスレッドは折りたたまない
+- http://www.wolfermann.org/mutt.html -- Armin Wolfermann (aw)
+-- listreply -- メーリングリストのメッセージに返信するとき、個人的な返信かリストへの投稿か聞く
+-- timeouthook -- $timeout を過ぎたときにコマンドを実行するフック
+- http://vorlon.cwru.edu/~jrh29 -- Justin Hibbits (jrh)
+-- sidebar -- フォルダ一覧をサイドバーに表示 (いわゆる 3 ペイン?)
+- http://www.laas.fr/~lcourtes/software/ -- Ludovic Courtes
+-- mutt-guile -- Extensible Mutt: スクリプト言語を Mutt に追加。Guile を使用
+-- mutt-guile Wiki: http://amacleod.is-a-geek.org/mutt-guile/
+- http://sourceforge.jp/frs/index.php?group_id=351 -- Takizawa Takashi
+-- ja -- 日本語パッチ
+-- ja manual: http://www.emaillab.org/mutt/1.5/doc/manual-ja-patch.ja.txt
+-- assumed_charset -- エンコード指定のないヘッダや本文に使う文字セット
+-- file_charset -- MIME 転送に使う文字セット。副作用的に受信添付ファイルの文字セットも解析される。
+-- create_rfc2047_parameters -- 添付ファイルのファイル名に規格違反のエンコード方法を使って、変なメールクライアントとの互換性を持たせる
+- http://wwwcip.informatik.uni-erlangen.de/~sithglan/mutt/ -- Thomas Glanzmann
+-- header-cache -- Maildir の [[ヘッダキャッシュ>HeaderCache]] パッチ
+-- colorstatus -- ステータス行に色を設定できるようにする
+-- edit_threads -- スレッドをつないだり切ったりできるようにする
+-- compressed -- 圧縮メールボックスを扱えるようにする
+- http://www.df7cb.de/projects/mutt/ -- Christoph Berg
+-- menu_context -- メニューにも履歴を ($pager_context みたいな感じ)
+-- reverse_reply -- 返信の際、エイリアスにある名前を使う ($reverse_alias みたいに)
+-- thread_pattern -- パターンに合致するメッセージのあるスレッド全体に合致 (threadcomplete の拡張版)
+- ftp://ftp.gnupg.org/gcrypt/alpha/aegypten -- Werner Koch (wk)
+-- cryptmod, gpgme -- gpgme 対応 Mutt (1.5.8 には取り入れられる予定)
+-- see also http://www.gnupg.org/aegypten2/ and <87u0zkib7m.fsf@vigenere.g10code.de>
+- http://www.deez.info/sengelha/projects/mutt/ -- Steven Engelhard (sde)
+-- libesmtp -- libESMTP を使って、外部 MTA を不要にする
+-- void_passphrase_on_failed_sign -- パスフレーズが違っていたら忘れる
+- ftp://ftp.sonic.net/pub/users/enrico/mutt -- G. Paul Ziemba (gpz)
+-- tagged-macros -- tag-prefix がマクロと組み合わせられるようにする
+
+- http://tibuci.hu/mutt/patch/ -- Sereg Tibor
+-- patchset -- あらゆる詰め合わせ。assumed_charset と file_charset も入っている
