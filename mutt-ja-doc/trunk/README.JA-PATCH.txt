@@ -1,10 +1,10 @@
 		Mutt 2.2.10 用日本語版パッチリリースノート
 
-							2023-05-22
-							Ver 2.2.10-j1
+							2024-01-07
+							Ver 2.2.12-j1
 							mutt-j 開発チーム
 
-Copyright (C)2000-2023 Oota Toshiya <ribbon@users.osdn.me>
+Copyright (C)2000-2024 Oota Toshiya <ribbon@users.osdn.me>
 
 Copyright (C)2000-2001 Kawaguti Ginga <ginga@ginganet.org>
 
@@ -190,7 +190,7 @@ init.h の中にあるコメントを抜き出してマニュアル末尾に付�
 
 現在のバージョンでは以下の環境で動作確認をしています。
 
-1) FreeBSD 12.4(64bit)       iw	     Oota Tochiya
+1) FreeBSD 13.2(64bit)       iw	     Oota Tochiya
 
 オプションの意味
 
