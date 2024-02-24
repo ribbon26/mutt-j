@@ -4,7 +4,7 @@
 
 ## 日本語マニュアル 
 
-最新版の日本語マニュアル(2.2.10対応)は、 <a href="manual.ja.html"> manual.ja.html </a>です。暫定版で、まだ未訳の所が残っています。
+最新版の日本語マニュアル(2.2.10対応)は、 <a href="htdocs/trunk/manual.ja.html"> manual.ja.html </a>です。暫定版で、まだ未訳の所が残っています。
 
 ## 最新ニュース
 <ul>
